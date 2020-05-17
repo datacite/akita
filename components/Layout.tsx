@@ -8,7 +8,7 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = 'Common DOI Search',
+  title = 'DataCite DOI Search',
 }) => (
   <div>
     <Head>
