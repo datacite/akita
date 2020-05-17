@@ -99,7 +99,7 @@ const Layout: React.FunctionComponent<Props> = ({
               <li><a href="https://www.datacite.org/privacy.html">Privacy policy</a></li>
               <li><a href="https://www.datacite.org/acknowledgments.html">Acknowledgements</a></li>
             </ul>
-            <a href="http://status.datacite.org" target="_blank">
+            <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
               <span className="color-dot"></span>
               <span className="color-description"></span>
             </a>

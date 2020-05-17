@@ -1,11 +1,12 @@
 {
-  "name": "with-typescript",
+  "name": "akita",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "type-check": "tsc",
+    "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "test": "jest",
     "test:watch": "jest — watch",
     "test:coverage": "jest — coverage"
@@ -24,15 +25,24 @@
     "@types/react": "^16.9.35",
     "@types/react-bootstrap": "^0.32.21",
     "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.2",
     "jest": "^26.0.1",
     "ts-jest": "^26.0.0",
     "typescript": "^3.9.2"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
