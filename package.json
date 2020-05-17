@@ -5,7 +5,10 @@
     "dev": "next",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "test": "jest",
+    "test:watch": "jest — watch",
+    "test:coverage": "jest — coverage"
   },
   "dependencies": {
     "next": "^9.4.1",
@@ -14,11 +17,22 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^25.2.2",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-bootstrap": "^0.32.21",
     "@types/react-dom": "^16.9.8",
-    "typescript": "^3.7.3"
+    "babel-core": "^6.26.3",
+    "babel-jest": "^26.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^26.0.1",
+    "ts-jest": "^26.0.0",
+    "typescript": "^3.9.2"
   },
   "license": "ISC"
 }
