@@ -1,62 +1,50 @@
-# TypeScript Next.js example
+[![Build Status](https://travis-ci.com/datacite/akita.svg?branch=master)](https://travis-ci.com/datacite/akita)
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+# Akita
 
-## Deploy your own
+The web frontend for the DataCite Common DOI Search service (under development).
 
-Deploy the example using [Vercel](https://vercel.com):
+## Prerequisites
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zeit/next.js/tree/canary/examples/with-typescript)
+You will need the following things properly installed on your computer.
 
-## How to use it?
+* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/) (with NPM)
 
-### Using `create-next-app`
+## Installation
 
-Execute [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+* `git clone <repository-url>` this repository
 
-```bash
-npm init next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
-```
+## Running / Client
 
-### Download manually
+* `yarn dev`
+* Visit your app at [http://localhost:3000](http://localhost:3000).
 
-Download the example:
+## Running / Server
 
-```bash
-curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-typescript
-cd with-typescript
-```
+* `yarn build`
+* `yarn start`
+* Visit your app at [http://localhost:3000](http://localhost:3000).
 
-Install it and run:
+### Running Tests
 
-```bash
-npm install
-npm run dev
-# or
-yarn
-yarn dev
-```
+* `yarn test`
 
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+### Linting
 
-## Notes
+* `yarn lint`
 
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
+### Deploying
 
-```
-npm install --save-dev typescript
-```
+The application is built as a Docker container `datacite/akita`.
 
-To enable TypeScript's features, we install the type declarations for React and Node.
+### Note on Patches/Pull Requests
 
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
+* Fork the project
+* Write tests for your new feature or a test that reproduces a bug
+* Implement your feature or make a bug fix
+* Do not mess with Rakefile, version or history
+* Commit, push and make a pull request. Bonus points for topical branches.
 
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
-
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
-
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+## License
+**akita** is released under the [MIT License](https://github.com/datacite/akita/blob/master/LICENSE).
