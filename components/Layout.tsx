@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { Navbar, Nav, NavItem, MenuItem, NavDropdown, Grid, Row, Col } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Grid, Row, Col } from 'react-bootstrap'
 
 type Props = {
   title?: string
