@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  web:
+    image: datacite/akita
+    build: .
+    ports:
+      - "9090:80"
+    volumes:
+      - ./public:/home/app/webapp/public
+      - ./.next:/home/app/webapp/.next
+      - ./vendor:/home/app/webapp/vendor

@@ -1,0 +1,94 @@
+---
+language: node_js
+node_js:
+  - "10"
+
+sudo: required
+
+cache:
+  yarn: true
+
+before_install:
+  - set -e
+  - if [ "${TRAVIS_TAG?}" ]; then
+      AUTO_DEPLOY=true;
+      DEPLOY_TARGET="production";
+    elif [ "$TRAVIS_BRANCH" == "master" ]; then
+      AUTO_DEPLOY=true;
+      DEPLOY_TARGET="staging";
+    else
+      AUTO_DEPLOY=false;
+      DEPLOY_TARGET="staging";
+    fi
+  - cp .env.travis .env
+  - npm config set spin false
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+install:
+  - yarn install --non-interactive
+  - sudo pip install awscli
+  - curl -sL https://sentry.io/get-cli/ | bash
+  - sentry-cli --version
+
+script:
+  - yarn lint
+
+after_success:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  - REPO=datacite/akita;
+  - if [ "${TRAVIS_TAG?}" ]; then
+      docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
+      docker push $REPO:$TRAVIS_TAG;
+      echo "Pushed to" $REPO:$TRAVIS_TAG;
+    elif [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      docker build -f Dockerfile -t $REPO .;
+      docker push $REPO;
+      echo "Pushed to" $REPO;
+    else
+      docker build -f Dockerfile -t $REPO:$TRAVIS_BRANCH .;
+      docker push $REPO:$TRAVIS_BRANCH;
+      echo "Pushed to" $REPO:$TRAVIS_BRANCH;
+    fi
+
+  - if [ "$AUTO_DEPLOY" == "true" ]; then
+      wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz;
+      tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz;
+      rm dockerize-linux-amd64-v0.6.0.tar.gz;
+      export GIT_SHA=$(git rev-parse --short HEAD);
+      export GIT_REVISION=$(git rev-parse HEAD);
+      export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
+
+      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git";
+      ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/stage/services/akita/_akita.auto.tfvars;
+
+      sentry-cli releases new akita:${GIT_TAG} --finalize --project akita;
+
+      if [ "${TRAVIS_TAG?}" ]; then
+        ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/prod-eu-west/services/akita/_akita.auto.tfvars;
+        sentry-cli releases deploys akita:${GIT_TAG} new -e production;
+      else
+        sentry-cli releases deploys akita:${GIT_TAG} new -e stage;
+      fi
+
+      sentry-cli releases set-commits --auto akita:${GIT_TAG};
+      
+      cd mastino;
+      git remote;
+      git config user.email ${DOCKER_EMAIL};
+      git config user.name ${DOCKER_USERNAME};
+      
+      if [ "${TRAVIS_TAG?}" ]; then
+        git add prod-eu-west/services/doi/_akita.auto.tfvars;
+        git commit -m "Adding akita git variables for commit tagged ${TRAVIS_TAG?}";
+        git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
+      else
+        git add stage/services/doi/_akita.auto.tfvars;
+        git commit -m "Adding akita git variables for latest commit";
+        git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
+      fi
+    fi
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
+  email: false
