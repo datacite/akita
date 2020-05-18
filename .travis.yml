@@ -26,10 +26,8 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
-  - yarn install --non-interactive
+  - yarn add --non-interactive
   - sudo pip install awscli
-  - curl -sL https://sentry.io/get-cli/ | bash
-  - sentry-cli --version
 
 script:
   - yarn lint
@@ -62,16 +60,9 @@ after_success:
       git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git";
       ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/stage/services/akita/_akita.auto.tfvars;
 
-      sentry-cli releases new akita:${GIT_TAG} --finalize --project akita;
-
       if [ "${TRAVIS_TAG?}" ]; then
         ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/prod-eu-west/services/akita/_akita.auto.tfvars;
-        sentry-cli releases deploys akita:${GIT_TAG} new -e production;
-      else
-        sentry-cli releases deploys akita:${GIT_TAG} new -e stage;
       fi
-
-      sentry-cli releases set-commits --auto akita:${GIT_TAG};
       
       cd mastino;
       git remote;
