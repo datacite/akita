@@ -35,13 +35,14 @@ COPY vendor/docker/ntp.conf /etc/ntp.conf
 # Copy webapp folder
 COPY . /home/app/webapp/
 
-RUN chown -R app:app /home/app/webapp && \
-    chmod -R 755 /home/app/webapp
-
 # Install npm packages and build dist
 WORKDIR /home/app/webapp
 RUN yarn install --frozen-lockfile && \
     yarn build
+
+# Fix permissions
+RUN chown -R app:app /home/app/webapp && \
+    chmod -R 755 /home/app/webapp
 
 # Run additional scripts during container startup (i.e. not at build time)
 RUN mkdir -p /etc/my_init.d
