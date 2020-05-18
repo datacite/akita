@@ -79,11 +79,11 @@ after_success:
       git config user.name ${DOCKER_USERNAME};
       
       if [ "${TRAVIS_TAG?}" ]; then
-        git add prod-eu-west/services/doi/_akita.auto.tfvars;
+        git add prod-eu-west/services/akita/_akita.auto.tfvars;
         git commit -m "Adding akita git variables for commit tagged ${TRAVIS_TAG?}";
         git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
       else
-        git add stage/services/doi/_akita.auto.tfvars;
+        git add stage/services/akita/_akita.auto.tfvars;
         git commit -m "Adding akita git variables for latest commit";
         git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
       fi
