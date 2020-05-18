@@ -26,7 +26,7 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
-  - yarn add --non-interactive
+  - yarn install --non-interactive
   - sudo pip install awscli
 
 script:
