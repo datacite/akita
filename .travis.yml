@@ -60,12 +60,12 @@ after_success:
       export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
 
       git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git";
-      ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/stage/services/common/_akita.auto.tfvars;
+      ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/stage/services/akita/_akita.auto.tfvars;
 
       sentry-cli releases new akita:${GIT_TAG} --finalize --project akita;
 
       if [ "${TRAVIS_TAG?}" ]; then
-        ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/prod-eu-west/services/common/_akita.auto.tfvars;
+        ./dockerize -template vendor/docker/_akita.auto.tfvars.tmpl:mastino/prod-eu-west/services/akita/_akita.auto.tfvars;
         sentry-cli releases deploys akita:${GIT_TAG} new -e production;
       else
         sentry-cli releases deploys akita:${GIT_TAG} new -e stage;
