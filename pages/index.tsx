@@ -2,7 +2,7 @@ import Layout from '../components/Layout'
 import { Grid, Carousel } from 'react-bootstrap'
 
 const IndexPage = () => (
-  <Layout title="DataCite DOI Search">
+  <Layout title="DataCite Commons Stage">
     <Grid fluid={true}>
       <Carousel interval={3000} controls={false}>
         <Carousel.Item>
