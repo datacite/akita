@@ -22,13 +22,16 @@ const Layout: React.FunctionComponent<Props> = ({
     <Navbar fluid>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="#">{title}</a>
+          <a href="/">{title}</a>
         </Navbar.Brand>
       </Navbar.Header>
       <Nav pullRight>
-        <NavItem eventKey={1} href="https://support.datacite.org/">
-          Support
+        <NavItem eventKey={1} href="/about">
+          About
         </NavItem>
+        <NavItem eventKey={2} href="https://support.datacite.org/">
+          Support
+      </NavItem>
       </Nav>
     </Navbar>
 
