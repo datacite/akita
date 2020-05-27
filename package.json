@@ -12,7 +12,12 @@
     "test:coverage": "jest — coverage"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.5",
+    "apollo-boost": "^0.4.9",
+    "graphql": "^15.0.0",
     "next": "^9.4.1",
+    "next-with-apollo": "^5.0.1",
+    "node-fetch": "^2.6.0",
     "react": "^16.12.0",
     "react-bootstrap": "0.33.1",
     "react-dom": "^16.12.0"
