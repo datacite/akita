@@ -119,6 +119,9 @@ const Layout: React.FunctionComponent<Props> = ({
         .carousel-indicators li {
             background-color: #a3acb2;
         }
+        .panel-list {
+            margin-top: 20px;
+        }
       `}</style>
   </div>
 )
