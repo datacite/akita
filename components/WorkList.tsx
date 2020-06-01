@@ -1,17 +1,23 @@
 // this interface defines the shape of the data returned by the works query.
-export interface IWork {
+export interface WorkQueryResult {
   id: string;
   doi: string;
-  titles: {
-    title: string;
-  }
-  creators: {
-    name: string;
-  }
+  url: string;
+  creators: [{
+    name: string
+  }]
+  titles: [{
+    title: string
+  }]
+  publicationYear: number
+  publisher: string
+  descriptions: [{
+      description: string
+  }]
 }
 
 interface IProps {
-  works: IWork[];
+  works: WorkQueryResult[];
 }
 
 const WorkList = ({ works }: IProps) => {
