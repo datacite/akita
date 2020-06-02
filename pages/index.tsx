@@ -1,8 +1,8 @@
 import React from "react"
-import WorkList from "../components/WorkList"
+import WorkList from "../components/WorkList/WorkList"
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import Layout from '../components/Layout'
+import Layout from '../components/Layout/Layout'
 
 const IndexPage = () => {
   // our query that defines the attributes we want to get.
