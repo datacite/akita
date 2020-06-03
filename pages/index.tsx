@@ -10,13 +10,27 @@ const IndexPage = () => {
     query {
       works {
         totalCount
-        years {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        resourceTypes {
           id
+          title
+          count
+        }
+        registrationAgencies {
+          id
+          title
           count
         }
         nodes {
           id
           doi
+          types {
+            resourceTypeGeneral
+            resourceType
+          }
           titles {
             title
           }
@@ -25,7 +39,10 @@ const IndexPage = () => {
             descriptionType
           }
           creators {
+            id
             name
+            givenName
+            familyName
           }
           publicationYear
           publisher
@@ -35,12 +52,12 @@ const IndexPage = () => {
   `
 
   // the hook that calls the query.
-  const works = useQuery(WORKS_QUERY)
+  const worksQuery = useQuery(WORKS_QUERY)
 
   return (
     <Layout title="DataCite Commons Stage">
       <div className="row">
-        <div className="col-md-6 col-md-offset-3 panel-list" id="content">
+        <div className="col-md-8 col-md-offset-3 panel-list" id="content">
           <form className="form-horizontal">
             <div id="search" className="input-group">
               <input name="query" placeholder="Type to search..." className="form-control" type="text" />
@@ -49,9 +66,10 @@ const IndexPage = () => {
               </div>
             </div>
           </form>
+
+          <WorkList workQueryResult={worksQuery?.data?.works || null} />
         </div>
       </div>
-      <WorkList works={works?.data?.works || []} />
     </Layout>
   )
 }
