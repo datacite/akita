@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout/Layout'
 import { Grid, Carousel } from 'react-bootstrap'
 
 const AboutPage: React.FunctionComponent = () => (
