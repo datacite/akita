@@ -1,6 +1,9 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { Navbar, Nav, NavItem, Grid, Row, Col } from 'react-bootstrap'
+import VegaBarChart from './line.js'
+import BarChartRecharts from './bar.js';
+
 
 type Props = {
   title?: string
@@ -39,6 +42,25 @@ const Layout: React.FunctionComponent<Props> = ({
     {children}
 
     <footer className="row footer">
+
+    <Row
+            className="uk-margin-bottom"
+            title="Vega"
+          >
+            <section className="demo demo-nivo uk-margin-bottom">
+              <VegaBarChart />
+            </section>
+          </Row>
+
+
+          <Row
+            className="uk-margin-bottom"
+            title="Recharts"
+          >
+            <section className="demo demo-recharts uk-margin-bottom">
+              <BarChartRecharts />
+            </section>
+          </Row>
       <Grid fluid={true}>
         <Row>
           <Col sm={4} md={3} className="footer-column">
