@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert, Button } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import ContentItem from "../ContentItem/ContentItem"
 import Error from "../Error/Error"
 
@@ -157,7 +157,7 @@ export const Search: React.FunctionComponent<Props> = () => {
 
   const renderResults = () => {
     if (loading) return (
-      <Alert variant="info">
+      <Alert bsStyle="info">
         Loading...
       </Alert>
     )
@@ -200,13 +200,29 @@ export const Search: React.FunctionComponent<Props> = () => {
   }
 
   const renderFacets = () => {
-    if (!data ) return '';
+    if (!data || data.works.totalCount == 0) return '';
 
     return (
       <div>
         <div className="panel panel-transparent">
           <div className="panel-body">
             <div className="edit"></div>
+          </div>
+        </div>
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Publication Year</h4>
+            <ul>
+              {data.works.years.map(facet => (
+                <li key={facet.id}>
+                  <a href="#"><i className='fa fa-square-o'></i></a>
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
+                  <div className="clearfix"/>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
