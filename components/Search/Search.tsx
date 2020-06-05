@@ -166,9 +166,17 @@ export const Search: React.FunctionComponent<Props> = () => {
 
     if (!data ) return '';
 
+    if (data.works.totalCount == 0) return (
+      <Alert bsStyle="warning">
+        No content found.
+      </Alert>
+    )
+
     return (
       <div>
-        <h3 className="member-results">{data.works.totalCount.toLocaleString('en-US')} Results</h3>
+        {data.works.totalCount > 1 &&
+         <h3 className="member-results">{data.works.totalCount.toLocaleString('en-US')} Results</h3>
+        }
 
         {searchResults.map(item => (
           <div key={item.id}>
