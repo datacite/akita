@@ -1,0 +1,14 @@
+.carousel-inner {
+  background-color: white;
+}
+.carousel-indicators li {
+  background-color: #a3acb2;
+}
+.panel-list {
+  margin-top: 20px;
+}
+
+.panel-body h3.member > i {
+  color: #1abc9c;
+  font-size: 100%;
+}
