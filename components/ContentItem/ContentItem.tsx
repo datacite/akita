@@ -39,7 +39,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const creators = !item.creators ? '' : item.creators.map((creator) =>
     creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
   ).join(', ');
-  const title = {__html: item.titles[0].title + ' <span class="small">' + item.types.resourceTypeGeneral + '</span>' }
+  const title = {__html: item.titles[0].title + (item.types.resourceTypeGeneral ? ' <span class="small">' + item.types.resourceTypeGeneral + '</span>' : '') }
   const description = {__html: item.descriptions[0] ? item.descriptions[0].description : '' }
 
   return (
