@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 type Props = {
   title: string;
@@ -9,16 +9,10 @@ type Props = {
 
 const Error: React.FunctionComponent<Props> = ({title, message}) => {
   return (
-    <div className="Error">
-      <h2>{title}</h2>
-      <Grid className="content">
-        <Row>
-          <Col>
-          <p>{message}</p>
-          </Col>
-        </Row>
-      </Grid>
-    </div>
+    <Alert bsStyle="danger">
+      <h4>{title}</h4>
+      <p>{message}</p>
+    </Alert>
   )
 }
 

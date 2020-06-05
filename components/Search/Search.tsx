@@ -162,7 +162,7 @@ export const Search: React.FunctionComponent<Props> = () => {
       </Alert>
     )
 
-    if (error) return <Error title="Something went wrong." message="Unable to load results." />;
+    if (error) return <Error title="An error occured." message={error.message} />;
 
     if (!data ) return '';
 
