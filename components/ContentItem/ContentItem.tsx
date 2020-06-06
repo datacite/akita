@@ -1,7 +1,8 @@
 import * as React from 'react'
-import _ from 'lodash'
+import startCase from 'lodash/startCase'
+import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser'
+import ReactHtmlParser from 'react-html-parser'
 
 type Props = {
   item: ContentItem;
@@ -53,7 +54,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       <h3 className="member">
         {ReactHtmlParser(titleHtml)}
         {item.types.resourceTypeGeneral &&
-          <span className="small"> {_.startCase(item.types.resourceTypeGeneral)}</span>
+          <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
         }
       </h3>
     )
@@ -85,7 +86,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const metadata = () => {
     return (
       <div className="metadata">
-        {item.version ? 'Version ' + item.version + ' of ' : ''}{item.types.resourceType ? _.startCase(item.types.resourceType) : 'Content'} published {item.publicationYear} via {item.publisher}
+        {item.version ? 'Version ' + item.version + ' of ' : ''}{item.types.resourceType ? startCase(item.types.resourceType) : 'Content'} published {item.publicationYear} via {item.publisher}
       </div>
     )
   }
@@ -93,7 +94,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const description = () => {
     if (!item.descriptions[0]) return ''
 
-    const descriptionHtml = _.truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… '})
+    const descriptionHtml = truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… '})
 
     return (
       <div className="description">
