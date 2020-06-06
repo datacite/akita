@@ -1,6 +1,7 @@
 import * as React from 'react'
 import _ from 'lodash'
 import Pluralize from 'react-pluralize'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser'
 
 type Props = {
   item: ContentItem;
@@ -46,10 +47,13 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       <h3 className="member">No Title</h3>
     )
 
+    const titleHtml = item.titles[0].title 
+    
     return (
       <h3 className="member">
-        {item.titles[0].title} {item.types.resourceTypeGeneral &&
-          <span className="small">{item.types.resourceTypeGeneral}</span>
+        {ReactHtmlParser(titleHtml)}
+        {item.types.resourceTypeGeneral &&
+          <span className="small"> {_.startCase(item.types.resourceTypeGeneral)}</span>
         }
       </h3>
     )
@@ -58,11 +62,22 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const creators = () => {
     if (!item.creators) return 'No creators'
 
+    const creatorList = item.creators.reduce( (sum, creator, index, array) => {
+      const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
+      
+      // padding depending on position in creators list
+      if (array.length > index + 2) {
+        return sum + c + ', '
+      } else if (array.length > index + 1) {
+        return sum + c + ' & '
+      } else {
+        return sum + c
+      }
+    }, '')
+
     return (
       <React.Fragment>
-        {item.creators.map((creator) =>
-          creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
-         ).join(', ')}
+        {creatorList}
       </React.Fragment>
     )
   }
@@ -78,9 +93,11 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const description = () => {
     if (!item.descriptions[0]) return ''
 
+    const descriptionHtml = _.truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… '})
+
     return (
       <div className="description">
-        {_.truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… '})}
+        {ReactHtmlParser(descriptionHtml)}
       </div>
     )
   }

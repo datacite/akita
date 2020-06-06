@@ -206,10 +206,12 @@ export const Search: React.FunctionComponent<Props> = () => {
   }
 
   const renderFacets = () => {
-    if (!data || data.works.totalCount == 0) return ''
-
+    if (!data || data.works.totalCount == 0) return (
+      <div className="col-md-3"></div>
+    )
+    
     return (
-      <div>
+      <div className="col-md-3">
         <div className="panel panel-transparent">
           <div className="panel-body">
             <div className="edit"></div>
@@ -269,9 +271,7 @@ export const Search: React.FunctionComponent<Props> = () => {
 
   return (
     <div className="row">
-      <div className="col-md-3">
-        {renderFacets()}
-      </div>
+      {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
         <form className="form-horizontal">
           <div id="search" className="input-group">
