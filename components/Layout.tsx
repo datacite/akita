@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
-import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
+import Header from './Header'
+import Footer from './Footer'
 
 type Props = {
   title: string
@@ -9,7 +9,7 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = process.env.NEXT_PUBLIC_TITLE
+  title
 }) => (
   <div>
     <Head>

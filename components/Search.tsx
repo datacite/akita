@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert } from 'react-bootstrap'
-import ContentItem from "../ContentItem/ContentItem"
-import Error from "../Error/Error"
+import { Alert, Button, InputGroup, FormControl } from 'react-bootstrap'
+import ContentItem from "./ContentItem"
+import Error from "./Error"
 
 type Props = {
 
@@ -74,15 +74,15 @@ export const CONTENT_GQL = gql`
         titles {
           title
         }
-        descriptions {
-          description
-          descriptionType
-        }
         creators {
           id
           name
           givenName
           familyName
+        }
+        descriptions {
+          description
+          descriptionType
         }
         publicationYear
         publisher
@@ -108,6 +108,10 @@ export const Search: React.FunctionComponent<Props> = () => {
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
     setSearchQuery(e.currentTarget.value)
+  }
+
+  const onSearchClear = (e: React.FormEvent<HTMLInputElement>): void => {
+    setSearchQuery('')
   }
 
   const loadMore = (cursor: String) => {
@@ -142,18 +146,17 @@ export const Search: React.FunctionComponent<Props> = () => {
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: ""})
+      try {
+        // only trigger search with at least two characters as input
+        // if (searchQuery.length > 1) {
+        refetch({ query: searchQuery, cursor: ""})
+      } catch(e) {
+        console.log(e)
+      }
     }, 300)
 
-    const results: Content[] = []
-    if (data) {
-      data.works.nodes.map(item => {
-        results.push(item)
-
-        return results
-        }
-      )
-    }
+    let results: Content[] = []
+    if (data) results = data.works.nodes
     setSearchResults(results);
 
     return () => clearTimeout(typingDelay)
@@ -274,12 +277,23 @@ export const Search: React.FunctionComponent<Props> = () => {
       {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
         <form className="form-horizontal">
-          <div id="search" className="input-group">
-            <input name="query" onChange={onSearchChange} value={searchQuery} placeholder="Type to search..." className="form-control" type="text" />
-            <div className="input-group-btn">
-              <button className="btn btn-primary hidden-xs" type="submit">Search</button>
-            </div>
-          </div>
+          <InputGroup id="search">
+            <FormControl
+              type="text"
+              name="query"
+              value={searchQuery}
+              placeholder="Type to search..."
+              onChange={onSearchChange}
+            />
+            {searchQuery &&
+              <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
+                <i className='fa fa-times-circle'></i>
+              </span>
+            }
+            <InputGroup.Button>
+              <Button bsStyle="primary" type="submit">Search</Button>
+            </InputGroup.Button>
+          </InputGroup>
         </form>
 
         {renderResults()}

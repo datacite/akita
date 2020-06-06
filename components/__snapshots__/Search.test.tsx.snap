@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col-md-3"
+    />
+    <div
+      class="col-md-9 panel-list"
+      id="content"
+    >
+      <form
+        class="form-horizontal"
+      >
+        <span
+          class="input-group"
+          id="search"
+        >
+          <input
+            class="form-control"
+            name="query"
+            placeholder="Type to search..."
+            type="text"
+            value=""
+          />
+          
+          <span
+            class="input-group-btn"
+          >
+            <button
+              class="btn btn-primary"
+              type="submit"
+            >
+              Search
+            </button>
+          </span>
+        </span>
+      </form>
+      <div
+        class="alert alert-info"
+        role="alert"
+      >
+        Loading...
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders 2`] = `
+<div>
+  <div
+    class="row"
+  >
+    <div
+      class="col-md-3"
+    />
+    <div
+      class="col-md-9 panel-list"
+      id="content"
+    >
+      <form
+        class="form-horizontal"
+      >
+        <span
+          class="input-group"
+          id="search"
+        >
+          <input
+            class="form-control"
+            name="query"
+            placeholder="Type to search..."
+            type="text"
+            value=""
+          />
+          
+          <span
+            class="input-group-btn"
+          >
+            <button
+              class="btn btn-primary"
+              type="submit"
+            >
+              Search
+            </button>
+          </span>
+        </span>
+      </form>
+      <div
+        class="alert alert-info"
+        role="alert"
+      >
+        Loading...
+      </div>
+    </div>
+  </div>
+</div>
+`;
