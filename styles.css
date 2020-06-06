@@ -12,3 +12,12 @@
   color: #1abc9c;
   font-size: 100%;
 }
+
+.metrics-counter i.fa {
+  line-height: 25px;
+  margin-right: 3px;
+}
+
+.metrics-counter i {
+  margin-right: 1.5em;
+}

@@ -10,7 +10,7 @@ type Props = {
 };
 
 interface ContentNode {
-  node: ContentQueryItem
+  node: ContentItem
 }
 
 interface ContentFacet {
@@ -29,7 +29,7 @@ interface ContentQueryData {
       __typename: String;
       nodes: ContentNode[];
       pageInfo: PageInfo;
-      years: ContentFacet[];
+      published: ContentFacet[];
       resourceTypes: ContentFacet[];
       registrationAgencies: ContentFacet[];
       totalCount: Number;
@@ -54,7 +54,7 @@ export const CONTENT_GQL = gql`
         title
         count
       }
-      years {
+      published {
         id
         title
         count
@@ -86,14 +86,18 @@ export const CONTENT_GQL = gql`
         }
         publicationYear
         publisher
+        version
+        citationCount
+        viewCount
+        downloadCount
       }
     }
   }
 `
 
 export const Search: React.FunctionComponent<Props> = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState<Content[]>([]);
+  const [searchQuery, setSearchQuery] = React.useState("")
+  const [searchResults, setSearchResults] = React.useState<Content[]>([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
@@ -103,21 +107,21 @@ export const Search: React.FunctionComponent<Props> = () => {
   })
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    setSearchQuery(e.currentTarget.value);
-  };
+    setSearchQuery(e.currentTarget.value)
+  }
 
   const loadMore = (cursor: String) => {
     fetchMore(
       { variables: { cursor: cursor },
       updateQuery: (previousResult: ContentQueryData, { fetchMoreResult }) => {
-        if (!fetchMoreResult) { return previousResult; }
+        if (!fetchMoreResult) { return previousResult }
 
-        const newNodes = fetchMoreResult.works.nodes;
-        const pageInfo = fetchMoreResult.works.pageInfo;
-        const totalCount = fetchMoreResult.works.totalCount;
-        const years = fetchMoreResult.works.years;
-        const resourceTypes = fetchMoreResult.works.resourceTypes;
-        const registrationAgencies = fetchMoreResult.works.registrationAgencies;
+        const newNodes = fetchMoreResult.works.nodes
+        const pageInfo = fetchMoreResult.works.pageInfo
+        const totalCount = fetchMoreResult.works.totalCount
+        const published = fetchMoreResult.works.published
+        const resourceTypes = fetchMoreResult.works.resourceTypes
+        const registrationAgencies = fetchMoreResult.works.registrationAgencies
 
         return newNodes.length
           ? {
@@ -126,12 +130,12 @@ export const Search: React.FunctionComponent<Props> = () => {
                 nodes: [...previousResult.works.nodes, ...newNodes],
                 pageInfo,
                 totalCount,
-                years,
+                published,
                 resourceTypes,
                 registrationAgencies
               }
           }
-          : previousResult;
+          : previousResult
         }
       })
   }
@@ -141,19 +145,19 @@ export const Search: React.FunctionComponent<Props> = () => {
       refetch({ query: searchQuery, cursor: ""})
     }, 300)
 
-    const results: Content[] = [];
+    const results: Content[] = []
     if (data) {
       data.works.nodes.map(item => {
-        results.push(item);
+        results.push(item)
 
-        return results;
+        return results
         }
       )
     }
     setSearchResults(results);
 
     return () => clearTimeout(typingDelay)
-  }, [searchQuery, data, refetch]);
+  }, [searchQuery, data, refetch])
 
   const renderResults = () => {
     if (loading) return (
@@ -162,9 +166,11 @@ export const Search: React.FunctionComponent<Props> = () => {
       </Alert>
     )
 
-    if (error) return <Error title="An error occured." message={error.message} />;
+    if (error) return (
+      <Error title="An error occured." message={error.message} />
+    )
 
-    if (!data ) return '';
+    if (!data ) return ''
 
     if (data.works.totalCount == 0) return (
       <Alert bsStyle="warning">
@@ -200,7 +206,7 @@ export const Search: React.FunctionComponent<Props> = () => {
   }
 
   const renderFacets = () => {
-    if (!data || data.works.totalCount == 0) return '';
+    if (!data || data.works.totalCount == 0) return ''
 
     return (
       <div>
@@ -214,7 +220,7 @@ export const Search: React.FunctionComponent<Props> = () => {
           <div className="panel-body">
             <h4>Publication Year</h4>
             <ul>
-              {data.works.years.map(facet => (
+              {data.works.published.map(facet => (
                 <li key={facet.id}>
                   <a href="#"><i className='fa fa-square-o'></i></a>
                   <div className="facet-title">{facet.title}</div>
