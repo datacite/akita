@@ -13,7 +13,11 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
+    "@apollo/react-testing": "^3.1.4",
+    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/user-event": "^11.2.1",
     "@types/lodash": "^4.14.154",
+    "@types/react-html-parser": "^2.0.1",
     "apollo-boost": "^0.4.9",
     "graphql": "^15.0.0",
     "next": "^9.4.1",
@@ -26,12 +30,11 @@
     "react-pluralize": "^1.6.3"
   },
   "devDependencies": {
-    "@types/enzyme": "^3.10.5",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/jest": "^25.2.2",
+    "@testing-library/react": "^10.2.1",
+    "@types/jest": "^25.2.3",
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
-    "@types/react-bootstrap": "^0.32.21",
+    "@types/react-bootstrap": "0.32.22",
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
@@ -40,8 +43,6 @@
     "babel-jest": "^26.0.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
@@ -49,7 +50,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "jest": "^26.0.1",
-    "ts-jest": "^26.0.0",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.2"
   },
   "license": "MIT"
