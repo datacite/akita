@@ -17,7 +17,6 @@ const Layout: React.FunctionComponent<Props> = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet" />
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type='text/css' />
       <link href="https://assets.datacite.org/stylesheets/doi.css?version=3.8.0" rel='stylesheet' type='text/css' />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>

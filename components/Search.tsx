@@ -1,7 +1,11 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
 import { Alert, Button, InputGroup, FormControl } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import ContentItem from "./ContentItem"
 import Error from "./Error"
 
@@ -214,7 +218,7 @@ export const Search: React.FunctionComponent<Props> = () => {
     )
     
     return (
-      <div className="col-md-3">
+      <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
           <div className="panel-body">
             <div className="edit"></div>
@@ -227,7 +231,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
               {data.works.published.map(facet => (
                 <li key={facet.id}>
-                  <a href="#"><i className='fa fa-square-o'></i></a>
+                  <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                   <div className="clearfix"/>
@@ -243,7 +247,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
               {data.works.resourceTypes.map(facet => (
                 <li key={facet.id}>
-                  <a href="#"><i className='fa fa-square-o'></i></a>
+                  <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                   <div className="clearfix"/>
@@ -259,7 +263,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
             {data.works.registrationAgencies.map(facet => (
               <li key={facet.id}>
-                <a href="#"><i className='fa fa-square-o'></i></a>
+                <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
                 <div className="facet-title">{facet.title}</div>
                 <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                 <div className="clearfix"/>
@@ -287,11 +291,11 @@ export const Search: React.FunctionComponent<Props> = () => {
             />
             {searchQuery &&
               <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
-                <i className='fa fa-times-circle'></i>
+                <FontAwesomeIcon icon={faTimesCircle}/>
               </span>
             }
             <InputGroup.Button>
-              <Button bsStyle="primary" type="submit">Search</Button>
+              <Button bsStyle="primary" type="submit"><FontAwesomeIcon icon={faSearch}/></Button>
             </InputGroup.Button>
           </InputGroup>
         </form>

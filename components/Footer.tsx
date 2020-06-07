@@ -1,10 +1,7 @@
 import * as React from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faEnvelope,
-  faBlog
-} from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import { faLinkedin, faGithub, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {

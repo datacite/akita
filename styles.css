@@ -36,3 +36,19 @@ h3.popover-title {
   background: #F7F9F9;
   font-size: 21px;
 }
+
+#search span.input-group-btn .btn {
+  width: 48px;
+  padding-top: 9px;
+  padding-left: 9px;
+}
+
+#search span#search-clear {
+  right: 60px;
+  top: 11px;
+  font-size: 16px;
+}
+
+.btn.navbar-text {
+  margin-top: 20px;
+}

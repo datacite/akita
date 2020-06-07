@@ -8,12 +8,14 @@ import {
   faQuoteLeft, 
   faInfoCircle, 
   faShareAlt, 
-  faBookmark, 
   faExternalLinkAlt,
-  faEye,
   faDownload,
-  faSave
+  faSave,
+  faBookmark
 } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faEye
+} from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 
