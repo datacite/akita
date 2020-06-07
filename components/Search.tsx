@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert, Button, InputGroup, FormControl } from 'react-bootstrap'
+import { Alert, FormControl, Panel } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
@@ -100,21 +100,27 @@ export const CONTENT_GQL = gql`
 `
 
 export const Search: React.FunctionComponent<Props> = () => {
-  const [searchQuery, setSearchQuery] = React.useState("")
+  const router = useRouter()
+  // set initial searchQuery to query parameter in route
+  const [searchQuery, setSearchQuery] = React.useState(router.query.query || "")
   const [searchResults, setSearchResults] = React.useState<Content[]>([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: "", cursor: ""
+      variables: { query: "", cursor: "" }
     }
-  })
+  )
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    // sync searchQuery and query parameter in route
+    router.push('/?query=' + e.currentTarget.value)
     setSearchQuery(e.currentTarget.value)
   }
 
-  const onSearchClear = (e: React.FormEvent<HTMLInputElement>): void => {
+  const onSearchClear = () => {
+    // sync searchQuery and query parameter in route
+    router.push('/')
     setSearchQuery('')
   }
 
@@ -152,16 +158,23 @@ export const Search: React.FunctionComponent<Props> = () => {
     const typingDelay = setTimeout(() => {
       try {
         // only trigger search with at least two characters as input
-        // if (searchQuery.length > 1) {
-        refetch({ query: searchQuery, cursor: ""})
+        // otherwise reset search results
+        if (searchQuery.length > 0) {
+          refetch({ query: searchQuery, cursor: ""})
+        } else {
+          setSearchResults([])
+        }
       } catch(e) {
         console.log(e)
       }
     }, 300)
 
     let results: Content[] = []
-    if (data) results = data.works.nodes
-    setSearchResults(results);
+
+    if (searchQuery.length > 0) {
+      if (data) results = data.works.nodes
+    }
+    setSearchResults(results)
 
     return () => clearTimeout(typingDelay)
   }, [searchQuery, data, refetch])
@@ -177,9 +190,21 @@ export const Search: React.FunctionComponent<Props> = () => {
       <Error title="An error occured." message={error.message} />
     )
 
-    if (!data ) return ''
+    if (!data) return ''
 
-    if (data.works.totalCount == 0) return (
+    if (searchQuery.length == 0) return (
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          <p>DataCite Commons is a web interface where you can explore the complete 
+          collection of publicly available DOIs from DOI registation agencies DataCite
+          and Crossref. You can search, filter, cite results, and more!</p>
+          <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
+          <p><a href="https://datacite.org/roadmap.html" target="_blank">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank">Information in DataCite Support</a></p>
+        </div>
+      </div>
+    )
+
+    if (searchResults.length == 0) return (
       <Alert bsStyle="warning">
         No content found.
       </Alert>
@@ -187,7 +212,7 @@ export const Search: React.FunctionComponent<Props> = () => {
 
     return (
       <div>
-        {data.works.totalCount > 1 &&
+        {searchResults.length > 1 &&
          <h3 className="member-results">{data.works.totalCount.toLocaleString('en-US')} Results</h3>
         }
 
@@ -213,7 +238,7 @@ export const Search: React.FunctionComponent<Props> = () => {
   }
 
   const renderFacets = () => {
-    if (!data || data.works.totalCount == 0) return (
+    if (!data || searchResults.length == 0) return (
       <div className="col-md-3"></div>
     )
     
@@ -280,24 +305,22 @@ export const Search: React.FunctionComponent<Props> = () => {
     <div className="row">
       {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
-        <form className="form-horizontal">
-          <InputGroup id="search">
-            <FormControl
-              type="text"
-              name="query"
-              value={searchQuery}
-              placeholder="Type to search..."
-              onChange={onSearchChange}
-            />
-            {searchQuery &&
-              <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
-                <FontAwesomeIcon icon={faTimesCircle}/>
-              </span>
-            }
-            <InputGroup.Button>
-              <Button bsStyle="primary" type="submit"><FontAwesomeIcon icon={faSearch}/></Button>
-            </InputGroup.Button>
-          </InputGroup>
+        <form className="form-horizontal search">
+          <FormControl
+            type="text"
+            name="query"
+            value={searchQuery}
+            placeholder="Type to search..."
+            onChange={onSearchChange}
+          />
+          <span id="search-icon" title="Search" aria-label="Search">
+            <FontAwesomeIcon icon={faSearch}/>
+          </span>
+          {searchQuery &&
+            <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
+              <FontAwesomeIcon icon={faTimesCircle}/>
+            </span>
+          }
         </form>
 
         {renderResults()}

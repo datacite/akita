@@ -37,16 +37,42 @@ h3.popover-title {
   font-size: 21px;
 }
 
-#search span.input-group-btn .btn {
-  width: 48px;
-  padding-top: 9px;
-  padding-left: 9px;
+.form-horizontal.search {
+  max-width: 100%;
 }
 
-#search span#search-clear {
-  right: 60px;
-  top: 11px;
+.form-horizontal.search input[name="query"] {
+  z-index: 1;
+  height: 45px;
+  border-width: 1px;
+}
+
+.form-horizontal.search input[name="query"]:focus {
+  border-color: #1abc9c;
+}
+
+.form-horizontal.search #search-clear {
+  z-index: 3;
+  color: #cdd2d5;
+  position: absolute;
+  right: 25px;
+  top: 12px;
   font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-horizontal.search input.form-control {
+  text-indent: 24px;
+}
+
+.form-horizontal.search #search-icon {
+  z-index: 3;
+  color: #cdd2d5;
+  position: absolute;
+  left: 25px;
+  top: 12px;
+  text-decoration: none;
 }
 
 .btn.navbar-text {
