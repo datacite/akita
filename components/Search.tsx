@@ -188,9 +188,9 @@ export const Search: React.FunctionComponent<Props> = () => {
         }
 
         {searchResults.map(item => (
-          <div key={item.id}>
+          <React.Fragment key={item.id}>
             <ContentItem item={item} />
-          </div>
+          </React.Fragment>
         ))}
 
         {data.works.pageInfo.hasNextPage &&

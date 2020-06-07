@@ -9,7 +9,8 @@
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "test": "jest",
     "test:watch": "jest — watch",
-    "test:coverage": "jest — coverage"
+    "test:coverage": "jest — coverage",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -18,6 +19,7 @@
     "@testing-library/user-event": "^11.2.1",
     "@types/lodash": "^4.14.154",
     "@types/react-html-parser": "^2.0.1",
+    "@types/testing-library__cypress": "^5.0.5",
     "apollo-boost": "^0.4.9",
     "graphql": "^15.0.0",
     "next": "^9.4.1",
@@ -43,6 +45,8 @@
     "babel-jest": "^26.0.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "cypress": "^4.7.0",
+    "cypress-react-unit-test": "^4.4.2",
     "eslint": "^7.0.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",

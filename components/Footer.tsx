@@ -7,7 +7,7 @@ const Footer = () => {
       <Grid fluid={true}>
         <Row>
           <Col sm={4} md={3} className="footer-column">
-            <h4>About DataCite</h4>
+            <h4 data-cy="about">About DataCite</h4>
             <ul>
               <li><a href="https://www.datacite.org/mission.html">What we do</a></li>
               <li><a href="https://www.datacite.org/governance.html">Governance</a></li>

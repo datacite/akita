@@ -13,10 +13,10 @@ const Header: React.FunctionComponent<Props> = ({ title }: title) => (
       </Navbar.Brand>
     </Navbar.Header>
     <Nav pullRight>
-      <NavItem eventKey={1} href="/about">
+      <NavItem eventKey={1} data-cy="about" href="/about">
         About
       </NavItem>
-      <NavItem eventKey={2} href="https://support.datacite.org/">
+      <NavItem eventKey={2} data-cy="support" href="https://support.datacite.org/">
         Support
     </NavItem>
     </Nav>

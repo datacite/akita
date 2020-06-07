@@ -77,9 +77,9 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     }, '')
 
     return (
-      <React.Fragment>
+      <div className="creators">
         {creatorList}
-      </React.Fragment>
+      </div>
     )
   }
 
@@ -128,7 +128,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   }
 
   return (
-    <div key={item.id} className="panel panel-transparent">
+    <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
         {title()}
         {creators()}
