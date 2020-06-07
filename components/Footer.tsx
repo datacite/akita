@@ -1,5 +1,11 @@
 import * as React from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faEnvelope,
+  faBlog
+} from '@fortawesome/free-solid-svg-icons'
+import { faLinkedin, faGithub, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
   return (
@@ -49,19 +55,22 @@ const Footer = () => {
           <Col sm={4} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
             <a href='mailto:support@datacite.org' className="share">
-              <i className='fa fa-at'></i>
+              <FontAwesomeIcon icon={faEnvelope}/>
             </a>
             <a href='https://blog.datacite.org' className="share">
-              <i className='fa fa-rss'></i>
+              <FontAwesomeIcon icon={faBlog}/>
             </a>
             <a href='https://twitter.com/datacite' className="share">
-              <i className='fa fa-twitter'></i>
+              <FontAwesomeIcon icon={faTwitter}/>
             </a>
             <a href='https://github.com/datacite/datacite' className="share">
-              <i className='fa fa-github'></i>
+              <FontAwesomeIcon icon={faGithub}/>
+            </a>
+            <a href='https://www.youtube.com/channel/UCVsSDZhIN_WbnD_v5o9eB_A' className="share">
+              <FontAwesomeIcon icon={faYoutube}/>
             </a>
             <a href='https://www.linkedin.com/company/datacite' className="share">
-              <i className='fa fa-linkedin'></i>
+              <FontAwesomeIcon icon={faLinkedin}/>
             </a>
             <ul className="share">
               <li><a href="https://www.datacite.org/terms.html">Terms and conditions</a></li>

@@ -1,8 +1,20 @@
 import * as React from 'react'
-import { Modal, Popover, OverlayTrigger } from 'react-bootstrap'
+import { Popover, OverlayTrigger } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { 
+  faQuoteLeft, 
+  faInfoCircle, 
+  faShareAlt, 
+  faBookmark, 
+  faExternalLinkAlt,
+  faEye,
+  faDownload,
+  faSave
+} from '@fortawesome/free-solid-svg-icons'
+import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 
 type Props = {
@@ -108,7 +120,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     if (item.citationCount + item.viewCount + item.downloadCount == 0) {
       return (
         <div className="metrics-counter">
-          <i className="fa fa-info-circle"></i> <i>No citations, views or downloads reported.</i>
+          <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
         </div>
       )
     }
@@ -116,13 +128,13 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
         {item.citationCount > 0 &&
-          <i><i className="fa fa-quote-right"></i> <Pluralize singular={'Citation'} count={item.citationCount} /> </i>
+          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={item.citationCount} /> </i>
         }
         {item.viewCount > 0 &&
-          <i><i className="fa fa-eye"></i> <Pluralize singular={'View'} count={item.viewCount} /> </i>
+          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={item.viewCount} /> </i>
         }
         {item.downloadCount > 0 &&
-          <i><i className="fa fa-download"></i> <Pluralize singular={'Download'} count={item.downloadCount} /> </i>
+          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={item.downloadCount} /> </i>
         }
       </div>
     )  
@@ -141,14 +153,20 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   )
 
   const cite = (
-    <Popover id="cite" title="Formatted Citation">
+    <Popover id="cite" title="Download Metadata">
+      Downloading metadata in various formats will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+    </Popover>
+  )
+
+  const save = (
+    <Popover id="save" title="Formatted Citation">
       Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
     </Popover>
   )
 
   const claim = (
     <Popover id="claim" title="Claim to ORCID Record">
-      Claiming to your ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Claiming to an ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
     </Popover>
   )
 
@@ -162,19 +180,22 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
         {metricsCounter()}
       </div>
       <div className="panel-footer">
-        <a href={item.id}><i className='fa fa-external-link'></i> {item.id}</a>
+        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
         <span className="actions">
-          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark"><i className='fa fa-bookmark'></i> Bookmark</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={share}>
-            <span className="share"><i className='fa fa-share-alt'></i> Share</span>
+          <OverlayTrigger trigger="click" placement="top" overlay={save}>
+            <span className="save"><FontAwesomeIcon icon={faSave}/> Save</span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={cite}>
-            <span className="cite"><i className='fa fa-quote-left'></i> Cite</span>
+            <span className="cite"><FontAwesomeIcon icon={faQuoteLeft}/> Cite</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={share}>
+            <span className="share"><FontAwesomeIcon icon={faShareAlt}/> Share</span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-            <span className="claim"><img src="https://assets.datacite.org/images/orcid_16x16.gif" /> Claim</span>
+            <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
         </OverlayTrigger>
         </span>
       </div>
