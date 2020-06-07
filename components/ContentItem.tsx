@@ -152,14 +152,14 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     </Popover>
   )
 
-  const cite = (
-    <Popover id="cite" title="Download Metadata">
-      Downloading metadata in various formats will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+  const save = (
+    <Popover id="save" title="Download Metadata">
+      Downloading metadata will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
     </Popover>
   )
 
-  const save = (
-    <Popover id="save" title="Formatted Citation">
+  const cite = (
+    <Popover id="cite" title="Formatted Citation">
       Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
     </Popover>
   )
