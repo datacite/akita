@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Modal, Popover, OverlayTrigger } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
@@ -127,6 +128,30 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     )  
   }
 
+  const bookmark = (
+    <Popover id="bookmark" title="Bookmarking">
+      Bookmarking on this site will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+    </Popover>
+  )
+
+  const share = (
+    <Popover id="share" title="Sharing via Social Media">
+      Sharing via social media platforms will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+    </Popover>
+  )
+
+  const cite = (
+    <Popover id="cite" title="Formatted Citation">
+      Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+    </Popover>
+  )
+
+  const claim = (
+    <Popover id="claim" title="Claim to ORCID Record">
+      Claiming to your ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+    </Popover>
+  )
+
   return (
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
@@ -138,6 +163,20 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       </div>
       <div className="panel-footer">
         <a href={item.id}><i className='fa fa-external-link'></i> {item.id}</a>
+        <span className="actions">
+          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+            <span className="bookmark"><i className='fa fa-bookmark'></i> Bookmark</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={share}>
+            <span className="share"><i className='fa fa-share-alt'></i> Share</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={cite}>
+            <span className="cite"><i className='fa fa-quote-left'></i> Cite</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={claim}>
+            <span className="claim"><img src="https://assets.datacite.org/images/orcid_16x16.gif" /> Claim</span>
+        </OverlayTrigger>
+        </span>
       </div>
       <br/>
     </div>
