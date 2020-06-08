@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert } from 'react-bootstrap'
+import { Alert, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
@@ -127,6 +127,10 @@ export const Search: React.FunctionComponent<Props> = () => {
     setSearchQuery('')
   }
 
+  const onNextPage = () => {
+    loadMore(data.works.pageInfo.endCursor)
+  }
+
   const loadMore = (cursor: String) => {
     fetchMore(
       { variables: { cursor: cursor },
@@ -231,7 +235,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <div className="pagination-centered">
               <ul className="pagination">
                 <li className="active next">
-                  <a href="#" onClick={() => loadMore(data.works.pageInfo.endCursor)}>Next Page</a>
+                  <Button bsStyle="warning" onClick={onNextPage}>Next Page</Button>
                 </li>
               </ul>
             </div>
