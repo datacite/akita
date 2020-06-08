@@ -42,7 +42,7 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
-  - yarn install --non-interactive
+  - yarn install --non-interactive --frozen-lockfile
   - sudo pip install awscli
 
 script:
