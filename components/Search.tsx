@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert, FormControl } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
@@ -111,7 +111,7 @@ export const Search: React.FunctionComponent<Props> = () => {
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: "", cursor: "", published: "", resourceTypeId: "" }
+      variables: { query: "", cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string }
     }
   )
 
@@ -122,7 +122,7 @@ export const Search: React.FunctionComponent<Props> = () => {
   }
 
   const onSearchClear = () => {
-    // sync searchQuery and query parameter in route
+    // reset searchQuery and sync with query parameter in route
     router.push('/')
     setSearchQuery('')
   }
@@ -160,10 +160,10 @@ export const Search: React.FunctionComponent<Props> = () => {
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
       try {
-        // only trigger search with at least two characters as input
+        // only trigger search with at least one character as input
         // otherwise reset search results
         if (searchQuery.length > 0) {
-          refetch({ query: searchQuery, cursor: "", published: "", resourceTypeId: ""})
+          refetch({ query: searchQuery, cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string})
         } else {
           setSearchResults([])
         }
@@ -255,7 +255,7 @@ export const Search: React.FunctionComponent<Props> = () => {
       if (params.get(param) == value) {
         // if param is present, delete from query and use checked icon
         params.delete(param)
-        url += params.toString() 
+        url += params.toString()
         return <Link href={url}><a><FontAwesomeIcon icon={faCheckSquare}/> </a></Link>
       } else {
         // otherwise replace param with new value and use unchecked icon
