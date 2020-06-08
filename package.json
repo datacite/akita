@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest — watch",
     "test:coverage": "jest — coverage",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -34,7 +35,8 @@
     "react-bootstrap": "0.33.1",
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2",
-    "react-pluralize": "^1.6.3"
+    "react-pluralize": "^1.6.3",
+    "wait-on": "^5.0.1"
   },
   "devDependencies": {
     "@testing-library/react": "^10.2.1",

@@ -30,7 +30,9 @@ install:
   - sudo pip install awscli
 
 script:
-  - yarn lint
+  - yarn build
+  - yarn start & wait-on http://localhost:3000
+  - yarn cypress:run
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
