@@ -18,11 +18,6 @@ cache:
   directories:
     - ~/.npm
     - ~/.cache
-    - /home/travis/.cache/Cypress
-  override:
-    - npm ci
-    - npm run cy:verify
-    - npm run cy:info
 
 before_install:
   - set -e
