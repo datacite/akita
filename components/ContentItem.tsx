@@ -144,31 +144,31 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
 
   const bookmark = (
     <Popover id="bookmark" title="Bookmarking">
-      Bookmarking on this site will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Bookmarking on this site will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
   const share = (
     <Popover id="share" title="Sharing via Social Media">
-      Sharing via social media will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Sharing via social media will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
   const save = (
     <Popover id="save" title="Download Metadata">
-      Downloading metadata will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Downloading metadata will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
   const cite = (
     <Popover id="cite" title="Formatted Citation">
-      Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
   const claim = (
     <Popover id="claim" title="Claim to ORCID Record">
-      Claiming to an ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Claiming to an ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 

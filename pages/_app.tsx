@@ -2,6 +2,7 @@ import React from "react"
 import App from "next/app"
 import { ApolloProvider } from "@apollo/react-hooks"
 import withApollo from "../hooks/withApollo"
+// eslint-disable-next-line no-unused-vars
 import { ApolloClient, NormalizedCacheObject } from "apollo-boost"
 
 // properly handle fontawesome icons

@@ -191,7 +191,7 @@ export const Search: React.FunctionComponent<Props> = () => {
           collection of publicly available DOIs from DOI registation agencies DataCite
           and Crossref. You can search, filter, cite results, and more!</p>
           <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
-          <p><a href="https://datacite.org/roadmap.html" target="_blank">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank">Information in DataCite Support</a></p>
+          <p><a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
         </div>
       </div>
     )

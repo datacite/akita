@@ -13,7 +13,8 @@ describe('Layout Component', () => {
   })
 
   it('children', () => {
-    mount(<Layout children={'Bla bla'}/>)
+    const children= 'Bla bla'
+    mount(<Layout>{children}</Layout>)
     cy.get('.container-fluid')
       .contains('Bla bla')
       .should('be.visible')
