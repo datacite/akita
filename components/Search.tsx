@@ -2,10 +2,11 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import { Alert, FormControl, Panel } from 'react-bootstrap'
+import { Alert, FormControl } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { faSquare } from '@fortawesome/free-regular-svg-icons'
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
+import Link from 'next/link'
 import ContentItem from "./ContentItem"
 import Error from "./Error"
 
@@ -46,8 +47,8 @@ interface ContentQueryVar {
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String!, $cursor: String) {
-    works(first: 25, query: $query, after: $cursor) {
+  query getContentQuery($query: String!, $cursor: String, $published: String, $resourceTypeId: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId) {
       totalCount
       pageInfo {
         endCursor
@@ -108,7 +109,7 @@ export const Search: React.FunctionComponent<Props> = () => {
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: "", cursor: "" }
+      variables: { query: "", cursor: "", published: "", resourceTypeId: "" }
     }
   )
 
@@ -180,6 +181,19 @@ export const Search: React.FunctionComponent<Props> = () => {
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {
+    if (searchQuery.length == 0) return (
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          <h3 className="member">Introduction</h3>
+          <p>DataCite Commons is a web interface where you can explore the complete 
+          collection of publicly available DOIs from DOI registation agencies DataCite
+          and Crossref. You can search, filter, cite results, and more!</p>
+          <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
+          <p><a href="https://datacite.org/roadmap.html" target="_blank">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank">Information in DataCite Support</a></p>
+        </div>
+      </div>
+    )
+
     if (loading) return (
       <Alert bsStyle="info">
         Loading...
@@ -191,18 +205,6 @@ export const Search: React.FunctionComponent<Props> = () => {
     )
 
     if (!data) return ''
-
-    if (searchQuery.length == 0) return (
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          <p>DataCite Commons is a web interface where you can explore the complete 
-          collection of publicly available DOIs from DOI registation agencies DataCite
-          and Crossref. You can search, filter, cite results, and more!</p>
-          <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
-          <p><a href="https://datacite.org/roadmap.html" target="_blank">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank">Information in DataCite Support</a></p>
-        </div>
-      </div>
-    )
 
     if (searchResults.length == 0) return (
       <Alert bsStyle="warning">
@@ -241,7 +243,25 @@ export const Search: React.FunctionComponent<Props> = () => {
     if (!data || searchResults.length == 0) return (
       <div className="col-md-3"></div>
     )
-    
+
+    function facetLink(param: string, value: string) {
+      let url = '/?'
+      // get current query parameters from next router
+      let params = new URLSearchParams(router.query)
+
+      if (params.get(param) == value) {
+        // if param is present, delete from query and use checked icon
+        params.delete(param)
+        url += params.toString() 
+        return <Link href={url}><a><FontAwesomeIcon icon={faCheckSquare}/> </a></Link>
+      } else {
+        // otherwise replace param with new value and use unchecked icon
+        params.set(param, value)
+        url += params.toString() 
+        return <Link href={url}><a><FontAwesomeIcon icon={faSquare}/> </a></Link>
+      }
+    }
+
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -256,7 +276,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
               {data.works.published.map(facet => (
                 <li key={facet.id}>
-                  <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
+                  {facetLink('published', facet.id)}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                   <div className="clearfix"/>
@@ -272,7 +292,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
               {data.works.resourceTypes.map(facet => (
                 <li key={facet.id}>
-                  <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
+                  {facetLink('resource-type', facet.id)}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                   <div className="clearfix"/>
@@ -288,7 +308,7 @@ export const Search: React.FunctionComponent<Props> = () => {
             <ul>
             {data.works.registrationAgencies.map(facet => (
               <li key={facet.id}>
-                <a href="#"><FontAwesomeIcon icon={faSquare}/></a>
+                {facetLink('registration-agency', facet.id)}
                 <div className="facet-title">{facet.title}</div>
                 <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                 <div className="clearfix"/>
