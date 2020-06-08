@@ -28,8 +28,12 @@
   cursor: pointer;
 }
 
+.panel-footer a {
+  margin-right: 3em;
+}
+
 .panel-footer .actions {
-  margin-left: 3em;
+  white-space: pre;
 }
 
 h3.popover-title {

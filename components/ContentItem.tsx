@@ -150,7 +150,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
 
   const share = (
     <Popover id="share" title="Sharing via Social Media">
-      Sharing via social media platforms will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
+      Sharing via social media will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank">Provide input</a>
     </Popover>
   )
 
@@ -190,11 +190,11 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
           <OverlayTrigger trigger="click" placement="top" overlay={cite}>
             <span className="cite"><FontAwesomeIcon icon={faQuoteLeft}/> Cite</span>
           </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
-          </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={share}>
             <span className="share"><FontAwesomeIcon icon={faShareAlt}/> Share</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
             <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
