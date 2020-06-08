@@ -1,10 +1,10 @@
-import React from 'react';
-import { Alert } from 'react-bootstrap';
+import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 type Props = {
-  title: string;
-  message: string;
-};
+  title: string
+  message: string
+}
 
 const Error: React.FunctionComponent<Props> = ({title, message}) => {
   return (
@@ -15,4 +15,4 @@ const Error: React.FunctionComponent<Props> = ({title, message}) => {
   )
 }
 
-export default Error;
+export default Error

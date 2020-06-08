@@ -12,7 +12,7 @@ import Error from "./Error"
 
 type Props = {
 
-};
+}
 
 interface ContentNode {
   node: ContentItem
@@ -25,25 +25,27 @@ interface ContentFacet {
 }
 
 interface PageInfo {
-  endCursor: string;
-  hasNextPage: boolean;
+  endCursor: string
+  hasNextPage: boolean
 }
 
 interface ContentQueryData {
   works: {
-      __typename: String;
-      nodes: ContentNode[];
-      pageInfo: PageInfo;
-      published: ContentFacet[];
-      resourceTypes: ContentFacet[];
-      registrationAgencies: ContentFacet[];
-      totalCount: Number;
+      __typename: String
+      nodes: ContentNode[]
+      pageInfo: PageInfo
+      published: ContentFacet[]
+      resourceTypes: ContentFacet[]
+      registrationAgencies: ContentFacet[]
+      totalCount: Number
   },
 }
 
 interface ContentQueryVar {
-  query: string;
-  cursor: string;
+  query: string
+  cursor: string
+  published: string
+  resourceTypeId: string
 }
 
 export const CONTENT_GQL = gql`
@@ -349,4 +351,4 @@ export const Search: React.FunctionComponent<Props> = () => {
   )
 }
 
-export default Search;
+export default Search

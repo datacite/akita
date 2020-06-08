@@ -20,13 +20,13 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 
 type Props = {
-  item: ContentItem;
-};
+  item: ContentItem
+}
 
 interface ContentItem {
-  id: string;
-  doi: string;
-  url: string;
+  id: string
+  doi: string
+  url: string
   types: {
     resourceTypeGeneral: string
     resourceType: string
