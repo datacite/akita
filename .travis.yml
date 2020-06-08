@@ -5,8 +5,23 @@ node_js:
 
 sudo: required
 
+# if using Ubuntu 16 need this library
+# https://github.com/cypress-io/cypress-documentation/pull/1647
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
+
 cache:
   yarn: true
+  # cache both npm modules and Cypress binary
+  directories:
+    - ~/.npm
+    - ~/.cache
+  override:
+    - npm ci
+    - npm run cy:verify
+    - npm run cy:info
 
 before_install:
   - set -e
@@ -30,6 +45,7 @@ install:
   - sudo pip install awscli
 
 script:
+  - yarn lint
   - yarn build
   - yarn start & wait-on http://localhost:3000
   - yarn cypress:run
