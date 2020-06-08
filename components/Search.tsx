@@ -105,8 +105,8 @@ export const CONTENT_GQL = gql`
 export const Search: React.FunctionComponent<Props> = () => {
   const router = useRouter()
   // set initial searchQuery to query parameter in route
-  const [searchQuery, setSearchQuery] = React.useState(router.query.query || "")
-  const [searchResults, setSearchResults] = React.useState<Content[]>([])
+  const [searchQuery, setSearchQuery] = React.useState(router.query.query as string || "")
+  const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
@@ -163,7 +163,7 @@ export const Search: React.FunctionComponent<Props> = () => {
         // only trigger search with at least two characters as input
         // otherwise reset search results
         if (searchQuery.length > 0) {
-          refetch({ query: searchQuery, cursor: ""})
+          refetch({ query: searchQuery, cursor: "", published: "", resourceTypeId: ""})
         } else {
           setSearchResults([])
         }
@@ -172,7 +172,7 @@ export const Search: React.FunctionComponent<Props> = () => {
       }
     }, 300)
 
-    let results: Content[] = []
+    let results: ContentNode[] = []
 
     if (searchQuery.length > 0) {
       if (data) results = data.works.nodes
@@ -249,7 +249,8 @@ export const Search: React.FunctionComponent<Props> = () => {
     function facetLink(param: string, value: string) {
       let url = '/?'
       // get current query parameters from next router
-      let params = new URLSearchParams(router.query)
+      // workaround as type definition does not seem to accept object
+      let params = new URLSearchParams(router.query as any)
 
       if (params.get(param) == value) {
         // if param is present, delete from query and use checked icon
@@ -328,13 +329,7 @@ export const Search: React.FunctionComponent<Props> = () => {
       {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
         <form className="form-horizontal search">
-          <FormControl
-            type="text"
-            name="query"
-            value={searchQuery}
-            placeholder="Type to search..."
-            onChange={onSearchChange}
-          />
+        <input name="query" onChange={onSearchChange} value={searchQuery} placeholder="Type to search..." className="form-control" type="text" />
           <span id="search-icon" title="Search" aria-label="Search">
             <FontAwesomeIcon icon={faSearch}/>
           </span>

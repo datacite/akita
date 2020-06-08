@@ -13,7 +13,7 @@ const signIn = (
   </Popover>
 )
 
-const Header: React.FunctionComponent<Props> = ({ title }: title) => (
+const Header: React.FunctionComponent<Props> = ({ title }: typeof title) => (
   <Navbar fluid>
     <Navbar.Header>
       <Navbar.Brand>

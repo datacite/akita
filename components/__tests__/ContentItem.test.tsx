@@ -55,4 +55,11 @@ describe('ContentItem Component', () => {
       .contains('4 Citations 8 Views 3 Downloads')
       .should('be.visible')
   })
+
+  it('actions', () => {
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.actions')
+      .contains('Save Cite Share Bookmark Claim')
+      .should('be.visible')
+  })
 })
