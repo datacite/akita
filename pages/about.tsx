@@ -1,9 +1,9 @@
 import React from 'react'
-import Layout from '../components/Layout/Layout'
+import Layout from '../components/Layout'
 import { Grid, Carousel } from 'react-bootstrap'
 
 const AboutPage: React.FunctionComponent = () => (
-  <Layout title="DataCite Commons Stage">
+  <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Abour'}>
     <Grid fluid={true}>
       <Carousel interval={3000} controls={false}>
         <Carousel.Item>

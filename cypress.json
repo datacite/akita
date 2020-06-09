@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "experimentalComponentTesting": true,
+  "componentFolder": "components/__tests__",
+  "video": false
+}

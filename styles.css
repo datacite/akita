@@ -1,0 +1,84 @@
+.carousel-inner {
+  background-color: white;
+}
+.carousel-indicators li {
+  background-color: #a3acb2;
+}
+.panel-list {
+  margin-top: 20px;
+}
+
+.panel-body h3.member > i {
+  color: #1abc9c;
+  font-size: 100%;
+}
+
+.metrics-counter i.fa {
+  line-height: 25px;
+  margin-right: 3px;
+}
+
+.metrics-counter i {
+  margin-right: 1.5em;
+}
+
+.panel-footer span.bookmark, .panel-footer span.cite, .panel-footer span.save, .panel-footer span.claim, .panel-footer span.share {
+  color: #88939A;
+  margin-right: .75em;
+  cursor: pointer;
+}
+
+.panel-footer a {
+  margin-right: 3em;
+}
+
+.panel-footer .actions {
+  white-space: pre;
+}
+
+h3.popover-title {
+  background: #F7F9F9;
+  font-size: 21px;
+}
+
+.form-horizontal.search {
+  max-width: 100%;
+}
+
+.form-horizontal.search input[name="query"] {
+  z-index: 1;
+  height: 45px;
+  border-width: 1px;
+}
+
+.form-horizontal.search input[name="query"]:focus {
+  border-color: #1abc9c;
+}
+
+.form-horizontal.search #search-clear {
+  z-index: 3;
+  color: #cdd2d5;
+  position: absolute;
+  right: 25px;
+  top: 12px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-horizontal.search input.form-control {
+  text-indent: 24px;
+}
+
+.form-horizontal.search #search-icon {
+  z-index: 3;
+  color: #cdd2d5;
+  position: absolute;
+  left: 25px;
+  top: 12px;
+  text-decoration: none;
+}
+
+.btn.navbar-text {
+  margin-top: 20px;
+}

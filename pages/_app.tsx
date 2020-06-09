@@ -2,11 +2,18 @@ import React from "react"
 import App from "next/app"
 import { ApolloProvider } from "@apollo/react-hooks"
 import withApollo from "../hooks/withApollo"
+// eslint-disable-next-line no-unused-vars
 import { ApolloClient, NormalizedCacheObject } from "apollo-boost"
+
+// properly handle fontawesome icons
+import '../styles.css'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
+config.autoAddCss = false
 
 // since "apollo" isn't a native Next.js prop we have to declare it's type.
 interface IProps {
-  apollo: ApolloClient<NormalizedCacheObject>;
+  apollo: ApolloClient<NormalizedCacheObject>
 }
 
 // adds our custom props interface to the generic App base class.

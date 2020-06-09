@@ -1,48 +1,16 @@
 import * as React from 'react'
-import Head from 'next/head'
-import { Navbar, Nav, NavItem, Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
+import { faLinkedin, faGithub, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
-type Props = {
-  title?: string
-}
-
-const Layout: React.FunctionComponent<Props> = ({
-  children,
-  title = 'DataCite DOI Search',
-}) => (
-  <div>
-    <Head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet" />
-      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type='text/css' />
-      <link href="https://assets.datacite.org/stylesheets/doi.css?version=3.8.0" rel='stylesheet' type='text/css' />
-      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    </Head>
-    <Navbar fluid>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="/">{title}</a>
-        </Navbar.Brand>
-      </Navbar.Header>
-      <Nav pullRight>
-        <NavItem eventKey={1} href="/about">
-          About
-        </NavItem>
-        <NavItem eventKey={2} href="https://support.datacite.org/">
-          Support
-      </NavItem>
-      </Nav>
-    </Navbar>
-
-    {children}
-
+const Footer = () => {
+  return (
     <footer className="row footer">
       <Grid fluid={true}>
         <Row>
           <Col sm={4} md={3} className="footer-column">
-            <h4>About DataCite</h4>
+            <h4 data-cy="about">About DataCite</h4>
             <ul>
               <li><a href="https://www.datacite.org/mission.html">What we do</a></li>
               <li><a href="https://www.datacite.org/governance.html">Governance</a></li>
@@ -84,19 +52,22 @@ const Layout: React.FunctionComponent<Props> = ({
           <Col sm={4} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
             <a href='mailto:support@datacite.org' className="share">
-              <i className='fa fa-at'></i>
+              <FontAwesomeIcon icon={faEnvelope}/>
             </a>
             <a href='https://blog.datacite.org' className="share">
-              <i className='fa fa-rss'></i>
+              <FontAwesomeIcon icon={faBlog}/>
             </a>
             <a href='https://twitter.com/datacite' className="share">
-              <i className='fa fa-twitter'></i>
+              <FontAwesomeIcon icon={faTwitter}/>
             </a>
             <a href='https://github.com/datacite/datacite' className="share">
-              <i className='fa fa-github'></i>
+              <FontAwesomeIcon icon={faGithub}/>
+            </a>
+            <a href='https://www.youtube.com/channel/UCVsSDZhIN_WbnD_v5o9eB_A' className="share">
+              <FontAwesomeIcon icon={faYoutube}/>
             </a>
             <a href='https://www.linkedin.com/company/datacite' className="share">
-              <i className='fa fa-linkedin'></i>
+              <FontAwesomeIcon icon={faLinkedin}/>
             </a>
             <ul className="share">
               <li><a href="https://www.datacite.org/terms.html">Terms and conditions</a></li>
@@ -111,19 +82,7 @@ const Layout: React.FunctionComponent<Props> = ({
         </Row>
       </Grid>
     </footer>
+  )
+}
 
-    <style jsx global>{`
-        .carousel-inner {
-            background-color: white;
-        }
-        .carousel-indicators li {
-            background-color: #a3acb2;
-        }
-        .panel-list {
-            margin-top: 20px;
-        }
-      `}</style>
-  </div>
-)
-
-export default Layout
+export default Footer
