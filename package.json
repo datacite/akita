@@ -54,7 +54,7 @@
     "babel-preset-react": "^6.24.1",
     "cypress": "^4.7.0",
     "cypress-react-unit-test": "^4.4.2",
-    "eslint": "^7.0.0",
+    "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
