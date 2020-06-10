@@ -36,7 +36,7 @@ interface Title {
   title: string
 }
 
-interface Rights {
+export interface Rights {
   rights: string
   rightsUri: string
 }
