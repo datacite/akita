@@ -36,6 +36,7 @@
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2",
     "react-pluralize": "^1.6.3",
+    "urijs": "^1.19.2",
     "wait-on": "^5.0.1"
   },
   "devDependencies": {
