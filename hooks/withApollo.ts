@@ -4,7 +4,7 @@ import ApolloClient, { InMemoryCache } from "apollo-boost"
 export default withApollo(
   ({ initialState }) =>
     new ApolloClient({
-      uri: "https://api.stage.datacite.org/graphql",
+      uri: process.env.NEXT_PUBLIC_API_URL + "/graphql",
       cache: new InMemoryCache().restore(initialState || {})
     })
 )
