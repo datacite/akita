@@ -2,7 +2,6 @@ import * as React from 'react'
 import { gql } from "apollo-boost"
 import Error from "./Error"
 import { useQuery } from '@apollo/react-hooks';
-import Link from 'next/link'
 import Doi from './Doi'
 import { DoiType } from './types';
 
@@ -39,6 +38,7 @@ export const DOI_GQL = gql`
       rightsUri
     }
     id
+    doi
     formattedCitation
     citationCount
     citationsOverTime{
@@ -107,13 +107,46 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
   if (!doi ) return <p>Content not found.</p>;
 
+  const renderFacets = () => {
+
+    return (
+      <div className="col-md-3 hidden-xs hidden-sm">
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <div className="edit"></div>
+          </div>
+        </div>
+        <div className="panel panel-transparent">
+
+        <h5>Metadata Export</h5>
+          <div className="download">
+            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>DataCite XML</a>
+          </div>
+          <div className="download">
+            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>DataCite JSON</a>
+          </div>
+          <div className="download">
+            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>Schema.org JSON-LD</a>
+          </div>
+          <div className="download">
+            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>BibTeX</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div key={doi.id} className="panel panel-transparent content-item">
-      <div className="panel-body">
-        <Doi item={doi}/>
+    <div className="row">
+      {renderFacets()}
+      <div className="col-md-9 panel-list" id="content">
+        <div key={doi.id} className="panel panel-transparent content-item">
+          <div className="panel-body">
+            <Doi item={doi}/>
+          </div>
+          <br/>
+        </div>
       </div>
-      <br/>
     </div>
   )
 }
