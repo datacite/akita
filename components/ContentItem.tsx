@@ -183,6 +183,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
         {metadata()}
         {description()}
         {metricsCounter()}
+        <CitationsChart></CitationsChart>
       </div>
       <div className="panel-footer">
         <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
