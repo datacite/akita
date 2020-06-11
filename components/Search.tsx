@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
+import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
 import { Alert, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,10 +10,6 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 import ContentItem from "./ContentItem"
 import Error from "./Error"
-
-type Props = {
-
-}
 
 interface ContentNode {
   node: ContentItem
@@ -46,11 +43,12 @@ interface ContentQueryVar {
   cursor: string
   published: string
   resourceTypeId: string
+  registrationAgency: string
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String!, $cursor: String, $published: String, $resourceTypeId: String) {
-    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId) {
+  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $registrationAgency: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, registrationAgency: $registrationAgency) {
       totalCount
       pageInfo {
         endCursor
@@ -102,28 +100,28 @@ export const CONTENT_GQL = gql`
   }
 `
 
-export const Search: React.FunctionComponent<Props> = () => {
+export const Search: React.FunctionComponent = () => {
   const router = useRouter()
-  // set initial searchQuery to query parameter in route
-  const [searchQuery, setSearchQuery] = React.useState(router.query.query as string || "")
+  const [searchQuery, setSearchQuery] = useQueryState("query", { history: 'push' })
+  /* eslint-disable no-unused-vars */
+  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: "", cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string }
+      variables: { query: searchQuery, cursor: '', published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string }
     }
   )
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    // sync searchQuery and query parameter in route
-    router.push('/?query=' + e.currentTarget.value)
     setSearchQuery(e.currentTarget.value)
   }
 
   const onSearchClear = () => {
-    // reset searchQuery and sync with query parameter in route
-    router.push('/')
     setSearchQuery('')
   }
 
@@ -163,22 +161,12 @@ export const Search: React.FunctionComponent<Props> = () => {
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      try {
-        // only trigger search with at least one character as input
-        // otherwise reset search results
-        if (searchQuery.length > 0) {
-          refetch({ query: searchQuery, cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string})
-        } else {
-          setSearchResults([])
-        }
-      } catch(e) {
-        console.log(e)
-      }
-    }, 300)
+      refetch({ query: searchQuery, cursor: "", published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
+    }, 1000)
 
     let results: ContentNode[] = []
 
-    if (searchQuery.length > 0) {
+    if (searchQuery) {
       if (data) results = data.works.nodes
     }
     setSearchResults(results)
@@ -187,7 +175,7 @@ export const Search: React.FunctionComponent<Props> = () => {
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {
-    if (searchQuery.length == 0) return (
+    if (!searchQuery) return (
       <div className="panel panel-transparent">
         <div className="panel-body">
           <h3 className="member">Introduction</h3>
@@ -252,21 +240,22 @@ export const Search: React.FunctionComponent<Props> = () => {
 
     function facetLink(param: string, value: string) {
       let url = '/?'
+      let icon = faSquare
+
       // get current query parameters from next router
-      // workaround as type definition does not seem to accept object
       let params = new URLSearchParams(router.query as any)
 
       if (params.get(param) == value) {
         // if param is present, delete from query and use checked icon
         params.delete(param)
-        url += params.toString()
-        return <Link href={url}><a><FontAwesomeIcon icon={faCheckSquare}/> </a></Link>
+        icon = faCheckSquare
       } else {
         // otherwise replace param with new value and use unchecked icon
         params.set(param, value)
-        url += params.toString() 
-        return <Link href={url}><a><FontAwesomeIcon icon={faSquare}/> </a></Link>
       }
+
+      url += params.toString() 
+      return <Link href={url}><a><FontAwesomeIcon icon={icon}/> </a></Link>
     }
 
     return (
@@ -327,13 +316,12 @@ export const Search: React.FunctionComponent<Props> = () => {
       </div>
     )
   }
-
   return (
     <div className="row">
       {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
         <form className="form-horizontal search">
-        <input name="query" onChange={onSearchChange} value={searchQuery} placeholder="Type to search..." className="form-control" type="text" />
+          <input name="query" value={searchQuery || ''} onChange={onSearchChange} placeholder="Type to search..." className="form-control" type="text" />
           <span id="search-icon" title="Search" aria-label="Search">
             <FontAwesomeIcon icon={faSearch}/>
           </span>

@@ -59,6 +59,27 @@ describe("Search", () => {
       // no facet for zero results
       .get('.panel.facets').should('not.exist')
   })
+
+  it("search with publication year facet", () => {
+    cy.get('input[name="query"]')
+      .type('hallett')
+      .get(':nth-child(2) > .panel-body > ul > :nth-child(2) > a', { timeout: 10000 })
+      .click()
+      // timeout for the query results to return
+      .get('.member-results')
+      .should('contain', 'Results')
+      .get(':nth-child(3) > .panel-body > ul > :nth-child(1) > a').click()
+      // timeout for the query results to return
+      .get('.member-results')
+      .should('contain', 'Results')
+      // all facets are rendered
+      .get('.panel.facets').should(($facet) => {
+        expect($facet).to.have.length(3)
+        expect($facet.eq(0)).to.contain('Publication Year')
+        expect($facet.eq(1)).to.contain('Content Type')
+        expect($facet.eq(2)).to.contain('DOI Registration Agency')
+})
+  })
 })
 
 export {}

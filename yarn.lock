@@ -8429,6 +8429,11 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+next-usequerystate@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/next-usequerystate/-/next-usequerystate-1.1.0.tgz#9e34ef76e93e39871047881c59ba0d6ef568c15b"
+  integrity sha512-jhFAlD4FbE8q3IlfvNefSs8ZNCEKgNy8pjbhnwh3k2cHVvo+iRJiJGg0+Rmki/i5rkVT2RhS2q2C+nXrtZCbCw==
+
 next-with-apollo@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/next-with-apollo/-/next-with-apollo-5.0.1.tgz#11055d834e98ad6dbdeb9c853afcfe421b5d4730"
