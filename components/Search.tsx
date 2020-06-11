@@ -103,9 +103,11 @@ export const CONTENT_GQL = gql`
 export const Search: React.FunctionComponent = () => {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useQueryState("query", { history: 'push' })
+  /* eslint-disable no-unused-vars */
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
