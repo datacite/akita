@@ -20,6 +20,7 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import DoiType from './types';
 import CcLicense from './CcLicense';
+import CitationsChart from './CitationsChart';
 
 
 type Props = {
@@ -198,7 +199,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
         <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
           <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title="Citations Histogram">
             {/* <CitationsChart dataInput={item.citationsOverTime} /> */}
-            <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+            <CitationsChart data={item.citationsOverTime}></CitationsChart>
           </Tab>
           <Tab className="views-over-time-tab" eventKey="viewsOverTime" title="Views Histogram">
             {/* <ViewsChart dataInput={item.viewsOverTime} /> */}
