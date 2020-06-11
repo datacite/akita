@@ -59,6 +59,18 @@ describe("Search", () => {
       // no facet for zero results
       .get('.panel.facets').should('not.exist')
   })
+
+  it("search with publication year facet", () => {
+    cy.get('input[name="query"]')
+      .type('hallett')
+      // timeout for the query results to return
+      .get('.member-results', { timeout: 10000 })
+      .should('contain', 'Results')
+      // no results count for zero results
+      .get('.member-results').should('not.exist')
+      // no facet for zero results
+      .get('.panel.facets').should('not.exist')
+  })
 })
 
 export {}
