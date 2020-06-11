@@ -79,7 +79,7 @@ describe("Search", () => {
 //         expect($facet.eq(1)).to.contain('Content Type')
 //         expect($facet.eq(2)).to.contain('DOI Registration Agency')
 // })
-  })
+  // })
 })
 
 export {}
