@@ -7,12 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
-import ContentItem from "./ContentItem"
-import Error from "./Error"
-
-type Props = {
-
-}
+import ContentItem from "../ContentItem/ContentItem"
+import Error from "../Error/Error"
 
 interface ContentNode {
   node: ContentItem
@@ -102,7 +98,7 @@ export const CONTENT_GQL = gql`
   }
 `
 
-export const Search: React.FunctionComponent<Props> = () => {
+export const Search: React.FunctionComponent = () => {
   const router = useRouter()
   // set initial searchQuery to query parameter in route
   const [searchQuery, setSearchQuery] = React.useState(router.query.query as string || "")
