@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
 import { gql } from "apollo-boost"
 import Error from "./Error"
 import { useQuery } from '@apollo/react-hooks';
 import Doi from './Doi'
-import { DoiType } from './types';
+import DoiType from './types';
 
 
 type Props = {
@@ -71,7 +72,7 @@ export const DOI_GQL = gql`
 
 
 interface DoiQueryData {
-  doi: DoiType
+  work: DoiType
 }
 
 interface DoiQueryVar {
@@ -107,38 +108,49 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
   if (!doi ) return <p>Content not found.</p>;
 
-  const renderFacets = () => {
+  const leftSideBar = () => {
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
           <div className="panel-body">
-            <div className="edit"></div>
+            <div className="edit">
+
+            </div>
           </div>
         </div>
         <div className="panel panel-transparent">
 
-        <h5>Metadata Export</h5>
-          <div className="download">
-            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>DataCite XML</a>
+        <h5>Export</h5>
+          <div id="export-xml" className="download">
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.datacite.datacite+xml" + doi.doi}>DataCite XML</a>
           </div>
-          <div className="download">
-            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>DataCite JSON</a>
+          <div id="export-json" className="download">
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.datacite.datacite+json" + doi.doi}>DataCite JSON</a>
           </div>
-          <div className="download">
-            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>Schema.org JSON-LD</a>
+          <div id="export-ld" className="download">
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.schemaorg.ld+json" + doi.doi}>Schema.org JSON-LD</a>
           </div>
-          <div className="download">
-            <a target="_blank" rel="noopener" href={"https://api.datacite.org/dois/" + "application/vnd.schemaorg.ld+json" + doi.doi}>BibTeX</a>
+          <div od="export-bibtex" className="download">
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/x-bibtex" + doi.doi}>BibTeX</a>
           </div>
         </div>
       </div>
     )
   }
 
-  return (
-    <div className="row">
-      {renderFacets()}
+  const rightSideBar = () => {
+
+    return (
+      <div className="col-md-3 hidden-xs hidden-sm">
+
+      </div>
+    )
+  }
+
+  const content = () => {
+
+    return (
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
@@ -147,6 +159,14 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           <br/>
         </div>
       </div>
+    )
+  }
+
+  return (
+    <div className="row">
+      {leftSideBar()}
+      {content()}
+      {/* {rightSideBar()} */}
     </div>
   )
 }
