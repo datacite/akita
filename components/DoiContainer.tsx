@@ -120,8 +120,10 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           </div>
         </div>
         <div className="panel panel-transparent">
+        <div className="facets panel-body">
 
-        <h5>Export</h5>
+
+        <h4>Export</h4>
           <div id="export-xml" className="download">
             <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.datacite.datacite+xml" + doi.doi}>DataCite XML</a>
           </div>
@@ -134,7 +136,8 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           <div id="export-bibtex" className="download">
             <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/x-bibtex" + doi.doi}>BibTeX</a>
           </div>
-        </div>
+          </div>
+          </div>
       </div>
     )
   }
