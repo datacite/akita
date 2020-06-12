@@ -1,11 +1,11 @@
 describe("DoiContainer", () => {
   beforeEach(() => {
-    cy.visit(`/dois/${encodeURIComponent('10.5061/dryad.8jd18')}`)
+    cy.visit(`/dois/${encodeURIComponent('10.70048/q3sn-h087')}`)
   })
 
-  it("visit 10.5061/dryad.8jd18", () => {
+  it("visit 10.70048/q3sn-h087", () => {
     cy.get('h3.work',  { timeout: 10000 })
-      .contains('Data from: SNP discovery and gene annotation in the surf clam Mesodesma donacium')
+      .contains('Chandra X-ray Observatory ObsId 1')
       .should('be.visible')
   })
 
@@ -20,7 +20,7 @@ describe("DoiContainer", () => {
     cy.get('select.cite-as')
       .select('ieee')
       // timeout for the query results to return
-      .get('.formatted-citation', { timeout: 10000 }).contains('C. Gallardo-Escárate, V. Valenzuela-Muñoz, G. Núñez-Acuña, and P. Haye, “Data from: SNP discovery and gene annotation in the surf clam Mesodesma donacium.” Dryad, 2014, doi: 10.5061/DRYAD.8JD18.')
+      .get('.formatted-citation', { timeout: 10000 }).contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.” Chandra X-ray Center/SAO, 2000, doi: 10.70048/Q3SN-H087.')
       })
 })
 

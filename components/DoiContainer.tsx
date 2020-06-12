@@ -180,16 +180,16 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
         <h4>Export</h4>
           <div id="export-xml" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.datacite.datacite+xml" + doi.doi}>DataCite XML</a>
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
           </div>
           <div id="export-json" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.datacite.datacite+json" + doi.doi}>DataCite JSON</a>
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
           </div>
           <div id="export-ld" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.schemaorg.ld+json" + doi.doi}>Schema.org JSON-LD</a>
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
           </div>
           <div id="export-bibtex" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/x-bibtex" + doi.doi}>BibTeX</a>
+            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
           </div>
           </div>
           </div>
