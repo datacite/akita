@@ -5,7 +5,7 @@ import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
 import { Alert, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 import ContentItem from "./ContentItem"
@@ -327,7 +327,7 @@ export const Search: React.FunctionComponent = () => {
           </span>
           {searchQuery &&
             <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
-              <FontAwesomeIcon icon={faTimesCircle}/>
+              <FontAwesomeIcon icon={faTimes}/>
             </span>
           }
         </form>
