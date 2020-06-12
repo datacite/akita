@@ -10,6 +10,7 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 import ContentItem from "../ContentItem/ContentItem"
 import Error from "../Error/Error"
+import ContentLoader from "react-content-loader"
 
 interface ContentNode {
   node: ContentItem
@@ -189,9 +190,21 @@ export const Search: React.FunctionComponent = () => {
     )
 
     if (loading) return (
-      <Alert bsStyle="info">
-        Loading...
-      </Alert>
+      <ContentLoader 
+        speed={1}
+        width={1000}
+        height={250}
+        viewBox="0 0 1000 250"
+        backgroundColor="#f3f3f3"
+        foregroundColor="#ecebeb"
+      >
+        <rect x="117" y="34" rx="3" ry="3" width="198" height="14" /> 
+        <rect x="117" y="75" rx="3" ry="3" width="117" height="14" /> 
+        <rect x="9" y="142" rx="3" ry="3" width="923" height="14" /> 
+        <rect x="9" y="178" rx="3" ry="3" width="855" height="14" /> 
+        <rect x="9" y="214" rx="3" ry="3" width="401" height="14" /> 
+        <circle cx="54" cy="61" r="45" /> 
+      </ContentLoader>
     )
 
     if (error) return (
