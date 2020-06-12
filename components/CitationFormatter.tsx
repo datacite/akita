@@ -42,45 +42,46 @@ interface FormattedCitationQueryVar {
 const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, input}) => {
 
   const cslType = style || "apa";
+  const formatted = input
 
-  const [formatted, setFormattedCitation] = React.useState();
-  const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
-    FORMATTEDCITATION_GQL,
-      {
-          errorPolicy: 'all',
-          variables: { id: id, style: cslType, locale: locale }
+  if (style){ 
+    const [formatted, setFormattedCitation] = React.useState();
+    const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
+      FORMATTEDCITATION_GQL,
+        {
+            errorPolicy: 'all',
+            variables: { id: id, style: cslType, locale: locale }
+        }
+    )
+
+    React.useEffect(() => {
+      let result = undefined;
+      console.log(data)
+      if(data) {
+        result = data.work['formattedCitation'];
       }
-  )
 
-  React.useEffect(() => {
-    let result = undefined;
-    console.log(data)
-    if(data) {
-      result = data.work['formattedCitation'];
+        setFormattedCitation(result);
+    }, [id, data]);
+
+    if (loading) return <p>Loading...</p>;
+
+    if (error) {
+        return <Error title="No Content" message="Unable to retrieve Content" />
     }
-
-      setFormattedCitation(result);
-  }, [id, data]);
-
-  if (loading) return <p>Loading...</p>;
-
-  if (error) {
-      return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
+
   if (!formatted ) return <p>Content not found.</p>;
-
-
-  // const formattedCitationString: string = formatted.formattedCitation
 
 
   return ( 
 
     <div>
       <h3 className="member-results">Cite as</h3>
-      <div className="panel panel-transparent">
-      <div className="formatted-citation panel-body">
-        {style ? ReactHtmlParser(formatted) : ReactHtmlParser(input)}
+        <div className="panel panel-transparent">
+        <div className="formatted-citation panel-body">
+          {ReactHtmlParser(formatted)}
         </div>
       </div>
     </div>
