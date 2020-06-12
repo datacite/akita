@@ -6,7 +6,6 @@ import { GetServerSideProps } from 'next'
 
 
 const DoisPage = ({doiPath}) => {  
-  console.log(doiPath);
 
   return (
     <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Home'}>

@@ -25,7 +25,7 @@ export interface DoiType {
   downloads: []
 }
 
-interface Creator {
+export interface Creator {
   id: string
   name: string
   givenName: string
