@@ -19,13 +19,13 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
-import { DoiType } from './types';
+// import { DoiType } from './types';
 // import CcLicense from './CcLicense';
 import CitationFormatter from './CitationFormatter';
 
 
 type Props = {
-  item: DoiType;
+  item: any;
 }
 
 
