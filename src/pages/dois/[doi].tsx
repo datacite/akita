@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars*/
 import React from "react"
-import Layout from '../../components/Layout'
-import DoiContainer from '../../components/DoiContainer'
+import Layout from '../../components/Layout/Layout'
+import DoiContainer from '../../components/DoiContainer/DoiContainer'
 import { GetServerSideProps } from 'next'
 
 

@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
 import { gql } from "apollo-boost"
-import Error from "./Error"
+import Error from "../Error/Error"
 import { useQuery } from '@apollo/react-hooks';
-import Doi from './Doi'
+import Doi from '../Doi/Doi'
 
 type Props = {
   item?: string
 }
-
 
 export const DOI_GQL = gql`
   query getContentQuery($id: ID!) {
@@ -125,7 +124,6 @@ interface UsageMonth {
   total: number
 }
 
-
 interface DoiQueryData {
   work: DoiType
 }
@@ -133,7 +131,6 @@ interface DoiQueryData {
 interface DoiQueryVar {
   id: string;
 }
-
 
 const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
@@ -147,21 +144,21 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
   )
 
   React.useEffect(() => {
-    let result = undefined;
+    let result = undefined
     if(data) {
-      result = data.work;
+      result = data.work
     }
 
-      setDoi(result);
-  }, [item, data]);
+      setDoi(result)
+  }, [item, data])
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>
 
   if (error) {
       return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!doi ) return <p>Content not found.</p>;
+  if (!doi ) return <p>Content not found.</p>
 
   const leftSideBar = () => {
 
@@ -207,7 +204,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
   // }
 
   const content = () => {
-
     return (
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">

@@ -1,13 +1,8 @@
-
-/* eslint-disable no-unused-vars*/
-
 import * as React from 'react'
-
-import Error from "./Error"
+import Error from "../Error/Error"
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from "apollo-boost"
 import ReactHtmlParser from 'react-html-parser'
-
 
 type Props = {
   id: string
@@ -40,10 +35,8 @@ interface FormattedCitationQueryVar {
   locale: string
 }
 
-
 const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, input}) => {
-
-  const cslType = style || "apa";
+  const cslType = style || "apa"
 
   if (!style ) return(
     <div>
@@ -54,10 +47,9 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
         </div>
       </div>
     </div>
-
   )
 
-  const [formatted, setFormattedCitation] = React.useState();
+  const [formatted, setFormattedCitation] = React.useState()
   const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
     FORMATTEDCITATION_GQL,
       {
@@ -67,26 +59,23 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
   )
 
   React.useEffect(() => {
-    let result = undefined;
-    console.log(data)
-    if(data) {
-      result = data.work['formattedCitation'];
+    let result = undefined
+    if (data) {
+      result = data.work['formattedCitation']
     }
 
       setFormattedCitation(result);
-  }, [id, data]);
+  }, [id, data])
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>
 
   if (error) {
       return <Error title="No Content" message="Unable to retrieve Content" />
   }
   
-
   if (!formatted ) return <p>Content not found.</p>;
 
   return ( 
-
     <div>
       <h3 className="member-results">Cite as</h3>
         <div className="panel panel-transparent">
@@ -95,8 +84,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
         </div>
       </div>
     </div>
-
-   );
+   )
 }
 
 export default CitationFormatter

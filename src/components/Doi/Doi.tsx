@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
 import { Popover, OverlayTrigger, Tabs, Tab } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
@@ -21,16 +20,13 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 // import { DoiType } from './types';
 // import CcLicense from './CcLicense';
-import CitationFormatter from './CitationFormatter';
-
+import CitationFormatter from '../CitationFormatter/CitationFormatter';
 
 type Props = {
   item: any;
 }
 
-
 const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
-
   if (!item ) return <p>Work not found.</p>;
   
   const title = () => {
@@ -96,8 +92,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-  const formattedCitation = () => {
-    
+  const formattedCitation = () => { 
     const [selectedOption, setSelectedOption] = React.useState('');
 
     return (
@@ -116,7 +111,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )
   }
-  
 
   const metricsCounter = () => {
     if (item.citationCount + item.viewCount + item.downloadCount == 0) {
@@ -141,8 +135,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )  
   }
-
-
 
   const bookmark = (
     <Popover id="bookmark" title="Bookmarking">
@@ -174,7 +166,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     </Popover>
   )
 
-
   const links = () => {
     return (
       <div className="panel-footer">
@@ -202,7 +193,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   const analyticsBar = () => {
     return (
-
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
         <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
