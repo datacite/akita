@@ -6,7 +6,7 @@ import { Rights } from './types'
 import ReactHtmlParser from 'react-html-parser'
 
  type Props = {
-  rightsList: [Rights]
+  rightsList: Rights[]
 }
 
 
@@ -25,53 +25,54 @@ const CcLicense: React.FunctionComponent<Props> = ({rightsList}) => {
 
   const licenceses = () => {
 
-    if (!rightsList ) return '';
+    // if (!rightsList ) return '';
 
-    const licensesList = rightsList.map(rights => {
+    // const licensesList = rightsList.map(rights => {
 
-      let uri = new URI(rights.licenseURL);
-      let licenseLogo = null;
-      if (uri.hostname() === 'creativecommons.org') {
-        let labels = uri.segment(1).split('-');
-        labels.unshift('cc');
-        let val = null;
+    //   let uri = new URI(rights);
+    //   // let uri = new URI(rights.licenseURL);
+    //   let licenseLogo = null;
+    //   if (uri.hostname() === 'creativecommons.org') {
+    //     let labels = uri.segment(1).split('-');
+    //     labels.unshift('cc');
+    //     let val = null;
   
-        licenseLogo = labels.reduce(function(sum, key) {
-          if (('public publicdomain').includes(key)) {
-            key = 'zero';
-          }
-          if (('cc by nd nc sa zero').includes(key)) {
-            val = { class: 'cc cc-' + key, tooltip: (Tooltips).find(e => e.key === key) };
-            (sum).pushObject(val);
-          }
-          return sum;
-        }, []);
-      } else if (uri.hostname() === 'opensource.org') {
-        switch (uri.segment(1)) {
-          case 'MIT':
-            licenseLogo = [ { logo: ReactHtmlParser('<img src="https://img.shields.io/:license-MIT-blue.svg" />') } ];
-        }
-      }
+    //     licenseLogo = labels.reduce(function(sum, key) {
+    //       if (('public publicdomain').includes(key)) {
+    //         key = 'zero';
+    //       }
+    //       if (('cc by nd nc sa zero').includes(key)) {
+    //         val = { class: 'cc cc-' + key, tooltip: (Tooltips).find(e => e.key === key) };
+    //         (sum).pushObject(val);
+    //       }
+    //       return sum;
+    //     }, []);
+    //   } else if (uri.hostname() === 'opensource.org') {
+    //     switch (uri.segment(1)) {
+    //       case 'MIT':
+    //         licenseLogo = [ { logo: ReactHtmlParser('<img src="https://img.shields.io/:license-MIT-blue.svg" />') } ];
+    //     }
+    //   }
 
-      let license = {
-        id: rights.key,
-        licenseLogo: licenseLogo,
-        tooltip: {
-          title: rights.title,
-          text: rights.text,
-        },
-      }
-      return license;
-    })
+    //   let license = {
+    //     id: rights.key,
+    //     licenseLogo: licenseLogo,
+    //     tooltip: {
+    //       title: rights.title,
+    //       text: rights.text,
+    //     },
+    //   }
+    //   return license;
+    // })
 
-    const r = licensesList.map((license) =>
-      <i key={license.id} className={license.class}>
-        <Popover title={license.tooltip.title}>{license.tooltip.text}</Popover>
-      </i>
-    );
+    // const r = licensesList.map((license) =>
+    //   <i key={license.id} className={license.class}>
+    //     <Popover title={license.tooltip.title}>{license.tooltip.text}</Popover>
+    //   </i>
+    // );
 
     return (
-      {r}
+      'r'
     )
   }
 

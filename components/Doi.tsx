@@ -18,8 +18,9 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
-import DoiType from './types';
-import CcLicense from './CcLicense';
+import { DoiType } from './types';
+// import CcLicense from './CcLicense';
+// import CitationFormatter from './CitationFormatter';
 
 
 type Props = {
@@ -243,7 +244,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
         {metadata()}
         {description()}
         {metricsCounter()}
-        <CcLicense rightList={item.rights}/>
       </div>
       {links()}
       <br/>

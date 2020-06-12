@@ -4,7 +4,7 @@ import { gql } from "apollo-boost"
 import Error from "./Error"
 import { useQuery } from '@apollo/react-hooks';
 import Doi from './Doi'
-import DoiType from './types';
+import { DoiType } from './types';
 
 
 type Props = {
@@ -131,7 +131,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           <div id="export-ld" className="download">
             <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/vnd.schemaorg.ld+json" + doi.doi}>Schema.org JSON-LD</a>
           </div>
-          <div od="export-bibtex" className="download">
+          <div id="export-bibtex" className="download">
             <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/application/x-bibtex" + doi.doi}>BibTeX</a>
           </div>
         </div>
