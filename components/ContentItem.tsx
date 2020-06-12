@@ -18,6 +18,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
+import Link from 'next/link'
 
 type Props = {
   item: ContentItem
@@ -175,7 +176,9 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   return (
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
-        {title()}
+        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+          {title()}
+        </Link>
         {creators()}
         {metadata()}
         {description()}

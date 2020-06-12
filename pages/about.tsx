@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 import { Grid, Carousel } from 'react-bootstrap'
 
 const AboutPage: React.FunctionComponent = () => (
-  <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Abour'}>
+  <Layout title={process.env.NEXT_PUBLIC_TITLE || 'About'}>
     <Grid fluid={true}>
       <Carousel interval={3000} controls={false}>
         <Carousel.Item>
