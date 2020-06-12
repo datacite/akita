@@ -191,7 +191,7 @@ export const Search: React.FunctionComponent = () => {
 
     if (loading) return (
       <ContentLoader 
-        speed={2}
+        speed={1}
         width={1000}
         height={250}
         viewBox="0 0 1000 250"
