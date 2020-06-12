@@ -44,38 +44,46 @@ interface FormattedCitationQueryVar {
 const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, input}) => {
 
   const cslType = style || "apa";
-  const formatted = input
 
-  if (style){ 
-    const [formatted, setFormattedCitation] = React.useState();
-    const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
-      FORMATTEDCITATION_GQL,
-        {
-            errorPolicy: 'all',
-            variables: { id: id, style: cslType, locale: locale }
-        }
-    )
+  if (!style ) return(
+    <div>
+      <h3 className="member-results">Cite as</h3>
+        <div className="panel panel-transparent">
+        <div className="formatted-citation panel-body">
+          {ReactHtmlParser(input)}
+        </div>
+      </div>
+    </div>
 
-    React.useEffect(() => {
-      let result = undefined;
-      console.log(data)
-      if(data) {
-        result = data.work['formattedCitation'];
+  )
+
+  const [formatted, setFormattedCitation] = React.useState();
+  const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
+    FORMATTEDCITATION_GQL,
+      {
+          errorPolicy: 'all',
+          variables: { id: id, style: cslType, locale: locale }
       }
+  )
 
-        setFormattedCitation(result);
-    }, [id, data]);
-
-    if (loading) return <p>Loading...</p>;
-
-    if (error) {
-        return <Error title="No Content" message="Unable to retrieve Content" />
+  React.useEffect(() => {
+    let result = undefined;
+    console.log(data)
+    if(data) {
+      result = data.work['formattedCitation'];
     }
-  }
 
+      setFormattedCitation(result);
+  }, [id, data]);
+
+  if (loading) return <p>Loading...</p>;
+
+  if (error) {
+      return <Error title="No Content" message="Unable to retrieve Content" />
+  }
+  
 
   if (!formatted ) return <p>Content not found.</p>;
-
 
   return ( 
 
