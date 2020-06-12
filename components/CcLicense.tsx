@@ -1,9 +1,9 @@
 
 import URI from 'urijs';
 import * as React from 'react'
-import { Popover } from 'react-bootstrap'
+// import { Popover } from 'react-bootstrap'
 import { Rights } from './types'
-import ReactHtmlParser from 'react-html-parser'
+// import ReactHtmlParser from 'react-html-parser'
 
  type Props = {
   rightsList: Rights[]

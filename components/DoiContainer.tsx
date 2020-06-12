@@ -139,14 +139,14 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-  const rightSideBar = () => {
+  // const rightSideBar = () => {
 
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
+  //   return (
+  //     <div className="col-md-3 hidden-xs hidden-sm">
 
-      </div>
-    )
-  }
+  //     </div>
+  //   )
+  // }
 
   const content = () => {
 
