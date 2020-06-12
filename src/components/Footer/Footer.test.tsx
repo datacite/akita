@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import Footer from "../Footer"
+import Footer from "./Footer"
 
 describe('Footer Component', () => {
   it('works', () => {

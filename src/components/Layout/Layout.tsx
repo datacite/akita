@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
-import Header from './Header'
-import Footer from './Footer'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 
 type Props = {
   title: string

@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
-import ContentItem from "./ContentItem"
-import Error from "./Error"
+import ContentItem from "../ContentItem/ContentItem"
+import Error from "../Error/Error"
 
 interface ContentNode {
   node: ContentItem
