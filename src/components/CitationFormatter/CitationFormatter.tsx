@@ -1,7 +1,8 @@
 import * as React from 'react'
 import Error from "../Error/Error"
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks'
 import { gql } from "apollo-boost"
+import { Alert } from 'react-bootstrap'
 import ReactHtmlParser from 'react-html-parser'
 
 type Props = {
@@ -38,7 +39,7 @@ interface FormattedCitationQueryVar {
 const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, input}) => {
   const cslType = style || "apa"
 
-  if (!style ) return(
+  if (!style ) return (
     <div>
       <h3 className="member-results">Cite as</h3>
         <div className="panel panel-transparent">
@@ -50,6 +51,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
   )
 
   const [formatted, setFormattedCitation] = React.useState()
+  /* eslint-disable no-unused-vars */
   const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
     FORMATTEDCITATION_GQL,
       {
@@ -57,6 +59,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
           variables: { id: id, style: cslType, locale: locale }
       }
   )
+  /* eslint-enable no-unused-vars */
 
   React.useEffect(() => {
     let result = undefined
@@ -64,16 +67,18 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
       result = data.work['formattedCitation']
     }
 
-      setFormattedCitation(result);
+    setFormattedCitation(result)
   }, [id, data])
 
-  if (loading) return <p>Loading...</p>
-
   if (error) {
-      return <Error title="No Content" message="Unable to retrieve Content" />
+    return <Error title="No Content" message="Unable to retrieve Content" />
   }
   
-  if (!formatted ) return <p>Content not found.</p>;
+  if (!formatted ) return (
+    <Alert bsStyle="warning">
+      No content found.
+    </Alert>
+  )
 
   return ( 
     <div>
@@ -84,7 +89,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
         </div>
       </div>
     </div>
-   )
+  )
 }
 
 export default CitationFormatter

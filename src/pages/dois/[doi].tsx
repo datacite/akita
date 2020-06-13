@@ -1,20 +1,17 @@
-/* eslint-disable no-unused-vars*/
 import React from "react"
 import Layout from '../../components/Layout/Layout'
 import DoiContainer from '../../components/DoiContainer/DoiContainer'
+/* eslint-disable no-unused-vars*/
 import { GetServerSideProps } from 'next'
-
-
+/* eslint-ensable no-unused-vars*/
 
 const DoisPage = ({doiPath}) => {  
-
   return (
     <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Home'}>
       <DoiContainer item={doiPath}/>
     </Layout>
   )
 }
-
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const doiPath = context.params.doi;

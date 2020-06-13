@@ -82,3 +82,11 @@ h3.popover-title {
 .btn.navbar-text {
   margin-top: 20px;
 }
+
+h2.member-results {
+  font-weight: 600;
+  color: #1abc9c;
+  border-bottom: 1px solid #cdd2d5;
+  padding: 0;
+  margin: 0 0 .35em 10px;
+}

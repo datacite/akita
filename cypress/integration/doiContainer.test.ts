@@ -16,7 +16,7 @@ describe("DoiContainer", () => {
       .should('be.visible')
   })
 
-  it("chage cite as", () => {
+  it("cite as", () => {
     cy.get('select.cite-as')
       .select('ieee')
       // timeout for the query results to return

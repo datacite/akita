@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popover, OverlayTrigger, Tabs, Tab } from 'react-bootstrap'
+import { Popover, OverlayTrigger, Tabs, Tab, Alert } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
@@ -18,16 +18,20 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
-// import { DoiType } from './types';
-// import CcLicense from './CcLicense';
-import CitationFormatter from '../CitationFormatter/CitationFormatter';
+// import { DoiType } from './types'
+// import CcLicense from './CcLicense'
+import CitationFormatter from '../CitationFormatter/CitationFormatter'
 
 type Props = {
-  item: any;
+  item: any
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
-  if (!item ) return <p>Work not found.</p>;
+  if (!item ) return (
+    <Alert bsStyle="warning">
+        No content found.
+      </Alert>
+  )
   
   const title = () => {
     if (!item.titles[0]) return (
@@ -38,7 +42,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     
     return (
       <h3 className="work">
-        <a target="_blank" rel="noopener" href={item.id}>
+        <a target="_blank" rel="noreferrer" href={item.id}>
           {ReactHtmlParser(titleHtml)}
         </a>
         {item.types.resourceTypeGeneral &&
@@ -72,7 +76,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const metadata = () => {
-
     return (
       <div className="metadata">
         {item.version ? 'Version ' + item.version + ' of ' : ''}{item.types.resourceType ? startCase(item.types.resourceType) : 'Content'} published {item.publicationYear} via {item.publisher}
@@ -93,7 +96,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const formattedCitation = () => { 
-    const [selectedOption, setSelectedOption] = React.useState('');
+    const [selectedOption, setSelectedOption] = React.useState('')
 
     return (
       <div>
@@ -237,6 +240,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   return (
     <div key={item.id} className="panel panel-transparent">
+      <h2 className="member-results">{item.doi}</h2>
       <div className="panel-body">
         {title()}
         {creators()}

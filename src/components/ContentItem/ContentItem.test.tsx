@@ -23,7 +23,7 @@ const exampleItem = {
 describe('ContentItem Component', () => {
   it('title', () => {
     mount(<ContentItem item={exampleItem}/>)
-    cy.get('h3.member')
+    cy.get('h3.work')
       .contains('Example title of the item Dataset')
       .should('be.visible')
   })

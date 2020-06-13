@@ -247,6 +247,10 @@ export const Search: React.FunctionComponent = () => {
   }
 
   const renderFacets = () => {
+    if (loading) return (
+      <div className="col-md-3"></div>
+    )
+
     if (!data || searchResults.length == 0) return (
       <div className="col-md-3"></div>
     )

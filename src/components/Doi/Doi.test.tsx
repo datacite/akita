@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import Doi from '../Doi'
+import Doi from './Doi'
 
 const data = {
   id: "https://handle.stage.datacite.org/10.21945/xs62-rp71",
