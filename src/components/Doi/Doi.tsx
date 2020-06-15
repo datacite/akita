@@ -21,6 +21,7 @@ import ReactHtmlParser from 'react-html-parser'
 // import { DoiType } from './types'
 // import CcLicense from './CcLicense'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
+import CitationsChart from '../CitationsChart/CitationsChart'
 
 type Props = {
   item: any
