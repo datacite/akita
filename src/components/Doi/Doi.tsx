@@ -18,13 +18,13 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
-// import { DoiType } from './types'
+import { DoiType } from '../DoiContainer/DoiContainer'
 // import CcLicense from './CcLicense'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
 
 type Props = {
-  item: any
+  item: DoiType
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
@@ -196,22 +196,40 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const analyticsBar = () => {
+
+    const style = {
+      fontWeight: 600,  
+      color:'#1abc9c',
+      fontSize: '25px',
+      padding: 0,
+      margin: '0 0 .35em 10px',
+    }
+
+    const citationsTabLabel = Pluralize({count: item.citationCount, singular:'Citation', style:style,showCount:true}) 
+    const viewsTabLabel = Pluralize({count: item.viewCount, singular:'View',  className:'h3', style:style,showCount:true}) 
+    const downloadsTabLabel = Pluralize({count: item.downloadCount, singular:'Download', style:style,showCount:true}) 
+   
     return (
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
         <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
-          <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title="Citations Histogram">
-            {/* <CitationsChart dataInput={item.citationsOverTime} /> */}
-            <CitationsChart data={item.citationsOverTime}></CitationsChart>
-          </Tab>
-          <Tab className="views-over-time-tab" eventKey="viewsOverTime" title="Views Histogram">
-            {/* <ViewsChart dataInput={item.viewsOverTime} /> */}
-            <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
-          </Tab>
-          <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title="Downloads Histogram">
-            {/* <DownloadsChart dataInput={item.downloadsOverTime} /> */}
-            <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
-          </Tab>
+          {item.citationCount > 0 && 
+            <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
+              <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
+            </Tab>
+          }
+          {item.viewCount > 0 && 
+            <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
+              {/* <ViewsChart dataInput={item.viewsOverTime} /> */}
+              <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+            </Tab>
+          }
+          {item.downloadCount > 0 && 
+            <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
+              {/* <DownloadsChart dataInput={item.downloadsOverTime} /> */}
+              <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+            </Tab>
+          }
         </Tabs>
         </div>
       </div>
@@ -223,16 +241,20 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       <div className="panel panel-transparent">
       <div className="panel-body tab-content nav-tabs-member">
     <Tabs defaultActiveKey="citationsList" id="related-content-tabs">
+    {item.citations.length > 0 && 
       <Tab className="citations-list" eventKey="citationsList" title="Citations">
         {/* <RelatedContentList dataInput={item.citations} /> */}
         <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
 
       </Tab>
+    }
+     {item.references.length > 0 && 
       <Tab className="references-list" eventKey="referencesList" title="References">
         {/* <RelatedContentList dataInput={item.references} /> */}
         <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
 
       </Tab>
+    }
     </Tabs>
     </div>
   </div>
