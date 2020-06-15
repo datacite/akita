@@ -108,13 +108,14 @@ export const Search: React.FunctionComponent = () => {
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: '', published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string }
+      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string }
     }
   )
 
@@ -126,43 +127,47 @@ export const Search: React.FunctionComponent = () => {
     setSearchQuery('')
   }
 
-  const onNextPage = () => {
-    loadMore(data.works.pageInfo.endCursor)
-  }
+  const renderPagination = () => {
+    let url = '/?'
+    let firstPageUrl = null
+    let nextPageUrl = null
 
-  const loadMore = (cursor: String) => {
-    fetchMore(
-      { variables: { cursor: cursor },
-      updateQuery: (previousResult: ContentQueryData, { fetchMoreResult }) => {
-        if (!fetchMoreResult) { return previousResult }
+    // get current query parameters from next router
+    let params = new URLSearchParams(router.query as any)
 
-        const newNodes = fetchMoreResult.works.nodes
-        const pageInfo = fetchMoreResult.works.pageInfo
-        const totalCount = fetchMoreResult.works.totalCount
-        const published = fetchMoreResult.works.published
-        const resourceTypes = fetchMoreResult.works.resourceTypes
-        const registrationAgencies = fetchMoreResult.works.registrationAgencies
+    if (params.get('cursor')) {
+      // remove cursor query parameter for first page
+      params.delete('cursor')
+      firstPageUrl = url + params.toString()
+    }
 
-        return newNodes.length
-          ? {
-              works: {
-                __typename: previousResult.works.__typename,
-                nodes: [...previousResult.works.nodes, ...newNodes],
-                pageInfo,
-                totalCount,
-                published,
-                resourceTypes,
-                registrationAgencies
-              }
+    if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
+      // set cursor query parameter for next page
+      params.set('cursor', data.works.pageInfo.endCursor)
+      nextPageUrl = url + params.toString()
+    }
+
+    return (
+      <div className="pagination-centered">
+        <ul className="pagination">
+          {firstPageUrl &&
+            <li className="page-number">
+              <Link href={firstPageUrl}><a>First Page</a></Link>
+            </li>
           }
-          : previousResult
-        }
-      })
+          {nextPageUrl &&
+            <li className="page-number">
+              <Link href={nextPageUrl}><a>Next Page</a></Link>
+            </li>
+          }
+        </ul>
+      </div>
+    )
   }
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: "", published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
     }, 1000)
 
     let results: ContentNode[] = []
@@ -214,9 +219,13 @@ export const Search: React.FunctionComponent = () => {
     if (!data) return ''
 
     if (searchResults.length == 0) return (
-      <Alert bsStyle="warning">
-        No content found.
-      </Alert>
+      <React.Fragment>
+        <Alert bsStyle="warning">
+          No content found.
+        </Alert>
+
+        {renderPagination()}
+      </React.Fragment>
     )
 
     return (
@@ -231,17 +240,7 @@ export const Search: React.FunctionComponent = () => {
           </React.Fragment>
         ))}
 
-        {data.works.pageInfo.hasNextPage &&
-          <div className="text-centered">
-            <div className="pagination-centered">
-              <ul className="pagination">
-                <li className="active next">
-                  <Button bsStyle="warning" onClick={onNextPage}>Next Page</Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        }
+        {renderPagination()}
       </div>
     )
   }
@@ -257,6 +256,9 @@ export const Search: React.FunctionComponent = () => {
 
       // get current query parameters from next router
       let params = new URLSearchParams(router.query as any)
+
+      // delete cursor parameter
+      params.delete('cursor')
 
       if (params.get(param) == value) {
         // if param is present, delete from query and use checked icon

@@ -82,3 +82,13 @@ h3.popover-title {
 .btn.navbar-text {
   margin-top: 20px;
 }
+
+.pagination .page-number a {
+  color: #88939a !important;
+  border-color: #88939a !important;
+}
+
+.pagination .page-number a:hover {
+  color: white !important;
+  border-color: #e67e22 !important;
+}
