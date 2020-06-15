@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popover, OverlayTrigger, Tabs, Tab } from 'react-bootstrap'
+import { Popover, OverlayTrigger, Tabs, Tab, Alert } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
@@ -18,19 +18,20 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
-import DoiType from './types';
-import CcLicense from './CcLicense';
-import CitationsChart from './CitationsChart';
-
+// import { DoiType } from './types'
+// import CcLicense from './CcLicense'
+import CitationFormatter from '../CitationFormatter/CitationFormatter'
 
 type Props = {
-  item: DoiType;
+  item: any
 }
 
-
 const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
-
-  if (!item ) return <p>Work not found.</p>;
+  if (!item ) return (
+    <Alert bsStyle="warning">
+        No content found.
+      </Alert>
+  )
   
   const title = () => {
     if (!item.titles[0]) return (
@@ -41,7 +42,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     
     return (
       <h3 className="work">
-        <a target="_blank" rel="noopener" href={item.id}>
+        <a target="_blank" rel="noreferrer" href={item.id}>
           {ReactHtmlParser(titleHtml)}
         </a>
         {item.types.resourceTypeGeneral &&
@@ -75,7 +76,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const metadata = () => {
-
     return (
       <div className="metadata">
         {item.version ? 'Version ' + item.version + ' of ' : ''}{item.types.resourceType ? startCase(item.types.resourceType) : 'Content'} published {item.publicationYear} via {item.publisher}
@@ -95,19 +95,25 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-  const formattedCitation = () => {
+  const formattedCitation = () => { 
+    const [selectedOption, setSelectedOption] = React.useState('')
+
     return (
       <div>
-        <h3 className="member-results">Cite as</h3>
-        <div className="panel panel-transparent">
-        <div className="formatted-citation panel-body">
-          {item.formattedCitation ? ReactHtmlParser(item.formattedCitation)  : ''}
-          </div>
+        <div id="citation" className="input-group pull-right">
+          <select className="cite-as" onChange={e => setSelectedOption(e.target.value)} >
+              <option value="apa">APA</option>
+              <option value="harvard-cite-them-right">Harvard</option>
+              <option value="modern-language-association">MLA</option>
+              <option value="vancouver">Vancouver</option>
+              <option value="chicago-fullnote-bibliography">Chicago</option>
+              <option value="ieee">IEEE</option>
+          </select>
         </div>
+        <CitationFormatter id={item.doi} input={item.formattedCitation} locale="en" style={selectedOption}></CitationFormatter>
       </div>
     )
   }
-  
 
   const metricsCounter = () => {
     if (item.citationCount + item.viewCount + item.downloadCount == 0) {
@@ -132,8 +138,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )  
   }
-
-
 
   const bookmark = (
     <Popover id="bookmark" title="Bookmarking">
@@ -165,7 +169,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     </Popover>
   )
 
-
   const links = () => {
     return (
       <div className="panel-footer">
@@ -193,7 +196,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   const analyticsBar = () => {
     return (
-
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
         <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
@@ -238,18 +240,19 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   return (
     <div key={item.id} className="panel panel-transparent">
+      <h2 className="member-results">{item.doi}</h2>
       <div className="panel-body">
         {title()}
         {creators()}
         {metadata()}
         {description()}
         {metricsCounter()}
-        <CcLicense rightList={item.rights}/>
       </div>
       {links()}
       <br/>
 
       {formattedCitation()}
+
       {analyticsBar()}
       {relatedContent()}
     </div>

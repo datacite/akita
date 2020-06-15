@@ -1,18 +1,16 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
+import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
-import { Alert, Button } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
-import ContentItem from "./ContentItem"
-import Error from "./Error"
-
-type Props = {
-
-}
+import ContentItem from "../ContentItem/ContentItem"
+import Error from "../Error/Error"
+import ContentLoader from "react-content-loader"
 
 interface ContentNode {
   node: ContentItem
@@ -46,11 +44,12 @@ interface ContentQueryVar {
   cursor: string
   published: string
   resourceTypeId: string
+  registrationAgency: string
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String!, $cursor: String, $published: String, $resourceTypeId: String) {
-    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId) {
+  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $registrationAgency: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, registrationAgency: $registrationAgency) {
       totalCount
       pageInfo {
         endCursor
@@ -102,83 +101,78 @@ export const CONTENT_GQL = gql`
   }
 `
 
-export const Search: React.FunctionComponent<Props> = () => {
+export const Search: React.FunctionComponent = () => {
   const router = useRouter()
-  // set initial searchQuery to query parameter in route
-  const [searchQuery, setSearchQuery] = React.useState(router.query.query as string || "")
+  const [searchQuery, setSearchQuery] = useQueryState("query", { history: 'push' })
+  /* eslint-disable no-unused-vars */
+  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
+  /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
+  const { loading, error, data, refetch } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: "", cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string }
+      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string }
     }
   )
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    // sync searchQuery and query parameter in route
-    router.push('/?query=' + e.currentTarget.value)
     setSearchQuery(e.currentTarget.value)
   }
 
   const onSearchClear = () => {
-    // reset searchQuery and sync with query parameter in route
-    router.push('/')
     setSearchQuery('')
   }
 
-  const onNextPage = () => {
-    loadMore(data.works.pageInfo.endCursor)
-  }
+  const renderPagination = () => {
+    let url = '/?'
+    let firstPageUrl = null
+    let nextPageUrl = null
 
-  const loadMore = (cursor: String) => {
-    fetchMore(
-      { variables: { cursor: cursor },
-      updateQuery: (previousResult: ContentQueryData, { fetchMoreResult }) => {
-        if (!fetchMoreResult) { return previousResult }
+    // get current query parameters from next router
+    let params = new URLSearchParams(router.query as any)
 
-        const newNodes = fetchMoreResult.works.nodes
-        const pageInfo = fetchMoreResult.works.pageInfo
-        const totalCount = fetchMoreResult.works.totalCount
-        const published = fetchMoreResult.works.published
-        const resourceTypes = fetchMoreResult.works.resourceTypes
-        const registrationAgencies = fetchMoreResult.works.registrationAgencies
+    if (params.get('cursor')) {
+      // remove cursor query parameter for first page
+      params.delete('cursor')
+      firstPageUrl = url + params.toString()
+    }
 
-        return newNodes.length
-          ? {
-              works: {
-                __typename: previousResult.works.__typename,
-                nodes: [...previousResult.works.nodes, ...newNodes],
-                pageInfo,
-                totalCount,
-                published,
-                resourceTypes,
-                registrationAgencies
-              }
+    if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
+      // set cursor query parameter for next page
+      params.set('cursor', data.works.pageInfo.endCursor)
+      nextPageUrl = url + params.toString()
+    }
+
+    return (
+      <div className="pagination-centered">
+        <ul className="pagination">
+          {firstPageUrl &&
+            <li className="page-number">
+              <Link href={firstPageUrl}><a>First Page</a></Link>
+            </li>
           }
-          : previousResult
-        }
-      })
+          {nextPageUrl &&
+            <li className="page-number">
+              <Link href={nextPageUrl}><a>Next Page</a></Link>
+            </li>
+          }
+        </ul>
+      </div>
+    )
   }
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      try {
-        // only trigger search with at least one character as input
-        // otherwise reset search results
-        if (searchQuery.length > 0) {
-          refetch({ query: searchQuery, cursor: "", published: router.query.published as string, resourceTypeId: router.query['resource-type'] as string})
-        } else {
-          setSearchResults([])
-        }
-      } catch(e) {
-        console.log(e)
-      }
-    }, 300)
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
+    }, 1000)
 
     let results: ContentNode[] = []
 
-    if (searchQuery.length > 0) {
+    if (searchQuery) {
       if (data) results = data.works.nodes
     }
     setSearchResults(results)
@@ -187,7 +181,7 @@ export const Search: React.FunctionComponent<Props> = () => {
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {
-    if (searchQuery.length == 0) return (
+    if (!searchQuery) return (
       <div className="panel panel-transparent">
         <div className="panel-body">
           <h3 className="member">Introduction</h3>
@@ -201,9 +195,21 @@ export const Search: React.FunctionComponent<Props> = () => {
     )
 
     if (loading) return (
-      <Alert bsStyle="info">
-        Loading...
-      </Alert>
+      <ContentLoader 
+        speed={1}
+        width={1000}
+        height={250}
+        viewBox="0 0 1000 250"
+        backgroundColor="#f3f3f3"
+        foregroundColor="#ecebeb"
+      >
+        <rect x="117" y="34" rx="3" ry="3" width="198" height="14" /> 
+        <rect x="117" y="75" rx="3" ry="3" width="117" height="14" /> 
+        <rect x="9" y="142" rx="3" ry="3" width="923" height="14" /> 
+        <rect x="9" y="178" rx="3" ry="3" width="855" height="14" /> 
+        <rect x="9" y="214" rx="3" ry="3" width="401" height="14" /> 
+        <circle cx="54" cy="61" r="45" /> 
+      </ContentLoader>
     )
 
     if (error) return (
@@ -213,9 +219,13 @@ export const Search: React.FunctionComponent<Props> = () => {
     if (!data) return ''
 
     if (searchResults.length == 0) return (
-      <Alert bsStyle="warning">
-        No content found.
-      </Alert>
+      <React.Fragment>
+        <Alert bsStyle="warning">
+          No content found.
+        </Alert>
+
+        {renderPagination()}
+      </React.Fragment>
     )
 
     return (
@@ -230,43 +240,41 @@ export const Search: React.FunctionComponent<Props> = () => {
           </React.Fragment>
         ))}
 
-        {data.works.pageInfo.hasNextPage &&
-          <div className="text-centered">
-            <div className="pagination-centered">
-              <ul className="pagination">
-                <li className="active next">
-                  <Button bsStyle="warning" onClick={onNextPage}>Next Page</Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        }
+        {renderPagination()}
       </div>
     )
   }
 
   const renderFacets = () => {
+    if (loading) return (
+      <div className="col-md-3"></div>
+    )
+
     if (!data || searchResults.length == 0) return (
       <div className="col-md-3"></div>
     )
 
     function facetLink(param: string, value: string) {
       let url = '/?'
+      let icon = faSquare
+
       // get current query parameters from next router
-      // workaround as type definition does not seem to accept object
       let params = new URLSearchParams(router.query as any)
+
+      // delete cursor parameter
+      params.delete('cursor')
 
       if (params.get(param) == value) {
         // if param is present, delete from query and use checked icon
         params.delete(param)
-        url += params.toString()
-        return <Link href={url}><a><FontAwesomeIcon icon={faCheckSquare}/> </a></Link>
+        icon = faCheckSquare
       } else {
         // otherwise replace param with new value and use unchecked icon
         params.set(param, value)
-        url += params.toString() 
-        return <Link href={url}><a><FontAwesomeIcon icon={faSquare}/> </a></Link>
       }
+
+      url += params.toString() 
+      return <Link href={url}><a><FontAwesomeIcon icon={icon}/> </a></Link>
     }
 
     return (
@@ -327,19 +335,18 @@ export const Search: React.FunctionComponent<Props> = () => {
       </div>
     )
   }
-
   return (
     <div className="row">
       {renderFacets()}
       <div className="col-md-9 panel-list" id="content">
         <form className="form-horizontal search">
-        <input name="query" onChange={onSearchChange} value={searchQuery} placeholder="Type to search..." className="form-control" type="text" />
+          <input name="query" value={searchQuery || ''} onChange={onSearchChange} placeholder="Type to search..." className="form-control" type="text" />
           <span id="search-icon" title="Search" aria-label="Search">
             <FontAwesomeIcon icon={faSearch}/>
           </span>
           {searchQuery &&
             <span id="search-clear" title="Clear" aria-label="Clear" onClick={onSearchClear}>
-              <FontAwesomeIcon icon={faTimesCircle}/>
+              <FontAwesomeIcon icon={faTimes}/>
             </span>
           }
         </form>

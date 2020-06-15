@@ -82,3 +82,21 @@ h3.popover-title {
 .btn.navbar-text {
   margin-top: 20px;
 }
+
+h2.member-results {
+  font-weight: 600;
+  color: #1abc9c;
+  border-bottom: 1px solid #cdd2d5;
+  padding: 0;
+  margin: 0 0 .35em 10px;
+}
+
+.pagination .page-number a {
+  color: #88939a !important;
+  border-color: #88939a !important;
+}
+
+.pagination .page-number a:hover {
+  color: white !important;
+  border-color: #e67e22 !important;
+}
