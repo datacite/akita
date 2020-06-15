@@ -2,8 +2,9 @@
 import * as React from 'react'
 import { gql } from "apollo-boost"
 import Error from "../Error/Error"
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks'
 import Doi from '../Doi/Doi'
+import ContentLoader from "react-content-loader"
 
 type Props = {
   item?: string
@@ -129,18 +130,17 @@ interface DoiQueryData {
 }
 
 interface DoiQueryVar {
-  id: string;
+  id: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
-
-  const [doi, setDoi] = React.useState<DoiType>();
+  const [doi, setDoi] = React.useState<DoiType>()
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
-      DOI_GQL,
-      {
-          errorPolicy: 'all',
-          variables: { id: item }
-      }
+    DOI_GQL,
+    {
+      errorPolicy: 'all',
+      variables: { id: item }
+    }
   )
 
   React.useEffect(() => {
@@ -149,19 +149,39 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
       result = data.work
     }
 
-      setDoi(result)
+    setDoi(result)
   }, [item, data])
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return (
+    <div className="row">
+      <div className="col-md-3"></div>
+      <div className="col-md-9">
+        <ContentLoader 
+          speed={1}
+          width={1000}
+          height={250}
+          viewBox="0 0 1000 250"
+          backgroundColor="#f3f3f3"
+          foregroundColor="#ecebeb"
+        >
+          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" /> 
+          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" /> 
+          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" /> 
+          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" /> 
+          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" /> 
+          <circle cx="54" cy="61" r="45" /> 
+        </ContentLoader>
+      </div>
+    </div>
+  )
 
   if (error) {
-      return <Error title="No Content" message="Unable to retrieve Content" />
+    return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
   if (!doi ) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -174,22 +194,21 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
         <div className="panel panel-transparent">
         <div className="facets panel-body">
 
-
         <h4>Export</h4>
-          <div id="export-xml" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
-          </div>
-          <div id="export-json" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
-          </div>
-          <div id="export-ld" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
-          </div>
-          <div id="export-bibtex" className="download">
-            <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
-          </div>
-          </div>
-          </div>
+        <div id="export-xml" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
+        </div>
+        <div id="export-json" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
+        </div>
+        <div id="export-ld" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
+        </div>
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
+        </div>
+      </div>
+      </div>
       </div>
     )
   }

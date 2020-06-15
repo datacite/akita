@@ -61,14 +61,20 @@ interface Description {
 const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   const title = () => {
     if (!item.titles[0]) return (
-      <h3 className="member">No Title</h3>
+      <h3 className="work">
+        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+          <a>No Title</a>
+        </Link>
+      </h3>
     )
 
     const titleHtml = item.titles[0].title 
-    
+
     return (
-      <h3 className="member">
-        {ReactHtmlParser(titleHtml)}
+      <h3 className="work">
+        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+          <a>{ReactHtmlParser(titleHtml)}</a>
+        </Link>
         {item.types.resourceTypeGeneral &&
           <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
         }
@@ -176,9 +182,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   return (
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
-          {title()}
-        </Link>
+        {title()}
         {creators()}
         {metadata()}
         {description()}
