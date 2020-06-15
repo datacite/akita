@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
-import { Alert, Button } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
@@ -111,7 +111,7 @@ export const Search: React.FunctionComponent = () => {
   const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch, fetchMore } = useQuery<ContentQueryData, ContentQueryVar>(
+  const { loading, error, data, refetch } = useQuery<ContentQueryData, ContentQueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',

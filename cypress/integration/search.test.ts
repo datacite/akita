@@ -33,7 +33,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('10.80225/da52-7919')
       // no results count for single result
-      .get('.member-results').should('not.exist')
+      .get('.member-results', { timeout: 10000 }).should('not.exist')
       // the results are rendered
       .get('.panel.content-item').should(($contentItem) => {
         expect($contentItem).to.have.length(1)
@@ -78,6 +78,7 @@ describe("Search", () => {
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('DOI Registration Agency')
+      })
   })
 
   it("search with pagination", () => {
@@ -95,7 +96,6 @@ describe("Search", () => {
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('DOI Registration Agency')
+      })
   })
 })
-
-// export {}
