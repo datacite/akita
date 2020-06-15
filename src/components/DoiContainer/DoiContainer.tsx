@@ -86,13 +86,18 @@ export interface DoiType {
   formattedCitation: string
   citationCount: number
   citationsOverTime: CitationsYear[]
-  citations: []
+  citations: {
+    nodes: RelatedContentList[]
+  }
   viewCount: number
   viewsOverTime: UsageMonth[]
   views: []
   downloadCount: number
   downloadsOverTime: UsageMonth[]
   downloads: []
+  references: {
+    nodes: RelatedContentList[]
+  }
 }
 
 interface Creator {
@@ -123,6 +128,12 @@ interface CitationsYear {
 interface UsageMonth {
   yearMonth: string,
   total: number
+}
+
+interface RelatedContentList {
+  nodes: {
+    formattedCitation: string
+  }
 }
 
 interface DoiQueryData {
