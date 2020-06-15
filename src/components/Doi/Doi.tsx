@@ -22,6 +22,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 // import CcLicense from './CcLicense'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
+import { formatNumbers } from '../../utils/helpers'
 
 type Props = {
   item: DoiType
@@ -195,20 +196,22 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
+  const style = {
+    fontWeight: 600,  
+    color:'#1abc9c',
+    fontSize: '25px',
+    padding: 0,
+    margin: '0 0 .35em 10px',
+  }
+
+  const citationsTabLabel = Pluralize({count: formatNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
+  const viewsTabLabel = Pluralize({count: formatNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
+  const downloadsTabLabel = Pluralize({count: formatNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
+  const referencesTabLabel = Pluralize({count: formatNumbers(item.references.length), singular:'Reference', style:style,showCount:true}) 
+ 
+
   const analyticsBar = () => {
 
-    const style = {
-      fontWeight: 600,  
-      color:'#1abc9c',
-      fontSize: '25px',
-      padding: 0,
-      margin: '0 0 .35em 10px',
-    }
-
-    const citationsTabLabel = Pluralize({count: item.citationCount, singular:'Citation', style:style,showCount:true}) 
-    const viewsTabLabel = Pluralize({count: item.viewCount, singular:'View',  className:'h3', style:style,showCount:true}) 
-    const downloadsTabLabel = Pluralize({count: item.downloadCount, singular:'Download', style:style,showCount:true}) 
-   
     return (
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
@@ -236,20 +239,22 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
+
+
   const relatedContent = () => {
     return (
       <div className="panel panel-transparent">
       <div className="panel-body tab-content nav-tabs-member">
     <Tabs defaultActiveKey="citationsList" id="related-content-tabs">
-    {item.citations.length > 0 && 
-      <Tab className="citations-list" eventKey="citationsList" title="Citations">
+    {item.citations.nodes.length > 0 && 
+      <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
         {/* <RelatedContentList dataInput={item.citations} /> */}
         <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
 
       </Tab>
     }
-     {item.references.length > 0 && 
-      <Tab className="references-list" eventKey="referencesList" title="References">
+     {item.references.nodes.length > 0 && 
+      <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
         {/* <RelatedContentList dataInput={item.references} /> */}
         <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
 
