@@ -38,7 +38,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     
     return (
       <h3 className="work">
-        <a target="_blank" rel="noopener" href={item.id}>
+        <a target="_blank" rel="noreferrer" href={item.id}>
           {ReactHtmlParser(titleHtml)}
         </a>
         {item.types.resourceTypeGeneral &&
