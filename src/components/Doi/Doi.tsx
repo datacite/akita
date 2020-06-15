@@ -129,13 +129,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
         {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={item.citationCount} /> </i>
+          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={formatNumbers(item.citationCount)} /> </i>
         }
         {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={item.viewCount} /> </i>
+          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={formatNumbers(item.viewCount)} /> </i>
         }
         {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={item.downloadCount} /> </i>
+          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={formatNumbers(item.downloadCount)} /> </i>
         }
       </div>
     )  
@@ -207,7 +207,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   const citationsTabLabel = Pluralize({count: formatNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
   const viewsTabLabel = Pluralize({count: formatNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
   const downloadsTabLabel = Pluralize({count: formatNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
-  const referencesTabLabel = Pluralize({count: formatNumbers(item.references.length), singular:'Reference', style:style,showCount:true}) 
+  const referencesTabLabel = Pluralize({count: formatNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
  
 
   const analyticsBar = () => {
