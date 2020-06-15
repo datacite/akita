@@ -176,7 +176,7 @@ export const Search: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, registrationAgency: registrationAgency as string })
     }, 1000)
 
     let results: ContentNode[] = []
