@@ -68,7 +68,7 @@ export const DOI_GQL = gql`
 }
 `
 
-interface DoiType {
+export interface DoiType {
   id: string
   doi: string
   url: string
