@@ -8,12 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
+import { DoiType } from "../DoiContainer/DoiContainer"
 import ContentItem from "../ContentItem/ContentItem"
 import Error from "../Error/Error"
 import ContentLoader from "react-content-loader"
 
 interface ContentNode {
-  node: ContentItem
+  node: DoiType
 }
 
 interface ContentFacet {

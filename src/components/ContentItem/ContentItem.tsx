@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popover, OverlayTrigger } from 'react-bootstrap'
+import { Popover, OverlayTrigger, Alert } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import Pluralize from 'react-pluralize'
@@ -19,47 +19,25 @@ import {
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { DoiType } from '../DoiContainer/DoiContainer'
+import { formatNumbers } from '../../utils/helpers'
 
 type Props = {
-  item: ContentItem
-}
-
-interface ContentItem {
-  id: string
-  doi: string
-  url: string
-  types: {
-    resourceTypeGeneral: string
-    resourceType: string
-  }
-  creators: Creator[]
-  titles: Title[]
-  publicationYear: number
-  publisher: string
-  descriptions: Description[]
-  version: string
-  citationCount: number
-  viewCount: number
-  downloadCount: number
-}
-
-interface Creator {
-  id: string
-  name: string
-  givenName: string
-  familyName: string
-}
-
-interface Title {
-  title: string
-}
-
-interface Description {
-  description: string
+  item: DoiType
 }
 
 const ContentItem: React.FunctionComponent<Props> = ({item}) => {
-  const title = () => {
+
+  if (!item ) return (
+    <Alert bsStyle="warning">
+        No content found.
+      </Alert>
+  )
+  
+
+  const searchtitle = () => {
     if (!item.titles[0]) return (
       <h3 className="work">
         <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
@@ -81,6 +59,39 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       </h3>
     )
   }
+
+  const doiTitle = () => {
+    if (!item.titles[0]) return (
+      <h3 className="member">No Title</h3>
+    )
+
+    const titleHtml = item.titles[0].title 
+    
+    return (
+      <h3 className="work">
+        <a target="_blank" rel="noreferrer" href={item.id}>
+          {ReactHtmlParser(titleHtml)}
+        </a>
+        {item.types.resourceTypeGeneral &&
+          <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
+        }
+      </h3>
+    )
+  }
+
+
+
+  const title = () => {
+    const router = useRouter()
+    if(router == null || router.pathname === '/'){
+      return searchtitle()
+    }else{
+      return doiTitle()
+    }
+  }
+
+
+
 
   const creators = () => {
     if (!item.creators) return 'No creators'
@@ -137,13 +148,13 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
         {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={item.citationCount} /> </i>
+          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={formatNumbers(item.citationCount)} /> </i>
         }
         {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={item.viewCount} /> </i>
+          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={formatNumbers(item.viewCount)} /> </i>
         }
         {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={item.downloadCount} /> </i>
+          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={formatNumbers(item.downloadCount)} /> </i>
         }
       </div>
     )  
@@ -179,6 +190,31 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     </Popover>
   )
 
+  const links = () => {
+    return (
+      <div className="panel-footer">
+      <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
+      <span className="actions">
+        <OverlayTrigger trigger="click" placement="top" overlay={save}>
+          <span className="save"><FontAwesomeIcon icon={faSave}/> Save</span>
+        </OverlayTrigger>
+        <OverlayTrigger trigger="click" placement="top" overlay={cite}>
+          <span className="cite"><FontAwesomeIcon icon={faQuoteLeft}/> Cite</span>
+        </OverlayTrigger>
+        <OverlayTrigger trigger="click" placement="top" overlay={share}>
+          <span className="share"><FontAwesomeIcon icon={faShareAlt}/> Share</span>
+        </OverlayTrigger>
+        <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+          <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
+        </OverlayTrigger>
+        <OverlayTrigger trigger="click" placement="top" overlay={claim}>
+          <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
+      </OverlayTrigger>
+      </span>
+    </div>
+    )
+  }
+
   return (
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
@@ -188,26 +224,7 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
         {description()}
         {metricsCounter()}
       </div>
-      <div className="panel-footer">
-        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
-        <span className="actions">
-          <OverlayTrigger trigger="click" placement="top" overlay={save}>
-            <span className="save"><FontAwesomeIcon icon={faSave}/> Save</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={cite}>
-            <span className="cite"><FontAwesomeIcon icon={faQuoteLeft}/> Cite</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={share}>
-            <span className="share"><FontAwesomeIcon icon={faShareAlt}/> Share</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-            <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
-        </OverlayTrigger>
-        </span>
-      </div>
+        {links()}
       <br/>
     </div>
   )
