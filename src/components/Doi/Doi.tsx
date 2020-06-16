@@ -240,7 +240,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   return (
     <div key={item.id} className="panel panel-transparent">
-      <h2 className="member-results">{item.doi}</h2>
+      <h3 className="member-results">{item.doi}</h3>
       <div className="panel-body">
         {title()}
         {creators()}

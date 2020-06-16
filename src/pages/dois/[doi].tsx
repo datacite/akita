@@ -14,7 +14,7 @@ const DoisPage = ({doiPath}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const doiPath = context.params.doi;
+  const doiPath = context.params.doi
 
   return {
     props: {doiPath}, // will be passed to the page component as props

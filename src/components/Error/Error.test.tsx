@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import Error from "./Error";
+import Error from "./Error"
 
 const errorTitle = "Error title"
 const errorMessage = "An error has occured."
