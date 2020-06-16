@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next'
 
 const DoisPage = ({doiPath}) => {  
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Home'}>
+    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
       <DoiContainer item={doiPath}/>
     </Layout>
   )

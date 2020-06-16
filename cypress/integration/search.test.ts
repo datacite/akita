@@ -52,7 +52,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('xxxxxxxxxxxx')
       // timeout for the query results to return
-      .get('.alert-warning', { timeout: 5000 })
+      .get('.alert-warning', { timeout: 10000 })
       .should('contain', 'No content found.')
       // no results count for zero results
       .get('.member-results').should('not.exist')

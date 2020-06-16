@@ -4,7 +4,7 @@ import Search from '../components/Search/Search'
 
 const IndexPage = () => {  
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Home'}>
+    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
       <Search />
     </Layout>
   )
