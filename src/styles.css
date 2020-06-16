@@ -111,3 +111,7 @@ input[type=text] {
   /* Then Style */
   border-radius: 5px;   
 }
+
+.work span.small {
+  color: #88939a;
+}
