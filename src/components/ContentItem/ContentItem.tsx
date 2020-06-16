@@ -7,10 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faQuoteLeft, 
   faInfoCircle, 
-  faShareAlt, 
   faExternalLinkAlt,
   faDownload,
-  faSave,
   faBookmark
 } from '@fortawesome/free-solid-svg-icons'
 import { 
@@ -155,24 +153,6 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     </Popover>
   )
 
-  const share = (
-    <Popover id="share" title="Sharing via Social Media">
-      Sharing via social media will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
-    </Popover>
-  )
-
-  const save = (
-    <Popover id="save" title="Download Metadata">
-      Downloading metadata will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
-    </Popover>
-  )
-
-  const cite = (
-    <Popover id="cite" title="Formatted Citation">
-      Formatted citations will be implemented by August 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
-    </Popover>
-  )
-
   const claim = (
     <Popover id="claim" title="Claim to ORCID Record">
       Claiming to an ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
@@ -191,15 +171,6 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       <div className="panel-footer">
         <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
         <span className="actions">
-          <OverlayTrigger trigger="click" placement="top" overlay={save}>
-            <span className="save"><FontAwesomeIcon icon={faSave}/> Save</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={cite}>
-            <span className="cite"><FontAwesomeIcon icon={faQuoteLeft}/> Cite</span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={share}>
-            <span className="share"><FontAwesomeIcon icon={faShareAlt}/> Share</span>
-          </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
             <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
           </OverlayTrigger>
