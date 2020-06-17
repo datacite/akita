@@ -25,15 +25,13 @@ const actions = {
 
 const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
 
-  const lowerBoundYear = new Date().getFullYear() - 10
+  const thisYear= new Date().getFullYear()
 
-  const yearsDomain = new Date().getFullYear() - lowerBoundYear;
+  const lowerBoundYear = thisYear - 10 > publicationYear ? thisYear - 10 : publicationYear
 
-  const subset = data.filter((e)=> { return (e.year) > lowerBoundYear;});
+  const yearsDomain = thisYear - lowerBoundYear;
 
-  const width = 10 < subset.length ? yearsDomain : subset.length;
-
-  const labelAngle = width < 3 ? 45 : 0 ;
+  // const subset = data.filter((e)=> { return (e.year) > lowerBoundYear;});
 
 
   const spec = {
@@ -54,7 +52,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
         filter: "toNumber(datum.year) >" + lowerBoundYear
       }
     ],
-    width: width * 25,
+    width: yearsDomain * 25,
     mark: {
       type: "bar",
       cursor: "pointer",
@@ -79,8 +77,11 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
         type: "quantitative",
         axis: {
           format: "1",
-          labelAngle: labelAngle,
+          labelAngle: yearsDomain < 3 ? 45 : 0,
           labelOverlap: "parity"
+        },
+        scale: {
+          domain: [lowerBoundYear, thisYear]
         }
       },
       x2: {
