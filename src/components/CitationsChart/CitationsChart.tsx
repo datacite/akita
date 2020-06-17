@@ -23,7 +23,7 @@ const actions = {
 }
 
 
-const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, yearOfPublication}) => {
+const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
 
   const lowerBoundYear = new Date().getFullYear() - 10
 
@@ -111,7 +111,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
 
   const title = () => {
     return (
-    <small><Pluralize singular={'Citation'} count={citationCount} />  reported since publication in {yearOfPublication}</small>
+    <small><Pluralize singular={'Citation'} count={citationCount} />  reported since publication in {publicationYear}</small>
     )
   }
 
