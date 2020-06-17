@@ -82,7 +82,7 @@ describe('ContentItem Component', () => {
   it('actions', () => {
     mount(<Doi item={data}/>)
     cy.get('.actions')
-      .contains('Save Cite Share Bookmark Claim')
+      .contains('Share Bookmark Claim')
       .should('be.visible')
   })
 })

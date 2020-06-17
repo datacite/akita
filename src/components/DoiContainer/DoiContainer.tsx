@@ -218,6 +218,17 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
         <div id="export-bibtex" className="download">
           <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
         </div>
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
+        </div>
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
+        </div>
+        { doi.types.resourceTypeGeneral === "Software" &&
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
+        </div>
+        }
       </div>
       </div>
       </div>
