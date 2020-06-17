@@ -1,13 +1,14 @@
 import React from 'react';
-// import { Component } from 'react';
 import { VegaLite } from 'react-vega';
-// import { Handler } from 'vega-tooltip';
+import Pluralize from 'react-pluralize'
+import { Grid, Row } from 'react-bootstrap';
 
 
 type Props = {
   data?: [],
   doi?: string,
-  yearOfPublication?: number,
+  citationCount?: number,
+  publicationYear?: number,
 }
 
 interface Spec {
@@ -22,7 +23,7 @@ const actions = {
 }
 
 
-const CitationsChart: React.FunctionComponent<Props> = ({data}) => {
+const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, yearOfPublication}) => {
 
   const lowerBoundYear = new Date().getFullYear() - 10
 
@@ -33,6 +34,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data}) => {
   const width = 10 < subset.length ? yearsDomain : subset.length;
 
   const labelAngle = width < 3 ? 45 : 0 ;
+
 
   const spec = {
     $schema: "https://vega.github.io/schema/vega-lite/v4.json",
@@ -52,13 +54,6 @@ const CitationsChart: React.FunctionComponent<Props> = ({data}) => {
         filter: "toNumber(datum.year) >" + lowerBoundYear
       }
     ],
-    title: {
-      text: "DOI citations per year distribution",
-      subtitle: "doi-name-here",
-      baseline: "top",
-      anchor: "left",
-      angle: 0
-    },
     width: width * 25,
     mark: {
       type: "bar",
@@ -114,10 +109,23 @@ const CitationsChart: React.FunctionComponent<Props> = ({data}) => {
     }
   }
 
+  const title = () => {
+    return (
+    <small><Pluralize singular={'Citation'} count={citationCount} />  reported since publication in {yearOfPublication}</small>
+    )
+  }
+
   return (
       <div className="panel panel-transparent">
        <div className="citation-chart panel-body"> 
-       <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
+       <Grid>
+        <Row> 
+          {title()}
+        </Row>
+        <Row>       
+          <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
+        </Row>
+       </Grid>
        </div>
       </div>
    );
