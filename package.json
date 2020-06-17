@@ -29,6 +29,7 @@
     "@types/testing-library__cypress": "^5.0.5",
     "apollo-boost": "^0.4.9",
     "graphql": "^15.0.0",
+    "momentjs": "^2.0.0",
     "next": "^9.4.1",
     "next-usequerystate": "^1.1.0",
     "next-with-apollo": "^5.0.1",
@@ -39,7 +40,10 @@
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2",
     "react-pluralize": "^1.6.3",
+    "react-vega": "^7.3.0",
     "urijs": "^1.19.2",
+    "vega": "^5.13.0",
+    "vega-lite": "^4.13.1",
     "wait-on": "^5.0.1"
   },
   "devDependencies": {
