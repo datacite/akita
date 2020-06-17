@@ -100,3 +100,18 @@ h2.member-results {
   color: white !important;
   border-color: #e67e22 !important;
 }
+
+/* remove iOS input shadow, from https://stackoverflow.com/questions/23211656/remove-ios-input-shadow */
+input[type=text] {   
+  /* Remove First */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Then Style */
+  border-radius: 5px;   
+}
+
+.work span.small {
+  color: #88939a;
+}

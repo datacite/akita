@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import Layout from "./Layout";
+import Layout from "./Layout"
 
 describe('Layout Component', () => {
   it('title', () => {

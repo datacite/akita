@@ -7,14 +7,14 @@ import { GetServerSideProps } from 'next'
 
 const DoisPage = ({doiPath}) => {  
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE || 'Home'}>
+    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
       <DoiContainer item={doiPath}/>
     </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const doiPath = context.params.doi;
+  const doiPath = context.params.doi
 
   return {
     props: {doiPath}, // will be passed to the page component as props

@@ -35,6 +35,7 @@ interface ContentQueryData {
       pageInfo: PageInfo
       published: ContentFacet[]
       resourceTypes: ContentFacet[]
+      fieldsOfScience: ContentFacet[]
       registrationAgencies: ContentFacet[]
       totalCount: Number
   },
@@ -45,12 +46,13 @@ interface ContentQueryVar {
   cursor: string
   published: string
   resourceTypeId: string
+  fieldOfScience: string
   registrationAgency: string
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $registrationAgency: String) {
-    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, registrationAgency: $registrationAgency) {
+  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $registrationAgency: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, registrationAgency: $registrationAgency) {
       totalCount
       pageInfo {
         endCursor
@@ -62,6 +64,11 @@ export const CONTENT_GQL = gql`
         count
       }
       published {
+        id
+        title
+        count
+      }
+      fieldsOfScience {
         id
         title
         count
@@ -94,6 +101,7 @@ export const CONTENT_GQL = gql`
         publicationYear
         publisher
         version
+        registrationAgency
         citationCount
         viewCount
         downloadCount
@@ -108,6 +116,7 @@ export const Search: React.FunctionComponent = () => {
   /* eslint-disable no-unused-vars */
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [fieldOfScience, setfieldOfScience] = useQueryState('field-of-science', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
@@ -116,7 +125,7 @@ export const Search: React.FunctionComponent = () => {
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string }
+      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, registrationAgency: registrationAgency as string }
     }
   )
 
@@ -168,7 +177,7 @@ export const Search: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, registrationAgency: registrationAgency as string })
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, registrationAgency: registrationAgency as string })
     }, 1000)
 
     let results: ContentNode[] = []
@@ -317,6 +326,24 @@ export const Search: React.FunctionComponent = () => {
             </ul>
           </div>
         </div>
+
+        {data.works.fieldsOfScience.length > 0 &&
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Field of Science</h4>
+              <ul>
+                {data.works.fieldsOfScience.map(facet => (
+                  <li key={facet.id}>
+                    {facetLink('field-of-science', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
+                    <div className="clearfix"/>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        }
 
         <div className="panel facets add">
           <div className="panel-body">

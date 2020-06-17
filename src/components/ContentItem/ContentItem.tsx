@@ -7,10 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faQuoteLeft, 
   faInfoCircle, 
-  faShareAlt, 
   faExternalLinkAlt,
   faDownload,
-  faSave,
+  faShareAlt,
   faBookmark
 } from '@fortawesome/free-solid-svg-icons'
 import { 
