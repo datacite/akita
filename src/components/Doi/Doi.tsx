@@ -22,6 +22,8 @@ import ReactHtmlParser from 'react-html-parser'
 // import CcLicense from './CcLicense'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 
+import UsageChart from '../UsageChart/UsageChart'
+
 type Props = {
   item: any
 }
@@ -204,12 +206,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
             <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
           </Tab>
           <Tab className="views-over-time-tab" eventKey="viewsOverTime" title="Views Histogram">
-            {/* <ViewsChart dataInput={item.viewsOverTime} /> */}
-            <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+            <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={2020} type="View"/> 
           </Tab>
           <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title="Downloads Histogram">
-            {/* <DownloadsChart dataInput={item.downloadsOverTime} /> */}
-            <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+            <UsageChart data={item.downloadsOverTime} counts={item.downloadCount} publicationYear={item.publicationYear} type="Download" /> 
           </Tab>
         </Tabs>
         </div>
