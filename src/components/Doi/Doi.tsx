@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
+// eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
