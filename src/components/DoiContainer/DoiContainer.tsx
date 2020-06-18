@@ -120,23 +120,23 @@ interface Description {
   description: string
 }
 
-interface CitationsYear {
+export interface CitationsYear {
   year: string,
   total: number
 }
 
-interface UsageMonth {
+export interface UsageMonth {
   yearMonth: string,
   total: number
 }
 
-interface RelatedContentList {
+export interface RelatedContentList {
   nodes: {
     formattedCitation: string
   }
 }
 
-interface DoiQueryData {
+export interface DoiQueryData {
   work: DoiType
 }
 

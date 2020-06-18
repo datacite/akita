@@ -2,17 +2,15 @@ import React from 'react';
 import { VegaLite } from 'react-vega';
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
-
+  /* eslint-disable no-unused-vars */
+import { VisualizationSpec } from 'vega-embed';
+import { CitationsYear } from '../DoiContainer/DoiContainer'
 
 type Props = {
-  data?: [],
+  data?: CitationsYear[],
   doi?: string,
   citationCount?: number,
-  publicationYear?: number,
-}
-
-interface Spec {
-  spec: string
+  publicationYear?: number
 }
 
 const actions = {
@@ -22,7 +20,7 @@ const actions = {
   editor: false,
 }
 
-
+/* eslint-disable no-unused-vars */
 const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
 
   const thisYear= new Date().getFullYear() + 1 
@@ -34,7 +32,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
   // const subset = data.filter((e)=> { return (e.year) > lowerBoundYear;});
 
 
-  const spec = {
+  const spec: VisualizationSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v4.json",
     data: {
       name: 'table'
