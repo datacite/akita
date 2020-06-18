@@ -39,7 +39,10 @@
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2",
     "react-pluralize": "^1.6.3",
+    "react-vega": "^7.3.0",
     "urijs": "^1.19.2",
+    "vega": "^5.13.0",
+    "vega-lite": "^4.13.1",
     "wait-on": "^5.0.1"
   },
   "devDependencies": {

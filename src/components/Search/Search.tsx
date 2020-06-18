@@ -8,12 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
+// eslint-disable-next-line no-unused-vars
+import { DoiType } from "../DoiContainer/DoiContainer"
 import ContentItem from "../ContentItem/ContentItem"
 import Error from "../Error/Error"
 import ContentLoader from "react-content-loader"
 
 interface ContentNode {
-  node: ContentItem
+  node: DoiType
 }
 
 interface ContentFacet {

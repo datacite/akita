@@ -68,7 +68,7 @@ export const DOI_GQL = gql`
 }
 `
 
-interface DoiType {
+export interface DoiType {
   id: string
   doi: string
   url: string
@@ -86,13 +86,18 @@ interface DoiType {
   formattedCitation: string
   citationCount: number
   citationsOverTime: CitationsYear[]
-  citations: []
+  citations: {
+    nodes: RelatedContentList[]
+  }
   viewCount: number
   viewsOverTime: UsageMonth[]
   views: []
   downloadCount: number
   downloadsOverTime: UsageMonth[]
   downloads: []
+  references: {
+    nodes: RelatedContentList[]
+  }
 }
 
 interface Creator {
@@ -115,17 +120,23 @@ interface Description {
   description: string
 }
 
-interface CitationsYear {
+export interface CitationsYear {
   year: string,
   total: number
 }
 
-interface UsageMonth {
+export interface UsageMonth {
   yearMonth: string,
   total: number
 }
 
-interface DoiQueryData {
+export interface RelatedContentList {
+  nodes: {
+    formattedCitation: string
+  }
+}
+
+export interface DoiQueryData {
   work: DoiType
 }
 
@@ -207,6 +218,17 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
         <div id="export-bibtex" className="download">
           <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
         </div>
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
+        </div>
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
+        </div>
+        { doi.types.resourceTypeGeneral === "Software" &&
+        <div id="export-bibtex" className="download">
+          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
+        </div>
+        }
       </div>
       </div>
       </div>
