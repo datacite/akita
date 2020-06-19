@@ -20,11 +20,13 @@ const data = {
   viewCount: 8,
   downloadCount: 3000,
   citationsOverTime: [],
+  viewsOverTime: [],
+  downloadsOverTime: [],
   citations: {nodes: [] },
   references: {nodes: [] },
 }
 
-describe('ContentItem Component', () => {
+describe('DoiMetadata Component', () => {
   it('title', () => {
     mount(<Doi item={data}/>)
     cy.get('h3.work')
@@ -82,7 +84,7 @@ describe('ContentItem Component', () => {
   it('actions', () => {
     mount(<Doi item={data}/>)
     cy.get('.actions')
-      .contains('Share Bookmark Claim')
+      .contains('Bookmark Claim')
       .should('be.visible')
   })
 })

@@ -9,7 +9,7 @@ type Props = {
 
 const signIn = (
   <Popover id="sign-in" title="Personal Accounts">
-    Personal accounts will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
+    Personal accounts will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
   </Popover>
 )
 

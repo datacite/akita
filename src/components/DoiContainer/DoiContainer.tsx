@@ -197,13 +197,13 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
     const facebook = (
       <Popover id="share" title="Sharing via Facebook">
-         Sharing via social media will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
+         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 
     const twitter = (
       <Popover id="share" title="Sharing via Twitter">
-        Sharing via social media will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
+        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 

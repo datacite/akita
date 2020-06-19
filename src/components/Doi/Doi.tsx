@@ -5,7 +5,7 @@ import Pluralize from 'react-pluralize'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
-import ContentItem from '../ContentItem/ContentItem'
+import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { formatNumbers } from '../../utils/helpers'
 
 import UsageChart from '../UsageChart/UsageChart'
@@ -61,7 +61,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
-        <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
+        <Tabs  id="over-time-tabs">
           {item.citationCount > 0 && 
             <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
               <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
@@ -88,18 +88,18 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="panel panel-transparent">
       <div className="panel-body tab-content nav-tabs-member">
-    <Tabs defaultActiveKey="citationsList" id="related-content-tabs">
+    <Tabs id="related-content-tabs">
     {item.citations.nodes.length > 0 && 
       <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
         {/* <RelatedContentList dataInput={item.citations} /> */}
-        <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
       </Tab>
     }
      {item.references.nodes.length > 0 && 
       <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
         {/* <RelatedContentList dataInput={item.references} /> */}
-        <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
       </Tab>
     }
@@ -112,7 +112,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   return (
     <div key={item.id} className="panel panel-transparent">
       <h2 className="member-results">{item.doi}</h2>
-        <ContentItem item={item}></ContentItem>
+        <DoiMetadata item={item}></DoiMetadata>
       <br/>
       {formattedCitation()}
       {analyticsBar()}

@@ -10,7 +10,7 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from "../DoiContainer/DoiContainer"
-import ContentItem from "../ContentItem/ContentItem"
+import DoiMetadata from "../DoiMetadata/DoiMetadata"
 import Error from "../Error/Error"
 import ContentLoader from "react-content-loader"
 
@@ -200,7 +200,7 @@ export const Search: React.FunctionComponent = () => {
           collection of publicly available DOIs from DOI registation agencies DataCite
           and Crossref. You can search, filter, cite results, and more!</p>
           <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
-          <p><a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
+          <p><a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
         </div>
       </div>
     )
@@ -247,7 +247,7 @@ export const Search: React.FunctionComponent = () => {
 
         {searchResults.map(item => (
           <React.Fragment key={item.id}>
-            <ContentItem item={item} />
+            <DoiMetadata item={item} />
           </React.Fragment>
         ))}
 

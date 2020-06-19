@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import ContentItem from './ContentItem'
+import DoiMetadata from './DoiMetadata'
 
 const exampleItem = {
   id: "https://handle.stage.datacite.org/10.21945/xs62-rp71",
@@ -20,44 +20,44 @@ const exampleItem = {
   downloadCount: 3
 }
 
-describe('ContentItem Component', () => {
+describe('DoiMetadata Component', () => {
   it('title', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('h3.work')
       .contains('Example title of the item Dataset')
       .should('be.visible')
   })
   
   it('creators', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.creators')
       .contains('John Smith')
       .should('be.visible')
   })
 
   it('metadata', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.metadata')
       .contains('Version 1.0 of CSV File published 2019 via SURFsara')
       .should('be.visible')
   })
 
   it('description', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.description')
       .contains('Example description of the item.')
       .should('be.visible')
   })
 
   it('metrics counter', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.metrics-counter')
       .contains('4 Citations 8 Views 3 Downloads')
       .should('be.visible')
   })
 
   it('actions', () => {
-    mount(<ContentItem item={exampleItem}/>)
+    mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.actions')
       .contains('Bookmark Claim')
       .should('be.visible')
