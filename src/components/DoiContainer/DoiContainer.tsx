@@ -55,16 +55,16 @@ export const DOI_GQL = gql`
       yearMonth
       total
     }
-    citations{
-      nodes{
-        formattedCitation
-      }
-    }
-    references{
-      nodes{
-        formattedCitation
-      }  
-    }
+    # citations{
+    #   nodes{
+    #     formattedCitation
+    #   }
+    # }
+    # references{
+    #   nodes{
+    #     formattedCitation
+    #   }  
+    # }
   }
 }
 `

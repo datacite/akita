@@ -53,7 +53,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   const citationsTabLabel = Pluralize({count: formatNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
   const viewsTabLabel = Pluralize({count: formatNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
   const downloadsTabLabel = Pluralize({count: formatNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
-  const referencesTabLabel = Pluralize({count: formatNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
  
 
   const analyticsBar = () => {
@@ -85,6 +84,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 
   const relatedContent = () => {
+
+    const referencesTabLabel = Pluralize({count: formatNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
+    const citationsTabLabel = Pluralize({count: formatNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
+
     return (
       <div className="panel panel-transparent">
       <div className="panel-body tab-content nav-tabs-member">
@@ -116,7 +119,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       <br/>
       {formattedCitation()}
       {analyticsBar()}
-      {relatedContent()}
+      {/* {relatedContent()} */}
     </div>
   )
 }
