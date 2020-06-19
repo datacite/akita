@@ -3,10 +3,12 @@ import { VegaLite } from 'react-vega';
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
 import Moment from 'moment';
-
+/* eslint-disable no-unused-vars */
+import { VisualizationSpec } from 'vega-embed';
+import { UsageMonth } from '../DoiContainer/DoiContainer';
 
 type Props = {
-  data?: [],
+  data?: UsageMonth[],
   doi?: string,
   counts?: number,
   publicationYear?: number,
@@ -24,7 +26,7 @@ const actions = {
   editor: false,
 }
 
-
+/* eslint-disable no-unused-vars */
 const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicationYear, type}) => {
 
   // current date
@@ -33,25 +35,19 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
 
   // Get the lowerBound
   const lowerBoundYear = Moment(Moment().subtract(3, 'years')).isSameOrBefore(Moment(publicationYear,"YYYY")) ? Moment(publicationYear,"YYYY") : Moment().subtract(3, 'years')
-  console.log(lowerBoundYear.year())
 
   // Filter dataset
-  let subset = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
+  let subset: UsageMonth[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
   subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'));});
-  console.log(subset)
-
 
   // Get domain
   const domain =  Math.abs(lowerBoundYear.diff(new Date(), 'months'))   
 
-
-  const spec = {
+  const spec: VisualizationSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v4.json",
     data: {
-      values: subset
+      name: 'table'
     },
-    transform: [
-    ],
     width: domain * 25,
     mark: {
       type: "bar",
@@ -120,7 +116,7 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
           {title()}
         </Row>
         <Row>       
-        <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
+        <VegaLite renderer="svg" spec={spec} data={{table: subset}} actions={actions} />
         </Row>
        </Grid>
        </div>
