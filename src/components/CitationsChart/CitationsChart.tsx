@@ -29,8 +29,6 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
 
   const yearsDomain = thisYear - lowerBoundYear;
 
-  // const subset = data.filter((e)=> { return (e.year) > lowerBoundYear;});
-
 
   const spec: VisualizationSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v4.json",
