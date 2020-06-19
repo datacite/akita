@@ -107,8 +107,11 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
   }
 
   const title = () => {
+    const style = {
+      color:'#1abc9c',
+    }
     return (
-    <small><Pluralize singular={'Citation'} count={citationCount} />  reported since publication in {publicationYear}</small>
+    <small><Pluralize singular={'Citation'} count={citationCount} style={style}/>  reported since publication in {publicationYear}</small>
     )
   }
 

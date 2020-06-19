@@ -69,7 +69,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
           }
           {item.viewCount > 0 && 
             <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-              <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={2020} type="View"/> 
+              <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={item.publicationYear} type="View"/> 
             </Tab>
           }
           {item.downloadCount > 0 && 

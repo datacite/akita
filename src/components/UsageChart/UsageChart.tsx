@@ -103,8 +103,12 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
   }
   
    const title = () => {
+    const style = {
+      color:'#1abc9c',
+    }
+
     return (
-    <small><Pluralize singular={type} count={counts} />  reported since publication in {publicationYear}</small>
+    <small><Pluralize singular={type} count={counts} style={style} />  reported since publication in {publicationYear}</small>
     )
   }
 
