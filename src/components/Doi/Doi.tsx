@@ -82,7 +82,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-
+// eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
 
     const referencesTabLabel = Pluralize({count: formatNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
