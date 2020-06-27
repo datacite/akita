@@ -8,10 +8,9 @@
     "type-check": "tsc",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "test": "jest",
-    "test:watch": "jest — watch",
-    "test:coverage": "jest — coverage",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cy:coverage": "npx nyc@15 report --reporter=lcov",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
@@ -46,6 +45,7 @@
     "wait-on": "^5.0.1"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.8.1",
     "@testing-library/react": "^10.2.1",
     "@types/jest": "^25.2.3",
     "@types/node": "^12.12.39",
@@ -57,9 +57,10 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "cypress": "4.8.0",
+    "cypress": "4.9.0",
     "cypress-react-unit-test": "^4.4.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -68,6 +69,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "jest": "^26.0.1",
+    "nyc": "^15.1.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.2"
   },
