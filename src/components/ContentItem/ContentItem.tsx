@@ -28,14 +28,12 @@ type Props = {
 }
 
 const ContentItem: React.FunctionComponent<Props> = ({item}) => {
-
   if (!item ) return (
     <Alert bsStyle="warning">
         No content found.
       </Alert>
   )
   
-
   const searchtitle = () => {
     if (!item.titles[0]) return (
       <h3 className="work">
@@ -78,8 +76,6 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-
-
   const title = () => {
     const router = useRouter()
     if(router == null || router.pathname === '/'){
@@ -88,9 +84,6 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
       return doiTitle()
     }
   }
-
-
-
 
   const creators = () => {
     if (!item.creators) return 'No creators'

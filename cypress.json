@@ -3,5 +3,6 @@
   "experimentalComponentTesting": true,
   "componentFolder": "src/components",
   "testFiles": "**/*.test.*",
-  "video": false
+  "video": false,
+  "projectId": "yur1cf"
 }

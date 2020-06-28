@@ -14,7 +14,7 @@ describe('Layout Component', () => {
 
   it('children', () => {
     const children= 'Bla bla'
-    mount(<Layout>{children}</Layout>)
+    mount(<Layout title={'DataCite Commons'}>{children}</Layout>)
     cy.get('.container-fluid')
       .contains('Bla bla')
       .should('be.visible')

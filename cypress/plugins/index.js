@@ -15,12 +15,18 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
+const browserify = require('@cypress/browserify-preprocessor')
+
 module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-  
-  // add other tasks to be registered here
-  
-  // IMPORTANT to return the config object
-  // with the any changed environment variables
+  require('@cypress/code-coverage/task')(on, config);
+
+  const options = browserify.defaultOptions
+  options.browserifyOptions.transform[1][1].babelrc = true
+  options.typescript = require.resolve('typescript')
+
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'));
+  on('file:preprocessor', browserify(options))
+
   return config
-}
+};

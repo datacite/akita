@@ -23,5 +23,3 @@ describe("DoiContainer", () => {
       .get('.formatted-citation', { timeout: 10000 }).contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.” Chandra X-ray Center/SAO, 2000, doi: 10.70048/Q3SN-H087.')
       })
 })
-
-export {}

@@ -15,9 +15,15 @@ const exampleItem = {
   publisher: "SURFsara",
   publicationYear: 2019,
   version: "1.0",
+  rights: [{
+    rights: 'Creative Commons Attribution 3.0 Unported',
+    rightsUri: 'http://creativecommons.org/licenses/by/3.0/de/deed.en',
+    rightsIdentifier: ' CC-BY-3.0',
+    rightsIdentifierScheme: 'SPDX',
+    schemeUri: 'https://spdx.org/licenses/',
+  }],
   citationCount: 4,
-  viewCount: 8,
-  downloadCount: 3
+  citationsOverTime: [{ total: 4, year: 2020 }]
 }
 
 describe('ContentItem Component', () => {
