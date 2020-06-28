@@ -33,7 +33,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('10.80225/da52-7919')
       // no results count for single result
-      .get('.member-results', { timeout: 10000 }).should('not.exist')
+      .get('.member-results', { timeout: 15000 }).should('not.exist')
       // the results are rendered
       .get('.panel.content-item').should(($contentItem) => {
         expect($contentItem).to.have.length(1)
