@@ -1,11 +1,3 @@
-{
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "sourceType": "module",
-      "allowImportExportEverywhere": true
-    }
-  }
-
 module.exports = {
     "env": {
         "browser": true,
