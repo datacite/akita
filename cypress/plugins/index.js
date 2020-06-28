@@ -19,14 +19,13 @@
 const browserify = require('@cypress/browserify-preprocessor')
 
 module.exports = (on, config) => {
+  const options = browserify.defaultOptions;
+  options.browserifyOptions.transform[1][1].babelrc = true;
+  options.typescript = require.resolve('typescript');
+  on('file:preprocessor', browserify(options));
+
   require('@cypress/code-coverage/task')(on, config);
-
-  const options = browserify.defaultOptions
-  options.browserifyOptions.transform[1][1].babelrc = true
-  options.typescript = require.resolve('typescript')
-
   on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'));
-  on('file:preprocessor', browserify(options))
-
+  
   return config
 };
