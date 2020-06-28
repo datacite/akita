@@ -14,7 +14,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('hallett')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 10000 })
+      .get('.member-results', { timeout: 20000 })
       .should('contain', 'Results')
       // results are rendered
       .get('.panel.content-item').should(($contentItem) => {
