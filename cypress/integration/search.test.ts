@@ -32,13 +32,13 @@ describe("Search", () => {
   it("search for specific doi", () => {
     cy.get('input[name="query"]')
       .type('10.80225/da52-7919')
-      // no results count for single result
-      .get('.member-results', { timeout: 20000 }).should('not.exist')
       // the results are rendered
-      .get('.panel.content-item').should(($contentItem) => {
+      .get('.panel.content-item', { timeout: 20000 }).should(($contentItem) => {
         expect($contentItem).to.have.length(1)
         expect($contentItem.eq(0)).to.contain('Version 1.0 of Content published 2020 via DataCite')
       })
+      // no results count for single result
+      .get('.member-results').should('not.exist')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
         expect($facet).to.have.length(3)
