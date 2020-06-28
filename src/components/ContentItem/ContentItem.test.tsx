@@ -84,26 +84,6 @@ describe('ContentItem Component', () => {
       .should('be.visible')
   })
 
-  it('metrics counter B', () => {
-    exampleItem.citationCount = 4623000000
-    exampleItem.viewCount = 8976000000
-    exampleItem.downloadCount = 3143000000
-    mount(<ContentItem item={exampleItem}/>)
-    cy.get('.metrics-counter')
-      .contains('4.6B Citations 9B Views 3.1B Downloads')
-      .should('be.visible')
-  })
-
-  it('metrics counter T', () => {
-    exampleItem.citationCount = 4623000000000
-    exampleItem.viewCount = 8976000000000
-    exampleItem.downloadCount = 3143000000000
-    mount(<ContentItem item={exampleItem}/>)
-    cy.get('.metrics-counter')
-      .contains('4.6T Citations 9T Views 3.1T Downloads')
-      .should('be.visible')
-  })
-
   it('actions', () => {
     mount(<ContentItem item={exampleItem}/>)
     cy.get('.actions')
