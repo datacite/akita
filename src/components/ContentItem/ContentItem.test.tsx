@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import ContentItem from './ContentItem'
@@ -59,6 +61,46 @@ describe('ContentItem Component', () => {
     mount(<ContentItem item={exampleItem}/>)
     cy.get('.metrics-counter')
       .contains('4 Citations 8 Views 3 Downloads')
+      .should('be.visible')
+  })
+
+  it('metrics counter K', () => {
+    exampleItem.citationCount = 4623
+    exampleItem.viewCount = 8976
+    exampleItem.downloadCount = 3143
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.metrics-counter')
+      .contains('4.6K Citations 9K Views 3.1K Downloads')
+      .should('be.visible')
+  })
+
+  it('metrics counter M', () => {
+    exampleItem.citationCount = 4623000
+    exampleItem.viewCount = 8976000
+    exampleItem.downloadCount = 3143000
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.metrics-counter')
+      .contains('4.6M Citations 9M Views 3.1M Downloads')
+      .should('be.visible')
+  })
+
+  it('metrics counter B', () => {
+    exampleItem.citationCount = 4623000000
+    exampleItem.viewCount = 8976000000
+    exampleItem.downloadCount = 3143000000
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.metrics-counter')
+      .contains('4.6B Citations 9B Views 3.1B Downloads')
+      .should('be.visible')
+  })
+
+  it('metrics counter T', () => {
+    exampleItem.citationCount = 4623000000000
+    exampleItem.viewCount = 8976000000000
+    exampleItem.downloadCount = 3143000000000
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.metrics-counter')
+      .contains('4.6T Citations 9T Views 3.1T Downloads')
       .should('be.visible')
   })
 
