@@ -21,7 +21,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
-import { formatNumbers } from '../../utils/helpers'
+import { compactNumbers } from '../../utils/helpers'
 
 type Props = {
   item: DoiType
@@ -140,13 +140,13 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
         {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={formatNumbers(item.citationCount)} /> </i>
+          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
         }
         {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={formatNumbers(item.viewCount)} /> </i>
+          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
         }
         {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={formatNumbers(item.downloadCount)} /> </i>
+          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
         }
       </div>
     )  
