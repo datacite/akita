@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import ContentItem from './ContentItem'
