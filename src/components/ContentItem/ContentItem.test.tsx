@@ -29,6 +29,13 @@ const exampleItem = {
 }
 
 describe('ContentItem Component', () => {
+  it('no content', () => {
+    mount(<ContentItem item={null}/>)
+    cy.get('div.alert.alert-warning')
+      .contains('No content found.')
+      .should('be.visible')
+  })
+
   it('title', () => {
     mount(<ContentItem item={exampleItem}/>)
     cy.get('h3.work')
