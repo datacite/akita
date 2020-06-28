@@ -74,7 +74,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
   
-  if (!formatted ) return (
+  if (!loading && !formatted ) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>

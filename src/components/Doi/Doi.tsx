@@ -53,9 +53,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
   const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
  
-
   const analyticsBar = () => {
-
+    if (item.citationCount == 0) return ''
+    
     return (
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
@@ -83,8 +83,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-
   const relatedContent = () => {
+    if (item.citations.nodes.length == 0) return ''
+
     return (
       <div className="panel panel-transparent">
       <div className="panel-body tab-content nav-tabs-member">

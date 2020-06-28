@@ -229,7 +229,7 @@ export const Search: React.FunctionComponent = () => {
 
     if (!data) return ''
 
-    if (searchResults.length == 0) return (
+    if (!loading && searchResults.length == 0) return (
       <React.Fragment>
         <Alert bsStyle="warning">
           No content found.
