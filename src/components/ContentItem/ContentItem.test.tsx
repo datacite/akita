@@ -23,7 +23,9 @@ const exampleItem = {
     schemeUri: 'https://spdx.org/licenses/',
   }],
   citationCount: 4,
-  citationsOverTime: [{ total: 4, year: 2020 }]
+  citationsOverTime: [{ total: 4, year: 2020 }],
+  viewCount: 8,
+  downloadCount: 3,
 }
 
 describe('ContentItem Component', () => {
