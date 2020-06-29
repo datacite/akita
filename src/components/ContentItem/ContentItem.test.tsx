@@ -4,7 +4,7 @@ import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import ContentItem from './ContentItem'
 
-const exampleItem = {
+let exampleItem = {
   id: "https://handle.stage.datacite.org/10.21945/xs62-rp71",
   doi: "10.21945/xs62-rp71",
   url: "http://example.com",
@@ -47,6 +47,14 @@ describe('ContentItem Component', () => {
     mount(<ContentItem item={exampleItem}/>)
     cy.get('.creators')
       .contains('John Smith')
+      .should('be.visible')
+  })
+
+  it('no creators', () => {
+    exampleItem.creators = []
+    mount(<ContentItem item={exampleItem}/>)
+    cy.get('.creators')
+      .contains('No creators')
       .should('be.visible')
   })
 

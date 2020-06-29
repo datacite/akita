@@ -27,10 +27,10 @@ type Props = {
 }
 
 const ContentItem: React.FunctionComponent<Props> = ({item}) => {
-  if (!item ) return (
+  if (item == null) return (
     <Alert bsStyle="warning">
-        No content found.
-      </Alert>
+      No content found.
+    </Alert>
   )
   
   const searchtitle = () => {
@@ -77,15 +77,19 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
 
   const title = () => {
     const router = useRouter()
-    if(router == null || router.pathname === '/'){
+    if (router == null || router.pathname === '/') {
       return searchtitle()
-    }else{
+    } else {
       return doiTitle()
     }
   }
 
   const creators = () => {
-    if (!item.creators) return 'No creators'
+    if (!item.creators[0]) return (
+      <div className="creators alert alert-warning">
+        No creators
+      </div>
+    )
 
     const creatorList = item.creators.reduce( (sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name

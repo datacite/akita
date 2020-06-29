@@ -17,9 +17,7 @@ const data = {
   citationCount: 4,
   viewCount: 8,
   downloadCount: 3000,
-  citationsOverTime: [],
-  citations: {nodes: [] },
-  references: {nodes: [] },
+  citationsOverTime: []
 }
 
 describe('ContentItem Component', () => {

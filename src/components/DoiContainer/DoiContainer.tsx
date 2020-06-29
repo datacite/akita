@@ -40,29 +40,19 @@ export const DOI_GQL = gql`
     doi
     formattedCitation
     citationCount
-    citationsOverTime{
+    citationsOverTime {
       year
       total
     }
     viewCount
-    viewsOverTime{
+    viewsOverTime {
       yearMonth
       total
     }
     downloadCount
-    downloadsOverTime{
+    downloadsOverTime {
       yearMonth
       total
-    }
-    citations{
-      nodes{
-        formattedCitation
-      }
-    }
-    references{
-      nodes{
-        formattedCitation
-      }  
     }
   }
 }
@@ -86,16 +76,16 @@ export interface DoiType {
   formattedCitation?: string
   citationCount?: number
   citationsOverTime?: CitationsYear[]
-  citations?: {
-    nodes: RelatedContentList[]
-  }
+  // citations?: {
+  //   nodes: RelatedContentList[]
+  // }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
-  references?: {
-    nodes: RelatedContentList[]
-  }
+  // references?: {
+  //   nodes: RelatedContentList[]
+  // }
 }
 
 interface Creator {
