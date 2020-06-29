@@ -227,8 +227,6 @@ export const Search: React.FunctionComponent = () => {
       <Error title="An error occured." message={error.message} />
     )
 
-    if (!data) return ''
-
     if (!loading && searchResults.length == 0) return (
       <React.Fragment>
         <Alert bsStyle="warning">
@@ -261,7 +259,7 @@ export const Search: React.FunctionComponent = () => {
       <div className="col-md-3"></div>
     )
 
-    if (!data || searchResults.length == 0) return (
+    if (!loading && searchResults.length == 0) return (
       <div className="col-md-3"></div>
     )
 

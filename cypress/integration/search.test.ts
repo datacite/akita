@@ -29,6 +29,19 @@ describe("Search", () => {
       })
   })
 
+  it("search and reset", () => {
+    cy.get('input[name="query"]')
+      .type('hallett')
+      // timeout for the query results to return
+      .get('.member-results', { timeout: 20000 })
+      // results are found
+      .should('contain', 'Results')
+      .get('#search-clear >').click()
+      // return introduction text
+      .get('.member')
+      .should('contain', 'Introduction')
+  })
+
   it("search for specific doi", () => {
     cy.get('input[name="query"]')
       .type('10.80225/da52-7919')
