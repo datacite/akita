@@ -26,7 +26,7 @@ type Props = {
   item: DoiType
 }
 
-const ContentItem: React.FunctionComponent<Props> = ({item}) => {
+const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   if (item == null) return (
     <Alert bsStyle="warning">
       No content found.
@@ -157,13 +157,13 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
 
   const bookmark = (
     <Popover id="bookmark" title="Bookmarking">
-      Bookmarking on this site will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
+      Bookmarking on this site will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
   const claim = (
     <Popover id="claim" title="Claim to ORCID Record">
-      Claiming to an ORCID record will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a>
+      Claiming to an ORCID record will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
     </Popover>
   )
 
@@ -198,4 +198,4 @@ const ContentItem: React.FunctionComponent<Props> = ({item}) => {
   )
 }
 
-export default ContentItem
+export default DoiMetadata
