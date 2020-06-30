@@ -5,6 +5,7 @@ import Error from "../Error/Error"
 import { useQuery } from '@apollo/react-hooks'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
+import { Popover, OverlayTrigger } from 'react-bootstrap'
 
 type Props = {
   item?: string
@@ -54,6 +55,16 @@ export const DOI_GQL = gql`
       yearMonth
       total
     }
+    # citations{
+    #   nodes{
+    #     formattedCitation
+    #   }
+    # }
+    # references{
+    #   nodes{
+    #     formattedCitation
+    #   }  
+    # }
   }
 }
 `
@@ -76,16 +87,16 @@ export interface DoiType {
   formattedCitation?: string
   citationCount?: number
   citationsOverTime?: CitationsYear[]
-  // citations?: {
-  //   nodes: RelatedContentList[]
-  // }
+  citations?: {
+    nodes: RelatedContentList[]
+  }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
-  // references?: {
-  //   nodes: RelatedContentList[]
-  // }
+  references?: {
+    nodes: RelatedContentList[]
+  }
 }
 
 interface Creator {
@@ -184,6 +195,20 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
   if (!doi ) return <p>Content not found.</p>
 
   const leftSideBar = () => {
+
+    const facebook = (
+      <Popover id="share" title="Sharing via Facebook">
+         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+      </Popover>
+    )
+
+    const twitter = (
+      <Popover id="share" title="Sharing via Twitter">
+        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+      </Popover>
+    )
+
+
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -194,34 +219,54 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           </div>
         </div>
         <div className="panel panel-transparent">
-        <div className="facets panel-body">
+          <div className="facets panel-body">
 
-        <h4>Export</h4>
-        <div id="export-xml" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
+            <h4>Export</h4>
+            <div id="export-xml" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
+            </div>
+            <div id="export-json" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
+            </div>
+            <div id="export-ld" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
+            </div>
+            <div id="export-bibtex" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" +
+                doi.doi}>BibTeX</a>
+            </div>
+            <div id="export-bibtex" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
+            </div>
+            <div id="export-bibtex" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
+            </div>
+            { doi.types.resourceTypeGeneral === "Software" &&
+            <div id="export-bibtex" className="download">
+              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
+            </div>
+            }
+          </div>
+          <div className="facets panel-body">
+
+            <h4>Share</h4>
+            <span className="actions">
+            <OverlayTrigger  placement="top" overlay={facebook}>
+              <span className="share">Facebook</span>
+            </OverlayTrigger>
+            <br></br>
+            <OverlayTrigger  placement="top" overlay={twitter}>
+              <span className="share">Twitter</span>
+            </OverlayTrigger>
+            </span>
+          </div>
         </div>
-        <div id="export-json" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
-        </div>
-        <div id="export-ld" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
-        </div>
-        <div id="export-bibtex" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" + doi.doi}>BibTeX</a>
-        </div>
-        <div id="export-bibtex" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
-        </div>
-        <div id="export-bibtex" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
-        </div>
-        { doi.types.resourceTypeGeneral === "Software" &&
-        <div id="export-bibtex" className="download">
-          <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
-        </div>
-        }
-      </div>
-      </div>
       </div>
     )
   }

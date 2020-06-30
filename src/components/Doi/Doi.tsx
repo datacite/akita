@@ -5,8 +5,10 @@ import Pluralize from 'react-pluralize'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
-import ContentItem from '../ContentItem/ContentItem'
+import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { compactNumbers } from '../../utils/helpers'
+
+import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
   item: DoiType
@@ -56,7 +58,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="panel panel-transparent">
           <div className="panel-body tab-content nav-tabs-member">
-        <Tabs defaultActiveKey="citationsOverTime" id="over-time-tabs">
+        <Tabs  id="over-time-tabs">
           {item.citationCount > 0 && 
             <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
               <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
@@ -64,14 +66,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
           }
           {item.viewCount > 0 && 
             <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-              {/* <ViewsChart dataInput={item.viewsOverTime} /> */}
-              <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+              <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={item.publicationYear} type="View"/> 
             </Tab>
           }
           {item.downloadCount > 0 && 
             <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
-              {/* <DownloadsChart dataInput={item.downloadsOverTime} /> */}
-              <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+              <UsageChart data={item.downloadsOverTime} counts={item.downloadCount} publicationYear={item.publicationYear} type="Download" />
             </Tab>
           }
         </Tabs>
@@ -80,40 +80,44 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-  // const relatedContent = () => {
-  //   if (item.citations.nodes.length == 0) return ''
+// eslint-disable-next-line no-unused-vars
+  const relatedContent = () => {
 
-  //   return (
-  //     <div className="panel panel-transparent">
-  //     <div className="panel-body tab-content nav-tabs-member">
-  //   <Tabs defaultActiveKey="citationsList" id="related-content-tabs">
-  //   {item.citations.nodes.length > 0 && 
-  //     <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-  //       {/* <RelatedContentList dataInput={item.citations} /> */}
-  //       <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+    const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
+    const citationsTabLabel = Pluralize({count: compactNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
 
-  //     </Tab>
-  //   }
-  //    {item.references.nodes.length > 0 && 
-  //     <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-  //       {/* <RelatedContentList dataInput={item.references} /> */}
-  //       <p>This feature will be implemented later in 2020. <a href="https://datacite.org/roadmap.html" target="_blank" rel="noreferrer">Provide input</a></p>
+    return (
+      <div className="panel panel-transparent">
+      <div className="panel-body tab-content nav-tabs-member">
+    <Tabs id="related-content-tabs">
+    {item.citations.nodes.length > 0 && 
+      <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
+        {/* <RelatedContentList dataInput={item.citations} /> */}
+        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
-  //     </Tab>
-  //   }
-  //   </Tabs>
-  //   </div>
-  // </div>
-  //   )
-  // }
+      </Tab>
+    }
+     {item.references.nodes.length > 0 && 
+      <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
+        {/* <RelatedContentList dataInput={item.references} /> */}
+        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
+
+       </Tab>
+    }
+     </Tabs>
+     </div>
+   </div>
+     )
+   }
 
   return (
     <div key={item.id} className="panel panel-transparent">
-      <h3 className="member-results">{item.doi}</h3>
-        <ContentItem item={item}></ContentItem>
+      <h2 className="member-results">{item.doi}</h2>
+        <DoiMetadata item={item}></DoiMetadata>
       <br/>
       {formattedCitation()}
       {analyticsBar()}
+      {/* {relatedContent()} */}
     </div>
   )
 }

@@ -17,10 +17,14 @@ const data = {
   citationCount: 4,
   viewCount: 8,
   downloadCount: 3000,
-  citationsOverTime: []
+  citationsOverTime: [],
+  viewsOverTime: [],
+  downloadsOverTime: [],
+  citations: {nodes: [] },
+  references: {nodes: [] },
 }
 
-describe('ContentItem Component', () => {
+describe('DoiMetadata Component', () => {
   it('title', () => {
     mount(<Doi item={data}/>)
     cy.get('h3.work')
