@@ -173,6 +173,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           speed={1}
           width={1000}
           height={250}
+          uniqueKey={2}
           viewBox="0 0 1000 250"
           backgroundColor="#f3f3f3"
           foregroundColor="#ecebeb"
