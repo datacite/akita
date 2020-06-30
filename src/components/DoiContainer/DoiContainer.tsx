@@ -87,16 +87,16 @@ export interface DoiType {
   formattedCitation?: string
   citationCount?: number
   citationsOverTime?: CitationsYear[]
-  // citations?: {
-  //   nodes: RelatedContentList[]
-  // }
+  citations?: {
+    nodes: RelatedContentList[]
+  }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
-  // references?: {
-  //   nodes: RelatedContentList[]
-  // }
+  references?: {
+    nodes: RelatedContentList[]
+  }
 }
 
 interface Creator {
