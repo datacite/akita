@@ -72,8 +72,9 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
         type: "temporal",
         title: null,
         axis: {
-          labelAngle: domain < 3 ? 45 : 0 ,
-          labelOverlap: "parity"
+          labelAngle: domain < 30 ? 45 : 0,
+          labelFlush: false,
+          labelOverlap: true
         },
         scale: {
           domain: [{year:lowerBoundYear.year(),"month": 1}, {year:thisYear,"month": thisMonth}]
