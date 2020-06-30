@@ -4,5 +4,6 @@ NumberFormat.__addLocaleData(
 );
 
 export const compactNumbers = (num) => {
-  return toLocaleString(num, 'en', { notation: "compact" , compactDisplay: "short" })
+   if (num >= 1e3) return  toLocaleString(num, 'en', { notation: "compact" , compactDisplay: "short" })
+   return num
 }

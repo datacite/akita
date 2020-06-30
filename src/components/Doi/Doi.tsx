@@ -47,13 +47,11 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     margin: '0 0 .35em 10px',
   }
 
-  const citationsTabLabel = Pluralize({count: compactNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
-  const viewsTabLabel = Pluralize({count: compactNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
-  const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
-  // const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
+  const citationsTabLabel = Pluralize({count: compactNumbers(item.citationCount), singular:'Citation', style:style, showCount:true}) 
+  const viewsTabLabel = Pluralize({count: compactNumbers(item.viewCount), singular:'View', style:style, showCount:true}) 
+  const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style, showCount:true}) 
  
   const analyticsBar = () => {
-    if (item.citationCount == 0) return ''
 
     return (
       <div className="panel panel-transparent">

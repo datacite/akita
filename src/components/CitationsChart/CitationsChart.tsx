@@ -73,8 +73,9 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
         type: "quantitative",
         axis: {
           format: "1",
-          labelAngle: yearsDomain < 3 ? 45 : 0,
-          labelOverlap: "parity"
+          labelAngle: yearsDomain < 11 ? 45 : 0,
+          labelFlush: false,
+          labelOverlap: true
         },
         scale: {
           domain: [lowerBoundYear, thisYear]
