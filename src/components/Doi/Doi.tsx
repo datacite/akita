@@ -6,7 +6,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
-import { formatNumbers } from '../../utils/helpers'
+import { compactNumbers } from '../../utils/helpers'
 
 import UsageChart from '../UsageChart/UsageChart'
 
@@ -21,7 +21,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
       </Alert>
   )
   
-
   const formattedCitation = () => { 
     const [selectedOption, setSelectedOption] = React.useState('')
 
@@ -50,12 +49,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     margin: '0 0 .35em 10px',
   }
 
-  const citationsTabLabel = Pluralize({count: formatNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
-  const viewsTabLabel = Pluralize({count: formatNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
-  const downloadsTabLabel = Pluralize({count: formatNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
+  const citationsTabLabel = Pluralize({count: compactNumbers(item.citationCount), singular:'Citation', style:style,showCount:true}) 
+  const viewsTabLabel = Pluralize({count: compactNumbers(item.viewCount), singular:'View', style:style,showCount:true}) 
+  const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style,showCount:true}) 
  
-
   const analyticsBar = () => {
+    if (item.citationCount == 0) return ''
 
     return (
       <div className="panel panel-transparent">
@@ -85,8 +84,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
 
-    const referencesTabLabel = Pluralize({count: formatNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
-    const citationsTabLabel = Pluralize({count: formatNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
+    const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
+    const citationsTabLabel = Pluralize({count: compactNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
 
     return (
       <div className="panel panel-transparent">
@@ -104,13 +103,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
         {/* <RelatedContentList dataInput={item.references} /> */}
         <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
-      </Tab>
+       </Tab>
     }
-    </Tabs>
-    </div>
-  </div>
-    )
-  }
+     </Tabs>
+     </div>
+   </div>
+     )
+   }
 
   return (
     <div key={item.id} className="panel panel-transparent">

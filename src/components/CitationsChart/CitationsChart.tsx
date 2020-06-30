@@ -22,8 +22,7 @@ const actions = {
 
 /* eslint-disable no-unused-vars */
 const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
-
-  const thisYear= new Date().getFullYear() + 1 
+  const thisYear = new Date().getFullYear() + 1 
 
   const lowerBoundYear = thisYear - 10 > publicationYear ? thisYear - 10 : publicationYear
 

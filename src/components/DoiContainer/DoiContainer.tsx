@@ -41,17 +41,17 @@ export const DOI_GQL = gql`
     doi
     formattedCitation
     citationCount
-    citationsOverTime{
+    citationsOverTime {
       year
       total
     }
     viewCount
-    viewsOverTime{
+    viewsOverTime {
       yearMonth
       total
     }
     downloadCount
-    downloadsOverTime{
+    downloadsOverTime {
       yearMonth
       total
     }
@@ -74,31 +74,29 @@ export interface DoiType {
   doi: string
   url: string
   types: {
-    resourceTypeGeneral: string
-    resourceType: string
+    resourceTypeGeneral?: string
+    resourceType?: string
   }
   creators: Creator[]
   titles: Title[]
   publicationYear: number
   publisher: string
-  descriptions: Description[]
-  rights: Rights[]
-  version: string
-  formattedCitation: string
-  citationCount: number
-  citationsOverTime: CitationsYear[]
-  citations: {
-    nodes: RelatedContentList[]
-  }
-  viewCount: number
-  viewsOverTime: UsageMonth[]
-  views: []
-  downloadCount: number
-  downloadsOverTime: UsageMonth[]
-  downloads: []
-  references: {
-    nodes: RelatedContentList[]
-  }
+  descriptions?: Description[]
+  rights?: Rights[]
+  version?: string
+  formattedCitation?: string
+  citationCount?: number
+  citationsOverTime?: CitationsYear[]
+  // citations?: {
+  //   nodes: RelatedContentList[]
+  // }
+  viewCount?: number
+  viewsOverTime?: UsageMonth[]
+  downloadCount?: number
+  downloadsOverTime?: UsageMonth[]
+  // references?: {
+  //   nodes: RelatedContentList[]
+  // }
 }
 
 interface Creator {
@@ -115,6 +113,9 @@ interface Title {
 interface Rights {
   rights: string
   rightsUri: string
+  rightsIdentifier: string
+  rightsIdentifierScheme: string
+  schemeUri: string
 }
 
 interface Description {
@@ -122,7 +123,7 @@ interface Description {
 }
 
 export interface CitationsYear {
-  year: string,
+  year: number,
   total: number
 }
 

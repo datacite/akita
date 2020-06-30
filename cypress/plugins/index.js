@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -15,7 +14,17 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
+const browserify = require('@cypress/browserify-preprocessor')
+
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+  const options = browserify.defaultOptions;
+  options.browserifyOptions.transform[1][1].babelrc = true;
+  options.typescript = require.resolve('typescript');
+  on('file:preprocessor', browserify(options));
+
+  require('@cypress/code-coverage/task')(on, config);
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'));
+
+  return config
+};

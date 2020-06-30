@@ -46,28 +46,29 @@ const oldData = {
 }
 
 describe('CitationsChart Component', () => {
-      it('normal data', () => {
-          mount(
-          <CitationsChart doi={ data.doi } publicationYear={ data.publicationYear } citationCount={ data.citationCount} data={ data.citationOverTime } />)
-            cy.get('.mark-rect > path')
-            .should('be.visible')
-            .should('have.length', 3)
+  it('normal data', () => {
+    mount(
+    <CitationsChart doi={ data.doi } publicationYear={ data.publicationYear } citationCount={ data.citationCount} data={ data.citationOverTime } />)
+      cy.get('.mark-rect > path')
+      .should('be.visible')
+      .should('have.length', 3)
 
-            cy.get('small')
-            .should('be.visible')
-            .contains('137 Citations reported since publication in 2014')
-          })
+      cy.get('small')
+      .should('be.visible')
+      .contains('137 Citations reported since publication in 2014')
+  })
 
-      // Data older than 10 years should not be showned
-      it('old data', () => {
-        mount(
-        <CitationsChart doi={ oldData.doi } publicationYear={ oldData.publicationYear } citationCount={ oldData.citationCount} data={ oldData.citationOverTime } />)
-          cy.get('.mark-rect > path')
-          .should('not.be.visible')
-          .should('have.length', 0)
+  // Data older than 10 years should not be shown
+  it('old data', () => {
+    mount(
+    <CitationsChart doi={ oldData.doi } publicationYear={ oldData.publicationYear } citationCount={ oldData.citationCount} data={ oldData.citationOverTime } />)
+      cy.get('.mark-rect > path')
+      .should('not.be.visible')
+      .should('have.length', 0)
 
-          cy.get('small')
-          .should('be.visible')
-          .contains('137 Citations reported since publication in 1985')
-        })
-      })
+      cy.get('small')
+      .should('be.visible')
+      .contains('137 Citations reported since publication in 1985')
+  })
+})
+      

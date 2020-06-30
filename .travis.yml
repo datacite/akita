@@ -41,11 +41,18 @@ install:
   - cypress install
   - sudo pip install awscli
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - yarn lint
   - yarn build
   - yarn start & wait-on http://localhost:3000
-  - yarn cypress:run
+  - yarn cy:run --record
+  - yarn cy:coverage
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
