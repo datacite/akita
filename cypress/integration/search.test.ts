@@ -57,8 +57,8 @@ describe("Search", () => {
         expect($facet).to.have.length(4)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
-        expect($facet.eq(1)).to.contain('License')
-        expect($facet.eq(2)).to.contain('DOI Registration Agency')
+        expect($facet.eq(2)).to.contain('License')
+        expect($facet.eq(3)).to.contain('DOI Registration Agency')
       })
   })
 

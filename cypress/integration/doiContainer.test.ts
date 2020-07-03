@@ -11,7 +11,7 @@ describe("DoiContainer", () => {
 
   it("license", () => {
     cy.get('.license a')
-      .should('have.attr', 'href').and('include', 'creativecommons.org')
+      .should('have.attr', 'href')
       .should('be.visible')
   })
 
