@@ -1,17 +1,22 @@
 describe("DoiContainer", () => {
   beforeEach(() => {
-    cy.visit(`/dois/${encodeURIComponent('10.70048/q3sn-h087')}`)
+    cy.visit(`/dois/${encodeURIComponent('10.17863/cam.330')}`)
   })
 
-  it("visit 10.70048/q3sn-h087", () => {
+  it("visit 10.17863/cam.330", () => {
     cy.get('h3.work',  { timeout: 10000 })
-      .contains('Chandra X-ray Observatory ObsId 1')
+      .contains('Sugar Addiction: The State of the Science ')
+      .should('be.visible')
+  })
+
+  it("license", () => {
+    cy.get('.license a')
+      .should('have.attr', 'href').and('include', 'creativecommons.org')
       .should('be.visible')
   })
 
   it("export box", () => {
     cy.get('div#export-xml')
-      // timeout for the query results to return
       .contains('DataCite XML')
       .should('be.visible')
   })
@@ -23,5 +28,5 @@ describe("DoiContainer", () => {
       .get('.formatted-citation', { timeout: 10000 })
       .should('be.visible')
       //.contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.”')
-      })
+  })
 })

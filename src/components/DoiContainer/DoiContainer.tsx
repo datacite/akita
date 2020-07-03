@@ -36,6 +36,7 @@ export const DOI_GQL = gql`
   	rights{
       rights
       rightsUri
+      rightsIdentifier
     }
     id
     doi
@@ -114,8 +115,6 @@ interface Rights {
   rights: string
   rightsUri: string
   rightsIdentifier: string
-  rightsIdentifierScheme: string
-  schemeUri: string
 }
 
 interface Description {

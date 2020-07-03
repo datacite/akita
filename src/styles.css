@@ -115,3 +115,10 @@ input[type=text] {
 .work span.small {
   color: #88939a;
 }
+
+.license svg {
+  font-size: 27px;
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
