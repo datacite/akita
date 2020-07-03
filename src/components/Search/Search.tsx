@@ -49,6 +49,7 @@ interface ContentQueryVar {
   published: string
   resourceTypeId: string
   fieldOfScience: string
+  license: string
   registrationAgency: string
 }
 
