@@ -54,9 +54,10 @@ describe("Search", () => {
       .get('.member-results').should('not.exist')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(3)
+        expect($facet).to.have.length(4)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
+        expect($facet.eq(1)).to.contain('License')
         expect($facet.eq(2)).to.contain('DOI Registration Agency')
       })
   })
