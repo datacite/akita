@@ -34,7 +34,7 @@ describe('DoiMetadata Component', () => {
   it('title', () => {
     mount(<DoiMetadata item={exampleItem}/>)
     cy.get('h3.work')
-      .contains('Example title of the item Dataset')
+      .contains('Example title of the item')
       .should('be.visible')
   })
   
@@ -64,6 +64,13 @@ describe('DoiMetadata Component', () => {
     mount(<DoiMetadata item={exampleItem}/>)
     cy.get('.description')
       .contains('Example description of the item.')
+      .should('be.visible')
+  })
+
+  it('tags', () => {
+    mount(<DoiMetadata item={exampleItem}/>)
+    cy.get('.tags')
+      .contains('French')
       .should('be.visible')
   })
 
