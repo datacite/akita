@@ -14,7 +14,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('richard hallett')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 20000 })
+      .get('.member-results', { timeout: 30000 })
       .should('contain', 'Results')
       // results are rendered
       .get('.panel.content-item').should(($contentItem) => {
@@ -36,7 +36,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('hallett')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 20000 })
+      .get('.member-results', { timeout: 30000 })
       // results are found
       .should('contain', 'Results')
       .get('#search-clear >').click()
@@ -49,7 +49,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('10.80225/da52-7919')
       // the results are rendered
-      .get('.panel-body .metadata', { timeout: 20000 })
+      .get('.panel-body .metadata', { timeout: 30000 })
       .should('contain', 'Version 1.0 of Content published 2020 via DataCite' )
       .get('.panel-body .creators')
       .should('contain', 'Matt Buys, Robin Dasler & Martin Fenner')
@@ -74,7 +74,7 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('xxxxxxxxxxxx')
       // timeout for the query results to return
-      .get('.alert-warning', { timeout: 20000 })
+      .get('.alert-warning', { timeout: 30000 })
       .should('contain', 'No content found.')
       // no results count for zero results
       .get('.member-results').should('not.exist')
@@ -85,7 +85,7 @@ describe("Search", () => {
   it("search and use facets", () => {
     cy.get('input[name="query"]')
       .type('hallett')
-      .get(':nth-child(2) > .panel-body > ul > :nth-child(2) > a', { timeout: 20000 })
+      .get(':nth-child(2) > .panel-body > ul > :nth-child(2) > a', { timeout: 30000 })
       .click()
       // timeout for the query results to return
       .get('.member-results')
@@ -106,11 +106,11 @@ describe("Search", () => {
   it("search with pagination", () => {
     cy.get('input[name="query"]')
       .type('hallett')
-      .get('.member-results', { timeout: 10000 })
+      .get('.member-results', { timeout: 30000 })
       .should('contain', 'Results')
       .get('.page-number > a').click()
       // timeout for the query results to return
-      .get('.member-results', { timeout: 10000 })
+      .get('.member-results', { timeout: 30000 })
       .should('contain', 'Results')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
