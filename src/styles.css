@@ -115,3 +115,7 @@ input[type=text] {
 .work span.small {
   color: #88939a;
 }
+
+.pager li {
+  margin: 3px;
+}
