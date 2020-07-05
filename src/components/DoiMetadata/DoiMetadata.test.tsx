@@ -22,6 +22,8 @@ let exampleItem = {
     rightsIdentifierScheme: 'SPDX',
     schemeUri: 'https://spdx.org/licenses/',
   }],
+  registrationAgency: { id: 'datacite', name: 'DataCite' },
+  language: { id: 'fr', name: 'French' },
   citationCount: 4,
   citationsOverTime: [{ total: 4, year: 2020 }],
   viewCount: 8,
