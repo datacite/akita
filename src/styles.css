@@ -116,6 +116,13 @@ input[type=text] {
   color: #88939a;
 }
 
+.license svg {
+  font-size: 27px;
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
 .tags .label {
   margin-top: 2px;
   margin-right: 3px;

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Popover, OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
+import uniqBy from 'lodash/uniqBy'
 import Pluralize from 'react-pluralize'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
@@ -14,7 +15,15 @@ import {
 import { 
   faEye
 } from '@fortawesome/free-regular-svg-icons'
-import { faOrcid } from '@fortawesome/free-brands-svg-icons'
+import { 
+  faOrcid,
+  faCreativeCommons,
+  faCreativeCommonsBy,
+  faCreativeCommonsNc,
+  faCreativeCommonsNd,
+  faCreativeCommonsSa,
+  faCreativeCommonsZero
+} from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -125,6 +134,69 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
+  const license = () => {
+    const uniqueRights = uniqBy(item.rights, 'rightsIdentifier')
+    const ccRights = uniqueRights.reduce((sum, r) => {
+      if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
+        const splitIdentifier = r.rightsIdentifier.split('-').filter(l => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l) )
+        splitIdentifier.forEach(l => {
+          switch(l) {
+            case 'by':
+              sum.push({ icon: faCreativeCommonsBy, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              break;
+            case 'nc':
+              sum.push({ icon: faCreativeCommonsNc, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              break;
+            case 'nd':
+              sum.push({ icon: faCreativeCommonsNd, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              break;
+            case 'sa':
+              sum.push({ icon: faCreativeCommonsSa, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              break;
+            case 'cc0':
+              sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              sum.push({ icon: faCreativeCommonsZero, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              break;
+            default:
+              sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+          }
+        })
+      }
+      return sum
+    }, [])
+
+    const otherRights = uniqueRights.reduce((sum, r) => {
+      if (r.rightsIdentifier && !r.rightsIdentifier.startsWith('cc')) {
+        if (r.rightsIdentifier.startsWith('apache')) {
+          r.rightsIdentifier = "Apache%202.0"
+        } else if (r.rightsIdentifier.startsWith('ogl')) {
+            r.rightsIdentifier = "OGL%20Canada"
+        } else {
+          r.rightsIdentifier = r.rightsIdentifier.replace(/-/g, '%20').toUpperCase()
+        } 
+        sum.push(r)
+      }
+      return sum
+    }, [])
+
+    if (!ccRights[0] && !otherRights[0]) return ''
+
+    return (
+      <div className="license">
+        {ccRights.map((r, index) =>
+          <a href={r.rightsUri} key={index} target="_blank" rel="noreferrer">
+            <FontAwesomeIcon key={r.rightsIdentifier} icon={r.icon} />
+          </a>
+        )}
+        {otherRights.map((r) =>
+          <a href={r.rightsUri} key={r.rightsIdentifier} target="_blank" rel="noreferrer">
+            <img src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`} />
+          </a>
+        )}
+      </div>
+    )
+  }
+
   const registered = () => {
     return (
       <div className="registered">
@@ -219,16 +291,16 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   const links = () => {
     return (
       <div className="panel-footer">
-      <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
-      <span className="actions">
-        <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-          <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
-        </OverlayTrigger>
-        <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-          <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
-      </OverlayTrigger>
-      </span>
-    </div>
+        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
+        <span className="actions">
+          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" placement="top" overlay={claim}>
+            <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
+          </OverlayTrigger>
+        </span>
+      </div>
     )
   }
 
@@ -240,6 +312,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
         {metadata()}
         {description()}
         {registered()}
+        {license()}
         {tags()}
         {metricsCounter()}
       </div>

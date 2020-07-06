@@ -38,6 +38,7 @@ interface ContentQueryData {
       resourceTypes: ContentFacet[]
       languages: ContentFacet[]
       fieldsOfScience: ContentFacet[]
+      licenses: ContentFacet[]
       registrationAgencies: ContentFacet[]
       totalCount: Number
   },
@@ -50,12 +51,13 @@ interface ContentQueryVar {
   resourceTypeId: string
   language: string
   fieldOfScience: string
+  license: string
   registrationAgency: string
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $language: String, $fieldOfScience: String, $registrationAgency: String) {
-    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, language: $language, fieldOfScience: $fieldOfScience, registrationAgency: $registrationAgency) {
+  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency) {
       totalCount
       pageInfo {
         endCursor
@@ -77,6 +79,11 @@ export const CONTENT_GQL = gql`
         count
       }
       fieldsOfScience {
+        id
+        title
+        count
+      }
+      licenses {
         id
         title
         count
@@ -109,6 +116,11 @@ export const CONTENT_GQL = gql`
         publicationYear
         publisher
         version
+        rights {
+          rights
+          rightsUri
+          rightsIdentifier
+        }
         fieldsOfScience {
           id
           name
@@ -136,8 +148,9 @@ const Search: React.FunctionComponent = () => {
   /* eslint-disable no-unused-vars */
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  const [license, setLicense] = useQueryState('license', { history: 'push' })
+  const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
@@ -146,7 +159,7 @@ const Search: React.FunctionComponent = () => {
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, language: language as string, fieldOfScience: fieldOfScience as string, registrationAgency: registrationAgency as string }
+      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, license: license as string, registrationAgency: registrationAgency as string }
     }
   )
 
@@ -193,7 +206,7 @@ const Search: React.FunctionComponent = () => {
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, language: language as string, fieldOfScience: fieldOfScience as string, registrationAgency: registrationAgency as string })
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, license: license as string, registrationAgency: registrationAgency as string })
     }, 1000)
 
     let results: ContentNode[] = []
@@ -349,6 +362,24 @@ const Search: React.FunctionComponent = () => {
                 {data.works.fieldsOfScience.map(facet => (
                   <li key={facet.id}>
                     {facetLink('field-of-science', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
+                    <div className="clearfix"/>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        }
+
+        {data.works.licenses.length > 0 &&
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>License</h4>
+              <ul>
+                {data.works.licenses.map(facet => (
+                  <li key={facet.id}>
+                    {facetLink('license', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                     <div className="clearfix"/>
