@@ -50,7 +50,7 @@ const data = {
 describe('TypesChart Component', () => {
   it('normal data', () => {
     mount(
-    <TypesChart data={ data.works.resourceTypes } />)
+    <TypesChart data={ data.works.resourceTypes } legend={true} />)
       cy.get('.mark-arc > path')
       .should('be.visible')
       .should('have.length', 6)
@@ -58,6 +58,19 @@ describe('TypesChart Component', () => {
       cy.get('.mark-symbol > path')
       .should('be.visible')
       .should('have.length', 6)
+
+  })
+
+  it('no legend', () => {
+    mount(
+    <TypesChart data={ data.works.resourceTypes } legend={false} />)
+      cy.get('.mark-arc > path')
+      .should('be.visible')
+      .should('have.length', 6)
+
+      cy.get('.mark-symbol > path')
+      .should('not.be.visible')
+      .should('have.length', 0)
 
   })
 })

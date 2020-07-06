@@ -7,6 +7,7 @@ import { VisualizationSpec } from 'vega-embed';
 type Props = {
   data?: [],
   doi?: string,
+  legend?: any,
 }
 
 const actions = {
@@ -17,7 +18,7 @@ const actions = {
 }
 
 /* eslint-disable no-unused-vars */
-const TypesChart: React.FunctionComponent<Props> = ({data, doi}) => {
+const TypesChart: React.FunctionComponent<Props> = ({data, doi, legend}) => {
 
   const spec: VisualizationSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -41,6 +42,7 @@ const TypesChart: React.FunctionComponent<Props> = ({data, doi}) => {
           "field": "title",
           "title": "Type",
           "type": "nominal",
+          "legend": legend,
           "scale": {
             "scheme": "viridis"
           }
