@@ -121,4 +121,20 @@ input[type=text] {
   margin-top: 3px;
   margin-right: 3px;
   margin-bottom: 3px;
+
+.tags .label {
+  margin-top: 2px;
+  margin-right: 3px;
+  font-size: 16px;
+}
+
+.tags .label-info {
+  background: #ffffff;
+  color: #2b84d2;
+  border: 2px solid #2b84d2;
+  cursor: pointer;
+}
+
+.pager li {
+  margin: 3px;
 }

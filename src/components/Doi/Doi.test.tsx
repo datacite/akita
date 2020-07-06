@@ -13,6 +13,8 @@ const data = {
   publisher: "SURFsara",
   publicationYear: 2019,
   version: "1.0",
+  registered: "2019-12-19T12:43:12Z",
+  registrationAgency: { id: "datacite", name: "DataCite" },
   formattedCitation: "Gallardo-Escárate, C., Valenzuela-Muñoz, V., Núñez-Acuña, G., &amp; Haye, P. (2014). <i>Data from: SNP discovery and gene annotation in the surf clam Mesodesma donacium</i> (Version 1) [Data set]. Dryad. <a href='https://doi.org/10.5061/DRYAD.8JD18'>https://doi.org/10.5061/DRYAD.8JD18</a>",
   citationCount: 4,
   viewCount: 8,
@@ -28,7 +30,7 @@ describe('DoiMetadata Component', () => {
   it('title', () => {
     mount(<Doi item={data}/>)
     cy.get('h3.work')
-      .contains('Example title of the item Dataset')
+      .contains('Example title of the item')
       .should('be.visible')
   })
   
@@ -50,6 +52,13 @@ describe('DoiMetadata Component', () => {
     mount(<Doi item={data}/>)
     cy.get('.description')
       .contains('Example description of the item.')
+      .should('be.visible')
+  })
+
+  it('registered', () => {
+    mount(<Doi item={data}/>)
+    cy.get('.registered')
+      .contains('DOI registered December 19, 2019')
       .should('be.visible')
   })
 

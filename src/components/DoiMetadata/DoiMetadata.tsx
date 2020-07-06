@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popover, OverlayTrigger, Alert } from 'react-bootstrap'
+import { Popover, OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
@@ -58,9 +58,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
         <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
-        {item.types.resourceTypeGeneral &&
-          <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
-        }
       </h3>
     )
   }
@@ -77,9 +74,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
         <a target="_blank" rel="noreferrer" href={item.id}>
           {ReactHtmlParser(titleHtml)}
         </a>
-        {item.types.resourceTypeGeneral &&
-          <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
-        }
       </h3>
     )
   }
@@ -199,6 +193,58 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
             <img src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`} />
           </a>
         )}
+
+  const registered = () => {
+    return (
+      <div className="registered">
+      DOI registered
+      {item.registered &&
+        <span> {new Date(item.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+      } via {item.registrationAgency.name}.
+      </div>
+    )
+  }
+
+  const tooltipResourceTypeGeneral = (
+    <Tooltip id="tooltipResourceTypeGeneral">
+      The general type of the content.
+    </Tooltip>
+  )
+
+  const tooltipFieldsOfScience = (
+    <Tooltip id="tooltipFieldsOfScience">
+      The OECD Fields of Science for the content.
+    </Tooltip>
+  )
+
+  const tooltipLanguage = (
+    <Tooltip id="tooltipLanguage">
+      The primary language of the content.
+    </Tooltip>
+  )
+
+  const tags = () => {
+    return (
+      <div className="tags">
+        {item.types.resourceTypeGeneral &&
+          <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
+            <Label bsStyle="info">{startCase(item.types.resourceTypeGeneral)}</Label>
+          </OverlayTrigger>
+        }
+        {item.fieldsOfScience &&
+          <span>
+            {item.fieldsOfScience.map(fos => (
+              <OverlayTrigger key={fos.id} placement="top" overlay={tooltipFieldsOfScience}>
+                <Label bsStyle="info">{fos.name}</Label>
+              </OverlayTrigger>
+            ))}
+          </span>
+        }
+        {item.language &&
+          <OverlayTrigger placement="top" overlay={tooltipLanguage}>
+            <Label bsStyle="info">{item.language.name}</Label>
+          </OverlayTrigger>
+        }
       </div>
     )
   }
@@ -262,7 +308,9 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
         {creators()}
         {metadata()}
         {description()}
+        {registered()}
         {license()}
+        {tags()}
         {metricsCounter()}
       </div>
         {links()}

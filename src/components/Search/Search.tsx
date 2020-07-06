@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
-import { Alert } from 'react-bootstrap'
+import { Alert, Pager } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
@@ -36,6 +36,7 @@ interface ContentQueryData {
       pageInfo: PageInfo
       published: ContentFacet[]
       resourceTypes: ContentFacet[]
+      languages: ContentFacet[]
       fieldsOfScience: ContentFacet[]
       licenses: ContentFacet[]
       registrationAgencies: ContentFacet[]
@@ -48,14 +49,15 @@ interface ContentQueryVar {
   cursor: string
   published: string
   resourceTypeId: string
+  language: string
   fieldOfScience: string
   license: string
   registrationAgency: string
 }
 
 export const CONTENT_GQL = gql`
-  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $license: String, $registrationAgency: String) {
-    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, license: $license, registrationAgency: $registrationAgency) {
+  query getContentQuery($query: String, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String) {
+    works(first: 25, query: $query, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency) {
       totalCount
       pageInfo {
         endCursor
@@ -67,6 +69,11 @@ export const CONTENT_GQL = gql`
         count
       }
       published {
+        id
+        title
+        count
+      }
+      languages {
         id
         title
         count
@@ -114,7 +121,19 @@ export const CONTENT_GQL = gql`
           rightsUri
           rightsIdentifier
         }
-        registrationAgency
+        fieldsOfScience {
+          id
+          name
+        }
+        language {
+          id
+          name
+        }
+        registrationAgency {
+          id
+          name
+        }
+        registered
         citationCount
         viewCount
         downloadCount
@@ -123,7 +142,7 @@ export const CONTENT_GQL = gql`
   }
 `
 
-export const Search: React.FunctionComponent = () => {
+const Search: React.FunctionComponent = () => {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useQueryState("query", { history: 'push' })
   /* eslint-disable no-unused-vars */
@@ -131,6 +150,7 @@ export const Search: React.FunctionComponent = () => {
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
   const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
   const [license, setLicense] = useQueryState('license', { history: 'push' })
+  const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
@@ -139,7 +159,7 @@ export const Search: React.FunctionComponent = () => {
     CONTENT_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, license: license as string, registrationAgency: registrationAgency as string }
+      variables: { query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, license: license as string, registrationAgency: registrationAgency as string }
     }
   )
 
@@ -148,13 +168,16 @@ export const Search: React.FunctionComponent = () => {
   }
 
   const onSearchClear = () => {
+    setFieldOfScience(null)
     setSearchQuery('')
   }
 
   const renderPagination = () => {
     let url = '/?'
     let firstPageUrl = null
+    let hasFirstPage = false
     let nextPageUrl = null
+    let hasNextPage = false
 
     // get current query parameters from next router
     let params = new URLSearchParams(router.query as any)
@@ -163,35 +186,27 @@ export const Search: React.FunctionComponent = () => {
       // remove cursor query parameter for first page
       params.delete('cursor')
       firstPageUrl = url + params.toString()
+      hasFirstPage = typeof(firstPageUrl) === 'string'
     }
 
     if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
       // set cursor query parameter for next page
       params.set('cursor', data.works.pageInfo.endCursor)
       nextPageUrl = url + params.toString()
+      hasNextPage = typeof(nextPageUrl) === 'string'
     }
 
     return (
-      <div className="pagination-centered">
-        <ul className="pagination">
-          {firstPageUrl &&
-            <li className="page-number">
-              <Link href={firstPageUrl}><a>First Page</a></Link>
-            </li>
-          }
-          {nextPageUrl &&
-            <li className="page-number">
-              <Link href={nextPageUrl}><a>Next Page</a></Link>
-            </li>
-          }
-        </ul>
-      </div>
+      <Pager>
+        <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pager.Item>
+        <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pager.Item>
+      </Pager>
     )
   }
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, license: license as string, registrationAgency: registrationAgency as string })
+      refetch({ query: searchQuery, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, license: license as string, registrationAgency: registrationAgency as string })
     }, 1000)
 
     let results: ContentNode[] = []
@@ -365,6 +380,24 @@ export const Search: React.FunctionComponent = () => {
                 {data.works.licenses.map(facet => (
                   <li key={facet.id}>
                     {facetLink('license', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
+                    <div className="clearfix"/>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        }
+
+        {data.works.languages.length > 0 &&
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Language</h4>
+              <ul>
+                {data.works.languages.map(facet => (
+                  <li key={facet.id}>
+                    {facetLink('language', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
                     <div className="clearfix"/>
