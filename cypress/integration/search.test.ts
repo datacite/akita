@@ -99,11 +99,9 @@ describe("Search", () => {
       .should('contain', 'Results')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(5)
+        expect($facet).to.have.length(3)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
-        expect($facet.eq(2)).to.contain('Field of Science')
-        expect($facet.eq(3)).to.contain('License')
         expect($facet.eq(4)).to.contain('DOI Registration Agency')
       })
   })
@@ -111,18 +109,19 @@ describe("Search", () => {
   it("search and filter by license", () => {
     cy.get('input[name="query"]')
       .type('science')
-      .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 20000 })
+      .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 60000 })
       .click()
       .get('.member-results')
       .should('contain', 'Results')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(5)
+        expect($facet).to.have.length(6)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('Field of Science')
         expect($facet.eq(3)).to.contain('License')
-        expect($facet.eq(4)).to.contain('DOI Registration Agency')
+        expect($facet.eq(4)).to.contain('Language')
+        expect($facet.eq(5)).to.contain('DOI Registration Agency')
       })
   })
 
