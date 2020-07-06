@@ -14,6 +14,8 @@ type Props = {
 export const DOI_GQL = gql`
   query getContentQuery($id: ID!) {
   work(id: $id){
+    id
+    doi
     titles{
       title
     }
@@ -30,15 +32,26 @@ export const DOI_GQL = gql`
     version
     publicationYear
     publisher
-    descriptions{
+    descriptions {
       description
     }
-  	rights{
+  	rights {
       rights
       rightsUri
     }
-    id
-    doi
+    fieldsOfScience {
+      id
+      name
+    }
+    language {
+      id
+      name
+    }
+    registrationAgency {
+      id
+      name
+    }
+    registered
     formattedCitation
     citationCount
     citationsOverTime {
@@ -82,8 +95,18 @@ export interface DoiType {
   publicationYear: number
   publisher: string
   descriptions?: Description[]
+  fieldsOfScience?: FieldOfScience[]
   rights?: Rights[]
   version?: string
+  language?: {
+    id: string
+    name: string
+  }
+  registrationAgency: {
+    id: string
+    name: string
+  }
+  registered?: Date
   formattedCitation?: string
   citationCount?: number
   citationsOverTime?: CitationsYear[]
@@ -116,6 +139,11 @@ interface Rights {
   rightsIdentifier: string
   rightsIdentifierScheme: string
   schemeUri: string
+}
+
+interface FieldOfScience{
+  id: string
+  name: string
 }
 
 interface Description {
@@ -196,7 +224,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
   if (!doi ) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-
     const facebook = (
       <Popover id="share" title="Sharing via Facebook">
          Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
@@ -208,7 +235,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
-
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
@@ -239,23 +265,22 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" +
                 doi.doi}>BibTeX</a>
             </div>
-            <div id="export-bibtex" className="download">
+            <div id="export-ris" className="download">
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
                 + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
             </div>
-            <div id="export-bibtex" className="download">
+            <div id="export-jats" className="download">
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
                 + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
             </div>
             { doi.types.resourceTypeGeneral === "Software" &&
-            <div id="export-bibtex" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
-            </div>
+              <div id="export-codemeta" className="download">
+                <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
+                  + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
+              </div>
             }
           </div>
           <div className="facets panel-body">
-
             <h4>Share</h4>
             <span className="actions">
             <OverlayTrigger  placement="top" overlay={facebook}>

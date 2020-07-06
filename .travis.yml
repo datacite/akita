@@ -50,7 +50,7 @@ script:
   - yarn lint
   - yarn build
   - yarn start & wait-on http://localhost:3000
-  - yarn cy:run
+  - yarn cy:run --record
   - yarn cy:coverage
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
