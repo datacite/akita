@@ -17,8 +17,8 @@ type Props = {
 const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   if (!item ) return (
     <Alert bsStyle="warning">
-        No content found.
-      </Alert>
+      No content found.
+    </Alert>
   )
   
   const formattedCitation = () => { 
@@ -54,27 +54,26 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style, showCount:true}) 
  
   const analyticsBar = () => {
-
     return (
       <div className="panel panel-transparent">
-          <div className="panel-body tab-content nav-tabs-member">
-        <Tabs  id="over-time-tabs">
-          {item.citationCount > 0 && 
-            <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
-              <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
-            </Tab>
-          }
-          {item.viewCount > 0 && 
-            <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-              <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={item.publicationYear} type="View"/> 
-            </Tab>
-          }
-          {item.downloadCount > 0 && 
-            <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
-              <UsageChart data={item.downloadsOverTime} counts={item.downloadCount} publicationYear={item.publicationYear} type="Download" />
-            </Tab>
-          }
-        </Tabs>
+        <div className="panel-body tab-content nav-tabs-member">
+          <Tabs  id="over-time-tabs">
+            {item.citationCount > 0 && 
+              <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
+                <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
+              </Tab>
+            }
+            {item.viewCount > 0 && 
+              <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
+                <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={item.publicationYear} type="View"/> 
+              </Tab>
+            }
+            {item.downloadCount > 0 && 
+              <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
+                <UsageChart data={item.downloadsOverTime} counts={item.downloadCount} publicationYear={item.publicationYear} type="Download" />
+              </Tab>
+            }
+          </Tabs>
         </div>
       </div>
     )
@@ -82,38 +81,37 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-
     const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
     const citationsTabLabel = Pluralize({count: compactNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
 
     return (
       <div className="panel panel-transparent">
-      <div className="panel-body tab-content nav-tabs-member">
-    <Tabs id="related-content-tabs">
-    {item.citations.nodes.length > 0 && 
-      <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-        {/* <RelatedContentList dataInput={item.citations} /> */}
-        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
+        <div className="panel-body tab-content nav-tabs-member">
+          <Tabs id="related-content-tabs">
+            {item.citations.nodes.length > 0 && 
+              <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
+                {/* <RelatedContentList dataInput={item.citations} /> */}
+                <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
-      </Tab>
-    }
-     {item.references.nodes.length > 0 && 
-      <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-        {/* <RelatedContentList dataInput={item.references} /> */}
-        <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
+              </Tab>
+            }
+            {item.references.nodes.length > 0 && 
+              <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
+                {/* <RelatedContentList dataInput={item.references} /> */}
+                <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
-       </Tab>
-    }
-     </Tabs>
-     </div>
-   </div>
-     )
-   }
+              </Tab>
+            }
+          </Tabs>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div key={item.id} className="panel panel-transparent">
       <h2 className="member-results">{item.doi}</h2>
-        <DoiMetadata item={item}></DoiMetadata>
+      <DoiMetadata item={item}></DoiMetadata>
       <br/>
       {formattedCitation()}
       {analyticsBar()}
