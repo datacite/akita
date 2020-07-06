@@ -193,6 +193,9 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
             <img src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`} />
           </a>
         )}
+      </div>
+    )
+  }
 
   const registered = () => {
     return (
