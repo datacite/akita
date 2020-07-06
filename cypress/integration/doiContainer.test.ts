@@ -5,7 +5,7 @@ describe("DoiContainer", () => {
 
   it("visit 10.17863/cam.330", () => {
     cy.get('h3.work',  { timeout: 10000 })
-      .contains('Sugar Addiction: The State of the Science ')
+      .contains('Sugar Addiction: The State of the Science')
       .should('be.visible')
   })
 
