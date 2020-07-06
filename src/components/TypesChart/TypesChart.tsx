@@ -3,10 +3,12 @@ import { VegaLite } from 'react-vega';
 import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
+import { compactNumbers } from '../../utils/helpers'
 
 type Props = {
   data?: [],
   doi?: string,
+  count?: string,
   legend?: any,
 }
 
@@ -18,7 +20,7 @@ const actions = {
 }
 
 /* eslint-disable no-unused-vars */
-const TypesChart: React.FunctionComponent<Props> = ({data, doi, legend}) => {
+const TypesChart: React.FunctionComponent<Props> = ({data, doi, count, legend}) => {
 
   const spec: VisualizationSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -26,28 +28,38 @@ const TypesChart: React.FunctionComponent<Props> = ({data, doi, legend}) => {
       "data": {
         "name": "table"
       },
-      "mark": {
-        "type": "arc",
-        "innerRadius": 70,
-        "cursor": "pointer",
-        "tooltip": true
-      },
-      "encoding": {
-        "theta": {
-          "field": "count",
-          "type": "quantitative",
-          "sort": "descending"
+      "layer": [
+        {
+        "mark": {
+          "type": "arc",
+          "innerRadius": 70,
+          "cursor": "pointer",
+          "tooltip": true
         },
-        "color": {
-          "field": "title",
-          "title": "Type",
-          "type": "nominal",
-          "legend": legend,
-          "scale": {
-            "scheme": "viridis"
+        "encoding": {
+          "theta": {
+            "field": "count",
+            "type": "quantitative",
+            "sort": "descending"
+          },
+          "color": {
+            "field": "title",
+            "title": "Type",
+            "type": "nominal",
+            "legend": legend,
+            "scale": {
+              "scheme": "viridis"
+            }
           }
+        },
+       },
+       {
+        "mark": {"type": "text", "fill": "#767676", "align": "center", "baseline": "middle", "fontSize": "36"},
+        "encoding": {
+          "text": {"value": compactNumbers(count)}
         }
       },
+      ],
       "view": {
         "stroke": null
       }
