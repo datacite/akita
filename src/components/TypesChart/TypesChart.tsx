@@ -54,7 +54,7 @@ const TypesChart: React.FunctionComponent<Props> = ({data, doi, count, legend}) 
         },
        },
        {
-        "mark": {"type": "text", "fill": "#767676", "align": "center", "baseline": "middle", "fontSize": "36"},
+        "mark": {"type": "text", "fill": "#767676", "align": "center", "baseline": "middle", "fontSize": 36},
         "encoding": {
           "text": {"value": compactNumbers(count)}
         }
