@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
-import { Alert } from 'react-bootstrap'
+import { Alert, Pager } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
@@ -162,7 +162,9 @@ const Search: React.FunctionComponent = () => {
   const renderPagination = () => {
     let url = '/?'
     let firstPageUrl = null
+    let hasFirstPage = false
     let nextPageUrl = null
+    let hasNextPage = false
 
     // get current query parameters from next router
     let params = new URLSearchParams(router.query as any)
@@ -171,29 +173,21 @@ const Search: React.FunctionComponent = () => {
       // remove cursor query parameter for first page
       params.delete('cursor')
       firstPageUrl = url + params.toString()
+      hasFirstPage = typeof(firstPageUrl) === 'string'
     }
 
     if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
       // set cursor query parameter for next page
       params.set('cursor', data.works.pageInfo.endCursor)
       nextPageUrl = url + params.toString()
+      hasNextPage = typeof(nextPageUrl) === 'string'
     }
 
     return (
-      <div className="pagination-centered">
-        <ul className="pagination">
-          {firstPageUrl &&
-            <li className="page-number">
-              <Link href={firstPageUrl}><a>First Page</a></Link>
-            </li>
-          }
-          {nextPageUrl &&
-            <li className="page-number">
-              <Link href={nextPageUrl}><a>Next Page</a></Link>
-            </li>
-          }
-        </ul>
-      </div>
+      <Pager>
+        <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pager.Item>
+        <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pager.Item>
+      </Pager>
     )
   }
 

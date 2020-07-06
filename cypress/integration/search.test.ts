@@ -108,7 +108,7 @@ describe("Search", () => {
       .type('hallett')
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Results')
-      .get('.page-number > a').click()
+      .get('.pager > :nth-child(2) > a').click()
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Results')
