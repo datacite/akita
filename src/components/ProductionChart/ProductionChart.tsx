@@ -21,13 +21,16 @@ const actions = {
 /* eslint-disable no-unused-vars */
 const ProductionChart: React.FunctionComponent<Props> = ({data, id, doiCount}) => {
 
+  /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1 
 
+  /* istanbul ignore next */
   const lowerBoundYear = thisYear - 10
 
+  /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear;
 
-
+  /* istanbul ignore next */
   const spec: VisualizationSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v4.json",
     data: {
