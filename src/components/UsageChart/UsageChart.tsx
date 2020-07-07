@@ -32,6 +32,8 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
   // current date
   /* istanbul ignore next */
   const thisYear= new Date().getFullYear()
+
+  /* istanbul ignore next */
   const thisMonth= new Date().getMonth()
 
   // Get the lowerBound
@@ -41,6 +43,8 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
   // Filter dataset
   /* istanbul ignore next */
   let subset: UsageMonth[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
+
+  /* istanbul ignore next */
   subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'));});
 
   // Get domain
@@ -109,12 +113,9 @@ const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicat
   }
   
    const title = () => {
-    const style = {
-      color:'#1abc9c',
-    }
 
     return (
-    <small><Pluralize singular={type} count={counts} style={style} />  reported since publication in {publicationYear}</small>
+    <small><Pluralize singular={type} count={counts} style={{color:'#1abc9c'}} />  reported since publication in {publicationYear}</small>
     )
   }
 

@@ -91,6 +91,12 @@ describe('ProductionChart Component', () => {
       .should('be.visible')
       .should('have.length', 9)
 
+      cy.get('.production-chart')
+      .should('be.visible')
+
+      cy.get('small')
+      .should('be.visible')
+
       cy.get('small')
       .should('be.visible')
       .contains('177 Works reported')
