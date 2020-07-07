@@ -4,14 +4,13 @@ describe("DoiContainer", () => {
   })
 
   it("visit 10.17863/cam.330", () => {
-    cy.get('h3.work',  { timeout: 10000 })
-      .contains('Sugar Addiction: The State of the Science ')
+    cy.get('h3.work', { timeout: 10000 })
+      .contains('Sugar Addiction: The State of the Science')
       .should('be.visible')
   })
 
   it("license", () => {
-    cy.get('.license a')
-      .should('have.attr', 'href')
+    cy.get('.license')
       .should('be.visible')
   })
 

@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:3000",
   "experimentalComponentTesting": true,
+  "experimentalFetchPolyfill": true,
   "componentFolder": "src/components",
   "testFiles": "**/*.test.*",
   "video": false,

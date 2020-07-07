@@ -50,24 +50,25 @@ describe("Search", () => {
       .type('10.17863/cam.330')
       // the results are rendered
       .get('.panel-body .metadata', { timeout: 60000 })
-      .should('contain', 'Version 1.0 of Content published 2020 via DataCite' )
+      .should('contain', 'Article published 2016 via Apollo - University of Cambridge Repository (staging)' )
       .get('.panel-body .creators')
-      .should('contain', 'Matt Buys, Robin Dasler & Martin Fenner')
+      .should('contain', 'Margaret L Westwater, Paul Fletcher & Hisham Ziauddeen')
       .get('.panel-body .registered')
-      .should('contain', 'DOI registered March 19, 2020 via DataCite.')
+      .should('contain', 'DOI registered August 19, 2016 via DataCite.')
       .get('.panel-body .description')
-      .should('contain', 'As a community-driven organization')
+      .should('contain', 'Purpose As obesity rates continue to climb')
       .get('.panel-body .tags')
-      .should('contain', 'Interactive Resource')
+      .should('contain', 'Text')
       // no results count for single result
       .get('.member-results').should('not.exist')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(4)
+        expect($facet).to.have.length(5)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('License')
-        expect($facet.eq(3)).to.contain('DOI Registration Agency')
+        expect($facet.eq(3)).to.contain('Language')
+        expect($facet.eq(4)).to.contain('DOI Registration Agency')
       })
   })
 
@@ -98,30 +99,29 @@ describe("Search", () => {
       .should('contain', 'Results')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(5)
+        expect($facet).to.have.length(3)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
-        expect($facet.eq(2)).to.contain('Field of Science')
-        expect($facet.eq(3)).to.contain('License')
-        expect($facet.eq(4)).to.contain('DOI Registration Agency')
+        expect($facet.eq(2)).to.contain('DOI Registration Agency')
       })
   })
 
   it("search and filter by license", () => {
     cy.get('input[name="query"]')
       .type('science')
-      .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 20000 })
+      .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 60000 })
       .click()
       .get('.member-results')
       .should('contain', 'Results')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(5)
+        expect($facet).to.have.length(6)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('Field of Science')
         expect($facet.eq(3)).to.contain('License')
-        expect($facet.eq(4)).to.contain('DOI Registration Agency')
+        expect($facet.eq(4)).to.contain('Language')
+        expect($facet.eq(5)).to.contain('DOI Registration Agency')
       })
   })
 

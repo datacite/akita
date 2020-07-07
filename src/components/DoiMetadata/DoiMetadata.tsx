@@ -308,13 +308,14 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
         {title()}
+        
         {creators()}
         {metadata()}
         {description()}
         {registered()}
         {license()}
-        {tags()}
         {metricsCounter()}
+        {tags()}
       </div>
         {links()}
       <br/>
