@@ -94,22 +94,39 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )
 
+    console.log(item.creators)
+
+
     const creatorList = item.creators.reduce( (sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
-      
+
       // padding depending on position in creators list
-      if (array.length > index + 2) {
-        return sum + c + ', '
-      } else if (array.length > index + 1) {
-        return sum + c + ' & '
-      } else {
-        return sum + c
+      // console.log(array)
+      console.log(creator.givenName)
+
+      switch(true) {
+        case (array.length > index + 2):
+          sum.push({displayName: c + ', '})
+          break;
+        case (array.length > index + 1):
+          sum.push({displayName: c + ' & '})
+          break; 
+        default:
+          sum.push({displayName:c})
+          break;
       }
-    }, '')
+      return sum
+    }, [])
+
+
 
     return (
       <div className="creators">
-        {creatorList}
+        {creatorList.map((c, index) => 
+            <Link href="/person/[orcid]" key={index} as={`/person/${encodeURIComponent(c.id)}`}>
+              <a>{c.displayName}</a>
+            </Link>   
+        )}
       </div>
     )
   }
