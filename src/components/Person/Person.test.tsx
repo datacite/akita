@@ -14,7 +14,31 @@ const data = {
   works: {
     totalCount: 500,
     published: [],
-    resourceTypes: [],
+    "resourceTypes": [{
+      "title": "Text",
+      "count": 126
+    },
+    {
+      "title": "Audiovisual",
+      "count": 16
+    },
+    {
+      "title": "Dataset",
+      "count": 15
+    },
+    {
+      "title": "Software",
+      "count": 11
+    },
+    {
+      "title": "Collection",
+      "count": 3
+    },
+    {
+      "title": "Image",
+      "count": 2
+    }
+  ],
     nodes: [{
       id: "https://handle.stage.datacite.org/10.21945/xs62-rp71",
       doi: "10.21945/xs62-rp71",
@@ -61,10 +85,9 @@ describe('Person Component', () => {
       .should('be.visible')
   })
 
-
   it('analytics bar', () => {
-    mount(<Person item={data}/>)
-    cy.get('.panel')
+    mount(<Person item={data} />)
+      cy.get('.types-chart')
       .should('be.visible')
   })
 
