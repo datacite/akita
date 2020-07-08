@@ -68,7 +68,7 @@ const TypesChart: React.FunctionComponent<Props> = ({data, doi, count, legend}) 
 
   return (
       <div className="panel panel-transparent">
-       <div className="citation-chart panel-body"> 
+       <div className="types-chart panel-body"> 
        <Grid>
         <Row>       
           <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
