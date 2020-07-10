@@ -53,6 +53,12 @@ describe('CitationsChart Component', () => {
       .should('be.visible')
       .should('have.length', 3)
 
+      cy.get('.citation-chart')
+      .should('be.visible')
+
+      cy.get('small')
+      .should('be.visible')
+
       cy.get('small')
       .should('be.visible')
       .contains('137 Citations reported since publication in 2014')
@@ -65,6 +71,12 @@ describe('CitationsChart Component', () => {
       cy.get('.mark-rect > path')
       .should('not.be.visible')
       .should('have.length', 0)
+
+      cy.get('.citation-chart')
+      .should('be.visible')
+
+      cy.get('small')
+      .should('be.visible')
 
       cy.get('small')
       .should('be.visible')

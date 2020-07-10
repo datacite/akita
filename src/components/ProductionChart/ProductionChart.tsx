@@ -4,13 +4,11 @@ import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
-import { CitationsYear } from '../DoiContainer/DoiContainer'
 
 type Props = {
-  data?: CitationsYear[],
-  doi?: string,
-  citationCount?: number,
-  publicationYear?: number
+  data: [],
+  id?: string,
+  doiCount: number
 }
 
 const actions = {
@@ -21,14 +19,14 @@ const actions = {
 }
 
 /* eslint-disable no-unused-vars */
-const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
-  
+const ProductionChart: React.FunctionComponent<Props> = ({data, id, doiCount}) => {
+
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1 
-  
+
   /* istanbul ignore next */
-  const lowerBoundYear = thisYear - 10 > publicationYear ? thisYear - 10 : publicationYear
-  
+  const lowerBoundYear = thisYear - 10
+
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear;
 
@@ -40,15 +38,15 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
     },
     transform: [
       {
-        calculate: "toNumber(datum.year)",
+        calculate: "toNumber(datum.title)",
         as: "period"
       },
       {
-        calculate: "toNumber(datum.year)+1",
+        calculate: "toNumber(datum.title)+1",
         as: "bin_end"
       },
       {
-        filter: "toNumber(datum.year) >" + lowerBoundYear
+        filter: "toNumber(datum.title) >" + lowerBoundYear
       }
     ],
     width: yearsDomain * 25,
@@ -88,12 +86,12 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
         field: "bin_end"
       },
       y: {
-        field: "total",
+        field: "count",
         type: "quantitative",
         axis: null
       },
       color: {
-        field: "total",
+        field: "count",
         scale: { range: ["#1abc9c"] },
         type: "nominal",
         legend: null,
@@ -115,13 +113,13 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
       color:'#1abc9c',
     }
     return (
-    <small><Pluralize singular={'Citation'} count={citationCount} style={style}/>  reported since publication in {publicationYear}</small>
+    <small><Pluralize singular={'Work'} count={doiCount} style={style}/>  reported.</small>
     )
   }
 
   return (
       <div className="panel panel-transparent">
-       <div className="citation-chart panel-body"> 
+       <div className="production-chart panel-body"> 
        <Grid>
         <Row> 
           {title()}
@@ -135,4 +133,4 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCoun
    );
 }
 
-export default CitationsChart
+export default ProductionChart
