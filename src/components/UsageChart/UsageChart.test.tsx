@@ -55,6 +55,12 @@ describe('UsageChart Component', () => {
             .should('be.visible')
             .should('have.length', 3)
 
+            cy.get('.usage-chart')
+            .should('be.visible')
+
+            cy.get('small')
+            .should('be.visible')
+
             cy.get('small')
             .should('be.visible')
             .contains('137 Views reported since publication in 2017')
@@ -67,6 +73,12 @@ describe('UsageChart Component', () => {
           cy.get('.mark-rect > path')
           .should('be.visible')
           .should('have.length', 2)
+
+          cy.get('.usage-chart')
+          .should('be.visible')
+
+          cy.get('small')
+          .should('be.visible')
 
           cy.get('small')
           .should('be.visible')
