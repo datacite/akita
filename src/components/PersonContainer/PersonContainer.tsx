@@ -7,6 +7,7 @@ import Person from '../Person/Person'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
+import { PageInfo } from '../Search/Search'
 
 type Props = {
   item?: string
@@ -28,6 +29,10 @@ export const DOI_GQL = gql`
       }
       works(first: 5) {
         totalCount
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
         resourceTypes {
           title
           count
@@ -37,8 +42,45 @@ export const DOI_GQL = gql`
           count
         }
         nodes {
+          doi
           id
-          formattedCitation
+          titles{
+            title
+          }
+          types{
+            resourceTypeGeneral
+            resourceType
+          }
+          creators {
+            id
+            name
+            givenName
+            familyName
+          }
+          version
+          publicationYear
+          publisher
+          descriptions {
+            description
+          }
+          rights {
+            rights
+            rightsUri
+            rightsIdentifier
+          }
+          fieldsOfScience {
+            id
+            name
+          }
+          language {
+            id
+            name
+          }
+          registrationAgency {
+            id
+            name
+          }
+          registered
           rights {
             rights
           }
@@ -58,6 +100,7 @@ export interface PersonType {
   familyName: string
   citationCount: number
   viewCount: number
+  pageInfo: PageInfo
   downloadCount: number
   affiliation: Attribute
   works: Works

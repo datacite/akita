@@ -13,7 +13,22 @@ const data = {
   affiliation: [],
   works: {
     totalCount: 500,
-    published: [],
+    "published": [{
+      "title": "2020",
+      "count": 20
+    },
+    {
+      "title": "2019",
+      "count": 37
+    },
+    {
+      "title": "2018",
+      "count": 31
+    },
+    {
+      "title": "2017",
+      "count": 21
+    }],
     "resourceTypes": [{
       "title": "Text",
       "count": 126
@@ -52,6 +67,7 @@ const data = {
       version: "1.0",
       formattedCitation: "Gallardo-Escárate, C., Valenzuela-Muñoz, V., Núñez-Acuña, G., &amp; Haye, P. (2014). <i>Data from: SNP discovery and gene annotation in the surf clam Mesodesma donacium</i> (Version 1) [Data set]. Dryad. <a href='https://doi.org/10.5061/DRYAD.8JD18'>https://doi.org/10.5061/DRYAD.8JD18</a>",
       citationCount: 4,
+      registrationAgency: { id: 'datacite', name: 'DataCite' },
       viewCount: 8,
       downloadCount: 3000,
       citationsOverTime: [],
@@ -89,12 +105,19 @@ describe('Person Component', () => {
     mount(<Person item={data} />)
       cy.get('.types-chart')
       .should('be.visible')
+
+      cy.get('.production-chart')
+      .should('be.visible')
   })
 
   it('related content section', () => {
     mount(<Person item={data}/>)
-    cy.get('.panel')
+    cy.get('.member-results')
       .should('be.visible')
+
+    cy.get('.creators')
+    .contains('John Smith')
+    .should('be.visible')
   })
 
 })

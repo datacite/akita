@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Grid, Row, Col } from 'react-bootstrap'
+import { Alert, Grid, Row, Col, Pager } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { PersonType } from '../PersonContainer/PersonContainer'
@@ -19,7 +19,7 @@ import {
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import TypesChart from '../TypesChart/TypesChart'
-// import ProductionChart from '../ProductionChart/ProductionChart'
+import ProductionChart from '../ProductionChart/ProductionChart'
 
 type Props = {
   item: PersonType
@@ -104,9 +104,42 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )  
   }
+
+  const renderPagination = () => {
+    let url = '/?'
+    let firstPageUrl = null
+    let hasFirstPage = false
+    let nextPageUrl = null
+    let hasNextPage = false
+
+    // get current query parameters from next router
+    let params = new URLSearchParams(router.query as any)
+
+    if (params.get('cursor')) {
+      // remove cursor query parameter for first page
+      params.delete('cursor')
+      firstPageUrl = url + params.toString()
+      hasFirstPage = typeof(firstPageUrl) === 'string'
+    }
+
+    if (item.works.pageInfo.hasNextPage && item.works.pageInfo.endCursor) {
+      // set cursor query parameter for next page
+      params.set('cursor', item.works.pageInfo.endCursor)
+      nextPageUrl = url + params.toString()
+      hasNextPage = typeof(nextPageUrl) === 'string'
+    }
+
+    return (
+      <Pager>
+        <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pager.Item>
+        <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pager.Item>
+      </Pager>
+    )
+  }
   
 
   const analyticsBar = () => {
+    if (!item.works.totalCount ) return (null)
 
     return (
       <div>
@@ -117,11 +150,10 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
             </Row>
             <Row>
               <Col xs={6}>
-                              {/* <ProductionChart data={item.works.published}></ProductionChart> */}
-
-              <TypesChart data={item.works.resourceTypes} legend={true} count={item.works.totalCount}></TypesChart>
+              <ProductionChart data={item.works.published} doiCount={item.works.totalCount}></ProductionChart>
               </Col>
               <Col>
+              <br/>
               <TypesChart data={item.works.resourceTypes} legend={true} count={item.works.totalCount}></TypesChart>
               </Col>
             </Row>
@@ -134,6 +166,18 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
+    if (!item.works.totalCount ) return (
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          <h3 className="member">Introduction</h3>
+          <p>DataCite Commons is a web interface where you can explore the complete 
+          collection of publicly available DOIs from DOI registation agencies DataCite
+          and Crossref. You can search, filter, cite results, and more!</p>
+          <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
+          <p><a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
+        </div>
+      </div>
+    )
 
     const style = {
       fontWeight: 600,  
@@ -142,9 +186,40 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       padding: 0,
       margin: '0 0 .35em 10px',
     }
-  
+
 
     const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true}) 
+
+
+    if (!item.works.totalCount) return (
+      <React.Fragment>
+        <Alert bsStyle="warning">
+          No content found.
+        </Alert>
+
+        {/* {renderPagination()} */}
+      </React.Fragment>
+    )
+
+    return (
+      <div>
+        {item.works.totalCount > 1 &&
+         <h3 className="member-results">{item.works.totalCount.toLocaleString('en-US')} Works</h3>
+        }
+
+        {item.works.nodes.map(item => (
+          <React.Fragment key={item.id}>
+            <DoiMetadata item={item} />
+          </React.Fragment>
+        ))}
+
+        {/* {renderPagination()} */}
+      </div>
+    )
+
+
+  
+
 
     return (
       <div>
@@ -176,13 +251,10 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       {workCount()}
       {metricsCounter()}
       {orcid()}
-
-
       <br/>
       </div>
       {analyticsBar()}
       {relatedContent()}
-     
       </div>
   )
 }
