@@ -94,38 +94,38 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )
 
-    console.log(item.creators)
-
-
     const creatorList = item.creators.reduce( (sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
 
+      const orcid = document.createElement('a');
+      orcid.href = creator.id;
+
       // padding depending on position in creators list
-      // console.log(array)
-      console.log(creator.givenName)
 
       switch(true) {
         case (array.length > index + 2):
-          sum.push({displayName: c + ', '})
+          sum.push({displayName: c + ', ', id: orcid.pathname})
           break;
         case (array.length > index + 1):
-          sum.push({displayName: c + ' & '})
+          sum.push({displayName: c + ' & ', id: orcid.pathname})
           break; 
         default:
-          sum.push({displayName:c})
+          sum.push({displayName:c, id: orcid.pathname})
           break;
       }
       return sum
     }, [])
 
-
-
     return (
       <div className="creators">
         {creatorList.map((c, index) => 
-            <Link href="/person/[orcid]" key={index} as={`/person/${encodeURIComponent(c.id)}`}>
+            c.id ? ( 
+             <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
               <a>{c.displayName}</a>
-            </Link>   
+            </Link>
+            ) : (
+              c.displayName
+            )
         )}
       </div>
     )
