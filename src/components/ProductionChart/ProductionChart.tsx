@@ -25,7 +25,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({data, id, doiCount}) =
   const thisYear = new Date().getFullYear() + 1 
 
   /* istanbul ignore next */
-  const lowerBoundYear = thisYear - 10
+  const lowerBoundYear = thisYear - 20
 
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear;
