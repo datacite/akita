@@ -5,8 +5,11 @@ import Error from "../Error/Error"
 import { useQuery } from '@apollo/react-hooks'
 import Person from '../Person/Person'
 import ContentLoader from "react-content-loader"
+import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
+// eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
+// eslint-disable-next-line no-unused-vars
 import { PageInfo } from '../Search/Search'
 
 type Props = {
@@ -14,7 +17,7 @@ type Props = {
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!) {
+  query getContentQuery($id: ID!, $cursor: String) {
     person(id: $id) {
       id
       name
@@ -27,7 +30,7 @@ export const DOI_GQL = gql`
         name
         id
       }
-      works(first: 5) {
+      works(first: 5, after: $cursor) {
         totalCount
         pageInfo {
           endCursor
@@ -109,6 +112,7 @@ export interface PersonType {
 interface Works {
   totalCount: number
   resourceTypes: Attribute
+  pageInfo: PageInfo
   published: Attribute
   nodes: DoiType[] 
 }
@@ -125,15 +129,17 @@ export interface OrcidDataQuery {
 
 interface OrcidQueryVar {
   id: string
+  cursor: string
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
   const [orcid, setOrcid] = React.useState<PersonType>()
+  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" +  item }
+      variables: { id: "http://orcid.org/" +  item, cursor: cursor }
     }
   )
 

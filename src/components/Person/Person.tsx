@@ -17,9 +17,9 @@ import {
   faScroll
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
+import { useRouter } from 'next/router'
 
 type Props = {
   item: PersonType
@@ -106,13 +106,17 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const renderPagination = () => {
-    let url = '/?'
+    const orcid = document.createElement('a');
+    orcid.href = item.id;
+
+    let url = 'person' + orcid.pathname + '/?'
     let firstPageUrl = null
     let hasFirstPage = false
     let nextPageUrl = null
     let hasNextPage = false
 
     // get current query parameters from next router
+    const router = useRouter()
     let params = new URLSearchParams(router.query as any)
 
     if (params.get('cursor')) {
@@ -126,6 +130,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       // set cursor query parameter for next page
       params.set('cursor', item.works.pageInfo.endCursor)
       nextPageUrl = url + params.toString()
+      console.log(nextPageUrl);
       hasNextPage = typeof(nextPageUrl) === 'string'
     }
 
@@ -204,7 +209,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div>
         {item.works.totalCount > 1 &&
-         <h3 className="member-results">{item.works.totalCount.toLocaleString('en-US')} Works</h3>
+         <h3 className="member-results"></h3>
         }
 
         {item.works.nodes.map(item => (
@@ -213,7 +218,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           </React.Fragment>
         ))}
 
-        {/* {renderPagination()} */}
+        {renderPagination()}
       </div>
     )
 
