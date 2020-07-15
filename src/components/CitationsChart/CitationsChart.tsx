@@ -21,7 +21,7 @@ const actions = {
 }
 
 /* eslint-disable no-unused-vars */
-const CitationsChart: React.FunctionComponent<Props> = ({data, doi, citationCount, publicationYear}) => {
+const CitationsChart: React.FunctionComponent<Props> = ({data, citationCount, publicationYear}) => {
   
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1 
