@@ -80,7 +80,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
 
   const title = () => {
     const router = useRouter()
-    if (router == null || router.pathname === '/') {
+    if (router == null || router.pathname === '/' || router.pathname === '/person/[person]') {
       return searchtitle()
     } else {
       return doiTitle()

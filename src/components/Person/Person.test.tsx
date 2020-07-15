@@ -86,6 +86,14 @@ describe('Person Component', () => {
       .contains('https://orcid.org/0000-0003-3484-6875')
       .should('be.visible')
   })
+
+  it('link to doi page', () => {
+    mount(<Person item={data}/>)
+    cy.get('h3.work > a')
+      .first()
+      .should('have.attr', 'href')
+      .and('include', '/dois/')
+  })
   
   it('workCount', () => {
     mount(<Person item={data}/>)
