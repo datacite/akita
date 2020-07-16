@@ -124,7 +124,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
 
 
-    const hasNextPage = item.works.pageInfo ? item.works.pageInfo.hasNextPage : ""
+    const hasNextPage = item.works.pageInfo ? item.works.pageInfo.hasNextPage : false
     const endCursor = item.works.pageInfo ? item.works.pageInfo.endCursor : ""
 
     // const style = {
@@ -145,7 +145,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           No content found.
         </Alert>
 
-        {/* <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager> */}
+        <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </React.Fragment>
     )
 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 type Props = {
   url: string
-  hasNextPage: string
+  hasNextPage: boolean
   endCursor: string
 }
 
