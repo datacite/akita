@@ -6,13 +6,6 @@ import { PersonType } from '../PersonContainer/PersonContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-  faQuoteLeft, 
-  faInfoCircle, 
-  faEye,
-  faDownload,
-  faScroll
-} from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -40,7 +33,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   const orcid = () => {
 
     return (
-      <div className="metrics-counter">
+      <div className="panel-footer">
         <a id="orcid-link" href={item.id}><FontAwesomeIcon icon={faOrcid}/> {item.id}</a>
       </div>
     )
@@ -54,36 +47,40 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="metrics-counter">
-
-      <i id="work-count"><FontAwesomeIcon  icon={faScroll}/> <Pluralize singular={'Work'} count={compactNumbers(item.works.totalCount)} /> </i>
+      <ul className="counter-list">
+      <li>
+        <h4>Works</h4>
+        <Row>
+          <Col xs={4}>
+            <h3 id="work-count">{compactNumbers(item.works.totalCount)}</h3>
+          </Col>
+          </Row>
+        <Row >
+          {item.citationCount > 0 && 
+            <Col  xs={4}>
+              <h5><Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} showCount={false} /></h5>
+              <div id="citation-count">{compactNumbers(item.citationCount)}</div>
+            </Col>
+          }
+          {item.viewCount > 0 && 
+            <Col  xs={4}>
+              <h5><Pluralize singular={'View'} count={compactNumbers(item.viewCount)} showCount={false} /></h5>
+              <div id="view-count">{compactNumbers(item.viewCount)}</div>
+            </Col>
+          }
+          {item.downloadCount > 0 && 
+            <Col  xs={4}>
+              <h5><Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} showCount={false} /></h5>
+              <div id="download-count">{compactNumbers(item.downloadCount)}</div>
+            </Col>
+          }
+        </Row>
+      </li>
+      </ul>
       </div>
     )
   }
 
-
-  const metricsCounter = () => {
-    if (item.citationCount + item.viewCount + item.downloadCount == 0) {
-      return (
-        <div className="metrics-counter">
-          <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
-        </div>
-      )
-    }
-
-    return (
-      <div className="metrics-counter">
-        {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
-        }
-        {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
-        }
-        {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
-        }
-      </div>
-    )  
-  }
 
   const renderPagination = () => {
     let url = '/person' + orcidFromUrl(item.id)+ '/?'
@@ -134,13 +131,13 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
               <ProductionChart data={item.works.published} doiCount={item.works.totalCount}></ProductionChart>
               </Col>
               <Col>
-              <br/>
+              <br />
               <TypesChart data={item.works.resourceTypes} legend={true} count={item.works.totalCount}></TypesChart>
               </Col>
             </Row>
           </Grid>
-        </div>
-      </div>
+          </div>
+          </div>
 
     )
   }
@@ -194,7 +191,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           </React.Fragment>
         ))}
 
-        {renderPagination()}
+        {/* {renderPagination()} */}
       </div>
     )
    }
@@ -205,7 +202,6 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       <div className="panel-body">
       {/* {afilliation()} */}
       {workCount()}
-      {metricsCounter()}
       {orcid()}
       <br/>
       </div>

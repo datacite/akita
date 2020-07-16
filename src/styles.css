@@ -101,6 +101,11 @@ h2.member-results {
   border-color: #e67e22 !important;
 }
 
+ul.counter-list {
+  list-style: none;
+  padding-inline-start: 10px;
+}
+
 /* remove iOS input shadow, from https://stackoverflow.com/questions/23211656/remove-ios-input-shadow */
 input[type=text] {   
   /* Remove First */
@@ -139,3 +144,4 @@ input[type=text] {
 .pager li {
   margin: 3px;
 }
+

@@ -8,7 +8,7 @@ const data = {
   givenName: "Juan",
   familyName: "Perez",
   citationCount: 33,
-  viewCount: 33,
+  viewCount: 0,
   downloadCount: 4504,
   affiliation: [],
   works: {
@@ -97,17 +97,31 @@ describe('Person Component', () => {
   
   it('workCount', () => {
     mount(<Person item={data}/>)
-    cy.get('i#work-count')
+    cy.get('h3#work-count')
       .contains('500')
       .should('be.visible')
   })
 
-  it('metrics counter', () => {
+  it('citationCount', () => {
     mount(<Person item={data}/>)
-    cy.get('.metrics-counter')
-      .contains('33 Citations 33 Views 4.5K Downloads')
+    console.log(cy.get('div#citation-count'))
+    cy.get('div#citation-count')
+      .contains('33')
       .should('be.visible')
   })
+
+  it('viewCount', () => {
+    mount(<Person item={data}/>)
+    cy.get('div#view-count')
+      .should('not.be.visible')
+  })
+
+  // it('downloadCount', () => {
+  //   mount(<Person item={data}/>)
+  //   cy.get('div#download-count')
+  //     .contains('4.5k')
+  //     .should('be.visible')
+  // })
 
   it('analytics bar', () => {
     mount(<Person item={data} />)
