@@ -11,6 +11,15 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
 import { PageInfo } from '../Search/Search'
+import { orcidFromUrl } from '../../utils/helpers'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { 
+  faOrcid,
+} from '@fortawesome/free-brands-svg-icons'
+import { 
+  faInfoCircle, 
+} from '@fortawesome/free-solid-svg-icons'
+
 
 type Props = {
   item?: string
@@ -202,6 +211,14 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
       </Popover>
     )
 
+    const orcidLink = (
+      <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid}/> ORCiD</a>
+    )
+    console.log(item)
+
+    const impactLink = (
+      <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle}/> Impact Story</a>
+    )
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
@@ -213,6 +230,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
           </div>
         </div>
         <div className="panel panel-transparent">
+        <div className="facets panel-body">
+
+          <h4>Other Websites</h4>
+          {orcidLink}
+          <br/>
+          {impactLink}
+
+          </div>
+ 
           <div className="facets panel-body">
 
             <h4>Export</h4>
