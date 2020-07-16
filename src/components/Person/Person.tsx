@@ -20,6 +20,7 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { useRouter } from 'next/router'
+import { orcidFromUrl } from "../../utils/helpers"
 
 type Props = {
   item: PersonType
@@ -106,10 +107,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const renderPagination = () => {
-    const orcid = document.createElement('a');
-    orcid.href = item.id;
-
-    let url = 'person' + orcid.pathname + '/?'
+    let url = 'person' + orcidFromUrl(item.id)+ '/?'
     let firstPageUrl = null
     let hasFirstPage = false
     let nextPageUrl = null

@@ -29,7 +29,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
-import { compactNumbers } from '../../utils/helpers'
+import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   item: DoiType
@@ -97,20 +97,18 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     const creatorList = item.creators.reduce( (sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
 
-      const orcid = document.createElement('a');
-      orcid.href = creator.id;
 
       // padding depending on position in creators list
 
       switch(true) {
         case (array.length > index + 2):
-          sum.push({displayName: c + ', ', id: orcid.pathname})
+          sum.push({displayName: c + ', ', id: orcidFromUrl(creator.id)})
           break;
         case (array.length > index + 1):
-          sum.push({displayName: c + ' & ', id: orcid.pathname})
+          sum.push({displayName: c + ' & ', id: orcidFromUrl(creator.id)})
           break; 
         default:
-          sum.push({displayName:c, id: orcid.pathname})
+          sum.push({displayName:c, id: orcidFromUrl(creator.id)})
           break;
       }
       return sum
