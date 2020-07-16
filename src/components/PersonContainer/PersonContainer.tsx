@@ -11,7 +11,6 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
 import { PageInfo } from '../Search/Search'
-import { orcidFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faOrcid,

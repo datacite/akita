@@ -5,15 +5,12 @@ import Pluralize from 'react-pluralize'
 import { PersonType } from '../PersonContainer/PersonContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { compactNumbers } from '../../utils/helpers'
-import ReactHtmlParser from 'react-html-parser'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faQuoteLeft, 
   faInfoCircle, 
-  faExternalLinkAlt,
   faEye,
   faDownload,
-  faBookmark,
   faScroll
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -34,27 +31,9 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   )
 
 
-
+  //// Affiliation needs work in the API
   // const afilliation = () => {
-  //   if (!item.afilliation[0]) return (
-  //     <h3 className="work">
-  //       <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
-  //         <a>No Title</a>
-  //       </Link>
-  //     </h3>
-  //   )
-
-  //   const titleHtml = item.titles[0].title 
-
   //   return (
-  //     <h3 className="work">
-  //       <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
-  //         <a>{ReactHtmlParser(titleHtml)}</a>
-  //       </Link>
-  //       {item.types.resourceTypeGeneral &&
-  //         <span className="small"> {startCase(item.types.resourceTypeGeneral)}</span>
-  //       }
-  //     </h3>
   //   )
   // }
 
@@ -218,37 +197,12 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
         {renderPagination()}
       </div>
     )
-
-
-  
-
-
-    return (
-      <div>
-        <h3 className="member-results">{worksLabel}</h3>
-        <div className="panel panel-transparent">
-          <div className="formatted-citation panel-body">
-            {item.works.nodes.length > 0 &&
-            <div className="works-list">
-              {/*
-              <RelatedContentList dataInput={item.works} /> */}
-              <p>This feature will be implemented later in 2020. <a
-                  href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank"
-                  rel="noreferrer">Provide input</a></p>
-
-            </div>
-            }
-          </div>
-        </div>
-      </div>
-     )
    }
 
   return (
     <div key={item.id} className="panel panel-transparent">
       <h2 className="member-results">{item.name}</h2>
       <div className="panel-body">
-      {/* {name()} */}
       {/* {afilliation()} */}
       {workCount()}
       {metricsCounter()}
