@@ -2,11 +2,13 @@ import React from 'react';
 import { VegaLite } from 'react-vega';
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
-  /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
+/* eslint-disable no-unused-vars */
+import { Attribute } from '../PersonContainer/PersonContainer'
 
 type Props = {
-  data: [],
+  data?: Attribute[],
   id?: string,
   doiCount: number
 }

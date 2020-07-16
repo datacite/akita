@@ -4,11 +4,13 @@ import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
 import { compactNumbers } from '../../utils/helpers'
+  /* eslint-disable no-unused-vars */
+import { Attribute } from '../PersonContainer/PersonContainer'
 
 type Props = {
-  data?: [],
+  data?: Attribute[],
   doi?: string,
-  count?: string,
+  count?: number,
   legend?: any,
 }
 

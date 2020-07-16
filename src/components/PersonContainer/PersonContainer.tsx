@@ -119,13 +119,13 @@ export interface PersonType {
 
 interface Works {
   totalCount: number
-  resourceTypes: Attribute
+  resourceTypes: Attribute[]
   pageInfo: PageInfo
-  published: Attribute
+  published: Attribute[]
   nodes: DoiType[] 
 }
 
-interface Attribute {
+export interface Attribute {
   title: string
   count: number
 }
