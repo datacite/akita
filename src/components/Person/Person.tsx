@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Grid, Row, Col, Pagination } from 'react-bootstrap'
+import { Alert, Grid, Row, Col } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { PersonType } from '../PersonContainer/PersonContainer'
@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import { useRouter } from 'next/router'
 import { orcidFromUrl } from "../../utils/helpers"
+import Pager from '../Pager/Pager'
 
 type Props = {
   item: PersonType
@@ -82,40 +82,6 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
 
-  const renderPagination = () => {
-    let url = '/person' + orcidFromUrl(item.id)+ '/?'
-    let firstPageUrl = null
-    let hasFirstPage = false
-    let nextPageUrl = null
-    let hasNextPage = false
-    // get current query parameters from next router
-    const router = useRouter()
-    let params = new URLSearchParams(router.query as any)
-
-    if (params.get('cursor')) {
-      // remove cursor query parameter for first page
-      params.delete('cursor')
-      firstPageUrl = url + params.toString()
-      hasFirstPage = typeof(firstPageUrl) === 'string'
-    }
-
-    if (item.works.pageInfo.hasNextPage && item.works.pageInfo.endCursor) {
-      // set cursor query parameter for next page
-      params.set('cursor', item.works.pageInfo.endCursor)
-      nextPageUrl = url + params.toString()
-      console.log(nextPageUrl);
-      hasNextPage = typeof(nextPageUrl) === 'string'
-    }
-
-    return (
-      <Pagination>
-        <Pagination.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pagination.Item>
-        <Pagination.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pagination.Item>
-      </Pagination>
-    )
-  }
-  
-
   const analyticsBar = () => {
     if (!item.works.totalCount ) return (null)
 
@@ -157,16 +123,20 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )
 
-    const style = {
-      fontWeight: 600,  
-      color:'#1abc9c',
-      fontSize: '25px',
-      padding: 0,
-      margin: '0 0 .35em 10px',
-    }
+
+    const hasNextPage = item.works.pageInfo ? item.works.pageInfo.hasNextPage : ""
+    const endCursor = item.works.pageInfo ? item.works.pageInfo.endCursor : ""
+
+    // const style = {
+    //   fontWeight: 600,  
+    //   color:'#1abc9c',
+    //   fontSize: '25px',
+    //   padding: 0,
+    //   margin: '0 0 .35em 10px',
+    // }
 
 
-    const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true}) 
+    // const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true}) 
 
 
     if (!item.works.totalCount) return (
@@ -175,7 +145,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           No content found.
         </Alert>
 
-        {/* {renderPagination()} */}
+        {/* <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager> */}
       </React.Fragment>
     )
 
@@ -191,7 +161,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           </React.Fragment>
         ))}
 
-        {/* {renderPagination()} */}
+        <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </div>
     )
    }
