@@ -142,7 +142,7 @@ interface OrcidQueryVar {
 
 const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
   const [orcid, setOrcid] = React.useState<PersonType>()
-  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
