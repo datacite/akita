@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Grid, Row, Col, Pager } from 'react-bootstrap'
+import { Alert, Grid, Row, Col, Pagination } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { PersonType } from '../PersonContainer/PersonContainer'
@@ -107,12 +107,11 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const renderPagination = () => {
-    let url = 'person' + orcidFromUrl(item.id)+ '/?'
+    let url = '/person' + orcidFromUrl(item.id)+ '/?'
     let firstPageUrl = null
     let hasFirstPage = false
     let nextPageUrl = null
     let hasNextPage = false
-
     // get current query parameters from next router
     const router = useRouter()
     let params = new URLSearchParams(router.query as any)
@@ -133,10 +132,10 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     }
 
     return (
-      <Pager>
-        <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pager.Item>
-        <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pager.Item>
-      </Pager>
+      <Pagination>
+        <Pagination.Item disabled={!hasFirstPage} href={firstPageUrl}>First Page</Pagination.Item>
+        <Pagination.Item disabled={!hasNextPage} href={nextPageUrl}>Next Page</Pagination.Item>
+      </Pagination>
     )
   }
   
