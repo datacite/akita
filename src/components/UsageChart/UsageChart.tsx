@@ -27,7 +27,7 @@ const actions = {
 }
 
 /* eslint-disable no-unused-vars */
-const UsageChart: React.FunctionComponent<Props> = ({doi, data, counts, publicationYear, type}) => {
+const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYear, type}) => {
 
   // current date
   /* istanbul ignore next */

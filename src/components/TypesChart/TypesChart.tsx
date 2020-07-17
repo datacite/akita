@@ -4,11 +4,13 @@ import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
 import { compactNumbers } from '../../utils/helpers'
+  /* eslint-disable no-unused-vars */
+import { Attribute } from '../PersonContainer/PersonContainer'
 
 type Props = {
-  data?: [],
+  data?: Attribute[],
   doi?: string,
-  count?: string,
+  count?: number,
   legend?: any,
 }
 
@@ -68,7 +70,7 @@ const TypesChart: React.FunctionComponent<Props> = ({data, doi, count, legend}) 
 
   return (
       <div className="panel panel-transparent">
-       <div className="citation-chart panel-body"> 
+       <div className="types-chart panel-body"> 
        <Grid>
         <Row>       
           <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />

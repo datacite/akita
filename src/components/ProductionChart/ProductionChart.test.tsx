@@ -71,10 +71,6 @@ const data = {
         "count": 4
       },
       {
-        "title": "2007",
-        "count": 4
-      },
-      {
         "title": "1990",
         "count": 4
       }

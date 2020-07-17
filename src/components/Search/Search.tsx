@@ -24,7 +24,7 @@ interface ContentFacet {
   count: number
 }
 
-interface PageInfo {
+export interface PageInfo {
   endCursor: string
   hasNextPage: boolean
 }

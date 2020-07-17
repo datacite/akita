@@ -29,7 +29,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
-import { compactNumbers } from '../../utils/helpers'
+import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   item: DoiType
@@ -80,7 +80,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
 
   const title = () => {
     const router = useRouter()
-    if (router == null || router.pathname === '/') {
+    if (router == null || router.pathname === '/' || router.pathname === '/person/[person]') {
       return searchtitle()
     } else {
       return doiTitle()
@@ -96,20 +96,35 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
 
     const creatorList = item.creators.reduce( (sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
-      
+
+
       // padding depending on position in creators list
-      if (array.length > index + 2) {
-        return sum + c + ', '
-      } else if (array.length > index + 1) {
-        return sum + c + ' & '
-      } else {
-        return sum + c
+
+      switch(true) {
+        case (array.length > index + 2):
+          sum.push({displayName: c + ', ', id: orcidFromUrl(creator.id)})
+          break;
+        case (array.length > index + 1):
+          sum.push({displayName: c + ' & ', id: orcidFromUrl(creator.id)})
+          break; 
+        default:
+          sum.push({displayName:c, id: orcidFromUrl(creator.id)})
+          break;
       }
-    }, '')
+      return sum
+    }, [])
 
     return (
       <div className="creators">
-        {creatorList}
+        {creatorList.map((c, index) => 
+            c.id ? ( 
+             <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
+              <a>{c.displayName}</a>
+            </Link>
+            ) : (
+              c.displayName
+            )
+        )}
       </div>
     )
   }
