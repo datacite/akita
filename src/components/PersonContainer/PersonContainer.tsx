@@ -17,6 +17,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { 
   faInfoCircle, 
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
 
@@ -213,10 +214,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
     const orcidLink = (
       <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid}/> ORCiD</a>
     )
-    console.log(item)
 
     const impactLink = (
       <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle}/> Impact Story</a>
+    )
+
+    const europePMC = (
+      <a href={"http://europepmc.org/authors/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt}/> Europe PMC</a>
     )
 
     return (
@@ -231,11 +235,12 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
         <div className="panel panel-transparent">
         <div className="facets panel-body">
 
-          <h4>Other Websites</h4>
+          <h4>Other profiles for this person</h4>
           {orcidLink}
           <br/>
           {impactLink}
-
+          <br/>
+          {europePMC}
           </div>
  
           <div className="facets panel-body">

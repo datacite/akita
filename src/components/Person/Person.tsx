@@ -98,7 +98,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
               </Col>
               <Col>
               <br />
-              <TypesChart data={item.works.resourceTypes} legend={true} count={item.works.totalCount}></TypesChart>
+              <TypesChart data={item.works.resourceTypes} legend={false} count={item.works.totalCount}></TypesChart>
               </Col>
             </Row>
           </Grid>
@@ -152,7 +152,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div>
         {item.works.totalCount > 1 &&
-         <h3 className="member-results"></h3>
+         <h3 className="member-results">Works</h3>
         }
 
         {item.works.nodes.map(item => (
