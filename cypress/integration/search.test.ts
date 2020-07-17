@@ -14,11 +14,11 @@ describe("Search", () => {
     cy.get('input[name="query"]')
       .type('richard hallett')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 90000 })
+      .get('.member-results', { timeout: 60000 })
       .should('contain', 'Results')
       // results are rendered
       .get('.panel.content-item').should(($contentItem) => {
-        expect($contentItem).to.have.length(13)
+        expect($contentItem).to.have.length(14)
       })
       .get(':nth-child(2) > .panel-body > .registered')
       .should('contain', 'DOI registered')
