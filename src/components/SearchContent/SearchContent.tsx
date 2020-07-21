@@ -211,7 +211,6 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
     setSearchResults(results)
 
     return () => clearTimeout(typingDelay)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {

@@ -10,13 +10,13 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
-import { PageInfo } from '../Search/Search'
+import { PageInfo } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
+import {
   faOrcid,
 } from '@fortawesome/free-brands-svg-icons'
-import { 
-  faInfoCircle, 
+import {
+  faInfoCircle,
   faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -123,7 +123,7 @@ interface Works {
   resourceTypes: Attribute[]
   pageInfo: PageInfo
   published: Attribute[]
-  nodes: DoiType[] 
+  nodes: DoiType[]
 }
 
 export interface Attribute {
@@ -141,20 +141,20 @@ interface OrcidQueryVar {
   cursor: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
+const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
   const [orcid, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" +  item, cursor: cursor }
+      variables: { id: "http://orcid.org/" + item, cursor: cursor }
     }
   )
 
   React.useEffect(() => {
     let result = undefined
-    if(data) {
+    if (data) {
       result = data.person
     }
 
@@ -165,7 +165,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
     <div className="row">
       <div className="col-md-3"></div>
       <div className="col-md-9">
-        <ContentLoader 
+        <ContentLoader
           speed={1}
           width={1000}
           height={250}
@@ -174,12 +174,12 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
           backgroundColor="#f3f3f3"
           foregroundColor="#ecebeb"
         >
-          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" /> 
-          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" /> 
-          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" /> 
-          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" /> 
-          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" /> 
-          <circle cx="54" cy="61" r="45" /> 
+          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+          <circle cx="54" cy="61" r="45" />
         </ContentLoader>
       </div>
     </div>
@@ -189,13 +189,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!orcid ) return <p>Content not found.</p>
+  if (!orcid) return <p>Content not found.</p>
 
   const leftSideBar = () => {
 
     const facebook = (
       <Popover id="share" title="Sharing via Facebook">
-         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
+        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 
@@ -212,15 +212,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
     )
 
     const orcidLink = (
-      <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid}/> ORCiD</a>
+      <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
     )
 
     const impactLink = (
-      <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle}/> Impact Story</a>
+      <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
     )
 
     const europePMC = (
-      <a href={"http://europepmc.org/authors/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt}/> Europe PMC</a>
+      <a href={"http://europepmc.org/authors/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
     )
 
     return (
@@ -233,23 +233,23 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
           </div>
         </div>
         <div className="panel panel-transparent">
-        <div className="facets panel-body">
+          <div className="facets panel-body">
 
-          <h4>Other profiles for this person</h4>
-          {orcidLink}
-          <br/>
-          {impactLink}
-          <br/>
-          {europePMC}
+            <h4>Other profiles for this person</h4>
+            {orcidLink}
+            <br />
+            {impactLink}
+            <br />
+            {europePMC}
           </div>
- 
+
           <div className="facets panel-body">
 
             <h4>Export</h4>
             {/* <div id="export-bibtex" className="download">
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/"}>Works as BibTeX</a>
             </div> */}
-            <OverlayTrigger  placement="top" overlay={bibtex}>
+            <OverlayTrigger placement="top" overlay={bibtex}>
               <span className="share">Works as BibTeX</span>
             </OverlayTrigger>
           </div>
@@ -257,13 +257,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
 
             <h4>Share</h4>
             <span className="actions">
-            <OverlayTrigger  placement="top" overlay={facebook}>
-              <span className="share">Facebook</span>
-            </OverlayTrigger>
-            <br></br>
-            <OverlayTrigger  placement="top" overlay={twitter}>
-              <span className="share">Twitter</span>
-            </OverlayTrigger>
+              <OverlayTrigger placement="top" overlay={facebook}>
+                <span className="share">Facebook</span>
+              </OverlayTrigger>
+              <br></br>
+              <OverlayTrigger placement="top" overlay={twitter}>
+                <span className="share">Twitter</span>
+              </OverlayTrigger>
             </span>
           </div>
         </div>
@@ -285,9 +285,9 @@ const PersonContainer: React.FunctionComponent<Props> = ({item}) => {
       <div className="col-md-9 panel-list" id="content">
         <div key={orcid.id} className="panel panel-transparent content-item">
           <div className="panel-body">
-            <Person item={orcid}/>
+            <Person item={orcid} />
           </div>
-          <br/>
+          <br />
         </div>
       </div>
     )
