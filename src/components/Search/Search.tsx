@@ -38,7 +38,7 @@ const Search: React.FunctionComponent = () => {
   return (
     <div>
       <Row>
-        <Col>
+        <Col md={9}>
           <form className="form-horizontal search">
             <input name="query" value={searchQuery || ''} onChange={onSearchChange} placeholder="Type to search..." className="form-control" type="text" />
             <span id="search-icon" title="Search" aria-label="Search">
