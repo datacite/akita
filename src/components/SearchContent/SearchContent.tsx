@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/react-hooks"
 import { useQueryState } from 'next-usequerystate'
 import { gql } from "apollo-boost"
-import { Col, Alert, Pager } from 'react-bootstrap'
+import { Alert, Pager } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'

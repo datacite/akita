@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { useQueryState } from 'next-usequerystate'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
-import SearchOrganization from '../SearchOrganization/SearchOrganization'
-import SearchPerson from '../SearchPerson/SearchPerson'
+// import SearchOrganization from '../SearchOrganization/SearchOrganization'
+// import SearchPerson from '../SearchPerson/SearchPerson'
 
 const Search: React.FunctionComponent = () => {
   //const router = useRouter()
