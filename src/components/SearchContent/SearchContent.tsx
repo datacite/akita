@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import { useQuery } from "@apollo/react-hooks"
+import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-import { gql } from "apollo-boost"
 import { Alert, Pager } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
