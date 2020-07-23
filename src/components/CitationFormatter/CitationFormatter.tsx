@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Error from "../Error/Error"
-import { useQuery } from '@apollo/react-hooks'
-import { gql } from "apollo-boost"
+import { gql, useQuery } from '@apollo/client'
 import { Alert } from 'react-bootstrap'
 import ReactHtmlParser from 'react-html-parser'
 
@@ -36,13 +35,13 @@ interface FormattedCitationQueryVar {
   locale: string
 }
 
-const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, input}) => {
+const CitationFormatter: React.FunctionComponent<Props> = ({ id, style, locale, input }) => {
   const cslType = style || "apa"
 
-  if (!style ) return (
+  if (!style) return (
     <div>
       <h3 className="member-results">Cite as</h3>
-        <div className="panel panel-transparent">
+      <div className="panel panel-transparent">
         <div className="formatted-citation panel-body">
           {ReactHtmlParser(input)}
         </div>
@@ -54,10 +53,10 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
   /* eslint-disable no-unused-vars */
   const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
     FORMATTEDCITATION_GQL,
-      {
-          errorPolicy: 'all',
-          variables: { id: id, style: cslType, locale: locale }
-      }
+    {
+      errorPolicy: 'all',
+      variables: { id: id, style: cslType, locale: locale }
+    }
   )
   /* eslint-enable no-unused-vars */
 
@@ -73,17 +72,17 @@ const CitationFormatter: React.FunctionComponent<Props> = ({id, style, locale, i
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-  
-  if (!loading && !formatted ) return (
+
+  if (!loading && !formatted) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>
   )
 
-  return ( 
+  return (
     <div>
       <h3 className="member-results">Cite as</h3>
-        <div className="panel panel-transparent">
+      <div className="panel panel-transparent">
         <div className="formatted-citation panel-body">
           {ReactHtmlParser(formatted)}
         </div>

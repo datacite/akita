@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
-import { gql } from "apollo-boost"
 import Error from "../Error/Error"
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import ContentLoader from "react-content-loader"
 import { useQueryState } from 'next-usequerystate'

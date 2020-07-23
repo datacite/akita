@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
-import { gql } from "apollo-boost"
 import Error from "../Error/Error"
-import { useQuery } from '@apollo/react-hooks'
+import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
@@ -77,7 +76,7 @@ export const DOI_GQL = gql`
     # references{
     #   nodes{
     #     formattedCitation
-    #   }  
+    #   }
     # }
   }
 }
@@ -140,7 +139,7 @@ interface Rights {
   rightsIdentifier: string
 }
 
-interface FieldOfScience{
+interface FieldOfScience {
   id: string
   name: string
 }
@@ -173,7 +172,7 @@ interface DoiQueryVar {
   id: string
 }
 
-const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
+const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const [doi, setDoi] = React.useState<DoiType>()
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
@@ -185,7 +184,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
 
   React.useEffect(() => {
     let result = undefined
-    if(data) {
+    if (data) {
       result = data.work
     }
 
@@ -196,7 +195,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
     <div className="row">
       <div className="col-md-3"></div>
       <div className="col-md-9">
-        <ContentLoader 
+        <ContentLoader
           speed={1}
           width={1000}
           height={250}
@@ -205,12 +204,12 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           backgroundColor="#f3f3f3"
           foregroundColor="#ecebeb"
         >
-          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" /> 
-          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" /> 
-          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" /> 
-          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" /> 
-          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" /> 
-          <circle cx="54" cy="61" r="45" /> 
+          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+          <circle cx="54" cy="61" r="45" />
         </ContentLoader>
       </div>
     </div>
@@ -220,12 +219,12 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!doi ) return <p>Content not found.</p>
+  if (!doi) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const facebook = (
       <Popover id="share" title="Sharing via Facebook">
-         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 
@@ -272,7 +271,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
                 + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
             </div>
-            { doi.types.resourceTypeGeneral === "Software" &&
+            {doi.types.resourceTypeGeneral === "Software" &&
               <div id="export-codemeta" className="download">
                 <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
                   + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
@@ -282,13 +281,13 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
           <div className="facets panel-body">
             <h4>Share</h4>
             <span className="actions">
-            <OverlayTrigger  placement="top" overlay={facebook}>
-              <span className="share">Facebook</span>
-            </OverlayTrigger>
-            <br></br>
-            <OverlayTrigger  placement="top" overlay={twitter}>
-              <span className="share">Twitter</span>
-            </OverlayTrigger>
+              <OverlayTrigger placement="top" overlay={facebook}>
+                <span className="share">Facebook</span>
+              </OverlayTrigger>
+              <br></br>
+              <OverlayTrigger placement="top" overlay={twitter}>
+                <span className="share">Twitter</span>
+              </OverlayTrigger>
             </span>
           </div>
         </div>
@@ -310,9 +309,9 @@ const DoiContainer: React.FunctionComponent<Props> = ({item}) => {
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
-            <Doi item={doi}/>
+            <Doi item={doi} />
           </div>
-          <br/>
+          <br />
         </div>
       </div>
     )

@@ -1,9 +1,8 @@
 import React from "react"
 import App from "next/app"
-import { ApolloProvider } from "@apollo/react-hooks"
-import withApollo from "../../hooks/withApollo"
 // eslint-disable-next-line no-unused-vars
-import { ApolloClient, NormalizedCacheObject } from "apollo-boost"
+import { ApolloClient, NormalizedCacheObject, ApolloProvider } from '@apollo/client'
+import withApollo from "../../hooks/withApollo"
 
 // properly handle fontawesome icons
 import '../styles.css'
@@ -19,7 +18,7 @@ interface IProps {
 // adds our custom props interface to the generic App base class.
 class MyApp extends App<IProps> {
   render() {
-    // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider. 
+    // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props
 
     return (
