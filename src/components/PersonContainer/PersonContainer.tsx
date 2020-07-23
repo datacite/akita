@@ -38,7 +38,7 @@ export const DOI_GQL = gql`
         name
         id
       }
-      works(first: 5, after: $cursor) {
+      works(first: 25, after: $cursor) {
         totalCount
         pageInfo {
           endCursor
