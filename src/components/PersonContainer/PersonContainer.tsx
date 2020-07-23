@@ -234,7 +234,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
         <div className="panel panel-transparent">
           <div className="facets panel-body">
 
-            <h4>Other profiles for this person</h4>
+            <h4>Other Profiles</h4>
             {orcidLink}
             <br />
             {impactLink}
