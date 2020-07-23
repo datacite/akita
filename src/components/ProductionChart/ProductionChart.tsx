@@ -7,8 +7,13 @@ import { VisualizationSpec } from 'vega-embed';
 /* eslint-disable no-unused-vars */
 import { Attribute } from '../PersonContainer/PersonContainer'
 
+interface ChartRecord {
+  title: string
+  count: number
+}
+
 type Props = {
-  data?: Attribute[],
+  data?: ChartRecord[],
   id?: string,
   doiCount: number
 }
@@ -16,15 +21,15 @@ type Props = {
 const actions = {
   export: true,
   source: false,
-  compiled: false, 
+  compiled: false,
   editor: false,
 }
 
 /* eslint-disable no-unused-vars */
-const ProductionChart: React.FunctionComponent<Props> = ({data, id, doiCount}) => {
+const ProductionChart: React.FunctionComponent<Props> = ({ data, id, doiCount }) => {
 
   /* istanbul ignore next */
-  const thisYear = new Date().getFullYear() + 1 
+  const thisYear = new Date().getFullYear() + 1
 
   /* istanbul ignore next */
   const lowerBoundYear = thisYear - 20
@@ -110,29 +115,31 @@ const ProductionChart: React.FunctionComponent<Props> = ({data, id, doiCount}) =
     }
   }
 
+  const mydata = data;
+
   const title = () => {
     const style = {
-      color:'#1abc9c',
+      color: '#1abc9c',
     }
     return (
-    <small><Pluralize singular={'Work'} count={doiCount} style={style}/>  reported.</small>
+      <small><Pluralize singular={'Work'} count={doiCount} style={style} />  reported.</small>
     )
   }
 
   return (
-      <div className="panel panel-transparent">
-       <div className="production-chart panel-body"> 
-       <Grid>
-        <Row> 
-          {title()}
-        </Row>
-        <Row>       
-          <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
-        </Row>
-       </Grid>
-       </div>
+    <div className="panel panel-transparent">
+      <div className="production-chart panel-body">
+        <Grid>
+          <Row>
+            {title()}
+          </Row>
+          <Row>
+            <VegaLite renderer="svg" spec={spec} data={{ table: mydata }} actions={actions} />
+          </Row>
+        </Grid>
       </div>
-   );
+    </div>
+  );
 }
 
 export default ProductionChart

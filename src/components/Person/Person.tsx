@@ -11,16 +11,17 @@ import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { orcidFromUrl } from "../../utils/helpers"
 import Pager from '../Pager/Pager'
+// import { count } from 'console'
 
 type Props = {
   item: PersonType
 }
 
-const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
-  if (!item ) return (
+const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
+  if (!item) return (
     <Alert bsStyle="warning">
-        No content found.
-      </Alert>
+      No content found.
+    </Alert>
   )
 
 
@@ -34,7 +35,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="panel-footer">
-        <a id="orcid-link" href={item.id}><FontAwesomeIcon icon={faOrcid}/> {item.id}</a>
+        <a id="orcid-link" href={item.id}><FontAwesomeIcon icon={faOrcid} /> {item.id}</a>
       </div>
     )
   }
@@ -47,43 +48,46 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="metrics-counter">
-      <ul className="counter-list">
-      <li>
-        <h4>Works</h4>
-        <Row>
-          <Col xs={4}>
-            <h3 id="work-count">{compactNumbers(item.works.totalCount)}</h3>
-          </Col>
-          </Row>
-        <Row >
-          {item.citationCount > 0 && 
-            <Col  xs={4}>
-              <h5><Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} showCount={false} /></h5>
-              <div id="citation-count">{compactNumbers(item.citationCount)}</div>
-            </Col>
-          }
-          {item.viewCount > 0 && 
-            <Col  xs={4}>
-              <h5><Pluralize singular={'View'} count={compactNumbers(item.viewCount)} showCount={false} /></h5>
-              <div id="view-count">{compactNumbers(item.viewCount)}</div>
-            </Col>
-          }
-          {item.downloadCount > 0 && 
-            <Col  xs={4}>
-              <h5><Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} showCount={false} /></h5>
-              <div id="download-count">{compactNumbers(item.downloadCount)}</div>
-            </Col>
-          }
-        </Row>
-      </li>
-      </ul>
+        <ul className="counter-list">
+          <li>
+            <h4>Works</h4>
+            <Row>
+              <Col xs={4}>
+                <h3 id="work-count">{compactNumbers(item.works.totalCount)}</h3>
+              </Col>
+            </Row>
+            <Row >
+              {item.citationCount > 0 &&
+                <Col xs={4}>
+                  <h5><Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} showCount={false} /></h5>
+                  <div id="citation-count">{compactNumbers(item.citationCount)}</div>
+                </Col>
+              }
+              {item.viewCount > 0 &&
+                <Col xs={4}>
+                  <h5><Pluralize singular={'View'} count={compactNumbers(item.viewCount)} showCount={false} /></h5>
+                  <div id="view-count">{compactNumbers(item.viewCount)}</div>
+                </Col>
+              }
+              {item.downloadCount > 0 &&
+                <Col xs={4}>
+                  <h5><Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} showCount={false} /></h5>
+                  <div id="download-count">{compactNumbers(item.downloadCount)}</div>
+                </Col>
+              }
+            </Row>
+          </li>
+        </ul>
       </div>
     )
   }
 
 
   const analyticsBar = () => {
-    if (!item.works.totalCount ) return (null)
+    if (!item.works.totalCount) return (null)
+
+    const published = item.works.published.map(x => ({ title: x.title, count: x.count }));
+    const resourceTypes = item.works.resourceTypes.map(x => ({ title: x.title, count: x.count }));
 
     return (
       <div>
@@ -94,27 +98,27 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
             </Row>
             <Row>
               <Col xs={6}>
-              <ProductionChart data={item.works.published} doiCount={item.works.totalCount}></ProductionChart>
+                <ProductionChart data={published} doiCount={item.works.totalCount}></ProductionChart>
               </Col>
               <Col>
-              <br />
-              <TypesChart data={item.works.resourceTypes} legend={false} count={item.works.totalCount}></TypesChart>
+                <br />
+                <TypesChart data={resourceTypes} legend={false} count={item.works.totalCount}></TypesChart>
               </Col>
             </Row>
           </Grid>
-          </div>
-          </div>
+        </div>
+      </div>
 
     )
   }
 
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    if (!item.works.totalCount ) return (
+    if (!item.works.totalCount) return (
       <div className="panel panel-transparent">
         <div className="panel-body">
           <h3 className="member">Introduction</h3>
-          <p>DataCite Commons is a web interface where you can explore the complete 
+          <p>DataCite Commons is a web interface where you can explore the complete
           collection of publicly available DOIs from DOI registation agencies DataCite
           and Crossref. You can search, filter, cite results, and more!</p>
           <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
@@ -128,7 +132,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     const endCursor = item.works.pageInfo ? item.works.pageInfo.endCursor : ""
 
     // const style = {
-    //   fontWeight: 600,  
+    //   fontWeight: 600,
     //   color:'#1abc9c',
     //   fontSize: '25px',
     //   padding: 0,
@@ -136,7 +140,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     // }
 
 
-    // const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true}) 
+    // const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true})
 
 
     if (!item.works.totalCount) return (
@@ -145,14 +149,14 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           No content found.
         </Alert>
 
-        <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/person' + orcidFromUrl(item.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </React.Fragment>
     )
 
     return (
       <div>
         {item.works.totalCount > 1 &&
-         <h3 className="member-results">Works</h3>
+          <h3 className="member-results">Works</h3>
         }
 
         {item.works.nodes.map(item => (
@@ -161,23 +165,23 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
           </React.Fragment>
         ))}
 
-        <Pager url={'/person' + orcidFromUrl(item.id)+ '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/person' + orcidFromUrl(item.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </div>
     )
-   }
+  }
 
   return (
     <div key={item.id} className="panel panel-transparent">
       <h2 className="member-results">{item.name}</h2>
       <div className="panel-body">
-      {/* {afilliation()} */}
-      {workCount()}
-      {orcid()}
-      <br/>
+        {/* {afilliation()} */}
+        {workCount()}
+        {orcid()}
+        <br />
       </div>
       {analyticsBar()}
       {relatedContent()}
-      </div>
+    </div>
   )
 }
 
