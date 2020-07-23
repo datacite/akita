@@ -80,7 +80,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
 
   const title = () => {
     const router = useRouter()
-    if (router == null || router.pathname === '/' || router.pathname === '/person/[person]') {
+    if (router == null || router.pathname === '/' || router.pathname === '/people/[person]') {
       return searchtitle()
     } else {
       return doiTitle()
@@ -118,7 +118,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id ? (
-            <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
+            <Link href="/people/[orcid]" key={index} as={`/people${(c.id)}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
