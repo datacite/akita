@@ -99,7 +99,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
 
 
       // padding depending on position in creators list
-
       switch (true) {
         case (array.length > index + 2):
           sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
@@ -117,7 +116,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
     return (
       <div className="creators">
         {creatorList.map((c, index) =>
-          c.id ? (
+          c.id !== null ? (
             <Link href="/people/[orcid]" key={index} as={`/people${(c.id)}`}>
               <a>{c.displayName}</a>
             </Link>
