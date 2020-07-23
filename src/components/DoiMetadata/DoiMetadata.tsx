@@ -5,17 +5,17 @@ import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Pluralize from 'react-pluralize'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { 
-  faQuoteLeft, 
-  faInfoCircle, 
+import {
+  faQuoteLeft,
+  faInfoCircle,
   faExternalLinkAlt,
   faDownload,
   faBookmark
 } from '@fortawesome/free-solid-svg-icons'
-import { 
+import {
   faEye
 } from '@fortawesome/free-regular-svg-icons'
-import { 
+import {
   faOrcid,
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -35,13 +35,13 @@ type Props = {
   item: DoiType
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
+const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   if (item == null) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>
   )
-  
+
   const searchtitle = () => {
     if (!item.titles[0]) return (
       <h3 className="work">
@@ -51,7 +51,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
       </h3>
     )
 
-    const titleHtml = item.titles[0].title 
+    const titleHtml = item.titles[0].title
 
     return (
       <h3 className="work">
@@ -67,8 +67,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
       <h3 className="member">No Title</h3>
     )
 
-    const titleHtml = item.titles[0].title 
-    
+    const titleHtml = item.titles[0].title
+
     return (
       <h3 className="work">
         <a target="_blank" rel="noreferrer" href={item.id}>
@@ -94,21 +94,21 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
       </div>
     )
 
-    const creatorList = item.creators.reduce( (sum, creator, index, array) => {
+    const creatorList = item.creators.reduce((sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
 
 
       // padding depending on position in creators list
 
-      switch(true) {
+      switch (true) {
         case (array.length > index + 2):
-          sum.push({displayName: c + ', ', id: orcidFromUrl(creator.id)})
+          sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
           break;
         case (array.length > index + 1):
-          sum.push({displayName: c + ' & ', id: orcidFromUrl(creator.id)})
-          break; 
+          sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
+          break;
         default:
-          sum.push({displayName:c, id: orcidFromUrl(creator.id)})
+          sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
           break;
       }
       return sum
@@ -116,12 +116,12 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="creators">
-        {creatorList.map((c, index) => 
-            c.id ? ( 
-             <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
+        {creatorList.map((c, index) =>
+          c.id ? (
+            <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
               <a>{c.displayName}</a>
             </Link>
-            ) : (
+          ) : (
               c.displayName
             )
         )}
@@ -140,7 +140,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   const description = () => {
     if (!item.descriptions[0]) return ''
 
-    const descriptionHtml = truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… '})
+    const descriptionHtml = truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… ' })
 
     return (
       <div className="description">
@@ -150,12 +150,13 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   }
 
   const license = () => {
-    const uniqueRights = uniqBy(item.rights, 'rightsIdentifier')
+    let rights = [...item.rights];
+    const uniqueRights = uniqBy(rights, 'rightsIdentifier')
     const ccRights = uniqueRights.reduce((sum, r) => {
       if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
-        const splitIdentifier = r.rightsIdentifier.split('-').filter(l => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l) )
+        const splitIdentifier = r.rightsIdentifier.split('-').filter(l => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l))
         splitIdentifier.forEach(l => {
-          switch(l) {
+          switch (l) {
             case 'by':
               sum.push({ icon: faCreativeCommonsBy, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
               break;
@@ -181,14 +182,15 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     }, [])
 
     const otherRights = uniqueRights.reduce((sum, r) => {
-      if (r.rightsIdentifier && !r.rightsIdentifier.startsWith('cc')) {
-        if (r.rightsIdentifier.startsWith('apache')) {
-          r.rightsIdentifier = "Apache%202.0"
-        } else if (r.rightsIdentifier.startsWith('ogl')) {
-            r.rightsIdentifier = "OGL%20Canada"
+      let rightsIdentifier = r.rightsIdentifier;
+      if (rightsIdentifier && !rightsIdentifier.startsWith('cc')) {
+        if (rightsIdentifier.startsWith('apache')) {
+          rightsIdentifier = "Apache%202.0"
+        } else if (rightsIdentifier.startsWith('ogl')) {
+          rightsIdentifier = "OGL%20Canada"
         } else {
-          r.rightsIdentifier = r.rightsIdentifier.replace(/-/g, '%20').toUpperCase()
-        } 
+          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase();
+        }
         sum.push(r)
       }
       return sum
@@ -215,10 +217,10 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   const registered = () => {
     return (
       <div className="registered">
-      DOI registered
-      {item.registered &&
-        <span> {new Date(item.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-      } via {item.registrationAgency.name}.
+        DOI registered
+        {item.registered &&
+          <span> {new Date(item.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        } via {item.registrationAgency.name}.
       </div>
     )
   }
@@ -271,7 +273,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     if (item.citationCount + item.viewCount + item.downloadCount == 0) {
       return (
         <div className="metrics-counter">
-          <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
+          <i><FontAwesomeIcon icon={faInfoCircle} /> No citations, views or downloads reported.</i>
         </div>
       )
     }
@@ -279,16 +281,16 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
         {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
+          <i><FontAwesomeIcon icon={faQuoteLeft} /> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
         }
         {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
+          <i><FontAwesomeIcon icon={faEye} /> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
         }
         {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
+          <i><FontAwesomeIcon icon={faDownload} /> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
         }
       </div>
-    )  
+    )
   }
 
   const bookmark = (
@@ -306,13 +308,13 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
   const links = () => {
     return (
       <div className="panel-footer">
-        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt}/> {item.id}</a>
+        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt} /> {item.id}</a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark"><FontAwesomeIcon icon={faBookmark}/> Bookmark</span>
+            <span className="bookmark"><FontAwesomeIcon icon={faBookmark} /> Bookmark</span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-            <span className="claim"><FontAwesomeIcon icon={faOrcid}/> Claim</span>
+            <span className="claim"><FontAwesomeIcon icon={faOrcid} /> Claim</span>
           </OverlayTrigger>
         </span>
       </div>
@@ -323,7 +325,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
     <div key={item.id} className="panel panel-transparent content-item">
       <div className="panel-body">
         {title()}
-        
+
         {creators()}
         {metadata()}
         {description()}
@@ -332,8 +334,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({item}) => {
         {metricsCounter()}
         {tags()}
       </div>
-        {links()}
-      <br/>
+      {links()}
+      <br />
     </div>
   )
 }
