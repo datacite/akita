@@ -206,7 +206,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
 
     const bibtex = (
       <Popover id="share" title="Export bibtex">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
+        Export as BibTeX will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 
