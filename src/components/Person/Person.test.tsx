@@ -69,6 +69,7 @@ const data = {
       citationCount: 4,
       registrationAgency: { id: 'datacite', name: 'DataCite' },
       viewCount: 8,
+      rights: [],
       downloadCount: 3000,
       citationsOverTime: [],
       viewsOverTime: [],

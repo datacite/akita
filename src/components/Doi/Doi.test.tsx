@@ -18,6 +18,7 @@ const data = {
   formattedCitation: "Gallardo-Escárate, C., Valenzuela-Muñoz, V., Núñez-Acuña, G., &amp; Haye, P. (2014). <i>Data from: SNP discovery and gene annotation in the surf clam Mesodesma donacium</i> (Version 1) [Data set]. Dryad. <a href='https://doi.org/10.5061/DRYAD.8JD18'>https://doi.org/10.5061/DRYAD.8JD18</a>",
   citationCount: 4,
   viewCount: 8,
+  rights: [],
   downloadCount: 3000,
   citationsOverTime: [],
   viewsOverTime: [],
