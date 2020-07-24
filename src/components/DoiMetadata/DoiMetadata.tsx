@@ -45,7 +45,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   const searchtitle = () => {
     if (!item.titles[0]) return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+        <Link href="/dois/[...doi]" as={`/dois/${(item.doi)}`}>
           <a>No Title</a>
         </Link>
       </h3>
@@ -55,7 +55,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
 
     return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+        <Link href="/dois/[...doi]" as={`/dois/${(item.doi)}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
