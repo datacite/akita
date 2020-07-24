@@ -57,7 +57,7 @@ const Search: React.FunctionComponent = () => {
       <Col></Col>
         <Col>
 
-        <Tabs defaultActiveKey="content" id="noanim-tab-example" variant="pills">
+        <Tabs defaultActiveKey="content" id="noanim-tab-example">
           <Tab eventKey="people" title="People" peopleTab>
           {!searchQuery || searchQuery === " "
             ? (renderIntroduction())
