@@ -60,6 +60,18 @@ export const CONTENT_GQL = gql`
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     const router = useRouter()
 
+    console.log(searchQuery)
+
+    const regex = RegExp("/^(\d{4}-\d{4}-\d{4}-\d{3}[0-9X]+$)/")
+    const found = regex.test('0000-0001-7035-8997') // searchQuery.match(regex);
+    
+    console.log("found")
+    console.log(found)
+
+
+    searchQuery = found ? '"${searchQuery}"' : searchQuery
+    
+    console.log(searchQuery)
 
     /* eslint-disable no-unused-vars */
     const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })

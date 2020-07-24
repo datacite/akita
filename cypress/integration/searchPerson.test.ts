@@ -1,6 +1,8 @@
 describe("Search Person", () => {
   beforeEach(() => {
     cy.visit("/")
+    cy.get('a#noanim-tab-example-tab-people')
+    .click()
   })
 
   it("search no query", () => {
@@ -61,12 +63,9 @@ describe("Search Person", () => {
     cy.get('input[name="query"]')
       .type(' ')
       // timeout for the query results to return
-      .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No content found.')
-      // no results count for zero results
-      .get('.member-results').should('not.exist')
-      // no facet for zero results
-      .get('.panel.facets').should('not.exist')
+      // return introduction text
+      .get('.member', { timeout: 60000 })
+      .should('contain', 'Introduction')
   })
 
 })
