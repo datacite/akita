@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 // eslint-disable-next-line no-unused-vars
@@ -58,20 +57,9 @@ export const CONTENT_GQL = gql`
 `
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
-    const router = useRouter()
-
-    console.log(searchQuery)
-
-    const regex = RegExp("/^(\d{4}-\d{4}-\d{4}-\d{3}[0-9X]+$)/")
-    const found = regex.test('0000-0001-7035-8997') // searchQuery.match(regex);
-    
-    console.log("found")
-    console.log(found)
+    // const router = useRouter()
 
 
-    searchQuery = found ? '"${searchQuery}"' : searchQuery
-    
-    console.log(searchQuery)
 
     /* eslint-disable no-unused-vars */
     const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
