@@ -31,10 +31,15 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 
   //// Affiliation needs work in the API
-  // const afilliation = () => {
-  //   return (
-  //   )
-  // }
+  const afilliation = () => {
+    if (item.affiliation.length < 1) { return null }
+    return (
+      <div className="metrics-counter">
+      <span>From &nbsp; 
+      <a id="affiliation" href={item.affiliation[0].id}>{item.affiliation[0].name}</a></span> 
+     </div>
+    )
+  }
 
   const name = () => {
     if (!item.name) return (
@@ -115,9 +120,9 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
       <div className="panel-body">
         <ul className="counter-list">
         {name()}
-        {/* {afilliation()} */}
-          {workCount()}
-          {metricsCounter()}
+        {afilliation()}
+        {workCount()}
+          {/* {metricsCounter()} */}
           </ul>
         {orcid()}
         <br />

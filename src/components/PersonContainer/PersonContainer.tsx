@@ -113,7 +113,7 @@ export interface PersonType {
   viewCount: number
   pageInfo: PageInfo
   downloadCount: number
-  affiliation: Attribute
+  affiliation: Attribute[]
   works: Works
 }
 

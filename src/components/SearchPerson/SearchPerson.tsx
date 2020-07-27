@@ -41,9 +41,9 @@ export const CONTENT_GQL = gql`
       name
       givenName
       familyName
-      citationCount
-      viewCount
-      downloadCount
+      # citationCount
+      # viewCount
+      # downloadCount
       affiliation {
         name
         id
@@ -58,8 +58,6 @@ export const CONTENT_GQL = gql`
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     // const router = useRouter()
-
-
 
     /* eslint-disable no-unused-vars */
     const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })

@@ -10,7 +10,12 @@ const data = {
   citationCount: 33,
   viewCount: 0,
   downloadCount: 4504,
-  affiliation: [],
+  affiliation: [
+    {
+    name: "cdl",
+    id: "https://ror.org/03yrm5c26"
+    }
+  ],
   works: {
     totalCount: 500,
     "published": [{
@@ -95,10 +100,18 @@ describe('Person Component', () => {
       .should('be.visible')
   })
 
-  it('citationCount', () => {
+    // To be added after MVP according to feedback
+  // it('citationCount', () => {
+  //   mount(<PersonMetadata item={data}/>)
+  //   cy.get('div.metrics-counter')
+  //     .contains('33')
+  //     .should('be.visible')
+  // })
+
+  it('affiliation', () => {
     mount(<PersonMetadata item={data}/>)
-    cy.get('div.metrics-counter')
-      .contains('33')
+    cy.get('a#affiliation')
+      .contains('cdl')
       .should('be.visible')
   })
 
@@ -109,10 +122,11 @@ describe('Person Component', () => {
       .should('be.visible')
   })
 
-  it('viewCount', () => {
-    mount(<PersonMetadata item={data}/>)
-    cy.get('div#view-count')
-      .should('not.be.visible')
-  })
+    // To be added after MVP according to feedback
+  // it('viewCount', () => {
+  //   mount(<PersonMetadata item={data}/>)
+  //   cy.get('div#view-count')
+  //     .should('not.be.visible')
+  // })
 
 })
