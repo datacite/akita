@@ -89,7 +89,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     )
   }
 
-
+// eslint-disable-next-line no-unused-vars
   const metricsCounter = () => {
     if (item.citationCount + item.viewCount + item.downloadCount == 0) {
       return (

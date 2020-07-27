@@ -119,15 +119,21 @@ export interface PersonType {
 
 interface Works {
   totalCount: number
-  resourceTypes: Attribute[]
+  resourceTypes: ContentFacet[]
   pageInfo: PageInfo
-  published: Attribute[]
+  published: ContentFacet[]
   nodes: DoiType[]
 }
 
-export interface Attribute {
+interface ContentFacet {
+  id: string
   title: string
   count: number
+}
+
+export interface Attribute {
+  name: string
+  id: string
 }
 
 
