@@ -161,7 +161,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
 
         {item.works.nodes.map(item => (
           <React.Fragment key={item.id}>
-            <DoiMetadata item={item} />
+            <DoiMetadata metadata={item} />
           </React.Fragment>
         ))}
 
