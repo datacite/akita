@@ -11,11 +11,11 @@ import { compactNumbers } from '../../utils/helpers'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
-  item: DoiType
+  doi: DoiType
 }
 
-const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
-  if (!item ) return (
+const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
+  if (!doi ) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>
@@ -36,7 +36,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
               <option value="ieee">IEEE</option>
           </select>
         </div>
-        <CitationFormatter id={item.doi} input={item.formattedCitation} locale="en" style={selectedOption}></CitationFormatter>
+        <CitationFormatter id={doi.doi} input={doi.formattedCitation} locale="en" style={selectedOption}></CitationFormatter>
       </div>
     )
   }
@@ -49,28 +49,28 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
     margin: '0 0 .35em 10px',
   }
 
-  const citationsTabLabel = Pluralize({count: compactNumbers(item.citationCount), singular:'Citation', style:style, showCount:true}) 
-  const viewsTabLabel = Pluralize({count: compactNumbers(item.viewCount), singular:'View', style:style, showCount:true}) 
-  const downloadsTabLabel = Pluralize({count: compactNumbers(item.downloadCount), singular:'Download', style:style, showCount:true}) 
+  const citationsTabLabel = Pluralize({count: compactNumbers(doi.citationCount), singular:'Citation', style:style, showCount:true}) 
+  const viewsTabLabel = Pluralize({count: compactNumbers(doi.viewCount), singular:'View', style:style, showCount:true}) 
+  const downloadsTabLabel = Pluralize({count: compactNumbers(doi.downloadCount), singular:'Download', style:style, showCount:true}) 
  
   const analyticsBar = () => {
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
           <Tabs  id="over-time-tabs">
-            {item.citationCount > 0 && 
+            {doi.citationCount > 0 && 
               <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
-                <CitationsChart data={item.citationsOverTime} publicationYear={item.publicationYear} citationCount={item.citationCount}></CitationsChart>
+                <CitationsChart data={doi.citationsOverTime} publicationYear={doi.publicationYear} citationCount={doi.citationCount}></CitationsChart>
               </Tab>
             }
-            {item.viewCount > 0 && 
+            {doi.viewCount > 0 && 
               <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-                <UsageChart data={item.viewsOverTime} counts={item.viewCount} publicationYear={item.publicationYear} type="View"/> 
+                <UsageChart data={doi.viewsOverTime} counts={doi.viewCount} publicationYear={doi.publicationYear} type="View"/> 
               </Tab>
             }
-            {item.downloadCount > 0 && 
+            {doi.downloadCount > 0 && 
               <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
-                <UsageChart data={item.downloadsOverTime} counts={item.downloadCount} publicationYear={item.publicationYear} type="Download" />
+                <UsageChart data={doi.downloadsOverTime} counts={doi.downloadCount} publicationYear={doi.publicationYear} type="Download" />
               </Tab>
             }
           </Tabs>
@@ -81,23 +81,23 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    const referencesTabLabel = Pluralize({count: compactNumbers(item.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
-    const citationsTabLabel = Pluralize({count: compactNumbers(item.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
+    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
+    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
 
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
           <Tabs id="related-content-tabs">
-            {item.citations.nodes.length > 0 && 
+            {doi.citations.nodes.length > 0 && 
               <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-                {/* <RelatedContentList dataInput={item.citations} /> */}
+                {/* <RelatedContentList dataInput={doi.citations} /> */}
                 <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
               </Tab>
             }
-            {item.references.nodes.length > 0 && 
+            {doi.references.nodes.length > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                {/* <RelatedContentList dataInput={item.references} /> */}
+                {/* <RelatedContentList dataInput={doi.references} /> */}
                 <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
 
               </Tab>
@@ -109,9 +109,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({item}) => {
   }
 
   return (
-    <div key={item.id} className="panel panel-transparent">
-      <h2 className="member-results">{item.doi}</h2>
-      <DoiMetadata item={item}></DoiMetadata>
+    <div key={doi.id} className="panel panel-transparent">
+      <h2 className="member-results">{doi.doi}</h2>
+      <DoiMetadata metadata={doi}></DoiMetadata>
       <br/>
       {formattedCitation()}
       {analyticsBar()}

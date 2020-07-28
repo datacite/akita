@@ -309,7 +309,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
-            <Doi item={doi} />
+            <Doi doi={doi} />
           </div>
           <br />
         </div>

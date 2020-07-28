@@ -32,30 +32,30 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
-  item: DoiType
+  metadata: DoiType
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
-  if (item == null) return (
+const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
+  if (metadata == null) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>
   )
 
   const searchtitle = () => {
-    if (!item.titles[0]) return (
+    if (!metadata.titles[0]) return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(metadata.doi)}`}>
           <a>No Title</a>
         </Link>
       </h3>
     )
 
-    const titleHtml = item.titles[0].title
+    const titleHtml = metadata.titles[0].title
 
     return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(item.doi)}`}>
+        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(metadata.doi)}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -63,15 +63,15 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   }
 
   const doiTitle = () => {
-    if (!item.titles[0]) return (
+    if (!metadata.titles[0]) return (
       <h3 className="member">No Title</h3>
     )
 
-    const titleHtml = item.titles[0].title
+    const titleHtml = metadata.titles[0].title
 
     return (
       <h3 className="work">
-        <a target="_blank" rel="noreferrer" href={item.id}>
+        <a target="_blank" rel="noreferrer" href={metadata.id}>
           {ReactHtmlParser(titleHtml)}
         </a>
       </h3>
@@ -88,13 +88,13 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   }
 
   const creators = () => {
-    if (!item.creators[0]) return (
+    if (!metadata.creators[0]) return (
       <div className="creators alert alert-warning">
         No creators
       </div>
     )
 
-    const creatorList = item.creators.reduce((sum, creator, index, array) => {
+    const creatorList = metadata.creators.reduce((sum, creator, index, array) => {
       const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
 
 
@@ -129,18 +129,18 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
     )
   }
 
-  const metadata = () => {
+  const metadataTag = () => {
     return (
       <div className="metadata">
-        {item.version ? 'Version ' + item.version + ' of ' : ''}{item.types.resourceType ? startCase(item.types.resourceType) : 'Content'} published {item.publicationYear} via {item.publisher}
+        {metadata.version ? 'Version ' + metadata.version + ' of ' : ''}{metadata.types.resourceType ? startCase(metadata.types.resourceType) : 'Content'} published {metadata.publicationYear} via {metadata.publisher}
       </div>
     )
   }
 
   const description = () => {
-    if (!item.descriptions[0]) return ''
+    if (!metadata.descriptions[0]) return ''
 
-    const descriptionHtml = truncate(item.descriptions[0].description, { 'length': 750, 'separator': '… ' })
+    const descriptionHtml = truncate(metadata.descriptions[0].description, { 'length': 750, 'separator': '… ' })
 
     return (
       <div className="description">
@@ -150,7 +150,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   }
 
   const license = () => {
-    let rights = [...item.rights];
+    let rights = [...metadata.rights];
     const uniqueRights = uniqBy(rights, 'rightsIdentifier')
     const ccRights = uniqueRights.reduce((sum, r) => {
       if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
@@ -218,9 +218,9 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
     return (
       <div className="registered">
         DOI registered
-        {item.registered &&
-          <span> {new Date(item.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-        } via {item.registrationAgency.name}.
+        {metadata.registered &&
+          <span> {new Date(metadata.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        } via {metadata.registrationAgency.name}.
       </div>
     )
   }
@@ -246,23 +246,23 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   const tags = () => {
     return (
       <div className="tags">
-        {item.types.resourceTypeGeneral &&
+        {metadata.types.resourceTypeGeneral &&
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Label bsStyle="info">{startCase(item.types.resourceTypeGeneral)}</Label>
+            <Label bsStyle="info">{startCase(metadata.types.resourceTypeGeneral)}</Label>
           </OverlayTrigger>
         }
-        {item.fieldsOfScience &&
+        {metadata.fieldsOfScience &&
           <span>
-            {item.fieldsOfScience.map(fos => (
+            {metadata.fieldsOfScience.map(fos => (
               <OverlayTrigger key={fos.id} placement="top" overlay={tooltipFieldsOfScience}>
                 <Label bsStyle="info">{fos.name}</Label>
               </OverlayTrigger>
             ))}
           </span>
         }
-        {item.language &&
+        {metadata.language &&
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            <Label bsStyle="info">{item.language.name}</Label>
+            <Label bsStyle="info">{metadata.language.name}</Label>
           </OverlayTrigger>
         }
       </div>
@@ -270,7 +270,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   }
 
   const metricsCounter = () => {
-    if (item.citationCount + item.viewCount + item.downloadCount == 0) {
+    if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
       return (
         <div className="metrics-counter">
           <i><FontAwesomeIcon icon={faInfoCircle} /> No citations, views or downloads reported.</i>
@@ -280,14 +280,14 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
 
     return (
       <div className="metrics-counter">
-        {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft} /> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
+        {metadata.citationCount > 0 &&
+          <i><FontAwesomeIcon icon={faQuoteLeft} /> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
         }
-        {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye} /> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
+        {metadata.viewCount > 0 &&
+          <i><FontAwesomeIcon icon={faEye} /> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
         }
-        {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload} /> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
+        {metadata.downloadCount > 0 &&
+          <i><FontAwesomeIcon icon={faDownload} /> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
         }
       </div>
     )
@@ -308,7 +308,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   const links = () => {
     return (
       <div className="panel-footer">
-        <a href={item.id}><FontAwesomeIcon icon={faExternalLinkAlt} /> {item.id}</a>
+        <a href={metadata.id}><FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.id}</a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
             <span className="bookmark"><FontAwesomeIcon icon={faBookmark} /> Bookmark</span>
@@ -322,12 +322,12 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ item }) => {
   }
 
   return (
-    <div key={item.id} className="panel panel-transparent content-item">
+    <div key={metadata.id} className="panel panel-transparent content-metadata">
       <div className="panel-body">
         {title()}
 
         {creators()}
-        {metadata()}
+        {metadataTag()}
         {description()}
         {registered()}
         {license()}
