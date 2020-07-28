@@ -15,16 +15,16 @@ export interface OrganizationRecord {
 
 type Props = {
     organization: OrganizationRecord;
-    linksToDetailpage: boolean;
+    linkToDetailPage: boolean;
 };
 
 
-export const Organization: React.FunctionComponent<Props> = ({ organization, linksToDetailpage }) => {
+export const Organization: React.FunctionComponent<Props> = ({ organization, linkToDetailPage }) => {
 
 
     const titleLink = () => {
-        console.log(linksToDetailpage);
-        if (linksToDetailpage) {
+        console.log(linkToDetailPage);
+        if (linkToDetailPage) {
             return (
                 <Link href="/organizations/[organization]" as={`/organizations${encodeURIComponent(rorFromUrl(organization.id))}`}>
                     <a>{organization.name}</a>

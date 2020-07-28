@@ -125,7 +125,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
         <ul>
           {searchResults.map(item => (
             <React.Fragment key={item.id}>
-              <Organization organization={item} linksToDetailpage={true}></Organization>
+              <Organization organization={item} linkToDetailPage={true}></Organization>
             </React.Fragment>
           ))}
         </ul>
