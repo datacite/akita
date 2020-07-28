@@ -91,12 +91,15 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
 
     if (data) {
       data.organizations.edges.map(edge => {
-        results.push(
-          {
-            id: edge.node.id,
-            name: edge.node.name,
-          }
-        );
+        let org: OrganizationRecord = {
+          id: edge.node.id,
+          name: edge.node.name,
+          type: edge.node.type,
+          url: edge.node.url,
+          identifiers: edge.node.identifiers,
+        };
+
+        results.push(org);
 
         return results;
       })
@@ -105,7 +108,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
     }
 
   }, [searchQuery, data, refetch]);
-
 
   const renderResults = () => {
     if (loading) return <p>Loading...</p>;
@@ -123,7 +125,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
         <ul>
           {searchResults.map(item => (
             <React.Fragment key={item.id}>
-              <Organization organization={item}></Organization>
+              <Organization organization={item} linksToDetailpage={true}></Organization>
             </React.Fragment>
           ))}
         </ul>

@@ -4,13 +4,23 @@ NumberFormat.__addLocaleData(
 );
 
 export const compactNumbers = (num) => {
-   if (num >= 1e3) return  toLocaleString(num, 'en', { notation: "compact" , compactDisplay: "short" })
-   return num
+  if (num >= 1e3) return toLocaleString(num, 'en', { notation: "compact", compactDisplay: "short" })
+  return num
 }
 
 
-export const orcidFromUrl = (orcidUrl :string) => {
+export const orcidFromUrl = (orcidUrl: string) => {
   const url = document.createElement('a');
   url.href = orcidUrl;
+  return url.pathname
+}
+
+export const rorFromUrl = (rorUrl: string) => {
+  if (!rorUrl) {
+    return null
+  }
+
+  const url = document.createElement('a');
+  url.href = rorUrl;
   return url.pathname
 }
