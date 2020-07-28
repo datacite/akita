@@ -82,14 +82,14 @@ const data = {
 
 describe('Person Component', () => {
   it('orcid', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     cy.get('a#orcid-link')
       .contains('https://orcid.org/0000-0003-3484-6875')
       .should('be.visible')
   })
 
   it('link to doi page', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     cy.get('h3.work > a')
       .first()
       .should('have.attr', 'href')
@@ -97,14 +97,14 @@ describe('Person Component', () => {
   })
   
   it('workCount', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     cy.get('h3#work-count')
       .contains('500')
       .should('be.visible')
   })
 
   it('citationCount', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     console.log(cy.get('div#citation-count'))
     cy.get('div#citation-count')
       .contains('33')
@@ -112,20 +112,20 @@ describe('Person Component', () => {
   })
 
   it('viewCount', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     cy.get('div#view-count')
       .should('not.be.visible')
   })
 
   // it('downloadCount', () => {
-  //   mount(<Person item={data}/>)
+  //   mount(<Person person={data}/>)
   //   cy.get('div#download-count')
   //     .contains('4.5k')
   //     .should('be.visible')
   // })
 
   it('analytics bar', () => {
-    mount(<Person item={data} />)
+    mount(<Person person={data} />)
       cy.get('.types-chart')
       .should('be.visible')
 
@@ -134,7 +134,7 @@ describe('Person Component', () => {
   })
 
   it('related content section', () => {
-    mount(<Person item={data}/>)
+    mount(<Person person={data}/>)
     cy.get('.member-results')
       .should('be.visible')
 

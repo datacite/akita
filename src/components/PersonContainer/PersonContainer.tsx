@@ -21,7 +21,7 @@ import {
 
 
 type Props = {
-  item?: string
+  orcid?: string
 }
 
 export const DOI_GQL = gql`
@@ -146,14 +146,14 @@ interface OrcidQueryVar {
   cursor: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
-  const [orcid, setOrcid] = React.useState<PersonType>()
+const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
+  const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + item, cursor: cursor }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor }
     }
   )
 
@@ -164,7 +164,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
     }
 
     setOrcid(result)
-  }, [item, data])
+  }, [orcid, data])
 
   if (loading) return (
     <div className="row">
@@ -194,7 +194,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!orcid) return <p>Content not found.</p>
+  if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
 
@@ -217,15 +217,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
     )
 
     const orcidLink = (
-      <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
+      <a href={"https://orcid.org/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
     )
 
     const impactLink = (
-      <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
+      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
     )
 
     const europePMC = (
-      <a href={"http://europepmc.org/authors/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
+      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
     )
 
     return (
@@ -288,9 +288,9 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <div key={orcid.id} className="panel panel-transparent content-item">
+        <div key={orcidRecord.id} className="panel panel-transparent content-orcid">
           <div className="panel-body">
-            <Person item={orcid} />
+            <Person person={orcidRecord} />
           </div>
           <br />
         </div>

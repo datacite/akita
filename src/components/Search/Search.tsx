@@ -58,19 +58,19 @@ const Search: React.FunctionComponent = () => {
         <Col>
 
         <Tabs defaultActiveKey="content" id="noanim-tab-example">
-          <Tab eventKey="people" title="People" peopleTab>
+          <Tab eventKey="people" title="People">
           {!searchQuery || searchQuery === " "
             ? (renderIntroduction())
             : (<SearchPerson searchQuery={searchQuery} />)
           }
           </Tab>
-          <Tab  eventKey="content" title="Content" contentTab>
+          <Tab  eventKey="content" title="Content">
           {!searchQuery || searchQuery === " "
             ? (renderIntroduction())
             : (<SearchContent searchQuery={searchQuery} />)
           }
           </Tab>
-          <Tab  eventKey="organisations" title="Organisations" disabled organisationsTab>
+          <Tab  eventKey="organisations" title="Organisations" disabled>
           {!searchQuery || searchQuery === " "
             ? (renderIntroduction())
             : (<SearchPerson searchQuery={searchQuery} />)

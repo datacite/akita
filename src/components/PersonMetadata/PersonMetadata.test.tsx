@@ -87,14 +87,14 @@ const data = {
 
 describe('Person Component', () => {
   it('orcid', () => {
-    mount(<PersonMetadata item={data}/>)
+    mount(<PersonMetadata metadata={data}/>)
     cy.get('a#orcid-link')
       .contains('https://orcid.org/0000-0003-3484-6875')
       .should('be.visible')
   })
   
   it('workCount', () => {
-    mount(<PersonMetadata item={data}/>)
+    mount(<PersonMetadata metadata={data}/>)
     cy.get('i#work-count')
       .contains('500')
       .should('be.visible')
@@ -102,21 +102,21 @@ describe('Person Component', () => {
 
     // To be added after MVP according to feedback
   // it('citationCount', () => {
-  //   mount(<PersonMetadata item={data}/>)
+  //   mount(<PersonMetadata metadata={data}/>)
   //   cy.get('div.metrics-counter')
   //     .contains('33')
   //     .should('be.visible')
   // })
 
   it('affiliation', () => {
-    mount(<PersonMetadata item={data}/>)
+    mount(<PersonMetadata metadata={data}/>)
     cy.get('a#affiliation')
       .contains('cdl')
       .should('be.visible')
   })
 
   it('name', () => {
-    mount(<PersonMetadata item={data}/>)
+    mount(<PersonMetadata metadata={data}/>)
     cy.get('h3.work')
       .contains('Juan Perez')
       .should('be.visible')
@@ -124,7 +124,7 @@ describe('Person Component', () => {
 
     // To be added after MVP according to feedback
   // it('viewCount', () => {
-  //   mount(<PersonMetadata item={data}/>)
+  //   mount(<PersonMetadata metadata={data}/>)
   //   cy.get('div#view-count')
   //     .should('not.be.visible')
   // })

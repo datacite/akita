@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Alert} from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
-import { PersonType } from '../PersonContainer/PersonContainer'
+import { PersonRecord } from '../Person/Person'
 import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -19,11 +19,11 @@ import { orcidFromUrl } from "../../utils/helpers"
 
 
 type Props = {
-  item: PersonType
+  metadata: PersonRecord
 }
 
-const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
-  if (!item ) return (
+const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
+  if (!metadata ) return (
     <Alert bsStyle="warning">
         No content found.
       </Alert>
@@ -32,29 +32,29 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
   //// Affiliation needs work in the API
   const afilliation = () => {
-    if (item.affiliation.length < 1) { return null }
+    if (metadata.affiliation.length < 1) { return null }
     return (
       <div className="metrics-counter">
       <span>From &nbsp; 
-      <a id="affiliation" href={item.affiliation[0].id}>{item.affiliation[0].name}</a></span> 
+      <a id="affiliation" href={metadata.affiliation[0].id}>{metadata.affiliation[0].name}</a></span> 
      </div>
     )
   }
 
   const name = () => {
-    if (!item.name) return (
+    if (!metadata.name) return (
       <h3 className="work">
-        <Link href="/people/[person]" as={`/people${(orcidFromUrl(item.id))}`}>
+        <Link href="/people/[person]" as={`/people${(orcidFromUrl(metadata.id))}`}>
           <a>No Title</a>
         </Link>
       </h3>
     )
 
-    const titleHtml = item.name
+    const titleHtml = metadata.name
 
     return (
       <h3 className="work">
-        <Link href="/people/[person]" as={`/people${(orcidFromUrl(item.id))}`}>
+        <Link href="/people/[person]" as={`/people${(orcidFromUrl(metadata.id))}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -65,13 +65,13 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="panel-footer">
-        <a id="orcid-link" href={item.id}><FontAwesomeIcon icon={faOrcid} /> {item.id}</a>
+        <a id="orcid-link" href={metadata.id}><FontAwesomeIcon icon={faOrcid} /> {metadata.id}</a>
       </div>
     )
   }
 
   const workCount = () => {
-    if (item.works.totalCount == 0) {
+    if (metadata.works.totalCount == 0) {
       return (
         <div className="metrics-counter">
   
@@ -84,14 +84,14 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
     return (
       <div className="metrics-counter">
 
-      <i id="work-count"><FontAwesomeIcon  icon={faScroll}/> <Pluralize singular={'Work'} count={compactNumbers(item.works.totalCount)} /> </i>
+      <i id="work-count"><FontAwesomeIcon  icon={faScroll}/> <Pluralize singular={'Work'} count={compactNumbers(metadata.works.totalCount)} /> </i>
       </div>
     )
   }
 
 // eslint-disable-next-line no-unused-vars
   const metricsCounter = () => {
-    if (item.citationCount + item.viewCount + item.downloadCount == 0) {
+    if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
       return (
         <div className="metrics-counter">
           <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
@@ -101,14 +101,14 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
     return (
       <div className="metrics-counter">
-        {item.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} /> </i>
+        {metadata.citationCount > 0 &&
+          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
         }
-        {item.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(item.viewCount)} /> </i>
+        {metadata.viewCount > 0 &&
+          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
         }
-        {item.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} /> </i>
+        {metadata.downloadCount > 0 &&
+          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
         }
       </div>
     )  
@@ -116,7 +116,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
 
 
   return (
-    <div key={item.id} className="panel panel-transparent">
+    <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         <ul className="counter-list">
         {name()}
@@ -131,4 +131,4 @@ const PersonPresentation: React.FunctionComponent<Props> = ({item}) => {
   )
 }
 
-export default PersonPresentation
+export default PersonMetadata

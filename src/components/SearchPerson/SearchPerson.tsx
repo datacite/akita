@@ -57,7 +57,6 @@ export const CONTENT_GQL = gql`
 `
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
-    // const router = useRouter()
 
     /* eslint-disable no-unused-vars */
     const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
@@ -140,7 +139,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     
             {searchResults.map(item => (
               <React.Fragment key={item.id}>
-                <PersonMetadata item={item} />
+                <PersonMetadata metadata={item} />
               </React.Fragment>
             ))}
     
