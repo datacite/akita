@@ -4,7 +4,7 @@ import { Row, Col, Tab, Tabs } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
-// import SearchOrganization from '../SearchOrganization/SearchOrganization'
+import SearchOrganization from '../SearchOrganization/SearchOrganization'
 import SearchPerson from '../SearchPerson/SearchPerson'
 
 const Search: React.FunctionComponent = () => {
@@ -73,7 +73,7 @@ const Search: React.FunctionComponent = () => {
           <Tab  eventKey="organisations" title="Organisations" disabled>
           {!searchQuery || searchQuery === " "
             ? (renderIntroduction())
-            : (<SearchPerson searchQuery={searchQuery} />)
+            : (<SearchOrganization searchQuery={searchQuery} />)
           }
           </Tab>
         </Tabs>
