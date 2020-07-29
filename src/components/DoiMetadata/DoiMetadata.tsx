@@ -45,7 +45,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   const searchtitle = () => {
     if (!metadata.titles[0]) return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(metadata.doi)}`}>
+        <Link href="/dois/[...doi]" as={`/dois/${(metadata.doi)}`}>
           <a>No Title</a>
         </Link>
       </h3>
@@ -55,7 +55,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return (
       <h3 className="work">
-        <Link href="/dois/[doi]" as={`/dois/${encodeURIComponent(metadata.doi)}`}>
+        <Link href="/dois/[...doi]" as={`/dois/${(metadata.doi)}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -80,7 +80,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
   const title = () => {
     const router = useRouter()
-    if (router == null || router.pathname === '/' || router.pathname === '/person/[person]') {
+    if (router == null || router.pathname === '/' || router.pathname === '/people/[person]') {
       return searchtitle()
     } else {
       return doiTitle()
@@ -99,7 +99,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
 
       // padding depending on position in creators list
-
       switch (true) {
         case (array.length > index + 2):
           sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
@@ -117,8 +116,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     return (
       <div className="creators">
         {creatorList.map((c, index) =>
-          c.id ? (
-            <Link href="/person/[orcid]" key={index} as={`/person${(c.id)}`}>
+          c.id !== null ? (
+            <Link href="/people/[orcid]" key={index} as={`/people${(c.id)}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
