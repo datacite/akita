@@ -46,7 +46,7 @@ interface OrganizationsQueryData {
 }
 
 export const ORGANIZATIONS_GQL = gql`
-  query getContentQuery(
+  query getOrganizationQuery(
     $query: String,
     $cursor: String,
     ) {

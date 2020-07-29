@@ -26,7 +26,7 @@ export const Organization: React.FunctionComponent<Props> = ({ organization, det
     const titleLink = () => {
         if (!detailPage) {
             return (
-                <Link href="/organizations/[organization]" as={`/organizations${encodeURIComponent(rorFromUrl(organization.id))}`}>
+                <Link href="/organization/[organization]" as={`/organizations${encodeURIComponent(rorFromUrl(organization.id))}`}>
                     <a>{organization.name}</a>
                 </Link>
             )
