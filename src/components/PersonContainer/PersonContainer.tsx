@@ -21,7 +21,7 @@ import {
 
 
 type Props = {
-  item?: string
+  orcid?: string
 }
 
 export const DOI_GQL = gql`
@@ -38,7 +38,7 @@ export const DOI_GQL = gql`
         name
         id
       }
-      works(first: 5, after: $cursor) {
+      works(first: 25, after: $cursor) {
         totalCount
         pageInfo {
           endCursor
@@ -113,21 +113,27 @@ export interface PersonType {
   viewCount: number
   pageInfo: PageInfo
   downloadCount: number
-  affiliation: Attribute
+  affiliation: Attribute[]
   works: Works
 }
 
 interface Works {
   totalCount: number
-  resourceTypes: Attribute[]
+  resourceTypes: ContentFacet[]
   pageInfo: PageInfo
-  published: Attribute[]
+  published: ContentFacet[]
   nodes: DoiType[]
 }
 
-export interface Attribute {
+interface ContentFacet {
+  id: string
   title: string
   count: number
+}
+
+export interface Attribute {
+  name: string
+  id: string
 }
 
 
@@ -140,14 +146,14 @@ interface OrcidQueryVar {
   cursor: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
-  const [orcid, setOrcid] = React.useState<PersonType>()
+const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
+  const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + item, cursor: cursor }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor }
     }
   )
 
@@ -158,7 +164,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
     }
 
     setOrcid(result)
-  }, [item, data])
+  }, [orcid, data])
 
   if (loading) return (
     <div className="row">
@@ -188,7 +194,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!orcid) return <p>Content not found.</p>
+  if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
 
@@ -206,20 +212,20 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
 
     const bibtex = (
       <Popover id="share" title="Export bibtex">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
+        Export as BibTeX will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
       </Popover>
     )
 
     const orcidLink = (
-      <a href={"https://orcid.org/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
+      <a href={"https://orcid.org/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
     )
 
     const impactLink = (
-      <a href={"https://profiles.impactstory.org/u/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
+      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
     )
 
     const europePMC = (
-      <a href={"http://europepmc.org/authors/" + item} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
+      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
     )
 
     return (
@@ -234,7 +240,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
         <div className="panel panel-transparent">
           <div className="facets panel-body">
 
-            <h4>Other profiles for this person</h4>
+            <h4>Other Profiles</h4>
             {orcidLink}
             <br />
             {impactLink}
@@ -282,9 +288,9 @@ const PersonContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <div key={orcid.id} className="panel panel-transparent content-item">
+        <div key={orcidRecord.id} className="panel panel-transparent content-orcid">
           <div className="panel-body">
-            <Person item={orcid} />
+            <Person person={orcidRecord} />
           </div>
           <br />
         </div>

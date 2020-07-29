@@ -8,14 +8,12 @@ import { GetServerSideProps } from 'next'
 const PersonPage = ({personPath}) => {  
   return (
     <Layout title={process.env.NEXT_PUBLIC_TITLE}>
-      <PersonContainer item={personPath}/>
+      <PersonContainer orcid={personPath}/>
     </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("context")
-  console.log(context)
 
   const personPath = context.params.person
 

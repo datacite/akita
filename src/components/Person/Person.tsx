@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Alert, Grid, Row, Col } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
-import { PersonType } from '../PersonContainer/PersonContainer'
+import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,12 +13,51 @@ import { orcidFromUrl } from "../../utils/helpers"
 import Pager from '../Pager/Pager'
 // import { count } from 'console'
 
-type Props = {
-  item: PersonType
+
+export interface PersonRecord {
+  id: string
+  name: string
+  givenName: string
+  familyName: string
+  citationCount: number
+  viewCount: number
+  pageInfo: PageInfo
+  downloadCount: number
+  affiliation: Attribute[]
+  works: Works
 }
 
-const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
-  if (!item) return (
+interface Works {
+  totalCount: number
+  resourceTypes: ContentFacet[]
+  pageInfo: PageInfo
+  published: ContentFacet[]
+  nodes: DoiType[]
+}
+
+interface PageInfo {
+  endCursor: string
+  hasNextPage: boolean
+}
+
+interface ContentFacet {
+  id: string
+  title: string
+  count: number
+}
+
+export interface Attribute {
+  name: string
+  id: string
+}
+
+
+type Props = {
+  person: PersonRecord
+}
+
+const Person: React.FunctionComponent<Props> = ({ person }) => {
+  if (!person) return (
     <Alert bsStyle="warning">
       No content found.
     </Alert>
@@ -26,22 +65,28 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
 
 
   //// Affiliation needs work in the API
-  // const afilliation = () => {
-  //   return (
-  //   )
-  // }
+  const afilliation = () => {
+    if (person.affiliation.length < 1) { return null }
+    return (
+      <div className="metrics-counter">
+      <span>From &nbsp; 
+      <a id="affiliation" href={person.affiliation[0].id}>{person.affiliation[0].name}</a>
+      </span> 
+     </div>
+    )
+  }
 
   const orcid = () => {
 
     return (
       <div className="panel-footer">
-        <a id="orcid-link" href={item.id}><FontAwesomeIcon icon={faOrcid} /> {item.id}</a>
+        <a id="orcid-link" href={person.id}><FontAwesomeIcon icon={faOrcid} /> {person.id}</a>
       </div>
     )
   }
 
   const workCount = () => {
-    if (item.works.totalCount == 0) {
+    if (person.works.totalCount == 0) {
       return ""
     }
 
@@ -53,26 +98,26 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
             <h4>Works</h4>
             <Row>
               <Col xs={4}>
-                <h3 id="work-count">{compactNumbers(item.works.totalCount)}</h3>
+                <h3 id="work-count">{compactNumbers(person.works.totalCount)}</h3>
               </Col>
             </Row>
             <Row >
-              {item.citationCount > 0 &&
+              {person.citationCount > 0 &&
                 <Col xs={4}>
-                  <h5><Pluralize singular={'Citation'} count={compactNumbers(item.citationCount)} showCount={false} /></h5>
-                  <div id="citation-count">{compactNumbers(item.citationCount)}</div>
+                  <h5><Pluralize singular={'Citation'} count={compactNumbers(person.citationCount)} showCount={false} /></h5>
+                  <div id="citation-count">{compactNumbers(person.citationCount)}</div>
                 </Col>
               }
-              {item.viewCount > 0 &&
+              {person.viewCount > 0 &&
                 <Col xs={4}>
-                  <h5><Pluralize singular={'View'} count={compactNumbers(item.viewCount)} showCount={false} /></h5>
-                  <div id="view-count">{compactNumbers(item.viewCount)}</div>
+                  <h5><Pluralize singular={'View'} count={compactNumbers(person.viewCount)} showCount={false} /></h5>
+                  <div id="view-count">{compactNumbers(person.viewCount)}</div>
                 </Col>
               }
-              {item.downloadCount > 0 &&
+              {person.downloadCount > 0 &&
                 <Col xs={4}>
-                  <h5><Pluralize singular={'Download'} count={compactNumbers(item.downloadCount)} showCount={false} /></h5>
-                  <div id="download-count">{compactNumbers(item.downloadCount)}</div>
+                  <h5><Pluralize singular={'Download'} count={compactNumbers(person.downloadCount)} showCount={false} /></h5>
+                  <div id="download-count">{compactNumbers(person.downloadCount)}</div>
                 </Col>
               }
             </Row>
@@ -84,10 +129,10 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
 
 
   const analyticsBar = () => {
-    if (!item.works.totalCount) return (null)
+    if (!person.works.totalCount) return (null)
 
-    const published = item.works.published.map(x => ({ title: x.title, count: x.count }));
-    const resourceTypes = item.works.resourceTypes.map(x => ({ title: x.title, count: x.count }));
+    const published = person.works.published.map(x => ({ title: x.title, count: x.count }));
+    const resourceTypes = person.works.resourceTypes.map(x => ({ title: x.title, count: x.count }));
 
     return (
       <div>
@@ -98,11 +143,11 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
             </Row>
             <Row>
               <Col xs={6}>
-                <ProductionChart data={published} doiCount={item.works.totalCount}></ProductionChart>
+                <ProductionChart data={published} doiCount={person.works.totalCount}></ProductionChart>
               </Col>
               <Col>
                 <br />
-                <TypesChart data={resourceTypes} legend={false} count={item.works.totalCount}></TypesChart>
+                <TypesChart data={resourceTypes} legend={false} count={person.works.totalCount}></TypesChart>
               </Col>
             </Row>
           </Grid>
@@ -114,7 +159,7 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
 
   // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    if (!item.works.totalCount) return (
+    if (!person.works.totalCount) return (
       <div className="panel panel-transparent">
         <div className="panel-body">
           <h3 className="member">Introduction</h3>
@@ -128,53 +173,42 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
     )
 
 
-    const hasNextPage = item.works.pageInfo ? item.works.pageInfo.hasNextPage : false
-    const endCursor = item.works.pageInfo ? item.works.pageInfo.endCursor : ""
-
-    // const style = {
-    //   fontWeight: 600,
-    //   color:'#1abc9c',
-    //   fontSize: '25px',
-    //   padding: 0,
-    //   margin: '0 0 .35em 10px',
-    // }
+    const hasNextPage = person.works.pageInfo ? person.works.pageInfo.hasNextPage : false
+    const endCursor = person.works.pageInfo ? person.works.pageInfo.endCursor : ""
 
 
-    // const worksLabel = Pluralize({count: compactNumbers(item.works.totalCount), singular:'Work', style:style,showCount:true})
-
-
-    if (!item.works.totalCount) return (
+    if (!person.works.totalCount) return (
       <React.Fragment>
         <Alert bsStyle="warning">
           No content found.
         </Alert>
 
-        <Pager url={'/person' + orcidFromUrl(item.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </React.Fragment>
     )
 
     return (
       <div>
-        {item.works.totalCount > 1 &&
+        {person.works.totalCount > 1 &&
           <h3 className="member-results">Works</h3>
         }
 
-        {item.works.nodes.map(item => (
-          <React.Fragment key={item.id}>
-            <DoiMetadata item={item} />
+        {person.works.nodes.map(doi => (
+          <React.Fragment key={doi.id}>
+            <DoiMetadata item={doi} />
           </React.Fragment>
         ))}
 
-        <Pager url={'/person' + orcidFromUrl(item.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
       </div>
     )
   }
 
   return (
-    <div key={item.id} className="panel panel-transparent">
-      <h2 className="member-results">{item.name}</h2>
+    <div key={person.id} className="panel panel-transparent">
+      <h2 className="member-results">{person.name}</h2>
       <div className="panel-body">
-        {/* {afilliation()} */}
+        {afilliation()}
         {workCount()}
         {orcid()}
         <br />
@@ -185,4 +219,4 @@ const PersonPresentation: React.FunctionComponent<Props> = ({ item }) => {
   )
 }
 
-export default PersonPresentation
+export default Person

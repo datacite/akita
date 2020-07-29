@@ -6,9 +6,10 @@ import { GetServerSideProps } from 'next'
 /* eslint-ensable no-unused-vars*/
 
 const DoisPage = ({doiPath}) => {  
+
   return (
     <Layout title={process.env.NEXT_PUBLIC_TITLE}>
-      <DoiContainer item={doiPath}/>
+      <DoiContainer item={doiPath.join("/")}/>
     </Layout>
   )
 }

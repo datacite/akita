@@ -10,6 +10,9 @@ export const compactNumbers = (num) => {
 
 
 export const orcidFromUrl = (orcidUrl :string) => {
+  if(!orcidUrl){
+    return null 
+  }
   const url = document.createElement('a');
   url.href = orcidUrl;
   return url.pathname
