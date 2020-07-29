@@ -18,8 +18,10 @@ interface OrganizationsNode {
   id: string;
   name: string;
   alternateName: string[];
-  type: string;
   url: string;
+  address: {
+    country: string
+  }
   identifiers: [{
     identifier: string,
     identifierType: string
@@ -59,8 +61,10 @@ export const ORGANIZATIONS_GQL = gql`
           id,
           name,
           alternateName,
-          type,
           url,
+          address {
+            country
+          },
           identifiers {
             identifier,
             identifierType
@@ -90,13 +94,20 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
     const results: OrganizationRecord[] = [];
 
     if (data) {
+
       data.organizations.edges.map(edge => {
+        // Filter out any empty identifiers
+        let identifiers = edge.node.identifiers.filter(i => {
+          return i.identifier != "";
+        });
+
         let org: OrganizationRecord = {
           id: edge.node.id,
           name: edge.node.name,
-          type: edge.node.type,
+          alternateNames: edge.node.alternateName,
           url: edge.node.url,
-          identifiers: edge.node.identifiers,
+          countryName: edge.node.address.country,
+          identifiers: identifiers,
         };
 
         results.push(org);
@@ -125,7 +136,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
         <ul>
           {searchResults.map(item => (
             <React.Fragment key={item.id}>
-              <Organization organization={item} linkToDetailPage={true}></Organization>
+              <Organization organization={item} detailPage={false}></Organization>
             </React.Fragment>
           ))}
         </ul>
