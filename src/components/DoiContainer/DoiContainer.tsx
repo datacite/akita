@@ -81,11 +81,37 @@ export const DOI_GQL = gql`
     citations{
       nodes{
         formattedCitation
+        repository{
+          name
+          re3dataId
+          id
+        }
+        registrationAgency{
+          name
+          id
+        }
+        member{
+          name
+          id
+        }
       }
     }
     references{
       nodes{
         formattedCitation
+        repository{
+          name
+          re3dataId
+          id
+        }
+        registrationAgency{
+          name
+          id
+        }
+        member{
+          name
+          id
+        }
       }
     }
   }
@@ -170,8 +196,21 @@ export interface UsageMonth {
 
 export interface RelatedContentList {
   nodes: {
-    formattedCitation: string
-  }
+    formattedCitation: string,
+    repository: {
+      name: string,
+      re3dataId: string,
+      id: string,
+    },
+    registrationAgency: {
+      name: string,
+      id: string,
+    },
+    member: {
+      name: string,
+      id: string,
+    },
+  },
 }
 
 export interface DoiQueryData {
