@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { useQueryState } from 'next-usequerystate'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Tab, Tabs } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
 import SearchOrganization from '../SearchOrganization/SearchOrganization'
-// import SearchPerson from '../SearchPerson/SearchPerson'
+import SearchPerson from '../SearchPerson/SearchPerson'
 
 const Search: React.FunctionComponent = () => {
   //const router = useRouter()
@@ -38,7 +38,8 @@ const Search: React.FunctionComponent = () => {
   return (
     <div>
       <Row>
-        <Col md={9}>
+        <Col md={3}></Col>
+        <Col md={6}>
           <form className="form-horizontal search">
             <input name="query" value={searchQuery || ''} onChange={onSearchChange} placeholder="Type to search..." className="form-control" type="text" />
             <span id="search-icon" title="Search" aria-label="Search">
@@ -53,13 +54,29 @@ const Search: React.FunctionComponent = () => {
         </Col>
       </Row>
       <Row>
+        <Col></Col>
         <Col>
-          {/* {!searchQuery
-            ? renderIntroduction()
-            : <SearchContent searchQuery={searchQuery} />
-          } */}
-          <SearchOrganization searchQuery={searchQuery} />
-          {/* <SearchPerson searchQuery={searchQuery} /> */}
+
+          <Tabs defaultActiveKey="content" id="noanim-tab-example">
+            <Tab eventKey="people" title="People">
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchPerson searchQuery={searchQuery} />)
+              }
+            </Tab>
+            <Tab eventKey="content" title="Content">
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchContent searchQuery={searchQuery} />)
+              }
+            </Tab>
+            <Tab eventKey="organisations" title="Organisations" disabled>
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchOrganization searchQuery={searchQuery} />)
+              }
+            </Tab>
+          </Tabs>
         </Col>
       </Row>
     </div>

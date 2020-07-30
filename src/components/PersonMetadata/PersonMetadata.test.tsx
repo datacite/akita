@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import Person from './Person'
+import PersonMetadata from './PersonMetadata'
 
 const data = {
   id: "https://orcid.org/0000-0003-3484-6875",
@@ -10,7 +10,12 @@ const data = {
   citationCount: 33,
   viewCount: 0,
   downloadCount: 4504,
-  affiliation: [],
+  affiliation: [
+    {
+    name: "cdl",
+    id: "https://ror.org/03yrm5c26"
+    }
+  ],
   works: {
     totalCount: 500,
     "published": [{
@@ -69,10 +74,10 @@ const data = {
       citationCount: 4,
       registrationAgency: { id: 'datacite', name: 'DataCite' },
       viewCount: 8,
-      rights: [],
       downloadCount: 3000,
       citationsOverTime: [],
       viewsOverTime: [],
+      rights: [],
       downloadsOverTime: [],
       citations: {nodes: [] },
       references: {nodes: [] }}
@@ -82,65 +87,46 @@ const data = {
 
 describe('Person Component', () => {
   it('orcid', () => {
-    mount(<Person person={data}/>)
+    mount(<PersonMetadata metadata={data}/>)
     cy.get('a#orcid-link')
       .contains('https://orcid.org/0000-0003-3484-6875')
       .should('be.visible')
   })
-
-  it('link to doi page', () => {
-    mount(<Person person={data}/>)
-    cy.get('h3.work > a')
-      .first()
-      .should('have.attr', 'href')
-      .and('include', '/dois/')
-  })
   
   it('workCount', () => {
-    mount(<Person person={data}/>)
-    cy.get('h3#work-count')
+    mount(<PersonMetadata metadata={data}/>)
+    cy.get('i#work-count')
       .contains('500')
       .should('be.visible')
   })
 
-  it('citationCount', () => {
-    mount(<Person person={data}/>)
-    console.log(cy.get('div#citation-count'))
-    cy.get('div#citation-count')
-      .contains('33')
-      .should('be.visible')
-  })
-
-  it('viewCount', () => {
-    mount(<Person person={data}/>)
-    cy.get('div#view-count')
-      .should('not.be.visible')
-  })
-
-  // it('downloadCount', () => {
-  //   mount(<Person person={data}/>)
-  //   cy.get('div#download-count')
-  //     .contains('4.5k')
+    // To be added after MVP according to feedback
+  // it('citationCount', () => {
+  //   mount(<PersonMetadata metadata={data}/>)
+  //   cy.get('div.metrics-counter')
+  //     .contains('33')
   //     .should('be.visible')
   // })
 
-  it('analytics bar', () => {
-    mount(<Person person={data} />)
-      cy.get('.types-chart')
-      .should('be.visible')
-
-      cy.get('.production-chart')
+  it('affiliation', () => {
+    mount(<PersonMetadata metadata={data}/>)
+    cy.get('a#affiliation')
+      .contains('cdl')
       .should('be.visible')
   })
 
-  it('related content section', () => {
-    mount(<Person person={data}/>)
-    cy.get('.member-results')
+  it('name', () => {
+    mount(<PersonMetadata metadata={data}/>)
+    cy.get('h3.work')
+      .contains('Juan Perez')
       .should('be.visible')
-
-    cy.get('.creators')
-    .contains('John Smith')
-    .should('be.visible')
   })
+
+    // To be added after MVP according to feedback
+  // it('viewCount', () => {
+  //   mount(<PersonMetadata metadata={data}/>)
+  //   cy.get('div#view-count')
+  //     .should('not.be.visible')
+  // })
 
 })
