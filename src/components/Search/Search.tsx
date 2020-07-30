@@ -70,7 +70,7 @@ const Search: React.FunctionComponent = () => {
                 : (<SearchContent searchQuery={searchQuery} />)
               }
             </Tab>
-            <Tab eventKey="organisations" title="Organisations" disabled>
+            <Tab eventKey="organisations" title="Organisations">
               {!searchQuery || searchQuery === " "
                 ? (renderIntroduction())
                 : (<SearchOrganization searchQuery={searchQuery} />)
