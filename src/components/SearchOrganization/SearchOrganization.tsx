@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Alert } from 'react-bootstrap'
 
 import Error from "../Error/Error"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
@@ -124,33 +124,57 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
   }, [searchQuery, data, refetch]);
 
   const renderResults = () => {
-    if (loading) return <p>Loading...</p>;
+
+    if (!loading && searchResults.length == 0) return (
+      <React.Fragment>
+        <Alert bsStyle="warning">
+          No content found.
+        </Alert>
+      </React.Fragment>
+    )
 
     if (error) return <Error title="Something went wrong." message="Unable to load services." />;
 
     if (!data) return '';
 
     return (
-      <div>
-        {searchResults.length > 1 &&
-          <h3 className="member-results">{data.organizations.totalCount.toLocaleString('en-US')} Results</h3>
-        }
+      <div className="col-md-9 panel-list" id="content">
+        <div className="panel panel-transparent content-item">
+          <div className="panel-body">
+            {searchResults.length > 1 &&
+              <h3 className="member-results">{data.organizations.totalCount.toLocaleString('en-US')} Results</h3>
+            }
 
-        <ul>
-          {searchResults.map(item => (
-            <React.Fragment key={item.metadata.id}>
-              <Organization organization={item} detailPage={false}></Organization>
-            </React.Fragment>
-          ))}
-        </ul>
+            <ul>
+              {searchResults.map(item => (
+                <React.Fragment key={item.metadata.id}>
+                  <Organization organization={item} detailPage={false}></Organization>
+                </React.Fragment>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     )
   }
 
+  const renderFacets = () => {
+
+    return (
+      <div className="col-md-3 hidden-xs hidden-sm">
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <div className="edit">Filters</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Row>
-      <Col>{renderResults()}</Col>
+      {renderFacets()}
+      {renderResults()}
     </Row>
   )
 }
