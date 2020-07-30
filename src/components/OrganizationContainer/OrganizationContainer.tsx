@@ -1,10 +1,14 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row } from 'react-bootstrap'
+import { Row, Alert } from 'react-bootstrap'
+import { useQueryState } from 'next-usequerystate'
 
 import Error from "../Error/Error"
+import Pager from "../Pager/Pager"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
+import { DoiType } from '../DoiContainer/DoiContainer'
+import DoiMetadata from '../DoiMetadata/DoiMetadata'
 
 type Props = {
     rorId: string;
@@ -22,6 +26,26 @@ interface OrganizationResult {
         identifier: string,
         identifierType: string
     }];
+    works: Works;
+}
+
+interface Works {
+    totalCount: number
+    resourceTypes: ContentFacet[]
+    pageInfo: PageInfo
+    published: ContentFacet[]
+    nodes: DoiType[]
+}
+
+interface ContentFacet {
+    id: string
+    title: string
+    count: number
+}
+
+interface PageInfo {
+    endCursor: string
+    hasNextPage: boolean
 }
 
 interface OrganizationQueryData {
@@ -30,10 +54,11 @@ interface OrganizationQueryData {
 
 interface OrganizationQueryVar {
     id: string;
+    cursor: string;
 }
 
 export const ORGANIZATION_GQL = gql`
-query getOrganizationQuery($id: ID!) {
+query getOrganizationQuery($id: ID!, $cursor: String) {
     organization(id: $id) {
         id,
         name,
@@ -43,8 +68,70 @@ query getOrganizationQuery($id: ID!) {
         country
         },
         identifiers {
-        identifier,
-        identifierType
+            identifier,
+            identifierType,
+        },
+        works(first: 25, after: $cursor) {
+            totalCount
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+            resourceTypes {
+              title
+              count
+            }
+            published {
+              title
+              count
+            }
+            nodes {
+              doi
+              id
+              titles{
+                title
+              }
+              types{
+                resourceTypeGeneral
+                resourceType
+              }
+              creators {
+                id
+                name
+                givenName
+                familyName
+              }
+              version
+              publicationYear
+              publisher
+              descriptions {
+                description
+              }
+              rights {
+                rights
+                rightsUri
+                rightsIdentifier
+              }
+              fieldsOfScience {
+                id
+                name
+              }
+              language {
+                id
+                name
+              }
+              registrationAgency {
+                id
+                name
+              }
+              registered
+              rights {
+                rights
+              }
+              citationCount
+              viewCount
+              downloadCount
+            }
         }
     }
 }
@@ -52,6 +139,7 @@ query getOrganizationQuery($id: ID!) {
 
 
 const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
+    const [cursor] = useQueryState('cursor', { history: 'push' })
     const [organization, setOrganization] = React.useState<OrganizationRecord>();
 
     const fullId = "https://ror.org/" + rorId;
@@ -61,7 +149,8 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         {
             errorPolicy: 'all',
             variables: {
-                id: fullId
+                id: fullId,
+                cursor: cursor
             }
         })
 
@@ -100,12 +189,71 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         return <Error title="No Data" message="No organization data" />
     }
 
+    const relatedContent = () => {
+        if (!data.organization.works.totalCount) return (
+            <div className="panel panel-transparent">
+                <div className="panel-body">
+                    <h3 className="member">Introduction</h3>
+                    <p>DataCite Commons is a web interface where you can explore the complete
+                    collection of publicly available DOIs from DOI registation agencies DataCite
+              and Crossref. You can search, filter, cite results, and more!</p>
+                    <p>DataCite Commons is work in progress and will officially launch in October 2020.</p>
+                    <p><a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
+                </div>
+            </div>
+        )
+
+
+        const hasNextPage = data.organization.works.pageInfo ? data.organization.works.pageInfo.hasNextPage : false
+        const endCursor = data.organization.works.pageInfo ? data.organization.works.pageInfo.endCursor : ""
+
+        if (!data.organization.works.totalCount) return (
+            <React.Fragment>
+                <Alert bsStyle="warning">No content found.</Alert>
+            </React.Fragment>
+        )
+
+        return (
+            <div>
+                {data.organization.works.totalCount > 1 &&
+                    <h3 className="member-results">{data.organization.works.totalCount.toLocaleString('en-US')} Works</h3>
+                }
+
+                {data.organization.works.nodes.map(doi => (
+                    <React.Fragment key={doi.id}>
+                        <DoiMetadata item={doi} />
+                    </React.Fragment>
+                ))}
+
+                <Pager url={'/organization/' + rorId + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} />
+            </div>
+        )
+    }
+
+    const leftSideBar = () => {
+
+        return (
+            <div className="col-md-3 hidden-xs hidden-sm">
+                <div className="panel panel-transparent">
+                    <div className="panel-body">
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     const content = () => {
         return (
             <div className="col-md-9 panel-list" id="content">
                 <div className="panel panel-transparent content-item">
                     <div className="panel-body">
-                        <Organization organization={organization} detailPage={true}></Organization>
+                        <h2 className="member-results">Organization</h2>
+                        <Organization organization={organization} />
+
+                        {relatedContent()}
                     </div>
                     <br />
                 </div>
@@ -115,6 +263,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
     return (
         <Row>
+            {leftSideBar()}
             {content()}
         </Row>
     )

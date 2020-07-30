@@ -7,13 +7,12 @@ export interface OrganizationRecord {
 
 type Props = {
     organization: OrganizationRecord;
-    detailPage: boolean;
 };
 
 
-export const Organization: React.FunctionComponent<Props> = ({ organization, detailPage }) => {
+export const Organization: React.FunctionComponent<Props> = ({ organization }) => {
 
     return (
-        <OrganizationMetadata metadata={organization.metadata} linkToExternal={detailPage}></OrganizationMetadata>
+        <OrganizationMetadata metadata={organization.metadata} linkToExternal={true}></OrganizationMetadata>
     )
 }
