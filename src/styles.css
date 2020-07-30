@@ -107,14 +107,14 @@ ul.counter-list {
 }
 
 /* remove iOS input shadow, from https://stackoverflow.com/questions/23211656/remove-ios-input-shadow */
-input[type=text] {   
+input[type=text] {
   /* Remove First */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
   /* Then Style */
-  border-radius: 5px;   
+  border-radius: 5px;
 }
 
 .work span.small {
@@ -145,3 +145,7 @@ input[type=text] {
   margin: 3px;
 }
 
+ul.ror-identifiers {
+  list-style: none;
+  padding: 0;
+}
