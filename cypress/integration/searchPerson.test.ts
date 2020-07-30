@@ -6,7 +6,7 @@ describe("Search Person", () => {
   })
 
   it("search no query", () => {
-    cy.get('input[name="query"]')
+    cy.get('input[name="query"]', { timeout: 60000 })
       // return introduction text
       .get('.member')
       .should('contain', 'Introduction')

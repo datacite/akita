@@ -27,7 +27,7 @@ const data = {
   references: {nodes: [] },
 }
 
-describe('DoiMetadata Component', () => {
+describe('Doi Component', () => {
   it('title', () => {
     mount(<Doi doi={data}/>)
     cy.get('h3.work')

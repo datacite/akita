@@ -4,7 +4,7 @@ describe("Search", () => {
   })
 
   it("search no query", () => {
-    cy.get('input[name="query"]')
+    cy.get('input[name="query"]', { timeout: 60000 })
       // return introduction text
       .get('.member')
       .should('contain', 'Introduction')
@@ -33,7 +33,7 @@ describe("Search", () => {
   })
 
   it("search and reset", () => {
-    cy.get('input[name="query"]')
+    cy.get('input[name="query"]', { timeout: 60000 })
       .type('hallett')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
