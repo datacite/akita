@@ -4,10 +4,16 @@ import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
-import { CitationsYear } from '../DoiContainer/DoiContainer'
+
+
+interface ChartRecord {
+  year: number,
+  total: number
+}
+
 
 type Props = {
-  data?: CitationsYear[],
+  data: ChartRecord[],
   doi?: string,
   citationCount?: number,
   publicationYear?: number

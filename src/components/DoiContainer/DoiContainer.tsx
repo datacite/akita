@@ -12,6 +12,7 @@ import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import Pluralize from 'react-pluralize'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { compactNumbers } from '../../utils/helpers'
+import Pager from '../Pager/Pager'
 
 import UsageChart from '../UsageChart/UsageChart'
 
@@ -79,7 +80,12 @@ export const DOI_GQL = gql`
       total
     }
     citations{
+      pageInfo {
+          endCursor
+          hasNextPage
+      }
       nodes{
+        id
         formattedCitation
         repository{
           name
@@ -97,7 +103,12 @@ export const DOI_GQL = gql`
       }
     }
     references{
+      pageInfo {
+          endCursor
+          hasNextPage
+      }
       nodes{
+        id
         formattedCitation
         repository{
           name
@@ -148,6 +159,7 @@ export interface DoiType {
   citationsOverTime?: CitationsYear[]
   citations?: {
     nodes: RelatedContentList[]
+    pageInfo: PageInfo
   }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
@@ -155,6 +167,7 @@ export interface DoiType {
   downloadsOverTime?: UsageMonth[]
   references?: {
     nodes: RelatedContentList[]
+    pageInfo: PageInfo
   }
 }
 
@@ -184,7 +197,12 @@ interface Description {
   description: string
 }
 
-export interface CitationsYear {
+interface PageInfo {
+  endCursor: string
+  hasNextPage: boolean
+}
+
+interface CitationsYear {
   year: number,
   total: number
 }
@@ -196,6 +214,7 @@ export interface UsageMonth {
 
 export interface RelatedContentList {
   nodes: {
+    id: string,
     formattedCitation: string,
     repository: {
       name: string,
@@ -385,6 +404,10 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const citationsTabLabel = Pluralize({count: compactNumbers(doi.citationCount), singular:'Citation', style:style, showCount:true}) 
   const viewsTabLabel = Pluralize({count: compactNumbers(doi.viewCount), singular:'View', style:style, showCount:true}) 
   const downloadsTabLabel = Pluralize({count: compactNumbers(doi.downloadCount), singular:'Download', style:style, showCount:true}) 
+
+  const citationsOverTime = doi.citationsOverTime.map(datum => ({ year: datum.year, total: datum.total }));
+  const viewsOverTime = doi.viewsOverTime.map(datum => ({ yearMonth: datum.yearMonth, total: datum.total }));
+  const downloadsOverTime = doi.downloadsOverTime.map(datum => ({ yearMonth: datum.yearMonth, total: datum.total }));
  
   const analyticsBar = () => {
     return (
@@ -393,17 +416,17 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
           <Tabs  id="over-time-tabs">
             {doi.citationCount > 0 && 
               <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
-                <CitationsChart data={doi.citationsOverTime} publicationYear={doi.publicationYear} citationCount={doi.citationCount}></CitationsChart>
+                <CitationsChart data={citationsOverTime} publicationYear={doi.publicationYear} citationCount={doi.citationCount}></CitationsChart>
               </Tab>
             }
             {doi.viewCount > 0 && 
               <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-                <UsageChart data={doi.viewsOverTime} counts={doi.viewCount} publicationYear={doi.publicationYear} type="View"/> 
+                <UsageChart data={viewsOverTime} counts={doi.viewCount} publicationYear={doi.publicationYear} type="View"/> 
               </Tab>
             }
             {doi.downloadCount > 0 && 
               <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
-                <UsageChart data={doi.downloadsOverTime} counts={doi.downloadCount} publicationYear={doi.publicationYear} type="Download" />
+                <UsageChart data={downloadsOverTime} counts={doi.downloadCount} publicationYear={doi.publicationYear} type="Download" />
               </Tab>
             }
           </Tabs>
@@ -428,9 +451,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             }
             {doi.references.nodes.length > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                {/* <RelatedContentList dataInput={doi.references} /> */}
-                <p>This feature will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a></p>
-
+                <DoiRelatedContent dois={doi.references} type="reference" count={doi.references.nodes.length} />
               </Tab>
             }
           </Tabs>

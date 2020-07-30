@@ -5,19 +5,23 @@ import { Grid, Row } from 'react-bootstrap';
 import Moment from 'moment';
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
-import { UsageMonth } from '../DoiContainer/DoiContainer';
+
+
+interface ChartRecord {
+  yearMonth: string,
+  total: number
+}
+
+
 
 type Props = {
-  data?: UsageMonth[],
+  data?: ChartRecord[],
   doi?: string,
   counts?: number,
   publicationYear?: number,
   type: string
 }
 
-interface Spec {
-  spec: string
-}
 
 const actions = {
   export: true,
@@ -42,7 +46,7 @@ const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYe
 
   // Filter dataset
   /* istanbul ignore next */
-  let subset: UsageMonth[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
+  let subset: ChartRecord[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
 
   /* istanbul ignore next */
   subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'));});
