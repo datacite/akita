@@ -33,9 +33,10 @@ import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: DoiType
+  itemType?: string
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
+const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, itemType }) => {
   if (metadata == null) return (
     <Alert bsStyle="warning">
       No content found.
@@ -81,6 +82,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   const title = () => {
     const router = useRouter()
     if (router == null || router.pathname === '/' || router.pathname === '/people/[person]') {
+      return searchtitle()
+    } else if(itemType == "relatedContent"){
       return searchtitle()
     } else {
       return doiTitle()
@@ -307,7 +310,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   const links = () => {
     return (
       <div className="panel-footer">
-        <a href={metadata.id}><FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.id}</a>
+        <a href={metadata.doi}><FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.doi}</a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
             <span className="bookmark"><FontAwesomeIcon icon={faBookmark} /> Bookmark</span>
@@ -321,8 +324,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   }
 
   return (
-    <div key={metadata.id} className="panel panel-transparent content-metadata">
-      <div className="panel-body">
+    <div  >
+      <div >
         {title()}
 
         {creators()}

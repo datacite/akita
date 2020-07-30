@@ -114,7 +114,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
   return (
     <div key={doi.id} className="panel panel-transparent">
       <h2 className="member-results">{doi.doi}</h2>
+      <div key={doi.id} className="panel panel-transparent content-metadata">
+      <div className="panel-body">
       <DoiMetadata metadata={doi}></DoiMetadata>
+      </div></div>
       <br/>
       {formattedCitation()}
       {analyticsBar()}

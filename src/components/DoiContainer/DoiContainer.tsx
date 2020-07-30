@@ -5,17 +5,6 @@ import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
-// import { Tabs, Tab, Alert } from 'react-bootstrap'
-// import CitationFormatter from '../CitationFormatter/CitationFormatter'
-// import CitationsChart from '../CitationsChart/CitationsChart'
-// import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
-// import Pluralize from 'react-pluralize'
-// import DoiMetadata from '../DoiMetadata/DoiMetadata'
-// import { compactNumbers } from '../../utils/helpers'
-// import Pager from '../Pager/Pager'
-
-// import UsageChart from '../UsageChart/UsageChart'
-
 
 type Props = {
   item?: string
@@ -85,21 +74,44 @@ export const DOI_GQL = gql`
           hasNextPage
       }
       nodes{
-        id
-        formattedCitation
-        repository{
-          name
-          re3dataId
-          id
+        doi
+        titles{
+          title
         }
-        registrationAgency{
-          name
-          id
+        types{
+          resourceTypeGeneral
+          resourceType
         }
-        member{
-          name
+        creators {
           id
+          name
+          givenName
+          familyName
         }
+        version
+        publicationYear
+        publisher
+        descriptions {
+          description
+        }
+        rights {
+          rights
+          rightsUri
+          rightsIdentifier
+        }
+        fieldsOfScience {
+          id
+          name
+        }
+        language {
+          id
+          name
+        }
+        registrationAgency {
+          id
+          name
+        }
+        registered
       }
     }
     references{
@@ -108,21 +120,44 @@ export const DOI_GQL = gql`
           hasNextPage
       }
       nodes{
-        id
-        formattedCitation
-        repository{
-          name
-          re3dataId
-          id
+        doi
+        titles{
+          title
         }
-        registrationAgency{
-          name
-          id
+        types{
+          resourceTypeGeneral
+          resourceType
         }
-        member{
-          name
+        creators {
           id
+          name
+          givenName
+          familyName
         }
+        version
+        publicationYear
+        publisher
+        descriptions {
+          description
+        }
+        rights {
+          rights
+          rightsUri
+          rightsIdentifier
+        }
+        fieldsOfScience {
+          id
+          name
+        }
+        language {
+          id
+          name
+        }
+        registrationAgency {
+          id
+          name
+        }
+        registered
       }
     }
   }
@@ -158,7 +193,7 @@ export interface DoiType {
   citationCount?: number
   citationsOverTime?: CitationsYear[]
   citations?: {
-    nodes: RelatedContentList[]
+    nodes: DoiType[]
     pageInfo: PageInfo
   }
   viewCount?: number
@@ -166,7 +201,7 @@ export interface DoiType {
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
   references?: {
-    nodes: RelatedContentList[]
+    nodes: DoiType[]
     pageInfo: PageInfo
   }
 }
@@ -381,17 +416,11 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
           <div key={doi.id} className="panel panel-transparent">
-            {/* <h2 className="member-results">{doi.doi}</h2>
-            <DoiMetadata metadata={doi}></DoiMetadata>
-            <br/> */}
             <Doi doi={doi} ></Doi>
           </div>
           </div>
           <br />
         </div>
-        {/* {formattedCitation()}
-        {analyticsBar()}
-        {relatedContent()} */}
       </div>
     )
   }

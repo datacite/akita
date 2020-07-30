@@ -12,6 +12,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import Pager from '../Pager/Pager'
 import Link from 'next/link'
+// eslint-disable-next-line no-unused-vars
+import { DoiType } from '../DoiContainer/DoiContainer'
 
 type Props = {
   dois: RelatedContentList[]
@@ -26,23 +28,7 @@ interface PageInfo {
 
 interface RelatedContentList {
   pageInfo: PageInfo
-  nodes: {
-    id: string,
-    formattedCitation: string,
-    repository: {
-      name: string,
-      re3dataId: string,
-      id: string,
-    },
-    registrationAgency: {
-      name: string,
-      id: string,
-    },
-    member: {
-      name: string,
-      id: string,
-    },
-  },
+  nodes: DoiType[]
 }
 
 
@@ -64,8 +50,8 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, type, count, i
       <div>
         <ol>
           {dois.nodes.map(doi => (
-            <React.Fragment key={doi.id}>
-              <li>{ReactHtmlParser(doi.formattedCitation)} <br/>
+            <React.Fragment key={doi.doi}>
+              {/* <li>{ReactHtmlParser(doi.formattedCitation)} <br/>
               <div className="panel-footer">
               <span className="actions">
               {
@@ -85,6 +71,9 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, type, count, i
               </span>
               </div>
               <br/>
+              </li> */}
+              <li>
+              <DoiMetadata metadata={doi} itemType="relatedContent"></DoiMetadata>
               </li>
             </React.Fragment>
           ))}
