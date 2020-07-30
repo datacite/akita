@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import Pager from "../Pager/Pager"
+import FilterItem from "../FilterItem/FilterItem"
 import Error from "../Error/Error"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
@@ -34,6 +35,12 @@ interface OrganizationsEdge {
   node: OrganizationsNode
 }
 
+interface OrganizationFacet {
+  id: string
+  title: string
+  count: number
+}
+
 interface OrganizationsQueryVar {
   query: string;
   cursor: string;
@@ -44,6 +51,8 @@ interface OrganizationsQueryData {
     totalCount: number;
     pageInfo: PageInfo;
     edges: OrganizationsEdge[];
+    types: OrganizationFacet[];
+    countries: OrganizationFacet[];
   },
 }
 
@@ -73,12 +82,25 @@ export const ORGANIZATIONS_GQL = gql`
           }
         }
       }
+      types {
+        id,
+        count,
+        title
+      },
+      countries {
+        id,
+        count,
+        title
+      }
     }
   }
 `;
 
 const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
+  // TODO: Until API supports filter comment out for now as we dont use them.
+  // const [orgType] = useQueryState<string>('orgtype');
+  // const [orgCountry] = useQueryState<string>('orgcountry');
   const [searchResults, setSearchResults] = React.useState<OrganizationRecord[]>([]);
 
   const { loading, error, data, refetch } = useQuery<OrganizationsQueryData, OrganizationsQueryVar>(
@@ -89,7 +111,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
         query: searchQuery, cursor: cursor
       }
     })
-
 
   React.useEffect(() => {
     refetch({ query: searchQuery, cursor: cursor });
@@ -167,12 +188,41 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
   }
 
   const renderFacets = () => {
+    if (!data) return '';
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
           <div className="panel-body">
-            <div className="edit">Filters</div>
+            <div className="edit">
+
+              <div className="panel facets add">
+                <div className="panel-body">
+                  <h4>Organization Type</h4>
+                  <ul>
+                    {data.organizations.types.map(facet => (
+                      <li key={facet.id}>
+                        <FilterItem name="orgtype" id={facet.id} count={facet.count} title={facet.title} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="panel facets add">
+                <div className="panel-body">
+                  <h4>Country</h4>
+                  <ul>
+                    {data.organizations.countries.map(facet => (
+                      <li key={facet.id}>
+                        <FilterItem name="orgcountry" id={facet.id} count={facet.count} title={facet.title} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
