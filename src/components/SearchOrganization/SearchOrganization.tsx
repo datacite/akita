@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
-
+import { useQueryState } from 'next-usequerystate'
+import Pager from "../Pager/Pager"
 import Error from "../Error/Error"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
@@ -77,6 +78,7 @@ export const ORGANIZATIONS_GQL = gql`
 `;
 
 const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) => {
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   const [searchResults, setSearchResults] = React.useState<OrganizationRecord[]>([]);
 
   const { loading, error, data, refetch } = useQuery<OrganizationsQueryData, OrganizationsQueryVar>(
@@ -84,13 +86,13 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
     {
       errorPolicy: 'all',
       variables: {
-        query: searchQuery, cursor: ''
+        query: searchQuery, cursor: cursor
       }
     })
 
 
   React.useEffect(() => {
-    refetch({ query: searchQuery, cursor: '' });
+    refetch({ query: searchQuery, cursor: cursor });
 
     const results: OrganizationRecord[] = [];
 
@@ -137,6 +139,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
 
     if (!data) return '';
 
+    const hasNextPage = data.organizations.pageInfo ? data.organizations.pageInfo.hasNextPage : false
+    const endCursor = data.organizations.pageInfo ? data.organizations.pageInfo.endCursor : ""
+
     return (
       <div className="col-md-9 panel-list" id="content">
         <div className="panel panel-transparent content-item">
@@ -152,6 +157,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
                 </React.Fragment>
               ))}
             </ul>
+
+            <Pager url={'/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+
           </div>
         </div>
       </div>
