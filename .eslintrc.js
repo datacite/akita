@@ -32,6 +32,12 @@ module.exports = {
     ],
     "rules": {
         "react/react-in-jsx-scope": "warn",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "@typescript-eslint/no-unused-vars": [
+            1,
+            {
+                "args": "none"
+            }
+        ]
     }
 };
