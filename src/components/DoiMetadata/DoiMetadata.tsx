@@ -334,7 +334,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
         {tags()}
       </div>
       {links()}
-      <br />
     </div>
   )
 }

@@ -5,16 +5,16 @@ import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
-import { Tabs, Tab, Alert } from 'react-bootstrap'
-import CitationFormatter from '../CitationFormatter/CitationFormatter'
-import CitationsChart from '../CitationsChart/CitationsChart'
-import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
-import Pluralize from 'react-pluralize'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
-import { compactNumbers } from '../../utils/helpers'
-import Pager from '../Pager/Pager'
+// import { Tabs, Tab, Alert } from 'react-bootstrap'
+// import CitationFormatter from '../CitationFormatter/CitationFormatter'
+// import CitationsChart from '../CitationsChart/CitationsChart'
+// import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
+// import Pluralize from 'react-pluralize'
+// import DoiMetadata from '../DoiMetadata/DoiMetadata'
+// import { compactNumbers } from '../../utils/helpers'
+// import Pager from '../Pager/Pager'
 
-import UsageChart from '../UsageChart/UsageChart'
+// import UsageChart from '../UsageChart/UsageChart'
 
 
 type Props = {
@@ -241,7 +241,7 @@ interface DoiQueryVar {
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
-  const [selectedOption, setSelectedOption] = React.useState('')
+  // const [selectedOption, setSelectedOption] = React.useState('')
   const [doi, setDoi] = React.useState<DoiType>()
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
@@ -373,92 +373,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   //   )
   // }
 
-    
-  const formattedCitation = () => { 
-
-    return (
-      <div>
-        <div id="citation" className="input-group pull-right">
-          <select className="cite-as" onChange={e => setSelectedOption(e.target.value)} >
-              <option value="apa">APA</option>
-              <option value="harvard-cite-them-right">Harvard</option>
-              <option value="modern-language-association">MLA</option>
-              <option value="vancouver">Vancouver</option>
-              <option value="chicago-fullnote-bibliography">Chicago</option>
-              <option value="ieee">IEEE</option>
-          </select>
-        </div>
-        <CitationFormatter id={doi.doi} input={doi.formattedCitation} locale="en" style={selectedOption}></CitationFormatter>
-      </div>
-    )
-  }
-
-  const style = {
-    fontWeight: 600,  
-    color:'#1abc9c',
-    fontSize: '25px',
-    padding: 0,
-    margin: '0 0 .35em 10px',
-  }
-
-  const citationsTabLabel = Pluralize({count: compactNumbers(doi.citationCount), singular:'Citation', style:style, showCount:true}) 
-  const viewsTabLabel = Pluralize({count: compactNumbers(doi.viewCount), singular:'View', style:style, showCount:true}) 
-  const downloadsTabLabel = Pluralize({count: compactNumbers(doi.downloadCount), singular:'Download', style:style, showCount:true}) 
-
-  const citationsOverTime = doi.citationsOverTime.map(datum => ({ year: datum.year, total: datum.total }));
-  const viewsOverTime = doi.viewsOverTime.map(datum => ({ yearMonth: datum.yearMonth, total: datum.total }));
-  const downloadsOverTime = doi.downloadsOverTime.map(datum => ({ yearMonth: datum.yearMonth, total: datum.total }));
- 
-  const analyticsBar = () => {
-    return (
-      <div className="panel panel-transparent">
-        <div className="panel-body tab-content nav-tabs-member">
-          <Tabs  id="over-time-tabs">
-            {doi.citationCount > 0 && 
-              <Tab className="citations-over-time-tab" eventKey="citationsOverTime" title={citationsTabLabel}>
-                <CitationsChart data={citationsOverTime} publicationYear={doi.publicationYear} citationCount={doi.citationCount}></CitationsChart>
-              </Tab>
-            }
-            {doi.viewCount > 0 && 
-              <Tab className="views-over-time-tab" eventKey="viewsOverTime" title={viewsTabLabel}>
-                <UsageChart data={viewsOverTime} counts={doi.viewCount} publicationYear={doi.publicationYear} type="View"/> 
-              </Tab>
-            }
-            {doi.downloadCount > 0 && 
-              <Tab className="downloads-over-time-tab" eventKey="downloadsOverTime" title={downloadsTabLabel}>
-                <UsageChart data={downloadsOverTime} counts={doi.downloadCount} publicationYear={doi.publicationYear} type="Download" />
-              </Tab>
-            }
-          </Tabs>
-        </div>
-      </div>
-    )
-  }
-
-// eslint-disable-next-line no-unused-vars
-  const relatedContent = () => {
-    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
-    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
-
-    return (
-      <div className="panel panel-transparent">
-        <div className="panel-body tab-content nav-tabs-member">
-          <Tabs id="related-content-tabs">
-            {doi.citations.nodes.length > 0 && 
-              <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-                <DoiRelatedContent dois={doi.citations} type="citation" count={doi.citations.nodes.length} />
-              </Tab>
-            }
-            {doi.references.nodes.length > 0 && 
-              <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                <DoiRelatedContent dois={doi.references} type="reference" count={doi.references.nodes.length} />
-              </Tab>
-            }
-          </Tabs>
-        </div>
-      </div>
-    )
-  }
+  
 
   const content = () => {
     return (
@@ -466,16 +381,17 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
           <div key={doi.id} className="panel panel-transparent">
-            <h2 className="member-results">{doi.doi}</h2>
+            {/* <h2 className="member-results">{doi.doi}</h2>
             <DoiMetadata metadata={doi}></DoiMetadata>
-            <br/>
+            <br/> */}
+            <Doi doi={doi} ></Doi>
           </div>
           </div>
           <br />
         </div>
-        {formattedCitation()}
+        {/* {formattedCitation()}
         {analyticsBar()}
-        {relatedContent()}
+        {relatedContent()} */}
       </div>
     )
   }
