@@ -5,8 +5,7 @@ import { useQueryState } from 'next-usequerystate'
 import Pager from "../Pager/Pager"
 import FilterItem from "../FilterItem/FilterItem"
 import Error from "../Error/Error"
-import { Organization, OrganizationRecord } from '../Organization/Organization';
-import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
+import { OrganizationMetadata, OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
 
 type Props = {
   searchQuery: string;
@@ -101,7 +100,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
   // TODO: Until API supports filter comment out for now as we dont use them.
   // const [orgType] = useQueryState<string>('orgtype');
   // const [orgCountry] = useQueryState<string>('orgcountry');
-  const [searchResults, setSearchResults] = React.useState<OrganizationRecord[]>([]);
+  const [searchResults, setSearchResults] = React.useState<OrganizationMetadataRecord[]>([]);
 
   const { loading, error, data, refetch } = useQuery<OrganizationsQueryData, OrganizationsQueryVar>(
     ORGANIZATIONS_GQL,
@@ -115,7 +114,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
   React.useEffect(() => {
     refetch({ query: searchQuery, cursor: cursor });
 
-    const results: OrganizationRecord[] = [];
+    const results: OrganizationMetadataRecord[] = [];
 
     if (data) {
 
@@ -134,9 +133,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
           identifiers: identifiers,
         };
 
-        results.push({
-          metadata: orgMetadata
-        });
+        results.push(orgMetadata);
 
         return results;
       })
@@ -173,8 +170,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
 
             <ul>
               {searchResults.map(item => (
-                <React.Fragment key={item.metadata.id}>
-                  <Organization organization={item}></Organization>
+                <React.Fragment key={item.id}>
+                  <OrganizationMetadata metadata={item} linkToExternal={false}></OrganizationMetadata>
                 </React.Fragment>
               ))}
             </ul>
