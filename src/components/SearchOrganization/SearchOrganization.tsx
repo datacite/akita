@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 
 import Error from "../Error/Error"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
+import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
 
 type Props = {
   searchQuery: string;
@@ -101,7 +102,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
           return i.identifier != "";
         });
 
-        let org: OrganizationRecord = {
+        let orgMetadata: OrganizationMetadataRecord = {
           id: edge.node.id,
           name: edge.node.name,
           alternateNames: edge.node.alternateName,
@@ -110,7 +111,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
           identifiers: identifiers,
         };
 
-        results.push(org);
+        results.push({
+          metadata: orgMetadata
+        });
 
         return results;
       })
@@ -135,7 +138,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) =>
 
         <ul>
           {searchResults.map(item => (
-            <React.Fragment key={item.id}>
+            <React.Fragment key={item.metadata.id}>
               <Organization organization={item} detailPage={false}></Organization>
             </React.Fragment>
           ))}

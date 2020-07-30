@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Col } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 
 import Error from "../Error/Error"
 import { Organization, OrganizationRecord } from '../Organization/Organization';
+import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
 
 type Props = {
     rorId: string;
@@ -73,7 +74,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
                 return i.identifier != "";
             });
 
-            let org: OrganizationRecord = {
+            let orgMetadata: OrganizationMetadataRecord = {
                 id: organization.id,
                 name: organization.name,
                 alternateNames: organization.alternateName,
@@ -82,7 +83,9 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
                 identifiers: identifiers,
             };
 
-            setOrganization(org);
+            setOrganization({
+                metadata: orgMetadata
+            });
         }
 
     }, [data]);
