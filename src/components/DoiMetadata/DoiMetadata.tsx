@@ -33,10 +33,10 @@ import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: DoiType
-  itemType?: string
+  linkToExternal?: boolean;
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, itemType }) => {
+const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal }) => {
   if (metadata == null) return (
     <Alert bsStyle="warning">
       No content found.
@@ -63,7 +63,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, itemType }) => 
     )
   }
 
-  const doiTitle = () => {
+  const externalTitle = () => {
     if (!metadata.titles[0]) return (
       <h3 className="member">No Title</h3>
     )
@@ -80,13 +80,10 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, itemType }) => 
   }
 
   const title = () => {
-    const router = useRouter()
-    if (router == null || router.pathname === '/' || router.pathname === '/people/[person]') {
+    if (linkToExternal) {
+      return externalTitle()
+    }else{
       return searchtitle()
-    } else if(itemType == "relatedContent"){
-      return searchtitle()
-    } else {
-      return doiTitle()
     }
   }
 
