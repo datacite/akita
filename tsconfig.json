@@ -18,7 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["jest", "mocha"]
+    "types": ["jest"]
   },
   "exclude": [
     "node_modules"

@@ -12,6 +12,9 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
+  "nyc": {
+    "reporter": ["html"]
+  },
   "dependencies": {
     "@apollo/client": "^3.0.2",
     "@formatjs/intl-numberformat": "^4.2.10",
