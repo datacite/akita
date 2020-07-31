@@ -207,7 +207,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
                 {data.organization.works.nodes.map(doi => (
                     <React.Fragment key={doi.id}>
-                        <DoiMetadata item={doi} />
+                        <DoiMetadata metadata={doi} />
                     </React.Fragment>
                 ))}
 
