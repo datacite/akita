@@ -24,7 +24,7 @@ interface RelatedContentList {
 
 
 
-const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, type, count, id}) => {
+const DoiRelatedContent: React.FunctionComponent<Props> = ({dois}) => {
   if (!dois ) return (
     <Alert bsStyle="warning">
       No content found.

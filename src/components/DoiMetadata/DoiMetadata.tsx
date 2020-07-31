@@ -26,6 +26,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
+// eslint-disable-next-line no-unused-vars
 import { useRouter } from 'next/router'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
