@@ -54,29 +54,29 @@ const Search: React.FunctionComponent = () => {
         </Col>
       </Row>
       <Row>
-      <Col></Col>
+        <Col></Col>
         <Col>
 
-        <Tabs defaultActiveKey="content" id="noanim-tab-example">
-          <Tab eventKey="people" title="People">
-          {!searchQuery || searchQuery === " "
-            ? (renderIntroduction())
-            : (<SearchPerson searchQuery={searchQuery} />)
-          }
-          </Tab>
-          <Tab  eventKey="content" title="Content">
-          {!searchQuery || searchQuery === " "
-            ? (renderIntroduction())
-            : (<SearchContent searchQuery={searchQuery} />)
-          }
-          </Tab>
-          <Tab  eventKey="organisations" title="Organisations" disabled>
-          {!searchQuery || searchQuery === " "
-            ? (renderIntroduction())
-            : (<SearchOrganization searchQuery={searchQuery} />)
-          }
-          </Tab>
-        </Tabs>
+          <Tabs defaultActiveKey="content" id="noanim-tab-example">
+            <Tab eventKey="people" title="People">
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchPerson searchQuery={searchQuery} />)
+              }
+            </Tab>
+            <Tab eventKey="content" title="Content">
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchContent searchQuery={searchQuery} />)
+              }
+            </Tab>
+            <Tab eventKey="organisations" title="Organisations">
+              {!searchQuery || searchQuery === " "
+                ? (renderIntroduction())
+                : (<SearchOrganization searchQuery={searchQuery} />)
+              }
+            </Tab>
+          </Tabs>
         </Col>
       </Row>
     </div>
