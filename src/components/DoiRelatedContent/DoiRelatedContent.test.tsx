@@ -115,7 +115,7 @@ describe('DoiRelatedContent Component', () => {
   
   it('the list correct the right number of items', () => {
     mount(<DoiRelatedContent dois={data.references} type="references" count={2}/>)
-    cy.get('ol#related-content-items > li')
+    cy.get('ul#related-content-items > li')
       .should('be.visible')
       .should('have.length', 2)
   })

@@ -39,7 +39,7 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, root}) => {
 
     return (
       <div>
-        <ol id="related-content-items">
+        <ul id="related-content-items">
           {dois.nodes.map(doi => (
             <React.Fragment key={doi.doi}>
               <li>
@@ -47,7 +47,7 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, root}) => {
               </li>
             </React.Fragment>
           ))}
-        </ol>
+        </ul>
         <Pager url={'/dois/' + root + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </div>
     )
