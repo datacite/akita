@@ -183,7 +183,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           No content found.
         </Alert>
 
-        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </React.Fragment>
     )
 
@@ -199,7 +199,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           </React.Fragment>
         ))}
 
-        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </div>
     )
   }
