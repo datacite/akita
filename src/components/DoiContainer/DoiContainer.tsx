@@ -5,13 +5,14 @@ import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
+import { useQueryState } from 'next-usequerystate'
 
 type Props = {
   item?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!) {
+  query getContentQuery($id: ID!, $cursor: String) {
   work(id: $id){
     id
     doi
@@ -68,7 +69,7 @@ export const DOI_GQL = gql`
       yearMonth
       total
     }
-    citations{
+    citations(first: 5, after: $cursor) {
       pageInfo {
           endCursor
           hasNextPage
@@ -114,7 +115,7 @@ export const DOI_GQL = gql`
         registered
       }
     }
-    references{
+    references(first: 5, after: $cursor){
       pageInfo {
           endCursor
           hasNextPage
@@ -273,16 +274,18 @@ export interface DoiQueryData {
 
 interface DoiQueryVar {
   id: string
+  cursor: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   // const [selectedOption, setSelectedOption] = React.useState('')
   const [doi, setDoi] = React.useState<DoiType>()
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item }
+      variables: { id: item, cursor: cursor  }
     }
   )
 

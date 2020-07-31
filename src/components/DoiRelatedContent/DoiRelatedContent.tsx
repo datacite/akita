@@ -8,6 +8,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 
 type Props = {
   dois: RelatedContentList
+  root: string
   count: number
   type: string
 }
@@ -24,7 +25,7 @@ interface RelatedContentList {
 
 
 
-const DoiRelatedContent: React.FunctionComponent<Props> = ({dois}) => {
+const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, root}) => {
   if (!dois ) return (
     <Alert bsStyle="warning">
       No content found.
@@ -47,7 +48,7 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois}) => {
             </React.Fragment>
           ))}
         </ol>
-        <Pager url={'/doi' + "doi" + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/dois/' + root + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </div>
     )
   }

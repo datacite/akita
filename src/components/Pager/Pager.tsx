@@ -4,11 +4,12 @@ import { useRouter } from 'next/router'
 
 type Props = {
   url: string
+  isNested?: boolean
   hasNextPage: boolean
   endCursor: string
 }
 
-const Pager: React.FunctionComponent<Props> = ({url, hasNextPage, endCursor}) => {
+const Pager: React.FunctionComponent<Props> = ({url, hasNextPage, endCursor, isNested}) => {
   const router = useRouter()
   if (!router) return (null) 
 
@@ -20,7 +21,8 @@ const Pager: React.FunctionComponent<Props> = ({url, hasNextPage, endCursor}) =>
 
   // get current query parameters from next router
   
-  let params = new URLSearchParams(router.query as any)
+  // let params = new URLSearchParams(router.query as any)
+  let params = isNested ? new URLSearchParams("") : new URLSearchParams(router.query as any)
 
   if (params.get('cursor')) {
     // remove cursor query parameter for first page

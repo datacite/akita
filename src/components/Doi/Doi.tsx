@@ -96,12 +96,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
           <Tabs id="related-content-tabs">
             {doi.citations.nodes.length > 0 && 
               <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-                <DoiRelatedContent dois={doi.citations} type="citation" count={doi.citations.nodes.length} />
+                <DoiRelatedContent dois={doi.citations} root={doi.doi} type="citation" count={doi.citations.nodes.length} />
               </Tab>
             }
             {doi.references.nodes.length > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                <DoiRelatedContent dois={doi.references} type="reference" count={doi.references.nodes.length} />
+                <DoiRelatedContent dois={doi.references} root={doi.doi} type="reference" count={doi.references.nodes.length} />
               </Tab>
             }
           </Tabs>
