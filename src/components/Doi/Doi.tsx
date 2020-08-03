@@ -6,6 +6,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import Pager from '../Pager/Pager'
 import { compactNumbers } from '../../utils/helpers'
 
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
@@ -90,6 +91,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
     const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.totalCount), singular:'Reference', style:style,showCount:true}) 
     const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.totalCount), singular:'Citation', style:style,showCount:true}) 
 
+    const hasNextPageCitations = doi.citations.pageInfo ? doi.citations.pageInfo.hasNextPage : false
+    const endCursorCitations = doi.citations.pageInfo ? doi.citations.pageInfo.endCursor : ""
+
+    const hasNextPageReferences = doi.references.pageInfo ? doi.references.pageInfo.hasNextPage : false
+    const endCursorReferences = doi.references.pageInfo ? doi.references.pageInfo.endCursor : ""
+
+
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
@@ -97,11 +105,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
             {doi.citations.totalCount > 0 && 
               <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
                 <DoiRelatedContent dois={doi.citations} root={doi.doi} type="citation" />
+                <Pager url={'/dois/' + doi.doi + '/?'} hasNextPage={hasNextPageCitations} endCursor={endCursorCitations} isNested={true}></Pager>
               </Tab>
             }
             {doi.references.totalCount > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
                 <DoiRelatedContent dois={doi.references} root={doi.doi} type="reference" />
+                <Pager url={'/dois/' + doi.doi + '/?'} hasNextPage={hasNextPageReferences} endCursor={endCursorReferences} isNested={true}></Pager>
               </Tab>
             }
           </Tabs>
