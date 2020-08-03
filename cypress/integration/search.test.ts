@@ -18,13 +18,13 @@ describe("Search", () => {
       .should('contain', 'Results')
       // results are rendered
       .get('.panel.content-item').should(($contentItem) => {
-        expect($contentItem).to.have.length(14)
+        expect($contentItem).to.have.length.at.least(14)
       })
       .get(':nth-child(2) > .panel-body > .registered')
       .should('contain', 'DOI registered')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
-        expect($facet).to.have.length(4)
+        expect($facet).to.have.length.at.least(4)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Content Type')
         expect($facet.eq(2)).to.contain('Language')

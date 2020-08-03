@@ -21,6 +21,6 @@ describe("Search", () => {
       .get('.alert > h4')
       .should('contain', 'An error occured.')
       .get('.alert > p')
-      .should('contain', 'GraphQL error: Internal Server Error')
+      .should('contain', 'Internal Server Error')
   })
 })
