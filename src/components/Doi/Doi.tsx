@@ -87,21 +87,21 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
 
 // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.nodes.length), singular:'Reference', style:style,showCount:true}) 
-    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.nodes.length), singular:'Citation', style:style,showCount:true}) 
+    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.totalCount), singular:'Reference', style:style,showCount:true}) 
+    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.totalCount), singular:'Citation', style:style,showCount:true}) 
 
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
           <Tabs id="related-content-tabs">
-            {doi.citations.nodes.length > 0 && 
+            {doi.citations.totalCount > 0 && 
               <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-                <DoiRelatedContent dois={doi.citations} root={doi.doi} type="citation" count={doi.citations.nodes.length} />
+                <DoiRelatedContent dois={doi.citations} root={doi.doi} type="citation" />
               </Tab>
             }
-            {doi.references.nodes.length > 0 && 
+            {doi.references.totalCount > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                <DoiRelatedContent dois={doi.references} root={doi.doi} type="reference" count={doi.references.nodes.length} />
+                <DoiRelatedContent dois={doi.references} root={doi.doi} type="reference" />
               </Tab>
             }
           </Tabs>

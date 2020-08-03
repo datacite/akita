@@ -74,6 +74,7 @@ export const DOI_GQL = gql`
           endCursor
           hasNextPage
       }
+      totalCount
       nodes{
         doi
         titles{
@@ -120,6 +121,7 @@ export const DOI_GQL = gql`
           endCursor
           hasNextPage
       }
+      totalCount
       nodes{
         doi
         titles{
@@ -196,6 +198,7 @@ export interface DoiType {
   citations?: {
     nodes: DoiType[]
     pageInfo: PageInfo
+    totalCount: number
   }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
@@ -204,6 +207,7 @@ export interface DoiType {
   references?: {
     nodes: DoiType[]
     pageInfo: PageInfo
+    totalCount: number
   }
 }
 

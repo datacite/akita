@@ -9,7 +9,6 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 type Props = {
   dois: RelatedContentList
   root: string
-  count: number
   type: string
 }
 
@@ -20,10 +19,9 @@ interface PageInfo {
 
 interface RelatedContentList {
   pageInfo: PageInfo
+  totalCount: number
   nodes: DoiType[]
 }
-
-
 
 const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, root}) => {
   if (!dois ) return (
@@ -38,23 +36,19 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({dois, root}) => {
     const endCursor = dois.pageInfo ? dois.pageInfo.endCursor : ""
 
     return (
-      <div>
-        <ul id="related-content-items">
-          {dois.nodes.map(doi => (
-            <React.Fragment key={doi.doi}>
-              <li>
-              <DoiMetadata metadata={doi} linkToExternal={false}></DoiMetadata>
-              </li>
-            </React.Fragment>
-          ))}
-        </ul>
+      <div id="related-content-list'">
+        <div className="panel-body" id="related-content-items">
+        {dois.nodes.map(doi => (
+          <React.Fragment key={doi.doi}>
+            <DoiMetadata metadata={doi} linkToExternal={false}></DoiMetadata>
+          </React.Fragment>
+        ))}
+        </div>
         <Pager url={'/dois/' + root + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </div>
     )
   }
   
-
-
   return (
     <div id="related-content-list">
     {renderResults()}
