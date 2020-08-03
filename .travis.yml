@@ -50,9 +50,9 @@ script:
   - yarn lint
   - yarn build
   - yarn start & wait-on http://localhost:3000
-  - yarn cy:run --record
-  - yarn cy:coverage
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  # - yarn cy:run --record
+  # - yarn cy:coverage
+  # - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
