@@ -104,13 +104,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
           <Tabs id="related-content-tabs">
             {doi.citations.totalCount > 0 && 
               <Tab className="citations-list" eventKey="citationsList" title={citationsTabLabel}>
-                <DoiRelatedContent dois={doi.citations} root={doi.doi} type="citation" />
+                <DoiRelatedContent dois={doi.citations} type="citation" />
                 <Pager url={'/dois/' + doi.doi + '/?'} hasNextPage={hasNextPageCitations} endCursor={endCursorCitations} isNested={true}></Pager>
               </Tab>
             }
             {doi.references.totalCount > 0 && 
               <Tab className="references-list" eventKey="referencesList" title={referencesTabLabel}>
-                <DoiRelatedContent dois={doi.references} root={doi.doi} type="reference" />
+                <DoiRelatedContent dois={doi.references} type="reference" />
                 <Pager url={'/dois/' + doi.doi + '/?'} hasNextPage={hasNextPageReferences} endCursor={endCursorReferences} isNested={true}></Pager>
               </Tab>
             }
