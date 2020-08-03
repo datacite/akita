@@ -22,7 +22,6 @@ let exampleItem = {
     rightsIdentifierScheme: 'SPDX',
     schemeUri: 'https://spdx.org/licenses/',
   }],
-  rights: [],
   registrationAgency: { id: 'datacite', name: 'DataCite' },
   language: { id: 'fr', name: 'French' },
   citationCount: 4,
@@ -33,14 +32,14 @@ let exampleItem = {
 
 describe('DoiMetadata Component', () => {
   it('title', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('h3.work')
       .contains('Example title of the item')
       .should('be.visible')
   })
   
   it('creators', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.creators')
       .contains('John Smith')
       .should('be.visible')
@@ -48,35 +47,35 @@ describe('DoiMetadata Component', () => {
 
   it('no creators', () => {
     exampleItem.creators = []
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.creators')
       .contains('No creators')
       .should('be.visible')
   })
 
   it('metadata', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.metadata')
       .contains('Version 1.0 of CSV File published 2019 via SURFsara')
       .should('be.visible')
   })
 
   it('description', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.description')
       .contains('Example description of the item.')
       .should('be.visible')
   })
 
   it('tags', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.tags')
       .contains('French')
       .should('be.visible')
   })
 
   it('metrics counter', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.metrics-counter')
       .contains('4 Citations 8 Views 3 Downloads')
       .should('be.visible')
@@ -86,7 +85,7 @@ describe('DoiMetadata Component', () => {
     exampleItem.citationCount = 4623
     exampleItem.viewCount = 8976
     exampleItem.downloadCount = 3143
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.metrics-counter')
       .contains('4.6K Citations 9K Views 3.1K Downloads')
       .should('be.visible')
@@ -96,14 +95,14 @@ describe('DoiMetadata Component', () => {
     exampleItem.citationCount = 4623000
     exampleItem.viewCount = 8976000
     exampleItem.downloadCount = 3143000
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.metrics-counter')
       .contains('4.6M Citations 9M Views 3.1M Downloads')
       .should('be.visible')
   })
 
   it('actions', () => {
-    mount(<DoiMetadata item={exampleItem}/>)
+    mount(<DoiMetadata metadata={exampleItem}/>)
     cy.get('.actions')
       .contains('Bookmark Claim')
       .should('be.visible')

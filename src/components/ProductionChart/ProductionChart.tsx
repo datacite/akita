@@ -4,8 +4,7 @@ import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap';
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
-/* eslint-disable no-unused-vars */
-import { Attribute } from '../PersonContainer/PersonContainer'
+
 
 interface ChartRecord {
   title: string

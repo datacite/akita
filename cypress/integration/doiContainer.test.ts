@@ -1,5 +1,5 @@
 describe("DoiContainer", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit(`/dois/${encodeURIComponent('10.17863/cam.330')}`)
   })
 
@@ -10,7 +10,7 @@ describe("DoiContainer", () => {
   })
 
   it("license", () => {
-    cy.get('.license')
+    cy.get('.license', { timeout: 30000 })
       .should('be.visible')
   })
 

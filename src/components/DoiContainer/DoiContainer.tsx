@@ -5,13 +5,14 @@ import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
 import { Popover, OverlayTrigger } from 'react-bootstrap'
+import { useQueryState } from 'next-usequerystate'
 
 type Props = {
   item?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!) {
+  query getContentQuery($id: ID!, $cursor: String) {
   work(id: $id){
     id
     doi
@@ -68,16 +69,100 @@ export const DOI_GQL = gql`
       yearMonth
       total
     }
-    # citations{
-    #   nodes{
-    #     formattedCitation
-    #   }
-    # }
-    # references{
-    #   nodes{
-    #     formattedCitation
-    #   }
-    # }
+    citations(first: 5, after: $cursor) {
+      pageInfo {
+          endCursor
+          hasNextPage
+      }
+      totalCount
+      nodes{
+        doi
+        titles{
+          title
+        }
+        types{
+          resourceTypeGeneral
+          resourceType
+        }
+        creators {
+          id
+          name
+          givenName
+          familyName
+        }
+        version
+        publicationYear
+        publisher
+        descriptions {
+          description
+        }
+        rights {
+          rights
+          rightsUri
+          rightsIdentifier
+        }
+        fieldsOfScience {
+          id
+          name
+        }
+        language {
+          id
+          name
+        }
+        registrationAgency {
+          id
+          name
+        }
+        registered
+      }
+    }
+    references(first: 5, after: $cursor){
+      pageInfo {
+          endCursor
+          hasNextPage
+      }
+      totalCount
+      nodes{
+        doi
+        titles{
+          title
+        }
+        types{
+          resourceTypeGeneral
+          resourceType
+        }
+        creators {
+          id
+          name
+          givenName
+          familyName
+        }
+        version
+        publicationYear
+        publisher
+        descriptions {
+          description
+        }
+        rights {
+          rights
+          rightsUri
+          rightsIdentifier
+        }
+        fieldsOfScience {
+          id
+          name
+        }
+        language {
+          id
+          name
+        }
+        registrationAgency {
+          id
+          name
+        }
+        registered
+      }
+    }
   }
 }
 `
@@ -111,14 +196,18 @@ export interface DoiType {
   citationCount?: number
   citationsOverTime?: CitationsYear[]
   citations?: {
-    nodes: RelatedContentList[]
+    nodes: DoiType[]
+    pageInfo: PageInfo
+    totalCount: number
   }
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
   references?: {
-    nodes: RelatedContentList[]
+    nodes: DoiType[]
+    pageInfo: PageInfo
+    totalCount: number
   }
 }
 
@@ -148,7 +237,12 @@ interface Description {
   description: string
 }
 
-export interface CitationsYear {
+interface PageInfo {
+  endCursor: string
+  hasNextPage: boolean
+}
+
+interface CitationsYear {
   year: number,
   total: number
 }
@@ -160,8 +254,22 @@ export interface UsageMonth {
 
 export interface RelatedContentList {
   nodes: {
-    formattedCitation: string
-  }
+    id: string,
+    formattedCitation: string,
+    repository: {
+      name: string,
+      re3dataId: string,
+      id: string,
+    },
+    registrationAgency: {
+      name: string,
+      id: string,
+    },
+    member: {
+      name: string,
+      id: string,
+    },
+  },
 }
 
 export interface DoiQueryData {
@@ -170,15 +278,18 @@ export interface DoiQueryData {
 
 interface DoiQueryVar {
   id: string
+  cursor: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
+  // const [selectedOption, setSelectedOption] = React.useState('')
   const [doi, setDoi] = React.useState<DoiType>()
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item }
+      variables: { id: item, cursor: cursor  }
     }
   )
 
@@ -304,12 +415,16 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   //   )
   // }
 
+  
+
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
-            <Doi item={doi} />
+          <div key={doi.id} className="panel panel-transparent">
+            <Doi doi={doi} ></Doi>
+          </div>
           </div>
           <br />
         </div>

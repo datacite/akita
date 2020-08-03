@@ -3,7 +3,7 @@ import { Alert, Grid, Row, Col } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -183,7 +183,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           No content found.
         </Alert>
 
-        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </React.Fragment>
     )
 
@@ -193,13 +193,10 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           <h3 className="member-results">Works</h3>
         }
 
-        {person.works.nodes.map(doi => (
-          <React.Fragment key={doi.id}>
-            <DoiMetadata item={doi} />
-          </React.Fragment>
-        ))}
+        <DoiRelatedContent dois={person.works} />
 
-        <Pager url={'/person' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor}></Pager>
+
+        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
       </div>
     )
   }

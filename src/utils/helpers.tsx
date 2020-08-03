@@ -18,6 +18,15 @@ export const orcidFromUrl = (orcidUrl: string) => {
   return url.pathname
 }
 
+export const doiFromUrl = (doiUrl :string) => {
+  if(!doiUrl){
+    return null 
+  }
+  const url = document.createElement('a');
+  url.href = doiUrl;
+  return url.pathname
+}
+
 export const rorFromUrl = (rorUrl: string) => {
   if (!rorUrl) {
     return null
