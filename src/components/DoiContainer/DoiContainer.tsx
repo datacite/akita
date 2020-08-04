@@ -4,8 +4,15 @@ import Error from "../Error/Error"
 import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
 import ContentLoader from "react-content-loader"
-import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from "react-share"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 type Props = {
   item?: string
@@ -333,18 +340,9 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   if (!doi) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-    const facebook = (
-      <Popover id="share" title="Sharing via Facebook">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
-      </Popover>
-    )
-
-    const twitter = (
-      <Popover id="share" title="Sharing via Twitter">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
-      </Popover>
-    )
-
+    const title = "DataCite Commons: " + doi.titles[0].title
+    const url = window.location.href
+    console.log(url)
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -391,14 +389,20 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
           </div>
           <div className="facets panel-body">
             <h4>Share</h4>
-            <span className="actions">
-              <OverlayTrigger placement="top" overlay={facebook}>
-                <span className="share">Facebook</span>
-              </OverlayTrigger>
-              <br></br>
-              <OverlayTrigger placement="top" overlay={twitter}>
-                <span className="share">Twitter</span>
-              </OverlayTrigger>
+            <span className="share-button">
+              <EmailShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faEnvelope} size="lg" />
+              </EmailShareButton>
+            </span>
+            <span className="share-button">
+              <TwitterShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faTwitter} size="lg" />
+              </TwitterShareButton>
+            </span>
+            <span className="share-button">
+              <FacebookShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faFacebook} size="lg" />
+              </FacebookShareButton>
             </span>
           </div>
         </div>
