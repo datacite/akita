@@ -17,7 +17,6 @@ import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 import { orcidFromUrl } from "../../utils/helpers"
 
-
 type Props = {
   metadata: PersonRecord
 }
@@ -28,7 +27,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
         No content found.
       </Alert>
   )
-
 
   //// Affiliation needs work in the API
   const afilliation = () => {
@@ -62,7 +60,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
   }
 
   const orcid = () => {
-
     return (
       <div className="panel-footer">
         <a id="orcid-link" href={metadata.id}><FontAwesomeIcon icon={faOrcid} /> {metadata.id}</a>
@@ -79,7 +76,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
         </div>
       )
     }
-
 
     return (
       <div className="metrics-counter">
@@ -113,7 +109,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
       </div>
     )  
   }
-
 
   return (
     <div key={metadata.id} className="panel panel-transparent">
