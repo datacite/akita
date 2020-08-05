@@ -342,7 +342,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const leftSideBar = () => {
     const title = "DataCite Commons: " + doi.titles[0].title
     const url = window.location.href
-    console.log(url)
+
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -354,7 +354,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
         </div>
         <div className="panel panel-transparent">
           <div className="facets panel-body">
-
             <h4>Export</h4>
             <div id="export-xml" className="download">
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
@@ -410,17 +409,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     )
   }
 
-  // const rightSideBar = () => {
-
-  //   return (
-  //     <div className="col-md-3 hidden-xs hidden-sm">
-
-  //     </div>
-  //   )
-  // }
-
-  
-
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
@@ -440,7 +428,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     <div className="row">
       {leftSideBar()}
       {content()}
-      {/* {rightSideBar()} */}
     </div>
   )
 }

@@ -8,9 +8,7 @@ import CitationsChart from '../CitationsChart/CitationsChart'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import Pager from '../Pager/Pager'
 import { compactNumbers } from '../../utils/helpers'
-
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
-
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
@@ -44,17 +42,17 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
     )
   }
 
-  const style = {
-    fontWeight: 600,  
-    color:'#1abc9c',
-    fontSize: '25px',
-    padding: 0,
-    margin: '0 0 .35em 10px',
-  }
+  // const style = {
+  //   fontWeight: 600,  
+  //   color:'#1abc9c',
+  //   fontSize: '25px',
+  //   padding: 0,
+  //   margin: '0 0 .35em 10px',
+  // }
 
-  const citationsTabLabel = Pluralize({count: compactNumbers(doi.citationCount), singular:'Citation', style:style, showCount:true}) 
-  const viewsTabLabel = Pluralize({count: compactNumbers(doi.viewCount), singular:'View', style:style, showCount:true}) 
-  const downloadsTabLabel = Pluralize({count: compactNumbers(doi.downloadCount), singular:'Download', style:style, showCount:true}) 
+  const citationsTabLabel = Pluralize({count: compactNumbers(doi.citationCount), singular:'Citation', showCount:true}) 
+  const viewsTabLabel = Pluralize({count: compactNumbers(doi.viewCount), singular:'View', showCount:true}) 
+  const downloadsTabLabel = Pluralize({count: compactNumbers(doi.downloadCount), singular:'Download', showCount:true}) 
 
   const citationsOverTime = doi.citationsOverTime.map(datum => ({ year: datum.year, total: datum.total }));
   const viewsOverTime = doi.viewsOverTime.map(datum => ({ yearMonth: datum.yearMonth, total: datum.total }));
@@ -86,17 +84,16 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
     )
   }
 
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.totalCount), singular:'Reference', style:style,showCount:true}) 
-    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.totalCount), singular:'Citation', style:style,showCount:true}) 
+    const referencesTabLabel = Pluralize({count: compactNumbers(doi.references.totalCount), singular:'Reference', showCount:true}) 
+    const citationsTabLabel = Pluralize({count: compactNumbers(doi.citations.totalCount), singular:'Citation', showCount:true}) 
 
     const hasNextPageCitations = doi.citations.pageInfo ? doi.citations.pageInfo.hasNextPage : false
     const endCursorCitations = doi.citations.pageInfo ? doi.citations.pageInfo.endCursor : ""
 
     const hasNextPageReferences = doi.references.pageInfo ? doi.references.pageInfo.hasNextPage : false
     const endCursorReferences = doi.references.pageInfo ? doi.references.pageInfo.endCursor : ""
-
 
     return (
       <div className="panel panel-transparent">
@@ -120,14 +117,15 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
     )
   }
 
-
   return (
     <div key={doi.id} className="panel panel-transparent">
-      <h2 className="member-results">{doi.doi}</h2>
+      <h3 className="member-results">{"https://doi.org/" + doi.doi}</h3>
       <div key={doi.id} className="panel panel-transparent content-metadata">
-      <div className="panel-body">
-      <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
-      </div></div>
+        <div className="panel-body">
+          <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
+       </div>
+      </div>
+
       <br/>
       {formattedCitation()}
       {analyticsBar()}

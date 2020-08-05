@@ -143,7 +143,6 @@ export interface Attribute {
   id: string
 }
 
-
 export interface OrcidDataQuery {
   person: PersonType
 }
@@ -218,11 +217,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
 
     const impactLink = (
-      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
+      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer">Impactstory</a>
     )
 
-    const europePMC = (
-      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
+    const europePMCLink = (
+      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer">Europe PMC</a>
     )
 
     return (
@@ -237,11 +236,9 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         <div className="panel panel-transparent">
           <div className="facets panel-body">
             <h4>Other Profiles</h4>
-            {orcidLink}
-            <br />
-            {impactLink}
-            <br />
-            {europePMC}
+            <div id="profile-orcid" className="download">{orcidLink}</div>
+            <div id="profile-impactstory" className="download">{impactLink}</div>
+            <div id="profile-europepmc" className="download">{europePMCLink}</div>
           </div>
           <div className="facets panel-body">
             <h4>Export</h4>

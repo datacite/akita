@@ -13,7 +13,6 @@ import { orcidFromUrl } from "../../utils/helpers"
 import Pager from '../Pager/Pager'
 // import { count } from 'console'
 
-
 export interface PersonRecord {
   id: string
   name: string
@@ -51,7 +50,6 @@ export interface Attribute {
   id: string
 }
 
-
 type Props = {
   person: PersonRecord
 }
@@ -62,7 +60,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       No content found.
     </Alert>
   )
-
 
   //// Affiliation needs work in the API
   const afilliation = () => {
@@ -77,7 +74,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   }
 
   const orcid = () => {
-
     return (
       <div className="panel-footer">
         <a id="orcid-link" href={person.id}><FontAwesomeIcon icon={faOrcid} /> {person.id}</a>
@@ -89,7 +85,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     if (person.works.totalCount == 0) {
       return ""
     }
-
 
     return (
       <div className="metrics-counter">
@@ -127,7 +122,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
-
   const analyticsBar = () => {
     if (!person.works.totalCount) return (null)
 
@@ -153,7 +147,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           </Grid>
         </div>
       </div>
-
     )
   }
 
@@ -172,10 +165,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       </div>
     )
 
-
     const hasNextPage = person.works.pageInfo ? person.works.pageInfo.hasNextPage : false
     const endCursor = person.works.pageInfo ? person.works.pageInfo.endCursor : ""
-
 
     if (!person.works.totalCount) return (
       <React.Fragment>

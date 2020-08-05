@@ -9,11 +9,9 @@ import ContentLoader from "react-content-loader"
 import Error from "../Error/Error"
 import PersonMetadata from "../PersonMetadata/PersonMetadata"
 
-
 type Props = {
     searchQuery: string;
 };
-
 
 interface ContentQueryData {
     people: {

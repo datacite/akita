@@ -105,7 +105,6 @@ describe('Person Component', () => {
 
   it('citationCount', () => {
     mount(<Person person={data}/>)
-    console.log(cy.get('div#citation-count'))
     cy.get('div#citation-count')
       .contains('33')
       .should('be.visible')

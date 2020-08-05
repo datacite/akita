@@ -5,12 +5,10 @@ import { Grid, Row } from 'react-bootstrap';
   /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
 
-
 interface ChartRecord {
   year: number,
   total: number
 }
-
 
 type Props = {
   data: ChartRecord[],
@@ -117,27 +115,27 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, citationCount, pu
   }
 
   const title = () => {
-    const style = {
-      color:'#1abc9c',
-    }
+    // const style = {
+    //   color:'#1abc9c',
+    // }
     return (
-    <small><Pluralize singular={'Citation'} count={citationCount} style={style}/>  reported since publication in {publicationYear}</small>
+      <small><Pluralize singular={'Citation'} count={citationCount}/> reported since publication in {publicationYear}</small>
     )
   }
 
   return (
-      <div className="panel panel-transparent">
-       <div className="citation-chart panel-body"> 
-       <Grid>
-        <Row> 
-          {title()}
-        </Row>
-        <Row>       
-          <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
-        </Row>
-       </Grid>
-       </div>
+    <div className="panel panel-transparent">
+      <div className="citation-chart panel-body"> 
+        <Grid>
+          <Row> 
+            {title()}
+          </Row>
+          <Row>       
+            <VegaLite renderer="svg" spec={spec} data={{table: data}} actions={actions} />
+          </Row>
+        </Grid>
       </div>
+    </div>
    );
 }
 

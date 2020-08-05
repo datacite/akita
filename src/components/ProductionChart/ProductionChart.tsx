@@ -5,7 +5,6 @@ import { Grid, Row } from 'react-bootstrap';
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed';
 
-
 interface ChartRecord {
   title: string
   count: number
@@ -117,11 +116,11 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data, id, doiCount })
   const mydata = data;
 
   const title = () => {
-    const style = {
-      color: '#1abc9c',
-    }
+    // const style = {
+    //   color: '#1abc9c',
+    // }
     return (
-      <small><Pluralize singular={'Work'} count={doiCount} style={style} />  reported.</small>
+      <small><Pluralize singular={'Work'} count={doiCount} /> reported.</small>
     )
   }
 
