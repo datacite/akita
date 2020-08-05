@@ -251,11 +251,13 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
           <h3 className="member-results">{data.works.totalCount.toLocaleString('en-US')} Results</h3>
         }
 
-        {searchResults.map(item => (
-          <React.Fragment key={item.id}>
-            <DoiMetadata metadata={item} />
-          </React.Fragment>
-        ))}
+        <div className="panel-body" id="related-content-items">
+          {searchResults.map(item => (
+            <React.Fragment key={item.id}>
+              <DoiMetadata metadata={item} />
+            </React.Fragment>
+          ))}
+        </div>
 
         {renderPagination()}
       </div>
