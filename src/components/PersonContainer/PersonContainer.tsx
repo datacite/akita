@@ -10,6 +10,22 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
 import { PageInfo } from '../SearchContent/SearchContent'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faOrcid,
+  faTwitter, 
+  faFacebook
+} from '@fortawesome/free-brands-svg-icons'
+import {
+  faInfoCircle,
+  faExternalLinkAlt,
+  faEnvelope
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from "react-share"
 
 type Props = {
   orcid?: string
@@ -187,17 +203,8 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-    const facebook = (
-      <Popover id="share" title="Sharing via Facebook">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
-      </Popover>
-    )
-
-    const twitter = (
-      <Popover id="share" title="Sharing via Twitter">
-        Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
-      </Popover>
-    )
+    const title = "DataCite Commons: " + data.person.name
+    const url = window.location.href
 
     const bibtex = (
       <Popover id="share" title="Export bibtex">
@@ -206,7 +213,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
 
     const orcidLink = (
-      <a href={"https://orcid.org/" + orcid} target="_blank" rel="noreferrer">ORCID</a>
+      <a href={data.person.id} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
     )
 
     const impactLink = (
@@ -233,7 +240,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <div id="profile-impactstory" className="download">{impactLink}</div>
             <div id="profile-europepmc" className="download">{europePMCLink}</div>
           </div>
-
           <div className="facets panel-body">
             <h4>Export</h4>
             {/* <div id="export-bibtex" className="download">
@@ -244,16 +250,21 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </OverlayTrigger>
           </div>
           <div className="facets panel-body">
-
             <h4>Share</h4>
-            <span className="actions">
-              <OverlayTrigger placement="top" overlay={facebook}>
-                <span className="share">Facebook</span>
-              </OverlayTrigger>
-              <br></br>
-              <OverlayTrigger placement="top" overlay={twitter}>
-                <span className="share">Twitter</span>
-              </OverlayTrigger>
+            <span className="share-button">
+              <EmailShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faEnvelope} size="lg" />
+              </EmailShareButton>
+            </span>
+            <span className="share-button">
+              <TwitterShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faTwitter} size="lg" />
+              </TwitterShareButton>
+            </span>
+            <span className="share-button">
+              <FacebookShareButton url={url} title={title}>
+                <FontAwesomeIcon icon={faFacebook} size="lg" />
+              </FacebookShareButton>
             </span>
           </div>
         </div>

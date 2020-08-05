@@ -21,6 +21,15 @@ describe("DoiContainer", () => {
       .should('be.visible')
   })
 
+  it("share", () => {
+    cy.get('.share-button', { timeout: 30000 }).should(($btn) => {
+      expect($btn).to.have.length(3)
+      expect($btn.eq(0)).to.be.visible
+      expect($btn.eq(1)).to.be.visible
+      expect($btn.eq(2)).to.be.visible
+    })
+  })
+
   it("cite as", () => {
     cy.get('select.cite-as')
       .select('ieee')

@@ -213,7 +213,6 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {
-
     if (loading) return (
       <ContentLoader
         speed={1}

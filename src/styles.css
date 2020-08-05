@@ -149,3 +149,8 @@ ul.ror-identifiers {
   list-style: none;
   padding: 0;
 }
+
+.share-button {
+  font-size: 32px;
+  margin-right: 10px;
+}
