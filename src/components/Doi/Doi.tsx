@@ -119,7 +119,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({doi}) => {
 
   return (
     <div key={doi.id} className="panel panel-transparent">
-      <h2 className="member-results">{"https://doi.org/" + doi.doi}</h2>
+      <h3 className="member-results">{"https://doi.org/" + doi.doi}</h3>
       <div key={doi.id} className="panel panel-transparent content-metadata">
         <div className="panel-body">
           <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
