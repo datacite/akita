@@ -20,8 +20,8 @@ describe("Search", () => {
       .get('.panel.content-item').should(($contentItem) => {
         expect($contentItem).to.have.length.at.least(14)
       })
-      .get(':nth-child(2) > .panel-body > .registered')
-      .should('contain', 'DOI registered')
+      // .get(':nth-child(2) > .panel-body > .registered')
+      // .should('contain', 'DOI registered')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
         expect($facet).to.have.length.at.least(4)
