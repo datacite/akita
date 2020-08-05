@@ -46,7 +46,6 @@ const Footer = () => {
               <li><a href="https://www.datacite.org/steering.html">Steering groups</a></li>
               <li><a href="https://www.datacite.org/events.html">Events</a></li>
               <li><a href="https://www.datacite.org/roadmap.html">Roadmap</a></li>
-              <li><a href="https://www.datacite.org/user-stories.html">User Stories</a></li>
             </ul>
           </Col>
           <Col sm={4} md={3} className="footer-column">
@@ -73,6 +72,11 @@ const Footer = () => {
               <li><a href="https://www.datacite.org/terms.html">Terms and conditions</a></li>
               <li><a href="https://www.datacite.org/privacy.html">Privacy policy</a></li>
               <li><a href="https://www.datacite.org/acknowledgments.html">Acknowledgements</a></li>
+            </ul>
+            <h4>Funding</h4>
+            <ul>
+              The work on DataCite Commons is supported by funding from the European Union’s Horizon 2020 research and innovation 
+              programme under grant agreement No <a href="https://cordis.europa.eu/project/id/777523" target="_blank" rel="noreferrer">777523</a>.
             </ul>
             <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
               <span className="color-dot"></span>
