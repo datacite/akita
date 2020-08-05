@@ -12,13 +12,10 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import { PageInfo } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faOrcid,
   faTwitter, 
   faFacebook
 } from '@fortawesome/free-brands-svg-icons'
 import {
-  faInfoCircle,
-  faExternalLinkAlt,
   faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
 import {

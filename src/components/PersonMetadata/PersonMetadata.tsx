@@ -7,10 +7,10 @@ import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { 
-  faQuoteLeft, 
-  faInfoCircle, 
-  faEye,
-  faDownload,
+  // faQuoteLeft, 
+  // faInfoCircle, 
+  // faEye,
+  // faDownload,
   faScroll
 } from '@fortawesome/free-solid-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
@@ -85,40 +85,39 @@ const PersonMetadata: React.FunctionComponent<Props> = ({metadata}) => {
     )
   }
 
-// eslint-disable-next-line no-unused-vars
-  const metricsCounter = () => {
-    if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
-      return (
-        <div className="metrics-counter">
-          <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
-        </div>
-      )
-    }
+  // const metricsCounter = () => {
+  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
+  //     return (
+  //       <div className="metrics-counter">
+  //         <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
+  //       </div>
+  //     )
+  //   }
 
-    return (
-      <div className="metrics-counter">
-        {metadata.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
-        }
-        {metadata.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
-        }
-        {metadata.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
-        }
-      </div>
-    )  
-  }
+  //   return (
+  //     <div className="metrics-counter">
+  //       {metadata.citationCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
+  //       }
+  //       {metadata.viewCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
+  //       }
+  //       {metadata.downloadCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
+  //       }
+  //     </div>
+  //   )  
+  // }
 
   return (
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         <ul className="counter-list">
-        {name()}
-        {afilliation()}
-        {workCount()}
+          {name()}
+          {afilliation()}
+          {workCount()}
           {/* {metricsCounter()} */}
-          </ul>
+        </ul>
         {orcid()}
         <br />
       </div>

@@ -18,6 +18,7 @@ describe("PersonContainer", () => {
       expect($btn.eq(1)).to.be.visible
       expect($btn.eq(2)).to.be.visible
     })
+  })
 
   it("other profiles", () => {
     cy.get('#profile-orcid')

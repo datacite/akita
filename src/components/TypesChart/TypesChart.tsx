@@ -5,7 +5,7 @@ import { Grid, Row } from 'react-bootstrap';
 import { VisualizationSpec } from 'vega-embed';
 import { compactNumbers } from '../../utils/helpers'
 /* eslint-disable no-unused-vars */
-import { Attribute } from '../PersonContainer/PersonContainer'
+// import { Attribute } from '../PersonContainer/PersonContainer'
 
 interface ChartRecord {
   title: string
