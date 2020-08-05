@@ -10,15 +10,6 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
 import { PageInfo } from '../SearchContent/SearchContent'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faOrcid,
-} from '@fortawesome/free-brands-svg-icons'
-import {
-  faInfoCircle,
-  faExternalLinkAlt,
-} from '@fortawesome/free-solid-svg-icons'
-
 
 type Props = {
   orcid?: string
@@ -136,7 +127,6 @@ export interface Attribute {
   id: string
 }
 
-
 export interface OrcidDataQuery {
   person: PersonType
 }
@@ -197,7 +187,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-
     const facebook = (
       <Popover id="share" title="Sharing via Facebook">
         Sharing via social media will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search" target="_blank" rel="noreferrer">Provide input</a>
@@ -217,15 +206,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
 
     const orcidLink = (
-      <a href={"https://orcid.org/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
+      <a href={"https://orcid.org/" + orcid} target="_blank" rel="noreferrer">ORCID</a>
     )
 
     const impactLink = (
-      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInfoCircle} /> Impact Story</a>
+      <a href={"https://profiles.impactstory.org/u/" + orcid} target="_blank" rel="noreferrer">Impactstory</a>
     )
 
-    const europePMC = (
-      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faExternalLinkAlt} /> Europe PMC</a>
+    const europePMCLink = (
+      <a href={"http://europepmc.org/authors/" + orcid} target="_blank" rel="noreferrer">Europe PMC</a>
     )
 
     return (
@@ -239,17 +228,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         </div>
         <div className="panel panel-transparent">
           <div className="facets panel-body">
-
             <h4>Other Profiles</h4>
-            {orcidLink}
-            <br />
-            {impactLink}
-            <br />
-            {europePMC}
+            <div id="profile-orcid" className="download">{orcidLink}</div>
+            <div id="profile-impactstory" className="download">{impactLink}</div>
+            <div id="profile-europepmc" className="download">{europePMCLink}</div>
           </div>
 
           <div className="facets panel-body">
-
             <h4>Export</h4>
             {/* <div id="export-bibtex" className="download">
               <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/"}>Works as BibTeX</a>
