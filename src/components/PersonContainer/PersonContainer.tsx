@@ -213,7 +213,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
 
     const orcidLink = (
-      <a href={data.person.id} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faOrcid} /> ORCiD</a>
+      <a href={data.person.id} target="_blank" rel="noreferrer">ORCID</a>
     )
 
     const impactLink = (
