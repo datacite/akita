@@ -1,9 +1,9 @@
-import React from 'react';
-import { VegaLite } from 'react-vega';
+import React from 'react'
+import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-import { Grid, Row } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap'
   /* eslint-disable no-unused-vars */
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
   year: number,
@@ -21,7 +21,7 @@ const actions = {
   export: true,
   source: false,
   compiled: false, 
-  editor: false,
+  editor: false
 }
 
 /* eslint-disable no-unused-vars */
@@ -34,7 +34,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, citationCount, pu
   const lowerBoundYear = thisYear - 10 > publicationYear ? thisYear - 10 : publicationYear
   
   /* istanbul ignore next */
-  const yearsDomain = thisYear - lowerBoundYear;
+  const yearsDomain = thisYear - lowerBoundYear
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -136,7 +136,7 @@ const CitationsChart: React.FunctionComponent<Props> = ({data, citationCount, pu
         </Grid>
       </div>
     </div>
-   );
+   )
 }
 
 export default CitationsChart

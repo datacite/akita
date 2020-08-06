@@ -1,8 +1,8 @@
-import React from 'react';
-import { VegaLite } from 'react-vega';
-import { Grid, Row } from 'react-bootstrap';
+import React from 'react'
+import { VegaLite } from 'react-vega'
+import { Grid, Row } from 'react-bootstrap'
 /* eslint-disable no-unused-vars */
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from 'vega-embed'
 import { compactNumbers } from '../../utils/helpers'
 /* eslint-disable no-unused-vars */
 // import { Attribute } from '../PersonContainer/PersonContainer'
@@ -83,7 +83,7 @@ const TypesChart: React.FunctionComponent<Props> = ({ data, doi, count, legend }
         </Grid>
       </div>
     </div>
-  );
+  )
 }
 
 export default TypesChart

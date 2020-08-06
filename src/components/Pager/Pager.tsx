@@ -46,4 +46,4 @@ const Pager: React.FunctionComponent<Props> = ({url, hasNextPage, endCursor, isN
   )
 }
  
-export default Pager;
+export default Pager

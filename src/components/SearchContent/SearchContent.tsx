@@ -13,7 +13,7 @@ import Error from "../Error/Error"
 import ContentLoader from "react-content-loader"
 
 type Props = {
-  searchQuery: string;
+  searchQuery: string
 }
 
 interface ContentNode {

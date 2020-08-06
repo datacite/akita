@@ -125,8 +125,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   const analyticsBar = () => {
     if (!person.works.totalCount) return (null)
 
-    const published = person.works.published.map(x => ({ title: x.title, count: x.count }));
-    const resourceTypes = person.works.resourceTypes.map(x => ({ title: x.title, count: x.count }));
+    const published = person.works.published.map(x => ({ title: x.title, count: x.count }))
+    const resourceTypes = person.works.resourceTypes.map(x => ({ title: x.title, count: x.count }))
 
     return (
       <div>

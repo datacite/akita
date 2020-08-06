@@ -5,28 +5,28 @@ import { useQueryState } from 'next-usequerystate'
 
 import Error from "../Error/Error"
 import Pager from "../Pager/Pager"
-import { Organization, OrganizationRecord } from '../Organization/Organization';
-import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata';
+import { Organization, OrganizationRecord } from '../Organization/Organization'
+import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 
 type Props = {
-    rorId: string;
-};
+    rorId: string
+}
 
 interface OrganizationResult {
-    id: string;
-    name: string;
-    alternateName: string[];
-    url: string;
+    id: string
+    name: string
+    alternateName: string[]cccc
+    url: string
     address: {
         country: string
     }
     identifiers: [{
         identifier: string,
         identifierType: string
-    }];
-    works: Works;
+    }]
+    works: Works
 }
 
 interface Works {
@@ -53,8 +53,8 @@ interface OrganizationQueryData {
 }
 
 interface OrganizationQueryVar {
-    id: string;
-    cursor: string;
+    id: string
+    cursor: string
 }
 
 export const ORGANIZATION_GQL = gql`
@@ -135,14 +135,13 @@ query getOrganizationQuery($id: ID!, $cursor: String) {
         }
     }
 }
-`;
-
+`
 
 const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     const [cursor] = useQueryState('cursor', { history: 'push' })
-    const [organization, setOrganization] = React.useState<OrganizationRecord>();
+    const [organization, setOrganization] = React.useState<OrganizationRecord>()
 
-    const fullId = "https://ror.org/" + rorId;
+    const fullId = "https://ror.org/" + rorId
 
     const { loading, error, data } = useQuery<OrganizationQueryData, OrganizationQueryVar>(
         ORGANIZATION_GQL,
@@ -154,14 +153,12 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
             }
         })
 
-
     React.useEffect(() => {
-
         if (data) {
-            let organization = data.organization;
+            let organization = data.organization
             let identifiers = organization.identifiers.filter(i => {
-                return i.identifier != "";
-            });
+                return i.identifier != ""
+            })
 
             let orgMetadata: OrganizationMetadataRecord = {
                 id: organization.id,
@@ -170,16 +167,16 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
                 url: organization.url,
                 countryName: organization.address.country,
                 identifiers: identifiers,
-            };
+            }
 
             setOrganization({
                 metadata: orgMetadata
-            });
+            })
         }
 
-    }, [data]);
+    }, [data])
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p>Loading...</p>
 
     if (error) {
         return <Error title="No Service" message="Unable to retrieve organization" />

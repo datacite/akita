@@ -1,9 +1,9 @@
-import React from 'react';
-import { VegaLite } from 'react-vega';
+import React from 'react'
+import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-import { Grid, Row } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap'
 /* eslint-disable no-unused-vars */
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
   title: string
@@ -33,7 +33,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data, id, doiCount })
   const lowerBoundYear = thisYear - 20
 
   /* istanbul ignore next */
-  const yearsDomain = thisYear - lowerBoundYear;
+  const yearsDomain = thisYear - lowerBoundYear
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -113,7 +113,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data, id, doiCount })
     }
   }
 
-  const mydata = data;
+  const mydata = data
 
   const title = () => {
     // const style = {
@@ -137,7 +137,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data, id, doiCount })
         </Grid>
       </div>
     </div>
-  );
+  )
 }
 
 export default ProductionChart

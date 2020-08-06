@@ -11,7 +11,7 @@ type Props = {
 }
 
 const FilterItem: React.FunctionComponent<Props> = ({ name, id, title, count }) => {
-    const [activeFilter, setActiveFilter] = useQueryState<string>(name);
+    const [activeFilter, setActiveFilter] = useQueryState<string>(name)
 
     const activeIcon = (id: string) => {
         let icon = faSquare
@@ -21,16 +21,16 @@ const FilterItem: React.FunctionComponent<Props> = ({ name, id, title, count }) 
 
         return (
             <FontAwesomeIcon icon={icon} />
-        );
+        )
     }
 
     const toggleFilter = (id: string) => {
         if (activeFilter !== id) {
-            setActiveFilter(id);
+            setActiveFilter(id)
         } else {
-            setActiveFilter(null);
+            setActiveFilter(null)
         }
-    };
+    }
 
     return (
         <div>

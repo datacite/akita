@@ -32,7 +32,7 @@ import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: DoiType
-  linkToExternal?: boolean;
+  linkToExternal?: boolean
 }
 
 const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal }) => {
@@ -101,13 +101,13 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
       switch (true) {
         case (array.length > index + 2):
           sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
-          break;
+          break
         case (array.length > index + 1):
           sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
-          break;
+          break
         default:
           sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
-          break;
+          break
       }
       return sum
     }, [])
@@ -148,7 +148,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   }
 
   const license = () => {
-    let rights = [...metadata.rights];
+    let rights = [...metadata.rights]
     const uniqueRights = uniqBy(rights, 'rightsIdentifier')
     const ccRights = uniqueRights.reduce((sum, r) => {
       if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
@@ -157,20 +157,20 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
           switch (l) {
             case 'by':
               sum.push({ icon: faCreativeCommonsBy, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              break
             case 'nc':
               sum.push({ icon: faCreativeCommonsNc, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              break
             case 'nd':
               sum.push({ icon: faCreativeCommonsNd, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              break
             case 'sa':
               sum.push({ icon: faCreativeCommonsSa, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              break
             case 'cc0':
               sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
               sum.push({ icon: faCreativeCommonsZero, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              break
             default:
               sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
           }
@@ -180,14 +180,14 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
     }, [])
 
     const otherRights = uniqueRights.reduce((sum, r) => {
-      let rightsIdentifier = r.rightsIdentifier;
+      let rightsIdentifier = r.rightsIdentifier
       if (rightsIdentifier && !rightsIdentifier.startsWith('cc')) {
         if (rightsIdentifier.startsWith('apache')) {
           rightsIdentifier = "Apache%202.0"
         } else if (rightsIdentifier.startsWith('ogl')) {
           rightsIdentifier = "OGL%20Canada"
         } else {
-          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase();
+          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase()
         }
         sum.push(r)
       }

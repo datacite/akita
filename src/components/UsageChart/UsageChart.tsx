@@ -1,10 +1,10 @@
-import React from 'react';
-import { VegaLite } from 'react-vega';
+import React from 'react'
+import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-import { Grid, Row } from 'react-bootstrap';
-import Moment from 'moment';
+import { Grid, Row } from 'react-bootstrap'
+import Moment from 'moment'
 /* eslint-disable no-unused-vars */
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from 'vega-embed'
 
 
 interface ChartRecord {
@@ -46,10 +46,10 @@ const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYe
 
   // Filter dataset
   /* istanbul ignore next */
-  let subset: ChartRecord[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear);});
+  let subset: ChartRecord[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear)})
 
   /* istanbul ignore next */
-  subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'));});
+  subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'))})
 
   // Get domain
   /* istanbul ignore next */
@@ -116,32 +116,26 @@ const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYe
     }
   }
   
-   const title = () => {
-
+  const title = () => {
     return (
-    <small><Pluralize singular={type} count={counts} style={{color:'#1abc9c'}} />  reported since publication in {publicationYear}</small>
+      <small><Pluralize singular={type} count={counts} style={{color:'#1abc9c'}} />  reported since publication in {publicationYear}</small>
     )
   }
 
   return (
-      <div className="panel panel-transparent">
-       <div className="usage-chart panel-body"> 
-       <Grid>
-        <Row> 
-          {title()}
-        </Row>
-        <Row>       
-        <VegaLite renderer="svg" spec={spec} data={{table: subset}} actions={actions} />
-        </Row>
-       </Grid>
-       </div>
+    <div className="panel panel-transparent">
+      <div className="usage-chart panel-body"> 
+        <Grid>
+          <Row> 
+            {title()}
+          </Row>
+          <Row>       
+            <VegaLite renderer="svg" spec={spec} data={{table: subset}} actions={actions} />
+          </Row>
+        </Grid>
       </div>
-   );
+    </div>
+   )
 }
 
 export default UsageChart
-
-
-
-
-

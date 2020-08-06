@@ -1,23 +1,23 @@
-import React from 'react';
+import React from 'react'
 import Link from 'next/link'
 import { rorFromUrl } from '../../utils/helpers'
 
 export interface OrganizationMetadataRecord {
-    id: string;
-    name: string;
-    alternateNames: string[];
-    url: string;
-    countryName: string;
+    id: string
+    name: string
+    alternateNames: string[]
+    url: string
+    countryName: string
     identifiers: {
         identifier: string,
         identifierType: string
-    }[];
+    }[]
 }
 
 type Props = {
-    metadata: OrganizationMetadataRecord;
-    linkToExternal: boolean;
-};
+    metadata: OrganizationMetadataRecord
+    linkToExternal: boolean
+}
 
 
 export const OrganizationMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal }) => {
@@ -62,4 +62,4 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({ metadata,
     )
 }
 
-export default OrganizationMetadata;
+export default OrganizationMetadata

@@ -10,16 +10,16 @@ import Error from "../Error/Error"
 import PersonMetadata from "../PersonMetadata/PersonMetadata"
 
 type Props = {
-    searchQuery: string;
-};
+    searchQuery: string
+}
 
 interface ContentQueryData {
-    people: {
-      __typename: String
-      nodes: PersonType[]
-      pageInfo: PageInfo
-    },
-  }
+  people: {
+    __typename: String
+    nodes: PersonType[]
+    pageInfo: PageInfo
+  },
+}
 
 interface PageInfo {
     endCursor: string
