@@ -17,7 +17,7 @@ type Props = {
 interface OrganizationResult {
     id: string
     name: string
-    alternateName: string[]cccc
+    alternateName: string[]
     url: string
     address: {
         country: string
