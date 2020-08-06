@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
-import Error from "../Error/Error"
+import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
-import ContentLoader from "react-content-loader"
+import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
-} from "react-share"
+} from 'react-share'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -20,158 +20,158 @@ type Props = {
 
 export const DOI_GQL = gql`
   query getContentQuery($id: ID!, $cursor: String) {
-  work(id: $id){
-    id
-    doi
-    titles{
-      title
-    }
-    types{
-      resourceTypeGeneral
-      resourceType
-    }
-    creators {
+    work(id: $id) {
       id
-      name
-      givenName
-      familyName
-    }
-    version
-    publicationYear
-    publisher
-    descriptions {
-      description
-    }
-  	rights {
-      rights
-      rightsUri
-      rightsIdentifier
-    }
-    fieldsOfScience {
-      id
-      name
-    }
-    language {
-      id
-      name
-    }
-    registrationAgency {
-      id
-      name
-    }
-    registered
-    formattedCitation
-    citationCount
-    citationsOverTime {
-      year
-      total
-    }
-    viewCount
-    viewsOverTime {
-      yearMonth
-      total
-    }
-    downloadCount
-    downloadsOverTime {
-      yearMonth
-      total
-    }
-    citations(first: 5, after: $cursor) {
-      pageInfo {
+      doi
+      titles {
+        title
+      }
+      types {
+        resourceTypeGeneral
+        resourceType
+      }
+      creators {
+        id
+        name
+        givenName
+        familyName
+      }
+      version
+      publicationYear
+      publisher
+      descriptions {
+        description
+      }
+      rights {
+        rights
+        rightsUri
+        rightsIdentifier
+      }
+      fieldsOfScience {
+        id
+        name
+      }
+      language {
+        id
+        name
+      }
+      registrationAgency {
+        id
+        name
+      }
+      registered
+      formattedCitation
+      citationCount
+      citationsOverTime {
+        year
+        total
+      }
+      viewCount
+      viewsOverTime {
+        yearMonth
+        total
+      }
+      downloadCount
+      downloadsOverTime {
+        yearMonth
+        total
+      }
+      citations(first: 5, after: $cursor) {
+        pageInfo {
           endCursor
           hasNextPage
+        }
+        totalCount
+        nodes {
+          doi
+          titles {
+            title
+          }
+          types {
+            resourceTypeGeneral
+            resourceType
+          }
+          creators {
+            id
+            name
+            givenName
+            familyName
+          }
+          version
+          publicationYear
+          publisher
+          descriptions {
+            description
+          }
+          rights {
+            rights
+            rightsUri
+            rightsIdentifier
+          }
+          fieldsOfScience {
+            id
+            name
+          }
+          language {
+            id
+            name
+          }
+          registrationAgency {
+            id
+            name
+          }
+          registered
+        }
       }
-      totalCount
-      nodes{
-        doi
-        titles{
-          title
-        }
-        types{
-          resourceTypeGeneral
-          resourceType
-        }
-        creators {
-          id
-          name
-          givenName
-          familyName
-        }
-        version
-        publicationYear
-        publisher
-        descriptions {
-          description
-        }
-        rights {
-          rights
-          rightsUri
-          rightsIdentifier
-        }
-        fieldsOfScience {
-          id
-          name
-        }
-        language {
-          id
-          name
-        }
-        registrationAgency {
-          id
-          name
-        }
-        registered
-      }
-    }
-    references(first: 5, after: $cursor){
-      pageInfo {
+      references(first: 5, after: $cursor) {
+        pageInfo {
           endCursor
           hasNextPage
-      }
-      totalCount
-      nodes{
-        doi
-        titles{
-          title
         }
-        types{
-          resourceTypeGeneral
-          resourceType
+        totalCount
+        nodes {
+          doi
+          titles {
+            title
+          }
+          types {
+            resourceTypeGeneral
+            resourceType
+          }
+          creators {
+            id
+            name
+            givenName
+            familyName
+          }
+          version
+          publicationYear
+          publisher
+          descriptions {
+            description
+          }
+          rights {
+            rights
+            rightsUri
+            rightsIdentifier
+          }
+          fieldsOfScience {
+            id
+            name
+          }
+          language {
+            id
+            name
+          }
+          registrationAgency {
+            id
+            name
+          }
+          registered
         }
-        creators {
-          id
-          name
-          givenName
-          familyName
-        }
-        version
-        publicationYear
-        publisher
-        descriptions {
-          description
-        }
-        rights {
-          rights
-          rightsUri
-          rightsIdentifier
-        }
-        fieldsOfScience {
-          id
-          name
-        }
-        language {
-          id
-          name
-        }
-        registrationAgency {
-          id
-          name
-        }
-        registered
       }
     }
   }
-}
 `
 
 export interface DoiType {
@@ -250,33 +250,33 @@ interface PageInfo {
 }
 
 interface CitationsYear {
-  year: number,
+  year: number
   total: number
 }
 
 export interface UsageMonth {
-  yearMonth: string,
+  yearMonth: string
   total: number
 }
 
 export interface RelatedContentList {
   nodes: {
-    id: string,
-    formattedCitation: string,
+    id: string
+    formattedCitation: string
     repository: {
-      name: string,
-      re3dataId: string,
-      id: string,
-    },
+      name: string
+      re3dataId: string
+      id: string
+    }
     registrationAgency: {
-      name: string,
-      id: string,
-    },
+      name: string
+      id: string
+    }
     member: {
-      name: string,
-      id: string,
-    },
-  },
+      name: string
+      id: string
+    }
+  }
 }
 
 export interface DoiQueryData {
@@ -296,7 +296,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item, cursor: cursor  }
+      variables: { id: item, cursor: cursor }
     }
   )
 
@@ -309,29 +309,30 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     setDoi(result)
   }, [item, data])
 
-  if (loading) return (
-    <div className="row">
-      <div className="col-md-3"></div>
-      <div className="col-md-9">
-        <ContentLoader
-          speed={1}
-          width={1000}
-          height={250}
-          uniqueKey="2"
-          viewBox="0 0 1000 250"
-          backgroundColor="#f3f3f3"
-          foregroundColor="#ecebeb"
-        >
-          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-          <circle cx="54" cy="61" r="45" />
-        </ContentLoader>
+  if (loading)
+    return (
+      <div className="row">
+        <div className="col-md-3"></div>
+        <div className="col-md-9">
+          <ContentLoader
+            speed={1}
+            width={1000}
+            height={250}
+            uniqueKey="2"
+            viewBox="0 0 1000 250"
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb"
+          >
+            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+            <circle cx="54" cy="61" r="45" />
+          </ContentLoader>
+        </div>
       </div>
-    </div>
-  )
+    )
 
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
@@ -340,51 +341,112 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   if (!doi) return <p>Content not found.</p>
 
   const leftSideBar = () => {
-    const title = "DataCite Commons: " + doi.titles[0].title
+    const title = 'DataCite Commons: ' + doi.titles[0].title
     const url = window.location.href
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
           <div className="panel-body">
-            <div className="edit">
-
-            </div>
+            <div className="edit"></div>
           </div>
         </div>
         <div className="panel panel-transparent">
           <div className="facets panel-body">
             <h4>Export</h4>
             <div id="export-xml" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/vnd.datacite.datacite+xml/" + doi.doi}>DataCite XML</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/vnd.datacite.datacite+xml/' +
+                  doi.doi
+                }
+              >
+                DataCite XML
+              </a>
             </div>
             <div id="export-json" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/vnd.datacite.datacite+json/" + doi.doi}>DataCite JSON</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/vnd.datacite.datacite+json/' +
+                  doi.doi
+                }
+              >
+                DataCite JSON
+              </a>
             </div>
             <div id="export-ld" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/vnd.schemaorg.ld+json/" + doi.doi}>Schema.org JSON-LD</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/vnd.schemaorg.ld+json/' +
+                  doi.doi
+                }
+              >
+                Schema.org JSON-LD
+              </a>
             </div>
             <div id="export-bibtex" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/" +
-                doi.doi}>BibTeX</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/x-bibtex/' +
+                  doi.doi
+                }
+              >
+                BibTeX
+              </a>
             </div>
             <div id="export-ris" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/x-research-info-systems/" + doi.doi}>RIS</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/x-research-info-systems/' +
+                  doi.doi
+                }
+              >
+                RIS
+              </a>
             </div>
             <div id="export-jats" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                + "/dois/application/vnd.jats+xml/" + doi.doi}>JATS</a>
+              <a
+                target="_blank"
+                rel="noopener"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/dois/application/vnd.jats+xml/' +
+                  doi.doi
+                }
+              >
+                JATS
+              </a>
             </div>
-            {doi.types.resourceTypeGeneral === "Software" &&
+            {doi.types.resourceTypeGeneral === 'Software' && (
               <div id="export-codemeta" className="download">
-                <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL
-                  + "/dois/application/vnd.codemeta.ld+json/" + doi.doi}>Codemeta</a>
+                <a
+                  target="_blank"
+                  rel="noopener"
+                  href={
+                    process.env.NEXT_PUBLIC_API_URL +
+                    '/dois/application/vnd.codemeta.ld+json/' +
+                    doi.doi
+                  }
+                >
+                  Codemeta
+                </a>
               </div>
-            }
+            )}
           </div>
           <div className="facets panel-body">
             <h4>Share</h4>
@@ -414,9 +476,9 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
       <div className="col-md-9 panel-list" id="content">
         <div key={doi.id} className="panel panel-transparent content-item">
           <div className="panel-body">
-          <div key={doi.id} className="panel panel-transparent">
-            <Doi doi={doi} ></Doi>
-          </div>
+            <div key={doi.id} className="panel panel-transparent">
+              <Doi doi={doi}></Doi>
+            </div>
           </div>
           <br />
         </div>

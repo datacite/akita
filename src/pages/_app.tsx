@@ -1,8 +1,12 @@
-import React from "react"
-import App from "next/app"
+import React from 'react'
+import App from 'next/app'
 // eslint-disable-next-line no-unused-vars
-import { ApolloClient, NormalizedCacheObject, ApolloProvider } from '@apollo/client'
-import withApollo from "../../hooks/withApollo"
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  ApolloProvider
+} from '@apollo/client'
+import withApollo from '../../hooks/withApollo'
 
 // properly handle fontawesome icons
 import '../styles.css'

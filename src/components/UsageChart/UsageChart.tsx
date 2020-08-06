@@ -6,83 +6,93 @@ import Moment from 'moment'
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 
-
 interface ChartRecord {
-  yearMonth: string,
+  yearMonth: string
   total: number
 }
 
-
-
 type Props = {
-  data?: ChartRecord[],
-  doi?: string,
-  counts?: number,
-  publicationYear?: number,
+  data?: ChartRecord[]
+  doi?: string
+  counts?: number
+  publicationYear?: number
   type: string
 }
-
 
 const actions = {
   export: true,
   source: false,
-  compiled: false, 
-  editor: false,
+  compiled: false,
+  editor: false
 }
 
 /* eslint-disable no-unused-vars */
-const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYear, type}) => {
-
+const UsageChart: React.FunctionComponent<Props> = ({
+  data,
+  counts,
+  publicationYear,
+  type
+}) => {
   // current date
   /* istanbul ignore next */
-  const thisYear= new Date().getFullYear()
+  const thisYear = new Date().getFullYear()
 
   /* istanbul ignore next */
-  const thisMonth= new Date().getMonth()
+  const thisMonth = new Date().getMonth()
 
   // Get the lowerBound
   /* istanbul ignore next */
-  const lowerBoundYear = Moment(Moment().subtract(3, 'years')).isSameOrBefore(Moment(publicationYear,"YYYY")) ? Moment(publicationYear,"YYYY") : Moment().subtract(3, 'years')
+  const lowerBoundYear = Moment(Moment().subtract(3, 'years')).isSameOrBefore(
+    Moment(publicationYear, 'YYYY')
+  )
+    ? Moment(publicationYear, 'YYYY')
+    : Moment().subtract(3, 'years')
 
   // Filter dataset
   /* istanbul ignore next */
-  let subset: ChartRecord[] = data.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(lowerBoundYear)})
+  let subset: ChartRecord[] = data.filter((e) => {
+    return Moment(e.yearMonth, 'YYYY-MM').isAfter(lowerBoundYear)
+  })
 
   /* istanbul ignore next */
-  subset = subset.filter((e)=> { return (Moment(e.yearMonth,"YYYY-MM")).isAfter(Moment(publicationYear,'YYYY'))})
+  subset = subset.filter((e) => {
+    return Moment(e.yearMonth, 'YYYY-MM').isAfter(
+      Moment(publicationYear, 'YYYY')
+    )
+  })
 
   // Get domain
   /* istanbul ignore next */
-  const domain =  Math.abs(lowerBoundYear.diff(new Date(), 'months'))   
+  const domain = Math.abs(lowerBoundYear.diff(new Date(), 'months'))
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     data: {
       name: 'table'
     },
     width: domain * 25,
     mark: {
-      type: "bar",
+      type: 'bar',
       tooltip: true,
-      cursor: "pointer"
+      cursor: 'pointer'
     },
     selection: {
       highlight: {
-        type: "single",
-        empty: "none",
-        on: "mouseover"
+        type: 'single',
+        empty: 'none',
+        on: 'mouseover'
       }
     },
     encoding: {
       x: {
-        field: "yearMonth",
+        field: 'yearMonth',
         timeUnit: {
-          unit: "yearmonth",
-          step: 1,
+          unit: 'yearmonth',
+          step: 1
           // band: 0.5
         },
-        type: "temporal",
+        type: 'temporal',
         title: null,
         axis: {
           labelAngle: domain < 30 ? 45 : 0,
@@ -90,20 +100,23 @@ const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYe
           labelOverlap: true
         },
         scale: {
-          domain: [{year:lowerBoundYear.year(),"month": 1}, {year:thisYear,"month": thisMonth}]
+          domain: [
+            { year: lowerBoundYear.year(), month: 1 },
+            { year: thisYear, month: thisMonth }
+          ]
         }
       },
       y: {
-        field: "total",
-        type: "quantitative",
+        field: 'total',
+        type: 'quantitative',
         axis: null
       },
       color: {
-        field: "total",
-        scale: { range: ["#1abc9c"] },
-        type: "nominal",
+        field: 'total',
+        scale: { range: ['#1abc9c'] },
+        type: 'nominal',
         legend: null,
-        condition: [{ selection: "highlight", value: "#34495e" }]
+        condition: [{ selection: 'highlight', value: '#34495e' }]
       }
     },
     config: {
@@ -115,27 +128,37 @@ const UsageChart: React.FunctionComponent<Props> = ({data, counts, publicationYe
       }
     }
   }
-  
+
   const title = () => {
     return (
-      <small><Pluralize singular={type} count={counts} style={{color:'#1abc9c'}} />  reported since publication in {publicationYear}</small>
+      <small>
+        <Pluralize
+          singular={type}
+          count={counts}
+          style={{ color: '#1abc9c' }}
+        />{' '}
+        reported since publication in {publicationYear}
+      </small>
     )
   }
 
   return (
     <div className="panel panel-transparent">
-      <div className="usage-chart panel-body"> 
+      <div className="usage-chart panel-body">
         <Grid>
-          <Row> 
-            {title()}
-          </Row>
-          <Row>       
-            <VegaLite renderer="svg" spec={spec} data={{table: subset}} actions={actions} />
+          <Row>{title()}</Row>
+          <Row>
+            <VegaLite
+              renderer="svg"
+              spec={spec}
+              data={{ table: subset }}
+              actions={actions}
+            />
           </Row>
         </Grid>
       </div>
     </div>
-   )
+  )
 }
 
 export default UsageChart

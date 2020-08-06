@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import { orcidFromUrl } from "../../utils/helpers"
+import { orcidFromUrl } from '../../utils/helpers'
 import Pager from '../Pager/Pager'
 // import { count } from 'console'
 
@@ -55,35 +55,38 @@ type Props = {
 }
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
-  if (!person) return (
-    <Alert bsStyle="warning">
-      No content found.
-    </Alert>
-  )
+  if (!person) return <Alert bsStyle="warning">No content found.</Alert>
 
   //// Affiliation needs work in the API
   const afilliation = () => {
-    if (person.affiliation.length < 1) { return null }
+    if (person.affiliation.length < 1) {
+      return null
+    }
     return (
       <div className="metrics-counter">
-      <span>From &nbsp; 
-      <a id="affiliation" href={person.affiliation[0].id}>{person.affiliation[0].name}</a>
-      </span> 
-     </div>
+        <span>
+          From &nbsp;
+          <a id="affiliation" href={person.affiliation[0].id}>
+            {person.affiliation[0].name}
+          </a>
+        </span>
+      </div>
     )
   }
 
   const orcid = () => {
     return (
       <div className="panel-footer">
-        <a id="orcid-link" href={person.id}><FontAwesomeIcon icon={faOrcid} /> {person.id}</a>
+        <a id="orcid-link" href={person.id}>
+          <FontAwesomeIcon icon={faOrcid} /> {person.id}
+        </a>
       </div>
     )
   }
 
   const workCount = () => {
     if (person.works.totalCount == 0) {
-      return ""
+      return ''
     }
 
     return (
@@ -93,28 +96,52 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             <h4>Works</h4>
             <Row>
               <Col xs={4}>
-                <h3 id="work-count">{compactNumbers(person.works.totalCount)}</h3>
+                <h3 id="work-count">
+                  {compactNumbers(person.works.totalCount)}
+                </h3>
               </Col>
             </Row>
-            <Row >
-              {person.citationCount > 0 &&
+            <Row>
+              {person.citationCount > 0 && (
                 <Col xs={4}>
-                  <h5><Pluralize singular={'Citation'} count={compactNumbers(person.citationCount)} showCount={false} /></h5>
-                  <div id="citation-count">{compactNumbers(person.citationCount)}</div>
+                  <h5>
+                    <Pluralize
+                      singular={'Citation'}
+                      count={compactNumbers(person.citationCount)}
+                      showCount={false}
+                    />
+                  </h5>
+                  <div id="citation-count">
+                    {compactNumbers(person.citationCount)}
+                  </div>
                 </Col>
-              }
-              {person.viewCount > 0 &&
+              )}
+              {person.viewCount > 0 && (
                 <Col xs={4}>
-                  <h5><Pluralize singular={'View'} count={compactNumbers(person.viewCount)} showCount={false} /></h5>
+                  <h5>
+                    <Pluralize
+                      singular={'View'}
+                      count={compactNumbers(person.viewCount)}
+                      showCount={false}
+                    />
+                  </h5>
                   <div id="view-count">{compactNumbers(person.viewCount)}</div>
                 </Col>
-              }
-              {person.downloadCount > 0 &&
+              )}
+              {person.downloadCount > 0 && (
                 <Col xs={4}>
-                  <h5><Pluralize singular={'Download'} count={compactNumbers(person.downloadCount)} showCount={false} /></h5>
-                  <div id="download-count">{compactNumbers(person.downloadCount)}</div>
+                  <h5>
+                    <Pluralize
+                      singular={'Download'}
+                      count={compactNumbers(person.downloadCount)}
+                      showCount={false}
+                    />
+                  </h5>
+                  <div id="download-count">
+                    {compactNumbers(person.downloadCount)}
+                  </div>
                 </Col>
-              }
+              )}
             </Row>
           </li>
         </ul>
@@ -123,25 +150,37 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   }
 
   const analyticsBar = () => {
-    if (!person.works.totalCount) return (null)
+    if (!person.works.totalCount) return null
 
-    const published = person.works.published.map(x => ({ title: x.title, count: x.count }))
-    const resourceTypes = person.works.resourceTypes.map(x => ({ title: x.title, count: x.count }))
+    const published = person.works.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+    const resourceTypes = person.works.resourceTypes.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
 
     return (
       <div>
         <h3 className="member-results">Analytics</h3>
         <div className="panel panel-transparent">
           <Grid>
-            <Row>
-            </Row>
+            <Row></Row>
             <Row>
               <Col xs={6}>
-                <ProductionChart data={published} doiCount={person.works.totalCount}></ProductionChart>
+                <ProductionChart
+                  data={published}
+                  doiCount={person.works.totalCount}
+                ></ProductionChart>
               </Col>
               <Col>
                 <br />
-                <TypesChart data={resourceTypes} legend={false} count={person.works.totalCount}></TypesChart>
+                <TypesChart
+                  data={resourceTypes}
+                  legend={false}
+                  count={person.works.totalCount}
+                ></TypesChart>
               </Col>
             </Row>
           </Grid>
@@ -152,45 +191,90 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    if (!person.works.totalCount) return (
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          <h3 className="member">Introduction</h3>
-          <p>DataCite Commons is a web search interface for the <a href="https://doi.org/10.5438/jwvf-8a66" target="_blank" rel="noreferrer">PID Graph</a>, 
-          the graph formed by the collection of scholarly resources such as
-          publications, datasets, people and research organizations, and their connections. The PID Graph
-          uses persistent identifiers and <a href="https://graphql.org/" target="_blank" rel="noreferrer">GraphQL</a>, 
-          with PIDs and metadata provided by DataCite, Crossref, ORCID, and others.</p> 
-          <p>DataCite Commons is work in progress and will officially launch in October 2020. The work is
-          supported by funding from the European Union’s Horizon 2020 research and innovation programme.</p>
-          <p><a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input to the DataCite Roadmap</a> | <a href="https://support.datacite.org/docs/datacite-search-user-documentation" target="_blank" rel="noreferrer">Information in DataCite Support</a></p>
+    if (!person.works.totalCount)
+      return (
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <h3 className="member">Introduction</h3>
+            <p>
+              DataCite Commons is a web search interface for the{' '}
+              <a
+                href="https://doi.org/10.5438/jwvf-8a66"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PID Graph
+              </a>
+              , the graph formed by the collection of scholarly resources such
+              as publications, datasets, people and research organizations, and
+              their connections. The PID Graph uses persistent identifiers and{' '}
+              <a href="https://graphql.org/" target="_blank" rel="noreferrer">
+                GraphQL
+              </a>
+              , with PIDs and metadata provided by DataCite, Crossref, ORCID,
+              and others.
+            </p>
+            <p>
+              DataCite Commons is work in progress and will officially launch in
+              October 2020. The work is supported by funding from the European
+              Union’s Horizon 2020 research and innovation programme.
+            </p>
+            <p>
+              <a
+                href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Provide input to the DataCite Roadmap
+              </a>{' '}
+              |{' '}
+              <a
+                href="https://support.datacite.org/docs/datacite-search-user-documentation"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Information in DataCite Support
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
-    )
+      )
 
-    const hasNextPage = person.works.pageInfo ? person.works.pageInfo.hasNextPage : false
-    const endCursor = person.works.pageInfo ? person.works.pageInfo.endCursor : ""
+    const hasNextPage = person.works.pageInfo
+      ? person.works.pageInfo.hasNextPage
+      : false
+    const endCursor = person.works.pageInfo
+      ? person.works.pageInfo.endCursor
+      : ''
 
-    if (!person.works.totalCount) return (
-      <React.Fragment>
-        <Alert bsStyle="warning">
-          No content found.
-        </Alert>
+    if (!person.works.totalCount)
+      return (
+        <React.Fragment>
+          <Alert bsStyle="warning">No content found.</Alert>
 
-        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
-      </React.Fragment>
-    )
+          <Pager
+            url={'/people' + orcidFromUrl(person.id) + '/?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+            isNested={true}
+          ></Pager>
+        </React.Fragment>
+      )
 
     return (
       <div>
-        {person.works.totalCount > 1 &&
+        {person.works.totalCount > 1 && (
           <h3 className="member-results">Works</h3>
-        }
+        )}
 
         <DoiRelatedContent dois={person.works} />
 
-
-        <Pager url={'/people' + orcidFromUrl(person.id) + '/?'} hasNextPage={hasNextPage} endCursor={endCursor} isNested={true}></Pager>
+        <Pager
+          url={'/people' + orcidFromUrl(person.id) + '/?'}
+          hasNextPage={hasNextPage}
+          endCursor={endCursor}
+          isNested={true}
+        ></Pager>
       </div>
     )
   }
