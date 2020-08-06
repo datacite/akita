@@ -101,8 +101,8 @@ export const ORGANIZATIONS_GQL = gql`
 
 const SearchOrganizations: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [types] = useQueryState<string>('types')
-  const [country] = useQueryState<string>('country')
+  // const [types] = useQueryState<string>('types')
+  // const [country] = useQueryState<string>('country')
   const [searchResults, setSearchResults] = React.useState<OrganizationMetadataRecord[]>([])
 
   const { loading, error, data, refetch } = useQuery<OrganizationsQueryData, OrganizationsQueryVar>(
