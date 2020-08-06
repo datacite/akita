@@ -4,7 +4,7 @@ describe("About", () => {
   })
 
   it("header", () => {
-    cy.get('h2.member"]', { timeout: 30000 })
+    cy.get('h2.member', { timeout: 30000 })
       .should('eq', 'About')
   })
 })
