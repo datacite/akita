@@ -28,6 +28,7 @@ interface OrganizationResult {
   name: string
   alternateName: string[]
   url: string
+  wikipediaUrl: string
   types: string[]
   address: {
     country: string
