@@ -250,7 +250,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           <Alert bsStyle="warning">No content found.</Alert>
 
           <Pager
-            url={'/people' + orcidFromUrl(person.id) + '/?'}
+            url={'/orcid.org' + orcidFromUrl(person.id) + '/?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
             isNested={true}
@@ -267,7 +267,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         <DoiRelatedContent dois={person.works} />
 
         <Pager
-          url={'/people' + orcidFromUrl(person.id) + '/?'}
+          url={'/orcid.org' + orcidFromUrl(person.id) + '/?'}
           hasNextPage={hasNextPage}
           endCursor={endCursor}
           isNested={true}

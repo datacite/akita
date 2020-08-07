@@ -174,7 +174,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               >
                 <DoiRelatedContent dois={doi.citations} type="citation" />
                 <Pager
-                  url={'/dois/' + doi.doi + '/?'}
+                  url={'/doi.org/' + doi.doi + '/?'}
                   hasNextPage={hasNextPageCitations}
                   endCursor={endCursorCitations}
                   isNested={true}
@@ -189,7 +189,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               >
                 <DoiRelatedContent dois={doi.references} type="reference" />
                 <Pager
-                  url={'/dois/' + doi.doi + '/?'}
+                  url={'/doi.org/' + doi.doi + '/?'}
                   hasNextPage={hasNextPageReferences}
                   endCursor={endCursorReferences}
                   isNested={true}
@@ -205,13 +205,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   return (
     <div key={doi.id} className="panel panel-transparent">
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <div key={doi.id} className="panel panel-transparent content-metadata">
-        <div className="panel-body">
-          <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
-        </div>
-      </div>
+      <DoiMetadata metadata={doi} linkToExternal={true} />
 
-      <br />
       {formattedCitation()}
       {analyticsBar()}
       {relatedContent()}

@@ -1,6 +1,6 @@
 describe("DoiContainer", () => {
   before(() => {
-    cy.visit(`/dois/${encodeURIComponent('10.17863/cam.330')}`)
+    cy.visit(`/doi.org/${encodeURIComponent('10.17863/cam.330')}`)
   })
 
   it("visit 10.17863/cam.330", () => {

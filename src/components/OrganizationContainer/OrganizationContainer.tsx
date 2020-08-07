@@ -270,7 +270,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         ))}
 
         <Pager
-          url={'/organization/' + rorId + '/?'}
+          url={'/ror.org/' + rorId + '/?'}
           hasNextPage={hasNextPage}
           endCursor={endCursor}
         />

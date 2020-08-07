@@ -2,7 +2,7 @@
 
 describe("OrganizationContainer", () => {
   beforeEach(() => {
-    cy.visit('/organization/052gg0110')
+    cy.visit('/ror.org/052gg0110')
   })
 
   it("id", () => {

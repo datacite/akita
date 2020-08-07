@@ -290,15 +290,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
   }
 
-  // const rightSideBar = () => {
-
-  //   return (
-  //     <div className="col-md-3 hidden-xs hidden-sm">
-
-  //     </div>
-  //   )
-  // }
-
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
@@ -309,7 +300,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           <div className="panel-body">
             <Person person={orcidRecord} />
           </div>
-          <br />
         </div>
       </div>
     )

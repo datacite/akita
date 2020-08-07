@@ -1,4 +1,4 @@
-describe("Search", () => {
+describe("Search Content", () => {
   beforeEach(() => {
     cy.visit("/")
   })

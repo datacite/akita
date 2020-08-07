@@ -44,7 +44,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.titles[0])
       return (
         <h3 className="work">
-          <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
+          <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -54,7 +54,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <h3 className="work">
-        <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
+        <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -114,7 +114,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href="/people/[orcid]" key={index} as={`/people${c.id}`}>
+            <Link href="/orcid.org/[orcid]" key={index} as={`/orcid.org${c.id}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
@@ -391,21 +391,21 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
     </Popover>
   )
 
-  const links = () => {
+  const footer = () => {
     return (
       <div className="panel-footer">
         <a href={metadata.doi}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.doi}
+          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.doi}
         </a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
             <span className="bookmark">
-              <FontAwesomeIcon icon={faBookmark} /> Bookmark
+              <FontAwesomeIcon icon={faBookmark} size="sm" /> Bookmark
             </span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
             <span className="claim">
-              <FontAwesomeIcon icon={faOrcid} /> Claim
+              <FontAwesomeIcon icon={faOrcid} size="sm" /> Claim
             </span>
           </OverlayTrigger>
         </span>
@@ -414,10 +414,9 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div>
-      <div>
+    <div className="panel panel-transparent content-item">
+      <div className="panel-body">
         {title()}
-
         {creators()}
         {metadataTag()}
         {description()}
@@ -426,7 +425,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
         {metricsCounter()}
         {tags()}
       </div>
-      {links()}
+      {footer()}
     </div>
   )
 }
