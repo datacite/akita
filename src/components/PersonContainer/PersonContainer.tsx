@@ -23,13 +23,14 @@ import {
   FacebookShareButton,
   TwitterShareButton
 } from "react-share"
+import FilterItem from "../FilterItem/FilterItem"
 
 type Props = {
   orcid?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String) {
+  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     person(id: $id) {
       id
       name
@@ -42,7 +43,7 @@ export const DOI_GQL = gql`
         name
         id
       }
-      works(first: 25, after: $cursor) {
+      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         totalCount
         pageInfo {
           endCursor
@@ -51,10 +52,22 @@ export const DOI_GQL = gql`
         resourceTypes {
           title
           count
+          id
         }
         published {
           title
           count
+          id
+        }
+        affiliations {
+          count
+          title
+          id
+        }
+        repositories{
+          count
+          title
+          id
         }
         nodes {
           doi
@@ -126,6 +139,8 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  affiliations: ContentFacet[]
+  repositories: ContentFacet[]
   nodes: DoiType[]
 }
 
@@ -147,16 +162,34 @@ export interface OrcidDataQuery {
 interface OrcidQueryVar {
   id: string
   cursor: string
+  published: string
+  resourceTypeId: string
+  language: string
+  fieldOfScience: string
+  license: string
+  registrationAgency: string
+  repositoryId: string
+
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
+
+  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
+  const [resourceTypeId, setResourceTypeId] = useQueryState('resource-type-id', { history: 'push' })
+
+
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, cursor: cursor }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
     }
   )
 
@@ -265,16 +298,122 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </span>
           </div>
         </div>
+
+
+             
+              <div className="panel facets add">
+                  <div className="panel-body">
+                    <h4>Publication Year</h4>
+                    <ul>
+                      {orcidRecord.works.published.map(facet => (
+                        <li key={facet.id}>
+                          <FilterItem name="published" id={facet.id} count={facet.count} title={facet.title} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="panel facets add">
+                  <div className="panel-body">
+                    <h4>Content Type</h4>
+                    <ul>
+                      {orcidRecord.works.resourceTypes.map(facet => (
+                        <li key={facet.id}>
+                          <FilterItem name="resource-type-id" id={facet.id} count={facet.count} title={facet.title} />
+
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                {orcidRecord.works.affiliations.length > 0 &&
+                <div className="panel facets add">
+                  <div className="panel-body">
+                    <h4>Affiliations</h4>
+                    <ul>
+                      {orcidRecord.works.affiliations.map(facet => (
+                        <li key={facet.id}>
+                          <FilterItem name="affiliation-id" id={facet.id} count={facet.count} title={facet.title} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                }
+
+                {orcidRecord.works.repositories.length > 0 &&
+                <div className="panel facets add">
+                  <div className="panel-body">
+                    <h4>Repositories</h4>
+                    <ul>
+                      {orcidRecord.works.repositories.map(facet => (
+                        <li key={facet.id}>
+                          <FilterItem name="repository-id" id={facet.id} count={facet.count} title={facet.title} />
+
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                }
+
+                {/* {orcidRecord.works.fieldsOfScience.length > 0 &&
+                  <div className="panel facets add">
+                    <div className="panel-body">
+                      <h4>Field of Science</h4>
+                      <ul>
+                        {orcidRecord.works.fieldsOfScience.map(facet => (
+                          <li key={facet.id}>
+                            <FilterItem name="orgtype" id={facet.id} count={facet.count} title={facet.title} />
+
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                }
+
+                {orcidRecord.works.licenses.length > 0 &&
+                  <div className="panel facets add">
+                    <div className="panel-body">
+                      <h4>License</h4>
+                      <ul>
+                        {orcidRecord.works.licenses.map(facet => (
+                          <li key={facet.id}>
+                          <FilterItem name="orgtype" id={facet.id} count={facet.count} title={facet.title} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                }
+
+                {orcidRecord.works.languages.length > 0 &&
+                  <div className="panel facets add">
+                    <div className="panel-body">
+                      <h4>Language</h4>
+                      <ul>
+                        {orcidRecord.works.languages.map(facet => (
+                          <li key={facet.id}>
+                            <FilterItem name="orgtype" id={facet.id} count={facet.count} title={facet.title} />
+
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                } */}
+
       </div>
     )
   }
 
   // const rightSideBar = () => {
+  //   if (!orcidRecord.works) return '';
 
   //   return (
-  //     <div className="col-md-3 hidden-xs hidden-sm">
-
-  //     </div>
   //   )
   // }
 
