@@ -260,9 +260,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
           <div className="facets panel-body">
             <h4>Export</h4>
-            {/* <div id="export-bibtex" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/"}>Works as BibTeX</a>
-            </div> */}
             <OverlayTrigger placement="top" overlay={bibtex}>
               <span className="share">Works as BibTeX</span>
             </OverlayTrigger>

@@ -106,7 +106,7 @@ describe('Person Component', () => {
     cy.get('h3.work > a')
       .first()
       .should('have.attr', 'href')
-      .and('include', '/dois/')
+      .and('include', '/doi.org/')
   })
 
   it('workCount', () => {
