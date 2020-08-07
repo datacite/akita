@@ -2,6 +2,7 @@ import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
+import ContentLoader from 'react-content-loader'
 import Pager from '../Pager/Pager'
 import FilterItem from '../FilterItem/FilterItem'
 import Error from '../Error/Error'
@@ -23,10 +24,35 @@ interface OrganizationsNode {
   id: string
   name: string
   alternateName: string[]
+  types: string[]
   url: string
   address: {
     country: string
   }
+  grid: [
+    {
+      identifier: string
+      identifierType: string
+    }
+  ]
+  fundref: [
+    {
+      identifier: string
+      identifierType: string
+    }
+  ]
+  isni: [
+    {
+      identifier: string
+      identifierType: string
+    }
+  ]
+  wikidata: [
+    {
+      identifier: string
+      identifierType: string
+    }
+  ]
   identifiers: [
     {
       identifier: string
@@ -85,7 +111,9 @@ export const ORGANIZATIONS_GQL = gql`
           id
           name
           alternateName
+          types
           url
+          wikipediaUrl
           address {
             country
           }
@@ -139,18 +167,32 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     if (data) {
       data.organizations.edges.map((edge) => {
-        // Filter out any empty identifiers
-        let identifiers = edge.node.identifiers.filter((i) => {
-          return i.identifier != ''
+        let grid = edge.node.identifiers.filter(i => {
+          return i.identifierType === 'grid'
+        })
+        let fundref = edge.node.identifiers.filter(i => {
+          return i.identifierType === 'fundref'
+        })
+        let isni = edge.node.identifiers.filter(i => {
+          return i.identifierType === 'isni'
+        })
+        let wikidata = edge.node.identifiers.filter(i => {
+          return i.identifierType === 'wikidata'
         })
 
         let orgMetadata: OrganizationMetadataRecord = {
           id: edge.node.id,
           name: edge.node.name,
           alternateNames: edge.node.alternateName,
+          types: edge.node.types,
           url: edge.node.url,
+          wikipediaUrl: edge.node.wikipediaUrl,
           countryName: edge.node.address.country,
-          identifiers: identifiers
+          grid: grid,
+          fundref: fundref,
+          isni: isni,
+          wikidata: wikidata,
+          identifiers: edge.node.identifiers
         }
 
         results.push(orgMetadata)
@@ -163,6 +205,30 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   }, [searchQuery, data, refetch])
 
   const renderResults = () => {
+    if (loading)
+      return (
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
+            <ContentLoader
+              speed={1}
+              width={1000}
+              height={250}
+              viewBox="0 0 1000 250"
+              backgroundColor="#f3f3f3"
+              foregroundColor="#ecebeb"
+            >
+              <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+              <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+              <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+              <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+              <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+              <circle cx="54" cy="61" r="45" />
+            </ContentLoader>
+          </div>
+        </div>
+      )
+
     if (!loading && searchResults.length == 0)
       return (
         <React.Fragment>
@@ -197,16 +263,14 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
               </h3>
             )}
 
-            <ul>
-              {searchResults.map((item) => (
-                <React.Fragment key={item.id}>
-                  <OrganizationMetadata
-                    metadata={item}
-                    linkToExternal={false}
-                  ></OrganizationMetadata>
-                </React.Fragment>
-              ))}
-            </ul>
+            {searchResults.map((item) => (
+              <React.Fragment key={item.id}>
+                <OrganizationMetadata
+                  metadata={item}
+                  linkToExternal={false}
+                ></OrganizationMetadata>
+              </React.Fragment>
+            ))}
 
             <Pager
               url={'/?'}
@@ -226,43 +290,43 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
           <div className="panel-body">
-            <div className="edit">
-              <div className="panel facets add">
-                <div className="panel-body">
-                  <h4>Organization Type</h4>
-                  <ul>
-                    {data.organizations.types.map((facet) => (
-                      <li key={facet.id}>
-                        <FilterItem
-                          name="types"
-                          id={facet.id}
-                          count={facet.count}
-                          title={facet.title}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            <div className="edit"></div>
+          </div>
+        </div>
+        
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Country</h4>
+            <ul>
+              {data.organizations.countries.map((facet) => (
+                <li key={facet.id}>
+                  <FilterItem
+                    name="country"
+                    id={facet.id}
+                    count={facet.count}
+                    title={facet.title}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-              <div className="panel facets add">
-                <div className="panel-body">
-                  <h4>Country</h4>
-                  <ul>
-                    {data.organizations.countries.map((facet) => (
-                      <li key={facet.id}>
-                        <FilterItem
-                          name="country"
-                          id={facet.id}
-                          count={facet.count}
-                          title={facet.title}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Organization Type</h4>
+            <ul>
+              {data.organizations.types.map((facet) => (
+                <li key={facet.id}>
+                  <FilterItem
+                    name="types"
+                    id={facet.id}
+                    count={facet.count}
+                    title={facet.title}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

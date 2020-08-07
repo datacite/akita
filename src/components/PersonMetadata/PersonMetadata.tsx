@@ -136,7 +136,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           {/* {metricsCounter()} */}
         </ul>
         {orcid()}
-        <br />
       </div>
     </div>
   )
