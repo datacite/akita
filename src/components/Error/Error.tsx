@@ -6,7 +6,7 @@ type Props = {
   message: string
 }
 
-const Error: React.FunctionComponent<Props> = ({title, message}) => {
+const Error: React.FunctionComponent<Props> = ({ title, message }) => {
   return (
     <Alert bsStyle="danger">
       <h4>{title}</h4>

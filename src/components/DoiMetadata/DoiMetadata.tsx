@@ -12,9 +12,7 @@ import {
   faDownload,
   faBookmark
 } from '@fortawesome/free-solid-svg-icons'
-import {
-  faEye
-} from '@fortawesome/free-regular-svg-icons'
+import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
   faOrcid,
   faCreativeCommons,
@@ -32,30 +30,31 @@ import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: DoiType
-  linkToExternal?: boolean;
+  linkToExternal?: boolean
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal }) => {
-  if (metadata == null) return (
-    <Alert bsStyle="warning">
-      No content found.
-    </Alert>
-  )
+const DoiMetadata: React.FunctionComponent<Props> = ({
+  metadata,
+  linkToExternal
+}) => {
+  if (metadata == null)
+    return <Alert bsStyle="warning">No content found.</Alert>
 
   const searchtitle = () => {
-    if (!metadata.titles[0]) return (
-      <h3 className="work">
-        <Link href="/dois/[...doi]" as={`/dois/${(metadata.doi)}`}>
-          <a>No Title</a>
-        </Link>
-      </h3>
-    )
+    if (!metadata.titles[0])
+      return (
+        <h3 className="work">
+          <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
+            <a>No Title</a>
+          </Link>
+        </h3>
+      )
 
     const titleHtml = metadata.titles[0].title
 
     return (
       <h3 className="work">
-        <Link href="/dois/[...doi]" as={`/dois/${(metadata.doi)}`}>
+        <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -63,9 +62,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   }
 
   const externalTitle = () => {
-    if (!metadata.titles[0]) return (
-      <h3 className="member">No Title</h3>
-    )
+    if (!metadata.titles[0]) return <h3 className="member">No Title</h3>
 
     const titleHtml = metadata.titles[0].title
 
@@ -81,47 +78,48 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   const title = () => {
     if (linkToExternal) {
       return externalTitle()
-    }else{
+    } else {
       return searchtitle()
     }
   }
 
   const creators = () => {
-    if (!metadata.creators[0]) return (
-      <div className="creators alert alert-warning">
-        No creators
-      </div>
+    if (!metadata.creators[0])
+      return <div className="creators alert alert-warning">No creators</div>
+
+    const creatorList = metadata.creators.reduce(
+      (sum, creator, index, array) => {
+        const c = creator.familyName
+          ? [creator.givenName, creator.familyName].join(' ')
+          : creator.name
+
+        // padding depending on position in creators list
+        switch (true) {
+          case array.length > index + 2:
+            sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
+            break
+          case array.length > index + 1:
+            sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
+            break
+          default:
+            sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
+            break
+        }
+        return sum
+      },
+      []
     )
-
-    const creatorList = metadata.creators.reduce((sum, creator, index, array) => {
-      const c = creator.familyName ? [creator.givenName, creator.familyName].join(' ') : creator.name
-
-
-      // padding depending on position in creators list
-      switch (true) {
-        case (array.length > index + 2):
-          sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
-          break;
-        case (array.length > index + 1):
-          sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
-          break;
-        default:
-          sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
-          break;
-      }
-      return sum
-    }, [])
 
     return (
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href="/people/[orcid]" key={index} as={`/people${(c.id)}`}>
+            <Link href="/people/[orcid]" key={index} as={`/people${c.id}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
-              c.displayName
-            )
+            c.displayName
+          )
         )}
       </div>
     )
@@ -130,7 +128,11 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   const metadataTag = () => {
     return (
       <div className="metadata">
-        {metadata.version ? 'Version ' + metadata.version + ' of ' : ''}{metadata.types.resourceType ? startCase(metadata.types.resourceType) : 'Content'} published {metadata.publicationYear} via {metadata.publisher}
+        {metadata.version ? 'Version ' + metadata.version + ' of ' : ''}
+        {metadata.types.resourceType
+          ? startCase(metadata.types.resourceType)
+          : 'Content'}{' '}
+        published {metadata.publicationYear} via {metadata.publisher}
       </div>
     )
   }
@@ -138,41 +140,70 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   const description = () => {
     if (!metadata.descriptions[0]) return ''
 
-    const descriptionHtml = truncate(metadata.descriptions[0].description, { 'length': 750, 'separator': '… ' })
+    const descriptionHtml = truncate(metadata.descriptions[0].description, {
+      length: 750,
+      separator: '… '
+    })
 
-    return (
-      <div className="description">
-        {ReactHtmlParser(descriptionHtml)}
-      </div>
-    )
+    return <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
   }
 
   const license = () => {
-    let rights = [...metadata.rights];
+    let rights = [...metadata.rights]
     const uniqueRights = uniqBy(rights, 'rightsIdentifier')
     const ccRights = uniqueRights.reduce((sum, r) => {
       if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
-        const splitIdentifier = r.rightsIdentifier.split('-').filter(l => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l))
-        splitIdentifier.forEach(l => {
+        const splitIdentifier = r.rightsIdentifier
+          .split('-')
+          .filter((l) => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l))
+        splitIdentifier.forEach((l) => {
           switch (l) {
             case 'by':
-              sum.push({ icon: faCreativeCommonsBy, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              sum.push({
+                icon: faCreativeCommonsBy,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              break
             case 'nc':
-              sum.push({ icon: faCreativeCommonsNc, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              sum.push({
+                icon: faCreativeCommonsNc,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              break
             case 'nd':
-              sum.push({ icon: faCreativeCommonsNd, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              sum.push({
+                icon: faCreativeCommonsNd,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              break
             case 'sa':
-              sum.push({ icon: faCreativeCommonsSa, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              sum.push({
+                icon: faCreativeCommonsSa,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              break
             case 'cc0':
-              sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              sum.push({ icon: faCreativeCommonsZero, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
-              break;
+              sum.push({
+                icon: faCreativeCommons,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              sum.push({
+                icon: faCreativeCommonsZero,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
+              break
             default:
-              sum.push({ icon: faCreativeCommons, rightsUri: r.rightsUri, rightsIdentifier: r.rightsIdentifier })
+              sum.push({
+                icon: faCreativeCommons,
+                rightsUri: r.rightsUri,
+                rightsIdentifier: r.rightsIdentifier
+              })
           }
         })
       }
@@ -180,14 +211,14 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
     }, [])
 
     const otherRights = uniqueRights.reduce((sum, r) => {
-      let rightsIdentifier = r.rightsIdentifier;
+      let rightsIdentifier = r.rightsIdentifier
       if (rightsIdentifier && !rightsIdentifier.startsWith('cc')) {
         if (rightsIdentifier.startsWith('apache')) {
-          rightsIdentifier = "Apache%202.0"
+          rightsIdentifier = 'Apache%202.0'
         } else if (rightsIdentifier.startsWith('ogl')) {
-          rightsIdentifier = "OGL%20Canada"
+          rightsIdentifier = 'OGL%20Canada'
         } else {
-          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase();
+          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase()
         }
         sum.push(r)
       }
@@ -198,16 +229,23 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
 
     return (
       <div className="license">
-        {ccRights.map((r, index) =>
+        {ccRights.map((r, index) => (
           <a href={r.rightsUri} key={index} target="_blank" rel="noreferrer">
             <FontAwesomeIcon key={r.rightsIdentifier} icon={r.icon} />
           </a>
-        )}
-        {otherRights.map((r) =>
-          <a href={r.rightsUri} key={r.rightsIdentifier} target="_blank" rel="noreferrer">
-            <img src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`} />
+        ))}
+        {otherRights.map((r) => (
+          <a
+            href={r.rightsUri}
+            key={r.rightsIdentifier}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
+            />
           </a>
-        )}
+        ))}
       </div>
     )
   }
@@ -216,9 +254,17 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
     return (
       <div className="registered">
         DOI registered
-        {metadata.registered &&
-          <span> {new Date(metadata.registered).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-        } via {metadata.registrationAgency.name}.
+        {metadata.registered && (
+          <span>
+            {' '}
+            {new Date(metadata.registered).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </span>
+        )}{' '}
+        via {metadata.registrationAgency.name}.
       </div>
     )
   }
@@ -236,83 +282,131 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   )
 
   const tooltipLanguage = (
-    <Tooltip id="tooltipLanguage">
-      The primary language of the content.
-    </Tooltip>
+    <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
   const tags = () => {
     return (
       <div className="tags">
-        {metadata.types.resourceTypeGeneral &&
+        {metadata.types.resourceTypeGeneral && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Label bsStyle="info">{startCase(metadata.types.resourceTypeGeneral)}</Label>
+            <Label bsStyle="info">
+              {startCase(metadata.types.resourceTypeGeneral)}
+            </Label>
           </OverlayTrigger>
-        }
-        {metadata.fieldsOfScience &&
+        )}
+        {metadata.fieldsOfScience && (
           <span>
-            {metadata.fieldsOfScience.map(fos => (
-              <OverlayTrigger key={fos.id} placement="top" overlay={tooltipFieldsOfScience}>
+            {metadata.fieldsOfScience.map((fos) => (
+              <OverlayTrigger
+                key={fos.id}
+                placement="top"
+                overlay={tooltipFieldsOfScience}
+              >
                 <Label bsStyle="info">{fos.name}</Label>
               </OverlayTrigger>
             ))}
           </span>
-        }
-        {metadata.language &&
+        )}
+        {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
             <Label bsStyle="info">{metadata.language.name}</Label>
           </OverlayTrigger>
-        }
+        )}
       </div>
     )
   }
 
   const metricsCounter = () => {
-    if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
+    if (
+      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
+      0
+    ) {
       return (
         <div className="metrics-counter">
-          <i><FontAwesomeIcon icon={faInfoCircle} /> No citations, views or downloads reported.</i>
+          <i>
+            <FontAwesomeIcon icon={faInfoCircle} /> No citations, views or
+            downloads reported.
+          </i>
         </div>
       )
     }
 
     return (
       <div className="metrics-counter">
-        {metadata.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft} /> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
-        }
-        {metadata.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye} /> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
-        }
-        {metadata.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload} /> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
-        }
+        {metadata.citationCount > 0 && (
+          <i>
+            <FontAwesomeIcon icon={faQuoteLeft} />{' '}
+            <Pluralize
+              singular={'Citation'}
+              count={compactNumbers(metadata.citationCount)}
+            />{' '}
+          </i>
+        )}
+        {metadata.viewCount > 0 && (
+          <i>
+            <FontAwesomeIcon icon={faEye} />{' '}
+            <Pluralize
+              singular={'View'}
+              count={compactNumbers(metadata.viewCount)}
+            />{' '}
+          </i>
+        )}
+        {metadata.downloadCount > 0 && (
+          <i>
+            <FontAwesomeIcon icon={faDownload} />{' '}
+            <Pluralize
+              singular={'Download'}
+              count={compactNumbers(metadata.downloadCount)}
+            />{' '}
+          </i>
+        )}
       </div>
     )
   }
 
   const bookmark = (
     <Popover id="bookmark" title="Bookmarking">
-      Bookmarking on this site will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+      Bookmarking on this site will be implemented later in 2020.{' '}
+      <a
+        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Provide input
+      </a>
     </Popover>
   )
 
   const claim = (
     <Popover id="claim" title="Claim to ORCID Record">
-      Claiming to an ORCID record will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+      Claiming to an ORCID record will be implemented later in 2020.{' '}
+      <a
+        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Provide input
+      </a>
     </Popover>
   )
 
   const links = () => {
     return (
       <div className="panel-footer">
-        <a href={metadata.doi}><FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.doi}</a>
+        <a href={metadata.doi}>
+          <FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.doi}
+        </a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark"><FontAwesomeIcon icon={faBookmark} /> Bookmark</span>
+            <span className="bookmark">
+              <FontAwesomeIcon icon={faBookmark} /> Bookmark
+            </span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-            <span className="claim"><FontAwesomeIcon icon={faOrcid} /> Claim</span>
+            <span className="claim">
+              <FontAwesomeIcon icon={faOrcid} /> Claim
+            </span>
           </OverlayTrigger>
         </span>
       </div>
@@ -320,8 +414,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({ metadata, linkToExternal 
   }
 
   return (
-    <div  >
-      <div >
+    <div>
+      <div>
         {title()}
 
         {creators()}

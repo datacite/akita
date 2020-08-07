@@ -9,7 +9,14 @@ type Props = {
 
 const signIn = (
   <Popover id="sign-in" title="Personal Accounts">
-    Personal accounts will be implemented later in 2020. <a href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search" target="_blank" rel="noreferrer">Provide input</a>
+    Personal accounts will be implemented later in 2020.{' '}
+    <a
+      href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+      target="_blank"
+      rel="noreferrer"
+    >
+      Provide input
+    </a>
   </Popover>
 )
 
@@ -26,11 +33,17 @@ const Header: React.FunctionComponent<Props> = ({ title }: typeof title) => (
         <NavItem eventKey={1} data-cy="about" href="/about">
           About
         </NavItem>
-        <NavItem eventKey={2} data-cy="support" href="https://support.datacite.org/">
+        <NavItem
+          eventKey={2}
+          data-cy="support"
+          href="https://support.datacite.org/"
+        >
           Support
         </NavItem>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={signIn}> 
-          <Navbar.Text className="btn btn-sm"><FontAwesomeIcon icon={faSignInAlt}/> Sign In</Navbar.Text>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={signIn}>
+          <Navbar.Text className="btn btn-sm">
+            <FontAwesomeIcon icon={faSignInAlt} /> Sign In
+          </Navbar.Text>
         </OverlayTrigger>
       </Nav>
     </Navbar.Collapse>

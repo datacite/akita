@@ -1,33 +1,60 @@
 import React from 'react'
 import Layout from '../components/Layout/Layout'
-import { Grid, Carousel } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 const AboutPage: React.FunctionComponent = () => (
   <Layout title={process.env.NEXT_PUBLIC_TITLE}>
     <Grid fluid={true}>
-      <Carousel interval={3000} controls={false}>
-        <Carousel.Item>
-          <img width={800} height={600} alt="800x600" src="/images/akita1.jpg" />
-          <Carousel.Caption>
-            <h3>Japanese Akita puppies</h3>
-            <p>Available via <a href="https://commons.wikimedia.org/wiki/File:Yuki_and_Branca_-_Japanese_Akita.jpg">Wikimedia Commons</a>.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img width={800} height={534} alt="800x534" src="/images/akita2.jpg" />
-          <Carousel.Caption>
-            <h3>An Akita Inu lying on the ground in an office.</h3>
-            <p>Available via <a href="https://commons.wikimedia.org/wiki/File:Akita_Inu_lying_on_the_ground_in_an_office.jpg">Wikimedia Commons</a>.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img width={800} height={600} alt="800x600" src="/images/akita3.jpg" />
-          <Carousel.Caption>
-            <h3>An eight-month-old black-and-white Akita Inu</h3>
-            <p>Available via <a href="https://commons.wikimedia.org/wiki/File:Akita_black-and-white.jpg">Wikimedia Commons</a>.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+      <Row>
+        <Col md={9} mdOffset={3}>
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <h3 className="member">About</h3>
+              <p>
+                DataCite Commons is a web search interface for the{' '}
+                <a
+                  href="https://doi.org/10.5438/jwvf-8a66"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  PID Graph
+                </a>
+                , the graph formed by the collection of scholarly resources such
+                as publications, datasets, people and research organizations,
+                and their connections. The PID Graph uses persistent identifiers
+                and{' '}
+                <a href="https://graphql.org/" target="_blank" rel="noreferrer">
+                  GraphQL
+                </a>
+                , with PIDs and metadata provided by DataCite, Crossref, ORCID,
+                and others.
+              </p>
+              <p>
+                DataCite Commons is work in progress and will officially launch
+                in October 2020. The work is supported by funding from the
+                European Union’s Horizon 2020 research and innovation programme.
+              </p>
+              <p>
+                <a
+                  href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Provide input to the DataCite Roadmap
+                </a>{' '}
+                |{' '}
+                <a
+                  href="https://support.datacite.org/docs/datacite-search-user-documentation"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Information in DataCite Support
+                </a>
+              </p>
+            </div>
+          </div>
+        </Col>
+      </Row>
     </Grid>
   </Layout>
 )

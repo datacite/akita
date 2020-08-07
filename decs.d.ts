@@ -1,1 +1,1 @@
-declare module "react-pluralize"
+declare module 'react-pluralize'

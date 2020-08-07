@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Error from "../Error/Error"
+import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import { Alert } from 'react-bootstrap'
 import ReactHtmlParser from 'react-html-parser'
@@ -18,11 +18,11 @@ interface FormattedCitation {
 
 export const FORMATTEDCITATION_GQL = gql`
   query getContentQuery($id: ID!, $style: String!, $locale: String!) {
-  work(id: $id){
-    id
-    formattedCitation(style: $style, locale: $locale)
+    work(id: $id) {
+      id
+      formattedCitation(style: $style, locale: $locale)
+    }
   }
-}
 `
 
 interface FormattedCitationQueryData {
@@ -35,29 +35,35 @@ interface FormattedCitationQueryVar {
   locale: string
 }
 
-const CitationFormatter: React.FunctionComponent<Props> = ({ id, style, locale, input }) => {
-  const cslType = style || "apa"
+const CitationFormatter: React.FunctionComponent<Props> = ({
+  id,
+  style,
+  locale,
+  input
+}) => {
+  const cslType = style || 'apa'
 
-  if (!style) return (
-    <div>
-      <h3 className="member-results">Cite as</h3>
-      <div className="panel panel-transparent">
-        <div className="formatted-citation panel-body">
-          {ReactHtmlParser(input)}
+  if (!style)
+    return (
+      <div>
+        <h3 className="member-results">Cite as</h3>
+        <div className="panel panel-transparent">
+          <div className="formatted-citation panel-body">
+            {ReactHtmlParser(input)}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
 
   const [formatted, setFormattedCitation] = React.useState()
   /* eslint-disable no-unused-vars */
-  const { loading, error, data } = useQuery<FormattedCitationQueryData, FormattedCitationQueryVar>(
-    FORMATTEDCITATION_GQL,
-    {
-      errorPolicy: 'all',
-      variables: { id: id, style: cslType, locale: locale }
-    }
-  )
+  const { loading, error, data } = useQuery<
+    FormattedCitationQueryData,
+    FormattedCitationQueryVar
+  >(FORMATTEDCITATION_GQL, {
+    errorPolicy: 'all',
+    variables: { id: id, style: cslType, locale: locale }
+  })
   /* eslint-enable no-unused-vars */
 
   React.useEffect(() => {
@@ -73,11 +79,8 @@ const CitationFormatter: React.FunctionComponent<Props> = ({ id, style, locale, 
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  if (!loading && !formatted) return (
-    <Alert bsStyle="warning">
-      No content found.
-    </Alert>
-  )
+  if (!loading && !formatted)
+    return <Alert bsStyle="warning">No content found.</Alert>
 
   return (
     <div>
