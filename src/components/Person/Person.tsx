@@ -1,12 +1,8 @@
 import * as React from 'react'
 import { Alert, Grid, Row, Col } from 'react-bootstrap'
-import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
-import { compactNumbers } from '../../utils/helpers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { orcidFromUrl } from '../../utils/helpers'

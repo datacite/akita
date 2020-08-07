@@ -167,23 +167,21 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const router = useRouter()
 
   /* eslint-disable no-unused-vars */
-  const [published, setPublished] = useQueryState('published', {
+  const [published] = useQueryState('published', {
     history: 'push'
   })
-  const [resourceType, setResourceType] = useQueryState('resource-type', {
+  const [resourceType] = useQueryState('resource-type', {
     history: 'push'
   })
-  const [fieldOfScience, setFieldOfScience] = useQueryState(
-    'field-of-science',
-    { history: 'push' }
-  )
-  const [license, setLicense] = useQueryState('license', { history: 'push' })
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
-  const [
-    registrationAgency,
-    setRegistrationAgency
-  ] = useQueryState('registration-agency', { history: 'push' })
-  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
+  const [license] = useQueryState('license', { history: 'push' })
+  const [language] = useQueryState('language', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<

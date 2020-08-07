@@ -56,7 +56,7 @@ export const CONTENT_GQL = gql`
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   /* eslint-disable no-unused-vars */
-  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<
