@@ -26,6 +26,7 @@ interface OrganizationsNode {
   alternateName: string[]
   types: string[]
   url: string
+  wikipediaUrl: string
   address: {
     country: string
   }
@@ -293,7 +294,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
             <div className="edit"></div>
           </div>
         </div>
-        
+
         <div className="panel facets add">
           <div className="panel-body">
             <h4>Country</h4>
