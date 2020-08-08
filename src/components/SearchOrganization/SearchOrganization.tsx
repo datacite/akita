@@ -306,8 +306,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
                   <FilterItem
                     name="country"
                     id={facet.id}
-                    count={facet.count}
                     title={facet.title}
+                    count={facet.count}
                   />
                 </li>
               ))}
@@ -324,8 +324,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
                   <FilterItem
                     name="types"
                     id={facet.id}
-                    count={facet.count}
                     title={facet.title}
+                    count={facet.count}
                   />
                 </li>
               ))}

@@ -47,7 +47,7 @@ const data = {
 describe('TypesChart Component', () => {
   it('normal data', () => {
     mount(
-      <TypesChart data={data.works.resourceTypes} count="173" legend={true} />
+      <TypesChart data={data.works.resourceTypes} count={173} legend={true} />
     )
     cy.get('.mark-arc > path').should('be.visible').should('have.length', 6)
 
@@ -58,7 +58,7 @@ describe('TypesChart Component', () => {
 
   it('no legend', () => {
     mount(
-      <TypesChart data={data.works.resourceTypes} count="1730" legend={false} />
+      <TypesChart data={data.works.resourceTypes} count={1730} legend={false} />
     )
     cy.get('.mark-arc > path').should('be.visible').should('have.length', 6)
 
