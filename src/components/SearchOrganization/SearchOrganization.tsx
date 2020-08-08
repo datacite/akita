@@ -286,7 +286,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
 
-    if (!loading && data.organizations.totalCount == 0)
+    if (!loading && data && data.organizations.totalCount == 0)
       return <div className="col-md-3"></div>
 
     return (
@@ -301,7 +301,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>Country</h4>
             <ul>
-              {data.organizations.countries.map((facet) => (
+              {data && data.organizations.countries.map((facet) => (
                 <li key={facet.id}>
                   <FilterItem
                     name="country"
@@ -319,7 +319,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>Organization Type</h4>
             <ul>
-              {data.organizations.types.map((facet) => (
+              {data && data.organizations.types.map((facet) => (
                 <li key={facet.id}>
                   <FilterItem
                     name="types"
