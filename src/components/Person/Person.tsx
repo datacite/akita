@@ -49,7 +49,7 @@ type Props = {
 }
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
-  if (!person) return <Alert bsStyle="warning">No content found.</Alert>
+  if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
   //// Affiliation needs work in the API
   const afilliation = () => {
@@ -243,7 +243,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     if (!person.works.totalCount)
       return (
         <React.Fragment>
-          <Alert bsStyle="warning">No content found.</Alert>
+          <Alert bsStyle="warning">No works found.</Alert>
 
           <Pager
             url={'/people' + orcidFromUrl(person.id) + '/?'}

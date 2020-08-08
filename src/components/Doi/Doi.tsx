@@ -16,7 +16,7 @@ type Props = {
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
-  if (!doi) return <Alert bsStyle="warning">No content found.</Alert>
+  if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
   const formattedCitation = () => {
     const [selectedOption, setSelectedOption] = React.useState('')
@@ -85,7 +85,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   const analyticsBar = () => {
     if (doi.citations.totalCount == 0) return ''
-    
+
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">

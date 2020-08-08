@@ -394,7 +394,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   const footer = () => {
     return (
       <div className="panel-footer">
-        <a href={metadata.doi}>
+        <a href={metadata.id}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">

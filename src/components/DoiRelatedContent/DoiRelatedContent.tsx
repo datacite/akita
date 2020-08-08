@@ -16,7 +16,7 @@ interface RelatedContentList {
 }
 
 const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
-  if (!dois) return <Alert bsStyle="warning">No content found.</Alert>
+  if (!dois) return <Alert bsStyle="warning">No works found.</Alert>
 
   return (
     <React.Fragment>

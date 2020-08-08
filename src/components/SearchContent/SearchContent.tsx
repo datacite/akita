@@ -295,7 +295,7 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-9">
-            <Alert bsStyle="warning">No content found.</Alert>
+            <Alert bsStyle="warning">No works found.</Alert>
           </div>
         </div>
       )
