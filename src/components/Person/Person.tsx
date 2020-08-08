@@ -257,7 +257,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <React.Fragment>
         {person.works.totalCount > 1 && (
-          <h3 className="member-results">Content Items</h3>
+          <h3 className="member-results">Works</h3>
         )}
 
         <DoiRelatedContent dois={person.works} />

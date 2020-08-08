@@ -1,4 +1,4 @@
-describe("Search Content", () => {
+describe("Search Works", () => {
   beforeEach(() => {
     cy.visit("/")
   })
@@ -15,19 +15,19 @@ describe("Search Content", () => {
       .type('richard hallett')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
-      .should('contain', 'Content Items')
+      .should('contain', 'Works')
       // results are rendered
       .get('.panel-transparent').should(($contentItem) => {
         expect($contentItem).to.have.length.at.least(14)
       })
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
-      
+
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
         expect($facet).to.have.length.at.least(4)
         expect($facet.eq(0)).to.contain('Publication Year')
-        expect($facet.eq(1)).to.contain('Content Type')
+        expect($facet.eq(1)).to.contain('Work Type')
         expect($facet.eq(2)).to.contain('Language')
         expect($facet.eq(3)).to.contain('DOI Registration Agency')
       })

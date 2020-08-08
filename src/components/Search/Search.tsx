@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useQueryState } from 'next-usequerystate'
 import { Row, Col, TabContent, TabPane, TabContainer, Nav, NavItem } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookReader, faSearch, faTimes, faBook, faUniversity, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTimes, faBook, faUniversity, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
 import SearchOrganization from '../SearchOrganization/SearchOrganization'
 import SearchPerson from '../SearchPerson/SearchPerson'
@@ -23,7 +23,7 @@ const Search: React.FunctionComponent = () => {
   }
 
   return (
-    <TabContainer defaultActiveKey="content" id="search-tabs">
+    <TabContainer defaultActiveKey="works" id="search-tabs">
       <React.Fragment>
         <Row>
           <Col md={6} mdOffset={3}>
@@ -52,7 +52,7 @@ const Search: React.FunctionComponent = () => {
             </form>
 
             <Nav bsStyle="tabs" id="search-nav">
-              <NavItem eventKey="content"><FontAwesomeIcon icon={faBook} /> Content</NavItem>
+              <NavItem eventKey="works"><FontAwesomeIcon icon={faBook} /> Works</NavItem>
               <NavItem eventKey="people"><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
               <NavItem eventKey="organizations"><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
             </Nav>
@@ -60,7 +60,7 @@ const Search: React.FunctionComponent = () => {
         </Row>
         
         <TabContent animation>
-          <TabPane eventKey="content">
+          <TabPane eventKey="works">
             <React.Fragment>
               {!searchQuery || searchQuery === ' ' ? (
                 <About title={'Introduction'} />

@@ -311,7 +311,7 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
       <div className="col-md-9" id="content">
         {searchResults.length > 1 && (
           <h3 className="member-results">
-            {data.works.totalCount.toLocaleString('en-US')} Content Items
+            {data.works.totalCount.toLocaleString('en-US')} Works
           </h3>
         )}
 
@@ -395,7 +395,7 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
         <div className="panel facets add">
           <div className="panel-body">
-            <h4>Content Type</h4>
+            <h4>Work Type</h4>
             <ul>
               {data.works.resourceTypes.map((facet) => (
                 <li key={facet.id}>

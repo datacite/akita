@@ -252,7 +252,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     if (!data.organization.works.totalCount)
       return (
         <Alert bsStyle="warning" className="no-content">
-          No content found.
+          No works found.
         </Alert>
       )
 
@@ -260,7 +260,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       <div>
         {data.organization.works.totalCount > 1 && (
           <h3 className="member-results">
-            {data.organization.works.totalCount.toLocaleString('en-US')} Content Items
+            {data.organization.works.totalCount.toLocaleString('en-US')} Works
           </h3>
         )}
 

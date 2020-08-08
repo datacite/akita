@@ -165,11 +165,11 @@ ul.ror-identifiers {
   margin-bottom: 1.25em;
 }
 
-#search-tabs-tab-content {
+#search-tabs-tab-works {
   padding-left: 36px;
 }
 
-#search-tabs-tab-content::before, #search-tabs-tab-content::after,
+#search-tabs-tab-works::before, #search-tabs-tab-works::after,
 #search-tabs-tab-people::before, #search-tabs-tab-people::after,
 #search-tabs-tab-organizations::before, #search-tabs-tab-organizations::after {
   display: none;

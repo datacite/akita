@@ -83,7 +83,7 @@ describe('Doi Component', () => {
     cy.get('.citations-over-time-tab').should('be.visible')
   })
 
-  it('related content section', () => {
+  it('related works section', () => {
     mount(<Doi doi={data} />)
     cy.get('.citations-list').should('not.be.visible')
   })
