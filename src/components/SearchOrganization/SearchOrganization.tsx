@@ -62,10 +62,6 @@ interface OrganizationsNode {
   ]
 }
 
-interface OrganizationsEdge {
-  node: OrganizationsNode
-}
-
 interface OrganizationFacet {
   id: string
   title: string
@@ -83,9 +79,9 @@ interface OrganizationsQueryData {
   organizations: {
     totalCount: number
     pageInfo: PageInfo
-    edges: OrganizationsEdge[]
     types: OrganizationFacet[]
     countries: OrganizationFacet[]
+    nodes: OrganizationsNode[]
   }
 }
 
@@ -107,23 +103,6 @@ export const ORGANIZATIONS_GQL = gql`
         endCursor
         hasNextPage
       }
-      edges {
-        node {
-          id
-          name
-          alternateName
-          types
-          url
-          wikipediaUrl
-          address {
-            country
-          }
-          identifiers {
-            identifier
-            identifierType
-          }
-        }
-      }
       types {
         id
         count
@@ -133,6 +112,21 @@ export const ORGANIZATIONS_GQL = gql`
         id
         count
         title
+      }
+      nodes {
+        id
+        name
+        alternateName
+        types
+        url
+        wikipediaUrl
+        address {
+          country
+        }
+        identifiers {
+          identifier
+          identifierType
+        }
       }
     }
   }
@@ -167,33 +161,33 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
     const results: OrganizationMetadataRecord[] = []
 
     if (data) {
-      data.organizations.edges.map((edge) => {
-        let grid = edge.node.identifiers.filter(i => {
+      data.organizations.nodes.map((node) => {
+        let grid = node.identifiers.filter(i => {
           return i.identifierType === 'grid'
         })
-        let fundref = edge.node.identifiers.filter(i => {
+        let fundref = node.identifiers.filter(i => {
           return i.identifierType === 'fundref'
         })
-        let isni = edge.node.identifiers.filter(i => {
+        let isni = node.identifiers.filter(i => {
           return i.identifierType === 'isni'
         })
-        let wikidata = edge.node.identifiers.filter(i => {
+        let wikidata = node.identifiers.filter(i => {
           return i.identifierType === 'wikidata'
         })
 
         let orgMetadata: OrganizationMetadataRecord = {
-          id: edge.node.id,
-          name: edge.node.name,
-          alternateNames: edge.node.alternateName,
-          types: edge.node.types,
-          url: edge.node.url,
-          wikipediaUrl: edge.node.wikipediaUrl,
-          countryName: edge.node.address.country,
+          id: node.id,
+          name: node.name,
+          alternateNames: node.alternateName,
+          types: node.types,
+          url: node.url,
+          wikipediaUrl: node.wikipediaUrl,
+          countryName: node.address.country,
           grid: grid,
           fundref: fundref,
           isni: isni,
           wikidata: wikidata,
-          identifiers: edge.node.identifiers
+          identifiers: node.identifiers
         }
 
         results.push(orgMetadata)

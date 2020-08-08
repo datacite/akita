@@ -9,7 +9,7 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
-import { PageInfo } from '../SearchContent/SearchContent'
+import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -38,69 +38,15 @@ export const DOI_GQL = gql`
         id
       }
       works(first: 25, after: $cursor) {
-        totalCount
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        resourceTypes {
-          title
-          count
-        }
-        published {
-          title
-          count
-        }
+        ...WorkConnectionFragment
         nodes {
-          doi
-          id
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
-          rights {
-            rights
-          }
-          citationCount
-          viewCount
-          downloadCount
+          ...WorkFragment
         }
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
 export interface PersonType {

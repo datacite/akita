@@ -58,28 +58,9 @@ interface ContentQueryVar {
   registrationAgency: string
 }
 
-export const CONTENT_GQL = gql`
-  query getContentQuery(
-    $query: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
-  ) {
-    works(
-      first: 25
-      query: $query
-      after: $cursor
-      published: $published
-      resourceTypeId: $resourceTypeId
-      fieldOfScience: $fieldOfScience
-      language: $language
-      license: $license
-      registrationAgency: $registrationAgency
-    ) {
+export const connectionFragment = {
+  workConnection: gql`
+    fragment WorkConnectionFragment on WorkConnectionWithTotal {
       totalCount
       pageInfo {
         endCursor
@@ -115,56 +96,93 @@ export const CONTENT_GQL = gql`
         title
         count
       }
-      nodes {
+    }
+  `
+}
+
+export const contentFragment = {
+  work: gql`
+    fragment WorkFragment on Work {
+      id
+      doi
+      types {
+        resourceTypeGeneral
+        resourceType
+      }
+      titles {
+        title
+      }
+      creators {
         id
-        doi
-        types {
-          resourceTypeGeneral
-          resourceType
-        }
-        titles {
-          title
-        }
-        creators {
-          id
-          name
-          givenName
-          familyName
-        }
-        descriptions {
-          description
-          descriptionType
-        }
-        publicationYear
-        publisher
-        version
-        rights {
-          rights
-          rightsUri
-          rightsIdentifier
-        }
-        fieldsOfScience {
-          id
-          name
-        }
-        language {
-          id
-          name
-        }
-        registrationAgency {
-          id
-          name
-        }
-        registered
-        citationCount
-        viewCount
-        downloadCount
+        name
+        givenName
+        familyName
+      }
+      descriptions {
+        description
+        descriptionType
+      }
+      publicationYear
+      publisher
+      version
+      rights {
+        rights
+        rightsUri
+        rightsIdentifier
+      }
+      fieldsOfScience {
+        id
+        name
+      }
+      language {
+        id
+        name
+      }
+      registrationAgency {
+        id
+        name
+      }
+      registered
+      citationCount
+      viewCount
+      downloadCount
+    }
+  `
+}
+
+export const CONTENT_GQL = gql`
+  query getContentQuery(
+    $query: String
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+  ) {
+    works(
+      first: 25
+      query: $query
+      after: $cursor
+      published: $published
+      resourceTypeId: $resourceTypeId
+      fieldOfScience: $fieldOfScience
+      language: $language
+      license: $license
+      registrationAgency: $registrationAgency
+    ) {
+      ...WorkConnectionFragment
+      nodes {
+        ...WorkFragment
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
-const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
+const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const router = useRouter()
 
   /* eslint-disable no-unused-vars */
@@ -499,4 +517,4 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
   )
 }
 
-export default Search
+export default SearchContent

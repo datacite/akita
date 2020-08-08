@@ -18,6 +18,8 @@ import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
+
 
 type Props = {
   rorId: string
@@ -56,11 +58,6 @@ interface ContentFacet {
   count: number
 }
 
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
-}
-
 interface OrganizationQueryData {
   organization: OrganizationResult
 }
@@ -87,69 +84,15 @@ export const ORGANIZATION_GQL = gql`
         identifierType
       }
       works(first: 25, after: $cursor) {
-        totalCount
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        resourceTypes {
-          title
-          count
-        }
-        published {
-          title
-          count
-        }
+        ...WorkConnectionFragment
         nodes {
-          doi
-          id
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
-          rights {
-            rights
-          }
-          citationCount
-          viewCount
-          downloadCount
+          ...WorkFragment
         }
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
 const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
