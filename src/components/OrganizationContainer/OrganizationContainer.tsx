@@ -260,7 +260,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       <div>
         {data.organization.works.totalCount > 1 && (
           <h3 className="member-results">
-            {data.organization.works.totalCount.toLocaleString('en-US')} Works
+            {data.organization.works.totalCount.toLocaleString('en-US')} Content Items
           </h3>
         )}
 
@@ -270,11 +270,13 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
           </React.Fragment>
         ))}
 
-        <Pager
-          url={'/organization/' + rorId + '/?'}
-          hasNextPage={hasNextPage}
-          endCursor={endCursor}
-        />
+        {data.organization.works.totalCount > 25 && (
+          <Pager
+            url={'/organization/' + rorId + '/?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+          />
+        )}
       </div>
     )
   }

@@ -274,11 +274,13 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           </React.Fragment>
         ))}
 
-        <Pager
-          url={'/?'}
-          hasNextPage={hasNextPage}
-          endCursor={endCursor}
-        ></Pager>
+        {data.organizations.totalCount > 20 && (
+          <Pager
+            url={'/?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+          ></Pager>
+        )}
       </div>
     )
   }

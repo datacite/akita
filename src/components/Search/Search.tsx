@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useQueryState } from 'next-usequerystate'
 import { Row, Col, TabContent, TabPane, TabContainer, Nav, NavItem } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faBookReader, faSearch, faTimes, faBook, faUniversity, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
 import SearchOrganization from '../SearchOrganization/SearchOrganization'
 import SearchPerson from '../SearchPerson/SearchPerson'
@@ -52,9 +52,9 @@ const Search: React.FunctionComponent = () => {
             </form>
 
             <Nav bsStyle="tabs" id="search-nav">
-              <NavItem eventKey="content">Content</NavItem>
-              <NavItem eventKey="people">People</NavItem>
-              <NavItem eventKey="organizations">Organizations</NavItem>
+              <NavItem eventKey="content"><FontAwesomeIcon icon={faBook} /> Content</NavItem>
+              <NavItem eventKey="people"><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
+              <NavItem eventKey="organizations"><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
             </Nav>
           </Col>
         </Row>
