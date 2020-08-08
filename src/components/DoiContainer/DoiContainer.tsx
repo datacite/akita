@@ -474,14 +474,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <div key={doi.id} className="panel panel-transparent content-item">
-          <div className="panel-body">
-            <div key={doi.id} className="panel panel-transparent">
-              <Doi doi={doi}></Doi>
-            </div>
-          </div>
-          <br />
-        </div>
+        <Doi doi={doi}></Doi>
       </div>
     )
   }

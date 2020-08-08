@@ -159,30 +159,28 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     }))
 
     return (
-      <div>
+      <React.Fragment>
         <h3 className="member-results">Analytics</h3>
-        <div className="panel panel-transparent">
-          <Grid>
-            <Row></Row>
-            <Row>
-              <Col xs={6}>
-                <ProductionChart
-                  data={published}
-                  doiCount={person.works.totalCount}
-                ></ProductionChart>
-              </Col>
-              <Col>
-                <br />
-                <TypesChart
-                  data={resourceTypes}
-                  legend={false}
-                  count={person.works.totalCount}
-                ></TypesChart>
-              </Col>
-            </Row>
-          </Grid>
-        </div>
-      </div>
+        <Grid>
+          <Row></Row>
+          <Row>
+            <Col xs={6}>
+              <ProductionChart
+                data={published}
+                doiCount={person.works.totalCount}
+              ></ProductionChart>
+            </Col>
+            <Col>
+              <br />
+              <TypesChart
+                data={resourceTypes}
+                legend={false}
+                count={person.works.totalCount}
+              ></TypesChart>
+            </Col>
+          </Row>
+        </Grid>
+      </React.Fragment>
     )
   }
 
@@ -259,7 +257,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       )
 
     return (
-      <div>
+      <React.Fragment>
         {person.works.totalCount > 1 && (
           <h3 className="member-results">Works</h3>
         )}
@@ -272,20 +270,22 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           endCursor={endCursor}
           isNested={true}
         ></Pager>
-      </div>
+      </React.Fragment>
     )
   }
 
   return (
-    <div key={person.id} className="panel panel-transparent">
+    <React.Fragment>
       <h3 className="member-results">{person.id}</h3>
-      <div className="panel-body">
-        {name()}
-        {afilliation()}
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          {name()}
+          {afilliation()}
+        </div>
       </div>
       {analyticsBar()}
       {relatedContent()}
-    </div>
+    </React.Fragment>
   )
 }
 

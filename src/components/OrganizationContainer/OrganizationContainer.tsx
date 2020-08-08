@@ -336,12 +336,8 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member-results">{organization.metadata.id}</h3>
-            <Organization organization={organization} />
-          </div>
-        </div>
+        <h3 className="member-results">{organization.metadata.id}</h3>
+        <Organization organization={organization} />
         {relatedContent()}
       </div>
     )

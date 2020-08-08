@@ -1,7 +1,7 @@
 describe("Search Person", () => {
   beforeEach(() => {
     cy.visit("/")
-    cy.get('a#noanim-tab-example-tab-people')
+    cy.get('a#search-tabs-tab-people')
     .click()
   })
 

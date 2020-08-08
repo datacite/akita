@@ -232,9 +232,12 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     if (!loading && searchResults.length == 0)
       return (
-        <React.Fragment>
-          <Alert bsStyle="warning">No content found.</Alert>
-        </React.Fragment>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
+            <Alert bsStyle="warning">No organizations found.</Alert>
+          </div>
+        </div>
       )
 
     if (error)
@@ -255,37 +258,36 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       : ''
 
     return (
-      <div className="col-md-9 panel-list" id="content">
-        <div className="panel panel-transparent content-item">
-          <div className="panel-body">
-            {searchResults.length > 1 && (
-              <h3 className="member-results">
-                {data.organizations.totalCount.toLocaleString('en-US')} Results
-              </h3>
-            )}
+      <div className="col-md-9" id="content">
+        {searchResults.length > 1 && (
+          <h3 className="member-results">
+            {data.organizations.totalCount.toLocaleString('en-US')} Organizations
+          </h3>
+        )}
 
-            {searchResults.map((item) => (
-              <React.Fragment key={item.id}>
-                <OrganizationMetadata
-                  metadata={item}
-                  linkToExternal={false}
-                ></OrganizationMetadata>
-              </React.Fragment>
-            ))}
+        {searchResults.map((item) => (
+          <React.Fragment key={item.id}>
+            <OrganizationMetadata
+              metadata={item}
+              linkToExternal={false}
+            ></OrganizationMetadata>
+          </React.Fragment>
+        ))}
 
-            <Pager
-              url={'/?'}
-              hasNextPage={hasNextPage}
-              endCursor={endCursor}
-            ></Pager>
-          </div>
-        </div>
+        <Pager
+          url={'/?'}
+          hasNextPage={hasNextPage}
+          endCursor={endCursor}
+        ></Pager>
       </div>
     )
   }
 
   const renderFacets = () => {
-    if (!data) return ''
+    if (loading) return <div className="col-md-3"></div>
+
+    if (!loading && data.organizations.totalCount == 0)
+      return <div className="col-md-3"></div>
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">

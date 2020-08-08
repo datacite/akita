@@ -43,6 +43,7 @@ h3.popover-title {
 
 .form-horizontal.search {
   max-width: 100%;
+  padding-bottom: 0;
 }
 
 .form-horizontal.search input[name="query"] {
@@ -156,6 +157,24 @@ ul.ror-identifiers {
 }
 
 .no-content {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
+
+#search-nav {
+  margin-bottom: 1.25em;
+}
+
+#search-tabs-tab-content {
+  padding-left: 36px;
+}
+
+#search-tabs-tab-content::before, #search-tabs-tab-content::after,
+#search-tabs-tab-people::before, #search-tabs-tab-people::after,
+#search-tabs-tab-organizations::before, #search-tabs-tab-organizations::after {
+  display: none;
+}
+
+/* h3.member-results {
+  margin-left: 0;
+} */

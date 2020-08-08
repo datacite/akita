@@ -13,10 +13,11 @@ type Props = {
   searchQuery: string
 }
 
-interface ContentQueryData {
+interface PersonQueryData {
   people: {
     __typename: String
     nodes: PersonType[]
+    totalCount: number
     pageInfo: PageInfo
   }
 }
@@ -26,14 +27,19 @@ interface PageInfo {
   hasNextPage: boolean
 }
 
-interface ContentQueryVar {
+interface PersonQueryVar {
   query: string
   cursor: string
 }
 
-export const CONTENT_GQL = gql`
-  query getContentQuery($query: String, $cursor: String) {
+export const PERSON_GQL = gql`
+  query getPersonQuery($query: String, $cursor: String) {
     people(first: 25, query: $query, after: $cursor) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
       nodes {
         id
         name
@@ -60,9 +66,9 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<
-    ContentQueryData,
-    ContentQueryVar
-  >(CONTENT_GQL, {
+    PersonQueryData,
+    PersonQueryVar
+  >(PERSON_GQL, {
     errorPolicy: 'all',
     variables: { query: searchQuery, cursor: cursor }
   })
@@ -117,44 +123,41 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (!loading && searchResults.length == 0)
       return (
-        <React.Fragment>
-          <Alert bsStyle="warning">No content found.</Alert>
-
-          <Pager
-            url={'/?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          ></Pager>
-        </React.Fragment>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
+            <Alert bsStyle="warning">No people found.</Alert>
+          </div>
+        </div>
       )
 
     return (
-      <div className="col-md-9 panel-list" id="content">
-        <div className="panel panel-transparent content-item">
-          <div className="panel-body">
-            {searchResults.length > 1 && (
-              <h3 className="member-results"> Results</h3>
-            )}
+      <div className="col-md-9" id="content">
+        {searchResults.length > 1 && (
+          <h3 className="member-results">
+            {data.people.totalCount.toLocaleString('en-US')} People
+          </h3>
+        )}
 
-            {searchResults.map((item) => (
-              <React.Fragment key={item.id}>
-                <PersonMetadata metadata={item} />
-              </React.Fragment>
-            ))}
+        {searchResults.map((item) => (
+          <React.Fragment key={item.id}>
+            <PersonMetadata metadata={item} />
+          </React.Fragment>
+        ))}
 
-            <Pager
-              url={'/?'}
-              hasNextPage={hasNextPage}
-              endCursor={endCursor}
-            ></Pager>
-          </div>
-        </div>
+        <Pager
+          url={'/?'}
+          hasNextPage={hasNextPage}
+          endCursor={endCursor}
+        ></Pager>
       </div>
     )
   }
 
   const renderFacets = () => {
-    if (loading || searchResults.length == 0)
+    if (loading) return <div className="col-md-3"></div>
+
+    if (!loading && searchResults.length == 0)
       return <div className="col-md-3"></div>
 
     return (

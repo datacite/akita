@@ -391,21 +391,21 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
     </Popover>
   )
 
-  const links = () => {
+  const footer = () => {
     return (
       <div className="panel-footer">
         <a href={metadata.doi}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} /> {metadata.doi}
+          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
             <span className="bookmark">
-              <FontAwesomeIcon icon={faBookmark} /> Bookmark
+              <FontAwesomeIcon icon={faBookmark} size="sm" /> Bookmark
             </span>
           </OverlayTrigger>
           <OverlayTrigger trigger="click" placement="top" overlay={claim}>
             <span className="claim">
-              <FontAwesomeIcon icon={faOrcid} /> Claim
+              <FontAwesomeIcon icon={faOrcid} size="sm" /> Claim
             </span>
           </OverlayTrigger>
         </span>
@@ -414,8 +414,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div>
-      <div>
+    <div key={metadata.id} className="panel panel-transparent">
+      <div className="panel-body">
         {title()}
 
         {creators()}
@@ -426,7 +426,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
         {metricsCounter()}
         {tags()}
       </div>
-      {links()}
+      {footer()}
     </div>
   )
 }

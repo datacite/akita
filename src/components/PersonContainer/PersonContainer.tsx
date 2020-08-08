@@ -260,9 +260,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
           <div className="facets panel-body">
             <h4>Export</h4>
-            {/* <div id="export-bibtex" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/"}>Works as BibTeX</a>
-            </div> */}
             <OverlayTrigger placement="top" overlay={bibtex}>
               <span className="share">Works as BibTeX</span>
             </OverlayTrigger>
@@ -290,27 +287,10 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
   }
 
-  // const rightSideBar = () => {
-
-  //   return (
-  //     <div className="col-md-3 hidden-xs hidden-sm">
-
-  //     </div>
-  //   )
-  // }
-
   const content = () => {
     return (
-      <div className="col-md-9 panel-list" id="content">
-        <div
-          key={orcidRecord.id}
-          className="panel panel-transparent content-orcid"
-        >
-          <div className="panel-body">
-            <Person person={orcidRecord} />
-          </div>
-          <br />
-        </div>
+      <div className="col-md-9" id="content">
+        <Person person={orcidRecord} />
       </div>
     )
   }
@@ -319,7 +299,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     <div className="row">
       {leftSideBar()}
       {content()}
-      {/* {rightSideBar()} */}
     </div>
   )
 }

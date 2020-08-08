@@ -84,6 +84,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
+    if (doi.citations.totalCount == 0) return ''
+    
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
@@ -162,6 +164,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       ? doi.references.pageInfo.endCursor
       : ''
 
+    if (doi.citations.totalCount == 0) return ''
+
     return (
       <div className="panel panel-transparent">
         <div className="panel-body tab-content nav-tabs-member">
@@ -203,19 +207,14 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   return (
-    <div key={doi.id} className="panel panel-transparent">
+    <React.Fragment>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <div key={doi.id} className="panel panel-transparent content-metadata">
-        <div className="panel-body">
-          <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
-        </div>
-      </div>
+      <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
 
-      <br />
       {formattedCitation()}
       {analyticsBar()}
       {relatedContent()}
-    </div>
+    </React.Fragment>
   )
 }
 
