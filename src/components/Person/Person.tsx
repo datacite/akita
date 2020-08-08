@@ -7,7 +7,6 @@ import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { orcidFromUrl } from '../../utils/helpers'
 import Pager from '../Pager/Pager'
-// import { count } from 'console'
 
 export interface PersonRecord {
   id: string
@@ -16,7 +15,6 @@ export interface PersonRecord {
   familyName: string
   citationCount: number
   viewCount: number
-  pageInfo: PageInfo
   downloadCount: number
   affiliation: Attribute[]
   works: Works
