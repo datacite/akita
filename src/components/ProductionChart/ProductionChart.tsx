@@ -11,7 +11,6 @@ interface ChartRecord {
 
 type Props = {
   data?: ChartRecord[]
-  id?: string
   doiCount: number
 }
 
@@ -25,7 +24,6 @@ const actions = {
 /* eslint-disable no-unused-vars */
 const ProductionChart: React.FunctionComponent<Props> = ({
   data,
-  id,
   doiCount
 }) => {
   /* istanbul ignore next */
@@ -128,7 +126,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
-        <div>{title()}</div>
+        <div className="title">{title()}</div>
         <VegaLite
           renderer="svg"
           spec={spec}

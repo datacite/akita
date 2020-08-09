@@ -242,7 +242,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         />
       )
 
-    if (!data) return ''
+    if (!data) return <div></div>
 
     const hasNextPage = data.organizations.pageInfo
       ? data.organizations.pageInfo.hasNextPage

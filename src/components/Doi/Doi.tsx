@@ -17,7 +17,6 @@ type Props = {
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
-
   const formattedCitation = () => {
     const [selectedOption, setSelectedOption] = React.useState('')
 

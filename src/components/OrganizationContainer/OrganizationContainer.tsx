@@ -17,16 +17,19 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
-import Search from '../Search/Search'
+// import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
-import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
+import {
+  PageInfo,
+  connectionFragment,
+  contentFragment
+} from '../SearchContent/SearchContent'
 
 type Props = {
   rorId: string
-  searchQuery?: string
 }
 
 interface OrganizationResult {
@@ -55,6 +58,7 @@ interface Works {
   resourceTypes: ContentFacet[]
   languages: ContentFacet[]
   licenses: ContentFacet[]
+  fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
   nodes: DoiType[]
 }
@@ -71,7 +75,6 @@ interface OrganizationQueryData {
 
 interface OrganizationQueryVar {
   id: string
-  query: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -127,10 +130,7 @@ export const ORGANIZATION_GQL = gql`
   ${contentFragment.work}
 `
 
-const OrganizationContainer: React.FunctionComponent<Props> = ({ 
-  rorId,
-  searchQuery 
-}) => {
+const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   const router = useRouter()
 
   const [published] = useQueryState('published', {
@@ -160,7 +160,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     variables: {
       id: fullId,
       cursor: cursor,
-      query: searchQuery,
       published: published as string,
       resourceTypeId: resourceType as string,
       fieldOfScience: fieldOfScience as string,
@@ -238,7 +237,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     )
   }
 
-  if (!organization) return ''
+  if (!organization) return <div></div>
 
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
@@ -414,8 +413,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
 
     return (
       <div className="col-md-9" id="related-content">
-        <Search useTabs={false} />
-
         {data.organization.works.totalCount > 1 && (
           <h3 className="member-results">
             {data.organization.works.totalCount.toLocaleString('en-US')} Works
@@ -512,7 +509,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
         {renderFacets()}
         {relatedContent()}
       </Row>
-  </React.Fragment>
+    </React.Fragment>
   )
 }
 
