@@ -55,14 +55,11 @@ describe('CitationsChart Component', () => {
       />
     )
     cy.get('.mark-rect > path').should('be.visible').should('have.length', 3)
-
     cy.get('.citation-chart').should('be.visible')
 
-    cy.get('small').should('be.visible')
-
-    cy.get('small')
+    cy.get('.citation-chart .title')
       .should('be.visible')
-      .contains('137 Citations reported since publication in 2014')
+      .contains('137 Citations reported since publication in 2014.')
   })
 
   // Data older than 10 years should not be shown
@@ -78,13 +75,9 @@ describe('CitationsChart Component', () => {
     cy.get('.mark-rect > path')
       .should('not.be.visible')
       .should('have.length', 0)
-
     cy.get('.citation-chart').should('be.visible')
-
-    cy.get('small').should('be.visible')
-
-    cy.get('small')
+    cy.get('.citation-chart .title')
       .should('be.visible')
-      .contains('137 Citations reported since publication in 1985')
+      .contains('137 Citations reported since publication in 1985.')
   })
 })

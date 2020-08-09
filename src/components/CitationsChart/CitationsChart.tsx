@@ -121,15 +121,15 @@ const CitationsChart: React.FunctionComponent<Props> = ({
     return (
       <div>
         <Pluralize singular={'Citation'} count={citationCount} /> reported since
-        publication in {publicationYear}
+        publication in {publicationYear}.
       </div>
     )
   }
 
   return (
     <div className="panel panel-transparent">
-      <div className="citation-chart panel-body">
-        <div>{title()}</div>
+      <div className="panel-body citation-chart">
+        <div className="title">{title()}</div>
         <VegaLite
           renderer="svg"
           spec={spec}

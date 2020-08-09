@@ -28,8 +28,10 @@ describe("Search Works", () => {
         expect($facet).to.have.length.at.least(3)
         expect($facet.eq(0)).to.contain('Publication Year')
         expect($facet.eq(1)).to.contain('Work Type')
-        // expect($facet.eq(2)).to.contain('Language')
-        expect($facet.eq(3)).to.contain('DOI Registration Agency')
+        expect($facet.eq(2)).to.contain('Field of Science')
+        expect($facet.eq(3)).to.contain('License')
+        expect($facet.eq(4)).to.contain('Language')
+        expect($facet.eq(5)).to.contain('DOI Registration Agency')
       })
   })
 
@@ -78,7 +80,7 @@ describe("Search Works", () => {
       .type('xxxxxxxxxxxx')
       // timeout for the query results to return
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No content found.')
+      .should('contain', 'No works found.')
       // no results count for zero results
       .get('.member-results').should('not.exist')
       // no facet for zero results
