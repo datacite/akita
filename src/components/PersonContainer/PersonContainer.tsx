@@ -110,7 +110,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     setOrcid(result)
   }, [orcid, data])
 
-  if (loading)
+  if (loading || !orcidRecord)
     return (
       <div className="row">
         <div className="col-md-3"></div>
@@ -138,8 +138,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name

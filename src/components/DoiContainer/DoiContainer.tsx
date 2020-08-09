@@ -192,7 +192,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     setDoi(result)
   }, [item, data])
 
-  if (loading)
+  if (loading || !doi)
     return (
       <div className="row">
         <div className="col-md-3"></div>
@@ -220,8 +220,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  if (!doi) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + doi.titles[0].title
