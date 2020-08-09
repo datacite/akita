@@ -1,6 +1,5 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
-import { Grid, Row } from 'react-bootstrap'
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 import { compactNumbers } from '../../utils/helpers'
@@ -14,7 +13,6 @@ interface ChartRecord {
 
 type Props = {
   data?: ChartRecord[]
-  doi?: string
   count?: number
   legend?: any
 }
@@ -29,13 +27,13 @@ const actions = {
 /* eslint-disable no-unused-vars */
 const TypesChart: React.FunctionComponent<Props> = ({
   data,
-  doi,
   count,
   legend
 }) => {
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
+    padding: { left: 5, top: 35, right: 5, bottom: 5 },
     data: {
       name: 'table'
     },
@@ -85,16 +83,12 @@ const TypesChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="types-chart panel-body">
-        <Grid>
-          <Row>
-            <VegaLite
-              renderer="svg"
-              spec={spec}
-              data={{ table: data }}
-              actions={actions}
-            />
-          </Row>
-        </Grid>
+        <VegaLite
+          renderer="svg"
+          spec={spec}
+          data={{ table: data }}
+          actions={actions}
+        />
       </div>
     </div>
   )

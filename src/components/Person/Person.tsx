@@ -159,80 +159,27 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <React.Fragment>
         <h3 className="member-results">Analytics</h3>
-        <Grid>
-          <Row></Row>
-          <Row>
-            <Col xs={6}>
-              <ProductionChart
-                data={published}
-                doiCount={person.works.totalCount}
-              ></ProductionChart>
-            </Col>
-            <Col>
-              <br />
-              <TypesChart
-                data={resourceTypes}
-                legend={false}
-                count={person.works.totalCount}
-              ></TypesChart>
-            </Col>
-          </Row>
-        </Grid>
+        <Row>
+          <Col xs={8}>
+            <ProductionChart
+              data={published}
+              doiCount={person.works.totalCount}
+            ></ProductionChart>
+          </Col>
+          <Col xs={4}>
+            <TypesChart
+              data={resourceTypes}
+              legend={false}
+              count={person.works.totalCount}
+            ></TypesChart>
+          </Col>
+        </Row>
       </React.Fragment>
     )
   }
 
   // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
-    if (!person.works.totalCount)
-      return (
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member">Introduction</h3>
-            <p>
-              DataCite Commons is a web search interface for the{' '}
-              <a
-                href="https://doi.org/10.5438/jwvf-8a66"
-                target="_blank"
-                rel="noreferrer"
-              >
-                PID Graph
-              </a>
-              , the graph formed by the collection of scholarly resources such
-              as publications, datasets, people and research organizations, and
-              their connections. The PID Graph uses persistent identifiers and{' '}
-              <a href="https://graphql.org/" target="_blank" rel="noreferrer">
-                GraphQL
-              </a>
-              , with PIDs and metadata provided by DataCite, Crossref, ORCID,
-              and others.
-            </p>
-            <p>
-              DataCite Commons is work in progress and will officially launch in
-              October 2020. The work is supported by funding from the European
-              Union’s Horizon 2020 research and innovation programme.
-            </p>
-            <p>
-              <a
-                href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Provide input to the DataCite Roadmap
-              </a>{' '}
-              |{' '}
-              <a
-                href="https://support.datacite.org/docs/datacite-search-user-documentation"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Information in DataCite Support
-              </a>
-            </p>
-          </div>
-        </div>
-      )
-
     const hasNextPage = person.works.pageInfo
       ? person.works.pageInfo.hasNextPage
       : false
@@ -242,16 +189,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
     if (!person.works.totalCount)
       return (
-        <React.Fragment>
-          <Alert bsStyle="warning">No works found.</Alert>
-
-          <Pager
-            url={'/people' + orcidFromUrl(person.id) + '/?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-            isNested={true}
-          ></Pager>
-        </React.Fragment>
+        <Alert bsStyle="warning">No works found.</Alert>
       )
 
     return (
@@ -262,12 +200,14 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
         <DoiRelatedContent dois={person.works} />
 
-        <Pager
-          url={'/people' + orcidFromUrl(person.id) + '/?'}
-          hasNextPage={hasNextPage}
-          endCursor={endCursor}
-          isNested={true}
-        ></Pager>
+        {person.works.totalCount > 25 && (
+          <Pager
+            url={'/people' + orcidFromUrl(person.id) + '/?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+            isNested={true}
+          ></Pager>
+        )}
       </React.Fragment>
     )
   }
