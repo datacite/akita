@@ -509,6 +509,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       </div>
     )
   }
+  
   return (
     <div>
       {renderFacets()}

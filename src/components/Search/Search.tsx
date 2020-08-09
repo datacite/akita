@@ -8,8 +8,11 @@ import SearchOrganization from '../SearchOrganization/SearchOrganization'
 import SearchPerson from '../SearchPerson/SearchPerson'
 import About from '../About/About'
 
-const Search: React.FunctionComponent = () => {
-  //const router = useRouter()
+type Props = {
+  useTabs?: boolean
+}
+
+const Search: React.FunctionComponent<Props> = ({ useTabs }) => {
   const [searchQuery, setSearchQuery] = useQueryState('query', {
     history: 'push'
   })
@@ -22,11 +25,39 @@ const Search: React.FunctionComponent = () => {
     setSearchQuery('')
   }
 
+  if (!useTabs) {
+    return (
+      <form className="form-horizontal search search-inline">
+        <input
+          name="query"
+          value={searchQuery || ''}
+          onChange={onSearchChange}
+          placeholder="Type to search..."
+          className="form-control"
+          type="text"
+        />
+        <span id="search-icon" title="Search" aria-label="Search">
+          <FontAwesomeIcon icon={faSearch} />
+        </span>
+        {searchQuery && (
+          <span
+            id="search-clear"
+            title="Clear"
+            aria-label="Clear"
+            onClick={onSearchClear}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        )}
+      </form>
+    )
+  }
+
   return (
     <TabContainer defaultActiveKey="works" id="search-tabs">
       <React.Fragment>
         <Row>
-          <Col md={6} mdOffset={3}>
+          <Col md={9} mdOffset={3}>
             <form className="form-horizontal search">
               <input
                 name="query"
@@ -91,6 +122,10 @@ const Search: React.FunctionComponent = () => {
       </React.Fragment>
     </TabContainer>
   )
+}
+
+Search.defaultProps = {
+  useTabs: true    
 }
 
 export default Search

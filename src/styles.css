@@ -175,6 +175,10 @@ ul.ror-identifiers {
   display: none;
 }
 
-/* h3.member-results {
-  margin-left: 0;
-} */
+#related-content {
+  margin-top: 30px;
+}
+
+#related-content h3.member-results {
+  margin-top: 20px;
+}

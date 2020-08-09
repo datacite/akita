@@ -1,4 +1,4 @@
-describe("Search Person", () => {
+describe("Search People", () => {
   beforeEach(() => {
     cy.visit("/")
     cy.get('a#search-tabs-tab-people')

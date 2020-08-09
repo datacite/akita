@@ -1,4 +1,4 @@
-describe("Search Organization", () => {
+describe("Search Organizations", () => {
   beforeEach(() => {
     cy.visit("/")
     cy.get('a#search-tabs-tab-organizations')
@@ -12,9 +12,9 @@ describe("Search Organization", () => {
       .should('contain', 'Introduction')
   })
 
-  it("search for richard hallett", () => {
+  it("search for oxford", () => {
     cy.get('input[name="query"]')
-      .type('richard hallett')
+      .type('oxford')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Organizations')
@@ -33,7 +33,7 @@ describe("Search Organization", () => {
 
   it("search and reset", () => {
     cy.get('input[name="query"]')
-      .type('richard')
+      .type('oxford')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       // results are found
