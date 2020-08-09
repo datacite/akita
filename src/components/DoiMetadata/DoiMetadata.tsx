@@ -85,7 +85,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
 
   const creators = () => {
     if (!metadata.creators[0])
-      return <div className="creators alert alert-warning">No creators</div>
+      return 'No creator'
 
     const creatorList = metadata.creators.reduce(
       (sum, creator, index, array) => {

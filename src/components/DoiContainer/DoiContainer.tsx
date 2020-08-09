@@ -3,7 +3,10 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
-import { connectionFragment, contentFragment } from '../SearchContent/SearchContent'
+import {
+  connectionFragment,
+  contentFragment
+} from '../SearchContent/SearchContent'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import {

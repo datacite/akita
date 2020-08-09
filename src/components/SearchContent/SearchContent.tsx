@@ -185,7 +185,6 @@ export const CONTENT_GQL = gql`
 const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const router = useRouter()
 
-  /* eslint-disable no-unused-vars */
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -201,7 +200,6 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<
     ContentQueryData,
@@ -509,7 +507,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       </div>
     )
   }
-  
+
   return (
     <div>
       {renderFacets()}

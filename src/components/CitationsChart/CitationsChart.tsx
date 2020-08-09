@@ -1,7 +1,6 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-import { Grid, Row } from 'react-bootstrap'
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 
@@ -119,31 +118,24 @@ const CitationsChart: React.FunctionComponent<Props> = ({
   }
 
   const title = () => {
-    // const style = {
-    //   color:'#1abc9c',
-    // }
     return (
-      <small>
+      <div>
         <Pluralize singular={'Citation'} count={citationCount} /> reported since
         publication in {publicationYear}
-      </small>
+      </div>
     )
   }
 
   return (
     <div className="panel panel-transparent">
       <div className="citation-chart panel-body">
-        <Grid>
-          <Row>{title()}</Row>
-          <Row>
-            <VegaLite
-              renderer="svg"
-              spec={spec}
-              data={{ table: data }}
-              actions={actions}
-            />
-          </Row>
-        </Grid>
+        <div>{title()}</div>
+        <VegaLite
+          renderer="svg"
+          spec={spec}
+          data={{ table: data }}
+          actions={actions}
+        />
       </div>
     </div>
   )
