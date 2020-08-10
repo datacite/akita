@@ -72,7 +72,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "cypress": "^4.12.0",
+    "cypress": "4.12.1",
     "cypress-react-unit-test": "^4.4.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
