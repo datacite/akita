@@ -9,7 +9,7 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
-import { PageInfo } from '../SearchContent/SearchContent'
+import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -39,82 +39,17 @@ export const DOI_GQL = gql`
         name
         id
       }
+
       works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
-        totalCount
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        resourceTypes {
-          title
-          count
-          id
-        }
-        published {
-          title
-          count
-          id
-        }
-        affiliations {
-          count
-          title
-          id
-        }
-        repositories{
-          count
-          title
-          id
-        }
+        ...WorkConnectionFragment
         nodes {
-          doi
-          id
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
-          rights {
-            rights
-          }
-          citationCount
-          viewCount
-          downloadCount
+          ...WorkFragment
         }
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
 export interface PersonType {
@@ -200,7 +135,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     setOrcid(result)
   }, [orcid, data])
 
-  if (loading)
+  if (loading || !orcidRecord)
     return (
       <div className="row">
         <div className="col-md-3"></div>
@@ -228,8 +163,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
@@ -296,9 +229,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
           <div className="facets panel-body">
             <h4>Export</h4>
-            {/* <div id="export-bibtex" className="download">
-              <a target="_blank" rel="noopener" href={process.env.NEXT_PUBLIC_API_URL + "/dois/application/x-bibtex/"}>Works as BibTeX</a>
-            </div> */}
             <OverlayTrigger placement="top" overlay={bibtex}>
               <span className="share">Works as BibTeX</span>
             </OverlayTrigger>
@@ -434,25 +364,10 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
   }
 
-  // const rightSideBar = () => {
-  //   if (!orcidRecord.works) return '';
-
-  //   return (
-  //   )
-  // }
-
   const content = () => {
     return (
-      <div className="col-md-9 panel-list" id="content">
-        <div
-          key={orcidRecord.id}
-          className="panel panel-transparent content-orcid"
-        >
-          <div className="panel-body">
-            <Person person={orcidRecord} />
-          </div>
-          <br />
-        </div>
+      <div className="col-md-9" id="content">
+        <Person person={orcidRecord} />
       </div>
     )
   }
@@ -461,7 +376,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     <div className="row">
       {leftSideBar()}
       {content()}
-      {/* {rightSideBar()} */}
     </div>
   )
 }

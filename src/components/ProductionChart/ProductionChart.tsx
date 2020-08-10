@@ -1,7 +1,6 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-import { Grid, Row } from 'react-bootstrap'
 /* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 
@@ -12,7 +11,6 @@ interface ChartRecord {
 
 type Props = {
   data?: ChartRecord[]
-  id?: string
   doiCount: number
 }
 
@@ -26,7 +24,6 @@ const actions = {
 /* eslint-disable no-unused-vars */
 const ProductionChart: React.FunctionComponent<Props> = ({
   data,
-  id,
   doiCount
 }) => {
   /* istanbul ignore next */
@@ -119,30 +116,23 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const mydata = data
 
   const title = () => {
-    // const style = {
-    //   color: '#1abc9c',
-    // }
     return (
-      <small>
-        <Pluralize singular={'Work'} count={doiCount} /> reported.
-      </small>
+      <React.Fragment>
+        <Pluralize singular={'work'} count={doiCount} /> reported.
+      </React.Fragment>
     )
   }
 
   return (
     <div className="panel panel-transparent">
-      <div className="production-chart panel-body">
-        <Grid>
-          <Row>{title()}</Row>
-          <Row>
-            <VegaLite
-              renderer="svg"
-              spec={spec}
-              data={{ table: mydata }}
-              actions={actions}
-            />
-          </Row>
-        </Grid>
+      <div className="panel-body production-chart">
+        <div className="title">{title()}</div>
+        <VegaLite
+          renderer="svg"
+          spec={spec}
+          data={{ table: mydata }}
+          actions={actions}
+        />
       </div>
     </div>
   )

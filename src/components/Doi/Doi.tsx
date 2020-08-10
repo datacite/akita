@@ -16,8 +16,7 @@ type Props = {
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
-  if (!doi) return <Alert bsStyle="warning">No content found.</Alert>
-
+  if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
   const formattedCitation = () => {
     const [selectedOption, setSelectedOption] = React.useState('')
 
@@ -45,14 +44,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       </div>
     )
   }
-
-  // const style = {
-  //   fontWeight: 600,
-  //   color:'#1abc9c',
-  //   fontSize: '25px',
-  //   padding: 0,
-  //   margin: '0 0 .35em 10px',
-  // }
 
   const citationsTabLabel = Pluralize({
     count: compactNumbers(doi.citationCount),
@@ -84,10 +75,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
+    if (doi.citations.totalCount == 0) return ''
+
     return (
       <div className="panel panel-transparent">
-        <div className="panel-body tab-content nav-tabs-member">
-          <Tabs id="over-time-tabs">
+        <div className="panel-body nav-tabs-member">
+          <Tabs className="content-tabs" id="over-time-tabs">
             {doi.citationCount > 0 && (
               <Tab
                 className="citations-over-time-tab"
@@ -162,25 +155,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       ? doi.references.pageInfo.endCursor
       : ''
 
+    if (doi.citations.totalCount == 0) return ''
+
     return (
       <div className="panel panel-transparent">
-        <div className="panel-body tab-content nav-tabs-member">
-          <Tabs id="related-content-tabs">
-            {doi.citations.totalCount > 0 && (
-              <Tab
-                className="citations-list"
-                eventKey="citationsList"
-                title={citationsTabLabel}
-              >
-                <DoiRelatedContent dois={doi.citations} type="citation" />
-                <Pager
-                  url={'/dois/' + doi.doi + '/?'}
-                  hasNextPage={hasNextPageCitations}
-                  endCursor={endCursorCitations}
-                  isNested={true}
-                ></Pager>
-              </Tab>
-            )}
+        <div className="panel-body nav-tabs-member">
+          <Tabs className="content-tabs" id="related-content-tabs">
             {doi.references.totalCount > 0 && (
               <Tab
                 className="references-list"
@@ -188,12 +168,31 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 title={referencesTabLabel}
               >
                 <DoiRelatedContent dois={doi.references} type="reference" />
-                <Pager
-                  url={'/dois/' + doi.doi + '/?'}
-                  hasNextPage={hasNextPageReferences}
-                  endCursor={endCursorReferences}
-                  isNested={true}
-                ></Pager>
+                {doi.references.totalCount > 25 && (
+                  <Pager
+                    url={'/dois/' + doi.doi + '/?'}
+                    hasNextPage={hasNextPageReferences}
+                    endCursor={endCursorReferences}
+                    isNested={true}
+                  ></Pager>
+                )}
+              </Tab>
+            )}
+            {doi.citations.totalCount > 0 && (
+              <Tab
+                className="citations-list"
+                eventKey="citationsList"
+                title={citationsTabLabel}
+              >
+                <DoiRelatedContent dois={doi.citations} type="citation" />
+                {doi.citations.totalCount > 25 && (
+                  <Pager
+                    url={'/dois/' + doi.doi + '/?'}
+                    hasNextPage={hasNextPageCitations}
+                    endCursor={endCursorCitations}
+                    isNested={true}
+                  ></Pager>
+                )}
               </Tab>
             )}
           </Tabs>
@@ -203,19 +202,14 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   return (
-    <div key={doi.id} className="panel panel-transparent">
+    <React.Fragment>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <div key={doi.id} className="panel panel-transparent content-metadata">
-        <div className="panel-body">
-          <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
-        </div>
-      </div>
+      <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
 
-      <br />
       {formattedCitation()}
       {analyticsBar()}
       {relatedContent()}
-    </div>
+    </React.Fragment>
   )
 }
 

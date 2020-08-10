@@ -46,9 +46,11 @@ const data = {
   viewsOverTime: [],
   downloadsOverTime: [],
   citations: {
+    totalCount: 0,
     nodes: []
   },
   references: {
+    totalCount: 2,
     nodes: [
       {
         id: 'https://handle.stage.datacite.org/10.21945/xs62-rp71',
@@ -131,14 +133,14 @@ describe('DoiRelatedContent Component', () => {
     mount(
       <DoiRelatedContent dois={data.references} type="references" count={2} />
     )
-    cy.get('div#related-content-list').should('be.visible')
+    cy.get('.panel-transparent').should('be.visible')
   })
 
   it('the list correct the right number of items', () => {
     mount(
       <DoiRelatedContent dois={data.references} type="references" count={2} />
     )
-    cy.get('div#related-content-items > div')
+    cy.get('.panel-transparent')
       .should('be.visible')
       .should('have.length', 2)
   })

@@ -5,10 +5,14 @@ describe("PersonContainer", () => {
     cy.visit(`/people/${encodeURIComponent('0000-0003-3484-6875')}`)
   })
 
-  it("visit 0000-0003-3484-6875", () => {
-    cy.get('h2.member-results',  { timeout: 30000 })
+  it("id", () => {
+    cy.get('h3.member-results',  { timeout: 30000 })
+      .contains('https://orcid.org/0000-0003-3484-6875')
+  })
+
+  it("name", () => {
+    cy.get('.panel-body h3.work',  { timeout: 30000 })
       .contains('K. J. Garza')
-      .should('be.visible')
   })
 
   it("share", () => {

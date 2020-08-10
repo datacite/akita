@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert } from 'react-bootstrap'
+import { Alert, OverlayTrigger, Popover } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
@@ -11,6 +11,7 @@ import {
   // faInfoCircle,
   // faEye,
   // faDownload,
+  faBookmark,
   faScroll
 } from '@fortawesome/free-solid-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
@@ -68,12 +69,32 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     )
   }
 
-  const orcid = () => {
+  const bookmark = (
+    <Popover id="bookmark" title="Bookmarking">
+      Bookmarking on this site will be implemented later in 2020.{' '}
+      <a
+        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Provide input
+      </a>
+    </Popover>
+  )
+
+  const footer = () => {
     return (
       <div className="panel-footer">
         <a id="orcid-link" href={metadata.id}>
           <FontAwesomeIcon icon={faOrcid} /> {metadata.id}
         </a>
+        <span className="actions">
+          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
+            <span className="bookmark">
+              <FontAwesomeIcon icon={faBookmark} size="sm" /> Bookmark
+            </span>
+          </OverlayTrigger>
+        </span>
       </div>
     )
   }
@@ -129,15 +150,11 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   return (
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
-        <ul className="counter-list">
-          {name()}
-          {afilliation()}
-          {workCount()}
-          {/* {metricsCounter()} */}
-        </ul>
-        {orcid()}
-        <br />
+        {name()}
+        {afilliation()}
+        {workCount()}
       </div>
+      {footer()}
     </div>
   )
 }

@@ -20,7 +20,7 @@ let exampleItem = {
   rights: [
     {
       rights: 'Creative Commons Attribution 3.0 Unported',
-      rightsUri: 'http://creativecommons.org/licenses/by/3.0/de/deed.en',
+      rightsUri: 'https://creativecommons.org/licenses/by/3.0/de/deed',
       rightsIdentifier: ' CC-BY-3.0',
       rightsIdentifierScheme: 'SPDX',
       schemeUri: 'https://spdx.org/licenses/'

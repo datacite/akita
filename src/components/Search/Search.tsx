@@ -1,14 +1,18 @@
 import * as React from 'react'
 import { useQueryState } from 'next-usequerystate'
-import { Row, Col, Tab, Tabs } from 'react-bootstrap'
+import { Row, Col, TabContent, TabPane, TabContainer, Nav, NavItem } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faTimes, faBook, faUniversity, faUserGraduate } from '@fortawesome/free-solid-svg-icons'
 import SearchContent from '../SearchContent/SearchContent'
 import SearchOrganization from '../SearchOrganization/SearchOrganization'
 import SearchPerson from '../SearchPerson/SearchPerson'
+import About from '../About/About'
 
-const Search: React.FunctionComponent = () => {
-  //const router = useRouter()
+type Props = {
+  useTabs?: boolean
+}
+
+const Search: React.FunctionComponent<Props> = ({ useTabs }) => {
   const [searchQuery, setSearchQuery] = useQueryState('query', {
     history: 'push'
   })
@@ -21,116 +25,107 @@ const Search: React.FunctionComponent = () => {
     setSearchQuery('')
   }
 
-  const renderIntroduction = () => {
+  if (!useTabs) {
     return (
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          <h3 className="member">Introduction</h3>
-          <p>
-            DataCite Commons is a web search interface for the{' '}
-            <a
-              href="https://doi.org/10.5438/jwvf-8a66"
-              target="_blank"
-              rel="noreferrer"
-            >
-              PID Graph
-            </a>
-            , the graph formed by the collection of scholarly resources such as
-            publications, datasets, people and research organizations, and their
-            connections. The PID Graph uses persistent identifiers and{' '}
-            <a href="https://graphql.org/" target="_blank" rel="noreferrer">
-              GraphQL
-            </a>
-            , with PIDs and metadata provided by DataCite, Crossref, ORCID, and
-            others.
-          </p>
-          <p>
-            DataCite Commons is work in progress and will officially launch in
-            October 2020. The work is supported by funding from the European
-            Union’s Horizon 2020 research and innovation programme.
-          </p>
-          <p>
-            <a
-              href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Provide input to the DataCite Roadmap
-            </a>{' '}
-            |{' '}
-            <a
-              href="https://support.datacite.org/docs/datacite-search-user-documentation"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Information in DataCite Support
-            </a>
-          </p>
-        </div>
-      </div>
+      <form className="form-horizontal search search-inline">
+        <input
+          name="query"
+          value={searchQuery || ''}
+          onChange={onSearchChange}
+          placeholder="Type to search..."
+          className="form-control"
+          type="text"
+        />
+        <span id="search-icon" title="Search" aria-label="Search">
+          <FontAwesomeIcon icon={faSearch} />
+        </span>
+        {searchQuery && (
+          <span
+            id="search-clear"
+            title="Clear"
+            aria-label="Clear"
+            onClick={onSearchClear}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        )}
+      </form>
     )
   }
 
   return (
-    <div>
-      <Row>
-        <Col md={3}></Col>
-        <Col md={6}>
-          <form className="form-horizontal search">
-            <input
-              name="query"
-              value={searchQuery || ''}
-              onChange={onSearchChange}
-              placeholder="Type to search..."
-              className="form-control"
-              type="text"
-            />
-            <span id="search-icon" title="Search" aria-label="Search">
-              <FontAwesomeIcon icon={faSearch} />
-            </span>
-            {searchQuery && (
-              <span
-                id="search-clear"
-                title="Clear"
-                aria-label="Clear"
-                onClick={onSearchClear}
-              >
-                <FontAwesomeIcon icon={faTimes} />
+    <TabContainer defaultActiveKey="works" id="search-tabs">
+      <React.Fragment>
+        <Row>
+          <Col md={9} mdOffset={3}>
+            <form className="form-horizontal search">
+              <input
+                name="query"
+                value={searchQuery || ''}
+                onChange={onSearchChange}
+                placeholder="Type to search..."
+                className="form-control"
+                type="text"
+              />
+              <span id="search-icon" title="Search" aria-label="Search">
+                <FontAwesomeIcon icon={faSearch} />
               </span>
-            )}
-          </form>
-        </Col>
-      </Row>
-      <Row>
-        <Col></Col>
-        <Col>
-          <Tabs defaultActiveKey="content" id="noanim-tab-example">
-            <Tab eventKey="people" title="People">
-              {!searchQuery || searchQuery === ' ' ? (
-                renderIntroduction()
-              ) : (
-                <SearchPerson searchQuery={searchQuery} />
+              {searchQuery && (
+                <span
+                  id="search-clear"
+                  title="Clear"
+                  aria-label="Clear"
+                  onClick={onSearchClear}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </span>
               )}
-            </Tab>
-            <Tab eventKey="content" title="Content">
+            </form>
+
+            <Nav bsStyle="tabs" id="search-nav">
+              <NavItem eventKey="works"><FontAwesomeIcon icon={faBook} /> Works</NavItem>
+              <NavItem eventKey="people"><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
+              <NavItem eventKey="organizations"><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
+            </Nav>
+          </Col>
+        </Row>
+        
+        <TabContent animation>
+          <TabPane eventKey="works">
+            <React.Fragment>
               {!searchQuery || searchQuery === ' ' ? (
-                renderIntroduction()
+                <About title={'Introduction'} />
               ) : (
                 <SearchContent searchQuery={searchQuery} />
               )}
-            </Tab>
-            <Tab eventKey="organisations" title="Organisations">
+            </React.Fragment>
+          </TabPane>
+          <TabPane eventKey="people">
+            <React.Fragment>
               {!searchQuery || searchQuery === ' ' ? (
-                renderIntroduction()
+                <About title={'Introduction'} />
+              ) : (
+                <SearchPerson searchQuery={searchQuery} />
+              )}
+            </React.Fragment>
+          </TabPane>
+          <TabPane eventKey="organizations">
+            <React.Fragment>
+              {!searchQuery || searchQuery === ' ' ? (
+                <About title={'Introduction'} />
               ) : (
                 <SearchOrganization searchQuery={searchQuery} />
               )}
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row>
-    </div>
+            </React.Fragment>
+          </TabPane>
+        </TabContent>
+      </React.Fragment>
+    </TabContainer>
   )
+}
+
+Search.defaultProps = {
+  useTabs: true    
 }
 
 export default Search

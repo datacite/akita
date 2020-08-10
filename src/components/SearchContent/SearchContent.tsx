@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-import { Alert, Pager } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
@@ -11,6 +11,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import Error from '../Error/Error'
 import ContentLoader from 'react-content-loader'
+import Pager from '../Pager/Pager'
 
 type Props = {
   searchQuery: string
@@ -57,28 +58,9 @@ interface ContentQueryVar {
   registrationAgency: string
 }
 
-export const CONTENT_GQL = gql`
-  query getContentQuery(
-    $query: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
-  ) {
-    works(
-      first: 25
-      query: $query
-      after: $cursor
-      published: $published
-      resourceTypeId: $resourceTypeId
-      fieldOfScience: $fieldOfScience
-      language: $language
-      license: $license
-      registrationAgency: $registrationAgency
-    ) {
+export const connectionFragment = {
+  workConnection: gql`
+    fragment WorkConnectionFragment on WorkConnectionWithTotal {
       totalCount
       pageInfo {
         endCursor
@@ -114,77 +96,110 @@ export const CONTENT_GQL = gql`
         title
         count
       }
-      nodes {
+    }
+  `
+}
+
+export const contentFragment = {
+  work: gql`
+    fragment WorkFragment on Work {
+      id
+      doi
+      types {
+        resourceTypeGeneral
+        resourceType
+      }
+      titles {
+        title
+      }
+      creators {
         id
-        doi
-        types {
-          resourceTypeGeneral
-          resourceType
-        }
-        titles {
-          title
-        }
-        creators {
-          id
-          name
-          givenName
-          familyName
-        }
-        descriptions {
-          description
-          descriptionType
-        }
-        publicationYear
-        publisher
-        version
-        rights {
-          rights
-          rightsUri
-          rightsIdentifier
-        }
-        fieldsOfScience {
-          id
-          name
-        }
-        language {
-          id
-          name
-        }
-        registrationAgency {
-          id
-          name
-        }
-        registered
-        citationCount
-        viewCount
-        downloadCount
+        name
+        givenName
+        familyName
+      }
+      descriptions {
+        description
+        descriptionType
+      }
+      publicationYear
+      publisher
+      version
+      rights {
+        rights
+        rightsUri
+        rightsIdentifier
+      }
+      fieldsOfScience {
+        id
+        name
+      }
+      language {
+        id
+        name
+      }
+      registrationAgency {
+        id
+        name
+      }
+      registered
+      citationCount
+      viewCount
+      downloadCount
+    }
+  `
+}
+
+export const CONTENT_GQL = gql`
+  query getContentQuery(
+    $query: String
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+  ) {
+    works(
+      first: 25
+      query: $query
+      after: $cursor
+      published: $published
+      resourceTypeId: $resourceTypeId
+      fieldOfScience: $fieldOfScience
+      language: $language
+      license: $license
+      registrationAgency: $registrationAgency
+    ) {
+      ...WorkConnectionFragment
+      nodes {
+        ...WorkFragment
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
-const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
+const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const router = useRouter()
 
-  /* eslint-disable no-unused-vars */
-  const [published, setPublished] = useQueryState('published', {
+  const [published] = useQueryState('published', {
     history: 'push'
   })
-  const [resourceType, setResourceType] = useQueryState('resource-type', {
+  const [resourceType] = useQueryState('resource-type', {
     history: 'push'
   })
-  const [fieldOfScience, setFieldOfScience] = useQueryState(
-    'field-of-science',
-    { history: 'push' }
-  )
-  const [license, setLicense] = useQueryState('license', { history: 'push' })
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
-  const [
-    registrationAgency,
-    setRegistrationAgency
-  ] = useQueryState('registration-agency', { history: 'push' })
-  const [cursor, setCursor] = useQueryState('cursor', { history: 'push' })
-  /* eslint-enable no-unused-vars */
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
+  const [license] = useQueryState('license', { history: 'push' })
+  const [language] = useQueryState('language', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
+  const [cursor] = useQueryState('cursor', { history: 'push' })
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<
     ContentQueryData,
@@ -203,41 +218,41 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
     }
   })
 
-  const renderPagination = () => {
-    let url = '/?'
-    let firstPageUrl = null
-    let hasFirstPage = false
-    let nextPageUrl = null
-    let hasNextPage = false
+  // const renderPagination = () => {
+  //   let url = '/?'
+  //   let firstPageUrl = null
+  //   let hasFirstPage = false
+  //   let nextPageUrl = null
+  //   let hasNextPage = false
 
-    // get current query parameters from next router
-    let params = new URLSearchParams(router.query as any)
+  //   // get current query parameters from next router
+  //   let params = new URLSearchParams(router.query as any)
 
-    if (params.get('cursor')) {
-      // remove cursor query parameter for first page
-      params.delete('cursor')
-      firstPageUrl = url + params.toString()
-      hasFirstPage = typeof firstPageUrl === 'string'
-    }
+  //   if (params.get('cursor')) {
+  //     // remove cursor query parameter for first page
+  //     params.delete('cursor')
+  //     firstPageUrl = url + params.toString()
+  //     hasFirstPage = typeof firstPageUrl === 'string'
+  //   }
 
-    if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
-      // set cursor query parameter for next page
-      params.set('cursor', data.works.pageInfo.endCursor)
-      nextPageUrl = url + params.toString()
-      hasNextPage = typeof nextPageUrl === 'string'
-    }
+  //   if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
+  //     // set cursor query parameter for next page
+  //     params.set('cursor', data.works.pageInfo.endCursor)
+  //     nextPageUrl = url + params.toString()
+  //     hasNextPage = typeof nextPageUrl === 'string'
+  //   }
 
-    return (
-      <Pager>
-        <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>
-          First Page
-        </Pager.Item>
-        <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>
-          Next Page
-        </Pager.Item>
-      </Pager>
-    )
-  }
+  //   return (
+  //     <Pager>
+  //       <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>
+  //         First Page
+  //       </Pager.Item>
+  //       <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>
+  //         Next Page
+  //       </Pager.Item>
+  //     </Pager>
+  //   )
+  // }
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
@@ -266,21 +281,26 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <ContentLoader
-          speed={1}
-          width={1000}
-          height={250}
-          viewBox="0 0 1000 250"
-          backgroundColor="#f3f3f3"
-          foregroundColor="#ecebeb"
-        >
-          <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-          <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-          <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-          <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-          <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-          <circle cx="54" cy="61" r="45" />
-        </ContentLoader>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
+            <ContentLoader
+              speed={1}
+              width={1000}
+              height={250}
+              viewBox="0 0 1000 250"
+              backgroundColor="#f3f3f3"
+              foregroundColor="#ecebeb"
+            >
+              <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+              <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+              <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+              <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+              <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+              <circle cx="54" cy="61" r="45" />
+            </ContentLoader>
+          </div>
+        </div>
       )
 
     if (error)
@@ -288,30 +308,42 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (!loading && searchResults.length == 0)
       return (
-        <React.Fragment>
-          <Alert bsStyle="warning">No content found.</Alert>
-
-          {renderPagination()}
-        </React.Fragment>
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-9">
+            <Alert bsStyle="warning">No works found.</Alert>
+          </div>
+        </div>
       )
 
+    const hasNextPage = data.works.pageInfo
+      ? data.works.pageInfo.hasNextPage
+      : false
+    const endCursor = data.works.pageInfo
+      ? data.works.pageInfo.endCursor
+      : ''
+
     return (
-      <div>
+      <div className="col-md-9" id="content">
         {searchResults.length > 1 && (
           <h3 className="member-results">
-            {data.works.totalCount.toLocaleString('en-US')} Results
+            {data.works.totalCount.toLocaleString('en-US')} Works
           </h3>
         )}
 
-        <div className="panel-body" id="related-content-items">
-          {searchResults.map((item) => (
-            <React.Fragment key={item.id}>
-              <DoiMetadata metadata={item} />
-            </React.Fragment>
-          ))}
-        </div>
+        {searchResults.map((item) => (
+          <React.Fragment key={item.id}>
+            <DoiMetadata metadata={item} />
+          </React.Fragment>
+        ))}
 
-        {renderPagination()}
+        {searchResults.length > 25 && (
+          <Pager
+            url={'/?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+          ></Pager>
+        )}
       </div>
     )
   }
@@ -379,7 +411,7 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
         <div className="panel facets add">
           <div className="panel-body">
-            <h4>Content Type</h4>
+            <h4>Work Type</h4>
             <ul>
               {data.works.resourceTypes.map((facet) => (
                 <li key={facet.id}>
@@ -475,14 +507,13 @@ const Search: React.FunctionComponent<Props> = ({ searchQuery }) => {
       </div>
     )
   }
+
   return (
     <div>
       {renderFacets()}
-      <div className="col-md-9 panel-list" id="content">
-        {renderResults()}
-      </div>
+      {renderResults()}
     </div>
   )
 }
 
-export default Search
+export default SearchContent
