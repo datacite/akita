@@ -43,6 +43,7 @@ h3.popover-title {
 
 .form-horizontal.search {
   max-width: 100%;
+  padding-bottom: 0;
 }
 
 .form-horizontal.search input[name="query"] {
@@ -156,6 +157,47 @@ ul.ror-identifiers {
 }
 
 .no-content {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#search-nav {
+  margin-bottom: 1.25em;
+}
+
+#search-tabs-tab-works {
+  padding-left: 36px;
+}
+
+#search-tabs-tab-works::before, #search-tabs-tab-works::after,
+#search-tabs-tab-people::before, #search-tabs-tab-people::after,
+#search-tabs-tab-organizations::before, #search-tabs-tab-organizations::after {
+  display: none;
+}
+
+#related-content {
+  margin-top: 30px;
+}
+
+#related-content h3.member-results {
+  margin-top: 20px;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 10px;
+}
+
+ul.nav.nav-tabs li {
+  margin-left: -15px;
+  margin-right: 30px;
+}
+
+.content-tabs .tab-content {
+  margin-left: -10px;
+}
+
+ul.nav.nav-tabs li span {
+  font-weight: 600;
+  color: #1abc9c;
+  font-size: 25px;
 }

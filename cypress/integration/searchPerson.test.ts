@@ -1,7 +1,7 @@
-describe("Search Person", () => {
+describe("Search People", () => {
   beforeEach(() => {
     cy.visit("/")
-    cy.get('a#noanim-tab-example-tab-people')
+    cy.get('a#search-tabs-tab-people')
     .click()
   })
 
@@ -17,14 +17,11 @@ describe("Search Person", () => {
       .type('richard hallett')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
-      .should('contain', 'Results')
+      .should('contain', 'People')
       // results are rendered
-      .get('.counter-list').should(($contentItem) => {
-        expect($contentItem).length.to.be.gt(20)
+      .get('.panel-transparent').should(($person) => {
+        expect($person).to.have.length.at.least(4)
       })
-      // .get(':nth-child(2) > .panel-body > .registered')
-      // .should('contain', 'DOI registered')
-      // all facets are rendered
   })
 
   it("search and reset", () => {
@@ -33,7 +30,7 @@ describe("Search Person", () => {
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       // results are found
-      .should('contain', 'Results')
+      .should('contain', 'People')
       .get('#search-clear >').click()
       // return introduction text
       .get('.member')
@@ -61,11 +58,10 @@ describe("Search Person", () => {
 
   it("search with no results", () => {
     cy.get('input[name="query"]')
-      .type(' ')
+      .type('xxxxxyyyyy')
       // timeout for the query results to return
-      // return introduction text
-      .get('.member', { timeout: 60000 })
-      .should('contain', 'Introduction')
+      .get('.alert-warning', { timeout: 60000 })
+      .should('contain', 'No people found.')
   })
 
 })

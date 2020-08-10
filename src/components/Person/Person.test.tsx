@@ -12,47 +12,61 @@ const data = {
   downloadCount: 4504,
   affiliation: [],
   works: {
+    pageInfo: {
+      endCursor: 'MQ',
+      hasNextPage: true
+    },
     totalCount: 500,
     published: [
       {
+        id: '2020',
         title: '2020',
         count: 20
       },
       {
+        id: '2019',
         title: '2019',
         count: 37
       },
       {
+        id: '2018',
         title: '2018',
         count: 31
       },
       {
+        id: '2017',
         title: '2017',
         count: 21
       }
     ],
     resourceTypes: [
       {
+        id: 'text',
         title: 'Text',
         count: 126
       },
       {
+        id: 'audiovisual',
         title: 'Audiovisual',
         count: 16
       },
       {
+        id: 'dataset',
         title: 'Dataset',
         count: 15
       },
       {
+        id: 'software',
         title: 'Software',
         count: 11
       },
       {
+        id: 'collection',
         title: 'Collection',
         count: 3
       },
       {
+        id: 'image',
         title: 'Image',
         count: 2
       }
@@ -97,32 +111,35 @@ describe('Person Component', () => {
   it('orcid', () => {
     mount(<Person person={data} />)
     cy.get('a#orcid-link')
-      .contains('https://orcid.org/0000-0003-3484-6875')
-      .should('be.visible')
+      .contains('Juan Perez')
+    cy.get('a#orcid-link')
+      .should('have.attr', 'href')
+      .and('eq', 'https://orcid.org/0000-0003-3484-6875')
   })
 
   it('link to doi page', () => {
     mount(<Person person={data} />)
     cy.get('h3.work > a')
-      .first()
+      // the second element, the first is a#orcid-link
+      .eq(1)
       .should('have.attr', 'href')
       .and('include', '/doi.org/')
   })
 
-  it('workCount', () => {
+  it('work count', () => {
     mount(<Person person={data} />)
-    cy.get('h3#work-count').contains('500').should('be.visible')
+    cy.get('.production-chart').contains('500')
   })
 
-  it('citationCount', () => {
-    mount(<Person person={data} />)
-    cy.get('div#citation-count').contains('33').should('be.visible')
-  })
+  // it('citationCount', () => {
+  //   mount(<Person person={data} />)
+  //   cy.get('div#citation-count').contains('33').should('be.visible')
+  // })
 
-  it('viewCount', () => {
-    mount(<Person person={data} />)
-    cy.get('div#view-count').should('not.be.visible')
-  })
+  // it('viewCount', () => {
+  //   mount(<Person person={data} />)
+  //   cy.get('div#view-count').should('not.be.visible')
+  // })
 
   // it('downloadCount', () => {
   //   mount(<Person person={data}/>)
@@ -134,14 +151,12 @@ describe('Person Component', () => {
   it('analytics bar', () => {
     mount(<Person person={data} />)
     cy.get('.types-chart').should('be.visible')
-
     cy.get('.production-chart').should('be.visible')
   })
 
   it('related content section', () => {
     mount(<Person person={data} />)
-    cy.get('.member-results').should('be.visible')
-
-    cy.get('.creators').contains('John Smith').should('be.visible')
+    cy.get('.member-results').contains('Works')
+    cy.get('.creators').contains('John Smith')
   })
 })

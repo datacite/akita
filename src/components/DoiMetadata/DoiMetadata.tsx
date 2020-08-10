@@ -84,8 +84,13 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   }
 
   const creators = () => {
-    if (!metadata.creators[0])
-      return <div className="creators alert alert-warning">No creators</div>
+    if (!metadata.creators[0]) {
+      return (
+        <div className="creators">
+          No creators
+        </div>
+      )
+    }
 
     const creatorList = metadata.creators.reduce(
       (sum, creator, index, array) => {
@@ -394,8 +399,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   const footer = () => {
     return (
       <div className="panel-footer">
-        <a href={metadata.doi}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.doi}
+        <a href={metadata.id}>
+          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">
           <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
@@ -414,7 +419,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div className="panel panel-transparent content-item">
+    <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         {title()}
         {creators()}

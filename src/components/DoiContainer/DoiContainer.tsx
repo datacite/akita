@@ -3,6 +3,10 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Doi from '../Doi/Doi'
+import {
+  connectionFragment,
+  contentFragment
+} from '../SearchContent/SearchContent'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import {
@@ -21,45 +25,7 @@ type Props = {
 export const DOI_GQL = gql`
   query getContentQuery($id: ID!, $cursor: String) {
     work(id: $id) {
-      id
-      doi
-      titles {
-        title
-      }
-      types {
-        resourceTypeGeneral
-        resourceType
-      }
-      creators {
-        id
-        name
-        givenName
-        familyName
-      }
-      version
-      publicationYear
-      publisher
-      descriptions {
-        description
-      }
-      rights {
-        rights
-        rightsUri
-        rightsIdentifier
-      }
-      fieldsOfScience {
-        id
-        name
-      }
-      language {
-        id
-        name
-      }
-      registrationAgency {
-        id
-        name
-      }
-      registered
+      ...WorkFragment
       formattedCitation
       citationCount
       citationsOverTime {
@@ -76,102 +42,22 @@ export const DOI_GQL = gql`
         yearMonth
         total
       }
-      citations(first: 5, after: $cursor) {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        totalCount
+      citations(first: 25, after: $cursor) {
+        ...WorkConnectionFragment
         nodes {
-          doi
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
+          ...WorkFragment
         }
       }
       references(first: 5, after: $cursor) {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        totalCount
+        ...WorkConnectionFragment
         nodes {
-          doi
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
+          ...WorkFragment
         }
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
 export interface DoiType {
@@ -309,7 +195,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     setDoi(result)
   }, [item, data])
 
-  if (loading)
+  if (loading || !doi)
     return (
       <div className="row">
         <div className="col-md-3"></div>
@@ -337,8 +223,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  if (!doi) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + doi.titles[0].title
@@ -474,7 +358,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <Doi doi={doi} />
+        <Doi doi={doi}></Doi>
       </div>
     )
   }

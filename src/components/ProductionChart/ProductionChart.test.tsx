@@ -87,11 +87,6 @@ describe('ProductionChart Component', () => {
       />
     )
     cy.get('.mark-rect > path').should('be.visible').should('have.length', 9)
-
-    cy.get('.production-chart').should('be.visible')
-
-    cy.get('small').should('be.visible')
-
-    cy.get('small').should('be.visible').contains('177 Works reported')
+    cy.get('.production-chart .title').should('be.visible').contains('177 works reported.')
   })
 })

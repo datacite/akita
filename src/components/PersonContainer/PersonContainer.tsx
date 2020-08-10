@@ -9,7 +9,7 @@ import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 // eslint-disable-next-line no-unused-vars
-import { PageInfo } from '../SearchContent/SearchContent'
+import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -38,69 +38,15 @@ export const DOI_GQL = gql`
         id
       }
       works(first: 25, after: $cursor) {
-        totalCount
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        resourceTypes {
-          title
-          count
-        }
-        published {
-          title
-          count
-        }
+        ...WorkConnectionFragment
         nodes {
-          doi
-          id
-          titles {
-            title
-          }
-          types {
-            resourceTypeGeneral
-            resourceType
-          }
-          creators {
-            id
-            name
-            givenName
-            familyName
-          }
-          version
-          publicationYear
-          publisher
-          descriptions {
-            description
-          }
-          rights {
-            rights
-            rightsUri
-            rightsIdentifier
-          }
-          fieldsOfScience {
-            id
-            name
-          }
-          language {
-            id
-            name
-          }
-          registrationAgency {
-            id
-            name
-          }
-          registered
-          rights {
-            rights
-          }
-          citationCount
-          viewCount
-          downloadCount
+          ...WorkFragment
         }
       }
     }
   }
+  ${connectionFragment.workConnection}
+  ${contentFragment.work}
 `
 
 export interface PersonType {
@@ -164,7 +110,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     setOrcid(result)
   }, [orcid, data])
 
-  if (loading)
+  if (loading || !orcidRecord)
     return (
       <div className="row">
         <div className="col-md-3"></div>
@@ -192,8 +138,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  if (!orcidRecord) return <p>Content not found.</p>
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
@@ -289,15 +233,8 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   const content = () => {
     return (
-      <div className="col-md-9 panel-list" id="content">
-        <div
-          key={orcidRecord.id}
-          className="panel panel-transparent content-orcid"
-        >
-          <div className="panel-body">
-            <Person person={orcidRecord} />
-          </div>
-        </div>
+      <div className="col-md-9" id="content">
+        <Person person={orcidRecord} />
       </div>
     )
   }
@@ -306,7 +243,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     <div className="row">
       {leftSideBar()}
       {content()}
-      {/* {rightSideBar()} */}
     </div>
   )
 }
