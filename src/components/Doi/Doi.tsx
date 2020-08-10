@@ -170,7 +170,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 <DoiRelatedContent dois={doi.references} type="reference" />
                 {doi.references.totalCount > 25 && (
                   <Pager
-                    url={'/dois/' + doi.doi + '/?'}
+                    url={'/doi.org/' + doi.doi + '/?'}
                     hasNextPage={hasNextPageReferences}
                     endCursor={endCursorReferences}
                     isNested={true}
@@ -187,7 +187,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 <DoiRelatedContent dois={doi.citations} type="citation" />
                 {doi.citations.totalCount > 25 && (
                   <Pager
-                    url={'/dois/' + doi.doi + '/?'}
+                    url={'/doi.org/' + doi.doi + '/?'}
                     hasNextPage={hasNextPageCitations}
                     endCursor={endCursorCitations}
                     isNested={true}
