@@ -44,7 +44,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.titles[0])
       return (
         <h3 className="work">
-          <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
+          <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -54,7 +54,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <h3 className="work">
-        <Link href="/dois/[...doi]" as={`/dois/${metadata.doi}`}>
+        <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -119,7 +119,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href="/people/[orcid]" key={index} as={`/people${c.id}`}>
+            <Link href="/orcid.org/[orcid]" key={index} as={`/orcid.org${c.id}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
@@ -422,7 +422,6 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         {title()}
-
         {creators()}
         {metadataTag()}
         {description()}

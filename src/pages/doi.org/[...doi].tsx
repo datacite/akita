@@ -3,7 +3,7 @@ import Layout from '../../components/Layout/Layout'
 import DoiContainer from '../../components/DoiContainer/DoiContainer'
 /* eslint-disable no-unused-vars*/
 import { GetServerSideProps } from 'next'
-/* eslint-ensable no-unused-vars*/
+/* eslint-enable no-unused-vars*/
 
 const DoisPage = ({ doiPath }) => {
   return (

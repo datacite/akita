@@ -123,7 +123,7 @@ describe('Person Component', () => {
       // the second element, the first is a#orcid-link
       .eq(1)
       .should('have.attr', 'href')
-      .and('include', '/dois/')
+      .and('include', '/doi.org/')
   })
 
   it('work count', () => {

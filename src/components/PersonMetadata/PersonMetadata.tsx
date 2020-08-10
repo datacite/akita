@@ -47,8 +47,8 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
       return (
         <h3 className="work">
           <Link
-            href="/people/[person]"
-            as={`/people${orcidFromUrl(metadata.id)}`}
+            href="/orcid.org/[person]"
+            as={`/orcid.org${orcidFromUrl(metadata.id)}`}
           >
             <a>No Title</a>
           </Link>
@@ -60,8 +60,8 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     return (
       <h3 className="work">
         <Link
-          href="/people/[person]"
-          as={`/people${orcidFromUrl(metadata.id)}`}
+          href="/orcid.org/[person]"
+          as={`/orcid.org${orcidFromUrl(metadata.id)}`}
         >
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
