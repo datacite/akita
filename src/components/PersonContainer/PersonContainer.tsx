@@ -4,7 +4,7 @@ import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import ContentLoader from 'react-content-loader'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from '../../../hooks/usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
@@ -19,6 +19,7 @@ import {
   TwitterShareButton
 } from "react-share"
 import FilterItem from "../FilterItem/FilterItem"
+import { useRouter } from 'next/router'
 
 type Props = {
   orcid?: string
@@ -161,7 +162,6 @@ interface OrcidQueryVar {
   resourceTypeId: string
   language: string
   fieldOfScience: string
-  license: string
   registrationAgency: string
   repositoryId: string
 
@@ -170,6 +170,9 @@ interface OrcidQueryVar {
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
+  // const router = useRouter()
+
+  // console.log(router)
 
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
@@ -341,7 +344,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
                     <ul>
                       {orcidRecord.works.resourceTypes.map(facet => (
                         <li key={facet.id}>
-                          <FilterItem name="resource-type-id" id={facet.id} count={facet.count} title={facet.title} />
+                          <FilterItem name="resource-type" id={facet.id} count={facet.count} title={facet.title} />
 
                         </li>
                       ))}
