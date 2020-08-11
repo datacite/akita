@@ -28,7 +28,7 @@ type Props = {
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $query: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     person(id: $id) {
       id
       name
@@ -42,7 +42,7 @@ export const DOI_GQL = gql`
         id
       }
 
-      works(first: 25, after: $cursor, query: $query, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -95,7 +95,6 @@ export interface OrcidDataQuery {
 interface OrcidQueryVar {
   id: string
   cursor: string
-  query: string
   published: string
   resourceTypeId: string
   language: string
@@ -117,15 +116,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
-  // const [relatedContentQuery, setRelatedContentQuery] = useQueryState('realtedContentQuery', {
-  //   history: 'push'
-  // })
+
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, query: relatedContentQuery as  string, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
     }
   )
 
