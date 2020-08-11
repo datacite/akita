@@ -12,7 +12,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -21,13 +21,14 @@ import {
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
+// import { Row, Col, Nav, NavItem } from 'react-bootstrap'
 
 type Props = {
   orcid?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery($id: ID!, $cursor: String, $query: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     person(id: $id) {
       id
       name
@@ -41,7 +42,7 @@ export const DOI_GQL = gql`
         id
       }
 
-      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      works(first: 25, after: $cursor, query: $query, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -94,6 +95,7 @@ export interface OrcidDataQuery {
 interface OrcidQueryVar {
   id: string
   cursor: string
+  query: string
   published: string
   resourceTypeId: string
   language: string
@@ -115,13 +117,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
-
+  // const [relatedContentQuery, setRelatedContentQuery] = useQueryState('realtedContentQuery', {
+  //   history: 'push'
+  // })
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
+      variables: { id: "http://orcid.org/" + orcid, query: relatedContentQuery as  string, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
     }
   )
 
@@ -176,7 +180,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
       // get current query parameters from next router
       let params = new URLSearchParams(router.query as any)
 
-      // delete organization parameter
+      // delete person parameter
       params.delete('person')
 
       // delete cursor parameter
@@ -203,10 +207,17 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
     return (
       <div>
+        {/* <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Filter by search</h4>
+            {relatedContentSearchBox()}
+          </div>
+        </div> */}
+
         <div className="panel facets add">
           <div className="panel-body">
             <h4>Publication Year</h4>
-            <ul>
+            <ul id="published-facets">
               {orcidRecord.works.published.map((facet) => (
                 <li key={facet.id}>
                   {facetLink('published', facet.id)}
@@ -224,7 +235,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         <div className="panel facets add">
           <div className="panel-body">
             <h4>Work Type</h4>
-            <ul>
+            <ul id="work-type-facets">
               {orcidRecord.works.resourceTypes.map((facet) => (
                 <li key={facet.id}>
                   {facetLink('resource-type', facet.id)}
@@ -242,11 +253,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         {orcidRecord.works.repositories && orcidRecord.works.repositories.length > 0 && (
           <div className="panel facets add">
             <div className="panel-body">
-              <h4>Field of Science</h4>
-              <ul>
+              <h4>Repository</h4>
+              <ul id="repository-facets">
                 {orcidRecord.works.repositories.map((facet) => (
                   <li key={facet.id}>
-                    {facetLink('field-of-science', facet.id)}
+                    {facetLink('repository', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">
                       {facet.count.toLocaleString('en-US')}
@@ -262,11 +273,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         {orcidRecord.works.affiliations && orcidRecord.works.affiliations.length > 0 && (
           <div className="panel facets add">
             <div className="panel-body">
-              <h4>License</h4>
-              <ul>
+              <h4>Affiliation</h4>
+              <ul id="affiliation-facets">
                 {orcidRecord.works.affiliations.map((facet) => (
                   <li key={facet.id}>
-                    {facetLink('license', facet.id)}
+                    {facetLink('affiliation', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">
                       {facet.count.toLocaleString('en-US')}
@@ -281,6 +292,49 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
       </div>
     )
   }
+
+
+  // const relatedContentSearchBox = () => {
+  
+  //   const onSearchRelatedContentChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  //     setRelatedContentQuery(e.currentTarget.value)
+  //   }
+  
+  //   const onSearchClear = () => {
+  //     setRelatedContentQuery('')
+  //   }
+
+
+  //   return(
+  //     <Row>
+  //     <Col md={12}>
+  //       <form className="form-horizontal search">
+  //         <input
+  //           name="query"
+  //           value={relatedContentQuery || ''}
+  //           onChange={onSearchRelatedContentChange}
+  //           placeholder="Type to search..."
+  //           className="form-control"
+  //           type="text"
+  //         />
+  //         <span id="search-icon" title="Search" aria-label="Search" onClick={onSearchRelatedContentChange}>
+  //           <FontAwesomeIcon icon={faSearch} />
+  //         </span>
+  //         {relatedContentQuery && (
+  //           <span
+  //             id="search-clear"
+  //             title="Clear"
+  //             aria-label="Clear"
+  //             onClick={onSearchClear}
+  //           >
+  //             <FontAwesomeIcon icon={faTimes} />
+  //           </span>
+  //         )}
+  //       </form>
+  //     </Col>
+  //   </Row>
+  //   )
+  // }
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
@@ -386,7 +440,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   return (
     <div className="row">
-      {leftSideBar()}
+      {leftSideBar()}     
       {content()}
     </div>
   )

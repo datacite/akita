@@ -44,4 +44,19 @@ describe("PersonContainer", () => {
       .should('have.attr', 'href')
       .should('eq', "http://europepmc.org/authors/0000-0003-3484-6875")
   })
+
+  it("facets", () => {
+    cy.get('#published-facets')
+      .should('be.visible')
+    cy.get('#published-facets > li').should(($facets) => {
+        expect($facets).to.have.length.at.least(1)
+      })
+    cy.get('#work-type-facets')
+    .should('be.visible')
+    cy.get('#work-type-facets > li').should(($facets) => {
+      expect($facets).to.have.length.at.least(2)
+    })
+    cy.get('#repository-facets')
+    .should('not.be.visible')
+  })
 })
