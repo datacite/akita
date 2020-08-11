@@ -4,7 +4,7 @@ import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import ContentLoader from 'react-content-loader'
-import { useQueryState } from '../../../hooks/usequerystate'
+import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
@@ -18,8 +18,9 @@ import {
   FacebookShareButton,
   TwitterShareButton
 } from "react-share"
-import FilterItem from "../FilterItem/FilterItem"
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 
 type Props = {
   orcid?: string
@@ -105,9 +106,8 @@ interface OrcidQueryVar {
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  // const router = useRouter()
+  const router = useRouter()
 
-  // console.log(router)
 
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
@@ -162,6 +162,163 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
+  }
+
+  const renderFacets = () => {
+    if (loading) return <div className="col-md-3"></div>
+
+    if (!loading && orcidRecord.works.nodes.length == 0)
+      return <div className="col-md-3"></div>
+
+    function facetLink(param: string, value: string) {
+      let url = '?'
+      let icon = faSquare
+
+      // get current query parameters from next router
+      let params = new URLSearchParams(router.query as any)
+
+      // delete organization parameter
+      params.delete('person')
+
+      // delete cursor parameter
+      params.delete('cursor')
+
+      if (params.get(param) == value) {
+        // if param is present, delete from query and use checked icon
+        params.delete(param)
+        icon = faCheckSquare
+      } else {
+        // otherwise replace param with new value and use unchecked icon
+        params.set(param, value)
+      }
+
+      url += params.toString()
+      return (
+        <Link href={url}>
+          <a>
+            <FontAwesomeIcon icon={icon} />{' '}
+          </a>
+        </Link>
+      )
+    }
+
+    return (
+      <div>
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Publication Year</h4>
+            <ul>
+              {orcidRecord.works.published.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('published', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Work Type</h4>
+            <ul>
+              {orcidRecord.works.resourceTypes.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('resource-type', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {orcidRecord.works.repositories && orcidRecord.works.repositories.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Field of Science</h4>
+              <ul>
+                {orcidRecord.works.repositories.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('field-of-science', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {orcidRecord.works.affiliations && orcidRecord.works.affiliations.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>License</h4>
+              <ul>
+                {orcidRecord.works.affiliations.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('license', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* {orcidRecord.works.languages.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Language</h4>
+              <ul>
+                {orcidRecord.works.languages.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('language', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )} */}
+
+        {/* <div className="panel facets add">
+          <div className="panel-body">
+            <h4>DOI Registration Agency</h4>
+            <ul>
+              {orcidRecord.works.registrationAgencies.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('registration-agency', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div> */}
+      </div>
+    )
   }
 
   const leftSideBar = () => {
@@ -253,9 +410,9 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
         </div>
 
-
+        {renderFacets()}
              
-              <div className="panel facets add">
+              {/* <div className="panel facets add">
                   <div className="panel-body">
                     <h4>Publication Year</h4>
                     <ul>
@@ -282,7 +439,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
                   </div>
                 </div>
                 
-                {orcidRecord.works.affiliations.length > 0 &&
+                {orcidRecord.works.affiliations && orcidRecord.works.affiliations.length > 0 &&
                 <div className="panel facets add">
                   <div className="panel-body">
                     <h4>Affiliations</h4>
@@ -297,7 +454,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
                 </div>
                 }
 
-                {orcidRecord.works.repositories.length > 0 &&
+                {orcidRecord.works.repositories && orcidRecord.works.repositories.length > 0 &&
                 <div className="panel facets add">
                   <div className="panel-body">
                     <h4>Repositories</h4>
@@ -311,7 +468,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
                     </ul>
                   </div>
                 </div>
-                }
+                } */}
 
                 {/* {orcidRecord.works.fieldsOfScience.length > 0 &&
                   <div className="panel facets add">
