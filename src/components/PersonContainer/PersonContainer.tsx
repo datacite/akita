@@ -115,7 +115,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
-  const [resourceTypeId, setResourceTypeId] = useQueryState('resource-type-id', { history: 'push' })
 
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
