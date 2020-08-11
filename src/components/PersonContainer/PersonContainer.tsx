@@ -65,10 +65,10 @@ export interface PersonType {
   name: string
   givenName: string
   familyName: string
-  alternateName: string
-  links: Links
-  Identifiers: Identifiers
-  Country: Country
+  alternateName: string[]
+  links: Links[]
+  identifiers: Identifiers[]
+  country: Country
   citationCount: number
   viewCount: number
   pageInfo: PageInfo
