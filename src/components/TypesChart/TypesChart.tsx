@@ -5,6 +5,7 @@ import { VisualizationSpec } from 'vega-embed'
 import { compactNumbers } from '../../utils/helpers'
 /* eslint-disable no-unused-vars */
 // import { Attribute } from '../PersonContainer/PersonContainer'
+import Pluralize from 'react-pluralize'
 
 interface ChartRecord {
   title: string
@@ -80,9 +81,19 @@ const TypesChart: React.FunctionComponent<Props> = ({
     }
   }
 
+  const title = () => {
+    return (
+      <React.Fragment>
+        Distribution of works by Resource Type
+      </React.Fragment>
+    )
+  }
+
+
   return (
     <div className="panel panel-transparent">
       <div className="types-chart panel-body">
+      <div className="title">{title()}</div>
         <VegaLite
           renderer="svg"
           spec={spec}

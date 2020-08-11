@@ -88,7 +88,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       <React.Fragment>
         <span> 
         <h3 className="work">  
-          <a id="orcid-link" href={person.id}>{person.name}</a>,&nbsp;{country()}
+          <a id="orcid-link" href={person.id}>{person.name}</a>
+          {country()}
         </h3></span>
         <br/>
       </React.Fragment>
@@ -101,7 +102,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     }
     return (
       <span id={"country-"+person.country.id} title={person.country.id}>
-        {person.country.name}
+        ,&nbsp;{person.country.name}
       </span>
     )
   }
@@ -197,7 +198,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
     return (
       <React.Fragment>
-        <h3 className="member-results">Analytics</h3>
         <Row>
           <Col xs={8}>
             <ProductionChart
