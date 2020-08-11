@@ -427,7 +427,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
         {data.organization.works.totalCount > 25 && (
           <Pager
-            url={'/organization/' + rorId + '/?'}
+            url={'/ror.org/' + rorId + '/?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
           />

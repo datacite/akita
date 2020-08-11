@@ -52,8 +52,8 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     if (!linkToExternal) {
       return (
         <Link
-          href="/organization/[organization]"
-          as={`/organization${rorFromUrl(metadata.id)}`}
+          href="/ror.org/[organization]"
+          as={`/ror.org${rorFromUrl(metadata.id)}`}
         >
           <a>
             {metadata.name}
@@ -179,7 +179,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                       <a
                         target="_blank"
                         rel="noreferrer"
-                        href={'https://www.wikidata.org/wiki/' + id.identifier}
+                        href={'https://doi.org/' + id.identifier}
                       >
                         {id.identifier}
                       </a>

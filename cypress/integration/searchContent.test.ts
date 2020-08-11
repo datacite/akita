@@ -22,7 +22,6 @@ describe("Search Works", () => {
       })
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
-
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
         expect($facet).to.have.length.at.least(3)

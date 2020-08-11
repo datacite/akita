@@ -241,7 +241,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
         {person.works.totalCount > 25 && (
           <Pager
-            url={'/people' + orcidFromUrl(person.id) + '/?'}
+            url={'/orcid.org' + orcidFromUrl(person.id) + '/?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
             isNested={true}

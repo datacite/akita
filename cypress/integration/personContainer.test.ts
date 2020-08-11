@@ -2,7 +2,7 @@
 
 describe("PersonContainer", () => {
   beforeEach(() => {
-    cy.visit(`/people/${encodeURIComponent('0000-0003-3484-6875')}`)
+    cy.visit(`/orcid.org/${encodeURIComponent('0000-0003-3484-6875')}`)
   })
 
   it("id", () => {
