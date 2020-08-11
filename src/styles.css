@@ -201,3 +201,11 @@ ul.nav.nav-tabs li span {
   color: #1abc9c;
   font-size: 25px;
 }
+
+.description.biography {
+  margin-bottom: 10px;
+}
+
+.alert-works {
+  margin: 10px;
+}

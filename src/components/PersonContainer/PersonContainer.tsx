@@ -30,13 +30,24 @@ export const DOI_GQL = gql`
       name
       givenName
       familyName
+      alternateName
+      description
+      identifiers {
+        identifier
+        identifierType
+        identifierUrl
+      }
+      links {
+        name
+        url
+      }
+      country {
+        id
+        name
+      }
       citationCount
       viewCount
       downloadCount
-      affiliation {
-        name
-        id
-      }
       works(first: 25, after: $cursor) {
         ...WorkConnectionFragment
         nodes {
@@ -54,12 +65,31 @@ export interface PersonType {
   name: string
   givenName: string
   familyName: string
+  alternateName: string
+  links: Links
+  Identifiers: Identifiers
+  Country: Country
   citationCount: number
   viewCount: number
   pageInfo: PageInfo
   downloadCount: number
-  affiliation: Attribute[]
   works: Works
+}
+
+interface Links {
+  name: string
+  url: string
+}
+
+interface Identifiers {
+  identifierType: string
+  identifierUrl: string
+  identifier: string
+}
+
+interface Country {
+  id: string
+  name: string
 }
 
 interface Works {

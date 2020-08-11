@@ -16,7 +16,11 @@ interface RelatedContentList {
 }
 
 const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
-  if (!dois) return <Alert bsStyle="warning">No works found.</Alert>
+  if (!dois) return (
+    <div className="alert-works">
+      <Alert bsStyle="warning">No works found.</Alert>
+    </div>
+  )
 
   return (
     <React.Fragment>

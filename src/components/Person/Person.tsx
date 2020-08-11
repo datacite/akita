@@ -7,16 +7,31 @@ import TypesChart from '../TypesChart/TypesChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { orcidFromUrl } from '../../utils/helpers'
 import Pager from '../Pager/Pager'
+import PersonMetadata from '../PersonMetadata/PersonMetadata'
 
 export interface PersonRecord {
   id: string
-  name: string
-  givenName: string
-  familyName: string
+  name?: string
+  givenName?: string
+  familyName?: string
+  alternateName?: string[]
+  description?: string
   citationCount: number
   viewCount: number
   downloadCount: number
-  affiliation: Attribute[]
+  links: {
+    name: string
+    url: string
+  }[]
+  identifiers: {
+    identifier: string
+    identifierType: string
+    identifierUrl: string
+  }[]
+  country: {
+    id: string
+    name: string
+  }
   works: Works
 }
 
@@ -50,34 +65,6 @@ type Props = {
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
-
-  //// Affiliation needs work in the API
-  const afilliation = () => {
-    if (person.affiliation.length < 1) {
-      return null
-    }
-    return (
-      <div className="metrics-counter">
-        <span>
-          From &nbsp;
-          <a id="affiliation" href={person.affiliation[0].id}>
-            {person.affiliation[0].name}
-          </a>
-        </span>
-      </div>
-    )
-  }
-
-  const name = () => {
-    return (
-      <React.Fragment>
-        <h3 className="work">
-          <a id="orcid-link" href={person.id}>{person.name}</a>
-        </h3>
-        <br/>
-      </React.Fragment>
-    )
-  }
 
   // const workCount = () => {
   //   if (person.works.totalCount == 0) {
@@ -178,7 +165,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
-  // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
     const hasNextPage = person.works.pageInfo
       ? person.works.pageInfo.hasNextPage
@@ -189,7 +175,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
     if (!person.works.totalCount)
       return (
-        <Alert bsStyle="warning">No works found.</Alert>
+        <div className="alert-works">
+          <Alert bsStyle="warning">No works found.</Alert>
+        </div>
       )
 
     return (
@@ -215,12 +203,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   return (
     <React.Fragment>
       <h3 className="member-results">{person.id}</h3>
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          {name()}
-          {afilliation()}
-        </div>
-      </div>
+      <PersonMetadata metadata={person} />
       {analyticsBar()}
       {relatedContent()}
     </React.Fragment>

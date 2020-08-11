@@ -10,7 +10,6 @@ const data = {
   citationCount: 33,
   viewCount: 0,
   downloadCount: 4504,
-  affiliation: [],
   works: {
     pageInfo: {
       endCursor: 'MQ',

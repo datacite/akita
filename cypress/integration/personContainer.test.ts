@@ -15,6 +15,25 @@ describe("PersonContainer", () => {
       .contains('K. J. Garza')
   })
 
+  it("links", () => {
+    cy.get('.people-links').should(($link) => {
+      expect($link).to.have.length(2)
+      expect($link.eq(0)).to.contain('Mendeley profile')
+      expect($link.eq(1)).to.contain('github')
+    })
+  })
+
+  it("identifiers", () => {
+    cy.get('.people-identifiers').should(($id) => {
+      expect($id).to.have.length(1)
+      expect($id.eq(0)).to.contain('GitHub')
+    })
+  })
+
+  it("tags", () => {
+    cy.get('.tags').contains('Germany')
+  })
+
   it("share", () => {
     cy.get('.share-button', { timeout: 30000 }).should(($btn) => {
       expect($btn).to.have.length(3)
