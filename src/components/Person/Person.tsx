@@ -10,6 +10,10 @@ import Pager from '../Pager/Pager'
 
 export interface PersonRecord {
   id: string
+  description: string
+  links: Link[]
+  identifiers: Identifier[]
+  country: Attribute
   name: string
   givenName: string
   familyName: string
@@ -33,6 +37,16 @@ interface PageInfo {
   hasNextPage: boolean
 }
 
+interface Identifier {
+  identifier: string
+  identifierType: string
+}
+
+interface Link {
+  url: string
+  name: string
+}
+
 interface ContentFacet {
   id: string
   title: string
@@ -53,7 +67,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   //// Affiliation needs work in the API
   const afilliation = () => {
-    if (person.affiliation.length < 1) {
+    if (!person.affiliation) {
       return null
     }
     return (
@@ -71,9 +85,33 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   const name = () => {
     return (
       <React.Fragment>
-        <h3 className="work">
-          <a id="orcid-link" href={person.id}>{person.name}</a>
-        </h3>
+        <span> 
+        <h3 className="work">  
+          <a id="orcid-link" href={person.id}>{person.name}</a>,&nbsp;{country()}
+        </h3></span>
+        <br/>
+      </React.Fragment>
+    )
+  }
+
+  const country = () => {
+    if (!person.country) {
+      return null
+    }
+    return (
+      <span id={"country-"+person.country.id} title={person.country.id}>
+        {person.country.name}
+      </span>
+    )
+  }
+
+  const description = () => {
+    if (!person.description) {
+      return null
+    }
+    return (
+      <React.Fragment>
+        <p>{person.description}</p>
         <br/>
       </React.Fragment>
     )
@@ -218,7 +256,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       <div className="panel panel-transparent">
         <div className="panel-body">
           {name()}
-          {afilliation()}
+          {description()}
+          {/* {afilliation()} */}
         </div>
       </div>
       {analyticsBar()}

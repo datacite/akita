@@ -31,16 +31,29 @@ export const DOI_GQL = gql`
   query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     person(id: $id) {
       id
+      description
+      links {
+        url
+        name
+      }
+      identifiers{
+        identifier
+        identifierType
+      }
+      country{
+        name
+        id
+      }
       name
       givenName
       familyName
       citationCount
       viewCount
       downloadCount
-      affiliation {
-        name
-        id
-      }
+      # affiliation {
+      #   name
+      #   id
+      # }
 
       works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
@@ -56,6 +69,10 @@ export const DOI_GQL = gql`
 
 export interface PersonType {
   id: string
+  description: string
+  links: Link[]
+  identifiers: Identifier[]
+  country: Attribute
   name: string
   givenName: string
   familyName: string
@@ -86,6 +103,16 @@ interface ContentFacet {
 export interface Attribute {
   name: string
   id: string
+}
+
+interface Identifier {
+  identifier: string
+  identifierType: string
+}
+
+interface Link {
+  url: string
+  name: string
 }
 
 export interface OrcidDataQuery {
@@ -333,6 +360,27 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   //   )
   // }
 
+
+  const otherIdentifiers = () => {
+    
+    const identifiers = (
+      data.person.identifiers.map((identifier) => (
+        <div key={identifier.identifier} id={"identifier-"+identifier.identifier} className="download">
+          <span>
+            {identifier.identifierType+": "+identifier.identifier}
+          </span>
+        </div>
+        ))
+    )
+
+    return ( 
+      <div className="facets panel-body">
+      <h4>Other Identifiers for this Person</h4>
+        {identifiers}
+      </div>
+     );
+  }
+
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
     const url = window.location.href
@@ -395,7 +443,20 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <div id="profile-europepmc" className="download">
               {europePMCLink}
             </div>
+            {data.person.links.map((link) => (
+              <div key={link.name} id={"profile-"+link.name} className="download">
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {link.name}
+                </a>
+              </div>
+              ))}
           </div>
+
+          {otherIdentifiers()}
           <div className="facets panel-body">
             <h4>Export</h4>
             <OverlayTrigger placement="top" overlay={bibtex}>
