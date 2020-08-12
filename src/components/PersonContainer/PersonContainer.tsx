@@ -9,7 +9,7 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -68,8 +68,8 @@ export const DOI_GQL = gql`
 export interface PersonType {
   id: string
   description: string
-  links: Link[]
-  identifiers: Identifier[]
+  links: Links[]
+  identifiers: Identifiers[]
   country: Attribute
   name: string
   givenName: string
@@ -119,16 +119,6 @@ export interface Attribute {
   id: string
 }
 
-interface Identifier {
-  identifier: string
-  identifierType: string
-}
-
-interface Link {
-  url: string
-  name: string
-}
-
 export interface OrcidDataQuery {
   person: PersonType
 }
@@ -150,12 +140,17 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const router = useRouter()
 
-
+ // eslint-disable-next-line no-unused-vars
   const [published, setPublished] = useQueryState('published', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
 
 

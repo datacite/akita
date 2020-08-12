@@ -1,6 +1,5 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
-import Pluralize from 'react-pluralize'
 import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
@@ -21,8 +20,7 @@ const actions = {
 }
 
 const ProductionChart: React.FunctionComponent<Props> = ({
-  data,
-  doiCount
+  data
 }) => {
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1

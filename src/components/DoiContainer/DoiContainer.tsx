@@ -206,10 +206,15 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const [doi, setDoi] = React.useState<DoiType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
+  // eslint-disable-next-line no-unused-vars
   const [published, setPublished] = useQueryState('published', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
   const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
 
 

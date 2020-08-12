@@ -46,6 +46,7 @@ interface PageInfo {
 interface Identifier {
   identifier: string
   identifierType: string
+  identifierUrl: string
 }
 
 interface Link {
