@@ -25,6 +25,11 @@ export interface PersonRecord {
   works: Works
 }
 
+export interface Attribute {
+  name: string
+  id: string
+}
+
 interface Works {
   totalCount: number
   resourceTypes: ContentFacet[]

@@ -31,7 +31,7 @@ describe('Person Component', () => {
 
   it('work count', () => {
     mount(<Person person={data} />)
-    cy.get('.production-chart').contains('500')
+    cy.get('.production-chart').contains('works by Year of Publication')
   })
 
   // it('citationCount', () => {
