@@ -42,9 +42,9 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           href="/orcid.org/[person]"
           as={`/orcid.org${orcidFromUrl(metadata.id)}`}
         >
-          <a>
+          <a id="orcid-link">
             {metadata.name}
-            {metadata.alternateName.length > 0 && (
+            {metadata.alternateName && metadata.alternateName.length > 0 && (
               <div className="subtitle">
                 {metadata.alternateName.join(', ')}
               </div>

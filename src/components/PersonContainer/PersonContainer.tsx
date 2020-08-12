@@ -103,11 +103,6 @@ interface ContentFacet {
   count: number
 }
 
-export interface Attribute {
-  name: string
-  id: string
-}
-
 export interface OrcidDataQuery {
   person: PersonType
 }

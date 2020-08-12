@@ -45,9 +45,6 @@ export const PERSON_GQL = gql`
         givenName
         familyName
         alternateName
-        # citationCount
-        # viewCount
-        # downloadCount
       }
     }
   }

@@ -14,14 +14,14 @@ describe('Person Metadata Component', () => {
   it('orcid', () => {
     mount(<PersonMetadata metadata={data} />)
     cy.get('a#orcid-link')
-      .contains('https://orcid.org/0000-0003-3484-6875')
+      .contains('orcid.org/0000-0003-3484-6875')
       .should('be.visible')
   })
 
-  it('workCount', () => {
-    mount(<PersonMetadata metadata={data} />)
-    cy.get('i#work-count').contains('500').should('be.visible')
-  })
+  // it('workCount', () => {
+  //   mount(<PersonMetadata metadata={data} />)
+  //   cy.get('i#work-count').contains('500').should('be.visible')
+  // })
 
   // To be added after MVP according to feedback
   // it('citationCount', () => {

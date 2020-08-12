@@ -13,7 +13,7 @@ export interface PersonRecord {
   name?: string
   givenName?: string
   familyName?: string
-  alternateName?: string[]
+  alternateName: string[]
   description?: string
   citationCount: number
   viewCount: number
@@ -51,11 +51,6 @@ interface ContentFacet {
   id: string
   title: string
   count: number
-}
-
-export interface Attribute {
-  name: string
-  id: string
 }
 
 type Props = {

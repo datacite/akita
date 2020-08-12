@@ -17,7 +17,7 @@ describe('Person Component', () => {
       .contains('Juan Perez')
     cy.get('a#orcid-link')
       .should('have.attr', 'href')
-      .and('eq', 'https://orcid.org/0000-0003-3484-6875')
+      .and('contains', 'orcid.org/0000-0003-3484-6875')
   })
 
   it('link to doi page', () => {
