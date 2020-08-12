@@ -4,26 +4,6 @@ import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import CitationsChart from './CitationsChart'
 
-const data = {
-  doi: '10.21945/xs62-rp71',
-  publicationYear: 2014,
-  citationCount: 137,
-  citationOverTime: [
-    {
-      year: 2018,
-      total: 34
-    },
-    {
-      year: 2016,
-      total: 3
-    },
-    {
-      year: 2019,
-      total: 100
-    }
-  ]
-}
-
 const oldData = {
   doi: '10.21945/xs62-rp71',
   publicationYear: 1985,
@@ -45,6 +25,13 @@ const oldData = {
 }
 
 describe('CitationsChart Component', () => {
+  let data
+  beforeEach(function () {
+    cy.fixture('citationChart.json').then((d) => {
+      data = d
+    })
+  })
+
   it('normal data', () => {
     mount(
       <CitationsChart
