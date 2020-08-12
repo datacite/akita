@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe("PersonContainer", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit(`/orcid.org/${encodeURIComponent('0000-0003-3484-6875')}`)
   })
 
@@ -78,4 +78,16 @@ describe("PersonContainer", () => {
     cy.get('#repository-facets')
     .should('not.be.visible')
   })
+
+  it("production chart", () => {
+    cy.get('.mark-rect > path')
+    .should('be.visible')
+    .should('have.length', 2)
+  })
+
+  it("types chart", () => {
+    cy.get('.mark-arc > path').should('be.visible').should('have.length', 4)
+  })
 })
+
+
