@@ -7,7 +7,8 @@ import TypesChart from '../TypesChart/TypesChart'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import Pager from '../Pager/Pager'
-import { orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl, compactNumbers } from '../../utils/helpers'
+import Pluralize from 'react-pluralize'
 
 export interface PersonRecord {
   id: string
@@ -66,70 +67,70 @@ type Props = {
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
-  // const workCount = () => {
-  //   if (person.works.totalCount == 0) {
-  //     return ''
-  //   }
+  const workCount = () => {
+    if (person.works.totalCount == 0) {
+      return ''
+    }
 
-  //   return (
-  //     <div className="metrics-counter">
-  //       <ul className="counter-list">
-  //         <li>
-  //           <h4>Works</h4>
-  //           <Row>
-  //             <Col xs={4}>
-  //               <h3 id="work-count">
-  //                 {compactNumbers(person.works.totalCount)}
-  //               </h3>
-  //             </Col>
-  //           </Row>
-  //           <Row>
-  //             {person.citationCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'Citation'}
-  //                     count={compactNumbers(person.citationCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="citation-count">
-  //                   {compactNumbers(person.citationCount)}
-  //                 </div>
-  //               </Col>
-  //             )}
-  //             {person.viewCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'View'}
-  //                     count={compactNumbers(person.viewCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="view-count">{compactNumbers(person.viewCount)}</div>
-  //               </Col>
-  //             )}
-  //             {person.downloadCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'Download'}
-  //                     count={compactNumbers(person.downloadCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="download-count">
-  //                   {compactNumbers(person.downloadCount)}
-  //                 </div>
-  //               </Col>
-  //             )}
-  //           </Row>
-  //         </li>
-  //       </ul>
-  //     </div>
-  //   )
-  // }
+    return (
+      <div className="metrics-counter">
+        <ul className="counter-list">
+          <li>
+            {/* <h4>Works</h4> */}
+            <Row>
+              <Col xs={4}>
+                {/* <h3 id="work-count"> */}
+                  {/* {compactNumbers(person.works.totalCount)} */}
+                {/* </h3> */}
+              </Col>
+            </Row>
+            <Row>
+              {person.citationCount > 0 && (
+                <Col xs={4}>
+                  <h5>
+                    <Pluralize
+                      singular={'Citation'}
+                      count={compactNumbers(person.citationCount)}
+                      showCount={false}
+                    />
+                  </h5>
+                  <div id="citation-count">
+                    {compactNumbers(person.citationCount)}
+                  </div>
+                </Col>
+              )}
+              {person.viewCount > 0 && (
+                <Col xs={4}>
+                  <h5>
+                    <Pluralize
+                      singular={'View'}
+                      count={compactNumbers(person.viewCount)}
+                      showCount={false}
+                    />
+                  </h5>
+                  <div id="view-count">{compactNumbers(person.viewCount)}</div>
+                </Col>
+              )}
+              {person.downloadCount > 0 && (
+                <Col xs={4}>
+                  <h5>
+                    <Pluralize
+                      singular={'Download'}
+                      count={compactNumbers(person.downloadCount)}
+                      showCount={false}
+                    />
+                  </h5>
+                  <div id="download-count">
+                    {compactNumbers(person.downloadCount)}
+                  </div>
+                </Col>
+              )}
+            </Row>
+          </li>
+        </ul>
+      </div>
+    )
+  }
 
   const analyticsBar = () => {
     if (!person.works.totalCount) return null
@@ -203,6 +204,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     <React.Fragment>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
+      {workCount()}
       {analyticsBar()}
       {relatedContent()}
     </React.Fragment>
