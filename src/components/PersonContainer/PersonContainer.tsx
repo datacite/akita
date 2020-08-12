@@ -45,6 +45,7 @@ export const DOI_GQL = gql`
         id
       }
       name
+      alternateName
       givenName
       familyName
       citationCount
@@ -77,9 +78,6 @@ export interface PersonType {
   givenName: string
   familyName: string
   alternateName: string[]
-  links: Links[]
-  identifiers: Identifiers[]
-  country: Country
   citationCount: number
   viewCount: number
   pageInfo: PageInfo
@@ -380,26 +378,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   // }
 
 
-  const otherIdentifiers = () => {
-    
-    const identifiers = (
-      data.person.identifiers.map((identifier) => (
-        <div key={identifier.identifier} id={"identifier-"+identifier.identifier} className="download">
-          <span>
-            {identifier.identifierType+": "+identifier.identifier}
-          </span>
-        </div>
-        ))
-    )
-
-    return ( 
-      <div className="facets panel-body">
-      <h4>Other Identifiers for this Person</h4>
-        {identifiers}
-      </div>
-     );
-  }
-
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
     const url = window.location.href
@@ -475,7 +453,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
               ))}
           </div>
 
-          {otherIdentifiers()}
           <div className="facets panel-body">
             <h4>Export</h4>
             <OverlayTrigger placement="top" overlay={bibtex}>
