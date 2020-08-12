@@ -1,8 +1,6 @@
 import * as React from 'react'
-// eslint-disable-next-line no-unused-vars
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import { Alert } from 'react-bootstrap'
-// eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 
 type Props = {

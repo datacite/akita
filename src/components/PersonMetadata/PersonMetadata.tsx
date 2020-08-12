@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Alert, OverlayTrigger, Popover, Row, Col, Label } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
-// eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
 import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

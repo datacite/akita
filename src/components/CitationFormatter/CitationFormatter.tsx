@@ -56,7 +56,6 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
     )
 
   const [formatted, setFormattedCitation] = React.useState()
-  /* eslint-disable no-unused-vars */
   const { loading, error, data } = useQuery<
     FormattedCitationQueryData,
     FormattedCitationQueryVar
@@ -64,7 +63,6 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
     errorPolicy: 'all',
     variables: { id: id, style: cslType, locale: locale }
   })
-  /* eslint-enable no-unused-vars */
 
   React.useEffect(() => {
     let result = undefined

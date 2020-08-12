@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
-// eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
