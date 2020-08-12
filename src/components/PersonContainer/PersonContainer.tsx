@@ -76,12 +76,31 @@ export interface PersonType {
   name: string
   givenName: string
   familyName: string
+  alternateName: string[]
+  links: Links[]
+  identifiers: Identifiers[]
+  country: Country
   citationCount: number
   viewCount: number
   pageInfo: PageInfo
   downloadCount: number
-  affiliation: Attribute[]
   works: Works
+}
+
+interface Links {
+  name: string
+  url: string
+}
+
+interface Identifiers {
+  identifierType: string
+  identifierUrl: string
+  identifier: string
+}
+
+interface Country {
+  id: string
+  name: string
 }
 
 interface Works {

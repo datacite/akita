@@ -406,9 +406,11 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
     if (!data.organization.works.totalCount)
       return (
-        <Alert bsStyle="warning" className="no-content">
-          No works found.
-        </Alert>
+        <div className="alert-works">
+          <Alert bsStyle="warning" className="no-content">
+            No works found.
+          </Alert>
+        </div>
       )
 
     return (

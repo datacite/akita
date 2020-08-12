@@ -4,16 +4,17 @@ import { Alert, Row, Col } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
+import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import Pager from '../Pager/Pager'
-import Pluralize from 'react-pluralize'
-import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from '../../utils/helpers'
 
 export interface PersonRecord {
   id: string
   description: string
   links: Link[]
   identifiers: Identifier[]
+  alternateName?: string[]
   country: Attribute
   name: string
   givenName: string
@@ -21,7 +22,6 @@ export interface PersonRecord {
   citationCount: number
   viewCount: number
   downloadCount: number
-  affiliation: Attribute[]
   works: Works
 }
 
@@ -66,123 +66,70 @@ type Props = {
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
-  //// Affiliation needs work in the API
-  const afilliation = () => {
-    if (!person.affiliation) {
-      return null
-    }
-    return (
-      <div className="metrics-counter">
-        <span>
-          From &nbsp;
-          <a id="affiliation" href={person.affiliation[0].id}>
-            {person.affiliation[0].name}
-          </a>
-        </span>
-      </div>
-    )
-  }
+  // const workCount = () => {
+  //   if (person.works.totalCount == 0) {
+  //     return ''
+  //   }
 
-  const name = () => {
-    return (
-      <React.Fragment>
-        <span> 
-        <h3 className="work">  
-          <a id="orcid-link" href={person.id}>{person.name}</a>
-          {country()}
-        </h3></span>
-        <br/>
-      </React.Fragment>
-    )
-  }
-
-  const country = () => {
-    if (!person.country) {
-      return null
-    }
-    return (
-      <span id={"country-"+person.country.id} title={person.country.id}>
-        ,&nbsp;{person.country.name}
-      </span>
-    )
-  }
-
-  const description = () => {
-    if (!person.description) {
-      return null
-    }
-    return (
-      <React.Fragment>
-        <p>{person.description}</p>
-        <br/>
-      </React.Fragment>
-    )
-  }
-
-  const workCount = () => {
-    if (person.works.totalCount == 0) {
-      return ''
-    }
-
-    return (
-      <div className="metrics-counter">
-        <ul className="counter-list">
-          <li>
-            {/* <h4>Works</h4> */}
-            <Row>
-              <Col xs={4}>
-                {/* <h3 id="work-count">
-                  {compactNumbers(person.works.totalCount)}
-                </h3> */}
-              </Col>
-            </Row>
-            <Row>
-              {person.citationCount > 0 && (
-                <Col xs={4}>
-                  <h5>
-                    <Pluralize
-                      singular={'Citation'}
-                      count={compactNumbers(person.citationCount)}
-                      showCount={false}
-                    />
-                  </h5>
-                  <div id="citation-count">
-                    {compactNumbers(person.citationCount)}
-                  </div>
-                </Col>
-              )}
-              {person.viewCount > 0 && (
-                <Col xs={4}>
-                  <h5>
-                    <Pluralize
-                      singular={'View'}
-                      count={compactNumbers(person.viewCount)}
-                      showCount={false}
-                    />
-                  </h5>
-                  <div id="view-count">{compactNumbers(person.viewCount)}</div>
-                </Col>
-              )}
-              {person.downloadCount > 0 && (
-                <Col xs={4}>
-                  <h5>
-                    <Pluralize
-                      singular={'Download'}
-                      count={compactNumbers(person.downloadCount)}
-                      showCount={false}
-                    />
-                  </h5>
-                  <div id="download-count">
-                    {compactNumbers(person.downloadCount)}
-                  </div>
-                </Col>
-              )}
-            </Row>
-          </li>
-        </ul>
-      </div>
-    )
-  }
+  //   return (
+  //     <div className="metrics-counter">
+  //       <ul className="counter-list">
+  //         <li>
+  //           <h4>Works</h4>
+  //           <Row>
+  //             <Col xs={4}>
+  //               <h3 id="work-count">
+  //                 {compactNumbers(person.works.totalCount)}
+  //               </h3>
+  //             </Col>
+  //           </Row>
+  //           <Row>
+  //             {person.citationCount > 0 && (
+  //               <Col xs={4}>
+  //                 <h5>
+  //                   <Pluralize
+  //                     singular={'Citation'}
+  //                     count={compactNumbers(person.citationCount)}
+  //                     showCount={false}
+  //                   />
+  //                 </h5>
+  //                 <div id="citation-count">
+  //                   {compactNumbers(person.citationCount)}
+  //                 </div>
+  //               </Col>
+  //             )}
+  //             {person.viewCount > 0 && (
+  //               <Col xs={4}>
+  //                 <h5>
+  //                   <Pluralize
+  //                     singular={'View'}
+  //                     count={compactNumbers(person.viewCount)}
+  //                     showCount={false}
+  //                   />
+  //                 </h5>
+  //                 <div id="view-count">{compactNumbers(person.viewCount)}</div>
+  //               </Col>
+  //             )}
+  //             {person.downloadCount > 0 && (
+  //               <Col xs={4}>
+  //                 <h5>
+  //                   <Pluralize
+  //                     singular={'Download'}
+  //                     count={compactNumbers(person.downloadCount)}
+  //                     showCount={false}
+  //                   />
+  //                 </h5>
+  //                 <div id="download-count">
+  //                   {compactNumbers(person.downloadCount)}
+  //                 </div>
+  //               </Col>
+  //             )}
+  //           </Row>
+  //         </li>
+  //       </ul>
+  //     </div>
+  //   )
+  // }
 
   const analyticsBar = () => {
     if (!person.works.totalCount) return null
@@ -217,7 +164,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
-  // eslint-disable-next-line no-unused-vars
   const relatedContent = () => {
     const hasNextPage = person.works.pageInfo
       ? person.works.pageInfo.hasNextPage
@@ -228,7 +174,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
     if (!person.works.totalCount)
       return (
-        <Alert bsStyle="warning">No works found.</Alert>
+        <div className="alert-works">
+          <Alert bsStyle="warning">No works found.</Alert>
+        </div>
       )
 
     return (
@@ -254,14 +202,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   return (
     <React.Fragment>
       <h3 className="member-results">{person.id}</h3>
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          {name()}
-          {description()}
-          {workCount()}
-          {/* {afilliation()} */}
-        </div>
-      </div>
+      <PersonMetadata metadata={person} />
       {analyticsBar()}
       {relatedContent()}
     </React.Fragment>

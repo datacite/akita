@@ -45,16 +45,10 @@ export const PERSON_GQL = gql`
         name
         givenName
         familyName
+        alternateName
         # citationCount
         # viewCount
         # downloadCount
-        affiliation {
-          name
-          id
-        }
-        works {
-          totalCount
-        }
       }
     }
   }
