@@ -45,3 +45,19 @@ describe("DoiContainer", () => {
     .should('have.length', 1)
   })
 })
+
+
+describe("DoiContainer with usage", () => {
+  before(() => {
+    cy.visit(`/doi.org/${encodeURIComponent('10.70048/findable101')}`)
+  })
+
+  it("chart", () => {
+    cy.get('.mark-rect > path')
+    .should('be.visible')
+    .should('have.length', 4)
+  })
+})
+
+
+

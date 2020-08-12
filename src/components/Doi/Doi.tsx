@@ -74,7 +74,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
-    if (doi.citations.totalCount == 0) return ''
+    if (doi.citations.totalCount == 0 && doi.viewCount == 0 && doi.downloadCount == 0) return ''
 
     return (
       <div className="panel panel-transparent">
