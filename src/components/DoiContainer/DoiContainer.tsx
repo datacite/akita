@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
@@ -396,7 +395,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-xml" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/vnd.datacite.datacite+xml/' +
@@ -409,7 +408,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-json" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/vnd.datacite.datacite+json/' +
@@ -422,7 +421,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-ld" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/vnd.schemaorg.ld+json/' +
@@ -435,7 +434,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-bibtex" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/x-bibtex/' +
@@ -448,7 +447,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-ris" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/x-research-info-systems/' +
@@ -461,7 +460,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <div id="export-jats" className="download">
               <a
                 target="_blank"
-                rel="noopener"
+                rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
                   '/dois/application/vnd.jats+xml/' +
@@ -475,7 +474,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
               <div id="export-codemeta" className="download">
                 <a
                   target="_blank"
-                  rel="noopener"
+                  rel="noreferrer"
                   href={
                     process.env.NEXT_PUBLIC_API_URL +
                     '/dois/application/vnd.codemeta.ld+json/' +

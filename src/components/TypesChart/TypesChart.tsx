@@ -1,11 +1,7 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
-/* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 import { compactNumbers } from '../../utils/helpers'
-/* eslint-disable no-unused-vars */
-// import { Attribute } from '../PersonContainer/PersonContainer'
-import Pluralize from 'react-pluralize'
 
 interface ChartRecord {
   title: string
@@ -25,7 +21,6 @@ const actions = {
   editor: false
 }
 
-/* eslint-disable no-unused-vars */
 const TypesChart: React.FunctionComponent<Props> = ({
   data,
   count,

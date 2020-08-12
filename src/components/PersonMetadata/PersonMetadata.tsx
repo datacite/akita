@@ -37,9 +37,9 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           href="/orcid.org/[person]"
           as={`/orcid.org${orcidFromUrl(metadata.id)}`}
         >
-          <a>
+          <a id="orcid-link">
             {metadata.name}
-            {metadata.alternateName.length > 0 && (
+            {metadata.alternateName && metadata.alternateName.length > 0 && (
               <div className="subtitle">
                 {metadata.alternateName.join(', ')}
               </div>
@@ -82,6 +82,30 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
   // const workCount = () => {
   //   if (!metadata.works || metadata.works.totalCount == 0) {
+  //     return (
+  //       <div className="metrics-counter">
+  //         <i id="work-count">
+  //           <FontAwesomeIcon icon={faScroll} /> No works reported{' '}
+  //         </i>
+  //       </div>
+  //     )
+  //   }
+
+  //   return (
+  //     <div className="metrics-counter">
+  //       <i id="work-count">
+  //         <FontAwesomeIcon icon={faScroll} />{' '}
+  //         <Pluralize
+  //           singular={'Work'}
+  //           count={compactNumbers(metadata.works.totalCount)}
+  //         />{' '}
+  //       </i>
+  //     </div>
+  //   )
+  // }
+
+  // const metricsCounter = () => {
+  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
   //     return (
   //       <div className="metrics-counter">
   //         <i id="work-count">

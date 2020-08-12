@@ -1,7 +1,6 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
-/* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
@@ -21,7 +20,6 @@ const actions = {
   editor: false
 }
 
-/* eslint-disable no-unused-vars */
 const ProductionChart: React.FunctionComponent<Props> = ({
   data,
   doiCount

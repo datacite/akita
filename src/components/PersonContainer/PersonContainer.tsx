@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-target-blank */
 import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
@@ -6,9 +5,7 @@ import Person from '../Person/Person'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
-// eslint-disable-next-line no-unused-vars
 import { DoiType } from '../DoiContainer/DoiContainer'
-// eslint-disable-next-line no-unused-vars
 import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'

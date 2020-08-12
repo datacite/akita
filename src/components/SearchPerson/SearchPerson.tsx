@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Row, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-// eslint-disable-next-line no-unused-vars
 import { PersonType } from '../PersonContainer/PersonContainer'
 import Pager from '../Pager/Pager'
 import ContentLoader from 'react-content-loader'
@@ -46,18 +45,13 @@ export const PERSON_GQL = gql`
         givenName
         familyName
         alternateName
-        # citationCount
-        # viewCount
-        # downloadCount
       }
     }
   }
 `
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
-  /* eslint-disable no-unused-vars */
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  /* eslint-enable no-unused-vars */
   const [searchResults, setSearchResults] = React.useState([])
   const { loading, error, data, refetch } = useQuery<
     PersonQueryData,

@@ -3,7 +3,6 @@ import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap'
 import Moment from 'moment'
-/* eslint-disable no-unused-vars */
 import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
@@ -26,7 +25,6 @@ const actions = {
   editor: false
 }
 
-/* eslint-disable no-unused-vars */
 const UsageChart: React.FunctionComponent<Props> = ({
   data,
   counts,

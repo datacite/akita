@@ -1,9 +1,7 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import PersonContainer from '../../components/PersonContainer/PersonContainer'
-/* eslint-disable no-unused-vars*/
 import { GetServerSideProps } from 'next'
-/* eslint-ensable no-unused-vars*/
 
 const PersonPage = ({ personPath }) => {
   return (

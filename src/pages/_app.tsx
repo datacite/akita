@@ -1,6 +1,5 @@
 import React from 'react'
 import App from 'next/app'
-// eslint-disable-next-line no-unused-vars
 import {
   ApolloClient,
   NormalizedCacheObject,
