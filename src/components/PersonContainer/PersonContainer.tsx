@@ -48,11 +48,6 @@ export const DOI_GQL = gql`
       citationCount
       viewCount
       downloadCount
-      # affiliation {
-      #   name
-      #   id
-      # }
-
       works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
@@ -103,6 +98,8 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  licenses: ContentFacet[]
+  languages: ContentFacet[]
   affiliations: ContentFacet[]
   repositories: ContentFacet[]
   nodes: DoiType[]

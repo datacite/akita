@@ -37,6 +37,8 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  licenses: ContentFacet[]
+  languages: ContentFacet[]
   nodes: DoiType[]
 }
 
