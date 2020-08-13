@@ -192,6 +192,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           </h3>
         )}
 
+        {analyticsBar()}
         <DoiRelatedContent dois={person.works} />
 
         {person.works.totalCount > 25 && (
@@ -211,7 +212,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {workCount()}
-      {analyticsBar()}
       {relatedContent()}
     </React.Fragment>
   )

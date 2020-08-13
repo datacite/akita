@@ -114,7 +114,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-         Distribution of works by Year of Publication
+         Distribution by publication year
       </React.Fragment>
     )
   }

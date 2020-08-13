@@ -29,7 +29,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
-    padding: { left: 5, top: 30, right: 5, bottom: 5 },
+    padding: { left: 5, top: 10, right: 5, bottom: 5 },
     data: {
       name: 'table'
     },
@@ -79,7 +79,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-        Distribution of works by Resource Type
+        Distribution by work type
       </React.Fragment>
     )
   }
