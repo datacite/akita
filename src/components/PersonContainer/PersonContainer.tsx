@@ -239,7 +239,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     }
 
     return (
-      <div>
+      <div className="panel panel-transparent">
         {/* <div className="panel facets add">
           <div className="panel-body">
             <h4>Filter by search</h4>

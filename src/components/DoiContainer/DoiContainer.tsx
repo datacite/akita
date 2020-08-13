@@ -303,7 +303,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     }
 
     return (
-      <div>
+      <div className="panel panel-transparent">
         <div className="panel facets add">
           <div className="panel-body">
             <h4>Publication Year</h4>

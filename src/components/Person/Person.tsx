@@ -183,7 +183,13 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <React.Fragment>
         {person.works.totalCount > 1 && (
-          <h3 className="member-results">Works</h3>
+          <h3 className="member-results">
+            <Pluralize
+              singular={'Work'}
+              count={compactNumbers(person.works.totalCount)}
+              showCount={false}
+            />
+          </h3>
         )}
 
         <DoiRelatedContent dois={person.works} />
