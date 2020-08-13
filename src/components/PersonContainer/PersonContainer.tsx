@@ -14,38 +14,46 @@ import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
-} from 'react-share'
+} from "react-share"
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
+// import { Row, Col, Nav, NavItem } from 'react-bootstrap'
 
 type Props = {
   orcid?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String) {
+  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     person(id: $id) {
       id
-      name
-      givenName
-      familyName
-      alternateName
       description
-      identifiers {
+      links {
+        url
+        name
+      }
+      identifiers{
         identifier
         identifierType
-        identifierUrl
       }
-      links {
+      country{
         name
-        url
-      }
-      country {
         id
-        name
       }
+      name
+      alternateName
+      givenName
+      familyName
       citationCount
       viewCount
       downloadCount
-      works(first: 25, after: $cursor) {
+      # affiliation {
+      #   name
+      #   id
+      # }
+
+      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -59,13 +67,14 @@ export const DOI_GQL = gql`
 
 export interface PersonType {
   id: string
+  description: string
+  links: Links[]
+  identifiers: Identifiers[]
+  country: Attribute
   name: string
   givenName: string
   familyName: string
   alternateName: string[]
-  links: Links[]
-  identifiers: Identifiers[]
-  country: Country
   citationCount: number
   viewCount: number
   pageInfo: PageInfo
@@ -94,6 +103,8 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  affiliations: ContentFacet[]
+  repositories: ContentFacet[]
   nodes: DoiType[]
 }
 
@@ -103,6 +114,11 @@ interface ContentFacet {
   count: number
 }
 
+export interface Attribute {
+  name: string
+  id: string
+}
+
 export interface OrcidDataQuery {
   person: PersonType
 }
@@ -110,16 +126,39 @@ export interface OrcidDataQuery {
 interface OrcidQueryVar {
   id: string
   cursor: string
+  published: string
+  resourceTypeId: string
+  language: string
+  fieldOfScience: string
+  registrationAgency: string
+  repositoryId: string
+
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
+  const router = useRouter()
+
+ // eslint-disable-next-line no-unused-vars
+  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
+
+
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: 'http://orcid.org/' + orcid, cursor: cursor }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
     }
   )
 
@@ -160,6 +199,176 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
+
+  const renderFacets = () => {
+    if (loading) return <div className="col-md-3"></div>
+
+    if (!loading && orcidRecord.works.nodes.length == 0)
+      return <div className="col-md-3"></div>
+
+    function facetLink(param: string, value: string) {
+      let url = '?'
+      let icon = faSquare
+
+      // get current query parameters from next router
+      let params = new URLSearchParams(router.query as any)
+
+      // delete person parameter
+      params.delete('person')
+
+      // delete cursor parameter
+      params.delete('cursor')
+
+      if (params.get(param) == value) {
+        // if param is present, delete from query and use checked icon
+        params.delete(param)
+        icon = faCheckSquare
+      } else {
+        // otherwise replace param with new value and use unchecked icon
+        params.set(param, value)
+      }
+
+      url += params.toString()
+      return (
+        <Link href={url}>
+          <a>
+            <FontAwesomeIcon icon={icon} />{' '}
+          </a>
+        </Link>
+      )
+    }
+
+    return (
+      <div className="panel panel-transparent">
+        {/* <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Filter by search</h4>
+            {relatedContentSearchBox()}
+          </div>
+        </div> */}
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Publication Year</h4>
+            <ul id="published-facets">
+              {orcidRecord.works.published.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('published', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Work Type</h4>
+            <ul id="work-type-facets">
+              {orcidRecord.works.resourceTypes.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('resource-type', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {orcidRecord.works.repositories && orcidRecord.works.repositories.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Repository</h4>
+              <ul id="repository-facets">
+                {orcidRecord.works.repositories.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('repository', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {orcidRecord.works.affiliations && orcidRecord.works.affiliations.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Affiliation</h4>
+              <ul id="affiliation-facets">
+                {orcidRecord.works.affiliations.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('affiliation', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+
+  // const relatedContentSearchBox = () => {
+  
+  //   const onSearchRelatedContentChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  //     setRelatedContentQuery(e.currentTarget.value)
+  //   }
+  
+  //   const onSearchClear = () => {
+  //     setRelatedContentQuery('')
+  //   }
+
+
+  //   return(
+  //     <Row>
+  //     <Col md={12}>
+  //       <form className="form-horizontal search">
+  //         <input
+  //           name="query"
+  //           value={relatedContentQuery || ''}
+  //           onChange={onSearchRelatedContentChange}
+  //           placeholder="Type to search..."
+  //           className="form-control"
+  //           type="text"
+  //         />
+  //         <span id="search-icon" title="Search" aria-label="Search" onClick={onSearchRelatedContentChange}>
+  //           <FontAwesomeIcon icon={faSearch} />
+  //         </span>
+  //         {relatedContentQuery && (
+  //           <span
+  //             id="search-clear"
+  //             title="Clear"
+  //             aria-label="Clear"
+  //             onClick={onSearchClear}
+  //           >
+  //             <FontAwesomeIcon icon={faTimes} />
+  //           </span>
+  //         )}
+  //       </form>
+  //     </Col>
+  //   </Row>
+  //   )
+  // }
+
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name
@@ -223,7 +432,19 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <div id="profile-europepmc" className="download">
               {europePMCLink}
             </div>
+            {data.person.links.map((link) => (
+              <div key={link.name} id={"profile-"+link.name} className="download">
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {link.name}
+                </a>
+              </div>
+              ))}
           </div>
+
           <div className="facets panel-body">
             <h4>Export</h4>
             <OverlayTrigger placement="top" overlay={bibtex}>
@@ -249,6 +470,8 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </span>
           </div>
         </div>
+
+        {renderFacets()}
       </div>
     )
   }
@@ -263,7 +486,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   return (
     <div className="row">
-      {leftSideBar()}
+      {leftSideBar()}     
       {content()}
     </div>
   )

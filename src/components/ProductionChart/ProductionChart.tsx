@@ -1,6 +1,5 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
-import Pluralize from 'react-pluralize'
 import { VisualizationSpec } from 'vega-embed'
 
 interface ChartRecord {
@@ -21,8 +20,7 @@ const actions = {
 }
 
 const ProductionChart: React.FunctionComponent<Props> = ({
-  data,
-  doiCount
+  data
 }) => {
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1
@@ -77,7 +75,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
         type: 'quantitative',
         axis: {
           format: '1',
-          labelAngle: yearsDomain < 11 ? 45 : 0,
+          labelAngle: yearsDomain < 25 ? 45 : 0,
           labelFlush: false,
           labelOverlap: true
         },
@@ -116,7 +114,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-        <Pluralize singular={'work'} count={doiCount} /> reported.
+         Distribution of works by Year of Publication
       </React.Fragment>
     )
   }

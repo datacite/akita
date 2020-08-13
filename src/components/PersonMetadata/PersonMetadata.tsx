@@ -1,15 +1,10 @@
 import * as React from 'react'
 import { Alert, OverlayTrigger, Popover, Row, Col, Label } from 'react-bootstrap'
-import Pluralize from 'react-pluralize'
+// eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
-import { compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import {
-  faQuoteLeft,
-  faInfoCircle,
-  faEye,
-  faDownload,
   faBookmark,
   // faScroll
 } from '@fortawesome/free-solid-svg-icons'
@@ -109,29 +104,53 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   //   )
   // }
 
-  const metricsCounter = () => {
-    if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
-      return (
-        <div className="metrics-counter">
-          <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
-        </div>
-      )
-    }
+  // const metricsCounter = () => {
+  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
+  //     return (
+  //       <div className="metrics-counter">
+  //         <i id="work-count">
+  //           <FontAwesomeIcon icon={faScroll} /> No works reported{' '}
+  //         </i>
+  //       </div>
+  //     )
+  //   }
 
-    return (
-      <div className="metrics-counter">
-        {metadata.citationCount > 0 &&
-          <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
-        }
-        {metadata.viewCount > 0 &&
-          <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
-        }
-        {metadata.downloadCount > 0 &&
-          <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
-        }
-      </div>
-    )
-  }
+  //   return (
+  //     <div className="metrics-counter">
+  //       <i id="work-count">
+  //         <FontAwesomeIcon icon={faScroll} />{' '}
+  //         <Pluralize
+  //           singular={'Work'}
+  //           count={compactNumbers(metadata.works.totalCount)}
+  //         />{' '}
+  //       </i>
+  //     </div>
+  //   )
+  // }
+
+  // const metricsCounter = () => {
+  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
+  //     return (
+  //       <div className="metrics-counter">
+  //         <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
+  //       </div>
+  //     )
+  //   }
+
+  //   return (
+  //     <div className="metrics-counter">
+  //       {metadata.citationCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
+  //       }
+  //       {metadata.viewCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
+  //       }
+  //       {metadata.downloadCount > 0 &&
+  //         <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
+  //       }
+  //     </div>
+  //   )
+  // }
 
   return (
     <div key={metadata.id} className="panel panel-transparent">
@@ -174,7 +193,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
             </Col>
           </Row>
         )}
-        {metricsCounter()}
         {metadata.country && (
           <div className="tags">
             <Label bsStyle="info">{metadata.country.name}</Label>

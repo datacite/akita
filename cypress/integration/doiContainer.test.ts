@@ -1,11 +1,11 @@
 describe("DoiContainer", () => {
   before(() => {
-    cy.visit(`/doi.org/${encodeURIComponent('10.17863/cam.330')}`)
+    cy.visit(`/doi.org/${encodeURIComponent('10.4224/crm.2012e.cass-5')}`)
   })
 
-  it("visit 10.17863/cam.330", () => {
+  it("visit 10.4224/crm.2012e.cass-5", () => {
     cy.get('h3.work', { timeout: 10000 })
-      .contains('Sugar Addiction: The State of the Science')
+      .contains('CASS-5: Nearshore seawater reference material for trace metals')
       .should('be.visible')
   })
 
@@ -38,4 +38,26 @@ describe("DoiContainer", () => {
       .should('be.visible')
       //.contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.”')
   })
+
+  it("chart", () => {
+    cy.get('.mark-rect > path')
+    .should('be.visible')
+    .should('have.length', 1)
+  })
 })
+
+
+describe("DoiContainer with usage", () => {
+  before(() => {
+    cy.visit(`/doi.org/${encodeURIComponent('10.70048/findable101')}`)
+  })
+
+  it("chart", () => {
+    cy.get('.mark-rect > path',  { timeout: 10000 })
+    .should('be.visible')
+    .should('have.length', 4)
+  })
+})
+
+
+

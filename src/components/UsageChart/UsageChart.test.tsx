@@ -4,26 +4,6 @@ import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import UsageChart from './UsageChart'
 
-const data = {
-  doi: '10.21945/xs62-rp71',
-  publicationYear: 2017,
-  viewCount: 137,
-  viewsOverTime: [
-    {
-      yearMonth: '2018-12',
-      total: 34
-    },
-    {
-      yearMonth: '2018-11',
-      total: 3
-    },
-    {
-      yearMonth: '2018-10',
-      total: 100
-    }
-  ]
-}
-
 const oldData = {
   doi: '10.21945/xs62-rp71',
   publicationYear: 1985,
@@ -46,6 +26,16 @@ const oldData = {
 }
 
 describe('UsageChart Component', () => {
+
+  let data
+  beforeEach(function () {
+    cy.fixture('usageChart.json').then((d) => {
+      data = d
+    })
+  })
+
+
+
   it('normal data', () => {
     mount(
       <UsageChart

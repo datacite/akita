@@ -60,9 +60,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     showCount: true
   })
 
-  const citationsOverTime = doi.citationsOverTime.map((datum) => ({
-    year: datum.year,
-    total: datum.total
+  // Using published while citations overtime is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
+  const citationsOverTime = doi.citations.published.map((datum) => ({
+    year: parseInt(datum.id),
+    total: datum.count
   }))
   const viewsOverTime = doi.viewsOverTime.map((datum) => ({
     yearMonth: datum.yearMonth,
@@ -74,7 +75,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
-    if (doi.citations.totalCount == 0) return ''
+    if (doi.citations.totalCount == 0 && doi.viewCount == 0 && doi.downloadCount == 0) return ''
 
     return (
       <div className="panel panel-transparent">

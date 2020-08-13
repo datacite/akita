@@ -16,13 +16,16 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 type Props = {
   item?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String) {
+  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
     work(id: $id) {
       ...WorkFragment
       formattedCitation
@@ -41,13 +44,13 @@ export const DOI_GQL = gql`
         yearMonth
         total
       }
-      citations(first: 25, after: $cursor) {
+      citations(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
         }
       }
-      references(first: 5, after: $cursor) {
+      references(first: 5, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -88,6 +91,12 @@ export interface DoiType {
   citationCount?: number
   citationsOverTime?: CitationsYear[]
   citations?: {
+    published: ContentFacet[]
+    resourceTypes: ContentFacet[]
+    languages: ContentFacet[]
+    licenses: ContentFacet[]
+    fieldsOfScience: ContentFacet[]
+    registrationAgencies: ContentFacet[]
     nodes: DoiType[]
     pageInfo: PageInfo
     totalCount: number
@@ -97,10 +106,22 @@ export interface DoiType {
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
   references?: {
+    published: ContentFacet[]
+    resourceTypes: ContentFacet[]
+    languages: ContentFacet[]
+    licenses: ContentFacet[]
+    fieldsOfScience: ContentFacet[]
+    registrationAgencies: ContentFacet[]
     nodes: DoiType[]
     pageInfo: PageInfo
     totalCount: number
   }
+}
+
+interface ContentFacet {
+  id: string
+  title: string
+  count: number
 }
 
 interface Creator {
@@ -171,17 +192,37 @@ export interface DoiQueryData {
 interface DoiQueryVar {
   id: string
   cursor: string
+  published: string
+  resourceTypeId: string
+  language: string
+  fieldOfScience: string
+  registrationAgency: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   // const [selectedOption, setSelectedOption] = React.useState('')
+  const router = useRouter()
+
   const [doi, setDoi] = React.useState<DoiType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
+
+  // eslint-disable-next-line no-unused-vars
+  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
+  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+
+
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item, cursor: cursor }
+      variables: { id: item, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string}
     }
   )
 
@@ -221,6 +262,125 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
 
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
+  }
+
+  const renderFacets = () => {
+    if (loading) return <div className="col-md-3"></div>
+
+    if (!loading && doi.citations.nodes.length == 0)
+      return <div className="col-md-3"></div>
+
+    function facetLink(param: string, value: string) {
+      let url = '?'
+      let icon = faSquare
+
+      // get current query parameters from next router
+      let params = new URLSearchParams(router.query as any)
+
+      // delete person parameter
+      params.delete('doi')
+
+      // delete cursor parameter
+      params.delete('cursor')
+
+      if (params.get(param) == value) {
+        // if param is present, delete from query and use checked icon
+        params.delete(param)
+        icon = faCheckSquare
+      } else {
+        // otherwise replace param with new value and use unchecked icon
+        params.set(param, value)
+      }
+
+      url += params.toString()
+      return (
+        <Link href={url}>
+          <a>
+            <FontAwesomeIcon icon={icon} />{' '}
+          </a>
+        </Link>
+      )
+    }
+
+    return (
+      <div className="panel panel-transparent">
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Publication Year</h4>
+            <ul id="published-facets">
+              {doi.citations.published.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('published', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Work Type</h4>
+            <ul id="work-type-facets">
+              {doi.citations.resourceTypes.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('resource-type', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {doi.citations.registrationAgencies && doi.citations.registrationAgencies.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Registration Agency</h4>
+              <ul id="repository-facets">
+                {doi.citations.registrationAgencies.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('registration-agency', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {doi.citations.languages && doi.citations.languages.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Language</h4>
+              <ul id="affiliation-facets">
+                {doi.citations.languages.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('language', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+    )
   }
 
   const leftSideBar = () => {
@@ -350,6 +510,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             </span>
           </div>
         </div>
+        {renderFacets()}
       </div>
     )
   }
