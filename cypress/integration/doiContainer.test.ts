@@ -53,7 +53,7 @@ describe("DoiContainer with usage", () => {
   })
 
   it("chart", () => {
-    cy.get('.mark-rect > path')
+    cy.get('.mark-rect > path',  { timeout: 10000 })
     .should('be.visible')
     .should('have.length', 4)
   })
