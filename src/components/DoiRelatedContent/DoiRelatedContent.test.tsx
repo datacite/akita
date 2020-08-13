@@ -13,14 +13,14 @@ describe('DoiRelatedContent Component', () => {
 
   it('the list is displayed', () => {
     mount(
-      <DoiRelatedContent dois={data.references} type="references" count={2} />
+      <DoiRelatedContent dois={data.references} type="references" />
     )
     cy.get('.panel-transparent').should('be.visible')
   })
 
   it('the list correct the right number of items', () => {
     mount(
-      <DoiRelatedContent dois={data.references} type="references" count={2} />
+      <DoiRelatedContent dois={data.references} type="references" />
     )
     cy.get('.panel-transparent')
       .should('be.visible')
