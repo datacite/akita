@@ -35,7 +35,20 @@
   "viewsOverTime": [],
   "downloadsOverTime": [],
   "citations": {
-    "nodes": []
+    "nodes": [],
+    "published": [{
+      "id": 2018,
+      "count": 34
+    },
+    {
+      "id": 2016,
+      "count": 3
+    },
+    {
+      "id": 2019,
+      "count": 100
+    }
+  ]
   },
   "references": {
     "totalCount": 2,
