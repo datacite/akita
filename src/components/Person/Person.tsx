@@ -187,7 +187,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             <Pluralize
               singular={'Work'}
               count={compactNumbers(person.works.totalCount)}
-              showCount={false}
+              showCount={true}
             />
           </h3>
         )}
