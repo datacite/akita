@@ -243,7 +243,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/vnd.datacite.datacite+xml/' +
+                  '/application/vnd.datacite.datacite+xml/' +
                   doi.doi
                 }
               >
@@ -256,7 +256,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/vnd.datacite.datacite+json/' +
+                  '/application/vnd.datacite.datacite+json/' +
                   doi.doi
                 }
               >
@@ -269,7 +269,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/vnd.schemaorg.ld+json/' +
+                  '/application/vnd.schemaorg.ld+json/' +
                   doi.doi
                 }
               >
@@ -282,7 +282,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/x-bibtex/' +
+                  '/application/x-bibtex/' +
                   doi.doi
                 }
               >
@@ -295,7 +295,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/x-research-info-systems/' +
+                  '/application/x-research-info-systems/' +
                   doi.doi
                 }
               >
@@ -308,7 +308,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                 rel="noreferrer"
                 href={
                   process.env.NEXT_PUBLIC_API_URL +
-                  '/dois/application/vnd.jats+xml/' +
+                  '/application/vnd.jats+xml/' +
                   doi.doi
                 }
               >
@@ -322,7 +322,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
                   rel="noreferrer"
                   href={
                     process.env.NEXT_PUBLIC_API_URL +
-                    '/dois/application/vnd.codemeta.ld+json/' +
+                    '/application/vnd.codemeta.ld+json/' +
                     doi.doi
                   }
                 >
