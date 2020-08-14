@@ -3,11 +3,13 @@ import { Alert, Row, Col } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
+import LicenseChart from '../LicenseChart/LicenseChart'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import Pager from '../Pager/Pager'
 import { orcidFromUrl, compactNumbers } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
+import clone from 'lodash/clone'
 
 export interface PersonRecord {
   id: string
@@ -35,6 +37,8 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  licenses: ContentFacet[]
+  languages: ContentFacet[]
   nodes: DoiType[]
 }
 
@@ -143,23 +147,42 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       title: x.title,
       count: x.count
     }))
+    const noLicenseValue: ContentFacet = {
+      id: 'no-license',
+      title: 'No License',
+      count: person.works.totalCount - person.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
+    }
+    let licenses = clone(person.works.licenses)
+    licenses.unshift(noLicenseValue)
+    licenses = licenses.map((x) => ({
+      id: x.id,
+      title: x.title,
+      count: x.count
+    }))
 
     return (
       <React.Fragment>
         <Row>
-          <Col xs={8}>
+          <Col xs={6}>
             <ProductionChart
               data={published}
               doiCount={person.works.totalCount}
             ></ProductionChart>
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <TypesChart
               data={resourceTypes}
               legend={false}
               count={person.works.totalCount}
             ></TypesChart>
           </Col>
+          <Col xs={3}>
+          <LicenseChart
+            data={licenses}
+            legend={false}
+            count={person.works.totalCount}
+          ></LicenseChart>
+        </Col>
         </Row>
       </React.Fragment>
     )

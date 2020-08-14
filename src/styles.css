@@ -209,3 +209,7 @@ ul.nav.nav-tabs li span {
 .alert-works {
   margin: 10px;
 }
+
+.types-chart text, .license-chart text {
+  font-size: 27px;
+}

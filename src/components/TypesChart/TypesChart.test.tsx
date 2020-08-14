@@ -4,8 +4,6 @@ import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import TypesChart from './TypesChart'
 
-
-
 describe('TypesChart Component', () => {
   let data
   beforeEach(function () {

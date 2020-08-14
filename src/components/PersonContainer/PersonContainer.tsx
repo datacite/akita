@@ -45,11 +45,6 @@ export const DOI_GQL = gql`
       citationCount
       viewCount
       downloadCount
-      # affiliation {
-      #   name
-      #   id
-      # }
-
       works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
         ...WorkConnectionFragment
         nodes {
@@ -100,6 +95,10 @@ interface Works {
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
+  licenses: ContentFacet[]
+  languages: ContentFacet[]
+  fieldsOfScience: ContentFacet[]
+  registrationAgencies: ContentFacet[]
   affiliations: ContentFacet[]
   repositories: ContentFacet[]
   nodes: DoiType[]
@@ -195,7 +194,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
 
   const leftSideBar = () => {
     const title = 'DataCite Commons: ' + data.person.name

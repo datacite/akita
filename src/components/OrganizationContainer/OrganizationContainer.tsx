@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import clone from 'lodash/clone'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
@@ -20,6 +21,9 @@ import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import TypesChart from '../TypesChart/TypesChart'
+import ProductionChart from '../ProductionChart/ProductionChart'
+import LicenseChart from '../LicenseChart/LicenseChart'
 import {
   PageInfo,
   connectionFragment,
@@ -246,6 +250,59 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     )
   }
 
+  const analyticsBar = () => {
+    if (!data.organization.works.totalCount) return null
+
+    const published = data.organization.works.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+    const resourceTypes = data.organization.works.resourceTypes.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    const noLicenseValue: ContentFacet = {
+      id: 'no-license',
+      title: 'No License',
+      count: data.organization.works.totalCount - data.organization.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
+    }
+    let licenses = clone(data.organization.works.licenses)
+    licenses.unshift(noLicenseValue)
+    licenses = licenses.map((x) => ({
+      id: x.id,
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <React.Fragment>
+        <Row>
+          <Col xs={6}>
+            <ProductionChart
+              data={published}
+              doiCount={data.organization.works.totalCount}
+            ></ProductionChart>
+          </Col>
+          <Col xs={3}>
+            <TypesChart
+              data={resourceTypes}
+              legend={false}
+              count={data.organization.works.totalCount}
+            ></TypesChart>
+          </Col>
+          <Col xs={3}>
+            <LicenseChart
+              data={licenses}
+              legend={false}
+              count={data.organization.works.totalCount}
+            ></LicenseChart>
+          </Col>
+        </Row>
+      </React.Fragment>
+    )
+  }
+
   const relatedContent = () => {
     const hasNextPage = data.organization.works.pageInfo
       ? data.organization.works.pageInfo.hasNextPage
@@ -270,6 +327,8 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
             {data.organization.works.totalCount.toLocaleString('en-US')} Works
           </h3>
         )}
+
+        {analyticsBar()}
 
         {data.organization.works.nodes.map((doi) => (
           <React.Fragment key={doi.id}>

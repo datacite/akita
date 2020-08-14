@@ -21,7 +21,7 @@ const actions = {
   editor: false
 }
 
-const TypesChart: React.FunctionComponent<Props> = ({
+const LicenseChart: React.FunctionComponent<Props> = ({
   data,
   count,
   legend
@@ -31,7 +31,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
     description: 'A simple donut chart with embedded data.',
     padding: { left: 5, top: 10, right: 5, bottom: 5 },
     data: {
-      name: 'table'
+      name: 'table',
     },
     layer: [
       {
@@ -80,7 +80,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-        <h4>Works by work type</h4>
+        <h4>Works by license</h4>
       </React.Fragment>
     )
   }
@@ -100,4 +100,4 @@ const TypesChart: React.FunctionComponent<Props> = ({
   )
 }
 
-export default TypesChart
+export default LicenseChart

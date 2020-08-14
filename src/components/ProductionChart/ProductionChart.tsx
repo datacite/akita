@@ -37,6 +37,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
     data: {
       name: 'table'
     },
+    padding: { left: 5, top: 5, right: 5, bottom: 5 },
     transform: [
       {
         calculate: 'toNumber(datum.title)',
@@ -50,7 +51,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
         filter: 'toNumber(datum.title) >' + lowerBoundYear
       }
     ],
-    width: yearsDomain * 25,
+    width: yearsDomain * 22,
     mark: {
       type: 'bar',
       cursor: 'pointer',
@@ -114,7 +115,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-         Distribution by publication year
+         <h4>Works by publication year</h4>
       </React.Fragment>
     )
   }
