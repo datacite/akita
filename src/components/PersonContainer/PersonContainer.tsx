@@ -2,6 +2,7 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
+import DoiFacet from '../DoiFacet/DoiFacet'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
@@ -15,10 +16,6 @@ import {
   FacebookShareButton,
   TwitterShareButton
 } from "react-share"
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
-// import { Row, Col, Nav, NavItem } from 'react-bootstrap'
 
 type Props = {
   orcid?: string
@@ -138,7 +135,6 @@ interface OrcidQueryVar {
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const router = useRouter()
 
  // eslint-disable-next-line no-unused-vars
   const [published, setPublished] = useQueryState('published', { history: 'push' })
@@ -199,168 +195,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   if (error) {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
-
-  const renderFacets = () => {
-    if (loading) return <div className="col-md-3"></div>
-
-    if (!loading && orcidRecord.works.nodes.length == 0)
-      return <div className="col-md-3"></div>
-
-    function facetLink(param: string, value: string) {
-      let url = '?'
-      let icon = faSquare
-
-      // get current query parameters from next router
-      let params = new URLSearchParams(router.query as any)
-
-      // delete person parameter
-      params.delete('person')
-
-      // delete cursor parameter
-      params.delete('cursor')
-
-      if (params.get(param) == value) {
-        // if param is present, delete from query and use checked icon
-        params.delete(param)
-        icon = faCheckSquare
-      } else {
-        // otherwise replace param with new value and use unchecked icon
-        params.set(param, value)
-      }
-
-      url += params.toString()
-      return (
-        <Link href={url}>
-          <a>
-            <FontAwesomeIcon icon={icon} />{' '}
-          </a>
-        </Link>
-      )
-    }
-
-    return (
-      <div className="panel panel-transparent">
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Publication Year</h4>
-            <ul id="published-facets">
-              {orcidRecord.works.published.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('published', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Work Type</h4>
-            <ul id="work-type-facets">
-              {orcidRecord.works.resourceTypes.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('resource-type', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {orcidRecord.works.repositories && orcidRecord.works.repositories.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Repository</h4>
-              <ul id="repository-facets">
-                {orcidRecord.works.repositories.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('repository', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {orcidRecord.works.affiliations && orcidRecord.works.affiliations.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Affiliation</h4>
-              <ul id="affiliation-facets">
-                {orcidRecord.works.affiliations.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('affiliation', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
-
-
-  // const relatedContentSearchBox = () => {
-  
-  //   const onSearchRelatedContentChange = (e: React.FormEvent<HTMLInputElement>): void => {
-  //     setRelatedContentQuery(e.currentTarget.value)
-  //   }
-  
-  //   const onSearchClear = () => {
-  //     setRelatedContentQuery('')
-  //   }
-
-
-  //   return(
-  //     <Row>
-  //     <Col md={12}>
-  //       <form className="form-horizontal search">
-  //         <input
-  //           name="query"
-  //           value={relatedContentQuery || ''}
-  //           onChange={onSearchRelatedContentChange}
-  //           placeholder="Type to search..."
-  //           className="form-control"
-  //           type="text"
-  //         />
-  //         <span id="search-icon" title="Search" aria-label="Search" onClick={onSearchRelatedContentChange}>
-  //           <FontAwesomeIcon icon={faSearch} />
-  //         </span>
-  //         {relatedContentQuery && (
-  //           <span
-  //             id="search-clear"
-  //             title="Clear"
-  //             aria-label="Clear"
-  //             onClick={onSearchClear}
-  //           >
-  //             <FontAwesomeIcon icon={faTimes} />
-  //           </span>
-  //         )}
-  //       </form>
-  //     </Col>
-  //   </Row>
-  //   )
-  // }
 
 
   const leftSideBar = () => {
@@ -464,7 +298,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
         </div>
 
-        {renderFacets()}
+        <DoiFacet model="doi" data={orcidRecord.works} loading={loading}></DoiFacet>
       </div>
     )
   }

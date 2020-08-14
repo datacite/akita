@@ -75,7 +75,7 @@ describe("PersonContainer", () => {
     cy.get('#work-type-facets > li').should(($facets) => {
       expect($facets).to.have.length.at.least(2)
     })
-    cy.get('#repository-facets')
+    cy.get('#registration-agency-facets')
     .should('not.be.visible')
   })
 
