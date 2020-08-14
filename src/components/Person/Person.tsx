@@ -149,7 +149,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     }))
     const noLicenseValue: ContentFacet = {
       id: 'no-license',
-      title: 'no license',
+      title: 'No License',
       count: person.works.totalCount - person.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
     }
     let licenses = clone(person.works.licenses)

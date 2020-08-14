@@ -80,11 +80,10 @@ const TypesChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-        Distribution by work type
+        <h4>Works by work type</h4>
       </React.Fragment>
     )
   }
-
 
   return (
     <div className="panel panel-transparent">

@@ -80,7 +80,7 @@ const LicenseChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <React.Fragment>
-        Distribution by license
+        <h4>Works by license</h4>
       </React.Fragment>
     )
   }
