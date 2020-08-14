@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { Row, Col, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Row, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import {
@@ -12,12 +10,12 @@ import {
 } from 'react-share'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import clone from 'lodash/clone'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
+import DoiFacet from '../DoiFacet/DoiFacet'
 // import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
@@ -135,7 +133,6 @@ export const ORGANIZATION_GQL = gql`
 `
 
 const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
-  const router = useRouter()
 
   const [published] = useQueryState('published', {
     history: 'push'
@@ -244,158 +241,11 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   if (!organization) return <div></div>
 
   const renderFacets = () => {
-    if (loading) return <div className="col-md-3"></div>
 
-    if (!loading && data.organization.works.nodes.length == 0)
-      return <div className="col-md-3"></div>
-
-    function facetLink(param: string, value: string) {
-      let url = '?'
-      let icon = faSquare
-
-      // get current query parameters from next router
-      let params = new URLSearchParams(router.query as any)
-
-      // delete organization parameter
-      params.delete('organization')
-
-      // delete cursor parameter
-      params.delete('cursor')
-
-      if (params.get(param) == value) {
-        // if param is present, delete from query and use checked icon
-        params.delete(param)
-        icon = faCheckSquare
-      } else {
-        // otherwise replace param with new value and use unchecked icon
-        params.set(param, value)
-      }
-
-      url += params.toString()
-      return (
-        <Link href={url}>
-          <a>
-            <FontAwesomeIcon icon={icon} />{' '}
-          </a>
-        </Link>
-      )
-    }
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Publication Year</h4>
-            <ul>
-              {data.organization.works.published.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('published', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Work Type</h4>
-            <ul>
-              {data.organization.works.resourceTypes.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('resource-type', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {data.organization.works.fieldsOfScience.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Field of Science</h4>
-              <ul>
-                {data.organization.works.fieldsOfScience.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('field-of-science', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {data.organization.works.licenses.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>License</h4>
-              <ul>
-                {data.organization.works.licenses.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('license', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {data.organization.works.languages.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Language</h4>
-              <ul>
-                {data.organization.works.languages.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('language', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>DOI Registration Agency</h4>
-            <ul>
-              {data.organization.works.registrationAgencies.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('registration-agency', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+          <DoiFacet model="organization" data={data.organization.works} loading={loading}></DoiFacet>
       </div>
     )
   }
