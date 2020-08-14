@@ -110,14 +110,14 @@ const DoiFacet: React.FunctionComponent<Props> = ({
         </div>
       </div>
 
-      {data.repositories && data.repositories.length > 0 && (
+      {data.licenses && data.licenses.length > 0 && (
         <div className="panel facets add">
           <div className="panel-body">
-            <h4>Repository</h4>
-            <ul id="repository-facets">
-              {data.repositories.map((facet) => (
+            <h4>License</h4>
+            <ul id="license-facets">
+              {data.licenses.map((facet) => (
                 <li key={facet.id}>
-                  {facetLink('repository', facet.id)}
+                  {facetLink('license', facet.id)}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">
                     {facet.count.toLocaleString('en-US')}
@@ -130,14 +130,14 @@ const DoiFacet: React.FunctionComponent<Props> = ({
         </div>
       )}
 
-      {data.affiliations && data.affiliations.length > 0 && (
+      {data.languages && data.languages.length > 0 && (
         <div className="panel facets add">
           <div className="panel-body">
-            <h4>Affiliation</h4>
-            <ul id="affiliation-facets">
-              {data.affiliations.map((facet) => (
+            <h4>Language</h4>
+            <ul id="language-facets">
+              {data.languages.map((facet) => (
                 <li key={facet.id}>
-                  {facetLink('affiliation', facet.id)}
+                  {facetLink('language', facet.id)}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">
                     {facet.count.toLocaleString('en-US')}
@@ -150,7 +150,7 @@ const DoiFacet: React.FunctionComponent<Props> = ({
         </div>
       )}
 
-      {data.fieldsOfScience.length > 0 && (
+      {data.fieldsOfScience && data.fieldsOfScience.length > 0 && (
           <div className="panel facets add">
             <div className="panel-body">
               <h4>Field of Science</h4>

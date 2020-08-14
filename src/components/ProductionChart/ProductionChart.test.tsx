@@ -87,6 +87,6 @@ describe('ProductionChart Component', () => {
       />
     )
     cy.get('.mark-rect > path').should('be.visible').should('have.length', 9)
-    cy.get('.production-chart .title').should('be.visible').contains('works by Year of Publication')
+    cy.get('.production-chart .title').should('be.visible').contains('Distribution by publication year')
   })
 })
