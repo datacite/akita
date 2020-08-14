@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Row, Col, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import {
