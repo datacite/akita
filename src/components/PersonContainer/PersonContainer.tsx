@@ -100,6 +100,8 @@ interface Works {
   published: ContentFacet[]
   licenses: ContentFacet[]
   languages: ContentFacet[]
+  fieldsOfScience: ContentFacet[]
+  registrationAgencies: ContentFacet[]
   affiliations: ContentFacet[]
   repositories: ContentFacet[]
   nodes: DoiType[]
@@ -262,6 +264,64 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
               {orcidRecord.works.resourceTypes.map((facet) => (
                 <li key={facet.id}>
                   {facetLink('resource-type', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {orcidRecord.works.licenses.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>License</h4>
+              <ul>
+                {orcidRecord.works.licenses.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('license', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {orcidRecord.works.languages.length > 0 && (
+          <div className="panel facets add">
+            <div className="panel-body">
+              <h4>Language</h4>
+              <ul>
+                {orcidRecord.works.languages.map((facet) => (
+                  <li key={facet.id}>
+                    {facetLink('language', facet.id)}
+                    <div className="facet-title">{facet.title}</div>
+                    <span className="number pull-right">
+                      {facet.count.toLocaleString('en-US')}
+                    </span>
+                    <div className="clearfix" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>DOI Registration Agency</h4>
+            <ul>
+              {orcidRecord.works.registrationAgencies.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('registration-agency', facet.id)}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">
                     {facet.count.toLocaleString('en-US')}

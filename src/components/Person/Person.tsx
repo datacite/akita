@@ -153,7 +153,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       count: person.works.totalCount - person.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
     }
     let licenses = clone(person.works.licenses)
-    licenses.push(noLicenseValue)
+    licenses.unshift(noLicenseValue)
     licenses = licenses.map((x) => ({
       id: x.id,
       title: x.title,

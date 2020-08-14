@@ -418,7 +418,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       count: data.organization.works.totalCount - data.organization.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
     }
     let licenses = clone(data.organization.works.licenses)
-    licenses.push(noLicenseValue)
+    licenses.unshift(noLicenseValue)
     licenses = licenses.map((x) => ({
       id: x.id,
       title: x.title,
