@@ -5,7 +5,6 @@ import { DoiType } from '../DoiContainer/DoiContainer'
 
 type Props = {
   dois: RelatedContentList
-  type?: string
 }
 
 interface RelatedContentList {
@@ -13,7 +12,7 @@ interface RelatedContentList {
   nodes: DoiType[]
 }
 
-const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois, type }) => {
+const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
   if (!dois)
     return (
       <div className="alert-works">
