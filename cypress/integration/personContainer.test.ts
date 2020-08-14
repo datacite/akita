@@ -86,7 +86,7 @@ describe("PersonContainer", () => {
   })
 
   it("types chart", () => {
-    cy.get('.mark-arc > path').should('be.visible').should('have.length', 4)
+    cy.get('.mark-arc > path').should('be.visible').should('have.length', 6)
   })
 })
 

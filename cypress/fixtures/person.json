@@ -66,6 +66,18 @@
         "count":2
       }
     ],
+    "licenses":[
+      {
+        "id":"cc-by-4.0",
+        "title":"CC-BY-4.0",
+        "count":126
+      },
+      {
+        "id":"cc0-1.0",
+        "title":"CC0-1.0",
+        "count":3
+      }
+    ],
     "nodes":[
       {
         "id":"https://handle.stage.datacite.org/10.21945/xs62-rp71",
