@@ -50,11 +50,11 @@ const TypesChart: React.FunctionComponent<Props> = ({
           },
           color: {
             field: 'title',
-            title: 'Type',
             type: 'nominal',
+            title: 'type',
             legend: legend,
             scale: {
-              scheme: 'viridis'
+              scheme: 'set3'
             }
           }
         }
@@ -65,7 +65,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
           fill: '#767676',
           align: 'center',
           baseline: 'middle',
-          fontSize: 36
+          fontSize: 27
         },
         encoding: {
           text: { value: compactNumbers(count) }

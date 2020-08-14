@@ -50,11 +50,11 @@ const LicenseChart: React.FunctionComponent<Props> = ({
           },
           color: {
             field: 'title',
-            title: 'Type',
+            title: 'license',
             type: 'nominal',
             legend: legend,
             scale: {
-              scheme: 'viridis'
+              scheme: 'set3'
             }
           }
         }
@@ -65,7 +65,7 @@ const LicenseChart: React.FunctionComponent<Props> = ({
           fill: '#767676',
           align: 'center',
           baseline: 'middle',
-          fontSize: 36
+          fontSize: 27
         },
         encoding: {
           text: { value: compactNumbers(count) }
