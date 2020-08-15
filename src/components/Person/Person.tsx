@@ -159,7 +159,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       title: x.title,
       count: x.count
     }))
-
+    
     return (
       <React.Fragment>
         <Row>

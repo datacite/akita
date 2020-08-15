@@ -22,8 +22,8 @@ import { OrganizationMetadataRecord } from '../OrganizationMetadata/Organization
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import TypesChart from '../TypesChart/TypesChart'
-import ProductionChart from '../ProductionChart/ProductionChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
+import ProductionChart from '../ProductionChart/ProductionChart'
 import {
   PageInfo,
   connectionFragment,
@@ -133,7 +133,6 @@ export const ORGANIZATION_GQL = gql`
 `
 
 const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
-
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -241,11 +240,13 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   if (!organization) return <div></div>
 
   const renderFacets = () => {
-
-
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-          <DoiFacet model="organization" data={data.organization.works} loading={loading}></DoiFacet>
+        <DoiFacet
+          model="organization"
+          data={data.organization.works}
+          loading={loading}
+        ></DoiFacet>
       </div>
     )
   }
@@ -265,7 +266,12 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     const noLicenseValue: ContentFacet = {
       id: 'no-license',
       title: 'No License',
-      count: data.organization.works.totalCount - data.organization.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
+      count:
+        data.organization.works.totalCount -
+        data.organization.works.licenses.reduce(
+          (a, b) => a + (b['count'] || 0),
+          0
+        )
     }
     let licenses = clone(data.organization.works.licenses)
     licenses.unshift(noLicenseValue)
@@ -274,7 +280,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       title: x.title,
       count: x.count
     }))
-
+ 
     return (
       <React.Fragment>
         <Row>

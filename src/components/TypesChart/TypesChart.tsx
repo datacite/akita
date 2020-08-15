@@ -54,7 +54,40 @@ const TypesChart: React.FunctionComponent<Props> = ({
             title: 'type',
             legend: legend,
             scale: {
-              scheme: 'set3'
+              range: [
+                '#fccde5',
+                '#fdb462',
+                '#fb8072',
+                '#fb8072',
+                '#b3de69',
+                '#bc80bd',
+                '#fccde5',
+                '#8dd3c7',
+                '#ffed6f',
+                '#d9d9d9',
+                '#ffffb3',
+                '#bebada',
+                '#80b1d3',
+                '#ccebc5',
+                '#d9d9d9'
+              ],
+              domain: [
+                'Audiovisual',
+                'Collection',
+                'Dataset',
+                'Data Paper',
+                'Event',
+                'Image',
+                'Interactive Resource',
+                'Model',
+                'Physical Object',
+                'Service',
+                'Sound',
+                'Software',
+                'Text',
+                'Workflow',
+                'Other'
+              ]
             }
           }
         }
@@ -88,7 +121,7 @@ const TypesChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="types-chart panel-body">
-      <div className="title">{title()}</div>
+        <div className="title">{title()}</div>
         <VegaLite
           renderer="svg"
           spec={spec}

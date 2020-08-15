@@ -166,7 +166,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 eventKey="referencesList"
                 title={referencesTabLabel}
               >
-                <DoiRelatedContent dois={doi.references} type="reference" />
+                <DoiRelatedContent dois={doi.references} />
                 {doi.references.totalCount > 25 && (
                   <Pager
                     url={'/doi.org/' + doi.doi + '/?'}
@@ -183,7 +183,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 eventKey="citationsList"
                 title={citationsTabLabel}
               >
-                <DoiRelatedContent dois={doi.citations} type="citation" />
+                <DoiRelatedContent dois={doi.citations} />
                 {doi.citations.totalCount > 25 && (
                   <Pager
                     url={'/doi.org/' + doi.doi + '/?'}

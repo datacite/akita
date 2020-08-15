@@ -257,17 +257,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <div id="profile-europepmc" className="download">
               {europePMCLink}
             </div>
-            {data.person.links.map((link) => (
-              <div key={link.name} id={"profile-"+link.name} className="download">
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {link.name}
-                </a>
-              </div>
-              ))}
           </div>
 
           <div className="facets panel-body">
