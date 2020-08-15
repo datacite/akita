@@ -6,6 +6,8 @@ import { Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
+import Pluralize from 'react-pluralize'
+
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import Error from '../Error/Error'
@@ -326,9 +328,14 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     return (
       <div className="col-md-9" id="content">
-        {searchResults.length > 1 && (
+        {searchResults.length > 0 && (
           <h3 className="member-results">
-            {data.works.totalCount.toLocaleString('en-US')} Works
+            {data.works.totalCount.toLocaleString('en-US') + ' '}
+            <Pluralize
+              singular={'Work'}
+              count={data.works.totalCount}
+              showCount={false}
+            />
           </h3>
         )}
 

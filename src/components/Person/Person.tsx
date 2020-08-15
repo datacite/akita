@@ -205,12 +205,13 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
     return (
       <React.Fragment>
-        {person.works.totalCount > 1 && (
+        {person.works.totalCount > 0 && (
           <h3 className="member-results">
+            {person.works.totalCount.toLocaleString('en-US') + ' '}
             <Pluralize
               singular={'Work'}
-              count={compactNumbers(person.works.totalCount)}
-              showCount={true}
+              count={person.works.totalCount}
+              showCount={false}
             />
           </h3>
         )}

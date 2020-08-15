@@ -3,6 +3,8 @@ import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
+import Pluralize from 'react-pluralize'
+
 import Pager from '../Pager/Pager'
 import FilterItem from '../FilterItem/FilterItem'
 import Error from '../Error/Error'
@@ -253,9 +255,14 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     return (
       <div className="col-md-9" id="content">
-        {searchResults.length > 1 && (
+        {searchResults.length > 0 && (
           <h3 className="member-results">
-            {data.organizations.totalCount.toLocaleString('en-US')} Organizations
+            {data.organizations.totalCount.toLocaleString('en-US') + ' '}
+            <Pluralize
+              singular={'Organization'}
+              count={data.organizations.totalCount}
+              showCount={false}
+            />
           </h3>
         )}
 

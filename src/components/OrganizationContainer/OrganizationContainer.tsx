@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import clone from 'lodash/clone'
+import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
@@ -328,9 +329,14 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
     return (
       <div className="col-md-9" id="related-content">
-        {data.organization.works.totalCount > 1 && (
+        {data.organization.works.totalCount > 0 && (
           <h3 className="member-results">
-            {data.organization.works.totalCount.toLocaleString('en-US')} Works
+            {data.organization.works.totalCount.toLocaleString('en-US') + ' '}
+            <Pluralize
+              singular={'Work'}
+              count={data.organization.works.totalCount}
+              showCount={false}
+            />
           </h3>
         )}
 
