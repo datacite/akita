@@ -30,7 +30,6 @@ export function useQueryState<T = string>(
   }: Partial<UseQueryStateOptions<T>> = {}
 ): UseQueryStateReturn<T | null> {
   const router = useRouter()
-  console.log(router)
 
   // Memoizing the update function has the advantage of making it
   // immutable as long as `history` stays the same.
@@ -46,7 +45,6 @@ export function useQueryState<T = string>(
       return null
     }
     const query = new URLSearchParams(window.location.search)
-    console.log(query)
     const value = query.get(key)
     return value ? parse(value) : null
   }, [])

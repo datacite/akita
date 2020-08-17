@@ -1,11 +1,11 @@
 import React from 'react'
 import { useQueryState } from 'next-usequerystate'
 
-import Layout from '../components/Layout/Layout'
-import About from '../components/About/About'
-import SearchContent from '../components/SearchContent/SearchContent'
+import Layout from '../../components/Layout/Layout'
+import About from '../../components/About/About'
+import SearchOrganization from '../../components/SearchOrganization/SearchOrganization'
 
-const IndexPage = () => {
+const OrganizationIndexPage = () => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
@@ -14,11 +14,11 @@ const IndexPage = () => {
         {!searchQuery || searchQuery === '' ? (
           <About title={'Introduction'} />
         ) : (
-          <SearchContent searchQuery={searchQuery} />
+          <SearchOrganization searchQuery={searchQuery} />
         )}
       </React.Fragment>
     </Layout>
   )
 }
 
-export default IndexPage
+export default OrganizationIndexPage

@@ -15,7 +15,6 @@
 //     })
 
 //     cy.visit('/')
-
 //     cy.get('input[name="query"]')
 //       .type('hallett')
 //       .get('.alert > h4')
