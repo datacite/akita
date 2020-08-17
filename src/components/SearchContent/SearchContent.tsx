@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-import { Alert } from 'react-bootstrap'
+import { Alert, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
@@ -282,39 +282,35 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <ContentLoader
-              speed={1}
-              width={1000}
-              height={250}
-              viewBox="0 0 1000 250"
-              backgroundColor="#f3f3f3"
-              foregroundColor="#ecebeb"
-            >
-              <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-              <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-              <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-              <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-              <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-              <circle cx="54" cy="61" r="45" />
-            </ContentLoader>
-          </div>
+        <div className="col-md-9">
+          <ContentLoader
+            speed={1}
+            width={1000}
+            height={250}
+            viewBox="0 0 1000 250"
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb"
+          >
+            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+            <circle cx="54" cy="61" r="45" />
+          </ContentLoader>
         </div>
       )
+
+    if (!data) return null
 
     if (error)
       return <Error title="An error occured." message={error.message} />
 
     if (!loading && searchResults.length == 0)
       return (
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <div className="alert-works">
-              <Alert bsStyle="warning">No works found.</Alert>
-            </div>
+        <div className="col-md-9">
+          <div className="alert-works">
+            <Alert bsStyle="warning">No works found.</Alert>
           </div>
         </div>
       )
@@ -358,6 +354,8 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
+
+    if (!data) return <div className="col-md-3"></div>
 
     if (!loading && searchResults.length == 0)
       return <div className="col-md-3"></div>
@@ -517,10 +515,10 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   }
 
   return (
-    <div>
+    <Row>
       {renderFacets()}
       {renderResults()}
-    </div>
+    </Row>
   )
 }
 

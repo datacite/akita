@@ -204,35 +204,31 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const renderResults = () => {
     if (loading)
       return (
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <ContentLoader
-              speed={1}
-              width={1000}
-              height={250}
-              viewBox="0 0 1000 250"
-              backgroundColor="#f3f3f3"
-              foregroundColor="#ecebeb"
-            >
-              <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-              <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-              <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-              <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-              <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-              <circle cx="54" cy="61" r="45" />
-            </ContentLoader>
-          </div>
+        <div className="col-md-9">
+          <ContentLoader
+            speed={1}
+            width={1000}
+            height={250}
+            viewBox="0 0 1000 250"
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb"
+          >
+            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
+            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
+            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
+            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
+            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
+            <circle cx="54" cy="61" r="45" />
+          </ContentLoader>
         </div>
       )
 
+    if (!data) return null
+
     if (!loading && searchResults.length == 0)
       return (
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <Alert bsStyle="warning">No organizations found.</Alert>
-          </div>
+        <div className="col-md-9">
+          <Alert bsStyle="warning">No organizations found.</Alert>
         </div>
       )
 
@@ -243,8 +239,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           message="Unable to load services."
         />
       )
-
-    if (!data) return <div></div>
 
     const hasNextPage = data.organizations.pageInfo
       ? data.organizations.pageInfo.hasNextPage
@@ -288,6 +282,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
+
+    if (!data) return null
 
     if (!loading && data && data.organizations.totalCount == 0)
       return <div className="col-md-3"></div>

@@ -103,6 +103,8 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
+    if (!data) return null
+
     if (error)
       return <Error title="An error occured." message={error.message} />
 
