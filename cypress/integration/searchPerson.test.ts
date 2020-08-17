@@ -37,24 +37,24 @@ describe("Search People", () => {
       .should('contain', 'Introduction')
   })
 
-  // it("search for specific ORCID", () => {
-  //   cy.get('input[name="query"]')
-  //     .type('0000-0003-3484-6875')
-  //     // the results are rendered
-  //     .get('.panel-body .metadata', { timeout: 60000 })
-  //     .should('contain', 'Article published 2016 via Apollo - University of Cambridge Repository (staging)' )
-  //     .get('.panel-body .creators')
-  //     .should('contain', 'Margaret L Westwater, Paul Fletcher & Hisham Ziauddeen')
-  //     .get('.panel-body .registered')
-  //     .should('contain', 'DOI registered August 19, 2016 via DataCite.')
-  //     .get('.panel-body .description')
-  //     .should('contain', 'Purpose As obesity rates continue to climb')
-  //     .get('.panel-body .tags')
-  //     .should('contain', 'Text')
-  //     // no results count for single result
-  //     .get('.member-results').should('not.exist')
-  //     // all facets are rendered
-  // })
+  it("search for specific ORCID", () => {
+    cy.get('input[name="query"]')
+      .type('0000-0003-3484-6875{enter}')
+      // the results are rendered
+      .get('.panel-body .metadata', { timeout: 60000 })
+      .should('contain', 'Article published 2016 via Apollo - University of Cambridge Repository (staging)' )
+      .get('.panel-body .creators')
+      .should('contain', 'Margaret L Westwater, Paul Fletcher & Hisham Ziauddeen')
+      .get('.panel-body .registered')
+      .should('contain', 'DOI registered August 19, 2016 via DataCite.')
+      .get('.panel-body .description')
+      .should('contain', 'Purpose As obesity rates continue to climb')
+      .get('.panel-body .tags')
+      .should('contain', 'Text')
+      // no results count for single result
+      .get('.member-results').should('not.exist')
+      // all facets are rendered
+  })
 
   it("search with no results", () => {
     cy.get('input[name="query"]')

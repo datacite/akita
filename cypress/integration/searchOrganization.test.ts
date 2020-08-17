@@ -31,6 +31,25 @@ describe("Search Organizations", () => {
       })
   })
 
+  it("search for specific ror id", () => {
+    cy.get('input[name="query"]')
+      .type('ror.org/052gg0110{enter}')
+      // timeout for the query results to return
+      .get('.member-results', { timeout: 60000 })
+      .should('contain', 'Organizations')
+      // results are rendered
+      .get('.panel-transparent').should(($organization) => {
+        expect($organization).to.have.length.at.least(4)
+      })
+
+      // all facets are rendered
+      .get('.panel.facets').should(($facet) => {
+        expect($facet).to.have.length.at.least(2)
+        // expect($facet.eq(0)).to.contain('Country')
+        // expect($facet.eq(1)).to.contain('Organization Type')
+      })
+  })
+
   it("search and reset", () => {
     cy.get('input[name="query"]')
       .type('oxford{enter}')
@@ -52,5 +71,4 @@ describe("Search Organizations", () => {
       .get('.alert-warning', { timeout: 60000 })
       .should('contain', 'No organizations found.')
   })
-
 })

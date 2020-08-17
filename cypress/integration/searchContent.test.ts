@@ -42,9 +42,8 @@ describe("Search Works", () => {
       // results are found
       .should('contain', 'Works')
       .get('#search-clear >').click()
-      // return introduction text
-      .get('.member')
-      .should('contain', 'Introduction')
+      .get('input[name="query"]')
+      .should('not.contain', 'climate')
   })
 
   it("search for specific doi", () => {
@@ -62,12 +61,13 @@ describe("Search Works", () => {
       .get('.panel-body .tags')
       .should('contain', 'Text')
       // no results count for single result
-      .get('.member-results').should('not.exist')
+      .get('.member-results', { timeout: 60000 })
+      .should('contain', 'Work')
       // all facets are rendered
       .get('.panel.facets').should(($facet) => {
         expect($facet).to.have.length(5)
         expect($facet.eq(0)).to.contain('Publication Year')
-        expect($facet.eq(1)).to.contain('Content Type')
+        expect($facet.eq(1)).to.contain('Work Type')
         expect($facet.eq(2)).to.contain('License')
         expect($facet.eq(3)).to.contain('Language')
         expect($facet.eq(4)).to.contain('DOI Registration Agency')

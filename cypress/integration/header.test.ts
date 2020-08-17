@@ -8,6 +8,15 @@ describe("Header", () => {
         .should('contain', 'Works')
     })
 
+    it("search with submit", () => {
+      cy.visit("/")
+      cy.get('input[name="query"]')
+        .type('climate')
+        .get('.search-submit').click()
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
+
     it("search with click", () => {
       cy.visit("/")
       cy.get('input[name="query"]')
@@ -33,6 +42,15 @@ describe("Header", () => {
         .should('contain', 'Works')
     })
 
+    it("search with submit", () => {
+      cy.visit("/doi.org/10.17863/cam.10544")
+      cy.get('input[name="query"]')
+        .type('climate')
+        .get('.search-submit').click()
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
+
     it("search with click", () => {
       cy.visit("/doi.org/10.17863/cam.10544")
       cy.get('input[name="query"]')
@@ -48,6 +66,15 @@ describe("Header", () => {
       cy.visit("/orcid.org")
       cy.get('input[name="query"]')
         .type('Josiah Carberry{enter}')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'People')
+    })
+
+    it("search with submit", () => {
+      cy.visit("/orcid.org")
+      cy.get('input[name="query"]')
+        .type('Josiah Carberry')
+        .get('.search-submit').click()
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'People')
     })
@@ -77,6 +104,15 @@ describe("Header", () => {
         .should('contain', 'People')
     })
 
+    it("search with submit", () => {
+      cy.visit("/orcid.org/0000-0002-1825")
+      cy.get('input[name="query"]')
+        .type('Josiah Carberry')
+        .get('.search-submit').click()
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'People')
+    })
+
     it("search with click", () => {
       cy.visit("/orcid.org/0000-0002-1825")
       cy.get('input[name="query"]')
@@ -92,6 +128,15 @@ describe("Header", () => {
       cy.visit("/ror.org")
       cy.get('input[name="query"]')
         .type('Cambridge{enter}')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Organizations')
+    })
+
+    it("search with submit", () => {
+      cy.visit("/ror.org")
+      cy.get('input[name="query"]')
+        .type('Cambridge')
+        .get('.search-submit').click()
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'Organizations')
     })
@@ -117,6 +162,15 @@ describe("Header", () => {
       cy.visit("/ror.org/013meh722")
       cy.get('input[name="query"]')
         .type('Cambridge{enter}')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Organizations')
+    })
+
+    it("search with submit", () => {
+      cy.visit("/ror.org/013meh722")
+      cy.get('input[name="query"]')
+        .type('Cambridge')
+        .get('.search-submit').click()
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'Organizations')
     })
