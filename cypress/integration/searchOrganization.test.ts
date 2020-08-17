@@ -1,14 +1,10 @@
 describe("Search Organizations", () => {
   beforeEach(() => {
-    cy.visit("/")
-    cy.get('a#organizations-link')
-    .click()
+    cy.visit("/ror.org")
   })
 
   it("search no query", () => {
-    cy.get('input[name="query"]', { timeout: 60000 })
-      // return introduction text
-      .get('.member')
+    cy.get('.member')
       .should('contain', 'Introduction')
   })
 
@@ -36,10 +32,10 @@ describe("Search Organizations", () => {
       .type('ror.org/052gg0110{enter}')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
-      .should('contain', 'Organizations')
+      .should('contain', 'Organization')
       // results are rendered
       .get('.panel-transparent').should(($organization) => {
-        expect($organization).to.have.length.at.least(4)
+        expect($organization).to.have.length.at.least(1)
       })
 
       // all facets are rendered
@@ -58,9 +54,8 @@ describe("Search Organizations", () => {
       // results are found
       .should('contain', 'Organizations')
       .get('#search-clear >').click()
-      // return introduction text
-      .get('.member')
-      .should('contain', 'Introduction')
+      .get('input[name="query"]')
+      .should('not.contain', 'oxford')
   })
 
   it("search with no results", () => {
