@@ -41,43 +41,71 @@ h3.popover-title {
   font-size: 21px;
 }
 
-.form-horizontal.search {
-  max-width: 100%;
+.navbar-right {
+  padding-top: 2px;
+}
+
+.navbar-form {
   padding-bottom: 0;
+  margin-left: 36px;
+  margin-top: 19px;
 }
 
-.form-horizontal.search input[name="query"] {
-  z-index: 1;
-  height: 45px;
-  border-width: 1px;
+.navbar-form .input-group input[name="query"] {
+  z-index: 2;
+  min-width: 600px;
+  max-width: 500px;
+  height: 40px;
+  border: 1px solid #cdd2d5;
+  border-radius: 26px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #34495e;
 }
 
-.form-horizontal.search input[name="query"]:focus {
+.navbar-form input[name="query"]:focus {
   border-color: #1abc9c;
 }
 
-.form-horizontal.search #search-clear {
+.navbar-form #search-clear {
   z-index: 3;
   color: #cdd2d5;
   position: absolute;
-  right: 25px;
-  top: 12px;
+  right: 18px;
+  top: 10px;
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
 }
 
-.form-horizontal.search input.form-control {
-  text-indent: 24px;
+.navbar-form input.form-control {
+  text-indent: 34px;
 }
 
-.form-horizontal.search #search-icon {
+.navbar-form #search-icon {
   z-index: 3;
   color: #cdd2d5;
   position: absolute;
-  left: 25px;
-  top: 12px;
+  left: 12px;
+  top: 10px;
   text-decoration: none;
+}
+
+.navbar-form .input-group .input-group-btn button {
+  z-index: 1;
+  margin-top: 0;
+  margin-left: -1px;
+  margin-bottom: 0;
+}
+
+.navbar-form .input-group .input-group-btn button:hover {
+  border-color: #1abc9c;
+  background-color: #1abc9c;
+  color: white;
+}
+
+.navbar-form .dropdown-menu {
+  margin-block-start: 3px;
 }
 
 .btn.navbar-text {
@@ -161,17 +189,23 @@ ul.ror-identifiers {
   margin-right: 10px;
 }
 
+.col-md-9.search-nav {
+  margin-top: -40px;
+  margin-bottom: -20px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
 #search-nav {
-  margin-bottom: 1.25em;
+  margin-left: -6px;
+  padding-left: 0;
 }
 
-#search-tabs-tab-works {
-  padding-left: 36px;
+#search-nav li.active a {
+  color: #34495e;
 }
 
-#search-tabs-tab-works::before, #search-tabs-tab-works::after,
-#search-tabs-tab-people::before, #search-tabs-tab-people::after,
-#search-tabs-tab-organizations::before, #search-tabs-tab-organizations::after {
+#search-nav li a::before, #search-nav li a::after {
   display: none;
 }
 

@@ -1,7 +1,7 @@
 describe("Search People", () => {
   beforeEach(() => {
     cy.visit("/")
-    cy.get('a#search-tabs-tab-people')
+    cy.get('a#people-link')
     .click()
   })
 
@@ -14,7 +14,7 @@ describe("Search People", () => {
 
   it("search for richard hallett", () => {
     cy.get('input[name="query"]')
-      .type('richard hallett')
+      .type('richard hallett{enter}')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
@@ -26,7 +26,7 @@ describe("Search People", () => {
 
   it("search and reset", () => {
     cy.get('input[name="query"]')
-      .type('hallett')
+      .type('hallett{enter}')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       // results are found
@@ -58,10 +58,9 @@ describe("Search People", () => {
 
   it("search with no results", () => {
     cy.get('input[name="query"]')
-      .type('xxxxxyyyyy')
+      .type('xxxxxyyyyy{enter}')
       // timeout for the query results to return
       .get('.alert-warning', { timeout: 60000 })
       .should('contain', 'No people found.')
   })
-
 })

@@ -151,7 +151,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   }
 
   const renderFacets = () => {
-    if (loading) return <div className="col-md-3"></div>
+    if (loading) return ''
 
     if (!loading && searchResults.length == 0)
       return <div className="col-md-3"></div>

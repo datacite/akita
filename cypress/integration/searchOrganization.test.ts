@@ -1,7 +1,7 @@
 describe("Search Organizations", () => {
   beforeEach(() => {
     cy.visit("/")
-    cy.get('a#search-tabs-tab-organizations')
+    cy.get('a#organizations-link')
     .click()
   })
 
@@ -14,7 +14,7 @@ describe("Search Organizations", () => {
 
   it("search for oxford", () => {
     cy.get('input[name="query"]')
-      .type('oxford')
+      .type('oxford{enter}')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Organizations')
@@ -33,7 +33,7 @@ describe("Search Organizations", () => {
 
   it("search and reset", () => {
     cy.get('input[name="query"]')
-      .type('oxford')
+      .type('oxford{enter}')
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       // results are found
@@ -46,7 +46,7 @@ describe("Search Organizations", () => {
 
   it("search with no results", () => {
     cy.get('input[name="query"]')
-      .type('xxx')
+      .type('xxx{enter}')
       // timeout for the query results to return
       // return introduction text
       .get('.alert-warning', { timeout: 60000 })
