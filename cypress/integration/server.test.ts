@@ -17,7 +17,7 @@ describe("Search", () => {
     cy.visit('/')
 
     cy.get('input[name="query"]')
-      .type('hallett')
+      .type('hallett{enter}')
       .get('.alert > h4')
       .should('contain', 'An error occured.')
       .get('.alert > p')
