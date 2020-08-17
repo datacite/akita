@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Navbar, Nav, NavItem, Popover, OverlayTrigger, InputGroup } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Popover, OverlayTrigger, InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt, faTimes, faSearch, faBook, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
 
@@ -46,11 +46,15 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
-      router.push({
-        pathname: pathname,
-        query: { query: searchInput },
-      })
+      onSubmit()
     }
+  }
+
+  const onSubmit = () => {
+    router.push({
+      pathname: pathname,
+      query: { query: searchInput },
+    })
   }
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -83,9 +87,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
                 className="form-control"
                 type="text"
               />
-              <span id="search-icon" title="Search" aria-label="Search">
-                <FontAwesomeIcon icon={faSearch} />
-              </span>
+
               {searchInput !== '' && (
                 <span
                   id="search-clear"
@@ -96,6 +98,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               )}
+              <Button type="submit" className="search-submit" onClick={onSubmit}><FontAwesomeIcon icon={faSearch} /></Button>
             </InputGroup>
           </Navbar.Form>
           <Nav pullRight>

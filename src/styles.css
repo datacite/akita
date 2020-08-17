@@ -47,7 +47,7 @@ h3.popover-title {
 
 .navbar-form {
   padding-bottom: 0;
-  margin-left: 36px;
+  margin-left: 62px;
   margin-top: 19px;
 }
 
@@ -57,7 +57,8 @@ h3.popover-title {
   max-width: 500px;
   height: 40px;
   border: 1px solid #cdd2d5;
-  border-radius: 26px;
+  border-top-left-radius: 26px;
+  border-bottom-left-radius: 26px;
   font-size: 18px;
   font-weight: 400;
   color: #34495e;
@@ -71,7 +72,7 @@ h3.popover-title {
   z-index: 3;
   color: #cdd2d5;
   position: absolute;
-  right: 18px;
+  right: 60px;
   top: 10px;
   font-size: 16px;
   text-decoration: none;
@@ -79,16 +80,7 @@ h3.popover-title {
 }
 
 .navbar-form input.form-control {
-  text-indent: 34px;
-}
-
-.navbar-form #search-icon {
-  z-index: 3;
-  color: #cdd2d5;
-  position: absolute;
-  left: 12px;
-  top: 10px;
-  text-decoration: none;
+  text-indent: 18px;
 }
 
 .navbar-form .input-group .input-group-btn button {
@@ -96,12 +88,6 @@ h3.popover-title {
   margin-top: 0;
   margin-left: -1px;
   margin-bottom: 0;
-}
-
-.navbar-form .input-group .input-group-btn button:hover {
-  border-color: #1abc9c;
-  background-color: #1abc9c;
-  color: white;
 }
 
 .navbar-form .dropdown-menu {
@@ -190,7 +176,7 @@ ul.ror-identifiers {
 }
 
 .col-md-9.search-nav {
-  margin-top: -40px;
+  margin-top: -36px;
   margin-bottom: -20px;
   margin-left: 0;
   padding-left: 0;
@@ -207,6 +193,31 @@ ul.ror-identifiers {
 
 #search-nav li a::before, #search-nav li a::after {
   display: none;
+}
+
+.navbar-form .search-submit {
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
+  padding-left: 8px;
+  font-size: 16px;
+  height: 40px;
+  width: 45px;
+  border-top: 1px solid #cdd2d5;
+  border-bottom: 1px solid #cdd2d5;
+  border-right: 1px solid #cdd2d5;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 26px;
+  border-bottom-right-radius: 26px;
+}
+
+.navbar-form .search-submit:hover {
+  border-color: #1abc9c;
+  background-color: #1abc9c;
+  color: white;
 }
 
 #related-content {
