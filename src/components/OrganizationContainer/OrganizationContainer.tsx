@@ -16,12 +16,12 @@ import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
-import DoiFacet from '../DoiFacet/DoiFacet'
+import WorkFacet from '../WorkFacet/WorkFacet'
 // import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
-import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
+import { DoiType } from '../WorkContainer/WorkContainer'
+import WorkRelatedContent from '../WorkRelatedContent/WorkRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -243,11 +243,11 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   const renderFacets = () => {
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-        <DoiFacet
+        <WorkFacet
           model="organization"
           data={data.organization.works}
           loading={loading}
-        ></DoiFacet>
+        ></WorkFacet>
       </div>
     )
   }
@@ -341,7 +341,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         )}
 
         {analyticsBar()}
-        <DoiRelatedContent dois={data.organization.works} />
+        <WorkRelatedContent dois={data.organization.works} />
 
         {data.organization.works.totalCount > 25 && (
           <Pager

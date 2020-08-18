@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
-import Doi from '../Doi/Doi'
+import Work from '../Work/Work'
 import {
   connectionFragment,
   contentFragment
@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import DoiFacet from '../DoiFacet/DoiFacet'
+import WorkFacet from '../WorkFacet/WorkFacet'
 
 type Props = {
   item?: string
@@ -219,7 +219,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string}
+      variables: { id: item, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string }
     }
   )
 
@@ -388,7 +388,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             </span>
           </div>
         </div>
-        <DoiFacet model="doi" data={doi.citations} loading={loading}></DoiFacet>
+        <WorkFacet model="doi" data={doi.citations} loading={loading}></WorkFacet>
       </div>
     )
   }
@@ -396,7 +396,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <Doi doi={doi}></Doi>
+        <Work doi={doi}></Work>
       </div>
     )
   }

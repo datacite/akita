@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { DoiType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import Pager from '../Pager/Pager'
 import { compactNumbers } from '../../utils/helpers'
-import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
+import WorkRelatedContent from '../WorkRelatedContent/WorkRelatedContent'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
@@ -166,7 +166,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 eventKey="referencesList"
                 title={referencesTabLabel}
               >
-                <DoiRelatedContent dois={doi.references} />
+                <WorkRelatedContent dois={doi.references} />
                 {doi.references.totalCount > 25 && (
                   <Pager
                     url={'/doi.org/' + doi.doi + '/?'}
@@ -183,7 +183,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 eventKey="citationsList"
                 title={citationsTabLabel}
               >
-                <DoiRelatedContent dois={doi.citations} />
+                <WorkRelatedContent dois={doi.citations} />
                 {doi.citations.totalCount > 25 && (
                   <Pager
                     url={'/doi.org/' + doi.doi + '/?'}
@@ -203,7 +203,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   return (
     <React.Fragment>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <DoiMetadata metadata={doi} linkToExternal={true}></DoiMetadata>
+      <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
 
       {formattedCitation()}
       {analyticsBar()}

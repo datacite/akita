@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import DoiRelatedContent from './DoiRelatedContent'
+import WorkRelatedContent from './WorkRelatedContent'
 
 describe('DoiRelatedContent Component', () => {
   let data
@@ -13,14 +13,14 @@ describe('DoiRelatedContent Component', () => {
 
   it('the list is displayed', () => {
     mount(
-      <DoiRelatedContent dois={data.references} type="references" />
+      <WorkRelatedContent dois={data.references} type="references" />
     )
     cy.get('.panel-transparent').should('be.visible')
   })
 
   it('the list correct the right number of items', () => {
     mount(
-      <DoiRelatedContent dois={data.references} type="references" />
+      <WorkRelatedContent dois={data.references} type="references" />
     )
     cy.get('.panel-transparent')
       .should('be.visible')

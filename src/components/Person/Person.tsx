@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
-import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
+import { DoiType } from '../WorkContainer/WorkContainer'
+import WorkRelatedContent from '../WorkRelatedContent/WorkRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
@@ -84,7 +84,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             <Row>
               <Col xs={4}>
                 {/* <h3 id="work-count"> */}
-                  {/* {compactNumbers(person.works.totalCount)} */}
+                {/* {compactNumbers(person.works.totalCount)} */}
                 {/* </h3> */}
               </Col>
             </Row>
@@ -159,7 +159,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       title: x.title,
       count: x.count
     }))
-    
+
     return (
       <React.Fragment>
         <Row>
@@ -177,12 +177,12 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             ></TypesChart>
           </Col>
           <Col xs={3}>
-          <LicenseChart
-            data={licenses}
-            legend={false}
-            count={person.works.totalCount}
-          ></LicenseChart>
-        </Col>
+            <LicenseChart
+              data={licenses}
+              legend={false}
+              count={person.works.totalCount}
+            ></LicenseChart>
+          </Col>
         </Row>
       </React.Fragment>
     )
@@ -217,7 +217,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         )}
 
         {analyticsBar()}
-        <DoiRelatedContent dois={person.works} />
+        <WorkRelatedContent dois={person.works} />
 
         {person.works.totalCount > 25 && (
           <Pager

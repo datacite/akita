@@ -1,7 +1,7 @@
 import * as React from 'react'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import { Alert } from 'react-bootstrap'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { DoiType } from '../WorkContainer/WorkContainer'
 
 type Props = {
   dois: RelatedContentList
@@ -12,7 +12,7 @@ interface RelatedContentList {
   nodes: DoiType[]
 }
 
-const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
+const WorkRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
   if (!dois)
     return (
       <div className="alert-works">
@@ -24,11 +24,11 @@ const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
     <React.Fragment>
       {dois.nodes.map((doi) => (
         <React.Fragment key={doi.doi}>
-          <DoiMetadata metadata={doi} linkToExternal={false}></DoiMetadata>
+          <WorkMetadata metadata={doi} linkToExternal={false}></WorkMetadata>
         </React.Fragment>
       ))}
     </React.Fragment>
   )
 }
 
-export default DoiRelatedContent
+export default WorkRelatedContent

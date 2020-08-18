@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { DoiType } from '../WorkContainer/WorkContainer'
 import Link from 'next/link'
 
 type Props = {
@@ -29,7 +29,7 @@ interface ContentFacet {
   count: number
 }
 
-const DoiFacet: React.FunctionComponent<Props> = ({
+const WorkFacet: React.FunctionComponent<Props> = ({
   data,
   model,
   loading,
@@ -151,45 +151,45 @@ const DoiFacet: React.FunctionComponent<Props> = ({
       )}
 
       {data.fieldsOfScience && data.fieldsOfScience.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Field of Science</h4>
-              <ul>
-                {data.fieldsOfScience.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('field-of-science', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Field of Science</h4>
+            <ul>
+              {data.fieldsOfScience.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('field-of-science', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
+        </div>
+      )}
 
       {data.registrationAgencies && data.registrationAgencies.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Registration Agency</h4>
-              <ul id="repository-facets">
-                {data.registrationAgencies.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('registration-agency', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="panel facets add">
+          <div className="panel-body">
+            <h4>Registration Agency</h4>
+            <ul id="repository-facets">
+              {data.registrationAgencies.map((facet) => (
+                <li key={facet.id}>
+                  {facetLink('registration-agency', facet.id)}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
+        </div>
+      )}
     </div>
   )
 }
-export default DoiFacet
+export default WorkFacet

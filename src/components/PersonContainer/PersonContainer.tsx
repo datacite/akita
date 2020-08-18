@@ -2,11 +2,11 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
-import DoiFacet from '../DoiFacet/DoiFacet'
+import WorkFacet from '../WorkFacet/WorkFacet'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { DoiType } from '../WorkContainer/WorkContainer'
 import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -135,7 +135,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
- // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const [published, setPublished] = useQueryState('published', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
   const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
@@ -153,7 +153,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
+      variables: { id: "http://orcid.org/" + orcid, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string }
     }
   )
 
@@ -285,7 +285,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
         </div>
 
-        <DoiFacet model="doi" data={orcidRecord.works} loading={loading}></DoiFacet>
+        <WorkFacet model="doi" data={orcidRecord.works} loading={loading}></WorkFacet>
       </div>
     )
   }
@@ -300,7 +300,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   return (
     <div className="row">
-      {leftSideBar()}     
+      {leftSideBar()}
       {content()}
     </div>
   )

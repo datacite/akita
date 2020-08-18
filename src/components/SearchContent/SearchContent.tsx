@@ -8,8 +8,8 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 import Pluralize from 'react-pluralize'
 
-import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import { DoiType } from '../WorkContainer/WorkContainer'
+import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import Error from '../Error/Error'
 import ContentLoader from 'react-content-loader'
 import Pager from '../Pager/Pager'
@@ -341,7 +341,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
         {searchResults.map((item) => (
           <React.Fragment key={item.id}>
-            <DoiMetadata metadata={item} />
+            <WorkMetadata metadata={item} />
           </React.Fragment>
         ))}
 
