@@ -54,8 +54,7 @@ export const PERSON_GQL = gql`
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch } = useQuery<
+  const { loading, error, data } = useQuery<
     PersonQueryData,
     PersonQueryVar
   >(PERSON_GQL, {
@@ -63,25 +62,10 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     variables: { query: searchQuery, cursor: cursor }
   })
 
-  React.useEffect(() => {
-    const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor })
-    }, 1000)
-
-    let results: PersonType[] = []
-
-    if (searchQuery) {
-      if (data) results = data.people.nodes
-    }
-    setSearchResults(results)
-
-    return () => clearTimeout(typingDelay)
-  }, [searchQuery, data, refetch])
-
   const renderResults = () => {
     if (loading)
       return (
-        <Col md={9}>
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -102,7 +86,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (error)
       return (
-        <Col md={9}>
+        <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
       )
@@ -111,41 +95,41 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
       ? data.people.pageInfo.hasNextPage
       : false
     const endCursor = data.people.pageInfo ? data.people.pageInfo.endCursor : ''
-
-    if (!loading && searchResults.length == 0)
+    
+    if (data.people.nodes.length > 0)
       return (
-        <Col md={9}>
-          <Alert bsStyle="warning">No people found.</Alert>
+        <Col md={9} mdOffset={3} id="content">
+          {data.people.nodes.length > 0 && (
+            <h3 className="member-results">
+              {data.people.totalCount.toLocaleString('en-US') + ' '}
+              <Pluralize
+                singular={'Person'}
+                plural={'People'}
+                count={data.people.totalCount}
+                showCount={false}
+              />
+            </h3>
+          )}
+
+          {data.people.nodes.map((item) => (
+            <React.Fragment key={item.id}>
+              <PersonMetadata metadata={item} />
+            </React.Fragment>
+          ))}
+
+          {data.people.totalCount > 25 && (
+            <Pager
+              url={'/orcid.org?'}
+              hasNextPage={hasNextPage}
+              endCursor={endCursor}
+            ></Pager>
+          )}
         </Col>
       )
 
     return (
-      <Col md={9} id="content">
-        {searchResults.length > 0 && (
-          <h3 className="member-results">
-            {data.people.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Person'}
-              plural={'People'}
-              count={data.people.totalCount}
-              showCount={false}
-            />
-          </h3>
-        )}
-
-        {searchResults.map((item) => (
-          <React.Fragment key={item.id}>
-            <PersonMetadata metadata={item} />
-          </React.Fragment>
-        ))}
-
-        {data.people.totalCount > 25 && (
-          <Pager
-            url={'/orcid.org?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          ></Pager>
-        )}
+      <Col md={9} mdOffset={3}>
+        <Alert bsStyle="warning">No people found.</Alert>
       </Col>
     )
   }

@@ -246,6 +246,9 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     DOI_GQL,
     {
       errorPolicy: 'all',
+      fetchPolicy: 'cache-first',
+      partialRefetch: true,
+      returnPartialData: true,
       variables: {
         id: item,
         cursor: cursor,

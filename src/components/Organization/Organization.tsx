@@ -1,11 +1,22 @@
 import React from 'react'
 import {
-  OrganizationMetadata,
-  OrganizationMetadataRecord
+  OrganizationMetadata
 } from '../OrganizationMetadata/OrganizationMetadata'
 
 export interface OrganizationRecord {
-  metadata: OrganizationMetadataRecord
+  id: string
+  name: string
+  alternateName: string[]
+  url: string
+  wikipediaUrl: string
+  types: string[]
+  address: {
+    country: string
+  }
+  identifiers: {
+    identifier: string
+    identifierType: string
+  }[]
 }
 
 type Props = {
@@ -17,7 +28,7 @@ export const Organization: React.FunctionComponent<Props> = ({
 }) => {
   return (
     <OrganizationMetadata
-      metadata={organization.metadata}
+      metadata={organization}
       linkToExternal={true}
     ></OrganizationMetadata>
   )

@@ -151,7 +151,6 @@ interface OrcidQueryVar {
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
-  const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -167,7 +166,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [registrationAgency] = useQueryState('registration-agency', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
@@ -186,16 +184,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     }
   )
 
-  React.useEffect(() => {
-    let result = undefined
-    if (data) {
-      result = data.person
-    }
-
-    setOrcid(result)
-  }, [orcid, data])
-
-  if (loading || !orcidRecord)
+  if (loading)
     return (
       <React.Fragment>
         <div className="col-md-3"></div>
@@ -316,7 +305,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
         <DoiFacet
           model="doi"
-          data={orcidRecord.works}
+          data={data.person.works}
           loading={loading}
         ></DoiFacet>
       </div>
@@ -326,7 +315,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const content = () => {
     return (
       <div className="col-md-9" id="content">
-        <Person person={orcidRecord} />
+        <Person person={data.person} />
       </div>
     )
   }

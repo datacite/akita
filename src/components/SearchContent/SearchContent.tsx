@@ -18,10 +18,6 @@ type Props = {
   searchQuery: string
 }
 
-interface ContentNode {
-  node: DoiType
-}
-
 interface ContentFacet {
   id: string
   title: string
@@ -36,7 +32,7 @@ export interface PageInfo {
 interface ContentQueryData {
   works: {
     __typename: String
-    nodes: ContentNode[]
+    nodes: DoiType[]
     pageInfo: PageInfo
     published: ContentFacet[]
     resourceTypes: ContentFacet[]
@@ -201,8 +197,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch } = useQuery<
+  const { loading, error, data } = useQuery<
     ContentQueryData,
     ContentQueryVar
   >(CONTENT_GQL, {
@@ -218,30 +213,6 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       registrationAgency: registrationAgency as string
     }
   })
-
-  React.useEffect(() => {
-    const typingDelay = setTimeout(() => {
-      refetch({
-        query: searchQuery,
-        cursor: cursor,
-        published: published as string,
-        resourceTypeId: resourceType as string,
-        fieldOfScience: fieldOfScience as string,
-        language: language as string,
-        license: license as string,
-        registrationAgency: registrationAgency as string
-      })
-    }, 1000)
-
-    let results: ContentNode[] = []
-
-    if (searchQuery) {
-      if (data) results = data.works.nodes
-    }
-    setSearchResults(results)
-
-    return () => clearTimeout(typingDelay)
-  }, [searchQuery, data, refetch])
 
   const renderResults = () => {
     if (loading)
@@ -272,9 +243,14 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
-    if (!data) return null
+    // hasNextPage is not reliable when coming from Elasticsearch
+    // it is safer to calculate it here
+    const hasNextPage = data.works.totalCount > 25 && data.works.nodes.length == 25
+    const endCursor = data.works.pageInfo
+      ? data.works.pageInfo.endCursor
+      : ''
 
-    if (!loading && searchResults.length == 0)
+    if (data.works.nodes.length == 0)
       return (
         <div className="col-md-9">
           <div className="alert-works">
@@ -283,27 +259,18 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
-    // hasNextPage is not reliable when coming from Elasticsearch
-    // it is safer to calculate it here
-    const hasNextPage = data.works.totalCount > 25 && searchResults.length == 25
-    const endCursor = data.works.pageInfo
-      ? data.works.pageInfo.endCursor
-      : ''
-
     return (
       <div className="col-md-9" id="content">
-        {searchResults.length > 0 && (
-          <h3 className="member-results">
-            {data.works.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Work'}
-              count={data.works.totalCount}
-              showCount={false}
-            />
-          </h3>
-        )}
+        <h3 className="member-results">
+          {data.works.totalCount.toLocaleString('en-US') + ' '}
+          <Pluralize
+            singular={'Work'}
+            count={data.works.totalCount}
+            showCount={false}
+          />
+        </h3>
 
-        {searchResults.map((item) => (
+        {data.works.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <DoiMetadata metadata={item} />
           </React.Fragment>
@@ -322,11 +289,6 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
-
-    if (!data) return <div className="col-md-3"></div>
-
-    if (!loading && searchResults.length == 0)
-      return <div className="col-md-3"></div>
 
     function facetLink(param: string, value: string) {
       let url = '/?'
@@ -357,58 +319,22 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       )
     }
 
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
+    if (data.works.nodes.length > 0)
+      return (
+        <div className="col-md-3 hidden-xs hidden-sm">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <div className="edit"></div>
+            </div>
           </div>
-        </div>
 
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Publication Year</h4>
-            <ul>
-              {data.works.published.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('published', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Work Type</h4>
-            <ul>
-              {data.works.resourceTypes.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('resource-type', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {data.works.fieldsOfScience.length > 0 && (
           <div className="panel facets add">
             <div className="panel-body">
-              <h4>Field of Science</h4>
+              <h4>Publication Year</h4>
               <ul>
-                {data.works.fieldsOfScience.map((facet) => (
+                {data.works.published.map((facet) => (
                   <li key={facet.id}>
-                    {facetLink('field-of-science', facet.id)}
+                    {facetLink('published', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">
                       {facet.count.toLocaleString('en-US')}
@@ -419,16 +345,14 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
               </ul>
             </div>
           </div>
-        )}
 
-        {data.works.licenses.length > 0 && (
           <div className="panel facets add">
             <div className="panel-body">
-              <h4>License</h4>
+              <h4>Work Type</h4>
               <ul>
-                {data.works.licenses.map((facet) => (
+                {data.works.resourceTypes.map((facet) => (
                   <li key={facet.id}>
-                    {facetLink('license', facet.id)}
+                    {facetLink('resource-type', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">
                       {facet.count.toLocaleString('en-US')}
@@ -439,16 +363,74 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
               </ul>
             </div>
           </div>
-        )}
 
-        {data.works.languages.length > 0 && (
+          {data.works.fieldsOfScience.length > 0 && (
+            <div className="panel facets add">
+              <div className="panel-body">
+                <h4>Field of Science</h4>
+                <ul>
+                  {data.works.fieldsOfScience.map((facet) => (
+                    <li key={facet.id}>
+                      {facetLink('field-of-science', facet.id)}
+                      <div className="facet-title">{facet.title}</div>
+                      <span className="number pull-right">
+                        {facet.count.toLocaleString('en-US')}
+                      </span>
+                      <div className="clearfix" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {data.works.licenses.length > 0 && (
+            <div className="panel facets add">
+              <div className="panel-body">
+                <h4>License</h4>
+                <ul>
+                  {data.works.licenses.map((facet) => (
+                    <li key={facet.id}>
+                      {facetLink('license', facet.id)}
+                      <div className="facet-title">{facet.title}</div>
+                      <span className="number pull-right">
+                        {facet.count.toLocaleString('en-US')}
+                      </span>
+                      <div className="clearfix" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {data.works.languages.length > 0 && (
+            <div className="panel facets add">
+              <div className="panel-body">
+                <h4>Language</h4>
+                <ul>
+                  {data.works.languages.map((facet) => (
+                    <li key={facet.id}>
+                      {facetLink('language', facet.id)}
+                      <div className="facet-title">{facet.title}</div>
+                      <span className="number pull-right">
+                        {facet.count.toLocaleString('en-US')}
+                      </span>
+                      <div className="clearfix" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
           <div className="panel facets add">
             <div className="panel-body">
-              <h4>Language</h4>
+              <h4>DOI Registration Agency</h4>
               <ul>
-                {data.works.languages.map((facet) => (
+                {data.works.registrationAgencies.map((facet) => (
                   <li key={facet.id}>
-                    {facetLink('language', facet.id)}
+                    {facetLink('registration-agency', facet.id)}
                     <div className="facet-title">{facet.title}</div>
                     <span className="number pull-right">
                       {facet.count.toLocaleString('en-US')}
@@ -458,28 +440,11 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
                 ))}
               </ul>
             </div>
-          </div>
-        )}
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>DOI Registration Agency</h4>
-            <ul>
-              {data.works.registrationAgencies.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('registration-agency', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
-      </div>
-    )
+      )
+
+    return <div className="col-md-3"></div>
   }
 
   return (

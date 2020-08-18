@@ -60,7 +60,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     showCount: true
   })
 
-  // Using published while citations overtime is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
+  // Using published until citations overtime is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
   const citationsOverTime = doi.citations.published.map((datum) => ({
     year: parseInt(datum.id),
     total: datum.count

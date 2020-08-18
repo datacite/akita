@@ -17,9 +17,7 @@ import Pluralize from 'react-pluralize'
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
 import DoiFacet from '../DoiFacet/DoiFacet'
-// import Search from '../Search/Search'
-import { Organization, OrganizationRecord } from '../Organization/Organization'
-import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
+import { Organization } from '../Organization/Organization'
 import { DoiType } from '../DoiContainer/DoiContainer'
 import DoiMetadata from '../DoiMetadata/DoiMetadata'
 import TypesChart from '../TypesChart/TypesChart'
@@ -149,8 +147,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [organization, setOrganization] = React.useState<OrganizationRecord>()
-
   const fullId = 'https://ror.org/' + rorId
 
   const { loading, error, data } = useQuery<
@@ -170,46 +166,9 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     }
   })
 
-  React.useEffect(() => {
-    if (data) {
-      let organization = data.organization
-      let grid = organization.identifiers.filter((i) => {
-        return i.identifierType === 'grid'
-      })
-      let fundref = organization.identifiers.filter((i) => {
-        return i.identifierType === 'fundref'
-      })
-      let isni = organization.identifiers.filter((i) => {
-        return i.identifierType === 'isni'
-      })
-      let wikidata = organization.identifiers.filter((i) => {
-        return i.identifierType === 'wikidata'
-      })
-
-      let orgMetadata: OrganizationMetadataRecord = {
-        id: organization.id,
-        name: organization.name,
-        alternateNames: organization.alternateName,
-        types: organization.types,
-        url: organization.url,
-        wikipediaUrl: organization.wikipediaUrl,
-        countryName: organization.address.country,
-        grid: grid,
-        fundref: fundref,
-        isni: isni,
-        wikidata: wikidata,
-        identifiers: organization.identifiers
-      }
-
-      setOrganization({
-        metadata: orgMetadata
-      })
-    }
-  }, [data])
-
   if (loading)
     return (
-      <div className="row">
+      <React.Fragment>
         <div className="col-md-3"></div>
         <div className="col-md-9">
           <ContentLoader
@@ -229,16 +188,19 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
         </div>
-      </div>
+      </React.Fragment>
     )
 
   if (error) {
-    return (
-      <Error title="No Service" message="Unable to retrieve organization" />
+    return (      
+      <React.Fragment>
+        <div className="col-md-3"></div>
+        <div className="col-md-9">
+          <Error title="An error occured." message={error.message} />
+        </div>
+      </React.Fragment>
     )
   }
-
-  if (!organization) return <div></div>
 
   const renderFacets = () => {
     return (
@@ -318,10 +280,10 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
     if (!data.organization.works.totalCount)
       return (
-        <div className="alert-works">
-          <Alert bsStyle="warning" className="no-content">
-            No works found.
-          </Alert>
+        <div className="col-md-9">
+          <div className="alert-works">
+            <Alert bsStyle="warning">No works found.</Alert>
+          </div>
         </div>
       )
 
@@ -340,9 +302,9 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
         {analyticsBar()}
 
-        {data.organization.works.nodes.map((doi) => (
-          <React.Fragment key={doi.id}>
-            <DoiMetadata metadata={doi} />
+        {data.organization.works.nodes.map((work) => (
+          <React.Fragment key={work.id}>
+            <DoiMetadata metadata={work} />
           </React.Fragment>
         ))}
 
@@ -414,8 +376,8 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <h3 className="member-results">{organization.metadata.id}</h3>
-        <Organization organization={organization} />
+        <h3 className="member-results">{data.organization.id}</h3>
+        <Organization organization={data.organization} />
       </div>
     )
   }

@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { Alert, OverlayTrigger, Popover, Row, Col, Label } from 'react-bootstrap'
-// eslint-disable-next-line no-unused-vars
+import {
+  Alert,
+  OverlayTrigger,
+  Popover,
+  Row,
+  Col,
+  Label
+} from 'react-bootstrap'
 import { PersonRecord } from '../Person/Person'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import {
-  faBookmark,
-  // faScroll
-} from '@fortawesome/free-solid-svg-icons'
+import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
 
@@ -157,11 +160,9 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
       <div className="panel-body">
         {name()}
         {metadata.description && (
-          <div className="description biography">
-            {metadata.description}
-          </div>
+          <div className="description biography">{metadata.description}</div>
         )}
-        {(metadata.links && metadata.identifiers) && (
+        {metadata.links && metadata.identifiers && (
           <Row>
             <Col md={6}>
               {metadata.links && metadata.links.length > 0 && (
@@ -170,10 +171,10 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                   {metadata.links.map((link) => (
                     <div key={link.name} className="people-links">
                       <a href={link.url} target="_blank" rel="noreferrer">
-                        {link.name}  
+                        {link.name}
                       </a>
                     </div>
-                  ))}                
+                  ))}
                 </React.Fragment>
               )}
             </Col>
@@ -183,11 +184,16 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                   <h5>Other Identifiers</h5>
                   {metadata.identifiers.map((id) => (
                     <div key={id.identifier} className="people-identifiers">
-                      {id.identifierType}: <a href={id.identifierUrl} target="_blank" rel="noreferrer">
-                        {id.identifier}  
+                      {id.identifierType}:{' '}
+                      <a
+                        href={id.identifierUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {id.identifier}
                       </a>
                     </div>
-                  ))}                
+                  ))}
                 </React.Fragment>
               )}
             </Col>

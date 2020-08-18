@@ -15,8 +15,10 @@ interface RelatedContentList {
 const DoiRelatedContent: React.FunctionComponent<Props> = ({ dois }) => {
   if (!dois)
     return (
-      <div className="alert-works">
-        <Alert bsStyle="warning">No works found.</Alert>
+      <div className="col-md-9">
+        <div className="alert-works">
+          <Alert bsStyle="warning">No works found.</Alert>
+        </div>
       </div>
     )
 

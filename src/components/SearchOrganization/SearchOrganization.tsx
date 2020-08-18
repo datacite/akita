@@ -9,8 +9,7 @@ import Pager from '../Pager/Pager'
 import FilterItem from '../FilterItem/FilterItem'
 import Error from '../Error/Error'
 import {
-  OrganizationMetadata,
-  OrganizationMetadataRecord
+  OrganizationMetadata
 } from '../OrganizationMetadata/OrganizationMetadata'
 
 type Props = {
@@ -140,11 +139,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [types] = useQueryState<string>('types')
   const [country] = useQueryState<string>('country')
-  const [searchResults, setSearchResults] = React.useState<
-    OrganizationMetadataRecord[]
-  >([])
-
-  const { loading, error, data, refetch } = useQuery<
+  const { loading, error, data } = useQuery<
     OrganizationsQueryData,
     OrganizationsQueryVar
   >(ORGANIZATIONS_GQL, {
@@ -156,50 +151,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       country: country
     }
   })
-
-  React.useEffect(() => {
-    refetch({ query: searchQuery, cursor: cursor })
-
-    const results: OrganizationMetadataRecord[] = []
-
-    if (data) {
-      data.organizations.nodes.map((node) => {
-        let grid = node.identifiers.filter(i => {
-          return i.identifierType === 'grid'
-        })
-        let fundref = node.identifiers.filter(i => {
-          return i.identifierType === 'fundref'
-        })
-        let isni = node.identifiers.filter(i => {
-          return i.identifierType === 'isni'
-        })
-        let wikidata = node.identifiers.filter(i => {
-          return i.identifierType === 'wikidata'
-        })
-
-        let orgMetadata: OrganizationMetadataRecord = {
-          id: node.id,
-          name: node.name,
-          alternateNames: node.alternateName,
-          types: node.types,
-          url: node.url,
-          wikipediaUrl: node.wikipediaUrl,
-          countryName: node.address.country,
-          grid: grid,
-          fundref: fundref,
-          isni: isni,
-          wikidata: wikidata,
-          identifiers: node.identifiers
-        }
-
-        results.push(orgMetadata)
-
-        return results
-      })
-
-      setSearchResults(results)
-    }
-  }, [searchQuery, data, refetch])
 
   const renderResults = () => {
     if (loading)
@@ -230,9 +181,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </div>
       )
 
-    if (!data) return null
-
-    if (!loading && searchResults.length == 0)
+    if (data.organizations.nodes.length == 0)
       return (
         <div className="col-md-9">
           <Alert bsStyle="warning">No organizations found.</Alert>
@@ -248,7 +197,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     return (
       <div className="col-md-9" id="content">
-        {searchResults.length > 0 && (
+        {data.organizations.nodes.length > 0 && (
           <h3 className="member-results">
             {data.organizations.totalCount.toLocaleString('en-US') + ' '}
             <Pluralize
@@ -259,7 +208,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           </h3>
         )}
 
-        {searchResults.map((item) => (
+        {data.organizations.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <OrganizationMetadata
               metadata={item}
@@ -282,9 +231,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
 
-    if (!data) return null
-
-    if (!loading && data && data.organizations.totalCount == 0)
+    if (data.organizations.totalCount == 0)
       return <div className="col-md-3"></div>
 
     return (

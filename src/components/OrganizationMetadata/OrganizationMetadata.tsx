@@ -9,38 +9,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
-export interface OrganizationMetadataRecord {
-  id: string
-  name: string
-  alternateNames: string[]
-  url: string
-  wikipediaUrl: string
-  types: string[]
-  countryName: string
-  identifiers: {
-    identifier: string
-    identifierType: string
-  }[]
-  grid: {
-    identifier: string
-    identifierType: string
-  }[]
-  fundref: {
-    identifier: string
-    identifierType: string
-  }[]
-  isni: {
-    identifier: string
-    identifierType: string
-  }[]
-  wikidata: {
-    identifier: string
-    identifierType: string
-  }[]
-}
+import {
+  OrganizationRecord
+} from '../Organization/Organization'
 
 type Props = {
-  metadata: OrganizationMetadataRecord
+  metadata: OrganizationRecord
   linkToExternal: boolean
 }
 
@@ -48,6 +22,19 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
+  const grid = metadata.identifiers.filter((i) => {
+    return i.identifierType === 'grid'
+  })
+  const fundref = metadata.identifiers.filter((i) => {
+    return i.identifierType === 'fundref'
+  })
+  const isni = metadata.identifiers.filter((i) => {
+    return i.identifierType === 'isni'
+  })
+  const wikidata = metadata.identifiers.filter((i) => {
+    return i.identifierType === 'wikidata'
+  })
+
   const titleLink = () => {
     if (!linkToExternal) {
       return (
@@ -57,9 +44,9 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
         >
           <a>
             {metadata.name}
-            {metadata.alternateNames.length > 0 && (
+            {metadata.alternateName.length > 0 && (
               <div className="subtitle">
-                {metadata.alternateNames.join(', ')}
+                {metadata.alternateName.join(', ')}
               </div>
             )}
           </a>
@@ -69,8 +56,8 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
       return (
         <a target="_blank" rel="noreferrer" href={metadata.id}>
           {metadata.name}
-          {metadata.alternateNames.length > 0 && (
-            <div className="subtitle">{metadata.alternateNames.join(', ')}</div>
+          {metadata.alternateName.length > 0 && (
+            <div className="subtitle">{metadata.alternateName.join(', ')}</div>
           )}
         </a>
       )
@@ -163,15 +150,15 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                 target="_blank"
                 rel="noreferrer"
                 href={
-                  'https://grid.ac/institutes/' + metadata.grid[0].identifier
+                  'https://grid.ac/institutes/' + grid[0].identifier
                 }
               >
-                {metadata.grid[0].identifier}
+                {grid[0].identifier}
               </a>
             </div>
-            {metadata.fundref.length > 0 && (
+            {fundref.length > 0 && (
               <React.Fragment>
-                {metadata.fundref
+                {fundref
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
                     <div key={id.identifier}>
@@ -187,9 +174,9 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                   ))}
               </React.Fragment>
             )}
-            {metadata.isni.length > 0 && (
+            {isni.length > 0 && (
               <React.Fragment>
-                {metadata.isni
+                {isni
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
                     <div key={id.identifier}>
@@ -205,9 +192,9 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                   ))}
               </React.Fragment>
             )}
-            {metadata.wikidata.length > 0 && (
+            {wikidata.length > 0 && (
               <React.Fragment>
-                {metadata.wikidata
+                {wikidata
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
                     <div key={id.identifier}>
@@ -226,7 +213,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           </Col>
         </Row>
         <div className="tags">
-          <Label bsStyle="info">{metadata.countryName}</Label>
+          <Label bsStyle="info">{metadata.address.country}</Label>
           <span>
             {metadata.types.map((type) => (
               <Label key="type" bsStyle="info">
