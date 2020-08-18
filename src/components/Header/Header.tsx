@@ -87,7 +87,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
                 className="form-control"
                 type="text"
               />
-
+              <Button type="submit" className="search-submit" onClick={onSubmit}><FontAwesomeIcon icon={faSearch} /></Button>
               {searchInput !== '' && (
                 <span
                   id="search-clear"
@@ -98,7 +98,6 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
                   <FontAwesomeIcon icon={faTimes} />
                 </span>
               )}
-              <Button type="submit" className="search-submit" onClick={onSubmit}><FontAwesomeIcon icon={faSearch} /></Button>
             </InputGroup>
           </Navbar.Form>
           <Nav pullRight>

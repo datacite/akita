@@ -1,9 +1,3 @@
-.carousel-inner {
-  background-color: white;
-}
-.carousel-indicators li {
-  background-color: #a3acb2;
-}
 .panel-list {
   margin-top: 20px;
 }
@@ -53,8 +47,7 @@ h3.popover-title {
 
 .navbar-form .input-group input[name="query"] {
   z-index: 2;
-  min-width: 600px;
-  max-width: 500px;
+  width: 600px;
   height: 40px;
   border: 1px solid #cdd2d5;
   border-top-left-radius: 26px;
@@ -64,7 +57,20 @@ h3.popover-title {
   color: #34495e;
 }
 
-.navbar-form input[name="query"]:focus {
+@media(max-width:1200px) {
+  .navbar-form .input-group input[name="query"] {
+    width: 360px;
+  }
+  .navbar-form {
+    margin-left: -14px;
+  }
+  .navbar-header .navbar-brand {
+    font-size: 27px;
+  }
+}
+
+.navbar-form .input-group input[name="query"]:focus,
+.navbar-form .input-group input[name="query"]:focus + .search-submit {
   border-color: #1abc9c;
 }
 
