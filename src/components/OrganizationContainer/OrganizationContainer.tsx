@@ -16,7 +16,7 @@ import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
 import Pager from '../Pager/Pager'
-import WorkFacet from '../WorkFacet/WorkFacet'
+import WorkFacets from '../WorkFacets/WorkFacets'
 // import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
@@ -243,11 +243,11 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   const renderFacets = () => {
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-        <WorkFacet
+        <WorkFacets
           model="organization"
           data={data.organization.works}
           loading={loading}
-        ></WorkFacet>
+        ></WorkFacets>
       </div>
     )
   }

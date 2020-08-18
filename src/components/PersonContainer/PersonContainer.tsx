@@ -2,7 +2,7 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
-import WorkFacet from '../WorkFacet/WorkFacet'
+import WorkFacets from '../WorkFacets/WorkFacets'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
@@ -285,7 +285,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
         </div>
 
-        <WorkFacet model="doi" data={orcidRecord.works} loading={loading}></WorkFacet>
+        <WorkFacets model="doi" data={orcidRecord.works} loading={loading}></WorkFacets>
       </div>
     )
   }

@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import WorkFacet from '../WorkFacet/WorkFacet'
+import WorkFacets from '../WorkFacets/WorkFacets'
 
 type Props = {
   item?: string
@@ -388,7 +388,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             </span>
           </div>
         </div>
-        <WorkFacet model="doi" data={doi.citations} loading={loading}></WorkFacet>
+        <WorkFacets model="doi" data={doi.citations} loading={loading}></WorkFacets>
       </div>
     )
   }

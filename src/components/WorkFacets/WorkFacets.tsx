@@ -29,7 +29,7 @@ interface ContentFacet {
   count: number
 }
 
-const WorkFacet: React.FunctionComponent<Props> = ({
+const WorkFacets: React.FunctionComponent<Props> = ({
   data,
   model,
   loading,
@@ -192,4 +192,4 @@ const WorkFacet: React.FunctionComponent<Props> = ({
     </div>
   )
 }
-export default WorkFacet
+export default WorkFacets
