@@ -83,7 +83,7 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   }
 
   const creators = () => {
-    if (!metadata.creators[0]) {
+    if (!metadata.creators || !metadata.creators[0]) {
       return (
         <div className="creators">
           No creators
