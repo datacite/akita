@@ -26,35 +26,44 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   // update query parameter only after submit
   // submit pushes new path instead of updating only query parameter,
   // to allow queries from Navbar when on a page for a single record
-  const router = useRouter()
-  const searchQuery = router.query.query as string
-  const [searchInput, setSearchInput] = useState(searchQuery)
-  let pathname = '/'
-  switch(router.pathname) {
-    case '/doi.org/[...doi]':
-      pathname = '/doi.org'
-      break
-    case '/orcid.org/[person]':
-      pathname = '/orcid.org'
-      break
-    case '/ror.org/[organization]':
-      pathname = '/ror.org'
-      break
-    default:
-      pathname = router.pathname
+  let searchQuery = ''
+  let onSubmit = () => {
+    
   }
+  
+  const router = useRouter()
+  if (router) {
+    searchQuery = router.query.query as string
+  
+    let pathname = '/'
+    switch(router.pathname) {
+      case '/doi.org/[...doi]':
+        pathname = '/doi.org'
+        break
+      case '/orcid.org/[person]':
+        pathname = '/orcid.org'
+        break
+      case '/ror.org/[organization]':
+        pathname = '/ror.org'
+        break
+      default:
+        pathname = router.pathname
+    }
+  
+    onSubmit = () => {
+      router.push({
+        pathname: pathname,
+        query: { query: searchInput },
+      })
+    }
+  }
+
+  const [searchInput, setSearchInput] = useState(searchQuery)
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
       onSubmit()
     }
-  }
-
-  const onSubmit = () => {
-    router.push({
-      pathname: pathname,
-      query: { query: searchInput },
-    })
   }
 
   const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
