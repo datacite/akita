@@ -195,6 +195,8 @@ ul.ror-identifiers {
 
 #search-nav li.active a {
   color: #34495e;
+  border-bottom: 3px solid #1abc9c;
+  border-radius: 0;
 }
 
 #search-nav li a::before, #search-nav li a::after {

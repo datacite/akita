@@ -27,6 +27,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   // submit pushes new path instead of updating only query parameter,
   // to allow queries from Navbar when on a page for a single record
   let searchQuery = ''
+  let pathname = '/'
   let onSubmit = () => {
     
   }
@@ -34,8 +35,6 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   const router = useRouter()
   if (router) {
     searchQuery = router.query.query as string
-  
-    let pathname = '/'
     switch(router.pathname) {
       case '/doi.org/[...doi]':
         pathname = '/doi.org'
@@ -58,7 +57,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
     }
   }
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
+  const [searchInput, setSearchInput] = useState(searchQuery || '')
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -132,10 +131,10 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
         <Navbar.Collapse>
           <div className="col-md-3"></div>
           <div className="col-md-9 search-nav">
-            <Nav id="search-nav">
-              <NavItem id='works-link' href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faBook} /> Works</NavItem>
-              <NavItem id='people-link' href={'/orcid.org?query=' + searchInput}><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
-              <NavItem id='organizations-link' href={'/ror.org?query=' + searchInput}><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
+            <Nav id="search-nav" activeKey={pathname}>
+              <NavItem id='works-link' eventKey={'/doi.org'} href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faBook} /> Works</NavItem>
+              <NavItem id='people-link' eventKey={'/orcid.org'} href={'/orcid.org?query=' + searchInput}><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
+              <NavItem id='organizations-link' eventKey={'/ror.org'} href={'/ror.org?query=' + searchInput}><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
             </Nav>
           </div>
         </Navbar.Collapse>
