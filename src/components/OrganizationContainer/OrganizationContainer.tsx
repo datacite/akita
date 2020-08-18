@@ -21,7 +21,7 @@ import DoiFacet from '../DoiFacet/DoiFacet'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
+import DoiRelatedContent from '../DoiRelatedContent/DoiRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -281,7 +281,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       title: x.title,
       count: x.count
     }))
- 
+
     return (
       <React.Fragment>
         <Row>
@@ -341,12 +341,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         )}
 
         {analyticsBar()}
-
-        {data.organization.works.nodes.map((doi) => (
-          <React.Fragment key={doi.id}>
-            <DoiMetadata metadata={doi} />
-          </React.Fragment>
-        ))}
+        <DoiRelatedContent dois={data.organization.works} />
 
         {data.organization.works.totalCount > 25 && (
           <Pager
