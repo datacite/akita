@@ -37,6 +37,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
     searchQuery = router.query.query as string
     switch(router.pathname) {
       case '/doi.org/[...doi]':
+      case '/':
         pathname = '/doi.org'
         break
       case '/orcid.org/[person]':

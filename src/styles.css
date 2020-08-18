@@ -262,3 +262,7 @@ ul.nav.nav-tabs li span {
 .alert-works {
   margin: 10px;
 }
+
+.alert a {
+  font-weight: 600;
+}

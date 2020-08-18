@@ -1,4 +1,4 @@
-describe("Header", () => {
+describe("Search", () => {
   context('works', () => {
     it("search with enter", () => {
       cy.visit("/doi.org")

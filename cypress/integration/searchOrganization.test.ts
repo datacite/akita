@@ -4,8 +4,8 @@ describe("Search Organizations", () => {
   })
 
   it("search no query", () => {
-    cy.get('.member')
-      .should('contain', 'Introduction')
+    cy.get('.alert-info')
+      .should('contain', 'DataCite Support')
   })
 
   it("search for oxford", () => {
