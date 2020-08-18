@@ -1,12 +1,10 @@
 describe("Search Works", () => {
   beforeEach(() => {
-    cy.visit("/")
+    cy.visit("/doi.org")
   })
 
   it("search no query", () => {
-    cy.get('input[name="query"]', { timeout: 60000 })
-      // return introduction text
-      .get('.member')
+    cy.get('.member')
       .should('contain', 'Introduction')
   })
 

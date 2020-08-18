@@ -301,10 +301,14 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
-    if (!data) return null
-
     if (error)
-      return <Error title="An error occured." message={error.message} />
+      return (
+        <div className="col-md-9">
+          <Error title="An error occured." message={error.message} />
+        </div>
+      )
+
+    if (!data) return null
 
     if (!loading && searchResults.length == 0)
       return (

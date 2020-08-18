@@ -32,7 +32,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   let pathname = '/'
   switch(router.pathname) {
     case '/doi.org/[...doi]':
-      pathname = '/'
+      pathname = '/doi.org'
       break
     case '/orcid.org/[person]':
       pathname = '/orcid.org'
@@ -125,7 +125,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
           <div className="col-md-3"></div>
           <div className="col-md-9 search-nav">
             <Nav id="search-nav">
-              <NavItem id='works-link' href={'/?query=' + searchInput}><FontAwesomeIcon icon={faBook} /> Works</NavItem>
+              <NavItem id='works-link' href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faBook} /> Works</NavItem>
               <NavItem id='people-link' href={'/orcid.org?query=' + searchInput}><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
               <NavItem id='organizations-link' href={'/ror.org?query=' + searchInput}><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
             </Nav>

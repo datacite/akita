@@ -223,6 +223,13 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </div>
       )
 
+    if (error)
+      return (
+        <div className="col-md-9">
+          <Error title="An error occured." message={error.message} />
+        </div>
+      )
+
     if (!data) return null
 
     if (!loading && searchResults.length == 0)
@@ -230,14 +237,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         <div className="col-md-9">
           <Alert bsStyle="warning">No organizations found.</Alert>
         </div>
-      )
-
-    if (error)
-      return (
-        <Error
-          title="Something went wrong."
-          message="Unable to load services."
-        />
       )
 
     const hasNextPage = data.organizations.pageInfo
