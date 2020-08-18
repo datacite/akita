@@ -7,7 +7,11 @@ import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger } from 'react-bootstrap'
 import { DoiType } from '../DoiContainer/DoiContainer'
-import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
+import {
+  PageInfo,
+  connectionFragment,
+  contentFragment
+} from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -15,14 +19,23 @@ import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
-} from "react-share"
+} from 'react-share'
 
 type Props = {
   orcid?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery(
+    $id: ID!
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+  ) {
     person(id: $id) {
       id
       description
@@ -30,11 +43,11 @@ export const DOI_GQL = gql`
         url
         name
       }
-      identifiers{
+      identifiers {
         identifier
         identifierType
       }
-      country{
+      country {
         name
         id
       }
@@ -45,7 +58,16 @@ export const DOI_GQL = gql`
       citationCount
       viewCount
       downloadCount
-      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      works(
+        first: 25
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -99,8 +121,6 @@ interface Works {
   languages: ContentFacet[]
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
-  affiliations: ContentFacet[]
-  repositories: ContentFacet[]
   nodes: DoiType[]
 }
 
@@ -125,35 +145,53 @@ interface OrcidQueryVar {
   published: string
   resourceTypeId: string
   language: string
+  license: string
   fieldOfScience: string
   registrationAgency: string
-  repositoryId: string
-
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
- // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [published, setPublished] = useQueryState('published', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', {
+    history: 'push'
+  })
+  // eslint-disable-next-line no-unused-vars
+  const [fieldOfScience, setFieldOfScience] = useQueryState(
+    'field-of-science',
+    { history: 'push' }
+  )
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [license, setLicense] = useQueryState('license', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
-
+  const [
+    registrationAgency,
+    setRegistrationAgency
+  ] = useQueryState('registration-agency', { history: 'push' })
+  // eslint-disable-next-line no-unused-vars
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string   }
+      variables: {
+        id: 'http://orcid.org/' + orcid,
+        cursor: cursor,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        license: license as string,
+        registrationAgency: registrationAgency as string
+      }
     }
   )
 
@@ -168,7 +206,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   if (loading || !orcidRecord)
     return (
-      <div className="row">
+      <React.Fragment>
         <div className="col-md-3"></div>
         <div className="col-md-9">
           <ContentLoader
@@ -188,7 +226,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
         </div>
-      </div>
+      </React.Fragment>
     )
 
   if (error) {
@@ -285,7 +323,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           </div>
         </div>
 
-        <DoiFacet model="doi" data={orcidRecord.works} loading={loading}></DoiFacet>
+        <DoiFacet
+          model="doi"
+          data={orcidRecord.works}
+          loading={loading}
+        ></DoiFacet>
       </div>
     )
   }
@@ -300,7 +342,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   return (
     <div className="row">
-      {leftSideBar()}     
+      {leftSideBar()}
       {content()}
     </div>
   )
