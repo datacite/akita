@@ -219,42 +219,6 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
     }
   })
 
-  // const renderPagination = () => {
-  //   let url = '/?'
-  //   let firstPageUrl = null
-  //   let hasFirstPage = false
-  //   let nextPageUrl = null
-  //   let hasNextPage = false
-
-  //   // get current query parameters from next router
-  //   let params = new URLSearchParams(router.query as any)
-
-  //   if (params.get('cursor')) {
-  //     // remove cursor query parameter for first page
-  //     params.delete('cursor')
-  //     firstPageUrl = url + params.toString()
-  //     hasFirstPage = typeof firstPageUrl === 'string'
-  //   }
-
-  //   if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
-  //     // set cursor query parameter for next page
-  //     params.set('cursor', data.works.pageInfo.endCursor)
-  //     nextPageUrl = url + params.toString()
-  //     hasNextPage = typeof nextPageUrl === 'string'
-  //   }
-
-  //   return (
-  //     <Pager>
-  //       <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>
-  //         First Page
-  //       </Pager.Item>
-  //       <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>
-  //         Next Page
-  //       </Pager.Item>
-  //     </Pager>
-  //   )
-  // }
-
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
       refetch({
@@ -345,9 +309,9 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
           </React.Fragment>
         ))}
 
-        {searchResults.length > 25 && (
+        {data.works.totalCount > 25 && (
           <Pager
-            url={'/?'}
+            url={'/doi.org?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
           ></Pager>
