@@ -23,7 +23,17 @@ type Props = {
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery(
+    $id: ID!
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+    $repositoryId: String
+  ) {
     work(id: $id) {
       ...WorkFragment
       formattedCitation
@@ -42,13 +52,33 @@ export const DOI_GQL = gql`
         yearMonth
         total
       }
-      citations(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      citations(
+        first: 25
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
         }
       }
-      references(first: 5, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      references(
+        first: 5
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -193,33 +223,39 @@ interface DoiQueryVar {
   published: string
   resourceTypeId: string
   language: string
+  license: string
   fieldOfScience: string
   registrationAgency: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
-  // const [selectedOption, setSelectedOption] = React.useState('')
-
   const [doi, setDoi] = React.useState<DoiType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-
-  // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
-
+  const [published] = useQueryState('published', { history: 'push' })
+  const [resourceType] = useQueryState('resource-type', { history: 'push' })
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
+  const [language] = useQueryState('language', { history: 'push' })
+  const [license] = useQueryState('license', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
 
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item, cursor: cursor,  published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string}
+      variables: {
+        id: item,
+        cursor: cursor,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        license: license as string,
+        registrationAgency: registrationAgency as string
+      }
     }
   )
 
@@ -234,7 +270,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
 
   if (loading || !doi)
     return (
-      <div className="row">
+      <React.Fragment>
         <div className="col-md-3"></div>
         <div className="col-md-9">
           <ContentLoader
@@ -254,7 +290,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
         </div>
-      </div>
+      </React.Fragment>
     )
 
   if (error) {

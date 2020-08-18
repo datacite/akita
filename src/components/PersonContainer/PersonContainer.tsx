@@ -153,29 +153,20 @@ interface OrcidQueryVar {
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-
-  // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', {
+  const [published] = useQueryState('published', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', {
+  const [resourceType] = useQueryState('resource-type', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState(
-    'field-of-science',
-    { history: 'push' }
-  )
-  // eslint-disable-next-line no-unused-vars
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [license, setLicense] = useQueryState('license', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
-  const [
-    registrationAgency,
-    setRegistrationAgency
-  ] = useQueryState('registration-agency', { history: 'push' })
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
+  const [language] = useQueryState('language', { history: 'push' })
+  const [license] = useQueryState('license', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
