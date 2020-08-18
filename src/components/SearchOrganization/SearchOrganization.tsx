@@ -270,7 +270,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
         {data.organizations.totalCount > 20 && (
           <Pager
-            url={'/ror.org?'}
+            url={'/?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
           ></Pager>

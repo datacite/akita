@@ -189,9 +189,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   }
 
   const relatedContent = () => {
-    const hasNextPage = person.works.pageInfo
-      ? person.works.pageInfo.hasNextPage
-      : false
+    const hasNextPage = person.works.totalCount > 25
     const endCursor = person.works.pageInfo
       ? person.works.pageInfo.endCursor
       : ''

@@ -140,16 +140,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       showCount: true
     })
 
-    const hasNextPageCitations = doi.citations.pageInfo
-      ? doi.citations.pageInfo.hasNextPage
-      : false
+    const hasNextPageCitations = doi.citations.totalCount > 25
     const endCursorCitations = doi.citations.pageInfo
       ? doi.citations.pageInfo.endCursor
       : ''
 
-    const hasNextPageReferences = doi.references.pageInfo
-      ? doi.references.pageInfo.hasNextPage
-      : false
+    const hasNextPageReferences = doi.references.totalCount > 25
     const endCursorReferences = doi.references.pageInfo
       ? doi.references.pageInfo.endCursor
       : ''

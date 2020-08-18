@@ -283,9 +283,9 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
-    const hasNextPage = data.works.pageInfo
-      ? data.works.pageInfo.hasNextPage
-      : false
+    // hasNextPage is not reliable when coming from Elasticsearch
+    // it is safer to calculate it here
+    const hasNextPage = data.works.totalCount > 25 && searchResults.length == 25
     const endCursor = data.works.pageInfo
       ? data.works.pageInfo.endCursor
       : ''
