@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Navbar, Nav, NavItem, Popover, OverlayTrigger, InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt, faTimes, faSearch, faBook, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
+import { faSignInAlt, faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   title: string
@@ -132,7 +132,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
           <div className="col-md-3"></div>
           <div className="col-md-9 search-nav">
             <Nav id="search-nav" activeKey={pathname}>
-              <NavItem id='works-link' eventKey={'/doi.org'} href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faBook} /> Works</NavItem>
+              <NavItem id='works-link' eventKey={'/doi.org'} href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faNewspaper} /> Works</NavItem>
               <NavItem id='people-link' eventKey={'/orcid.org'} href={'/orcid.org?query=' + searchInput}><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
               <NavItem id='organizations-link' eventKey={'/ror.org'} href={'/ror.org?query=' + searchInput}><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>
             </Nav>
