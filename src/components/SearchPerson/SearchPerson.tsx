@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Row, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import Pluralize from 'react-pluralize'
@@ -81,7 +81,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <div className="col-md-9">
+        <Col md={9}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -97,17 +97,15 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
             <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
-        </div>
+        </Col>
       )
 
     if (error)
       return (
-        <div className="col-md-9">
+        <Col md={9}>
           <Error title="An error occured." message={error.message} />
-        </div>
+        </Col>
       )
-
-    if (!data) return null
 
     const hasNextPage = data.people.pageInfo
       ? data.people.pageInfo.hasNextPage
@@ -116,13 +114,13 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (!loading && searchResults.length == 0)
       return (
-        <div className="col-md-9">
+        <Col md={9}>
           <Alert bsStyle="warning">No people found.</Alert>
-        </div>
+        </Col>
       )
 
     return (
-      <div className="col-md-9" id="content">
+      <Col md={9} id="content">
         {searchResults.length > 0 && (
           <h3 className="member-results">
             {data.people.totalCount.toLocaleString('en-US') + ' '}
@@ -146,20 +144,12 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
           hasNextPage={hasNextPage}
           endCursor={endCursor}
         ></Pager>
-      </div>
-    )
-  }
-
-  const renderFacets = () => {
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-      </div>
+      </Col>
     )
   }
 
   return (
     <Row>
-      {renderFacets()}
       {renderResults()}
     </Row>
   )
