@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { DoiType } from '../WorkContainer/WorkContainer'
-import WorkRelatedContent from '../WorkRelatedContent/WorkRelatedContent'
 import TypesChart from '../TypesChart/TypesChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
