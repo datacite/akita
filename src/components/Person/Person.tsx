@@ -136,107 +136,11 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
-  const analyticsBar = () => {
-    if (!person.works.totalCount) return null
-
-    const published = person.works.published.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-    const resourceTypes = person.works.resourceTypes.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-    const noLicenseValue: ContentFacet = {
-      id: 'no-license',
-      title: 'No License',
-      count: person.works.totalCount - person.works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
-    }
-    let licenses = clone(person.works.licenses)
-    licenses.unshift(noLicenseValue)
-    licenses = licenses.map((x) => ({
-      id: x.id,
-      title: x.title,
-      count: x.count
-    }))
-
-    return (
-      <React.Fragment>
-        <Row>
-          <Col xs={6}>
-            <ProductionChart
-              data={published}
-              doiCount={person.works.totalCount}
-            ></ProductionChart>
-          </Col>
-          <Col xs={3}>
-            <TypesChart
-              data={resourceTypes}
-              legend={false}
-              count={person.works.totalCount}
-            ></TypesChart>
-          </Col>
-          <Col xs={3}>
-            <LicenseChart
-              data={licenses}
-              legend={false}
-              count={person.works.totalCount}
-            ></LicenseChart>
-          </Col>
-        </Row>
-      </React.Fragment>
-    )
-  }
-
-  const relatedContent = () => {
-    const hasNextPage = person.works.pageInfo
-      ? person.works.pageInfo.hasNextPage
-      : false
-    const endCursor = person.works.pageInfo
-      ? person.works.pageInfo.endCursor
-      : ''
-
-    if (!person.works.totalCount)
-      return (
-        <div className="alert-works">
-          <Alert bsStyle="warning">No works found.</Alert>
-        </div>
-      )
-
-    return (
-      <React.Fragment>
-        {person.works.totalCount > 0 && (
-          <h3 className="member-results">
-            {person.works.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Work'}
-              count={person.works.totalCount}
-              showCount={false}
-            />
-          </h3>
-        )}
-
-        {analyticsBar()}
-        <WorkRelatedContent dois={person.works} />
-
-        {person.works.totalCount > 25 && (
-          <Pager
-            url={'/orcid.org' + orcidFromUrl(person.id) + '/?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-            isNested={true}
-          ></Pager>
-        )}
-      </React.Fragment>
-    )
-  }
-
   return (
     <React.Fragment>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {workCount()}
-      {relatedContent()}
     </React.Fragment>
   )
 }

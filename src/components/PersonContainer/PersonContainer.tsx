@@ -2,12 +2,18 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
-import WorkFacets from '../WorkFacets/WorkFacets'
+import WorksListing from '../WorksListing/WorksListing'
 import ContentLoader from 'react-content-loader'
+import { orcidFromUrl, compactNumbers } from '../../utils/helpers'
+import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
-import { Popover, OverlayTrigger } from 'react-bootstrap'
+import { Popover, OverlayTrigger, Row } from 'react-bootstrap'
 import { DoiType } from '../WorkContainer/WorkContainer'
-import { PageInfo, connectionFragment, contentFragment } from '../SearchContent/SearchContent'
+import {
+  PageInfo,
+  connectionFragment,
+  contentFragment
+} from '../SearchContent/SearchContent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -15,14 +21,24 @@ import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
-} from "react-share"
+} from 'react-share'
 
 type Props = {
   orcid?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery(
+    $id: ID!
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+    $repositoryId: String
+  ) {
     person(id: $id) {
       id
       description
@@ -30,11 +46,11 @@ export const DOI_GQL = gql`
         url
         name
       }
-      identifiers{
+      identifiers {
         identifier
         identifierType
       }
-      country{
+      country {
         name
         id
       }
@@ -45,7 +61,17 @@ export const DOI_GQL = gql`
       citationCount
       viewCount
       downloadCount
-      works(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      works(
+        first: 25
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -128,7 +154,6 @@ interface OrcidQueryVar {
   fieldOfScience: string
   registrationAgency: string
   repositoryId: string
-
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
@@ -136,24 +161,44 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
   // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  const [published, setPublished] = useQueryState('published', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  const [fieldOfScience, setFieldOfScience] = useQueryState(
+    'field-of-science',
+    { history: 'push' }
+  )
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [
+    registrationAgency,
+    setRegistrationAgency
+  ] = useQueryState('registration-agency', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [repositoryId, setRepositoryId] = useQueryState('repository-id', { history: 'push' })
-
+  const [repositoryId, setRepositoryId] = useQueryState('repository-id', {
+    history: 'push'
+  })
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: "http://orcid.org/" + orcid, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string, repositoryId: repositoryId as string }
+      variables: {
+        id: 'http://orcid.org/' + orcid,
+        cursor: cursor,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        registrationAgency: registrationAgency as string,
+        repositoryId: repositoryId as string
+      }
     }
   )
 
@@ -284,8 +329,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </span>
           </div>
         </div>
-
-        <WorkFacets model="doi" data={orcidRecord.works} loading={loading}></WorkFacets>
       </div>
     )
   }
@@ -298,11 +341,55 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
   }
 
+  const relatedContent = () => {
+    const hasNextPage = orcidRecord.works.pageInfo
+      ? orcidRecord.works.pageInfo.hasNextPage
+      : false
+    const endCursor = orcidRecord.works.pageInfo
+      ? orcidRecord.works.pageInfo.endCursor
+      : ''
+
+    const totalCount = orcidRecord.works.totalCount
+
+    return (
+      <div>
+        <div className="col-md-9 col-md-offset-3">
+          {totalCount > 0 && (
+            <h3 className="member-results">
+              {totalCount.toLocaleString('en-US') + ' '}
+              <Pluralize
+                singular={'Work'}
+                count={totalCount}
+                showCount={false}
+              />
+            </h3>
+          )}
+        </div>
+        {/* TODO: I think the pager element within this should be more dynamic
+        and not need to rely on passing in precalculated //
+        hasNextPage/endCursor instead calculate based on data provided */}
+        <WorksListing
+          works={orcidRecord.works}
+          loading={loading}
+          showFacets={true}
+          showAnalytics={true}
+          hasPagination={orcidRecord.works.totalCount > 25}
+          hasNextPage={hasNextPage}
+          url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
+          endCursor={endCursor}
+        />
+      </div>
+    )
+  }
+
   return (
-    <div className="row">
-      {leftSideBar()}
-      {content()}
-    </div>
+    <React.Fragment>
+      <Row>
+        {leftSideBar()}
+        {content()}
+      </Row>
+      <Row>{relatedContent()}</Row>
+    </React.Fragment>
   )
 }
 
