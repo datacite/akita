@@ -16,14 +16,27 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import WorkFacets from '../WorkFacets/WorkFacets'
+import { Row, Tab, Nav, NavItem } from 'react-bootstrap'
+import Pluralize from 'react-pluralize'
+import { compactNumbers } from '../../utils/helpers'
+import WorksListing from '../WorksListing/WorksListing'
 
 type Props = {
   item?: string
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery($id: ID!, $cursor: String, $published: String, $resourceTypeId: String, $fieldOfScience: String, $language: String, $license: String, $registrationAgency: String, $repositoryId: String) {
+  query getContentQuery(
+    $id: ID!
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+    $repositoryId: String
+  ) {
     work(id: $id) {
       ...WorkFragment
       formattedCitation
@@ -42,13 +55,33 @@ export const DOI_GQL = gql`
         yearMonth
         total
       }
-      citations(first: 25, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      citations(
+        first: 25
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
         }
       }
-      references(first: 5, after: $cursor, published: $published, resourceTypeId: $resourceTypeId, fieldOfScience: $fieldOfScience, language: $language, license: $license, registrationAgency: $registrationAgency, repositoryId: $repositoryId) {
+      references(
+        first: 5
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
         ...WorkConnectionFragment
         nodes {
           ...WorkFragment
@@ -204,22 +237,39 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
   // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', { history: 'push' })
+  const [published, setPublished] = useQueryState('published', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', { history: 'push' })
+  const [resourceType, setResourceType] = useQueryState('resource-type', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState('field-of-science', { history: 'push' })
+  const [fieldOfScience, setFieldOfScience] = useQueryState(
+    'field-of-science',
+    { history: 'push' }
+  )
   // eslint-disable-next-line no-unused-vars
   const [language, setLanguage] = useQueryState('language', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [registrationAgency, setRegistrationAgency] = useQueryState('registration-agency', { history: 'push' })
-
+  const [
+    registrationAgency,
+    setRegistrationAgency
+  ] = useQueryState('registration-agency', { history: 'push' })
 
   const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
     DOI_GQL,
     {
       errorPolicy: 'all',
-      variables: { id: item, cursor: cursor, published: published as string, resourceTypeId: resourceType as string, fieldOfScience: fieldOfScience as string, language: language as string, registrationAgency: registrationAgency as string }
+      variables: {
+        id: item,
+        cursor: cursor,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        registrationAgency: registrationAgency as string
+      }
     }
   )
 
@@ -388,7 +438,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             </span>
           </div>
         </div>
-        <WorkFacets model="doi" data={doi.citations} loading={loading}></WorkFacets>
       </div>
     )
   }
@@ -401,11 +450,104 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     )
   }
 
+  const relatedContent = () => {
+    const referencesTabLabel = Pluralize({
+      count: compactNumbers(doi.references.totalCount),
+      singular: 'Reference',
+      showCount: true
+    })
+    const citationsTabLabel = Pluralize({
+      count: compactNumbers(doi.citations.totalCount),
+      singular: 'Citation',
+      showCount: true
+    })
+
+    const hasNextPageCitations = doi.citations.pageInfo
+      ? doi.citations.pageInfo.hasNextPage
+      : false
+    const endCursorCitations = doi.citations.pageInfo
+      ? doi.citations.pageInfo.endCursor
+      : ''
+
+    const hasNextPageReferences = doi.references.pageInfo
+      ? doi.references.pageInfo.hasNextPage
+      : false
+    const endCursorReferences = doi.references.pageInfo
+      ? doi.references.pageInfo.endCursor
+      : ''
+
+    const url = '/doi.org/' + doi.doi + '/?'
+
+    if (doi.citations.totalCount == 0) return ''
+
+    return (
+      <div className="panel panel-transparent">
+        <div className="panel-body nav-tabs-member">
+          <Tab.Container
+            className="content-tabs"
+            id="related-content-tabs"
+            defaultActiveKey="referencesList"
+          >
+            <div>
+              <div className="col-md-9 col-md-offset-3">
+                <Nav bsStyle="tabs">
+                  <NavItem eventKey="referencesList">
+                    {referencesTabLabel}
+                  </NavItem>
+                  <NavItem eventKey="citationsList">
+                    {citationsTabLabel}
+                  </NavItem>
+                </Nav>
+              </div>
+              <Tab.Content>
+                {doi.references.totalCount > 0 && (
+                  <Tab.Pane
+                    className="references-list"
+                    eventKey="referencesList"
+                  >
+                    <WorksListing
+                      works={doi.references}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      hasPagination={doi.references.totalCount > 25}
+                      hasNextPage={hasNextPageReferences}
+                      url={url}
+                      endCursor={endCursorReferences}
+                    />
+                  </Tab.Pane>
+                )}
+
+                {doi.citations.totalCount > 0 && (
+                  <Tab.Pane className="citations-list" eventKey="citationsList">
+                    <WorksListing
+                      works={doi.citations}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      hasPagination={doi.citations.totalCount > 25}
+                      hasNextPage={hasNextPageCitations}
+                      url={url}
+                      endCursor={endCursorCitations}
+                    />
+                  </Tab.Pane>
+                )}
+              </Tab.Content>
+            </div>
+          </Tab.Container>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="row">
-      {leftSideBar()}
-      {content()}
-    </div>
+    <React.Fragment>
+      <Row>
+        {leftSideBar()}
+        {content()}
+      </Row>
+      <Row>{relatedContent()}</Row>
+    </React.Fragment>
   )
 }
 

@@ -1,13 +1,11 @@
 import * as React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
+import { compactNumbers } from '../../utils/helpers'
 import { DoiType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import Pager from '../Pager/Pager'
-import { compactNumbers } from '../../utils/helpers'
-import WorkRelatedContent from '../WorkRelatedContent/WorkRelatedContent'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
@@ -75,7 +73,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
-    if (doi.citations.totalCount == 0 && doi.viewCount == 0 && doi.downloadCount == 0) return ''
+    if (
+      doi.citations.totalCount == 0 &&
+      doi.viewCount == 0 &&
+      doi.downloadCount == 0
+    )
+      return ''
 
     return (
       <div className="panel panel-transparent">
@@ -128,78 +131,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     )
   }
 
-  const relatedContent = () => {
-    const referencesTabLabel = Pluralize({
-      count: compactNumbers(doi.references.totalCount),
-      singular: 'Reference',
-      showCount: true
-    })
-    const citationsTabLabel = Pluralize({
-      count: compactNumbers(doi.citations.totalCount),
-      singular: 'Citation',
-      showCount: true
-    })
-
-    const hasNextPageCitations = doi.citations.pageInfo
-      ? doi.citations.pageInfo.hasNextPage
-      : false
-    const endCursorCitations = doi.citations.pageInfo
-      ? doi.citations.pageInfo.endCursor
-      : ''
-
-    const hasNextPageReferences = doi.references.pageInfo
-      ? doi.references.pageInfo.hasNextPage
-      : false
-    const endCursorReferences = doi.references.pageInfo
-      ? doi.references.pageInfo.endCursor
-      : ''
-
-    if (doi.citations.totalCount == 0) return ''
-
-    return (
-      <div className="panel panel-transparent">
-        <div className="panel-body nav-tabs-member">
-          <Tabs className="content-tabs" id="related-content-tabs">
-            {doi.references.totalCount > 0 && (
-              <Tab
-                className="references-list"
-                eventKey="referencesList"
-                title={referencesTabLabel}
-              >
-                <WorkRelatedContent dois={doi.references} />
-                {doi.references.totalCount > 25 && (
-                  <Pager
-                    url={'/doi.org/' + doi.doi + '/?'}
-                    hasNextPage={hasNextPageReferences}
-                    endCursor={endCursorReferences}
-                    isNested={true}
-                  ></Pager>
-                )}
-              </Tab>
-            )}
-            {doi.citations.totalCount > 0 && (
-              <Tab
-                className="citations-list"
-                eventKey="citationsList"
-                title={citationsTabLabel}
-              >
-                <WorkRelatedContent dois={doi.citations} />
-                {doi.citations.totalCount > 25 && (
-                  <Pager
-                    url={'/doi.org/' + doi.doi + '/?'}
-                    hasNextPage={hasNextPageCitations}
-                    endCursor={endCursorCitations}
-                    isNested={true}
-                  ></Pager>
-                )}
-              </Tab>
-            )}
-          </Tabs>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <React.Fragment>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
@@ -207,7 +138,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
       {formattedCitation()}
       {analyticsBar()}
-      {relatedContent()}
     </React.Fragment>
   )
 }
