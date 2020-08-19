@@ -7,19 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link'
 import Pluralize from 'react-pluralize'
-
+import WorksListing from '../WorksListing/WorksListing'
 import { DoiType } from '../WorkContainer/WorkContainer'
-import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import Error from '../Error/Error'
 import ContentLoader from 'react-content-loader'
-import Pager from '../Pager/Pager'
 
 type Props = {
   searchQuery: string
-}
-
-interface ContentNode {
-  node: DoiType
 }
 
 interface ContentFacet {
@@ -33,19 +27,20 @@ export interface PageInfo {
   hasNextPage: boolean
 }
 
+export interface Works {
+  totalCount: number
+  pageInfo: PageInfo
+  published: ContentFacet[]
+  resourceTypes: ContentFacet[]
+  languages: ContentFacet[]
+  licenses: ContentFacet[]
+  fieldsOfScience: ContentFacet[]
+  registrationAgencies: ContentFacet[]
+  nodes: DoiType[]
+}
+
 interface ContentQueryData {
-  works: {
-    __typename: String
-    nodes: ContentNode[]
-    pageInfo: PageInfo
-    published: ContentFacet[]
-    resourceTypes: ContentFacet[]
-    languages: ContentFacet[]
-    fieldsOfScience: ContentFacet[]
-    licenses: ContentFacet[]
-    registrationAgencies: ContentFacet[]
-    totalCount: Number
-  }
+  works: Works
 }
 
 interface ContentQueryVar {
@@ -219,42 +214,6 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
     }
   })
 
-  // const renderPagination = () => {
-  //   let url = '/?'
-  //   let firstPageUrl = null
-  //   let hasFirstPage = false
-  //   let nextPageUrl = null
-  //   let hasNextPage = false
-
-  //   // get current query parameters from next router
-  //   let params = new URLSearchParams(router.query as any)
-
-  //   if (params.get('cursor')) {
-  //     // remove cursor query parameter for first page
-  //     params.delete('cursor')
-  //     firstPageUrl = url + params.toString()
-  //     hasFirstPage = typeof firstPageUrl === 'string'
-  //   }
-
-  //   if (data.works.pageInfo.hasNextPage && data.works.pageInfo.endCursor) {
-  //     // set cursor query parameter for next page
-  //     params.set('cursor', data.works.pageInfo.endCursor)
-  //     nextPageUrl = url + params.toString()
-  //     hasNextPage = typeof nextPageUrl === 'string'
-  //   }
-
-  //   return (
-  //     <Pager>
-  //       <Pager.Item disabled={!hasFirstPage} href={firstPageUrl}>
-  //         First Page
-  //       </Pager.Item>
-  //       <Pager.Item disabled={!hasNextPage} href={nextPageUrl}>
-  //         Next Page
-  //       </Pager.Item>
-  //     </Pager>
-  //   )
-  // }
-
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
       refetch({
@@ -269,7 +228,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       })
     }, 1000)
 
-    let results: ContentNode[] = []
+    let results: DoiType[] = []
 
     if (searchQuery) {
       if (data) results = data.works.nodes
@@ -322,207 +281,43 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
     const hasNextPage = data.works.pageInfo
       ? data.works.pageInfo.hasNextPage
       : false
-    const endCursor = data.works.pageInfo
-      ? data.works.pageInfo.endCursor
-      : ''
+    const endCursor = data.works.pageInfo ? data.works.pageInfo.endCursor : ''
+
+    const totalCount = data.works.totalCount
 
     return (
-      <div className="col-md-9" id="content">
-        {searchResults.length > 0 && (
-          <h3 className="member-results">
-            {data.works.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Work'}
-              count={data.works.totalCount}
-              showCount={false}
-            />
-          </h3>
-        )}
-
-        {searchResults.map((item) => (
-          <React.Fragment key={item.id}>
-            <WorkMetadata metadata={item} />
-          </React.Fragment>
-        ))}
-
-        {searchResults.length > 25 && (
-          <Pager
-            url={'/?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          ></Pager>
-        )}
-      </div>
-    )
-  }
-
-  const renderFacets = () => {
-    if (loading) return <div className="col-md-3"></div>
-
-    if (!data) return <div className="col-md-3"></div>
-
-    if (!loading && searchResults.length == 0)
-      return <div className="col-md-3"></div>
-
-    function facetLink(param: string, value: string) {
-      let url = '/?'
-      let icon = faSquare
-
-      // get current query parameters from next router
-      let params = new URLSearchParams(router.query as any)
-
-      // delete cursor parameter
-      params.delete('cursor')
-
-      if (params.get(param) == value) {
-        // if param is present, delete from query and use checked icon
-        params.delete(param)
-        icon = faCheckSquare
-      } else {
-        // otherwise replace param with new value and use unchecked icon
-        params.set(param, value)
-      }
-
-      url += params.toString()
-      return (
-        <Link href={url}>
-          <a>
-            <FontAwesomeIcon icon={icon} />{' '}
-          </a>
-        </Link>
-      )
-    }
-
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
-          </div>
+      <div>
+        <div className="col-md-9 col-md-offset-3" id="content">
+          {totalCount > 0 && (
+            <h3 className="member-results">
+              {totalCount.toLocaleString('en-US') + ' '}
+              <Pluralize
+                singular={'Work'}
+                count={totalCount}
+                showCount={false}
+              />
+            </h3>
+          )}
         </div>
 
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Publication Year</h4>
-            <ul>
-              {data.works.published.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('published', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Work Type</h4>
-            <ul>
-              {data.works.resourceTypes.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('resource-type', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {data.works.fieldsOfScience.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Field of Science</h4>
-              <ul>
-                {data.works.fieldsOfScience.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('field-of-science', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {data.works.licenses.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>License</h4>
-              <ul>
-                {data.works.licenses.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('license', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {data.works.languages.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <h4>Language</h4>
-              <ul>
-                {data.works.languages.map((facet) => (
-                  <li key={facet.id}>
-                    {facetLink('language', facet.id)}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>DOI Registration Agency</h4>
-            <ul>
-              {data.works.registrationAgencies.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('registration-agency', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <WorksListing
+          works={data.works}
+          loading={loading}
+          showFacets={true}
+          showAnalytics={false}
+          url={'/?'}
+          hasPagination={data.works.totalCount > 25}
+          hasNextPage={hasNextPage}
+          endCursor={endCursor}
+        />
       </div>
     )
   }
 
   return (
-    <Row>
-      {renderFacets()}
-      {renderResults()}
-    </Row>
+    <React.Fragment>
+      <Row>{renderResults()}</Row>
+    </React.Fragment>
   )
 }
 
