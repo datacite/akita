@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import {
@@ -277,19 +277,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     const title = 'DataCite Commons: ' + data.organization.name
     const url = window.location.href
 
-    const bibtex = (
-      <Popover id="share" title="Export bibtex">
-        Export as BibTeX will be implemented later in 2020.{' '}
-        <a
-          href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Provide input
-        </a>
-      </Popover>
-    )
-
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <div className="panel panel-transparent">
@@ -298,12 +285,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
           </div>
         </div>
         <div className="panel panel-transparent">
-          <div className="facets panel-body">
-            <h4>Export</h4>
-            <OverlayTrigger placement="top" overlay={bibtex}>
-              <span className="share">Works as BibTeX</span>
-            </OverlayTrigger>
-          </div>
           <div className="facets panel-body">
             <h4>Share</h4>
             <span className="share-button">

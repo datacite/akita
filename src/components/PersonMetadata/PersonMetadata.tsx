@@ -1,13 +1,10 @@
 import * as React from 'react'
-import { Alert, OverlayTrigger, Popover, Row, Col, Label } from 'react-bootstrap'
+import { Alert, Row, Col, Label } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import {
-  faBookmark,
-  // faScroll
-} from '@fortawesome/free-solid-svg-icons'
+
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
 
@@ -50,19 +47,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     )
   }
 
-  const bookmark = (
-    <Popover id="bookmark" title="Bookmarking">
-      Bookmarking on this site will be implemented later in 2020.{' '}
-      <a
-        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Provide input
-      </a>
-    </Popover>
-  )
-
   const footer = () => {
     return (
       <div className="panel-footer">
@@ -70,11 +54,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           <FontAwesomeIcon icon={faOrcid} /> {metadata.id}
         </a>
         <span className="actions">
-          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark">
-              <FontAwesomeIcon icon={faBookmark} size="sm" /> Bookmark
-            </span>
-          </OverlayTrigger>
+
         </span>
       </div>
     )

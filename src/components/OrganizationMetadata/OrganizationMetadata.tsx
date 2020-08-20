@@ -1,13 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-import { Label, Col, Row, Popover, OverlayTrigger } from 'react-bootstrap'
+import { Label, Col, Row } from 'react-bootstrap'
 import { rorFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faExternalLinkAlt,
-  faBookmark
+  faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons'
-import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 export interface OrganizationMetadataRecord {
   id: string
@@ -77,32 +75,6 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     }
   }
 
-  const bookmark = (
-    <Popover id="bookmark" title="Bookmarking">
-      Bookmarking on this site will be implemented later in 2020.{' '}
-      <a
-        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Provide input
-      </a>
-    </Popover>
-  )
-
-  const claim = (
-    <Popover id="claim" title="Claim to ORCID Record">
-      Claiming to an ORCID record will be implemented later in 2020.{' '}
-      <a
-        href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Provide input
-      </a>
-    </Popover>
-  )
-
   const footer = () => {
     return (
       <div className="panel-footer">
@@ -110,16 +82,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">
-          <OverlayTrigger trigger="click" placement="top" overlay={bookmark}>
-            <span className="bookmark">
-              <FontAwesomeIcon icon={faBookmark} /> Bookmark
-            </span>
-          </OverlayTrigger>
-          <OverlayTrigger trigger="click" placement="top" overlay={claim}>
-            <span className="claim">
-              <FontAwesomeIcon icon={faOrcid} /> Claim
-            </span>
-          </OverlayTrigger>
+
         </span>
       </div>
     )

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
+import { Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
@@ -22,15 +22,15 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { DoiType } from '../DoiContainer/DoiContainer'
 import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
-  metadata: WorkType
+  metadata: DoiType
   linkToExternal?: boolean
 }
 
-const WorkMetadata: React.FunctionComponent<Props> = ({
+const DoiMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
@@ -82,7 +82,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   const creators = () => {
     if (!metadata.creators || !metadata.creators[0]) {
-      return <div className="creators">No creators</div>
+      return (
+        <div className="creators">
+          No creators
+        </div>
+      )
     }
 
     const creatorList = metadata.creators.reduce(
@@ -112,11 +116,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link
-              href="/orcid.org/[orcid]"
-              key={index}
-              as={`/orcid.org${c.id}`}
-            >
+            <Link href="/orcid.org/[orcid]" key={index} as={`/orcid.org${c.id}`}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
@@ -397,4 +397,4 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   )
 }
 
-export default WorkMetadata
+export default DoiMetadata

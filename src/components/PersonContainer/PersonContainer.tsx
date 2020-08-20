@@ -7,7 +7,7 @@ import ContentLoader from 'react-content-loader'
 import { orcidFromUrl } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
-import { Popover, OverlayTrigger, Row } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import {
   PageInfo,
@@ -230,19 +230,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     const title = 'DataCite Commons: ' + data.person.name
     const url = window.location.href
 
-    const bibtex = (
-      <Popover id="share" title="Export bibtex">
-        Export as BibTeX will be implemented later in 2020.{' '}
-        <a
-          href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-orcid-search"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Provide input
-        </a>
-      </Popover>
-    )
-
     const orcidLink = (
       <a href={data.person.id} target="_blank" rel="noreferrer">
         ORCID
@@ -290,12 +277,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </div>
           </div>
 
-          <div className="facets panel-body">
-            <h4>Export</h4>
-            <OverlayTrigger placement="top" overlay={bibtex}>
-              <span className="share">Works as BibTeX</span>
-            </OverlayTrigger>
-          </div>
           <div className="facets panel-body">
             <h4>Share</h4>
             <span className="share-button">

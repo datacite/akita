@@ -1,25 +1,12 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Navbar, Nav, NavItem, Popover, OverlayTrigger, InputGroup, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignInAlt, faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   title: string
 }
-
-const signIn = (
-  <Popover id="sign-in" title="Personal Accounts">
-    Personal accounts will be implemented later in 2020.{' '}
-    <a
-      href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
-      target="_blank"
-      rel="noreferrer"
-    >
-      Provide input
-    </a>
-  </Popover>
-)
 
 const Header: React.FunctionComponent<Props> = ({ title }) => {
   // store query in useState(), default is current query parameter
@@ -120,11 +107,6 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
             >
               Support
             </NavItem>
-            <OverlayTrigger trigger="click" placement="bottom" overlay={signIn}>
-              <Navbar.Text className="btn btn-sm">
-                <FontAwesomeIcon icon={faSignInAlt} /> Sign In
-              </Navbar.Text>
-            </OverlayTrigger>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
