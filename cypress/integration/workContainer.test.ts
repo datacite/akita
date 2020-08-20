@@ -11,10 +11,6 @@ describe('DoiContainer', () => {
       .should('be.visible')
   })
 
-  it('license', () => {
-    cy.get('.license', { timeout: 30000 }).should('be.visible')
-  })
-
   it('export box', () => {
     cy.get('div#export-xml', { timeout: 30000 })
       // timeout for the query results to return
@@ -40,12 +36,11 @@ describe('DoiContainer', () => {
     //.contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.”')
   })
 
-  //TODO: Redo when data is available
-  // it("chart", () => {
-  //   cy.get('.mark-rect > path')
-  //   .should('be.visible')
-  //   .should('have.length', 1)
-  // })
+  it("chart", () => {
+    cy.get('.mark-rect > path')
+    .should('be.visible')
+    .should('have.length', 4)
+  })
 })
 
 //TODO: Redo when data is available

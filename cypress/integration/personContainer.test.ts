@@ -71,7 +71,7 @@ describe('PersonContainer', () => {
   })
 
   it('production chart', () => {
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 2)
+    cy.get('.mark-rect > path').should('be.visible').should('have.length.gt', 1)
   })
 
   it('types chart', () => {
