@@ -4,7 +4,7 @@ import clone from 'lodash/clone'
 
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import { Works } from '../SearchContent/SearchContent'
+import { Works } from '../SearchWork/SearchWork'
 import TypesChart from '../TypesChart/TypesChart'
 import LicenseChart from '../LicenseChart/LicenseChart'
 import ProductionChart from '../ProductionChart/ProductionChart'

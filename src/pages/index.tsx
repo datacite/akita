@@ -3,7 +3,7 @@ import { useQueryState } from 'next-usequerystate'
 
 import Layout from '../components/Layout/Layout'
 import Teaser from '../components/Teaser/Teaser'
-import SearchContent from '../components/SearchContent/SearchContent'
+import SearchWork from '../components/SearchWork/SearchWork'
 
 const IndexPage = () => {
   const [searchQuery] = useQueryState<string>('query')
@@ -14,7 +14,7 @@ const IndexPage = () => {
         {!searchQuery || searchQuery === '' ? (
           <Teaser title={'works'} />
         ) : (
-          <SearchContent searchQuery={searchQuery} />
+          <SearchWork searchQuery={searchQuery} />
         )}
       </React.Fragment>
     </Layout>

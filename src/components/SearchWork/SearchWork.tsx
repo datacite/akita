@@ -174,7 +174,7 @@ export const CONTENT_GQL = gql`
   ${contentFragment.work}
 `
 
-const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
+const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -315,4 +315,4 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
   )
 }
 
-export default SearchContent
+export default SearchWork

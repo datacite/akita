@@ -23,7 +23,7 @@ import {
   Works,
   connectionFragment,
   contentFragment
-} from '../SearchContent/SearchContent'
+} from '../SearchWork/SearchWork'
 
 type Props = {
   rorId: string

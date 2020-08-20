@@ -2,10 +2,7 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Work from '../Work/Work'
-import {
-  connectionFragment,
-  contentFragment
-} from '../SearchContent/SearchContent'
+import { connectionFragment, contentFragment } from '../SearchWork/SearchWork'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import {

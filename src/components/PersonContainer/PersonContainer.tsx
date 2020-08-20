@@ -13,7 +13,7 @@ import {
   PageInfo,
   connectionFragment,
   contentFragment
-} from '../SearchContent/SearchContent'
+} from '../SearchWork/SearchWork'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
