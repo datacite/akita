@@ -24,7 +24,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { DoiType } from '../WorkContainer/WorkContainer'
 import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
@@ -32,7 +32,7 @@ type Props = {
   linkToExternal?: boolean
 }
 
-const DoiMetadata: React.FunctionComponent<Props> = ({
+const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
@@ -122,8 +122,8 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
               <a>{c.displayName}</a>
             </Link>
           ) : (
-            c.displayName
-          )
+              c.displayName
+            )
         )}
       </div>
     )
@@ -434,4 +434,4 @@ const DoiMetadata: React.FunctionComponent<Props> = ({
   )
 }
 
-export default DoiMetadata
+export default WorkMetadata

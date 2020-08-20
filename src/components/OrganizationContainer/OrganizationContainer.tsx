@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Col, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Row, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import {
@@ -11,22 +11,16 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import clone from 'lodash/clone'
 import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
-import Pager from '../Pager/Pager'
-import DoiFacet from '../DoiFacet/DoiFacet'
 // import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
-import { DoiType } from '../DoiContainer/DoiContainer'
-import DoiMetadata from '../DoiMetadata/DoiMetadata'
-import TypesChart from '../TypesChart/TypesChart'
-import LicenseChart from '../LicenseChart/LicenseChart'
-import ProductionChart from '../ProductionChart/ProductionChart'
+import WorksListing from '../WorksListing/WorksListing'
+
 import {
-  PageInfo,
+  Works,
   connectionFragment,
   contentFragment
 } from '../SearchContent/SearchContent'
@@ -52,18 +46,6 @@ interface OrganizationResult {
     }
   ]
   works: Works
-}
-
-interface Works {
-  totalCount: number
-  pageInfo: PageInfo
-  published: ContentFacet[]
-  resourceTypes: ContentFacet[]
-  languages: ContentFacet[]
-  licenses: ContentFacet[]
-  fieldsOfScience: ContentFacet[]
-  registrationAgencies: ContentFacet[]
-  nodes: DoiType[]
 }
 
 interface ContentFacet {
@@ -240,75 +222,17 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
 
   if (!organization) return <div></div>
 
-  const renderFacets = () => {
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <DoiFacet
-          model="organization"
-          data={data.organization.works}
-          loading={loading}
-        ></DoiFacet>
-      </div>
-    )
-  }
-
-  const analyticsBar = () => {
-    if (!data.organization.works.totalCount) return null
-
-    const published = data.organization.works.published.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-    const resourceTypes = data.organization.works.resourceTypes.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-
-    const noLicenseValue: ContentFacet = {
-      id: 'no-license',
-      title: 'No License',
-      count:
-        data.organization.works.totalCount -
-        data.organization.works.licenses.reduce(
-          (a, b) => a + (b['count'] || 0),
-          0
-        )
-    }
-    let licenses = clone(data.organization.works.licenses)
-    licenses.unshift(noLicenseValue)
-    licenses = licenses.map((x) => ({
-      id: x.id,
-      title: x.title,
-      count: x.count
-    }))
- 
-    return (
-      <React.Fragment>
-        <Row>
-          <Col xs={6}>
-            <ProductionChart
-              data={published}
-              doiCount={data.organization.works.totalCount}
-            ></ProductionChart>
-          </Col>
-          <Col xs={3}>
-            <TypesChart
-              data={resourceTypes}
-              legend={false}
-              count={data.organization.works.totalCount}
-            ></TypesChart>
-          </Col>
-          <Col xs={3}>
-            <LicenseChart
-              data={licenses}
-              legend={false}
-              count={data.organization.works.totalCount}
-            ></LicenseChart>
-          </Col>
-        </Row>
-      </React.Fragment>
-    )
-  }
+  // const renderFacets = () => {
+  //   return (
+  //     <div className="col-md-3 hidden-xs hidden-sm">
+  //       <WorkFacets
+  //         model="organization"
+  //         data={data.organization.works}
+  //         loading={loading}
+  //       ></WorkFacets>
+  //     </div>
+  //   )
+  // }
 
   const relatedContent = () => {
     const hasNextPage = data.organization.works.totalCount > 25
@@ -316,43 +240,35 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       ? data.organization.works.pageInfo.endCursor
       : ''
 
-    if (!data.organization.works.totalCount)
-      return (
-        <div className="alert-works">
-          <Alert bsStyle="warning" className="no-content">
-            No works found.
-          </Alert>
-        </div>
-      )
+    const totalCount = data.organization.works.totalCount
 
     return (
-      <div className="col-md-9" id="related-content">
-        {data.organization.works.totalCount > 0 && (
-          <h3 className="member-results">
-            {data.organization.works.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Work'}
-              count={data.organization.works.totalCount}
-              showCount={false}
-            />
-          </h3>
-        )}
-
-        {analyticsBar()}
-
-        {data.organization.works.nodes.map((doi) => (
-          <React.Fragment key={doi.id}>
-            <DoiMetadata metadata={doi} />
-          </React.Fragment>
-        ))}
-
-        {data.organization.works.totalCount > 25 && (
-          <Pager
-            url={'/ror.org/' + rorId + '/?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          />
-        )}
+      <div>
+        <div className="col-md-9 col-md-offset-3">
+          {totalCount > 0 && (
+            <h3 className="member-results">
+              {totalCount.toLocaleString('en-US') + ' '}
+              <Pluralize
+                singular={'Work'}
+                count={totalCount}
+                showCount={false}
+              />
+            </h3>
+          )}
+        </div>
+        {/* TODO: I think the pager element within this should be more dynamic
+        and not need to rely on passing in precalculated //
+        hasNextPage/endCursor instead calculate based on data provided */}
+        <WorksListing
+          works={data.organization.works}
+          loading={loading}
+          showFacets={true}
+          showAnalytics={true}
+          hasPagination={data.organization.works.totalCount > 25}
+          hasNextPage={hasNextPage}
+          url={'/ror.org/' + rorId + '/?'}
+          endCursor={endCursor}
+        />
       </div>
     )
   }
@@ -426,10 +342,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
         {leftSideBar()}
         {content()}
       </Row>
-      <Row>
-        {renderFacets()}
-        {relatedContent()}
-      </Row>
+      <Row>{relatedContent()}</Row>
     </React.Fragment>
   )
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
-import DoiContainer from '../../components/DoiContainer/DoiContainer'
+import WorkContainer from '../../components/WorkContainer/WorkContainer'
 import { GetServerSideProps } from 'next'
 
 const DoisPage = ({ doiPath }) => {
   return (
     <Layout title={process.env.NEXT_PUBLIC_TITLE}>
-      <DoiContainer item={doiPath.join('/')} />
+      <WorkContainer item={doiPath.join('/')} />
     </Layout>
   )
 }
