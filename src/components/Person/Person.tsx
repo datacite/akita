@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import { compactNumbers } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
@@ -33,7 +33,7 @@ interface Works {
   published: ContentFacet[]
   licenses: ContentFacet[]
   languages: ContentFacet[]
-  nodes: DoiType[]
+  nodes: WorkType[]
 }
 
 interface PageInfo {

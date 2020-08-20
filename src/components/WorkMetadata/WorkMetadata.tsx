@@ -24,11 +24,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
-  metadata: DoiType
+  metadata: WorkType
   linkToExternal?: boolean
 }
 
@@ -84,11 +84,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   const creators = () => {
     if (!metadata.creators || !metadata.creators[0]) {
-      return (
-        <div className="creators">
-          No creators
-        </div>
-      )
+      return <div className="creators">No creators</div>
     }
 
     const creatorList = metadata.creators.reduce(
@@ -118,12 +114,16 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href="/orcid.org/[orcid]" key={index} as={`/orcid.org${c.id}`}>
+            <Link
+              href="/orcid.org/[orcid]"
+              key={index}
+              as={`/orcid.org${c.id}`}
+            >
               <a>{c.displayName}</a>
             </Link>
           ) : (
-              c.displayName
-            )
+            c.displayName
+          )
         )}
       </div>
     )

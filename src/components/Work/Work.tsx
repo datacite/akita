@@ -2,14 +2,14 @@ import * as React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import { compactNumbers } from '../../utils/helpers'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import CitationsChart from '../CitationsChart/CitationsChart'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
-  doi: DoiType
+  doi: WorkType
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {

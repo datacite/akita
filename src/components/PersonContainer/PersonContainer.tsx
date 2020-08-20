@@ -8,7 +8,7 @@ import { orcidFromUrl } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger, Row } from 'react-bootstrap'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import {
   PageInfo,
   connectionFragment,
@@ -123,7 +123,7 @@ interface Works {
   languages: ContentFacet[]
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
-  nodes: DoiType[]
+  nodes: WorkType[]
 }
 
 interface ContentFacet {

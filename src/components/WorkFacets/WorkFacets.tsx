@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import Link from 'next/link'
 
 type Props = {
@@ -20,7 +20,7 @@ interface Facets {
   affiliations?: ContentFacet[]
   fieldsOfScience?: ContentFacet[]
   registrationAgencies?: ContentFacet[]
-  nodes: DoiType[]
+  nodes: WorkType[]
 }
 
 interface ContentFacet {
@@ -32,7 +32,7 @@ interface ContentFacet {
 const WorkFacets: React.FunctionComponent<Props> = ({
   data,
   model,
-  loading,
+  loading
 }) => {
   const router = useRouter()
   if (loading) return <div className="col-md-3"></div>

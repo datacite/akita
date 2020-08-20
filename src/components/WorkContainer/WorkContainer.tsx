@@ -93,7 +93,7 @@ export const DOI_GQL = gql`
   ${contentFragment.work}
 `
 
-export interface DoiType {
+export interface WorkType {
   id: string
   doi: string
   url: string
@@ -128,7 +128,7 @@ export interface DoiType {
     licenses: ContentFacet[]
     fieldsOfScience: ContentFacet[]
     registrationAgencies: ContentFacet[]
-    nodes: DoiType[]
+    nodes: WorkType[]
     pageInfo: PageInfo
     totalCount: number
   }
@@ -143,7 +143,7 @@ export interface DoiType {
     licenses: ContentFacet[]
     fieldsOfScience: ContentFacet[]
     registrationAgencies: ContentFacet[]
-    nodes: DoiType[]
+    nodes: WorkType[]
     pageInfo: PageInfo
     totalCount: number
   }
@@ -217,7 +217,7 @@ export interface RelatedContentList {
 }
 
 export interface DoiQueryData {
-  work: DoiType
+  work: WorkType
 }
 
 interface DoiQueryVar {
@@ -232,7 +232,7 @@ interface DoiQueryVar {
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
-  const [doi, setDoi] = React.useState<DoiType>()
+  const [doi, setDoi] = React.useState<WorkType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })

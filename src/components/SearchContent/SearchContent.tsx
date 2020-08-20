@@ -4,7 +4,7 @@ import { useQueryState } from 'next-usequerystate'
 import { Alert, Row } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import WorksListing from '../WorksListing/WorksListing'
-import { DoiType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../WorkContainer/WorkContainer'
 import Error from '../Error/Error'
 import ContentLoader from 'react-content-loader'
 
@@ -32,7 +32,7 @@ export interface Works {
   licenses: ContentFacet[]
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
-  nodes: DoiType[]
+  nodes: WorkType[]
 }
 
 interface ContentQueryData {
@@ -222,7 +222,7 @@ const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
       })
     }, 1000)
 
-    let results: DoiType[] = []
+    let results: WorkType[] = []
 
     if (searchQuery) {
       if (data) results = data.works.nodes
