@@ -1,14 +1,9 @@
 import * as React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { DoiType } from '../WorkContainer/WorkContainer'
-import TypesChart from '../TypesChart/TypesChart'
-import LicenseChart from '../LicenseChart/LicenseChart'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
-import ProductionChart from '../ProductionChart/ProductionChart'
-import Pager from '../Pager/Pager'
-import { orcidFromUrl, compactNumbers } from '../../utils/helpers'
+import { compactNumbers } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
-import clone from 'lodash/clone'
 
 export interface PersonRecord {
   id: string

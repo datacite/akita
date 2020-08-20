@@ -1,11 +1,7 @@
 import * as React from 'react'
-import { useRouter } from 'next/router'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import { Alert, Row } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
-import Link from 'next/link'
 import Pluralize from 'react-pluralize'
 import WorksListing from '../WorksListing/WorksListing'
 import { DoiType } from '../WorkContainer/WorkContainer'
@@ -179,8 +175,6 @@ export const CONTENT_GQL = gql`
 `
 
 const SearchContent: React.FunctionComponent<Props> = ({ searchQuery }) => {
-  const router = useRouter()
-
   const [published] = useQueryState('published', {
     history: 'push'
   })

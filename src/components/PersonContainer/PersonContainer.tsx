@@ -4,7 +4,7 @@ import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import WorksListing from '../WorksListing/WorksListing'
 import ContentLoader from 'react-content-loader'
-import { orcidFromUrl, compactNumbers } from '../../utils/helpers'
+import { orcidFromUrl } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
 import { Popover, OverlayTrigger, Row } from 'react-bootstrap'
@@ -161,27 +161,25 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
   // eslint-disable-next-line no-unused-vars
-  const [published, setPublished] = useQueryState('published', {
+  const [published] = useQueryState('published', {
     history: 'push'
   })
   // eslint-disable-next-line no-unused-vars
-  const [resourceType, setResourceType] = useQueryState('resource-type', {
+  const [resourceType] = useQueryState('resource-type', {
     history: 'push'
   })
   // eslint-disable-next-line no-unused-vars
-  const [fieldOfScience, setFieldOfScience] = useQueryState(
-    'field-of-science',
-    { history: 'push' }
-  )
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [language, setLanguage] = useQueryState('language', { history: 'push' })
+  const [language] = useQueryState('language', { history: 'push' })
   // eslint-disable-next-line no-unused-vars
-  const [
-    registrationAgency,
-    setRegistrationAgency
-  ] = useQueryState('registration-agency', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
   // eslint-disable-next-line no-unused-vars
-  const [repositoryId, setRepositoryId] = useQueryState('repository-id', {
+  const [repositoryId] = useQueryState('repository-id', {
     history: 'push'
   })
 

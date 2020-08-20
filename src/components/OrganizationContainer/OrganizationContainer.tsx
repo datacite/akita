@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Col, Alert, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Row, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import {
@@ -11,23 +11,16 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import clone from 'lodash/clone'
 import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
-import Pager from '../Pager/Pager'
-import WorkFacets from '../WorkFacets/WorkFacets'
 // import Search from '../Search/Search'
 import { Organization, OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
-import { DoiType } from '../WorkContainer/WorkContainer'
 import WorksListing from '../WorksListing/WorksListing'
-import TypesChart from '../TypesChart/TypesChart'
-import LicenseChart from '../LicenseChart/LicenseChart'
-import ProductionChart from '../ProductionChart/ProductionChart'
+
 import {
   Works,
-  PageInfo,
   connectionFragment,
   contentFragment
 } from '../SearchContent/SearchContent'
