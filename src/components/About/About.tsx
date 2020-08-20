@@ -45,7 +45,7 @@ const About: React.FunctionComponent<Props> = ({ title }) => {
               </a>{' '}
               |{' '}
               <a
-                href="https://support.datacite.org/docs/datacite-search-user-documentation"
+                href="https://support.datacite.org/docs/datacite-commons"
                 target="_blank"
                 rel="noreferrer"
               >
