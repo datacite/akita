@@ -13,25 +13,10 @@ describe('Person Component', () => {
 
   it('orcid', () => {
     mount(<Person person={data} />)
-    cy.get('a#orcid-link')
-      .contains('Juan Perez')
+    cy.get('a#orcid-link').contains('Juan Perez')
     cy.get('a#orcid-link')
       .should('have.attr', 'href')
       .and('contains', 'orcid.org/0000-0003-3484-6875')
-  })
-
-  it('link to doi page', () => {
-    mount(<Person person={data} />)
-    cy.get('h3.work > a')
-      // the second element, the first is a#orcid-link
-      .eq(1)
-      .should('have.attr', 'href')
-      .and('include', '/doi.org/')
-  })
-
-  it('work count', () => {
-    mount(<Person person={data} />)
-    cy.get('.production-chart').contains('Works by publication year')
   })
 
   // it('citationCount', () => {
@@ -50,16 +35,4 @@ describe('Person Component', () => {
   //     .contains('4.5k')
   //     .should('be.visible')
   // })
-
-  it('analytics bar', () => {
-    mount(<Person person={data} />)
-    cy.get('.types-chart').should('be.visible')
-    cy.get('.production-chart').should('be.visible')
-  })
-
-  it('related content section', () => {
-    mount(<Person person={data} />)
-    cy.get('.member-results').contains('Works')
-    cy.get('.creators').contains('John Smith')
-  })
 })
