@@ -235,9 +235,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
   // }
 
   const relatedContent = () => {
-    const hasNextPage = data.organization.works.pageInfo
-      ? data.organization.works.pageInfo.hasNextPage
-      : false
+    const hasNextPage = data.organization.works.totalCount > 25
     const endCursor = data.organization.works.pageInfo
       ? data.organization.works.pageInfo.endCursor
       : ''

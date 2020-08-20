@@ -139,11 +139,13 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
           </React.Fragment>
         ))}
 
-        <Pager
-          url={'/?'}
-          hasNextPage={hasNextPage}
-          endCursor={endCursor}
-        ></Pager>
+        {data.people.totalCount > 25 && (
+          <Pager
+            url={'/orcid.org?'}
+            hasNextPage={hasNextPage}
+            endCursor={endCursor}
+          ></Pager>
+        )}
       </Col>
     )
   }

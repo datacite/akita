@@ -37,7 +37,6 @@ export const DOI_GQL = gql`
     $language: String
     $license: String
     $registrationAgency: String
-    $repositoryId: String
   ) {
     person(id: $id) {
       id
@@ -70,7 +69,6 @@ export const DOI_GQL = gql`
         language: $language
         license: $license
         registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
       ) {
         ...WorkConnectionFragment
         nodes {
@@ -125,8 +123,6 @@ interface Works {
   languages: ContentFacet[]
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
-  affiliations: ContentFacet[]
-  repositories: ContentFacet[]
   nodes: DoiType[]
 }
 
@@ -151,37 +147,29 @@ interface OrcidQueryVar {
   published: string
   resourceTypeId: string
   language: string
+  license: string
   fieldOfScience: string
   registrationAgency: string
-  repositoryId: string
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
   const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-
-  // eslint-disable-next-line no-unused-vars
   const [published] = useQueryState('published', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
   const [resourceType] = useQueryState('resource-type', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
   const [fieldOfScience] = useQueryState('field-of-science', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
   const [language] = useQueryState('language', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
+  const [license] = useQueryState('license', { history: 'push' })
   const [registrationAgency] = useQueryState('registration-agency', {
     history: 'push'
   })
   // eslint-disable-next-line no-unused-vars
-  const [repositoryId] = useQueryState('repository-id', {
-    history: 'push'
-  })
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
@@ -194,8 +182,8 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
         resourceTypeId: resourceType as string,
         fieldOfScience: fieldOfScience as string,
         language: language as string,
-        registrationAgency: registrationAgency as string,
-        repositoryId: repositoryId as string
+        license: license as string,
+        registrationAgency: registrationAgency as string
       }
     }
   )
@@ -211,7 +199,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   if (loading || !orcidRecord)
     return (
-      <div className="row">
+      <React.Fragment>
         <div className="col-md-3"></div>
         <div className="col-md-9">
           <ContentLoader
@@ -231,7 +219,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
         </div>
-      </div>
+      </React.Fragment>
     )
 
   if (error) {

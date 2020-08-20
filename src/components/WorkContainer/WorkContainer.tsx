@@ -226,31 +226,21 @@ interface DoiQueryVar {
   published: string
   resourceTypeId: string
   language: string
+  license: string
   fieldOfScience: string
   registrationAgency: string
 }
 
 const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
-  // const [selectedOption, setSelectedOption] = React.useState('')
-
   const [doi, setDoi] = React.useState<DoiType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
-
-  // eslint-disable-next-line no-unused-vars
-  const [published] = useQueryState('published', {
-    history: 'push'
-  })
-  // eslint-disable-next-line no-unused-vars
-  const [resourceType] = useQueryState('resource-type', {
-    history: 'push'
-  })
-  // eslint-disable-next-line no-unused-vars
+  const [published] = useQueryState('published', { history: 'push' })
+  const [resourceType] = useQueryState('resource-type', { history: 'push' })
   const [fieldOfScience] = useQueryState('field-of-science', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
   const [language] = useQueryState('language', { history: 'push' })
-  // eslint-disable-next-line no-unused-vars
+  const [license] = useQueryState('license', { history: 'push' })
   const [registrationAgency] = useQueryState('registration-agency', {
     history: 'push'
   })
@@ -266,6 +256,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
         resourceTypeId: resourceType as string,
         fieldOfScience: fieldOfScience as string,
         language: language as string,
+        license: license as string,
         registrationAgency: registrationAgency as string
       }
     }
@@ -282,7 +273,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
 
   if (loading || !doi)
     return (
-      <div className="row">
+      <React.Fragment>
         <div className="col-md-3"></div>
         <div className="col-md-9">
           <ContentLoader
@@ -302,7 +293,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
         </div>
-      </div>
+      </React.Fragment>
     )
 
   if (error) {
