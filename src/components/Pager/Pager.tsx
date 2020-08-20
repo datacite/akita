@@ -21,9 +21,6 @@ const Pager: React.FunctionComponent<Props> = ({
   let firstPageUrl = null
   let hasFirstPage = false
   let nextPageUrl = null
-  // let hasNextPage = false
-
-  // get current query parameters from next router
 
   // let params = new URLSearchParams(router.query as any)
   let params = isNested
@@ -34,14 +31,13 @@ const Pager: React.FunctionComponent<Props> = ({
     // remove cursor query parameter for first page
     params.delete('cursor')
     firstPageUrl = url + params.toString()
-    hasFirstPage = typeof firstPageUrl === 'string'
+    hasFirstPage = true
   }
 
   if (hasNextPage && endCursor) {
     // set cursor query parameter for next page
     params.set('cursor', endCursor)
     nextPageUrl = url + params.toString()
-    hasNextPage = typeof nextPageUrl === 'string'
   }
 
   return (

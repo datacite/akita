@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
-import Doi from '../Doi/Doi'
+import Work from '../Work/Work'
 import {
   connectionFragment,
   contentFragment
@@ -16,7 +16,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import DoiFacet from '../DoiFacet/DoiFacet'
+import { Row, Tab, Nav, NavItem } from 'react-bootstrap'
+import Pluralize from 'react-pluralize'
+import { compactNumbers } from '../../utils/helpers'
+import WorksListing from '../WorksListing/WorksListing'
 
 type Props = {
   item?: string
@@ -424,7 +427,6 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
             </span>
           </div>
         </div>
-        <DoiFacet model="doi" data={doi.citations} loading={loading}></DoiFacet>
       </div>
     )
   }
@@ -432,16 +434,109 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   const content = () => {
     return (
       <div className="col-md-9 panel-list" id="content">
-        <Doi doi={doi}></Doi>
+        <Work doi={doi}></Work>
+      </div>
+    )
+  }
+
+  const relatedContent = () => {
+    const referencesTabLabel = Pluralize({
+      count: compactNumbers(doi.references.totalCount),
+      singular: 'Reference',
+      showCount: true
+    })
+    const citationsTabLabel = Pluralize({
+      count: compactNumbers(doi.citations.totalCount),
+      singular: 'Citation',
+      showCount: true
+    })
+
+    const hasNextPageCitations = doi.citations.pageInfo
+      ? doi.citations.pageInfo.hasNextPage
+      : false
+    const endCursorCitations = doi.citations.pageInfo
+      ? doi.citations.pageInfo.endCursor
+      : ''
+
+    const hasNextPageReferences = doi.references.pageInfo
+      ? doi.references.pageInfo.hasNextPage
+      : false
+    const endCursorReferences = doi.references.pageInfo
+      ? doi.references.pageInfo.endCursor
+      : ''
+
+    const url = '/doi.org/' + doi.doi + '/?'
+
+    if (doi.citations.totalCount == 0) return ''
+
+    return (
+      <div className="panel panel-transparent">
+        <div className="panel-body nav-tabs-member">
+          <Tab.Container
+            className="content-tabs"
+            id="related-content-tabs"
+            defaultActiveKey="referencesList"
+          >
+            <div>
+              <div className="col-md-9 col-md-offset-3">
+                <Nav bsStyle="tabs">
+                  <NavItem eventKey="referencesList">
+                    {referencesTabLabel}
+                  </NavItem>
+                  <NavItem eventKey="citationsList">
+                    {citationsTabLabel}
+                  </NavItem>
+                </Nav>
+              </div>
+              <Tab.Content>
+                {doi.references.totalCount > 0 && (
+                  <Tab.Pane
+                    className="references-list"
+                    eventKey="referencesList"
+                  >
+                    <WorksListing
+                      works={doi.references}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      hasPagination={doi.references.totalCount > 25}
+                      hasNextPage={hasNextPageReferences}
+                      url={url}
+                      endCursor={endCursorReferences}
+                    />
+                  </Tab.Pane>
+                )}
+
+                {doi.citations.totalCount > 0 && (
+                  <Tab.Pane className="citations-list" eventKey="citationsList">
+                    <WorksListing
+                      works={doi.citations}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      hasPagination={doi.citations.totalCount > 25}
+                      hasNextPage={hasNextPageCitations}
+                      url={url}
+                      endCursor={endCursorCitations}
+                    />
+                  </Tab.Pane>
+                )}
+              </Tab.Content>
+            </div>
+          </Tab.Container>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="row">
-      {leftSideBar()}
-      {content()}
-    </div>
+    <React.Fragment>
+      <Row>
+        {leftSideBar()}
+        {content()}
+      </Row>
+      <Row>{relatedContent()}</Row>
+    </React.Fragment>
   )
 }
 

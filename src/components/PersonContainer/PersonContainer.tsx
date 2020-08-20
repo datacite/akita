@@ -2,11 +2,13 @@ import * as React from 'react'
 import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
-import DoiFacet from '../DoiFacet/DoiFacet'
+import WorksListing from '../WorksListing/WorksListing'
 import ContentLoader from 'react-content-loader'
+import { orcidFromUrl } from '../../utils/helpers'
+import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
-import { Popover, OverlayTrigger } from 'react-bootstrap'
-import { DoiType } from '../DoiContainer/DoiContainer'
+import { Popover, OverlayTrigger, Row } from 'react-bootstrap'
+import { DoiType } from '../WorkContainer/WorkContainer'
 import {
   PageInfo,
   connectionFragment,
@@ -313,12 +315,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
             </span>
           </div>
         </div>
-
-        <DoiFacet
-          model="doi"
-          data={orcidRecord.works}
-          loading={loading}
-        ></DoiFacet>
       </div>
     )
   }
@@ -331,11 +327,55 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     )
   }
 
+  const relatedContent = () => {
+    const hasNextPage = orcidRecord.works.pageInfo
+      ? orcidRecord.works.pageInfo.hasNextPage
+      : false
+    const endCursor = orcidRecord.works.pageInfo
+      ? orcidRecord.works.pageInfo.endCursor
+      : ''
+
+    const totalCount = orcidRecord.works.totalCount
+
+    return (
+      <div>
+        <div className="col-md-9 col-md-offset-3">
+          {totalCount > 0 && (
+            <h3 className="member-results">
+              {totalCount.toLocaleString('en-US') + ' '}
+              <Pluralize
+                singular={'Work'}
+                count={totalCount}
+                showCount={false}
+              />
+            </h3>
+          )}
+        </div>
+        {/* TODO: I think the pager element within this should be more dynamic
+        and not need to rely on passing in precalculated //
+        hasNextPage/endCursor instead calculate based on data provided */}
+        <WorksListing
+          works={orcidRecord.works}
+          loading={loading}
+          showFacets={true}
+          showAnalytics={true}
+          hasPagination={orcidRecord.works.totalCount > 25}
+          hasNextPage={hasNextPage}
+          url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
+          endCursor={endCursor}
+        />
+      </div>
+    )
+  }
+
   return (
-    <div className="row">
-      {leftSideBar()}
-      {content()}
-    </div>
+    <React.Fragment>
+      <Row>
+        {leftSideBar()}
+        {content()}
+      </Row>
+      <Row>{relatedContent()}</Row>
+    </React.Fragment>
   )
 }
 
