@@ -140,11 +140,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [types] = useQueryState<string>('types')
   const [country] = useQueryState<string>('country')
-  const [searchResults, setSearchResults] = React.useState<
-    OrganizationMetadataRecord[]
-  >([])
 
-  const { loading, error, data, refetch } = useQuery<
+  const { loading, error, data } = useQuery<
     OrganizationsQueryData,
     OrganizationsQueryVar
   >(ORGANIZATIONS_GQL, {
@@ -156,50 +153,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       country: country
     }
   })
-
-  React.useEffect(() => {
-    refetch({ query: searchQuery, cursor: cursor })
-
-    const results: OrganizationMetadataRecord[] = []
-
-    if (data) {
-      data.organizations.nodes.map((node) => {
-        let grid = node.identifiers.filter(i => {
-          return i.identifierType === 'grid'
-        })
-        let fundref = node.identifiers.filter(i => {
-          return i.identifierType === 'fundref'
-        })
-        let isni = node.identifiers.filter(i => {
-          return i.identifierType === 'isni'
-        })
-        let wikidata = node.identifiers.filter(i => {
-          return i.identifierType === 'wikidata'
-        })
-
-        let orgMetadata: OrganizationMetadataRecord = {
-          id: node.id,
-          name: node.name,
-          alternateNames: node.alternateName,
-          types: node.types,
-          url: node.url,
-          wikipediaUrl: node.wikipediaUrl,
-          countryName: node.address.country,
-          grid: grid,
-          fundref: fundref,
-          isni: isni,
-          wikidata: wikidata,
-          identifiers: node.identifiers
-        }
-
-        results.push(orgMetadata)
-
-        return results
-      })
-
-      setSearchResults(results)
-    }
-  }, [searchQuery, data, refetch])
 
   const renderResults = () => {
     if (loading)
@@ -230,9 +183,45 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </div>
       )
 
-    if (!data) return null
+    const results: OrganizationMetadataRecord[] = []
 
-    if (!loading && searchResults.length == 0)
+    if (data) {
+      data.organizations.nodes.map((node) => {
+        let grid = node.identifiers.filter((i) => {
+          return i.identifierType === 'grid'
+        })
+        let fundref = node.identifiers.filter((i) => {
+          return i.identifierType === 'fundref'
+        })
+        let isni = node.identifiers.filter((i) => {
+          return i.identifierType === 'isni'
+        })
+        let wikidata = node.identifiers.filter((i) => {
+          return i.identifierType === 'wikidata'
+        })
+
+        let orgMetadata: OrganizationMetadataRecord = {
+          id: node.id,
+          name: node.name,
+          alternateNames: node.alternateName,
+          types: node.types,
+          url: node.url,
+          wikipediaUrl: node.wikipediaUrl,
+          countryName: node.address.country,
+          grid: grid,
+          fundref: fundref,
+          isni: isni,
+          wikidata: wikidata,
+          identifiers: node.identifiers
+        }
+
+        results.push(orgMetadata)
+
+        return results
+      })
+    }
+
+    if (results.length == 0)
       return (
         <div className="col-md-9">
           <Alert bsStyle="warning">No organizations found.</Alert>
@@ -248,7 +237,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     return (
       <div className="col-md-9" id="content">
-        {searchResults.length > 0 && (
+        {results.length > 0 && (
           <h3 className="member-results">
             {data.organizations.totalCount.toLocaleString('en-US') + ' '}
             <Pluralize
@@ -259,7 +248,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           </h3>
         )}
 
-        {searchResults.map((item) => (
+        {results.map((item) => (
           <React.Fragment key={item.id}>
             <OrganizationMetadata
               metadata={item}
@@ -270,7 +259,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
         {data.organizations.totalCount > 20 && (
           <Pager
-            url={'/?'}
+            url={'/ror.org?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
           ></Pager>
@@ -299,16 +288,17 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>Country</h4>
             <ul>
-              {data && data.organizations.countries.map((facet) => (
-                <li key={facet.id}>
-                  <FilterItem
-                    name="country"
-                    id={facet.id}
-                    title={facet.title}
-                    count={facet.count}
-                  />
-                </li>
-              ))}
+              {data &&
+                data.organizations.countries.map((facet) => (
+                  <li key={facet.id}>
+                    <FilterItem
+                      name="country"
+                      id={facet.id}
+                      title={facet.title}
+                      count={facet.count}
+                    />
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
@@ -317,16 +307,17 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>Organization Type</h4>
             <ul>
-              {data && data.organizations.types.map((facet) => (
-                <li key={facet.id}>
-                  <FilterItem
-                    name="types"
-                    id={facet.id}
-                    title={facet.title}
-                    count={facet.count}
-                  />
-                </li>
-              ))}
+              {data &&
+                data.organizations.types.map((facet) => (
+                  <li key={facet.id}>
+                    <FilterItem
+                      name="types"
+                      id={facet.id}
+                      title={facet.title}
+                      count={facet.count}
+                    />
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

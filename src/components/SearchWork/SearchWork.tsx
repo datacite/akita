@@ -190,8 +190,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch } = useQuery<WorkQueryData, QueryVar>(
+  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
@@ -207,30 +206,6 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
       }
     }
   )
-
-  React.useEffect(() => {
-    const typingDelay = setTimeout(() => {
-      refetch({
-        query: searchQuery,
-        cursor: cursor,
-        published: published as string,
-        resourceTypeId: resourceType as string,
-        fieldOfScience: fieldOfScience as string,
-        language: language as string,
-        license: license as string,
-        registrationAgency: registrationAgency as string
-      })
-    }, 1000)
-
-    let results: WorkType[] = []
-
-    if (searchQuery) {
-      if (data) results = data.works.nodes
-    }
-    setSearchResults(results)
-
-    return () => clearTimeout(typingDelay)
-  }, [searchQuery, data, refetch])
 
   const renderResults = () => {
     if (loading)
@@ -261,9 +236,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </div>
       )
 
-    if (!data) return null
-
-    if (!loading && searchResults.length == 0)
+    if (data.works.nodes.length == 0)
       return (
         <div className="col-md-9">
           <div className="alert-works">
