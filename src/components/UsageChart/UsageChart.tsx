@@ -2,8 +2,8 @@ import React from 'react'
 import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap'
-import Moment from 'moment'
 import { VisualizationSpec } from 'vega-embed'
+import { subYears, isAfter, parse, differenceInMonths, getYear } from 'date-fns'
 
 interface ChartRecord {
   yearMonth: string
@@ -40,28 +40,27 @@ const UsageChart: React.FunctionComponent<Props> = ({
 
   // Get the lowerBound
   /* istanbul ignore next */
-  const lowerBoundYear = Moment(Moment().subtract(3, 'years')).isSameOrBefore(
-    Moment(publicationYear, 'YYYY')
-  )
-    ? Moment(publicationYear, 'YYYY')
-    : Moment().subtract(3, 'years')
+  const threeYearsAgo = subYears(new Date(), 3)
+  const lowerBound = isAfter(publicationYear, threeYearsAgo)
+    ? publicationYear
+    : threeYearsAgo
 
   // Filter dataset
   /* istanbul ignore next */
   let subset: ChartRecord[] = data.filter((e) => {
-    return Moment(e.yearMonth, 'YYYY-MM').isAfter(lowerBoundYear)
+    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    return isAfter(chartDate, lowerBound)
   })
 
   /* istanbul ignore next */
   subset = subset.filter((e) => {
-    return Moment(e.yearMonth, 'YYYY-MM').isAfter(
-      Moment(publicationYear, 'YYYY')
-    )
+    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    return isAfter(chartDate, publicationYear)
   })
 
   // Get domain
   /* istanbul ignore next */
-  const domain = Math.abs(lowerBoundYear.diff(new Date(), 'months'))
+  const domain = Math.abs(differenceInMonths(lowerBound, new Date()))
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -99,7 +98,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
         },
         scale: {
           domain: [
-            { year: lowerBoundYear.year(), month: 1 },
+            { year: getYear(lowerBound), month: 1 },
             { year: thisYear, month: thisMonth }
           ]
         }
@@ -130,11 +129,8 @@ const UsageChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <div>
-        <Pluralize
-          singular={type}
-          count={counts}
-        />{' '}
-        reported since publication in {publicationYear}.
+        <Pluralize singular={type} count={counts} /> reported since publication
+        in {publicationYear}.
       </div>
     )
   }
