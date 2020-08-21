@@ -7,7 +7,7 @@ import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
 // import Search from '../Search/Search'
-import Organization, { OrganizationRecord } from '../Organization/Organization'
+import Organization from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import WorksListing from '../WorksListing/WorksListing'
 
@@ -123,7 +123,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [organization, setOrganization] = React.useState<OrganizationRecord>()
+  //  const [organization, setOrganization] = React.useState<OrganizationRecord>()
 
   const fullId = 'https://ror.org/' + rorId
 
@@ -143,43 +143,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
       registrationAgency: registrationAgency as string
     }
   })
-
-  React.useEffect(() => {
-    if (data) {
-      let organization = data.organization
-      let grid = organization.identifiers.filter((i) => {
-        return i.identifierType === 'grid'
-      })
-      let fundref = organization.identifiers.filter((i) => {
-        return i.identifierType === 'fundref'
-      })
-      let isni = organization.identifiers.filter((i) => {
-        return i.identifierType === 'isni'
-      })
-      let wikidata = organization.identifiers.filter((i) => {
-        return i.identifierType === 'wikidata'
-      })
-
-      let orgMetadata: OrganizationMetadataRecord = {
-        id: organization.id,
-        name: organization.name,
-        alternateNames: organization.alternateName,
-        types: organization.types,
-        url: organization.url,
-        wikipediaUrl: organization.wikipediaUrl,
-        countryName: organization.address.country,
-        grid: grid,
-        fundref: fundref,
-        isni: isni,
-        wikidata: wikidata,
-        identifiers: organization.identifiers
-      }
-
-      setOrganization({
-        metadata: orgMetadata
-      })
-    }
-  }, [data])
 
   if (loading)
     return (
@@ -212,19 +175,42 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     )
   }
 
-  if (!organization) return <div></div>
+  const organization = (() => {
+    let organization = data.organization
+    let grid = organization.identifiers.filter((i) => {
+      return i.identifierType === 'grid'
+    })
+    let fundref = organization.identifiers.filter((i) => {
+      return i.identifierType === 'fundref'
+    })
+    let isni = organization.identifiers.filter((i) => {
+      return i.identifierType === 'isni'
+    })
+    let wikidata = organization.identifiers.filter((i) => {
+      return i.identifierType === 'wikidata'
+    })
 
-  // const renderFacets = () => {
-  //   return (
-  //     <div className="col-md-3 hidden-xs hidden-sm">
-  //       <WorkFacets
-  //         model="organization"
-  //         data={data.organization.works}
-  //         loading={loading}
-  //       ></WorkFacets>
-  //     </div>
-  //   )
-  // }
+    let orgMetadata: OrganizationMetadataRecord = {
+      id: organization.id,
+      name: organization.name,
+      alternateNames: organization.alternateName,
+      types: organization.types,
+      url: organization.url,
+      wikipediaUrl: organization.wikipediaUrl,
+      countryName: organization.address.country,
+      grid: grid,
+      fundref: fundref,
+      isni: isni,
+      wikidata: wikidata,
+      identifiers: organization.identifiers
+    }
+
+    return {
+      metadata: orgMetadata
+    }
+  })()
+
+  if (!organization) return <div></div>
 
   const relatedContent = () => {
     const hasNextPage = data.organization.works.totalCount > 25
