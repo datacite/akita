@@ -18,10 +18,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const exportMetadata = () => {
     return (
       <React.Fragment>
-        <h3 className="member-results">Export</h3>
-        <div className="export-metadata">
-          
-          <div id="export-xml">
+        <h3 className="member-results">Export as</h3>
+        <div className="export-metadata">         
+          <span id="export-xml">
             <a
               target="_blank"
               rel="noreferrer"
@@ -33,8 +32,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             >
               DataCite XML
             </a>
-          </div>
-          <div id="export-json">
+          </span>{' • '}
+          <span id="export-json">
             <a
               target="_blank"
               rel="noreferrer"
@@ -46,8 +45,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             >
               DataCite JSON
             </a>
-          </div>
-          <div id="export-ld" className="download">
+          </span>{' • '}
+          <span id="export-ld" className="download">
             <a
               target="_blank"
               rel="noreferrer"
@@ -59,8 +58,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             >
               Schema.org JSON-LD
             </a>
-          </div>
-          <div id="export-bibtex" className="download">
+          </span>{' • '}
+          <span id="export-bibtex" className="download">
             <a
               target="_blank"
               rel="noreferrer"
@@ -72,8 +71,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             >
               BibTeX
             </a>
-          </div>
-          <div id="export-ris" className="download">
+          </span>{' • '}
+          <span id="export-ris" className="download">
             <a
               target="_blank"
               rel="noreferrer"
@@ -85,21 +84,23 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             >
               RIS
             </a>
-          </div>
+          </span>
           {doi.types.resourceTypeGeneral === 'Software' && (
-            <div id="export-codemeta" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/vnd.codemeta.ld+json/' +
-                  doi.doi
-                }
-              >
-                Codemeta
-              </a>
-            </div>
+            <React.Fragment>{' • '}
+              <span id="export-codemeta" className="download">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={
+                    process.env.NEXT_PUBLIC_API_URL +
+                    '/application/vnd.codemeta.ld+json/' +
+                    doi.doi
+                  }
+                >
+                  Codemeta
+                </a>
+              </span>
+            </React.Fragment>
           )}
         </div>
       </React.Fragment>
