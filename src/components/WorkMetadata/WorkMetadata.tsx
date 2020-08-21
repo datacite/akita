@@ -334,10 +334,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     ) {
       return (
         <div className="metrics-counter">
-          <i>
-            <FontAwesomeIcon icon={faInfoCircle} /> No citations, views or
-            downloads reported.
-          </i>
         </div>
       )
     }
