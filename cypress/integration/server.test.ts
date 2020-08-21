@@ -15,15 +15,15 @@ describe("Server error", () => {
     })
   })
 
-  it('search works', () => {
-    cy.visit('/')
-    cy.get('input[name="query"]')
-      .type('hallett{enter}')
-      .get('.alert > h4')
-      .should('contain', 'An error occured.')
-      .get('.alert > p')
-      .should('contain', 'Internal Server Error')
-  })
+  // it('search works', () => {
+  //   cy.visit('/')
+  //   cy.get('input[name="query"]')
+  //     .type('hallett{enter}')
+  //     .get('.alert > h4')
+  //     .should('contain', 'An error occured.')
+  //     .get('.alert > p')
+  //     .should('contain', 'Internal Server Error')
+  // })
 
   it('search people', () => {
     cy.visit('/orcid.org')
@@ -45,3 +45,5 @@ describe("Server error", () => {
   //     .should('contain', 'Internal Server Error')
   // })
 })
+
+export {}

@@ -52,3 +52,5 @@ describe("Search People", () => {
       .should('contain', 'No people found.')
   })
 })
+
+export {}

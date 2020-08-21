@@ -76,3 +76,5 @@ describe('PersonContainer', () => {
     cy.get('.mark-arc > path').should('be.visible').should('have.length.gt', 1)
   })
 })
+
+export {}

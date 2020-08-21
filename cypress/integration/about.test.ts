@@ -8,3 +8,5 @@ describe("About", () => {
       .contains('About')
   })
 })
+
+export {}

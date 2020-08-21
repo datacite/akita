@@ -225,3 +225,5 @@ describe("Search", () => {
     })
   })
 })
+
+export {}

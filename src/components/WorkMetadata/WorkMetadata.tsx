@@ -376,7 +376,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
-    const title = 'DataCite Commons: ' + metadata.name
+    const title = metadata.titles[0] ? 'DataCite Commons: ' + metadata.titles[0].title : 'DataCite Commons: No Title'
     const url = window.location.href
 
     return (

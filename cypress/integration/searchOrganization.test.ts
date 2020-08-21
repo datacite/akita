@@ -67,3 +67,5 @@ describe("Search Organizations", () => {
       .should('contain', 'No organizations found.')
   })
 })
+
+export {}
