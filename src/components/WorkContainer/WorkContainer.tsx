@@ -29,17 +29,10 @@ export const DOI_GQL = gql`
     work(id: $id) {
       ...WorkFragment
       formattedCitation
-      citationCount
-      citationsOverTime {
-        year
-        total
-      }
-      viewCount
       viewsOverTime {
         yearMonth
         total
       }
-      downloadCount
       downloadsOverTime {
         yearMonth
         total
@@ -109,7 +102,6 @@ export interface WorkType {
   registered?: Date
   formattedCitation?: string
   citationCount?: number
-  citationsOverTime?: CitationsYear[]
   citations?: {
     published: Facet[]
     resourceTypes: Facet[]
@@ -173,11 +165,6 @@ interface Description {
 interface PageInfo {
   endCursor: string
   hasNextPage: boolean
-}
-
-interface CitationsYear {
-  year: number
-  total: number
 }
 
 export interface UsageMonth {

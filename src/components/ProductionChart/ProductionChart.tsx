@@ -2,6 +2,8 @@ import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
+import useWindowDimensions from '../../../hooks/useWindowDimensions'
+
 interface ChartRecord {
   title: string
   count: number
@@ -22,6 +24,9 @@ const actions = {
 const ProductionChart: React.FunctionComponent<Props> = ({
   data
 }) => {
+  // get current screen size
+  const width = useWindowDimensions().width
+
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1
 
@@ -30,6 +35,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
 
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear
+  const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -51,7 +57,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
         filter: 'toNumber(datum.title) >' + lowerBoundYear
       }
     ],
-    width: yearsDomain * 22,
+    width: chartWidth,
     mark: {
       type: 'bar',
       cursor: 'pointer',

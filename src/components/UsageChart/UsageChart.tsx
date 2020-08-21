@@ -5,6 +5,8 @@ import { Grid, Row } from 'react-bootstrap'
 import { VisualizationSpec } from 'vega-embed'
 import { subYears, isAfter, parse, differenceInMonths, getYear } from 'date-fns'
 
+import useWindowDimensions from '../../../hooks/useWindowDimensions'
+
 interface ChartRecord {
   yearMonth: string
   total: number
@@ -31,12 +33,16 @@ const UsageChart: React.FunctionComponent<Props> = ({
   publicationYear,
   type
 }) => {
+  // get current screen size
+  const width = useWindowDimensions().width
+
   // current date
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear()
 
   /* istanbul ignore next */
-  const thisMonth = new Date().getMonth()
+  // getMonth is zero-based, so January is 0
+  const thisMonth = new Date().getMonth() + 1
 
   // Get the lowerBound
   /* istanbul ignore next */
@@ -48,19 +54,20 @@ const UsageChart: React.FunctionComponent<Props> = ({
   // Filter dataset
   /* istanbul ignore next */
   let subset: ChartRecord[] = data.filter((e) => {
-    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    const chartDate = parse(e.yearMonth)
     return isAfter(chartDate, lowerBound)
   })
 
   /* istanbul ignore next */
   subset = subset.filter((e) => {
-    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    const chartDate = parse(e.yearMonth)
     return isAfter(chartDate, publicationYear)
   })
 
-  // Get domain
+  // get domain, set width according to screen size
   /* istanbul ignore next */
   const domain = Math.abs(differenceInMonths(lowerBound, new Date()))
+  const chartWidth = width >= 1400 ? domain * 25 : domain * 18
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -68,7 +75,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
     data: {
       name: 'table'
     },
-    width: domain * 25,
+    width: chartWidth,
     mark: {
       type: 'bar',
       tooltip: true,
@@ -129,7 +136,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <div>
-        <Pluralize singular={type} count={counts} /> reported since publication
+        <Pluralize singular={type} count={counts.toLocaleString('en-US')} /> reported since publication
         in {publicationYear}.
       </div>
     )

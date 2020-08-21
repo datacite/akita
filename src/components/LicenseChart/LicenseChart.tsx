@@ -1,7 +1,9 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
+
 import { compactNumbers } from '../../utils/helpers'
+import useWindowDimensions from '../../../hooks/useWindowDimensions'
 
 interface ChartRecord {
   title: string
@@ -26,6 +28,11 @@ const LicenseChart: React.FunctionComponent<Props> = ({
   count,
   legend
 }) => {
+  // get current screen size
+  const width = useWindowDimensions().width
+  const innerRadius = width >= 1400 ? 68 : 50
+  const outerRadius = width >= 1400 ? 90 : 70
+
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
@@ -37,8 +44,8 @@ const LicenseChart: React.FunctionComponent<Props> = ({
       {
         mark: {
           type: 'arc',
-          innerRadius: 68,
-          outerRadius: 90,
+          innerRadius: innerRadius,
+          outerRadius: outerRadius,
           cursor: 'pointer',
           tooltip: true
         },

@@ -76,20 +76,20 @@ const WorksListing: React.FunctionComponent<Props> = ({
     return (
       <React.Fragment>
         <Row>
-          <Col xs={6}>
+          <Col sm={6}>
             <ProductionChart
               data={published}
               doiCount={works.totalCount}
             ></ProductionChart>
           </Col>
-          <Col xs={3}>
+          <Col sm={3}>
             <TypesChart
               data={resourceTypes}
               legend={false}
               count={works.totalCount}
             ></TypesChart>
           </Col>
-          <Col xs={3}>
+          <Col sm={3}>
             <LicenseChart
               data={licenses}
               legend={false}

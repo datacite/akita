@@ -4,7 +4,6 @@ import Pluralize from 'react-pluralize'
 import { compactNumbers } from '../../utils/helpers'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
-import CitationsChart from '../CitationsChart/CitationsChart'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 
@@ -135,11 +134,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     )
   }
 
-  const citationsTabLabel = Pluralize({
-    count: compactNumbers(doi.citationCount),
-    singular: 'Citation',
-    showCount: true
-  })
   const viewsTabLabel = Pluralize({
     count: compactNumbers(doi.viewCount),
     singular: 'View',
@@ -151,11 +145,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     showCount: true
   })
 
-  // Using published until citations over time is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
-  const citationsOverTime = doi.citations.published.map((datum) => ({
-    year: parseInt(datum.id),
-    total: datum.count
-  }))
   const viewsOverTime = doi.viewsOverTime.map((datum) => ({
     yearMonth: datum.yearMonth,
     total: datum.total
@@ -167,7 +156,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   const analyticsBar = () => {
     if (
-      doi.citations.totalCount == 0 &&
       doi.viewCount == 0 &&
       doi.downloadCount == 0
     )
@@ -177,19 +165,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
           <Tabs className="content-tabs" id="over-time-tabs">
-            {doi.citationCount > 0 && (
-              <Tab
-                className="citations-over-time-tab"
-                eventKey="citationsOverTime"
-                title={citationsTabLabel}
-              >
-                <CitationsChart
-                  data={citationsOverTime}
-                  publicationYear={doi.publicationYear}
-                  citationCount={doi.citationCount}
-                ></CitationsChart>
-              </Tab>
-            )}
             {doi.viewCount > 0 && (
               <Tab
                 className="views-over-time-tab"
@@ -200,7 +175,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   data={viewsOverTime}
                   counts={doi.viewCount}
                   publicationYear={doi.publicationYear}
-                  type="View"
+                  type="view"
                 />
               </Tab>
             )}
@@ -214,7 +189,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   data={downloadsOverTime}
                   counts={doi.downloadCount}
                   publicationYear={doi.publicationYear}
-                  type="Download"
+                  type="download"
                 />
               </Tab>
             )}
