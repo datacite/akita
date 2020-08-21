@@ -50,7 +50,7 @@ describe('WorkMetadata Component', () => {
 
   it('metrics counter', () => {
     mount(<WorkMetadata metadata={data} />)
-    cy.get('.metrics-counter')
+    cy.get('.metrics')
       .contains('4 Citations 8 Views 3K Downloads')
       .should('be.visible')
   })
@@ -60,7 +60,7 @@ describe('WorkMetadata Component', () => {
     data.viewCount = 8976
     data.downloadCount = 3143
     mount(<WorkMetadata metadata={data} />)
-    cy.get('.metrics-counter')
+    cy.get('.metrics')
       .contains('4.6K Citations 9K Views 3.1K Downloads')
       .should('be.visible')
   })
@@ -70,7 +70,7 @@ describe('WorkMetadata Component', () => {
     data.viewCount = 8976000
     data.downloadCount = 3143000
     mount(<WorkMetadata metadata={data} />)
-    cy.get('.metrics-counter')
+    cy.get('.metrics')
       .contains('4.6M Citations 9M Views 3.1M Downloads')
       .should('be.visible')
   })

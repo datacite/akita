@@ -44,7 +44,7 @@ describe('Doi Component', () => {
 
   it('metrics counter', () => {
     mount(<Work doi={data} />)
-    cy.get('.metrics-counter')
+    cy.get('.metrics')
       .contains('4 Citations 8 Views 3K Downloads')
       .should('be.visible')
   })

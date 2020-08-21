@@ -34,8 +34,6 @@ describe('UsageChart Component', () => {
     })
   })
 
-
-
   it('normal data', () => {
     mount(
       <UsageChart
@@ -50,11 +48,9 @@ describe('UsageChart Component', () => {
 
     cy.get('.usage-chart').should('be.visible')
 
-    cy.get('small').should('be.visible')
-
-    cy.get('small')
+    cy.get('div')
       .should('be.visible')
-      .contains('137 Views reported since publication in 2017')
+      .contains('137 Views reported since publication in 2017.')
   })
 
   // Data older than 10 years should not be showned
@@ -72,10 +68,8 @@ describe('UsageChart Component', () => {
 
     cy.get('.usage-chart').should('be.visible')
 
-    cy.get('small').should('be.visible')
-
-    cy.get('small')
+    cy.get('div')
       .should('be.visible')
-      .contains('137 Views reported since publication in 1985')
+      .contains('137 Views reported since publication in 1985.')
   })
 })
