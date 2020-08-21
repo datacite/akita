@@ -7,7 +7,6 @@ import Pluralize from 'react-pluralize'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faQuoteLeft,
-  faInfoCircle,
   faExternalLinkAlt,
   faDownload,
   faEnvelope

@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Alert, Row, Col } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
-import { compactNumbers } from '../../utils/helpers'
-import Pluralize from 'react-pluralize'
+// import { compactNumbers } from '../../utils/helpers'
+// import Pluralize from 'react-pluralize'
 
 export interface PersonRecord {
   id: string
