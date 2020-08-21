@@ -54,29 +54,13 @@ export const PERSON_GQL = gql`
 
 const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch } = useQuery<
-    PersonQueryData,
-    PersonQueryVar
-  >(PERSON_GQL, {
-    errorPolicy: 'all',
-    variables: { query: searchQuery, cursor: cursor }
-  })
-
-  React.useEffect(() => {
-    const typingDelay = setTimeout(() => {
-      refetch({ query: searchQuery, cursor: cursor })
-    }, 1000)
-
-    let results: PersonType[] = []
-
-    if (searchQuery) {
-      if (data) results = data.people.nodes
+  const { loading, error, data } = useQuery<PersonQueryData, PersonQueryVar>(
+    PERSON_GQL,
+    {
+      errorPolicy: 'all',
+      variables: { query: searchQuery, cursor: cursor }
     }
-    setSearchResults(results)
-
-    return () => clearTimeout(typingDelay)
-  }, [searchQuery, data, refetch])
+  )
 
   const renderResults = () => {
     if (loading)
@@ -112,7 +96,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
       : false
     const endCursor = data.people.pageInfo ? data.people.pageInfo.endCursor : ''
 
-    if (!loading && searchResults.length == 0)
+    if (data.people.nodes.length == 0)
       return (
         <Col md={9}>
           <Alert bsStyle="warning">No people found.</Alert>
@@ -121,7 +105,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     return (
       <Col md={9} id="content">
-        {searchResults.length > 0 && (
+        {data.people.nodes.length > 0 && (
           <h3 className="member-results">
             {data.people.totalCount.toLocaleString('en-US') + ' '}
             <Pluralize
@@ -133,7 +117,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
           </h3>
         )}
 
-        {searchResults.map((item) => (
+        {data.people.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <PersonMetadata metadata={item} />
           </React.Fragment>
@@ -150,11 +134,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     )
   }
 
-  return (
-    <Row>
-      {renderResults()}
-    </Row>
-  )
+  return <Row>{renderResults()}</Row>
 }
 
 export default SearchPerson
