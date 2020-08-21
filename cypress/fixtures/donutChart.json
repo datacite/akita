@@ -34,6 +34,16 @@
         "title": "Image",
         "count": 2
       }
+    ],
+    "licenses": [
+      {
+        "title": "CC-BY-4.0",
+        "count": 126
+      },
+      {
+        "title": "CC0-1.0",
+        "count": 16
+      }
     ]
   }
 }

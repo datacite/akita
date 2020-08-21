@@ -58,11 +58,6 @@ describe('Doi Component', () => {
       .should('be.visible')
   })
 
-  it('analytics bar', () => {
-    mount(<Work doi={data} />)
-    cy.get('.citations-over-time-tab').should('be.visible')
-  })
-
   it('related works section', () => {
     mount(<Work doi={data} />)
     cy.get('.citations-list').should('not.be.visible')

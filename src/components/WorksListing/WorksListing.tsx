@@ -5,8 +5,7 @@ import clone from 'lodash/clone'
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import { Works } from '../SearchWork/SearchWork'
-import TypesChart from '../TypesChart/TypesChart'
-import LicenseChart from '../LicenseChart/LicenseChart'
+import DonutChart, { typesRange, typesDomain, licenseRange, licenseDomain } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 
 import Pager from '../Pager/Pager'
@@ -83,18 +82,24 @@ const WorksListing: React.FunctionComponent<Props> = ({
             ></ProductionChart>
           </Col>
           <Col sm={3}>
-            <TypesChart
+            <DonutChart
               data={resourceTypes}
               legend={false}
               count={works.totalCount}
-            ></TypesChart>
+              title='Works by work type'
+              range={typesRange}
+              domain={typesDomain}
+            ></DonutChart>
           </Col>
-          <Col sm={3}>
-            <LicenseChart
+            <Col sm={3}>
+              <DonutChart
               data={licenses}
               legend={false}
               count={works.totalCount}
-            ></LicenseChart>
+              title='Works by license'
+              range={licenseRange}
+              domain={licenseDomain}
+            ></DonutChart>
           </Col>
         </Row>
       </React.Fragment>

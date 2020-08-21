@@ -2,19 +2,26 @@
 
 import React from 'react'
 import { mount } from 'cypress-react-unit-test'
-import TypesChart from './TypesChart'
+import DonutChart, { typesRange, typesDomain } from './DonutChart'
 
-describe('TypesChart Component', () => {
+describe('DonutChart Component', () => {
   let data
   beforeEach(function () {
-    cy.fixture('typeChart.json').then((d) => {
+    cy.fixture('donutChart.json').then((d) => {
       data = d
     })
   })
 
   it('normal data', () => {
     mount(
-      <TypesChart data={data.works.resourceTypes} count={173} legend={true} />
+      <DonutChart
+        data={data.works.resourceTypes}
+        count={173}
+        legend={true}
+        title="Works by work type"
+        range={typesRange}
+        domain={typesDomain}
+      />
     )
     cy.get('.mark-arc > path').should('be.visible')
 
@@ -25,7 +32,14 @@ describe('TypesChart Component', () => {
 
   it('no legend', () => {
     mount(
-      <TypesChart data={data.works.resourceTypes} count={1730} legend={false} />
+      <DonutChart
+        data={data.works.resourceTypes}
+        count={1730}
+        legend={false}
+        title="Works by work type"
+        range={typesRange}
+        domain={typesDomain}
+      />
     )
     cy.get('.mark-arc > path').should('be.visible').should('have.length', 6)
 

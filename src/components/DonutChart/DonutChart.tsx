@@ -14,6 +14,9 @@ type Props = {
   data?: ChartRecord[]
   count?: number
   legend?: any
+  title: string
+  range: string[]
+  domain: string[]
 }
 
 const actions = {
@@ -23,10 +26,102 @@ const actions = {
   editor: false
 }
 
-const LicenseChart: React.FunctionComponent<Props> = ({
+export const typesRange = [
+  '#fccde5',
+  '#fdb462',
+  '#fb8072',
+  '#fb8072',
+  '#b3de69',
+  '#bc80bd',
+  '#fccde5',
+  '#8dd3c7',
+  '#ffed6f',
+  '#d9d9d9',
+  '#ffffb3',
+  '#bebada',
+  '#80b1d3',
+  '#ccebc5',
+  '#d9d9d9'
+]
+export const typesDomain = [
+  'Audiovisual',
+  'Collection',
+  'Dataset',
+  'Data Paper',
+  'Event',
+  'Image',
+  'Interactive Resource',
+  'Model',
+  'Physical Object',
+  'Service',
+  'Sound',
+  'Software',
+  'Text',
+  'Workflow',
+  'Other'
+]
+
+export const licenseRange = [
+  '#d9d9d9',
+  '#ffffb3',
+  '#ccebc5',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#8dd3c7',
+  '#80b1d3',
+  '#b3de69',
+  '#fdb462',
+  '#fccde5',
+  '#ccebc5',
+  '#ccebc5',
+  '#ffed6f',
+]
+
+export const licenseDomain = [
+  'No License',
+  'AFL-1.1',
+  'Apache-2.0',
+  'CC-BY-1.0',
+  'CC-BY-2.0',
+  'CC-BY-2.5',
+  'CC-BY-3.0',
+  'CC-BY-4.0',
+  'CC-BY-NC-2.0',
+  'CC-BY-NC-2.5',
+  'CC-BY-NC-3.0',
+  'CC-BY-NC-4.0',
+  'CC-BY-NC-ND-3.0',
+  'CC-BY-NC-ND-4.0',
+  'CC-BY-NC-SA-3.0',
+  'CC-BY-NC-SA-4.0',
+  'CC-BY-SA-4.0',
+  'CC-PDDC',
+  'CC0-1.0',
+  'GPL-3.0',
+  'ISC',
+  'MIT',
+  'MPL-2.0',
+  'OGL-Canada-2.0'
+]
+
+const DonutChart: React.FunctionComponent<Props> = ({
   data,
   count,
-  legend
+  legend,
+  title,
+  range,
+  domain
 }) => {
   // get current screen size
   const width = useWindowDimensions().width
@@ -57,62 +152,12 @@ const LicenseChart: React.FunctionComponent<Props> = ({
           },
           color: {
             field: 'title',
-            title: 'license',
             type: 'nominal',
+            title: 'type',
             legend: legend,
             scale: {
-              range: [
-                '#d9d9d9',
-                '#ffffb3',
-                '#ccebc5',
-                '#8dd3c7',
-                '#8dd3c7',
-                '#8dd3c7',
-                '#8dd3c7',
-                '#8dd3c7',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#80b1d3',
-                '#8dd3c7',
-                '#80b1d3',
-                '#b3de69',
-                '#fdb462',
-                '#fccde5',
-                '#ccebc5',
-                '#ccebc5',
-                '#ffed6f',
-              ],
-              domain: [
-                'No License',
-                'AFL-1.1',
-                'Apache-2.0',
-                'CC-BY-1.0',
-                'CC-BY-2.0',
-                'CC-BY-2.5',
-                'CC-BY-3.0',
-                'CC-BY-4.0',
-                'CC-BY-NC-2.0',
-                'CC-BY-NC-2.5',
-                'CC-BY-NC-3.0',
-                'CC-BY-NC-4.0',
-                'CC-BY-NC-ND-3.0',
-                'CC-BY-NC-ND-4.0',
-                'CC-BY-NC-SA-3.0',
-                'CC-BY-NC-SA-4.0',
-                'CC-BY-SA-4.0',
-                'CC-PDDC',
-                'CC0-1.0',
-                'GPL-3.0',
-                'ISC',
-                'MIT',
-                'MPL-2.0',
-                'OGL-Canada-2.0'
-              ]
+              range: range,
+              domain: domain
             }
           }
         }
@@ -135,18 +180,12 @@ const LicenseChart: React.FunctionComponent<Props> = ({
     }
   }
 
-  const title = () => {
-    return (
-      <React.Fragment>
-        <h4>Works by license</h4>
-      </React.Fragment>
-    )
-  }
-
   return (
     <div className="panel panel-transparent">
-      <div className="license-chart panel-body">
-        <div className="title">{title()}</div>
+      <div className="donut-chart panel-body">
+        <div className="title">
+          <h4>{title}</h4>
+        </div>
         <VegaLite
           renderer="svg"
           spec={spec}
@@ -158,4 +197,4 @@ const LicenseChart: React.FunctionComponent<Props> = ({
   )
 }
 
-export default LicenseChart
+export default DonutChart
