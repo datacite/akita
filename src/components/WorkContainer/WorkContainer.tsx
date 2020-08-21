@@ -61,7 +61,7 @@ export const DOI_GQL = gql`
         }
       }
       references(
-        first: 5
+        first: 25
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -322,27 +322,33 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item }) => {
 
     const url = '/doi.org/' + doi.doi + '/?'
 
-    if (doi.citations.totalCount == 0) return ''
+    if (doi.references.totalCount + doi.citations.totalCount == 0) return ''
 
+    const defaultActiveKey =
+      doi.references.totalCount > 0 ? 'referencesList' : 'citationsList'
     return (
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
           <Tab.Container
             className="content-tabs"
             id="related-content-tabs"
-            defaultActiveKey="referencesList"
+            defaultActiveKey={defaultActiveKey}
           >
-            <div>
-              <div className="col-md-9 col-md-offset-3">
+            <React.Fragment>
+              <Col md={9} mdOffset={3}>
                 <Nav bsStyle="tabs">
-                  <NavItem eventKey="referencesList">
-                    {referencesTabLabel}
-                  </NavItem>
-                  <NavItem eventKey="citationsList">
-                    {citationsTabLabel}
-                  </NavItem>
+                  {doi.references.totalCount > 0 && (
+                    <NavItem eventKey="referencesList">
+                      {referencesTabLabel}
+                    </NavItem>
+                  )}
+                  {doi.citations.totalCount > 0 && (
+                    <NavItem eventKey="citationsList">
+                      {citationsTabLabel}
+                    </NavItem>
+                  )}
                 </Nav>
-              </div>
+              </Col>
               <Tab.Content>
                 {doi.references.totalCount > 0 && (
                   <Tab.Pane
@@ -377,7 +383,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item }) => {
                   </Tab.Pane>
                 )}
               </Tab.Content>
-            </div>
+            </React.Fragment>
           </Tab.Container>
         </div>
       </div>
