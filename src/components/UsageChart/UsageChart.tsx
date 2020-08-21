@@ -54,13 +54,13 @@ const UsageChart: React.FunctionComponent<Props> = ({
   // Filter dataset
   /* istanbul ignore next */
   let subset: ChartRecord[] = data.filter((e) => {
-    const chartDate = parse(e.yearMonth)
+    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
     return isAfter(chartDate, lowerBound)
   })
 
   /* istanbul ignore next */
   subset = subset.filter((e) => {
-    const chartDate = parse(e.yearMonth)
+    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
     return isAfter(chartDate, publicationYear)
   })
 
