@@ -15,12 +15,10 @@ describe("OrganizationContainer", () => {
       .contains('University of Oxford')
   })
 
-  it("share", () => {
-    cy.get('.share-button', { timeout: 30000 }).should(($btn) => {
-      expect($btn).to.have.length(3)
-      expect($btn.eq(0)).to.be.visible
-      expect($btn.eq(1)).to.be.visible
-      expect($btn.eq(2)).to.be.visible
+  it('actions', () => {
+    cy.get('.actions', { timeout: 30000 })
+    .should(($action) => {
+      expect($action).to.have.length.at.least(3)
     })
   })
 })

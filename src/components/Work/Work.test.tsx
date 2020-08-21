@@ -70,6 +70,9 @@ describe('Doi Component', () => {
 
   it('actions', () => {
     mount(<Work doi={data} />)
-    cy.get('.actions').contains('Bookmark Claim').should('be.visible')
+    cy.get('.actions')
+    .should(($action) => {
+      expect($action).to.have.length(3)
+    })
   })
 })

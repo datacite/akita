@@ -16,9 +16,9 @@
   margin-right: 1.5em;
 }
 
-.panel-footer span.bookmark, .panel-footer span.cite, .panel-footer span.save, .panel-footer span.claim, .panel-footer span.share {
+.panel-footer span.actions {
   color: #88939A;
-  margin-right: .75em;
+  margin-right: .75em; 
   cursor: pointer;
 }
 
@@ -270,4 +270,13 @@ ul.nav.nav-tabs li span {
 
 .alert a {
   font-weight: 600;
+}
+
+.export-metadata {
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+#other-profiles {
+  margin-top: 10px;
 }

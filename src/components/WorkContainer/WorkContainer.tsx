@@ -5,15 +5,7 @@ import Work from '../Work/Work'
 import { connectionFragment, contentFragment } from '../SearchWork/SearchWork'
 import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { Row, Tab, Nav, NavItem } from 'react-bootstrap'
+import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import { compactNumbers } from '../../utils/helpers'
 import WorksListing from '../WorksListing/WorksListing'
@@ -297,142 +289,11 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  const leftSideBar = () => {
-    const title = 'DataCite Commons: ' + doi.titles[0].title
-    const url = window.location.href
-
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
-          </div>
-        </div>
-        <div className="panel panel-transparent">
-          <div className="facets panel-body">
-            <h4>Export</h4>
-            <div id="export-xml" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/vnd.datacite.datacite+xml/' +
-                  doi.doi
-                }
-              >
-                DataCite XML
-              </a>
-            </div>
-            <div id="export-json" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/vnd.datacite.datacite+json/' +
-                  doi.doi
-                }
-              >
-                DataCite JSON
-              </a>
-            </div>
-            <div id="export-ld" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/vnd.schemaorg.ld+json/' +
-                  doi.doi
-                }
-              >
-                Schema.org JSON-LD
-              </a>
-            </div>
-            <div id="export-bibtex" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/x-bibtex/' +
-                  doi.doi
-                }
-              >
-                BibTeX
-              </a>
-            </div>
-            <div id="export-ris" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/x-research-info-systems/' +
-                  doi.doi
-                }
-              >
-                RIS
-              </a>
-            </div>
-            <div id="export-jats" className="download">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  process.env.NEXT_PUBLIC_API_URL +
-                  '/application/vnd.jats+xml/' +
-                  doi.doi
-                }
-              >
-                JATS
-              </a>
-            </div>
-            {doi.types.resourceTypeGeneral === 'Software' && (
-              <div id="export-codemeta" className="download">
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={
-                    process.env.NEXT_PUBLIC_API_URL +
-                    '/application/vnd.codemeta.ld+json/' +
-                    doi.doi
-                  }
-                >
-                  Codemeta
-                </a>
-              </div>
-            )}
-          </div>
-          <div className="facets panel-body">
-            <h4>Share</h4>
-            <span className="share-button">
-              <EmailShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faEnvelope} size="lg" />
-              </EmailShareButton>
-            </span>
-            <span className="share-button">
-              <TwitterShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faTwitter} size="lg" />
-              </TwitterShareButton>
-            </span>
-            <span className="share-button">
-              <FacebookShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faFacebook} size="lg" />
-              </FacebookShareButton>
-            </span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const content = () => {
     return (
-      <div className="col-md-9 panel-list" id="content">
+      <Col md={9} mdOffset={3} className="panel-list" id="content">
         <Work doi={doi}></Work>
-      </div>
+      </Col>
     )
   }
 
@@ -528,10 +389,7 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
 
   return (
     <React.Fragment>
-      <Row>
-        {leftSideBar()}
-        {content()}
-      </Row>
+      <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </React.Fragment>
   )

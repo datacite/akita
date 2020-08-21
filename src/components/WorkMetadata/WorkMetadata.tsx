@@ -9,7 +9,8 @@ import {
   faQuoteLeft,
   faInfoCircle,
   faExternalLinkAlt,
-  faDownload
+  faDownload,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -18,8 +19,15 @@ import {
   faCreativeCommonsNc,
   faCreativeCommonsNd,
   faCreativeCommonsSa,
-  faCreativeCommonsZero
+  faCreativeCommonsZero,
+  faTwitter, 
+  faFacebook
 } from '@fortawesome/free-brands-svg-icons'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 import { WorkType } from '../WorkContainer/WorkContainer'
@@ -368,13 +376,28 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
+    const title = 'DataCite Commons: ' + metadata.name
+    const url = window.location.href
+
     return (
       <div className="panel-footer">
         <a href={metadata.id}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">
-
+          <EmailShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faEnvelope} />
+          </EmailShareButton>
+        </span>
+        <span className="actions">
+          <TwitterShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faTwitter} />
+          </TwitterShareButton>
+        </span>
+        <span className="actions">
+          <FacebookShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faFacebook} />
+          </FacebookShareButton>
         </span>
       </div>
     )

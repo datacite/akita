@@ -12,7 +12,7 @@ type Props = {
   organization: OrganizationRecord
 }
 
-export const Organization: React.FunctionComponent<Props> = ({
+const Organization: React.FunctionComponent<Props> = ({
   organization
 }) => {
   return (
@@ -22,3 +22,5 @@ export const Organization: React.FunctionComponent<Props> = ({
     ></OrganizationMetadata>
   )
 }
+
+export default Organization 

@@ -7,21 +7,13 @@ import ContentLoader from 'react-content-loader'
 import { orcidFromUrl } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
-import { Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import {
   PageInfo,
   connectionFragment,
   contentFragment
 } from '../SearchWork/SearchWork'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
 
 type Props = {
   orcid?: string
@@ -226,85 +218,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
-  const leftSideBar = () => {
-    const title = 'DataCite Commons: ' + data.person.name
-    const url = window.location.href
-
-    const orcidLink = (
-      <a href={data.person.id} target="_blank" rel="noreferrer">
-        ORCID
-      </a>
-    )
-
-    const impactLink = (
-      <a
-        href={'https://profiles.impactstory.org/u/' + orcid}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Impactstory
-      </a>
-    )
-
-    const europePMCLink = (
-      <a
-        href={'http://europepmc.org/authors/' + orcid}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Europe PMC
-      </a>
-    )
-
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
-          </div>
-        </div>
-        <div className="panel panel-transparent">
-          <div className="facets panel-body">
-            <h4>Other Profiles</h4>
-            <div id="profile-orcid" className="download">
-              {orcidLink}
-            </div>
-            <div id="profile-impactstory" className="download">
-              {impactLink}
-            </div>
-            <div id="profile-europepmc" className="download">
-              {europePMCLink}
-            </div>
-          </div>
-
-          <div className="facets panel-body">
-            <h4>Share</h4>
-            <span className="share-button">
-              <EmailShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faEnvelope} size="lg" />
-              </EmailShareButton>
-            </span>
-            <span className="share-button">
-              <TwitterShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faTwitter} size="lg" />
-              </TwitterShareButton>
-            </span>
-            <span className="share-button">
-              <FacebookShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faFacebook} size="lg" />
-              </FacebookShareButton>
-            </span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const content = () => {
     return (
-      <div className="col-md-9" id="content">
+      <Col md={9} mdOffset={3} >
         <Person person={orcidRecord} />
-      </div>
+      </Col>
     )
   }
 
@@ -319,8 +237,8 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     const totalCount = orcidRecord.works.totalCount
 
     return (
-      <div>
-        <div className="col-md-9 col-md-offset-3">
+      <React.Fragment>
+        <Col md={9} mdOffset={3} >
           {totalCount > 0 && (
             <h3 className="member-results">
               {totalCount.toLocaleString('en-US') + ' '}
@@ -331,7 +249,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
               />
             </h3>
           )}
-        </div>
+        </Col>
         {/* TODO: I think the pager element within this should be more dynamic
         and not need to rely on passing in precalculated //
         hasNextPage/endCursor instead calculate based on data provided */}
@@ -345,14 +263,13 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
           url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
           endCursor={endCursor}
         />
-      </div>
+      </React.Fragment>
     )
   }
 
   return (
     <React.Fragment>
       <Row>
-        {leftSideBar()}
         {content()}
       </Row>
       <Row>{relatedContent()}</Row>

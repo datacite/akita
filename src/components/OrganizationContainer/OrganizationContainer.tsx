@@ -1,21 +1,13 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
 // import Search from '../Search/Search'
-import { Organization, OrganizationRecord } from '../Organization/Organization'
+import Organization, { OrganizationRecord } from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import WorksListing from '../WorksListing/WorksListing'
 
@@ -273,56 +265,18 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     )
   }
 
-  const leftSideBar = () => {
-    const title = 'DataCite Commons: ' + data.organization.name
-    const url = window.location.href
-
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
-          </div>
-        </div>
-        <div className="panel panel-transparent">
-          <div className="facets panel-body">
-            <h4>Share</h4>
-            <span className="share-button">
-              <EmailShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faEnvelope} size="lg" />
-              </EmailShareButton>
-            </span>
-            <span className="share-button">
-              <TwitterShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faTwitter} size="lg" />
-              </TwitterShareButton>
-            </span>
-            <span className="share-button">
-              <FacebookShareButton url={url} title={title}>
-                <FontAwesomeIcon icon={faFacebook} size="lg" />
-              </FacebookShareButton>
-            </span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const content = () => {
     return (
-      <div className="col-md-9 panel-list" id="content">
+      <Col md={9} mdOffset={3} className="panel-list" id="content">
         <h3 className="member-results">{organization.metadata.id}</h3>
         <Organization organization={organization} />
-      </div>
+      </Col>
     )
   }
 
   return (
     <React.Fragment>
-      <Row>
-        {leftSideBar()}
-        {content()}
-      </Row>
+      <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </React.Fragment>
   )

@@ -4,8 +4,17 @@ import { Label, Col, Row } from 'react-bootstrap'
 import { rorFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faExternalLinkAlt
+  faExternalLinkAlt, faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTwitter,
+  faFacebook
+} from '@fortawesome/free-brands-svg-icons'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
 
 export interface OrganizationMetadataRecord {
   id: string
@@ -76,13 +85,28 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
+    const title = 'DataCite Commons: ' + metadata.name
+    const url = window.location.href
+
     return (
       <div className="panel-footer">
         <a id="ror-link" target="_blank" rel="noreferrer" href={metadata.id}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
         <span className="actions">
-
+          <EmailShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faEnvelope} />
+          </EmailShareButton>
+        </span>
+        <span className="actions">
+          <TwitterShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faTwitter} />
+          </TwitterShareButton>
+        </span>
+        <span className="actions">
+          <FacebookShareButton url={url} title={title}>
+            <FontAwesomeIcon icon={faFacebook} />
+          </FacebookShareButton>
         </span>
       </div>
     )

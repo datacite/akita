@@ -1,4 +1,4 @@
-describe('DoiContainer', () => {
+describe('WorkContainer', () => {
   before(() => {
     cy.visit(`/doi.org/${encodeURIComponent('10.4224/crm.2012e.cass-5')}`)
   })
@@ -18,15 +18,6 @@ describe('DoiContainer', () => {
       .should('be.visible')
   })
 
-  it('share', () => {
-    cy.get('.share-button', { timeout: 30000 }).should(($btn) => {
-      expect($btn).to.have.length(3)
-      expect($btn.eq(0)).to.be.visible
-      expect($btn.eq(1)).to.be.visible
-      expect($btn.eq(2)).to.be.visible
-    })
-  })
-
   it('cite as', () => {
     cy.get('select.cite-as')
       .select('ieee')
@@ -36,11 +27,11 @@ describe('DoiContainer', () => {
     //.contains('CXC-DS, “Chandra X-ray Observatory ObsId 1.”')
   })
 
-  it("chart", () => {
-    cy.get('.mark-rect > path')
-    .should('be.visible')
-    .should('have.length', 4)
-  })
+  // it("chart", () => {
+  //   cy.get('.mark-rect > path')
+  //   .should('be.visible')
+  //   .should('have.length', 4)
+  // })
 })
 
 //TODO: Redo when data is available

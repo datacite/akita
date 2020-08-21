@@ -14,6 +14,98 @@ type Props = {
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
+
+  const exportMetadata = () => {
+    return (
+      <React.Fragment>
+        <h3 className="member-results">Export</h3>
+        <div className="export-metadata">
+          
+          <div id="export-xml">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                process.env.NEXT_PUBLIC_API_URL +
+                '/application/vnd.datacite.datacite+xml/' +
+                doi.doi
+              }
+            >
+              DataCite XML
+            </a>
+          </div>
+          <div id="export-json">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                process.env.NEXT_PUBLIC_API_URL +
+                '/application/vnd.datacite.datacite+json/' +
+                doi.doi
+              }
+            >
+              DataCite JSON
+            </a>
+          </div>
+          <div id="export-ld" className="download">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                process.env.NEXT_PUBLIC_API_URL +
+                '/application/vnd.schemaorg.ld+json/' +
+                doi.doi
+              }
+            >
+              Schema.org JSON-LD
+            </a>
+          </div>
+          <div id="export-bibtex" className="download">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                process.env.NEXT_PUBLIC_API_URL +
+                '/application/x-bibtex/' +
+                doi.doi
+              }
+            >
+              BibTeX
+            </a>
+          </div>
+          <div id="export-ris" className="download">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                process.env.NEXT_PUBLIC_API_URL +
+                '/application/x-research-info-systems/' +
+                doi.doi
+              }
+            >
+              RIS
+            </a>
+          </div>
+          {doi.types.resourceTypeGeneral === 'Software' && (
+            <div id="export-codemeta" className="download">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  process.env.NEXT_PUBLIC_API_URL +
+                  '/application/vnd.codemeta.ld+json/' +
+                  doi.doi
+                }
+              >
+                Codemeta
+              </a>
+            </div>
+          )}
+        </div>
+      </React.Fragment>
+    )
+  }
+
   const formattedCitation = () => {
     const [selectedOption, setSelectedOption] = React.useState('')
 
@@ -58,7 +150,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     showCount: true
   })
 
-  // Using published while citations overtime is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
+  // Using published until citations over time is fixed https://github.com/datacite/lupo/issues/601#issuecomment-673321894
   const citationsOverTime = doi.citations.published.map((datum) => ({
     year: parseInt(datum.id),
     total: datum.count
@@ -135,7 +227,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     <React.Fragment>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
-
+      {exportMetadata()}
       {formattedCitation()}
       {analyticsBar()}
     </React.Fragment>
