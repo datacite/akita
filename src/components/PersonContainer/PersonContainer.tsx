@@ -145,7 +145,6 @@ interface OrcidQueryVar {
 }
 
 const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
-  const [orcidRecord, setOrcid] = React.useState<PersonType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -180,16 +179,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     }
   )
 
-  React.useEffect(() => {
-    let result = undefined
-    if (data) {
-      result = data.person
-    }
-
-    setOrcid(result)
-  }, [orcid, data])
-
-  if (loading || !orcidRecord)
+  if (loading)
     return (
       <React.Fragment>
         <div className="col-md-3"></div>
@@ -218,9 +208,11 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
     return <Error title="No Content" message="Unable to retrieve Content" />
   }
 
+  const orcidRecord = data.person
+
   const content = () => {
     return (
-      <Col md={9} mdOffset={3} >
+      <Col md={9} mdOffset={3}>
         <Person person={orcidRecord} />
       </Col>
     )
@@ -238,7 +230,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
     return (
       <React.Fragment>
-        <Col md={9} mdOffset={3} >
+        <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
             <h3 className="member-results">
               {totalCount.toLocaleString('en-US') + ' '}
@@ -269,9 +261,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
 
   return (
     <React.Fragment>
-      <Row>
-        {content()}
-      </Row>
+      <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </React.Fragment>
   )
