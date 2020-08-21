@@ -7,13 +7,18 @@
   font-size: 100%;
 }
 
-.metrics-counter i.fa {
-  line-height: 25px;
-  margin-right: 3px;
+span.metrics-counter {
+  color: #88939A;
+  margin-right: .75em; 
 }
 
-.metrics-counter i {
-  margin-right: 1.5em;
+span.metrics-counter span {
+  padding-left: 3px; 
+}
+
+svg[data-icon='quote-left'] {
+  padding-top: 5px;
+  font-size: 20px;
 }
 
 .panel-footer span.actions {

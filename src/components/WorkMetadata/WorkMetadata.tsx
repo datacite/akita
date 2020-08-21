@@ -333,39 +333,39 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       0
     ) {
       return (
-        <div className="metrics-counter">
+        <div>
         </div>
       )
     }
 
     return (
-      <div className="metrics-counter">
+      <div className="metrics">
         {metadata.citationCount > 0 && (
-          <i>
-            <FontAwesomeIcon icon={faQuoteLeft} />{' '}
+          <span className="metrics-counter">
+            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
             <Pluralize
               singular={'Citation'}
               count={compactNumbers(metadata.citationCount)}
             />{' '}
-          </i>
+          </span>
         )}
         {metadata.viewCount > 0 && (
-          <i>
-            <FontAwesomeIcon icon={faEye} />{' '}
+          <React.Fragment>
+            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
             <Pluralize
               singular={'View'}
               count={compactNumbers(metadata.viewCount)}
             />{' '}
-          </i>
+          </React.Fragment>
         )}
         {metadata.downloadCount > 0 && (
-          <i>
-            <FontAwesomeIcon icon={faDownload} />{' '}
+          <React.Fragment>
+            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
             <Pluralize
               singular={'Download'}
               count={compactNumbers(metadata.downloadCount)}
             />{' '}
-          </i>
+          </React.Fragment>
         )}
       </div>
     )
