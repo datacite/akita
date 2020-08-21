@@ -49,9 +49,6 @@ export const DOI_GQL = gql`
       alternateName
       givenName
       familyName
-      citationCount
-      viewCount
-      downloadCount
       works(
         first: 25
         after: $cursor
@@ -83,10 +80,7 @@ export interface PersonType {
   givenName: string
   familyName: string
   alternateName: string[]
-  citationCount: number
-  viewCount: number
   pageInfo: PageInfo
-  downloadCount: number
   works: Works
 }
 
