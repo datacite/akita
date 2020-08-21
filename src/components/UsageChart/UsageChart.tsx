@@ -129,14 +129,13 @@ const UsageChart: React.FunctionComponent<Props> = ({
 
   const title = () => {
     return (
-      <small>
+      <div>
         <Pluralize
           singular={type}
           count={counts}
-          style={{ color: '#1abc9c' }}
         />{' '}
-        reported since publication in {publicationYear}
-      </small>
+        reported since publication in {publicationYear}.
+      </div>
     )
   }
 
