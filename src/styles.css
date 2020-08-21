@@ -9,7 +9,8 @@
 
 span.metrics-counter {
   color: #88939A;
-  margin-right: .75em; 
+  margin-right: .75em;
+  display: inline; 
 }
 
 span.metrics-counter span {
@@ -17,7 +18,7 @@ span.metrics-counter span {
 }
 
 svg[data-icon='quote-left'] {
-  padding-top: 5px;
+  padding-top: 3px;
   font-size: 20px;
 }
 

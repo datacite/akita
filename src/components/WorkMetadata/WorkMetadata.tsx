@@ -349,22 +349,22 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           </span>
         )}
         {metadata.viewCount > 0 && (
-          <React.Fragment>
+          <span className="metrics-counter">
             <FontAwesomeIcon icon={faEye} size="sm" />{' '}
             <Pluralize
               singular={'View'}
               count={compactNumbers(metadata.viewCount)}
             />{' '}
-          </React.Fragment>
+          </span>
         )}
         {metadata.downloadCount > 0 && (
-          <React.Fragment>
+          <span className="metrics-counter">
             <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
             <Pluralize
               singular={'Download'}
               count={compactNumbers(metadata.downloadCount)}
             />{' '}
-          </React.Fragment>
+          </span>
         )}
       </div>
     )
