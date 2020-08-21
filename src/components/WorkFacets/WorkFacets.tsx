@@ -12,18 +12,18 @@ type Props = {
 }
 
 interface Facets {
-  published: ContentFacet[]
-  resourceTypes: ContentFacet[]
-  languages?: ContentFacet[]
-  licenses?: ContentFacet[]
-  repositories?: ContentFacet[]
-  affiliations?: ContentFacet[]
-  fieldsOfScience?: ContentFacet[]
-  registrationAgencies?: ContentFacet[]
+  published: Facet[]
+  resourceTypes: Facet[]
+  languages?: Facet[]
+  licenses?: Facet[]
+  repositories?: Facet[]
+  affiliations?: Facet[]
+  fieldsOfScience?: Facet[]
+  registrationAgencies?: Facet[]
   nodes: WorkType[]
 }
 
-interface ContentFacet {
+interface Facet {
   id: string
   title: string
   count: number

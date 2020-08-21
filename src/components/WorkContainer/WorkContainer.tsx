@@ -111,12 +111,12 @@ export interface WorkType {
   citationCount?: number
   citationsOverTime?: CitationsYear[]
   citations?: {
-    published: ContentFacet[]
-    resourceTypes: ContentFacet[]
-    languages: ContentFacet[]
-    licenses: ContentFacet[]
-    fieldsOfScience: ContentFacet[]
-    registrationAgencies: ContentFacet[]
+    published: Facet[]
+    resourceTypes: Facet[]
+    languages: Facet[]
+    licenses: Facet[]
+    fieldsOfScience: Facet[]
+    registrationAgencies: Facet[]
     nodes: WorkType[]
     pageInfo: PageInfo
     totalCount: number
@@ -126,19 +126,19 @@ export interface WorkType {
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
   references?: {
-    published: ContentFacet[]
-    resourceTypes: ContentFacet[]
-    languages: ContentFacet[]
-    licenses: ContentFacet[]
-    fieldsOfScience: ContentFacet[]
-    registrationAgencies: ContentFacet[]
+    published: Facet[]
+    resourceTypes: Facet[]
+    languages: Facet[]
+    licenses: Facet[]
+    fieldsOfScience: Facet[]
+    registrationAgencies: Facet[]
     nodes: WorkType[]
     pageInfo: PageInfo
     totalCount: number
   }
 }
 
-interface ContentFacet {
+interface Facet {
   id: string
   title: string
   count: number
@@ -205,11 +205,11 @@ export interface RelatedContentList {
   }
 }
 
-export interface DoiQueryData {
+export interface WorkQueryData {
   work: WorkType
 }
 
-interface DoiQueryVar {
+interface QueryVar {
   id: string
   cursor: string
   published: string
@@ -220,7 +220,7 @@ interface DoiQueryVar {
   registrationAgency: string
 }
 
-const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
+const WorkContainer: React.FunctionComponent<Props> = ({ item }) => {
   const [doi, setDoi] = React.useState<WorkType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
@@ -234,22 +234,19 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
     history: 'push'
   })
 
-  const { loading, error, data } = useQuery<DoiQueryData, DoiQueryVar>(
-    DOI_GQL,
-    {
-      errorPolicy: 'all',
-      variables: {
-        id: item,
-        cursor: cursor,
-        published: published as string,
-        resourceTypeId: resourceType as string,
-        fieldOfScience: fieldOfScience as string,
-        language: language as string,
-        license: license as string,
-        registrationAgency: registrationAgency as string
-      }
+  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
+    errorPolicy: 'all',
+    variables: {
+      id: item,
+      cursor: cursor,
+      published: published as string,
+      resourceTypeId: resourceType as string,
+      fieldOfScience: fieldOfScience as string,
+      language: language as string,
+      license: license as string,
+      registrationAgency: registrationAgency as string
     }
-  )
+  })
 
   React.useEffect(() => {
     let result = undefined
@@ -395,4 +392,4 @@ const DoiContainer: React.FunctionComponent<Props> = ({ item }) => {
   )
 }
 
-export default DoiContainer
+export default WorkContainer

@@ -12,7 +12,7 @@ type Props = {
   searchQuery: string
 }
 
-interface ContentFacet {
+interface Facet {
   id: string
   title: string
   count: number
@@ -26,20 +26,20 @@ export interface PageInfo {
 export interface Works {
   totalCount: number
   pageInfo: PageInfo
-  published: ContentFacet[]
-  resourceTypes: ContentFacet[]
-  languages: ContentFacet[]
-  licenses: ContentFacet[]
-  fieldsOfScience: ContentFacet[]
-  registrationAgencies: ContentFacet[]
+  published: Facet[]
+  resourceTypes: Facet[]
+  languages: Facet[]
+  licenses: Facet[]
+  fieldsOfScience: Facet[]
+  registrationAgencies: Facet[]
   nodes: WorkType[]
 }
 
-interface ContentQueryData {
+interface WorkQueryData {
   works: Works
 }
 
-interface ContentQueryVar {
+interface QueryVar {
   query: string
   cursor: string
   published: string
@@ -191,22 +191,22 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [searchResults, setSearchResults] = React.useState([])
-  const { loading, error, data, refetch } = useQuery<
-    ContentQueryData,
-    ContentQueryVar
-  >(CONTENT_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      query: searchQuery,
-      cursor: cursor,
-      published: published as string,
-      resourceTypeId: resourceType as string,
-      fieldOfScience: fieldOfScience as string,
-      language: language as string,
-      license: license as string,
-      registrationAgency: registrationAgency as string
+  const { loading, error, data, refetch } = useQuery<WorkQueryData, QueryVar>(
+    CONTENT_GQL,
+    {
+      errorPolicy: 'all',
+      variables: {
+        query: searchQuery,
+        cursor: cursor,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        license: license as string,
+        registrationAgency: registrationAgency as string
+      }
     }
-  })
+  )
 
   React.useEffect(() => {
     const typingDelay = setTimeout(() => {
