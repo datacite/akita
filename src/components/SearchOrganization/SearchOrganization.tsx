@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import ContentLoader from 'react-content-loader'
 import Pluralize from 'react-pluralize'
@@ -236,7 +236,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       : ''
 
     return (
-      <div className="col-md-9" id="content">
+      <Col md={9} id="content">
         {results.length > 0 && (
           <h3 className="member-results">
             {data.organizations.totalCount.toLocaleString('en-US') + ' '}
@@ -264,26 +264,18 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
             endCursor={endCursor}
           ></Pager>
         )}
-      </div>
+      </Col>
     )
   }
 
   const renderFacets = () => {
     if (loading) return <div className="col-md-3"></div>
 
-    if (!data) return null
-
     if (!loading && data && data.organizations.totalCount == 0)
       return <div className="col-md-3"></div>
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <div className="edit"></div>
-          </div>
-        </div>
-
         <div className="panel facets add">
           <div className="panel-body">
             <h4>Country</h4>

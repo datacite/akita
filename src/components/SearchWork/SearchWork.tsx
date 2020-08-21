@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-import { Alert, Row } from 'react-bootstrap'
+import { Alert, Row, Col } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import WorksListing from '../WorksListing/WorksListing'
 import { WorkType } from '../WorkContainer/WorkContainer'
@@ -210,7 +210,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -226,23 +226,23 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
             <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
-        </div>
+        </Col>
       )
 
     if (error)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
-        </div>
+        </Col>
       )
 
     if (data.works.nodes.length == 0)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <div className="alert-works">
             <Alert bsStyle="warning">No works found.</Alert>
           </div>
-        </div>
+        </Col>
       )
 
     const hasNextPage = data.works.pageInfo
@@ -254,7 +254,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     return (
       <div>
-        <div className="col-md-9 col-md-offset-3" id="content">
+        <Col md={9} mdOffset={3} id="content">
           {totalCount > 0 && (
             <h3 className="member-results">
               {totalCount.toLocaleString('en-US') + ' '}
@@ -265,7 +265,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
               />
             </h3>
           )}
-        </div>
+        </Col>
 
         <WorksListing
           works={data.works}
