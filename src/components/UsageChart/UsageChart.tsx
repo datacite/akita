@@ -3,7 +3,7 @@ import { VegaLite } from 'react-vega'
 import Pluralize from 'react-pluralize'
 import { Grid, Row } from 'react-bootstrap'
 import { VisualizationSpec } from 'vega-embed'
-import { subYears, isAfter, parse, differenceInMonths, getYear } from 'date-fns'
+import { subYears, isAfter, parseISO, differenceInMonths, getYear } from 'date-fns'
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
 
@@ -54,13 +54,13 @@ const UsageChart: React.FunctionComponent<Props> = ({
   // Filter dataset
   /* istanbul ignore next */
   let subset: ChartRecord[] = data.filter((e) => {
-    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    const chartDate = parseISO(e.yearMonth)
     return isAfter(chartDate, lowerBound)
   })
 
   /* istanbul ignore next */
   subset = subset.filter((e) => {
-    const chartDate = parse(e.yearMonth, 'yyyy-MM', new Date())
+    const chartDate = parseISO(e.yearMonth)
     return isAfter(chartDate, publicationYear)
   })
 
