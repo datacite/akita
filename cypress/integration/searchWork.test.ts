@@ -46,40 +46,40 @@ describe('Search Works', () => {
       .should('not.contain', 'climate')
   })
 
-  it('search for specific doi', () => {
-    cy.get('input[name="query"]')
-      .type('10.17863/cam.330{enter}')
-      // the results are rendered
-      .get('.panel-body .metadata', { timeout: 60000 })
-      .should(
-        'contain',
-        'Article published 2016 via Apollo - University of Cambridge Repository (staging)'
-      )
-      .get('.panel-body .creators')
-      .should(
-        'contain',
-        'Margaret L Westwater, Paul Fletcher & Hisham Ziauddeen'
-      )
-      .get('.panel-body .registered')
-      .should('contain', 'DOI registered August 19, 2016 via DataCite.')
-      .get('.panel-body .description')
-      .should('contain', 'Purpose As obesity rates continue to climb')
-      .get('.panel-body .tags')
-      .should('contain', 'Text')
-      // no results count for single result
-      .get('.member-results', { timeout: 60000 })
-      .should('contain', 'Work')
-      // all facets are rendered
-      .get('.panel.facets')
-      .should(($facet) => {
-        expect($facet).to.have.length(5)
-        expect($facet.eq(0)).to.contain('Publication Year')
-        expect($facet.eq(1)).to.contain('Work Type')
-        expect($facet.eq(2)).to.contain('License')
-        expect($facet.eq(3)).to.contain('Language')
-        expect($facet.eq(4)).to.contain('Registration Agency')
-      })
-  })
+  // it('search for specific doi', () => {
+  //   cy.get('input[name="query"]')
+  //     .type('10.17863/cam.330{enter}')
+  //     // the results are rendered
+  //     .get('.panel-body .metadata', { timeout: 60000 })
+  //     .should(
+  //       'contain',
+  //       'Article published 2016 via Apollo - University of Cambridge Repository (staging)'
+  //     )
+  //     .get('.panel-body .creators')
+  //     .should(
+  //       'contain',
+  //       'Margaret L Westwater, Paul Fletcher & Hisham Ziauddeen'
+  //     )
+  //     .get('.panel-body .registered')
+  //     .should('contain', 'DOI registered August 19, 2016 via DataCite.')
+  //     .get('.panel-body .description')
+  //     .should('contain', 'Purpose As obesity rates continue to climb')
+  //     .get('.panel-body .tags')
+  //     .should('contain', 'Text')
+  //     // no results count for single result
+  //     .get('.member-results', { timeout: 60000 })
+  //     .should('contain', 'Work')
+  //     // all facets are rendered
+  //     .get('.panel.facets')
+  //     .should(($facet) => {
+  //       expect($facet).to.have.length(5)
+  //       expect($facet.eq(0)).to.contain('Publication Year')
+  //       expect($facet.eq(1)).to.contain('Work Type')
+  //       expect($facet.eq(2)).to.contain('License')
+  //       expect($facet.eq(3)).to.contain('Language')
+  //       expect($facet.eq(4)).to.contain('Registration Agency')
+  //     })
+  // })
 
   it('search with no results', () => {
     cy.get('input[name="query"]')
