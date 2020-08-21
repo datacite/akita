@@ -4,7 +4,7 @@ import React from 'react'
 import { mount } from 'cypress-react-unit-test'
 import WorkMetadata from './WorkMetadata'
 
-describe('DoiMetadata Component', () => {
+describe('WorkMetadata Component', () => {
   let data
 
   beforeEach(function () {
