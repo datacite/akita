@@ -116,26 +116,26 @@ describe("Search", () => {
   })
     
   context('person record', () => {
-    // it("search with enter", () => {
-    //   cy.visit("/orcid.org/0000-0002-1825")
-    //   cy.get('input[name="query"]')
-    //     .type('Josiah Carberry{enter}')
-    //     .get('#search-nav li.active', { timeout: 60000 })
-    //     .should('contain', 'This Page')
-    //     .get('.member-results', { timeout: 60000 })
-    //     .should('contain', 'People')
-    // })
+    it("search with enter", () => {
+      cy.visit("/orcid.org/0000-0002-1825")
+      cy.get('input[name="query"]')
+        .type('Josiah Carberry{enter}')
+        .get('#search-nav li.active', { timeout: 60000 })
+        .should('contain', 'This Page')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
 
-    // it("search with submit", () => {
-    //   cy.visit("/orcid.org/0000-0002-1825")
-    //   cy.get('input[name="query"]')
-    //     .type('Josiah Carberry')
-    //     .get('.search-submit').click()
-    //     .get('#search-nav li.active', { timeout: 60000 })
-    //     .should('contain', 'This Page')
-    //     .get('.member-results', { timeout: 60000 })
-    //     .should('contain', 'People')
-    // })
+    it("search with submit", () => {
+      cy.visit("/orcid.org/0000-0002-1825")
+      cy.get('input[name="query"]')
+        .type('Josiah Carberry')
+        .get('.search-submit').click()
+        .get('#search-nav li.active', { timeout: 60000 })
+        .should('contain', 'This Page')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
 
     it("search with click", () => {
       cy.visit("/orcid.org/0000-0002-1825")
@@ -192,26 +192,26 @@ describe("Search", () => {
   })
 
   context('organization record', () => {
-    // it("search with enter", () => {
-    //   cy.visit("/ror.org/013meh722")
-    //   cy.get('input[name="query"]')
-    //     .type('Cambridge{enter}')
-    //     .get('#search-nav li.active', { timeout: 60000 })
-    //     .should('contain', 'This Page')
-    //     .get('.member-results', { timeout: 60000 })
-    //     .should('contain', 'Organizations')
-    // })
+    it("search with enter", () => {
+      cy.visit("/ror.org/013meh722")
+      cy.get('input[name="query"]')
+        .type('Cambridge{enter}')
+        .get('#search-nav li.active', { timeout: 60000 })
+        .should('contain', 'This Page')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
 
-    // it("search with submit", () => {
-    //   cy.visit("/ror.org/013meh722")
-    //   cy.get('input[name="query"]')
-    //     .type('Cambridge')
-    //     .get('.search-submit').click()
-    //     .get('#search-nav li.active', { timeout: 60000 })
-    //     .should('contain', 'This Page')
-    //     .get('.member-results', { timeout: 60000 })
-    //     .should('contain', 'Organizations')
-    // })
+    it("search with submit", () => {
+      cy.visit("/ror.org/013meh722")
+      cy.get('input[name="query"]')
+        .type('Cambridge')
+        .get('.search-submit').click()
+        .get('#search-nav li.active', { timeout: 60000 })
+        .should('contain', 'This Page')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', 'Works')
+    })
 
     it("search with click", () => {
       cy.visit("/ror.org/013meh722")
