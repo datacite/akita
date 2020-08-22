@@ -9,7 +9,7 @@ const IndexPage = () => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/'} >
+    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/doi.org'} >
       <React.Fragment>
         {!searchQuery || searchQuery === '' ? (
           <Teaser title={'works'} />

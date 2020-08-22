@@ -157,7 +157,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   const renderResults = () => {
     if (loading)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -173,7 +173,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
             <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
-        </div>
+        </Col>
       )
 
     if (error)

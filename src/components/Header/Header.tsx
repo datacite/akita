@@ -15,31 +15,14 @@ const Header: React.FunctionComponent<Props> = ({ title, path }) => {
   // submit pushes new path instead of updating only query parameter,
   // to allow queries from Navbar when on a page for a single record
   let searchQuery = ''
-  let pathname = '/'
+  const paths = ['/', '/doi.org', '/orcid.org', '/ror.org']
   let onSubmit = () => {
     
   }
   
   const router = useRouter()
   if (router) {
-    searchQuery = router.query.query as string
-    switch(router.pathname) {
-      case '/doi.org/[...doi]':
-        pathname = '/doi.org'
-        break
-      case '/':
-        pathname = '/doi.org'
-        break
-      case '/orcid.org/[person]':
-        pathname = '/orcid.org'
-        break
-      case '/ror.org/[organization]':
-        pathname = '/ror.org'
-        break
-      default:
-        pathname = router.pathname
-    }
-  
+    searchQuery = router.query.query as string  
     onSubmit = () => {
       router.push({
         pathname: path,
@@ -118,7 +101,7 @@ const Header: React.FunctionComponent<Props> = ({ title, path }) => {
           <div className="col-md-3"></div>
           <div className="col-md-9 search-nav">
             <Nav id="search-nav" activeKey={path}>
-              {path !== pathname && (
+              {!paths.includes(path) && (
                 <NavItem id='this-link' eventKey={path} href={path + '?query=' + searchInput}><FontAwesomeIcon icon={faMapMarker} /> This Page</NavItem>
               )}
               <NavItem id='works-link' eventKey={'/doi.org'} href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faNewspaper} /> Works</NavItem>

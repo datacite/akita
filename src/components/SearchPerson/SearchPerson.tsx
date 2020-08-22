@@ -65,7 +65,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <Col md={9}>
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -86,7 +86,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (error)
       return (
-        <Col md={9}>
+        <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
       )
@@ -98,13 +98,13 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     if (data.people.nodes.length == 0)
       return (
-        <Col md={9}>
+        <Col md={9} mdOffset={3}>
           <Alert bsStyle="warning">No people found.</Alert>
         </Col>
       )
 
     return (
-      <Col md={9} id="content">
+      <Col md={9} mdOffset={3} id="content">
         {data.people.nodes.length > 0 && (
           <h3 className="member-results">
             {data.people.totalCount.toLocaleString('en-US') + ' '}

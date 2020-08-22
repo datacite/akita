@@ -117,28 +117,28 @@ describe("Search", () => {
     
   context('person record', () => {
     it("search with enter", () => {
-      cy.visit("/orcid.org/0000-0002-1825")
+      cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
-        .type('Josiah Carberry{enter}')
+        .type('trier{enter}')
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Works')
+        .should('contain', 'Work')
     })
 
     it("search with submit", () => {
-      cy.visit("/orcid.org/0000-0002-1825")
+      cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
-        .type('Josiah Carberry')
+        .type('trier')
         .get('.search-submit').click()
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Works')
+        .should('contain', 'Work')
     })
 
     it("search with click", () => {
-      cy.visit("/orcid.org/0000-0002-1825")
+      cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
         .type('Josiah Carberry')
         .get('#people-link').click()
@@ -195,7 +195,7 @@ describe("Search", () => {
     it("search with enter", () => {
       cy.visit("/ror.org/013meh722")
       cy.get('input[name="query"]')
-        .type('Cambridge{enter}')
+        .type('Springer{enter}')
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
@@ -205,7 +205,7 @@ describe("Search", () => {
     it("search with submit", () => {
       cy.visit("/ror.org/013meh722")
       cy.get('input[name="query"]')
-        .type('Cambridge')
+        .type('Springer')
         .get('.search-submit').click()
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
