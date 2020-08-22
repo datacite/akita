@@ -5,11 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
-  title: string
   path: string
 }
 
-const Header: React.FunctionComponent<Props> = ({ title, path }) => {
+const Header: React.FunctionComponent<Props> = ({ path }) => {
   // store query in useState(), default is current query parameter
   // update query parameter only after submit
   // submit pushes new path instead of updating only query parameter,
@@ -52,7 +51,7 @@ const Header: React.FunctionComponent<Props> = ({ title, path }) => {
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">{title}</a>
+            <a href="/">DataCite Commons</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

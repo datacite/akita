@@ -15,86 +15,74 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
   const exportMetadata = () => {
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL ||
+      'https://api.stage.datacite.org'
     return (
       <React.Fragment>
         <h3 className="member-results">Export as</h3>
-        <div className="export-metadata">         
+        <div className="export-metadata">
           <span id="export-xml">
             <a
               target="_blank"
               rel="noreferrer"
               href={
-                process.env.NEXT_PUBLIC_API_URL +
-                '/application/vnd.datacite.datacite+xml/' +
-                doi.doi
+                apiUrl + '/application/vnd.datacite.datacite+xml/' + doi.doi
               }
             >
               DataCite XML
             </a>
-          </span>{' • '}
+          </span>
+          {' • '}
           <span id="export-json">
             <a
               target="_blank"
               rel="noreferrer"
               href={
-                process.env.NEXT_PUBLIC_API_URL +
-                '/application/vnd.datacite.datacite+json/' +
-                doi.doi
+                apiUrl + '/application/vnd.datacite.datacite+json/' + doi.doi
               }
             >
               DataCite JSON
             </a>
-          </span>{' • '}
+          </span>
+          {' • '}
           <span id="export-ld" className="download">
             <a
               target="_blank"
               rel="noreferrer"
-              href={
-                process.env.NEXT_PUBLIC_API_URL +
-                '/application/vnd.schemaorg.ld+json/' +
-                doi.doi
-              }
+              href={apiUrl + '/application/vnd.schemaorg.ld+json/' + doi.doi}
             >
               Schema.org JSON-LD
             </a>
-          </span>{' • '}
+          </span>
+          {' • '}
           <span id="export-bibtex" className="download">
             <a
               target="_blank"
               rel="noreferrer"
-              href={
-                process.env.NEXT_PUBLIC_API_URL +
-                '/application/x-bibtex/' +
-                doi.doi
-              }
+              href={apiUrl + '/application/x-bibtex/' + doi.doi}
             >
               BibTeX
             </a>
-          </span>{' • '}
+          </span>
+          {' • '}
           <span id="export-ris" className="download">
             <a
               target="_blank"
               rel="noreferrer"
-              href={
-                process.env.NEXT_PUBLIC_API_URL +
-                '/application/x-research-info-systems/' +
-                doi.doi
-              }
+              href={apiUrl + '/application/x-research-info-systems/' + doi.doi}
             >
               RIS
             </a>
           </span>
           {doi.types.resourceTypeGeneral === 'Software' && (
-            <React.Fragment>{' • '}
+            <React.Fragment>
+              {' • '}
               <span id="export-codemeta" className="download">
                 <a
                   target="_blank"
                   rel="noreferrer"
-                  href={
-                    process.env.NEXT_PUBLIC_API_URL +
-                    '/application/vnd.codemeta.ld+json/' +
-                    doi.doi
-                  }
+                  href={apiUrl + '/application/vnd.codemeta.ld+json/' + doi.doi}
                 >
                   Codemeta
                 </a>
@@ -155,11 +143,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }))
 
   const analyticsBar = () => {
-    if (
-      doi.viewCount == 0 &&
-      doi.downloadCount == 0
-    )
-      return ''
+    if (doi.viewCount == 0 && doi.downloadCount == 0) return ''
 
     return (
       <div className="panel panel-transparent">

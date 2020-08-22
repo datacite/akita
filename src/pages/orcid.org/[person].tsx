@@ -8,7 +8,7 @@ const PersonPage = ({ personPath }) => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/orcid.org/' + personPath} >
+    <Layout path={'/orcid.org/' + personPath} >
       <PersonContainer orcid={personPath} searchQuery={searchQuery} />
     </Layout>
   )

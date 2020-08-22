@@ -8,7 +8,7 @@ const DoisPage = ({ doiPath }) => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/doi.org/' + doiPath.join('/')} >
+    <Layout path={'/doi.org/' + doiPath.join('/')} >
       <WorkContainer item={doiPath.join('/')} searchQuery={searchQuery} />
     </Layout>
   )

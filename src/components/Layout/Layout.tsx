@@ -4,14 +4,13 @@ import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 
 type Props = {
-  title: string
   path: string
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children, title, path }) => (
+const Layout: React.FunctionComponent<Props> = ({ children, path }) => (
   <div>
     <Head>
-      <title>{title}</title>
+      <title>DataCite Commons</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
@@ -25,7 +24,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, title, path }) => (
       />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
-    <Header title={title} path={path} />
+    <Header path={path} />
     <div className="container-fluid">{children}</div>
     <Footer />
   </div>

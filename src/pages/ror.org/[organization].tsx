@@ -8,7 +8,7 @@ const OrganizationPage = ({ organizationPath }) => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/ror.org/' + organizationPath} >
+    <Layout path={'/ror.org/' + organizationPath} >
       <OrganizationContainer rorId={organizationPath} searchQuery={searchQuery} />
     </Layout>
   )
