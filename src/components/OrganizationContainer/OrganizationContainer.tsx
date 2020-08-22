@@ -152,8 +152,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
   if (loading)
     return (
       <div className="row">
-        <div className="col-md-3"></div>
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -170,15 +169,16 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
             <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
-        </div>
+        </Col>
       </div>
     )
 
-  if (error) {
+  if (error)
     return (
-      <Error title="No Service" message="Unable to retrieve organization" />
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
     )
-  }
 
   const organization = (() => {
     let organization = data.organization
@@ -227,7 +227,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
 
     return (
       <div>
-        <div className="col-md-9 col-md-offset-3">
+        <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
             <h3 className="member-results">
               {totalCount.toLocaleString('en-US') + ' '}
@@ -238,7 +238,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
               />
             </h3>
           )}
-        </div>
+        </Col>
         {/* TODO: I think the pager element within this should be more dynamic
         and not need to rely on passing in precalculated //
         hasNextPage/endCursor instead calculate based on data provided */}

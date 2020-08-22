@@ -178,9 +178,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     if (error)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
-        </div>
+        </Col>
       )
 
     const results: OrganizationMetadataRecord[] = []

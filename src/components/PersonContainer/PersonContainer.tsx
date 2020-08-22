@@ -181,8 +181,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
   if (loading)
     return (
       <React.Fragment>
-        <div className="col-md-3"></div>
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <ContentLoader
             speed={1}
             width={1000}
@@ -199,13 +198,16 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
             <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
             <circle cx="54" cy="61" r="45" />
           </ContentLoader>
-        </div>
+        </Col>
       </React.Fragment>
     )
 
-  if (error) {
-    return <Error title="No Content" message="Unable to retrieve Content" />
-  }
+  if (error)
+    return (
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
+    )
 
   const orcidRecord = data.person
 

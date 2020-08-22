@@ -274,9 +274,12 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
       </React.Fragment>
     )
 
-  if (error) {
-    return <Error title="No Content" message="Unable to retrieve Content" />
-  }
+  if (error)
+    return (
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
+    )
 
   const content = () => {
     return (

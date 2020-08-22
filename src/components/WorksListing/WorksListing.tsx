@@ -40,9 +40,11 @@ const WorksListing: React.FunctionComponent<Props> = ({
 }) => {
   if (works.totalCount == 0)
     return (
-      <div className="alert-works">
-        <Alert bsStyle="warning">No works found.</Alert>
-      </div>
+      <Col md={9} mdOffset={3}>
+        <div className="alert-works">
+          <Alert bsStyle="warning">No works found.</Alert>
+        </div>
+      </Col>
     )
 
   const analyticsBar = () => {
