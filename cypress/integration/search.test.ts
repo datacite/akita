@@ -119,7 +119,7 @@ describe("Search", () => {
     it("search with enter", () => {
       cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
-        .type('trier{enter}')
+        .type('datacite{enter}')
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
@@ -129,7 +129,7 @@ describe("Search", () => {
     it("search with submit", () => {
       cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
-        .type('trier')
+        .type('datacite')
         .get('.search-submit').click()
         .get('#search-nav li.active', { timeout: 60000 })
         .should('contain', 'This Page')
