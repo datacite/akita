@@ -40,26 +40,26 @@ describe("Search", () => {
   })
 
   context('work record', () => {
-    it("search with enter", () => {
-      cy.visit("/doi.org/10.17863/cam.10544")
-      cy.get('input[name="query"]')
-        .type('climate{enter}')
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Works')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Works')
-    })
+    // it("search with enter", () => {
+    //   cy.visit("/doi.org/10.17863/cam.10544")
+    //   cy.get('input[name="query"]')
+    //     .type('climate{enter}')
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'Works')
+    // })
 
-    it("search with submit", () => {
-      cy.visit("/doi.org/10.17863/cam.10544")
-      cy.get('input[name="query"]')
-        .type('climate')
-        .get('.search-submit').click()
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Works')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Works')
-    })
+    // it("search with submit", () => {
+    //   cy.visit("/doi.org/10.17863/cam.10544")
+    //   cy.get('input[name="query"]')
+    //     .type('climate')
+    //     .get('.search-submit').click()
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'Works')
+    // })
 
     it("search with click", () => {
       cy.visit("/doi.org/10.17863/cam.10544")
@@ -67,7 +67,7 @@ describe("Search", () => {
         .type('climate')
         .get('#works-link').click()
         .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Works')
+        .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'Works')
     })
@@ -116,25 +116,25 @@ describe("Search", () => {
   })
     
   context('person record', () => {
-    it("search with enter", () => {
-      cy.visit("/orcid.org/0000-0002-1825")
-      cy.get('input[name="query"]')
-        .type('Josiah Carberry{enter}')
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'People')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'People')
-    })
+    // it("search with enter", () => {
+    //   cy.visit("/orcid.org/0000-0002-1825")
+    //   cy.get('input[name="query"]')
+    //     .type('Josiah Carberry{enter}')
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'People')
+    // })
 
-    it("search with submit", () => {
-      cy.visit("/orcid.org/0000-0002-1825")
-      cy.get('input[name="query"]')
-        .type('Josiah Carberry')
-        .get('.search-submit').click()
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'People')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'People')
+    // it("search with submit", () => {
+    //   cy.visit("/orcid.org/0000-0002-1825")
+    //   cy.get('input[name="query"]')
+    //     .type('Josiah Carberry')
+    //     .get('.search-submit').click()
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'People')
     })
 
     it("search with click", () => {
@@ -143,7 +143,7 @@ describe("Search", () => {
         .type('Josiah Carberry')
         .get('#people-link').click()
         .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'People')
+        .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'People')
     })
@@ -192,26 +192,26 @@ describe("Search", () => {
   })
 
   context('organization record', () => {
-    it("search with enter", () => {
-      cy.visit("/ror.org/013meh722")
-      cy.get('input[name="query"]')
-        .type('Cambridge{enter}')
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Organizations')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Organizations')
-    })
+    // it("search with enter", () => {
+    //   cy.visit("/ror.org/013meh722")
+    //   cy.get('input[name="query"]')
+    //     .type('Cambridge{enter}')
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'Organizations')
+    // })
 
-    it("search with submit", () => {
-      cy.visit("/ror.org/013meh722")
-      cy.get('input[name="query"]')
-        .type('Cambridge')
-        .get('.search-submit').click()
-        .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Organizations')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', 'Organizations')
-    })
+    // it("search with submit", () => {
+    //   cy.visit("/ror.org/013meh722")
+    //   cy.get('input[name="query"]')
+    //     .type('Cambridge')
+    //     .get('.search-submit').click()
+    //     .get('#search-nav li.active', { timeout: 60000 })
+    //     .should('contain', 'This Page')
+    //     .get('.member-results', { timeout: 60000 })
+    //     .should('contain', 'Organizations')
+    // })
 
     it("search with click", () => {
       cy.visit("/ror.org/013meh722")
@@ -219,7 +219,7 @@ describe("Search", () => {
         .type('Cambridge')
         .get('#organizations-link').click()
         .get('#search-nav li.active', { timeout: 60000 })
-        .should('contain', 'Organizations')
+        .should('contain', 'This Page')
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'Organizations')
     })
