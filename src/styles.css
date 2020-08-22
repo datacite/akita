@@ -65,7 +65,7 @@ h3.popover-title {
 
 @media(max-width:1200px) {
   .navbar-form .input-group input[name="query"] {
-    width: 500px;
+    width: 450px;
   }
   .navbar-form {
     margin-left: -14px;
