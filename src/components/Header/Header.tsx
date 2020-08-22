@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Navbar, Nav, NavItem, InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faSearch, faNewspaper, faUserGraduate, faUniversity, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   title: string
+  path: string
 }
 
-const Header: React.FunctionComponent<Props> = ({ title }) => {
+const Header: React.FunctionComponent<Props> = ({ title, path }) => {
   // store query in useState(), default is current query parameter
   // update query parameter only after submit
   // submit pushes new path instead of updating only query parameter,
@@ -24,6 +25,8 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
     searchQuery = router.query.query as string
     switch(router.pathname) {
       case '/doi.org/[...doi]':
+        pathname = '/doi.org'
+        break
       case '/':
         pathname = '/doi.org'
         break
@@ -39,7 +42,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   
     onSubmit = () => {
       router.push({
-        pathname: pathname,
+        pathname: path,
         query: { query: searchInput },
       })
     }
@@ -114,7 +117,10 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
         <Navbar.Collapse>
           <div className="col-md-3"></div>
           <div className="col-md-9 search-nav">
-            <Nav id="search-nav" activeKey={pathname}>
+            <Nav id="search-nav" activeKey={path}>
+              {path !== pathname && (
+                <NavItem id='this-link' eventKey={path} href={path + '?query=' + searchInput}><FontAwesomeIcon icon={faMapMarker} /> This Page</NavItem>
+              )}
               <NavItem id='works-link' eventKey={'/doi.org'} href={'/doi.org?query=' + searchInput}><FontAwesomeIcon icon={faNewspaper} /> Works</NavItem>
               <NavItem id='people-link' eventKey={'/orcid.org'} href={'/orcid.org?query=' + searchInput}><FontAwesomeIcon icon={faUserGraduate} /> People</NavItem>
               <NavItem id='organizations-link' eventKey={'/ror.org'} href={'/ror.org?query=' + searchInput}><FontAwesomeIcon icon={faUniversity} /> Organizations</NavItem>

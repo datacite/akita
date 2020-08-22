@@ -19,6 +19,7 @@ import {
 
 type Props = {
   rorId: string
+  searchQuery: string
 }
 
 interface OrganizationResult {
@@ -52,6 +53,7 @@ interface OrganizationQueryData {
 
 interface OrganizationQueryVar {
   id: string
+  query: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -65,6 +67,7 @@ export const ORGANIZATION_GQL = gql`
   query getOrganizationQuery(
     $id: ID!
     $cursor: String
+    $query: String
     $published: String
     $resourceTypeId: String
     $fieldOfScience: String
@@ -89,6 +92,7 @@ export const ORGANIZATION_GQL = gql`
       works(
         first: 25
         after: $cursor
+        query: $query
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
@@ -107,7 +111,7 @@ export const ORGANIZATION_GQL = gql`
   ${contentFragment.work}
 `
 
-const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
+const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQuery }) => {
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -135,6 +139,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId }) => {
     variables: {
       id: fullId,
       cursor: cursor,
+      query: searchQuery,
       published: published as string,
       resourceTypeId: resourceType as string,
       fieldOfScience: fieldOfScience as string,

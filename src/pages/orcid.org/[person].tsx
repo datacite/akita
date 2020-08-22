@@ -2,11 +2,14 @@ import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import PersonContainer from '../../components/PersonContainer/PersonContainer'
 import { GetServerSideProps } from 'next'
+import { useQueryState } from 'next-usequerystate'
 
 const PersonPage = ({ personPath }) => {
+  const [searchQuery] = useQueryState<string>('query')
+
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
-      <PersonContainer orcid={personPath} />
+    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/orcid.org/' + personPath} >
+      <PersonContainer orcid={personPath} searchQuery={searchQuery} />
     </Layout>
   )
 }

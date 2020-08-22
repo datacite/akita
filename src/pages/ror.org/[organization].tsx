@@ -2,11 +2,14 @@ import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import OrganizationContainer from '../../components/OrganizationContainer/OrganizationContainer'
 import { GetServerSideProps } from 'next'
+import { useQueryState } from 'next-usequerystate'
 
 const OrganizationPage = ({ organizationPath }) => {
+  const [searchQuery] = useQueryState<string>('query')
+
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
-      <OrganizationContainer rorId={organizationPath} />
+    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/ror.org/' + organizationPath} >
+      <OrganizationContainer rorId={organizationPath} searchQuery={searchQuery} />
     </Layout>
   )
 }

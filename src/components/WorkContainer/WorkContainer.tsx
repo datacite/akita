@@ -12,11 +12,13 @@ import WorksListing from '../WorksListing/WorksListing'
 
 type Props = {
   item?: string
+  searchQuery: string
 }
 
 export const DOI_GQL = gql`
   query getContentQuery(
     $id: ID!
+    $query: String
     $cursor: String
     $published: String
     $resourceTypeId: String
@@ -39,6 +41,7 @@ export const DOI_GQL = gql`
       }
       citations(
         first: 25
+        query: $query
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -55,6 +58,7 @@ export const DOI_GQL = gql`
       }
       references(
         first: 25
+        query: $query
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -74,7 +78,6 @@ export const DOI_GQL = gql`
   ${connectionFragment.workConnection}
   ${contentFragment.work}
 `
-
 export interface WorkType {
   id: string
   doi: string
@@ -198,6 +201,7 @@ export interface WorkQueryData {
 
 interface QueryVar {
   id: string
+  query: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -207,7 +211,7 @@ interface QueryVar {
   registrationAgency: string
 }
 
-const WorkContainer: React.FunctionComponent<Props> = ({ item }) => {
+const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) => {
   const [doi, setDoi] = React.useState<WorkType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
@@ -226,6 +230,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item }) => {
     variables: {
       id: item,
       cursor: cursor,
+      query: searchQuery,
       published: published as string,
       resourceTypeId: resourceType as string,
       fieldOfScience: fieldOfScience as string,

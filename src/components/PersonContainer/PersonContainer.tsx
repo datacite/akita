@@ -17,11 +17,13 @@ import {
 
 type Props = {
   orcid?: string
+  searchQuery: string
 }
 
 export const DOI_GQL = gql`
   query getContentQuery(
     $id: ID!
+    $query: String
     $cursor: String
     $published: String
     $resourceTypeId: String
@@ -51,6 +53,7 @@ export const DOI_GQL = gql`
       familyName
       works(
         first: 25
+        query: $query
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -129,6 +132,7 @@ export interface OrcidDataQuery {
 
 interface OrcidQueryVar {
   id: string
+  query: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -138,7 +142,7 @@ interface OrcidQueryVar {
   registrationAgency: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
+const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -162,6 +166,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid }) => {
       errorPolicy: 'all',
       variables: {
         id: 'http://orcid.org/' + orcid,
+        query: searchQuery,
         cursor: cursor,
         published: published as string,
         resourceTypeId: resourceType as string,

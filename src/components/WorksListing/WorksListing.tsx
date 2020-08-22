@@ -46,7 +46,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
     )
 
   const analyticsBar = () => {
-    if (!works.totalCount) return null
+    if (!works.totalCount) return ''
 
     const published = works.published.map((x) => ({
       title: x.title,
@@ -73,36 +73,34 @@ const WorksListing: React.FunctionComponent<Props> = ({
     }))
 
     return (
-      <React.Fragment>
-        <Row>
-          <Col sm={6}>
-            <ProductionChart
-              data={published}
-              doiCount={works.totalCount}
-            ></ProductionChart>
-          </Col>
-          <Col sm={3}>
-            <DonutChart
-              data={resourceTypes}
-              legend={false}
-              count={works.totalCount}
-              title='Works by work type'
-              range={typesRange}
-              domain={typesDomain}
-            ></DonutChart>
-          </Col>
-            <Col sm={3}>
-              <DonutChart
-              data={licenses}
-              legend={false}
-              count={works.totalCount}
-              title='Works by license'
-              range={licenseRange}
-              domain={licenseDomain}
-            ></DonutChart>
-          </Col>
-        </Row>
-      </React.Fragment>
+      <Row>
+        <Col sm={6}>
+          <ProductionChart
+            data={published}
+            doiCount={works.totalCount}
+          ></ProductionChart>
+        </Col>
+        <Col sm={3}>
+          <DonutChart
+            data={resourceTypes}
+            legend={false}
+            count={works.totalCount}
+            title='Works by work type'
+            range={typesRange}
+            domain={typesDomain}
+          ></DonutChart>
+        </Col>
+        <Col sm={3}>
+          <DonutChart
+            data={licenses}
+            legend={false}
+            count={works.totalCount}
+            title='Works by license'
+            range={licenseRange}
+            domain={licenseDomain}
+          ></DonutChart>
+        </Col>
+      </Row>
     )
   }
 
@@ -119,10 +117,10 @@ const WorksListing: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div>
+    <React.Fragment>
       {showFacets && renderFacets()}
 
-      <div className="col-md-9" id="content">
+      <Col md={9} id="content">
         {showAnalytics && analyticsBar()}
 
         {works.nodes.map((doi) => (
@@ -138,8 +136,8 @@ const WorksListing: React.FunctionComponent<Props> = ({
             endCursor={endCursor}
           ></Pager>
         )}
-      </div>
-    </div>
+      </Col>
+    </React.Fragment>
   )
 }
 

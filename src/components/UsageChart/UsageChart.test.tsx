@@ -26,8 +26,8 @@ const oldData = {
 }
 
 describe('UsageChart Component', () => {
-
   let data
+  
   beforeEach(function () {
     cy.fixture('usageChart.json').then((d) => {
       data = d
@@ -38,7 +38,7 @@ describe('UsageChart Component', () => {
     mount(
       <UsageChart
         doi={data.doi}
-        type="View"
+        type="view"
         publicationYear={data.publicationYear}
         counts={data.viewCount}
         data={data.viewsOverTime}
@@ -50,15 +50,15 @@ describe('UsageChart Component', () => {
 
     cy.get('div')
       .should('be.visible')
-      .contains('137 Views reported since publication in 2017.')
+      .contains('137 views reported since publication in 2017.')
   })
 
-  // Data older than 10 years should not be showned
+  // Data older than 10 years should not be shown
   it('old data', () => {
     mount(
       <UsageChart
         doi={oldData.doi}
-        type="View"
+        type="view"
         publicationYear={oldData.publicationYear}
         counts={oldData.viewCount}
         data={oldData.viewsOverTime}
@@ -70,6 +70,6 @@ describe('UsageChart Component', () => {
 
     cy.get('div')
       .should('be.visible')
-      .contains('137 Views reported since publication in 1985.')
+      .contains('137 views reported since publication in 1985.')
   })
 })

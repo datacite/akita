@@ -9,7 +9,7 @@ const IndexPersonPage = () => {
   const [searchQuery] = useQueryState<string>('query')
   
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
+    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/orcid.org'} >
       {(!searchQuery || searchQuery === '') ? (
         <Teaser title={'people'} />
       ) : (

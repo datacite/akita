@@ -9,7 +9,7 @@ const OrganizationIndexPage = () => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout title={process.env.NEXT_PUBLIC_TITLE}>
+    <Layout title={process.env.NEXT_PUBLIC_TITLE} path={'/ror.org'} >
       <React.Fragment>
         {!searchQuery || searchQuery === '' ? (
           <Teaser title={'organizations'} />

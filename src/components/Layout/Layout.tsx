@@ -5,9 +5,10 @@ import Footer from '../Footer/Footer'
 
 type Props = {
   title: string
+  path: string
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children, title }) => (
+const Layout: React.FunctionComponent<Props> = ({ children, title, path }) => (
   <div>
     <Head>
       <title>{title}</title>
@@ -24,7 +25,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, title }) => (
       />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
-    <Header title={title} />
+    <Header title={title} path={path} />
     <div className="container-fluid">{children}</div>
     <Footer />
   </div>
