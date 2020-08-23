@@ -44,6 +44,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
 
+  // use production URL for non-DataCite DOIs
+  const handleUrl = metadata.registrationAgency.id === 'datacite' ? metadata.id : 'https://doi.org/' + metadata.doi
+  
   const searchtitle = () => {
     if (!metadata.titles[0])
       return (
@@ -72,7 +75,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <h3 className="work">
-        <a target="_blank" rel="noreferrer" href={metadata.id}>
+        <a target="_blank" rel="noreferrer" href={handleUrl}>
           {ReactHtmlParser(titleHtml)}
         </a>
       </h3>
@@ -407,8 +410,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <div className="panel-footer">
-        <a href={metadata.id}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
+        <a href={handleUrl}>
+          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {handleUrl}
         </a>
         <span className="actions">
           <EmailShareButton url={url} title={title}>
