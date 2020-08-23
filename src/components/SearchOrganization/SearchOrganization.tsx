@@ -207,9 +207,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     if (results.length == 0)
       return (
-        <div className="col-md-9">
+        <Col md={9} mdOffset={3}>
           <Alert bsStyle="warning">No organizations found.</Alert>
-        </div>
+        </Col>
       )
 
     const hasNextPage = data.organizations.pageInfo
