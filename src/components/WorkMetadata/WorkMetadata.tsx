@@ -19,7 +19,7 @@ import {
   faCreativeCommonsNd,
   faCreativeCommonsSa,
   faCreativeCommonsZero,
-  faTwitter, 
+  faTwitter,
   faFacebook
 } from '@fortawesome/free-brands-svg-icons'
 import {
@@ -134,6 +134,37 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
+  const container = () => {
+    if (metadata.container && metadata.container.identifier) {
+      return (
+        <React.Fragment>
+          {' '}
+          in{' '}
+          <a
+            href={
+              '/doi.org?query=container.identifier:' +
+              metadata.container.identifier
+            }
+          >
+            {metadata.container.title}
+          </a>
+        </React.Fragment>
+      )
+    } else if (metadata.repository && metadata.repository.id) {
+      return (
+        <React.Fragment>
+          {' '}
+          in{' '}
+          <a href={'/doi.org?query=client.uid:' + metadata.repository.id}>
+            {metadata.repository.name}
+          </a>
+        </React.Fragment>
+      )
+    } else {
+      return <React.Fragment> via {metadata.publisher}</React.Fragment>
+    }
+  }
+
   const metadataTag = () => {
     return (
       <div className="metadata">
@@ -141,7 +172,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {metadata.types.resourceType
           ? startCase(metadata.types.resourceType)
           : 'Content'}{' '}
-        published {metadata.publicationYear} via {metadata.publisher}
+        published {metadata.publicationYear}
+        {container()}
       </div>
     )
   }
@@ -331,10 +363,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
       0
     ) {
-      return (
-        <div>
-        </div>
-      )
+      return <div></div>
     }
 
     return (
@@ -371,7 +400,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
-    const title = metadata.titles[0] ? 'DataCite Commons: ' + metadata.titles[0].title : 'DataCite Commons: No Title'
+    const title = metadata.titles[0]
+      ? 'DataCite Commons: ' + metadata.titles[0].title
+      : 'DataCite Commons: No Title'
     const url = window.location.href
 
     return (
