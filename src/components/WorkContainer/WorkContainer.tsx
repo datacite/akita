@@ -3,12 +3,12 @@ import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Work from '../Work/Work'
 import { connectionFragment, contentFragment } from '../SearchWork/SearchWork'
-import ContentLoader from 'react-content-loader'
 import { useQueryState } from 'next-usequerystate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import { compactNumbers } from '../../utils/helpers'
 import WorksListing from '../WorksListing/WorksListing'
+import Loading from '../Loading/Loading'
 
 type Props = {
   item?: string
@@ -90,11 +90,20 @@ export interface WorkType {
   titles: Title[]
   publicationYear: number
   publisher: string
+  container?: {
+    identifier: string
+    identifierType: string
+    title: string
+  }
   descriptions?: Description[]
   fieldsOfScience?: FieldOfScience[]
   rights?: Rights[]
   version?: string
   language?: {
+    id: string
+    name: string
+  }
+  repository?: {
     id: string
     name: string
   }
@@ -179,16 +188,7 @@ export interface RelatedContentList {
   nodes: {
     id: string
     formattedCitation: string
-    repository: {
-      name: string
-      re3dataId: string
-      id: string
-    }
     registrationAgency: {
-      name: string
-      id: string
-    }
-    member: {
       name: string
       id: string
     }
@@ -212,7 +212,6 @@ interface QueryVar {
 }
 
 const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) => {
-  const [doi, setDoi] = React.useState<WorkType>()
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })
@@ -240,38 +239,9 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
     }
   })
 
-  React.useEffect(() => {
-    let result = undefined
-    if (data) {
-      result = data.work
-    }
-
-    setDoi(result)
-  }, [item, data])
-
-  if (loading || !doi)
+  if (loading)
     return (
-      <React.Fragment>
-        <div className="col-md-3"></div>
-        <div className="col-md-9">
-          <ContentLoader
-            speed={1}
-            width={1000}
-            height={250}
-            uniqueKey="2"
-            viewBox="0 0 1000 250"
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
-          >
-            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-            <circle cx="54" cy="61" r="45" />
-          </ContentLoader>
-        </div>
-      </React.Fragment>
+      <Loading />
     )
 
   if (error)
@@ -280,6 +250,8 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
         <Error title="An error occured." message={error.message} />
       </Col>
     )
+
+  const doi = data.work
 
   const content = () => {
     return (

@@ -6,7 +6,7 @@ import Pluralize from 'react-pluralize'
 import WorksListing from '../WorksListing/WorksListing'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import Error from '../Error/Error'
-import ContentLoader from 'react-content-loader'
+import Loading from '../Loading/Loading'
 
 type Props = {
   searchQuery: string
@@ -117,6 +117,15 @@ export const contentFragment = {
       publicationYear
       publisher
       version
+      container {
+        identifier
+        identifierType
+        title
+      }
+      repository {
+        id
+        name
+      }
       rights {
         rights
         rightsUri
@@ -210,23 +219,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const renderResults = () => {
     if (loading)
       return (
-        <Col md={9} mdOffset={3}>
-          <ContentLoader
-            speed={1}
-            width={1000}
-            height={250}
-            viewBox="0 0 1000 250"
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
-          >
-            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-            <circle cx="54" cy="61" r="45" />
-          </ContentLoader>
-        </Col>
+        <Loading />
       )
 
     if (error)

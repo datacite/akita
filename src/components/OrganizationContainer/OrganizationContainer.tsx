@@ -2,7 +2,6 @@ import * as React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
-import ContentLoader from 'react-content-loader'
 import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
@@ -10,6 +9,7 @@ import Error from '../Error/Error'
 import Organization from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import WorksListing from '../WorksListing/WorksListing'
+import Loading from '../Loading/Loading'
 
 import {
   Works,
@@ -152,24 +152,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
   if (loading)
     return (
       <div className="row">
-        <Col md={9} mdOffset={3}>
-          <ContentLoader
-            speed={1}
-            width={1000}
-            height={250}
-            uniqueKey="2"
-            viewBox="0 0 1000 250"
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
-          >
-            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-            <circle cx="54" cy="61" r="45" />
-          </ContentLoader>
-        </Col>
+        <Loading />
       </div>
     )
 

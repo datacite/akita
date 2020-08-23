@@ -3,7 +3,6 @@ import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import WorksListing from '../WorksListing/WorksListing'
-import ContentLoader from 'react-content-loader'
 import { orcidFromUrl } from '../../utils/helpers'
 import Pluralize from 'react-pluralize'
 import { useQueryState } from 'next-usequerystate'
@@ -14,6 +13,7 @@ import {
   connectionFragment,
   contentFragment
 } from '../SearchWork/SearchWork'
+import Loading from '../Loading/Loading'
 
 type Props = {
   orcid?: string
@@ -180,26 +180,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
 
   if (loading)
     return (
-      <React.Fragment>
-        <Col md={9} mdOffset={3}>
-          <ContentLoader
-            speed={1}
-            width={1000}
-            height={250}
-            uniqueKey="2"
-            viewBox="0 0 1000 250"
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
-          >
-            <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
-            <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
-            <rect x="9" y="142" rx="3" ry="3" width="923" height="14" />
-            <rect x="9" y="178" rx="3" ry="3" width="855" height="14" />
-            <rect x="9" y="214" rx="3" ry="3" width="401" height="14" />
-            <circle cx="54" cy="61" r="45" />
-          </ContentLoader>
-        </Col>
-      </React.Fragment>
+      <Loading />
     )
 
   if (error)
