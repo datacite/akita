@@ -16,7 +16,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   let searchQuery = ''
   const paths = ['/', '/doi.org', '/orcid.org', '/ror.org']
   let onSubmit = () => {
-    
+
   }
   
   const router = useRouter()
