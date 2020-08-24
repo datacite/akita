@@ -50,8 +50,8 @@ RUN mkdir -p /etc/my_init.d
 # install custom ssh key during startup
 COPY vendor/docker/10_ssh.sh /etc/my_init.d/10_ssh.sh
 
-# run ember-cli deploy
-COPY vendor/docker/20_yarn_build.sh /etc/my_init.d/20_yarn_build.sh
+# Build next js
+COPY vendor/docker/20_next_build.sh /etc/my_init.d/20_next_build.sh
 
 # Expose web
 EXPOSE 80
