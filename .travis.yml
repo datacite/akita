@@ -50,7 +50,6 @@ script:
   - yarn ci
   - yarn cy:coverage
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - if [ "${TRAVIS_TAG?}" ]; then
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
