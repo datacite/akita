@@ -48,7 +48,7 @@ before_script:
 script:
   - yarn lint
   - yarn build
-  - start & wait-on http://localhost:3000
+  - yarn start & wait-on http://localhost:3000
   - yarn cy:run --record
   - yarn cy:coverage
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
