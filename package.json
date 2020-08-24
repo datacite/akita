@@ -8,6 +8,7 @@
     "type-check": "tsc",
     "prettier-format": "prettier --config .prettierrc.json '*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
+    "ci": "NODE_ENV=test yarn dev & wait-on http://localhost:3000 && yarn cy:run --quiet",
     "cy:coverage": "npx nyc report --reporter=lcov",
     "cy:open": "cypress open",
     "cy:run": "cypress run"

@@ -47,8 +47,7 @@ before_script:
 
 script:
   - yarn lint
-  - NODE_ENV=test yarn dev & wait-on http://localhost:3000
-  - yarn cy:run --record --quiet
+  - yarn ci
   - yarn cy:coverage
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - if [ "${TRAVIS_TAG?}" ]; then
