@@ -36,10 +36,9 @@ COPY vendor/docker/ntp.conf /etc/ntp.conf
 # Copy webapp folder
 COPY . /home/app/webapp/
 
-# Install npm packages and build dist
+# Install npm packages
 WORKDIR /home/app/webapp
-RUN yarn install --frozen-lockfile && \
-    yarn build
+RUN yarn install --frozen-lockfile
 
 # Fix permissions
 RUN chown -R app:app /home/app/webapp && \
@@ -50,6 +49,9 @@ RUN mkdir -p /etc/my_init.d
 
 # install custom ssh key during startup
 COPY vendor/docker/10_ssh.sh /etc/my_init.d/10_ssh.sh
+
+# run ember-cli deploy
+COPY vendor/docker/20_yarn_build.sh /etc/my_init.d/20_yarn_build.sh
 
 # Expose web
 EXPOSE 80
