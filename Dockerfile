@@ -38,7 +38,7 @@ COPY . /home/app/webapp/
 
 # Install npm packages
 WORKDIR /home/app/webapp
-RUN yarn install --frozen-lockfile
+RUN CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile
 
 # Fix permissions
 RUN chown -R app:app /home/app/webapp && \
