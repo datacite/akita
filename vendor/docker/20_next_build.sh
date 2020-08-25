@@ -1,2 +1,2 @@
 #!/bin/sh
-yarn build
+/sbin/setuser app yarn build
