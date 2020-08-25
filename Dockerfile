@@ -44,6 +44,10 @@ RUN CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile
 RUN chown -R app:app /home/app/webapp && \
     chmod -R 755 /home/app/webapp
 
+# enable SSH
+RUN rm -f /etc/service/sshd/down && \
+    /etc/my_init.d/00_regen_ssh_host_keys.sh
+    
 # Run additional scripts during container startup (i.e. not at build time)
 RUN mkdir -p /etc/my_init.d
 
