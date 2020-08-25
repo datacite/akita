@@ -88,7 +88,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
             <NavItem
               eventKey={2}
               data-cy="support"
-              href="https://support.datacite.org/"
+              href="https://support.datacite.org/docs/datacite-commons"
             >
               Support
             </NavItem>
