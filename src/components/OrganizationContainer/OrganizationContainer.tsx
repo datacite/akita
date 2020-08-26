@@ -232,6 +232,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
           showAnalytics={true}
           hasPagination={data.organization.works.totalCount > 25}
           hasNextPage={hasNextPage}
+          model={'organization'}
           url={'/ror.org/' + rorId + '/?'}
           endCursor={endCursor}
         />

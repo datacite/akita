@@ -234,6 +234,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
           showAnalytics={true}
           hasPagination={orcidRecord.works.totalCount > 25}
           hasNextPage={hasNextPage}
+          model={'person'}
           url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
           endCursor={endCursor}
         />

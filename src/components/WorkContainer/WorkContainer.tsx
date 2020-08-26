@@ -329,6 +329,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
                       showAnalytics={true}
                       hasPagination={doi.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
+                      model={'doi'}
                       url={url}
                       endCursor={endCursorReferences}
                     />
@@ -344,6 +345,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
                       showAnalytics={true}
                       hasPagination={doi.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
+                      model={'doi'}
                       url={url}
                       endCursor={endCursorCitations}
                     />

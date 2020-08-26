@@ -15,6 +15,7 @@ type Props = {
   showAnalytics: boolean
   showFacets: boolean
   loading: boolean
+  model: string
   url: string
   hasPagination: boolean
   hasNextPage: boolean
@@ -33,6 +34,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   showAnalytics,
   showFacets,
   loading,
+  model,
   url,
   hasPagination,
   hasNextPage,
@@ -110,7 +112,8 @@ const WorksListing: React.FunctionComponent<Props> = ({
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
         <WorkFacets
-          model="organization"
+          model={model}
+          url={url}
           data={works}
           loading={loading}
         ></WorkFacets>

@@ -8,6 +8,7 @@ import Link from 'next/link'
 type Props = {
   data: Facets
   model: string
+  url: string
   loading: boolean
 }
 
@@ -32,25 +33,23 @@ interface Facet {
 const WorkFacets: React.FunctionComponent<Props> = ({
   data,
   model,
+  url,
   loading
 }) => {
-  const router = useRouter()
   if (loading) return <div className="col-md-3"></div>
 
   if (!loading && data.nodes.length == 0)
     return <div className="col-md-3"></div>
 
   function facetLink(param: string, value: string) {
-    let url = '?'
+    const router = useRouter()
     let icon = faSquare
 
     // get current query parameters from next router
     let params = new URLSearchParams(router.query as any)
 
-    // delete person parameter
+    // delete model and cursor parameters
     params.delete(model)
-
-    // delete cursor parameter
     params.delete('cursor')
 
     if (params.get(param) == value) {
@@ -62,9 +61,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       params.set(param, value)
     }
 
-    url += params.toString()
     return (
-      <Link href={url}>
+      <Link href={url + params.toString()}>
         <a>
           <FontAwesomeIcon icon={icon} />{' '}
         </a>
