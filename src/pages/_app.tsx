@@ -6,6 +6,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import withApollo from '../../hooks/withApollo'
+import * as Sentry from '@sentry/node'
 
 // properly handle fontawesome icons
 import '../styles.css'
@@ -16,6 +17,13 @@ config.autoAddCss = false
 // since "apollo" isn't a native Next.js prop we have to declare it's type.
 interface IProps {
   apollo: ApolloClient<NormalizedCacheObject>
+}
+
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    enabled: process.env.NODE_ENV === 'production',
+    dsn: process.env.SENTRY_DSN
+  })
 }
 
 // adds our custom props interface to the generic App base class.
