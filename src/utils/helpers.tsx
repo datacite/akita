@@ -13,29 +13,9 @@ export const compactNumbers = (num) => {
 }
 
 export const orcidFromUrl = (orcidUrl: string) => {
-  if (!orcidUrl) {
-    return null
-  }
-  const url = document.createElement('a')
-  url.href = orcidUrl
-  return url.pathname
-}
-
-export const doiFromUrl = (doiUrl: string) => {
-  if (!doiUrl) {
-    return null
-  }
-  const url = document.createElement('a')
-  url.href = doiUrl
-  return url.pathname
+  return orcidUrl ? orcidUrl.substring(17) : null
 }
 
 export const rorFromUrl = (rorUrl: string) => {
-  if (!rorUrl) {
-    return null
-  }
-
-  const url = document.createElement('a')
-  url.href = rorUrl
-  return url.pathname
+  return rorUrl ? rorUrl.substring(15) : null
 }
