@@ -45,8 +45,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     return <Alert bsStyle="warning">No content found.</Alert>
 
   // use production URL for non-DataCite DOIs
-  const handleUrl = metadata.registrationAgency.id === 'datacite' ? metadata.id : 'https://doi.org/' + metadata.doi
-  
+  const handleUrl =
+    metadata.registrationAgency.id === 'datacite'
+      ? metadata.id
+      : 'https://doi.org/' + metadata.doi
+
   const searchtitle = () => {
     if (!metadata.titles[0])
       return (
@@ -153,7 +156,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           </a>
         </React.Fragment>
       )
-    } else if (metadata.repository && metadata.repository.id && metadata.repository.id !== 'crossref.citations') {
+    } else if (
+      metadata.repository &&
+      metadata.repository.id &&
+      metadata.repository.id !== 'crossref.citations'
+    ) {
       return (
         <React.Fragment>
           {' '}
@@ -403,10 +410,14 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
+    const pageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/' + metadata.doi
+        : 'https://commons.stage.datacite.org/' + metadata.doi
+
     const title = metadata.titles[0]
       ? 'DataCite Commons: ' + metadata.titles[0].title
       : 'DataCite Commons: No Title'
-    const url = window.location.href
 
     return (
       <div className="panel-footer">
@@ -414,17 +425,17 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {handleUrl}
         </a>
         <span className="actions">
-          <EmailShareButton url={url} title={title}>
+          <EmailShareButton url={pageUrl} title={title}>
             <FontAwesomeIcon icon={faEnvelope} />
           </EmailShareButton>
         </span>
         <span className="actions">
-          <TwitterShareButton url={url} title={title}>
+          <TwitterShareButton url={pageUrl} title={title}>
             <FontAwesomeIcon icon={faTwitter} />
           </TwitterShareButton>
         </span>
         <span className="actions">
-          <FacebookShareButton url={url} title={title}>
+          <FacebookShareButton url={pageUrl} title={title}>
             <FontAwesomeIcon icon={faFacebook} />
           </FacebookShareButton>
         </span>

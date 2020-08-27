@@ -16,8 +16,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   const exportMetadata = () => {
     const apiUrl =
-      process.env.NEXT_PUBLIC_API_URL ||
-      'https://api.stage.datacite.org'
+      process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
     return (
       <React.Fragment>
         <h3 className="member-results">Export as</h3>
@@ -57,15 +56,17 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           </span>
           {' • '}
           <span id="export-citeproc" className="download">
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href={apiUrl + '/application/vnd.citationstyles.csl+json/' + doi.doi}
-          >
-            Citeproc JSON
-          </a>
-        </span>
-        {' • '}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={
+                apiUrl + '/application/vnd.citationstyles.csl+json/' + doi.doi
+              }
+            >
+              Citeproc JSON
+            </a>
+          </span>
+          {' • '}
           <span id="export-bibtex" className="download">
             <a
               target="_blank"
