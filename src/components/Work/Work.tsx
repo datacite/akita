@@ -56,6 +56,16 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             </a>
           </span>
           {' • '}
+          <span id="export-citeproc" className="download">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={apiUrl + '/application/vnd.citationstyles.csl+json/' + doi.doi}
+          >
+            Citeproc JSON
+          </a>
+        </span>
+        {' • '}
           <span id="export-bibtex" className="download">
             <a
               target="_blank"
