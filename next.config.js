@@ -20,8 +20,6 @@ const COMMIT_SHA =
   VERCEL_GITLAB_COMMIT_SHA ||
   VERCEL_BITBUCKET_COMMIT_SHA
 
-process.env.SENTRY_DSN = SENTRY_DSN
-
 module.exports = withSourceMaps({
   webpack: (config, options) => {
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While

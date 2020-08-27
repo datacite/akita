@@ -19,7 +19,7 @@ interface IProps {
   apollo: ApolloClient<NormalizedCacheObject>
 }
 
-if (process.env.SENTRY_DSN) {
+if (typeof process.env.SENTRY_DSN !== 'undefined') {
   Sentry.init({
     enabled: process.env.NODE_ENV === 'production',
     dsn: process.env.SENTRY_DSN
