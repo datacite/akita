@@ -153,7 +153,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           </a>
         </React.Fragment>
       )
-    } else if (metadata.repository && metadata.repository.id) {
+    } else if (metadata.repository && metadata.repository.id && metadata.repository.id !== 'crossref.citations') {
       return (
         <React.Fragment>
           {' '}
