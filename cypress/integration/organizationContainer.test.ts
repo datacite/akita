@@ -2,6 +2,7 @@
 
 describe("OrganizationContainer", () => {
   beforeEach(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit('/ror.org/052gg0110')
   })
 

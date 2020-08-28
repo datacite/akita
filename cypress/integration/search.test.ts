@@ -1,5 +1,10 @@
 describe("Search", () => {
-  context('works', () => {
+  describe("Works", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
+  
+    context('works', () => {
     it("search with enter", () => {
       cy.visit("/doi.org")
       cy.get('input[name="query"]')
@@ -38,8 +43,14 @@ describe("Search", () => {
         .should('contain', 'Works')
     })
   })
+  })
 
-  context('work record', () => {
+  describe("Work Record", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
+  
+    context('work record', () => {
     // it("search with enter", () => {
     //   cy.visit("/doi.org/10.17863/cam.10544")
     //   cy.get('input[name="query"]')
@@ -72,8 +83,14 @@ describe("Search", () => {
         .should('contain', 'Works')
     })
   })
+  })
 
-  context('people', () => {
+  describe("People", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
+    
+    context('people', () => {
     it("search with enter", () => {
       cy.visit("/orcid.org")
       cy.get('input[name="query"]')
@@ -114,8 +131,14 @@ describe("Search", () => {
         .should('contain', 'People')
     })
   })
+  })
+
+  describe("People Record", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
     
-  context('person record', () => {
+    context('person record', () => {
     it("search with enter", () => {
       cy.visit("/orcid.org/0000-0003-3484-6875")
       cy.get('input[name="query"]')
@@ -148,8 +171,14 @@ describe("Search", () => {
         .should('contain', 'People')
     })
   })
+  })
 
-  context('organizations', () => {
+  describe("Organizations", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
+    
+    context('organizations', () => {
     it("search with enter", () => {
       cy.visit("/ror.org")
       cy.get('input[name="query"]')
@@ -190,8 +219,14 @@ describe("Search", () => {
         .should('contain', 'Organizations')
     })
   })
+  })
 
-  context('organization record', () => {
+  describe("Organization Record", () => {
+    beforeEach(() => {
+      cy.setCookie('_consent', 'true')
+    })
+    
+    context('organization record', () => {
     it("search with enter", () => {
       cy.visit("/ror.org/013meh722")
       cy.get('input[name="query"]')
@@ -223,6 +258,7 @@ describe("Search", () => {
         .get('.member-results', { timeout: 60000 })
         .should('contain', 'Organizations')
     })
+  })
   })
 })
 

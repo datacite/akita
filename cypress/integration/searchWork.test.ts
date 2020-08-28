@@ -1,5 +1,6 @@
 describe('Search Works', () => {
   beforeEach(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit('/doi.org')
   })
 

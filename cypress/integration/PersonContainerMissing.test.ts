@@ -1,5 +1,6 @@
 describe('PersonContainer missing ORCID ID', () => {
   before(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit(`/orcid.org/xxxxx`)
   })
 

@@ -1,5 +1,6 @@
 describe("About", () => {
   beforeEach(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit("/about")
   })
 

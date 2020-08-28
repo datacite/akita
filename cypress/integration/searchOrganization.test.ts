@@ -1,5 +1,6 @@
 describe("Search Organizations", () => {
   beforeEach(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit("/ror.org")
   })
 

@@ -2,6 +2,7 @@
 
 describe('PersonContainer', () => {
   before(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit(`/orcid.org/${encodeURIComponent('0000-0003-3484-6875')}`)
   })
 

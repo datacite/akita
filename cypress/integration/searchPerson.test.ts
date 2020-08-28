@@ -1,5 +1,6 @@
 describe("Search People", () => {
   beforeEach(() => {
+    cy.setCookie('_consent', 'true')
     cy.visit("/orcid.org")
   })
 
