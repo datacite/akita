@@ -8449,6 +8449,11 @@ jest@^26.0.1:
     import-local "^3.0.2"
     jest-cli "^26.0.1"
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -10336,6 +10341,13 @@ react-content-loader@*, react-content-loader@^5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-5.0.4.tgz#1493491d2f6b309d281d84144a655417ea734486"
   integrity sha512-hxv4Td1kQxFOmIUbBZ2S3HGZ/jJr28aJvM+8fndm9TmNOE7tSde7WSTL6R68aTS6qE0BA3ptcWIErrP704pQSw==
+
+react-cookie-consent@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/react-cookie-consent/-/react-cookie-consent-5.1.3.tgz#071a79e523d1b4bbc89bc060d6939929f67a806e"
+  integrity sha512-a1eZM7/SrKq/L9SJfEkpLDtA9sfovW+fBOR/jIwIvDX0AxoogZibyJT92LvElPWhS27APeTqROOy4OngAahZYQ==
+  dependencies:
+    js-cookie "^2.2.1"
 
 react-dom@^16.12.0:
   version "16.13.1"

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -8,10 +8,33 @@ import {
   faTwitter,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons'
+import CookieConsent from 'react-cookie-consent'
 
 const Footer = () => {
   return (
     <footer className="row footer">
+      <CookieConsent
+        containerClasses="consent-cookie"
+        location="bottom"
+        buttonText="I accept"
+        declineButtonText="I decline"
+        sameSite="strict"
+        cookieName="_consent"
+        // extraCookieOptions={{ domain: "datacite.org" }}
+        overlay={true}
+        enableDeclineButton
+      >
+        This website uses cookies to enable important site functionality
+        including analytics and personalization.{' '}
+        <a
+          className="cookie"
+          href="https://www.datacite.org/privacy.html"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Read our privacy policy
+        </a>{' '}
+      </CookieConsent>
       <Grid fluid={true}>
         <Row>
           <Col sm={4} md={3} className="footer-column">
