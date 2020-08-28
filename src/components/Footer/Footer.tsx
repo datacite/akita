@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Row, Col, Button } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -27,7 +27,6 @@ const Footer = () => {
         This website uses cookies to enable important site functionality
         including analytics and personalization.{' '}
         <a
-          className="cookie"
           href="https://www.datacite.org/privacy.html"
           target="_blank"
           rel="noreferrer"
