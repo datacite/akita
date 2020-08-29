@@ -27,7 +27,7 @@ const Footer = () => {
         This website uses cookies to enable important site functionality
         including analytics and personalization.{' '}
         <a
-          href="https://www.datacite.org/privacy.html"
+          href="https://datacite.org/privacy.html"
           target="_blank"
           rel="noreferrer"
         >
@@ -40,23 +40,28 @@ const Footer = () => {
             <h4 data-cy="about">About DataCite</h4>
             <ul>
               <li>
-                <a href="https://www.datacite.org/mission.html">What we do</a>
+                <a href="https://datacite.org/mission.html">What we do</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/governance.html">
+                <a href="https://datacite.org/governance.html">
                   Governance
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/steering.html">
+                <a href="https://datacite.org/members.html">
+                  Members
+                </a>
+              </li>
+              <li>
+                <a href="https://datacite.org/steering.html">
                   Steering groups
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/staff.html">Staff</a>
+                <a href="https://datacite.org/staff.html">Staff</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/jobopportunities.html">
+                <a href="https://datacite.org/jobopportunities.html">
                   Job opportunities
                 </a>
               </li>
@@ -66,38 +71,41 @@ const Footer = () => {
             <h4>Services</h4>
             <ul>
               <li>
-                <a href="https://www.datacite.org/dois.html">Assign DOIs</a>
+                <a href="https://datacite.org/dois.html">Assign DOIs</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/search.html">
+                <a href="https://datacite.org/search.html">
                   Metadata search
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/eventdata.html">Event data</a>
+                <a href="https://datacite.org/eventdata.html">Event data</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/profiles.html">Profiles</a>
+                <a href="https://datacite.org/profiles.html">Profiles</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/re3data.html">re3data</a>
+                <a href="https://datacite.org/re3data.html">re3data</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/citation.html">
+                <a href="https://datacite.org/citation.html">
                   Citation formatter
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/stats.html">Statistics</a>
+                <a href="https://datacite.org/stats.html">Statistics</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/content.html">
+                <a href="https://datacite.org/content.html">
                   Content negotiation
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/oaipmh.html">OAI-PMH</a>
+                <a href="https://datacite.org/oaipmh.html">OAI-PMH</a>
               </li>
+              <li>
+              <a href="https://datacite.org/test.html">Test Environment</a>
+            </li>
             </ul>
           </Col>
           <Col sm={4} md={3} className="footer-column">
@@ -109,25 +117,28 @@ const Footer = () => {
               <li>
                 <a href="https://support.datacite.org">Support</a>
               </li>
+              <li>
+                <a href="https://datacite.org/feemodel.html">Fee Model</a>
+              </li>
             </ul>
             <h4>Community</h4>
             <ul>
               <li>
-                <a href="https://www.datacite.org/members.html">Members</a>
+                <a href="https://datacite.org/members.html">Members</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/partners.html">Partners</a>
+                <a href="https://datacite.org/partners.html">Partners</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/steering.html">
+                <a href="https://datacite.org/steering.html">
                   Steering groups
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/events.html">Events</a>
+                <a href="https://datacite.org/service-providers.html">Service Providers</a>
               </li>
               <li>
-                <a href="https://www.datacite.org/roadmap.html">Roadmap</a>
+                <a href="https://datacite.org/roadmap.html">Roadmap</a>
               </li>
             </ul>
           </Col>
@@ -159,18 +170,18 @@ const Footer = () => {
             </a>
             <ul className="share">
               <li>
-                <a href="https://www.datacite.org/terms.html">
+                <a href="https://datacite.org/imprint.html">
+                  Imprint
+                </a>
+              </li>
+              <li>
+                <a href="https://datacite.org/terms.html">
                   Terms and conditions
                 </a>
               </li>
               <li>
-                <a href="https://www.datacite.org/privacy.html">
+                <a href="https://datacite.org/privacy.html">
                   Privacy policy
-                </a>
-              </li>
-              <li>
-                <a href="https://www.datacite.org/acknowledgments.html">
-                  Acknowledgements
                 </a>
               </li>
             </ul>
