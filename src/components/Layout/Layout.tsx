@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import Consent from '../Consent/Consent'
 
 type Props = {
   path: string
@@ -26,6 +27,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => (
     </Head>
     <Header path={path} />
     <div className="container-fluid">{children}</div>
+    <Consent />
     <Footer />
   </div>
 )
