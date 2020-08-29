@@ -53,7 +53,7 @@ h3.popover-title {
 
 .navbar-form .input-group input[name="query"] {
   z-index: 2;
-  width: 600px;
+  width: 500px;
   height: 40px;
   border: 1px solid #cdd2d5;
   border-top-left-radius: 26px;
