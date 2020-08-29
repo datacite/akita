@@ -412,8 +412,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const footer = () => {
     const pageUrl =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/' + metadata.doi
-        : 'https://commons.stage.datacite.org/' + metadata.doi
+        ? 'https://commons.datacite.org/doi.org/' + metadata.doi
+        : 'https://commons.stage.datacite.org/doi.org/' + metadata.doi
 
     const title = metadata.titles[0]
       ? 'DataCite Commons: ' + metadata.titles[0].title
