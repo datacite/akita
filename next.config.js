@@ -22,6 +22,9 @@ const COMMIT_SHA =
 
 module.exports = withSourceMaps({
   webpack: (config, options) => {
+    // import yaml files
+    config.module.rules.push({test: /\.ya?ml$/, use: 'js-yaml-loader'})
+
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
     // @sentry/node will run in a Node.js environment. @sentry/node will use
     // Node.js-only APIs to catch even more unhandled exceptions.

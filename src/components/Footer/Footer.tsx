@@ -8,139 +8,45 @@ import {
   faTwitter,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons'
-import CookieConsent from 'react-cookie-consent'
+import Links from '../../../config/links.yml'
 
 const Footer = () => {
+  const baseUrl =
+  process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+    ? 'https://datacite.org'
+    : 'https://www.stage.datacite.org'
+
+  const footerLinks = (links) => {
+    return (
+      <ul>
+        {links.map((link) => (
+          <li key={link.name}>
+            <a href={link.url.startsWith('/') ? baseUrl + link.url : link.url} target="_blank" rel="noreferrer">
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
   return (
     <footer className="row footer">
-      <CookieConsent
-        containerClasses="consent-cookie"
-        location="bottom"
-        buttonText="I accept"
-        declineButtonText="I decline"
-        sameSite="strict"
-        cookieName="_consent"
-        // extraCookieOptions={{ domain: "datacite.org" }}
-        overlay={true}
-        enableDeclineButton
-      >
-        This website uses cookies to enable important site functionality
-        including analytics and personalization.{' '}
-        <a
-          href="https://datacite.org/privacy.html"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Read our privacy policy
-        </a>{' '}
-      </CookieConsent>
       <Grid fluid={true}>
         <Row>
           <Col sm={4} md={3} className="footer-column">
             <h4 data-cy="about">About DataCite</h4>
-            <ul>
-              <li>
-                <a href="https://datacite.org/mission.html">What we do</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/governance.html">
-                  Governance
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/members.html">
-                  Members
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/steering.html">
-                  Steering groups
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/staff.html">Staff</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/jobopportunities.html">
-                  Job opportunities
-                </a>
-              </li>
-            </ul>
+            {footerLinks(Links.about_links)}
           </Col>
           <Col sm={4} md={3} className="footer-column">
             <h4>Services</h4>
-            <ul>
-              <li>
-                <a href="https://datacite.org/dois.html">Assign DOIs</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/search.html">
-                  Metadata search
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/eventdata.html">Event data</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/profiles.html">Profiles</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/re3data.html">re3data</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/citation.html">
-                  Citation formatter
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/stats.html">Statistics</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/content.html">
-                  Content negotiation
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/oaipmh.html">OAI-PMH</a>
-              </li>
-              <li>
-              <a href="https://datacite.org/test.html">Test Environment</a>
-            </li>
-            </ul>
+            {footerLinks(Links.services_links)}
           </Col>
           <Col sm={4} md={3} className="footer-column">
             <h4>Resources</h4>
-            <ul>
-              <li>
-                <a href="https://schema.datacite.org">Metadata schema</a>
-              </li>
-              <li>
-                <a href="https://support.datacite.org">Support</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/feemodel.html">Fee Model</a>
-              </li>
-            </ul>
+            {footerLinks(Links.resources_links)}
             <h4>Community</h4>
-            <ul>
-              <li>
-                <a href="https://datacite.org/members.html">Members</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/partners.html">Partners</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/steering.html">
-                  Steering groups
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/service-providers.html">Service Providers</a>
-              </li>
-              <li>
-                <a href="https://datacite.org/roadmap.html">Roadmap</a>
-              </li>
-            </ul>
+            {footerLinks(Links.community_links)}
           </Col>
           <Col sm={4} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
@@ -168,23 +74,7 @@ const Footer = () => {
             >
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
-            <ul className="share">
-              <li>
-                <a href="https://datacite.org/imprint.html">
-                  Imprint
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/terms.html">
-                  Terms and conditions
-                </a>
-              </li>
-              <li>
-                <a href="https://datacite.org/privacy.html">
-                  Privacy policy
-                </a>
-              </li>
-            </ul>
+            {footerLinks(Links.contact_links)}
             <h4>Funding</h4>
             <ul>
               The work on DataCite Commons is supported by funding from the
