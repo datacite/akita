@@ -30,6 +30,7 @@ export const DOI_GQL = gql`
   ) {
     work(id: $id) {
       ...WorkFragment
+      contentUrl
       formattedCitation
       viewsOverTime {
         yearMonth
@@ -82,6 +83,7 @@ export interface WorkType {
   id: string
   doi: string
   url: string
+  contentUrl: string
   types: {
     resourceTypeGeneral?: string
     resourceType?: string
