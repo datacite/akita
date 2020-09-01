@@ -122,7 +122,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       {showFacets && renderFacets()}
 
       <Col md={9} id="content">
@@ -142,7 +142,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
           ></Pager>
         )}
       </Col>
-    </React.Fragment>
+    </>
   )
 }
 

@@ -276,9 +276,9 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Row>{renderResults()}</Row>
-    </React.Fragment>
+    </>
   )
 }
 

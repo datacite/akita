@@ -191,11 +191,11 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           <div className="description biography">{metadata.description}</div>
         )}
         {metadata.links && metadata.identifiers && (
-          <React.Fragment>
+          <>
             <Row>
               <Col md={6}>
                 {metadata.links && metadata.links.length > 0 && (
-                  <React.Fragment>
+                  <>
                     <h5>Links</h5>
                     {metadata.links.map((link) => (
                       <div key={link.name} className="people-links">
@@ -204,12 +204,12 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                         </a>
                       </div>
                     ))}
-                  </React.Fragment>
+                  </>
                 )}
               </Col>
               <Col md={6}>
                 {metadata.identifiers && metadata.identifiers.length > 0 && (
-                  <React.Fragment>
+                  <>
                     <h5>Other Identifiers</h5>
                     {metadata.identifiers.map((id) => (
                       <div key={id.identifier} className="people-identifiers">
@@ -223,7 +223,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                         </a>
                       </div>
                     ))}
-                  </React.Fragment>
+                  </>
                 )}
               </Col>
             </Row>
@@ -241,7 +241,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
               </div>
             </Col>
             </Row>
-          </React.Fragment>
+          </>
         )}
         {metadata.country && (
           <div className="tags">

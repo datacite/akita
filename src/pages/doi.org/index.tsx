@@ -10,13 +10,11 @@ const IndexPage = () => {
 
   return (
     <Layout path={'/doi.org'} >
-      <React.Fragment>
-        {!searchQuery || searchQuery === '' ? (
-          <Teaser title={'works'} />
-        ) : (
-          <SearchWork searchQuery={searchQuery} />
-        )}
-      </React.Fragment>
+      {!searchQuery || searchQuery === '' ? (
+        <Teaser title={'works'} />
+      ) : (
+        <SearchWork searchQuery={searchQuery} />
+      )}
     </Layout>
   )
 }

@@ -143,7 +143,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const container = () => {
     if (metadata.container && metadata.container.identifier) {
       return (
-        <React.Fragment>
+        <>
           {' '}
           in{' '}
           <a
@@ -154,7 +154,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           >
             {metadata.container.title}
           </a>
-        </React.Fragment>
+        </>
       )
     } else if (
       metadata.repository &&
@@ -162,16 +162,16 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       metadata.repository.id !== 'crossref.citations'
     ) {
       return (
-        <React.Fragment>
+        <>
           {' '}
           in{' '}
           <a href={'/doi.org?query=client.uid:' + metadata.repository.id}>
             {metadata.repository.name}
           </a>
-        </React.Fragment>
+        </>
       )
     } else {
-      return <React.Fragment> via {metadata.publisher}</React.Fragment>
+      return <> via {metadata.publisher}</>
     }
   }
 

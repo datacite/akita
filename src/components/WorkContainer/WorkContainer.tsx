@@ -255,11 +255,9 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
 
   const content = () => {
     return (
-      <React.Fragment>
-        <Col md={9} mdOffset={3} className="panel-list" id="content">
-          <Work doi={doi}></Work>
-        </Col>
-      </React.Fragment>
+      <Col md={9} mdOffset={3} className="panel-list" id="content">
+        <Work doi={doi}></Work>
+      </Col>
     )
   }
 
@@ -303,7 +301,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
             id="related-content-tabs"
             defaultActiveKey={defaultActiveKey}
           >
-            <React.Fragment>
+            <>
               <Col md={9} mdOffset={3}>
                 <Nav bsStyle="tabs">
                   {doi.references.totalCount > 0 && (
@@ -354,7 +352,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
                   </Tab.Pane>
                 )}
               </Tab.Content>
-            </React.Fragment>
+            </>
           </Tab.Container>
         </div>
       </div>
@@ -362,10 +360,10 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
   }
 
   return (
-    <React.Fragment>
+    <>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
-    </React.Fragment>
+    </>
   )
 }
 

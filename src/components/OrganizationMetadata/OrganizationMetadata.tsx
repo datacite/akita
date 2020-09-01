@@ -119,7 +119,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
         <Row>
           <Col md={6}>
             {(metadata.url || metadata.wikipediaUrl) && (
-              <React.Fragment>
+              <>
                 <h5>Links</h5>
                 {metadata.url && (
                   <div>
@@ -139,7 +139,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                     </a>
                   </div>
                 )}
-              </React.Fragment>
+              </>
             )}
           </Col>
           <Col md={6}>
@@ -157,7 +157,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               </a>
             </div>
             {metadata.fundref.length > 0 && (
-              <React.Fragment>
+              <>
                 {metadata.fundref
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
@@ -172,10 +172,10 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                       </a>
                     </div>
                   ))}
-              </React.Fragment>
+              </>
             )}
             {metadata.isni.length > 0 && (
-              <React.Fragment>
+              <>
                 {metadata.isni
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
@@ -190,10 +190,10 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                       </a>
                     </div>
                   ))}
-              </React.Fragment>
+              </>
             )}
             {metadata.wikidata.length > 0 && (
-              <React.Fragment>
+              <>
                 {metadata.wikidata
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
@@ -208,7 +208,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                       </a>
                     </div>
                   ))}
-              </React.Fragment>
+              </>
             )}
           </Col>
         </Row>

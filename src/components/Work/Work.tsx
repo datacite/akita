@@ -18,7 +18,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
     return (
-      <React.Fragment>
+      <>
         <h3 className="member-results">Export as</h3>
         <div className="export-metadata">
           <span id="export-xml">
@@ -87,7 +87,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             </a>
           </span>
           {doi.types.resourceTypeGeneral === 'Software' && (
-            <React.Fragment>
+            <>
               {' • '}
               <span id="export-codemeta" className="download">
                 <a
@@ -98,10 +98,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   Codemeta
                 </a>
               </span>
-            </React.Fragment>
+            </>
           )}
         </div>
-      </React.Fragment>
+      </>
     )
   }
 
@@ -195,13 +195,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
       {exportMetadata()}
       {formattedCitation()}
       {analyticsBar()}
-    </React.Fragment>
+    </>
   )
 }
 

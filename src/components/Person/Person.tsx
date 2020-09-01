@@ -128,10 +128,10 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   // }
 
   return (
-    <React.Fragment>
+    <>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
-    </React.Fragment>
+    </>
   )
 }
 

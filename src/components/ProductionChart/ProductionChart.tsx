@@ -120,9 +120,9 @@ const ProductionChart: React.FunctionComponent<Props> = ({
 
   const title = () => {
     return (
-      <React.Fragment>
+      <>
          <h4>Works by publication year</h4>
-      </React.Fragment>
+      </>
     )
   }
 

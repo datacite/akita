@@ -33,12 +33,10 @@ class MyApp extends App<IProps> {
     const { Component, pageProps, apollo } = this.props
 
     return (
-      <React.Fragment>
+      <ApolloProvider client={apollo}>
         {/* adds the apollo provider to provide it's children with the apollo scope. */}
-        <ApolloProvider client={apollo}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </React.Fragment>
+        <Component {...pageProps} />
+      </ApolloProvider>
     )
   }
 }

@@ -250,10 +250,10 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
   }
 
   return (
-    <React.Fragment>
+    <>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
-    </React.Fragment>
+    </>
   )
 }
 

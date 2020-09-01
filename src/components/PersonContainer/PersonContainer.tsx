@@ -211,7 +211,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
     const totalCount = orcidRecord.works.totalCount
 
     return (
-      <React.Fragment>
+      <>
         <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
             <h3 className="member-results">
@@ -238,15 +238,15 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
           url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
           endCursor={endCursor}
         />
-      </React.Fragment>
+      </>
     )
   }
 
   return (
-    <React.Fragment>
+    <>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
-    </React.Fragment>
+    </>
   )
 }
 

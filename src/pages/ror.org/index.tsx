@@ -10,13 +10,11 @@ const OrganizationIndexPage = () => {
 
   return (
     <Layout path={'/ror.org'} >
-      <React.Fragment>
-        {!searchQuery || searchQuery === '' ? (
-          <Teaser title={'organizations'} />
-        ) : (
-          <SearchOrganization searchQuery={searchQuery} />
-        )}
-      </React.Fragment>
+      {!searchQuery || searchQuery === '' ? (
+        <Teaser title={'organizations'} />
+      ) : (
+        <SearchOrganization searchQuery={searchQuery} />
+      )}
     </Layout>
   )
 }

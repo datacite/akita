@@ -47,7 +47,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
@@ -110,7 +110,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           </div>
         </Navbar.Collapse>
       </Navbar>
-    </React.Fragment>
+    </>
   )
 }
 
