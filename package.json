@@ -38,6 +38,7 @@
     "@types/testing-library__cypress": "^5.0.5",
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "date-fns": "^2.15.0",
+    "flagged": "^2.0.1",
     "graphql": "^15.0.0",
     "js-yaml-loader": "^1.2.2",
     "next": "^9.5.2",
