@@ -28,6 +28,10 @@ svg[data-icon='quote-left'] {
   cursor: pointer;
 }
 
+.panel-footer span.actions.with-label {
+  margin-right: 2.25em;
+}
+
 .panel-footer a {
   margin-right: 3em;
 }
