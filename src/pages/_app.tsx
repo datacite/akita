@@ -36,10 +36,14 @@ class MyApp extends App<IProps> {
     // feature flags are below. We can use ENV variables if we need more granular settings going forward
 
     // don't show consent cookie in production yet
-    const consentCookie = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
+    const consentCookie =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    // don't show download link in production yet
+    const downloadLink =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+      
     return (
-      <FlagsProvider features={{ consentCookie: consentCookie }}>
+      <FlagsProvider features={{ consentCookie: consentCookie, downloadLink: downloadLink }}>
         <ApolloProvider client={apollo}>
           {/* adds the apollo provider to provide it's children with the apollo scope. */}
           <Component {...pageProps} />

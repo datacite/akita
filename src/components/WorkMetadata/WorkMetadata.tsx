@@ -4,6 +4,7 @@ import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Pluralize from 'react-pluralize'
+import { useFeature } from 'flagged'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faQuoteLeft,
@@ -50,7 +51,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       ? metadata.id
       : 'https://doi.org/' + metadata.doi
 
-  const showDownloadLink = metadata.contentUrl
+  const showDownloadLink = metadata.contentUrl && useFeature('downloadLink')
   
   const searchtitle = () => {
     if (!metadata.titles[0])
