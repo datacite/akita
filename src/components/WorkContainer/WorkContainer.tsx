@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import Work from '../Work/Work'

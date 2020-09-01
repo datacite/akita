@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'

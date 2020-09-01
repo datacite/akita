@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Alert, Row, Col, Label } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'

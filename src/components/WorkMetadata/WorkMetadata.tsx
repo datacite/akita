@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'

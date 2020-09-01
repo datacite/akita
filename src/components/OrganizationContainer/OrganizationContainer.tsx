@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'

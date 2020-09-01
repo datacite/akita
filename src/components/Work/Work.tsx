@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import { compactNumbers } from '../../utils/helpers'
