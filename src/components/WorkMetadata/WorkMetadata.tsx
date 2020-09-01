@@ -450,15 +450,15 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         <a href={handleUrl}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {handleUrl}
         </a>
-        <span className="actions with-label">
-          {showDownloadLink && (
+        {showDownloadLink && (
+          <span className="actions with-label">
             <OverlayTrigger placement="top" overlay={tooltipDownload}>
               <a href={metadata.contentUrl} target="_blank" rel="noreferrer">
                 <FontAwesomeIcon icon={faDownload} size="sm" /> Download
               </a>
             </OverlayTrigger>
-          )}
-        </span>
+          </span>
+        )}
         <span className="actions">
           <OverlayTrigger placement="top" overlay={tooltipEnvelope}>
             <EmailShareButton url={pageUrl} title={title}>
