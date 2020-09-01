@@ -6,6 +6,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import withApollo from '../../hooks/withApollo'
+import { FlagsProvider } from 'flagged'
 import * as Sentry from '@sentry/node'
 
 // properly handle fontawesome icons
@@ -32,11 +33,18 @@ class MyApp extends App<IProps> {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props
 
+    // feature flags are below. We can use ENV variables if we need more granular settings going forward
+
+    // don't show consent cookie in production yet
+    const consentCookie = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
     return (
-      <ApolloProvider client={apollo}>
-        {/* adds the apollo provider to provide it's children with the apollo scope. */}
-        <Component {...pageProps} />
-      </ApolloProvider>
+      <FlagsProvider features={{ consentCookie: consentCookie }}>
+        <ApolloProvider client={apollo}>
+          {/* adds the apollo provider to provide it's children with the apollo scope. */}
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </FlagsProvider>
     )
   }
 }
