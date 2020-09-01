@@ -8,7 +8,7 @@ import {
   faTwitter,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons'
-import Links from 'config/links.yml'
+import Links from '../../../config/links.yml'
 
 const Footer = () => {
   const baseUrl =
