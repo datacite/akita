@@ -6,6 +6,15 @@
   "citationCount":33,
   "viewCount":0,
   "downloadCount":4504,
+  "employment": [
+    {
+      "organizationId": null,
+      "organizationName": "DataCite",
+      "roleTitle": "Application Developer",
+      "startDate": "2016-08-01T00:00:00Z",
+      "endDate": null
+    }
+  ],
   "works":{
     "pageInfo":{
       "endCursor":"MQ",
