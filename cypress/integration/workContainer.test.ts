@@ -34,17 +34,16 @@
 //   // })
 // })
 
-//TODO: Redo when data is available
-// describe("DoiContainer with usage", () => {
-//   before(() => {
-//     cy.visit(`/doi.org/${encodeURIComponent('10.70048/findable101')}`)
-//   })
+describe('workContainer with usage', () => {
+  before(() => {
+    cy.visit(`/doi.org/${encodeURIComponent('10.70048/findable101')}`)
+  })
 
-//   it("chart", () => {
-//     cy.get('.mark-rect > path',  { timeout: 10000 })
-//     .should('be.visible')
-//     .should('have.length', 4)
-//   })
-// })
+  it('chart', () => {
+    cy.get('.mark-rect > path', { timeout: 10000 })
+      .should('be.visible')
+      .should('have.length', 4)
+  })
+})
 
 export {}
