@@ -52,7 +52,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       : 'https://doi.org/' + metadata.doi
 
   const showDownloadLink = metadata.contentUrl && useFeature('downloadLink')
-  
+
   const searchtitle = () => {
     if (!metadata.titles[0])
       return (

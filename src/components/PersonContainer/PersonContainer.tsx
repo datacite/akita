@@ -51,6 +51,13 @@ export const DOI_GQL = gql`
       alternateName
       givenName
       familyName
+      employment {
+        organizationId
+        organizationName
+        roleTitle
+        startDate
+        endDate
+      }
       works(
         first: 25
         query: $query
@@ -83,6 +90,7 @@ export interface PersonType {
   givenName: string
   familyName: string
   alternateName: string[]
+  employment: Organization[]
   pageInfo: PageInfo
   works: Works
 }
@@ -96,6 +104,14 @@ interface Identifiers {
   identifierType: string
   identifierUrl: string
   identifier: string
+}
+
+interface Organization {
+  organizationId: string
+  organizationName: string
+  roleTitle: string
+  startDate: Date
+  endDate: Date
 }
 
 interface Country {

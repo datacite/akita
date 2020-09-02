@@ -38,12 +38,23 @@ class MyApp extends App<IProps> {
     // don't show consent cookie in production yet
     const consentCookie =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
     // don't show download link in production yet
     const downloadLink =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-      
+
+    // don't show person employment in production yet
+    const personEmployment =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
     return (
-      <FlagsProvider features={{ consentCookie: consentCookie, downloadLink: downloadLink }}>
+      <FlagsProvider
+        features={{
+          consentCookie,
+          downloadLink,
+          personEmployment
+        }}
+      >
         <ApolloProvider client={apollo}>
           {/* adds the apollo provider to provide it's children with the apollo scope. */}
           <Component {...pageProps} />

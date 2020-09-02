@@ -1,7 +1,10 @@
 import React from 'react'
 import { Alert } from 'react-bootstrap'
+import { useFeature } from 'flagged'
+
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
+import PersonEmployment from '../PersonEmployment/PersonEmployment'
 // import { compactNumbers } from '../../utils/helpers'
 // import Pluralize from 'react-pluralize'
 
@@ -12,6 +15,7 @@ export interface PersonRecord {
   identifiers: Identifier[]
   alternateName?: string[]
   country: Attribute
+  employment: EmploymentRecord[]
   name: string
   givenName: string
   familyName: string
@@ -21,6 +25,14 @@ export interface PersonRecord {
 export interface Attribute {
   name: string
   id: string
+}
+
+export interface EmploymentRecord {
+  organizationId: string
+  organizationName: string
+  roleTitle: string
+  startDate: Date
+  endDate: Date
 }
 
 interface Works {
@@ -61,6 +73,8 @@ type Props = {
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
+
+  const showEmployment = person.employment.length > 0 && useFeature('personEmployment')
 
   // const workCount = () => {
   //   if (person.works.totalCount == 0) {
@@ -131,6 +145,17 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     <>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
+      
+      {showEmployment && (
+        <h3 className="member-results" id="person-employment">Employment</h3>
+      )}
+      {showEmployment && (
+        person.employment.map((item) => (
+          <div className="panel panel-transparent employment" key={item.organizationName}>
+            <PersonEmployment employment={item} />
+          </div>
+        )
+      ))}
     </>
   )
 }
