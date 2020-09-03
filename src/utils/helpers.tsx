@@ -23,3 +23,7 @@ export const orcidFromUrl = (orcidUrl: string) => {
 export const rorFromUrl = (rorUrl: string) => {
   return rorUrl ? rorUrl.substring(15) : null
 }
+
+export const gridFromUrl = (gridUrl: string) => {
+  return gridUrl ? gridUrl.substring(15) : null
+}
