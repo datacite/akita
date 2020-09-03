@@ -31,6 +31,14 @@ export const DOI_GQL = gql`
     work(id: $id) {
       ...WorkFragment
       contentUrl
+      fundingReferences {
+        funderIdentifier
+        funderIdentifierType
+        funderName
+        awardTitle
+        awardUri
+        awardNumber
+      }
       formattedCitation
       viewsOverTime {
         yearMonth
@@ -115,6 +123,7 @@ export interface WorkType {
   }
   registered?: Date
   formattedCitation?: string
+  fundingReferences?: FundingReference[]
   citationCount?: number
   citations?: {
     published: Facet[]
@@ -167,6 +176,15 @@ interface Rights {
   rightsIdentifier: string
 }
 
+export interface FundingReference {
+  funderIdentifier?: string
+  funderIdentifierType?: string
+  funderName?: string
+  awardUri?: string
+  awardTitle?: string
+  awardNumber?: string
+}
+
 interface FieldOfScience {
   id: string
   name: string
@@ -174,6 +192,15 @@ interface FieldOfScience {
 
 interface Description {
   description: string
+}
+
+interface fundingReferences {
+  funderIdentifier: string
+  funderIdentifierType: string
+  funderName: string
+  awardUri: string
+  awardTitle: string
+  awardNumber: string
 }
 
 interface PageInfo {
@@ -213,7 +240,10 @@ interface QueryVar {
   registrationAgency: string
 }
 
-const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) => {
+const WorkContainer: React.FunctionComponent<Props> = ({
+  item,
+  searchQuery
+}) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })
@@ -241,10 +271,7 @@ const WorkContainer: React.FunctionComponent<Props> = ({ item, searchQuery }) =>
     }
   })
 
-  if (loading)
-    return (
-      <Loading />
-    )
+  if (loading) return <Loading />
 
   if (error)
     return (

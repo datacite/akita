@@ -47,12 +47,17 @@ class MyApp extends App<IProps> {
     const personEmployment =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    return (
+    // don't show work funding in production yet
+    const workFunding =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    
+      return (
       <FlagsProvider
         features={{
           consentCookie,
           downloadLink,
-          personEmployment
+          personEmployment,
+          workFunding
         }}
       >
         <ApolloProvider client={apollo}>
