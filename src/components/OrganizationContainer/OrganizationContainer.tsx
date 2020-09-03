@@ -2,14 +2,15 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
 import Pluralize from 'react-pluralize'
 
 import Error from '../Error/Error'
-// import Search from '../Search/Search'
 import Organization from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import WorksListing from '../WorksListing/WorksListing'
 import Loading from '../Loading/Loading'
+import { rorFromUrl } from '../../utils/helpers'
 
 import {
   Works,
@@ -18,7 +19,9 @@ import {
 } from '../SearchWork/SearchWork'
 
 type Props = {
-  rorId: string
+  rorId?: string
+  gridId?: string
+  crossrefFunderId?: string
   searchQuery: string
 }
 
@@ -53,6 +56,8 @@ interface OrganizationQueryData {
 
 interface OrganizationQueryVar {
   id: string
+  gridId: string
+  crossrefFunderId: string
   query: string
   cursor: string
   published: string
@@ -65,7 +70,9 @@ interface OrganizationQueryVar {
 
 export const ORGANIZATION_GQL = gql`
   query getOrganizationQuery(
-    $id: ID!
+    $id: ID
+    $gridId: ID
+    $crossrefFunderId: ID
     $cursor: String
     $query: String
     $published: String
@@ -75,7 +82,11 @@ export const ORGANIZATION_GQL = gql`
     $license: String
     $registrationAgency: String
   ) {
-    organization(id: $id) {
+    organization(
+      id: $id
+      gridId: $gridId
+      crossrefFunderId: $crossrefFunderId
+    ) {
       id
       name
       alternateName
@@ -111,7 +122,13 @@ export const ORGANIZATION_GQL = gql`
   ${contentFragment.work}
 `
 
-const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQuery }) => {
+const OrganizationContainer: React.FunctionComponent<Props> = ({
+  rorId,
+  gridId,
+  crossrefFunderId,
+  searchQuery
+}) => {
+  const router = useRouter()
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -127,17 +144,15 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  //  const [organization, setOrganization] = React.useState<OrganizationRecord>()
-
-  const fullId = 'https://ror.org/' + rorId
-
   const { loading, error, data } = useQuery<
     OrganizationQueryData,
     OrganizationQueryVar
   >(ORGANIZATION_GQL, {
     errorPolicy: 'all',
     variables: {
-      id: fullId,
+      id: rorId,
+      gridId: gridId,
+      crossrefFunderId: crossrefFunderId,
       cursor: cursor,
       query: searchQuery,
       published: published as string,
@@ -199,6 +214,16 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({ rorId, searchQu
   })()
 
   if (!organization) return <div></div>
+
+  // if query was for gridId or crossrefFunderId and organization was found 
+  if (!rorId && router) {
+    router.push('/ror.org' + rorFromUrl(organization.metadata.id))
+    return (
+      <div className="row">
+        <Loading />
+      </div>
+    )
+  }
 
   const relatedContent = () => {
     const hasNextPage = data.organization.works.totalCount > 25
