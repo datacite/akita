@@ -9,9 +9,11 @@ type Props = {
 }
 
 const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
-  console.log(funding)
   const funder = () => {
-    if (funding.funderIdentifier && funding.funderIdentifier.startsWith('https://doi.org/10.13039'))
+    if (
+      funding.funderIdentifier &&
+      funding.funderIdentifier.startsWith('https://doi.org/10.13039')
+    )
       return (
         <h3 className="work">
           <Link
@@ -41,13 +43,16 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
     let url = null
     if (funding.awardUri && funding.awardUri.startsWith('http')) {
       url = funding.awardUri
-    } else if (funding.awardUri && funding.awardUri.startsWith('info:eu-repo/grantAgreement')) {
+    } else if (
+      funding.awardUri &&
+      funding.awardUri.startsWith('info:eu-repo/grantAgreement')
+    ) {
       // provide url for EC funding
       url = 'https://cordis.europa.eu/project/id/' + funding.awardNumber
     }
 
     if (!url) return <div className="award">{title}</div>
-    
+
     return (
       <div className="award">
         <a target="_blank" rel="noreferrer" href={url}>
