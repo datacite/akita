@@ -46,7 +46,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
     } else if (
       (funding.awardUri &&
         funding.awardUri.startsWith('info:eu-repo/grantAgreement')) ||
-      (funding.awardNumber &&
+      (funding.awardNumber && funding.funderIdentifier && 
         funding.funderIdentifier.startsWith('https://doi.org/10.13039'))
     ) {
       // provide url for EC funding
