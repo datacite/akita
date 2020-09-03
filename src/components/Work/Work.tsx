@@ -17,7 +17,7 @@ type Props = {
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
-  const showFunding = doi.fundingReferences && useFeature('workFunding')
+  const showFunding = doi.fundingReferences.length > 0 && useFeature('workFunding')
 
   const exportMetadata = () => {
     const apiUrl =
