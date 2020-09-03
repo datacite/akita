@@ -12,6 +12,10 @@ export const compactNumbers = (num) => {
   return num
 }
 
+export const doiFromUrl = (doiUrl: string) => {
+  return doiUrl ? doiUrl.substring(15) : null
+}
+
 export const orcidFromUrl = (orcidUrl: string) => {
   return orcidUrl ? orcidUrl.substring(17) : null
 }

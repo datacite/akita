@@ -1,10 +1,13 @@
 import React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
+import { useFeature } from 'flagged'
+
 import { compactNumbers } from '../../utils/helpers'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
+import WorkFunding from '../WorkFunding/WorkFunding'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
@@ -13,6 +16,8 @@ type Props = {
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
+
+  const showFunding = doi.fundingReferences && useFeature('workFunding')
 
   const exportMetadata = () => {
     const apiUrl =
@@ -200,6 +205,16 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
       {exportMetadata()}
       {formattedCitation()}
+      {showFunding && (
+        <h3 className="member-results" id="work-funding">Funding</h3>
+      )}
+      {showFunding && (
+        doi.fundingReferences.map((item) => (
+          <div className="panel panel-transparent funding" key={item.funderName}>
+            <WorkFunding funding={item} />
+          </div>
+        )
+      ))}
       {analyticsBar()}
     </>
   )
