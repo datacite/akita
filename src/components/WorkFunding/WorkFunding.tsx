@@ -47,7 +47,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
       (funding.awardUri &&
         funding.awardUri.startsWith('info:eu-repo/grantAgreement')) ||
       (funding.awardNumber && funding.funderIdentifier && 
-        funding.funderIdentifier.startsWith('https://doi.org/10.13039'))
+        funding.funderIdentifier == 'https://doi.org/10.13039/501100000780')
     ) {
       // provide url for EC funding
       url = 'https://cordis.europa.eu/project/id/' + funding.awardNumber
