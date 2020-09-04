@@ -29,11 +29,18 @@ interface OrganizationResult {
   id: string
   name: string
   alternateName: string[]
+  inceptionYear: number
   url: string
   wikipediaUrl: string
+  twitter: string
   types: string[]
-  address: {
-    country: string
+  country: {
+    id: string
+    name: string
+  }
+  geolocation: {
+    pointLongitude: number
+    pointLatitude: number
   }
   identifiers: [
     {
@@ -90,11 +97,18 @@ export const ORGANIZATION_GQL = gql`
       id
       name
       alternateName
+      inceptionYear
       url
       wikipediaUrl
+      twitter
       types
-      address {
-        country
+      country {
+        id
+        name
+      }
+      geolocation {
+        pointLongitude
+        pointLatitude
       }
       identifiers {
         identifier
@@ -197,10 +211,13 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       id: organization.id,
       name: organization.name,
       alternateNames: organization.alternateName,
+      inceptionYear: organization.inceptionYear,
       types: organization.types,
       url: organization.url,
       wikipediaUrl: organization.wikipediaUrl,
-      countryName: organization.address.country,
+      twitter: organization.twitter,
+      country: organization.country,
+      geolocation: organization.geolocation,
       grid: grid,
       fundref: fundref,
       isni: isni,

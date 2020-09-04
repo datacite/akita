@@ -1,29 +1,39 @@
 import React from 'react'
 import Link from 'next/link'
 import { Label, Col, Row } from 'react-bootstrap'
-import { rorFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faExternalLinkAlt, faEnvelope
+  faExternalLinkAlt,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
-import {
-  faTwitter,
-  faFacebook
-} from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
 } from 'react-share'
+import { decimalToSexagesimal } from 'geolib'
+import { useFeature } from 'flagged'
+
+import { rorFromUrl } from '../../utils/helpers'
 
 export interface OrganizationMetadataRecord {
   id: string
   name: string
   alternateNames: string[]
+  inceptionYear: number
   url: string
   wikipediaUrl: string
+  twitter: string
   types: string[]
-  countryName: string
+  country: {
+    id: string
+    name: string
+  }
+  geolocation: {
+    pointLongitude: number
+    pointLatitude: number
+  }
   identifiers: {
     identifier: string
     identifierType: string
@@ -55,6 +65,15 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
+  const showInceptionYear =
+    metadata.inceptionYear && useFeature('organizationWikidata')
+  const showTwitter = metadata.twitter && useFeature('organizationWikidata')
+  const showLocation =
+    metadata.geolocation &&
+    metadata.geolocation.pointLongitude &&
+    metadata.geolocation.pointLatitude &&
+    useFeature('organizationWikidata')
+
   const titleLink = () => {
     if (!linkToExternal) {
       return (
@@ -82,6 +101,32 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
         </a>
       )
     }
+  }
+
+  const geolocation = () => {
+    const latitude =
+      metadata.geolocation.pointLatitude > 0
+        ? decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
+          ' N, '
+        : decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
+          ' S'
+    const longitude =
+      metadata.geolocation.pointLongitude > 0
+        ? decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
+          ' W'
+        : decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
+          ' E'
+
+    return (
+      <a
+        href={`https://geohack.toolforge.org/geohack.php?params=${metadata.geolocation.pointLatitude};${metadata.geolocation.pointLongitude}_&language=en`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {latitude}
+        {longitude}
+      </a>
+    )
   }
 
   const footer = () => {
@@ -116,9 +161,18 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         <h3 className="work">{titleLink()}</h3>
+        {showInceptionYear && (
+          <div className="inception-year">Founded {metadata.inceptionYear}</div>
+        )}
+        {showLocation && (
+          <div className="location">
+            <h5>Geolocation</h5>
+            {geolocation()}
+          </div>
+        )}
         <Row>
           <Col md={6}>
-            {(metadata.url || metadata.wikipediaUrl) && (
+            {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
               <>
                 <h5>Links</h5>
                 {metadata.url && (
@@ -136,6 +190,17 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                       rel="noreferrer"
                     >
                       Wikipedia
+                    </a>
+                  </div>
+                )}
+                {showTwitter && (
+                  <div>
+                    <a
+                      href={'https://twitter.com/' + metadata.twitter}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Twitter
                     </a>
                   </div>
                 )}
@@ -213,7 +278,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           </Col>
         </Row>
         <div className="tags">
-          <Label bsStyle="info">{metadata.countryName}</Label>
+          <Label bsStyle="info">{metadata.country.name}</Label>
           <span>
             {metadata.types.map((type) => (
               <Label key="type" bsStyle="info">

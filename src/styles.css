@@ -270,7 +270,7 @@ ul.nav.nav-tabs li span {
   font-size: 25px;
 }
 
-.description.biography {
+.description.biography, .location, .inception-year {
   margin-bottom: 10px;
 }
 

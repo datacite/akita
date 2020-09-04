@@ -26,11 +26,13 @@ interface OrganizationsNode {
   id: string
   name: string
   alternateName: string[]
+  inceptionYear: number
   types: string[]
   url: string
   wikipediaUrl: string
-  address: {
-    country: string
+  country: {
+    id: string
+    name: string
   }
   grid: [
     {
@@ -119,11 +121,13 @@ export const ORGANIZATIONS_GQL = gql`
         id
         name
         alternateName
+        inceptionYear
         types
         url
         wikipediaUrl
-        address {
-          country
+        country {
+          id
+          name
         }
         identifiers {
           identifier
@@ -191,7 +195,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           types: node.types,
           url: node.url,
           wikipediaUrl: node.wikipediaUrl,
-          countryName: node.address.country,
+          country: node.country,
           grid: grid,
           fundref: fundref,
           isni: isni,

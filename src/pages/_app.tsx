@@ -51,13 +51,18 @@ class MyApp extends App<IProps> {
     const workFunding =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
     
-      return (
+    // don't show organization info from Wikidata in production yet
+    const organizationWikidata =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
+    return (
       <FlagsProvider
         features={{
           consentCookie,
           downloadLink,
           personEmployment,
-          workFunding
+          workFunding,
+          organizationWikidata
         }}
       >
         <ApolloProvider client={apollo}>
