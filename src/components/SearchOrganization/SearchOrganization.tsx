@@ -30,6 +30,11 @@ interface OrganizationsNode {
   types: string[]
   url: string
   wikipediaUrl: string
+  twitter: string
+  geolocation: {
+    pointLongitude: number
+    pointLatitude: number
+  }
   country: {
     id: string
     name: string
@@ -194,6 +199,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           alternateNames: node.alternateName,
           types: node.types,
           url: node.url,
+          inceptionYear: node.inceptionYear, 
+          twitter: node.twitter, 
+          geolocation: node.geolocation,
           wikipediaUrl: node.wikipediaUrl,
           country: node.country,
           grid: grid,

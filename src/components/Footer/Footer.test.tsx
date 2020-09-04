@@ -8,3 +8,5 @@
 //     cy.get('[data-cy=about]').contains('About DataCite').should('be.visible')
 //   })
 // })
+
+export {}

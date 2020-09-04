@@ -14,3 +14,5 @@
 //     cy.get('.container-fluid').contains('Bla bla').should('be.visible')
 //   })
 // })
+
+export {}

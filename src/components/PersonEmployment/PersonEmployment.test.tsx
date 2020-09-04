@@ -16,3 +16,5 @@
 //     cy.get('h3.work').contains('DataCite')
 //   })
 // })
+
+export {}
