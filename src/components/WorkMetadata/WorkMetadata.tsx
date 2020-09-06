@@ -460,27 +460,31 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             </OverlayTrigger>
           </span>
         )}
-        <span className="actions">
-          <OverlayTrigger placement="top" overlay={tooltipEnvelope}>
-            <EmailShareButton url={pageUrl} title={title}>
-              <FontAwesomeIcon icon={faEnvelope} />
-            </EmailShareButton>
-          </OverlayTrigger>
-        </span>
-        <span className="actions">
-          <OverlayTrigger placement="top" overlay={tooltipTwitter}>
-            <TwitterShareButton url={pageUrl} title={title}>
-              <FontAwesomeIcon icon={faTwitter} />
-            </TwitterShareButton>
-          </OverlayTrigger>
-        </span>
-        <span className="actions">
-          <OverlayTrigger placement="top" overlay={tooltipFacebook}>
-            <FacebookShareButton url={pageUrl} title={title}>
-              <FontAwesomeIcon icon={faFacebook} /> Share
-            </FacebookShareButton>
-          </OverlayTrigger>
-        </span>
+        {linkToExternal && (
+          <>
+            <span className="actions">
+              <OverlayTrigger placement="top" overlay={tooltipEnvelope}>
+                <EmailShareButton url={pageUrl} title={title}>
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </EmailShareButton>
+              </OverlayTrigger>
+            </span>
+            <span className="actions">
+              <OverlayTrigger placement="top" overlay={tooltipTwitter}>
+                <TwitterShareButton url={pageUrl} title={title}>
+                  <FontAwesomeIcon icon={faTwitter} />
+                </TwitterShareButton>
+              </OverlayTrigger>
+            </span>
+            <span className="actions">
+              <OverlayTrigger placement="top" overlay={tooltipFacebook}>
+                <FacebookShareButton url={pageUrl} title={title}>
+                  <FontAwesomeIcon icon={faFacebook} /> Share
+                </FacebookShareButton>
+              </OverlayTrigger>
+            </span>
+          </>
+        )}
       </div>
     )
   }
