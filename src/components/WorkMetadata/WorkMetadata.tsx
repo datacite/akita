@@ -4,13 +4,11 @@ import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Pluralize from 'react-pluralize'
-import { useFeature } from 'flagged'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faQuoteLeft,
   faExternalLinkAlt,
   faDownload,
-  faEnvelope
 } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -20,16 +18,10 @@ import {
   faCreativeCommonsNd,
   faCreativeCommonsSa,
   faCreativeCommonsZero,
-  faTwitter,
-  faFacebook
 } from '@fortawesome/free-brands-svg-icons'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
+
 import { WorkType } from '../WorkContainer/WorkContainer'
 import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
 
@@ -50,8 +42,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     metadata.registrationAgency.id === 'datacite'
       ? metadata.id
       : 'https://doi.org/' + metadata.doi
-
-  const showDownloadLink = metadata.contentUrl && useFeature('downloadLink')
 
   const searchtitle = () => {
     if (!metadata.titles[0])
@@ -339,30 +329,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
-  const tooltipDownload = (
-    <Tooltip id="tooltipDownload">
-      Download link to PDF provided by Unpaywall.
-    </Tooltip>
-  )
-
-  const tooltipEnvelope = (
-    <Tooltip id="tooltipEnvelope">
-      Share this page via email.
-    </Tooltip>
-  )
-
-  const tooltipFacebook = (
-    <Tooltip id="tooltipFacebook">
-      Share this page via Facebook.
-    </Tooltip>
-  )
-
-  const tooltipTwitter = (
-    <Tooltip id="tooltipTwitter">
-      Share this page via Twitter.
-    </Tooltip>
-  )
-
   const tags = () => {
     return (
       <div className="tags">
@@ -437,54 +403,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
-    const pageUrl =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/doi.org/' + metadata.doi
-        : 'https://commons.stage.datacite.org/doi.org/' + metadata.doi
-
-    const title = metadata.titles[0]
-      ? 'DataCite Commons: ' + metadata.titles[0].title
-      : 'DataCite Commons: No Title'
-
     return (
       <div className="panel-footer">
         <a href={handleUrl}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {handleUrl}
-        </a>
-        {showDownloadLink && (
-          <span className="actions with-label">
-            <OverlayTrigger placement="top" overlay={tooltipDownload}>
-              <a href={metadata.contentUrl} target="_blank" rel="noreferrer">
-                <FontAwesomeIcon icon={faDownload} size="sm" /> Download
-              </a>
-            </OverlayTrigger>
-          </span>
-        )}
-        {linkToExternal && (
-          <>
-            <span className="actions">
-              <OverlayTrigger placement="top" overlay={tooltipEnvelope}>
-                <EmailShareButton url={pageUrl} title={title}>
-                  <FontAwesomeIcon icon={faEnvelope} />
-                </EmailShareButton>
-              </OverlayTrigger>
-            </span>
-            <span className="actions">
-              <OverlayTrigger placement="top" overlay={tooltipTwitter}>
-                <TwitterShareButton url={pageUrl} title={title}>
-                  <FontAwesomeIcon icon={faTwitter} />
-                </TwitterShareButton>
-              </OverlayTrigger>
-            </span>
-            <span className="actions">
-              <OverlayTrigger placement="top" overlay={tooltipFacebook}>
-                <FacebookShareButton url={pageUrl} title={title}>
-                  <FontAwesomeIcon icon={faFacebook} /> Share
-                </FacebookShareButton>
-              </OverlayTrigger>
-            </span>
-          </>
-        )}
+        </a>        
       </div>
     )
   }

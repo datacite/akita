@@ -3,17 +3,9 @@ import { Alert, Row, Col, Label } from 'react-bootstrap'
 // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import {
-  faOrcid,
-  faTwitter,
-  faFacebook
+  faOrcid
 } from '@fortawesome/free-brands-svg-icons'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
 
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
@@ -58,29 +50,11 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   }
 
   const footer = () => {
-    const title = 'DataCite Commons: ' + metadata.name
-    const url = window.location.href
-
     return (
       <div className="panel-footer">
         <a id="orcid-link" href={metadata.id}>
           <FontAwesomeIcon icon={faOrcid} /> {metadata.id}
         </a>
-        <span className="actions">
-          <EmailShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faEnvelope} />
-          </EmailShareButton>
-        </span>
-        <span className="actions">
-          <TwitterShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faTwitter} />
-          </TwitterShareButton>
-        </span>
-        <span className="actions">
-          <FacebookShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faFacebook} />
-          </FacebookShareButton>
-        </span>
       </div>
     )
   }
@@ -228,18 +202,18 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
               </Col>
             </Row>
             <Row>
-            <Col md={6} id="other-profiles">
-              <h5>Other Profiles</h5>
-              <div id="profile-orcid" className="people-profiles">
-                {orcidLink}
-              </div>
-              <div id="profile-impactstory" className="people-profiles">
-                {impactLink}
-              </div>
-              <div id="profile-europepmc" className="people-profiles">
-                {europePMCLink}
-              </div>
-            </Col>
+              <Col md={6} id="other-profiles">
+                <h5>Other Profiles</h5>
+                <div id="profile-orcid" className="people-profiles">
+                  {orcidLink}
+                </div>
+                <div id="profile-impactstory" className="people-profiles">
+                  {impactLink}
+                </div>
+                <div id="profile-europepmc" className="people-profiles">
+                  {europePMCLink}
+                </div>
+              </Col>
             </Row>
           </>
         )}

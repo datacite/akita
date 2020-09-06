@@ -3,15 +3,8 @@ import Link from 'next/link'
 import { Label, Col, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faExternalLinkAlt,
-  faEnvelope
+  faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
 import { decimalToSexagesimal } from 'geolib'
 import { useFeature } from 'flagged'
 
@@ -130,29 +123,11 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   }
 
   const footer = () => {
-    const title = 'DataCite Commons: ' + metadata.name
-    const url = window.location.href
-
     return (
       <div className="panel-footer">
         <a id="ror-link" target="_blank" rel="noreferrer" href={metadata.id}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
-        <span className="actions">
-          <EmailShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faEnvelope} />
-          </EmailShareButton>
-        </span>
-        <span className="actions">
-          <TwitterShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faTwitter} />
-          </TwitterShareButton>
-        </span>
-        <span className="actions">
-          <FacebookShareButton url={url} title={title}>
-            <FontAwesomeIcon icon={faFacebook} />
-          </FacebookShareButton>
-        </span>
       </div>
     )
   }

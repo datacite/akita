@@ -46,7 +46,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
   if (!style)
     return (
       <div>
-        <h3 className="member-results">Cite as</h3>
+        <h3 className="member-results">Cite</h3>
         <div className="panel panel-transparent">
           <div className="formatted-citation panel-body">
             {ReactHtmlParser(input)}
@@ -82,7 +82,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
 
   return (
     <div>
-      <h3 className="member-results">Cite as</h3>
+      <h3 className="member-results">Cite</h3>
       <div className="panel panel-transparent">
         <div className="formatted-citation panel-body">
           {ReactHtmlParser(formatted)}
