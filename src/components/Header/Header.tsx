@@ -72,7 +72,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     'https://profiles.stage.datacite.org'
 
   const user = session()
-
+  console.log(user)
   return (
     <Navbar fluid>
       <Navbar.Header>
