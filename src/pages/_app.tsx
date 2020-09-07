@@ -6,6 +6,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import withApollo from '../../hooks/withApollo'
+import { session } from '../utils/session'
 import { FlagsProvider } from 'flagged'
 import * as Sentry from '@sentry/node'
 
@@ -33,27 +34,25 @@ class MyApp extends App<IProps> {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props
 
-    // feature flags are below. We can use ENV variables if we need more granular settings going forward
+    // feature flags are below. We can use ENV variables
+    // or we are checking that the user is logged in and is a beta tester
+    const user = session()
 
     // don't show consent cookie in production yet
     const consentCookie =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    // don't show download link in production yet
-    const downloadLink =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    // show download link only to beta user
+    const downloadLink = user && user.beta_tester
 
-    // don't show person employment in production yet
-    const personEmployment =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    // show person employment only to beta user
+    const personEmployment = user && user.beta_tester
 
-    // don't show work funding in production yet
-    const workFunding =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    // show work funding only to beta user
+    const workFunding = user && user.beta_tester
     
     // don't show organization info from Wikidata in production yet
-    const organizationWikidata =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    const organizationWikidata = user && user.beta_tester
 
     return (
       <FlagsProvider
