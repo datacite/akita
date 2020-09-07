@@ -49,6 +49,26 @@ h3.popover-title {
   padding-top: 2px;
 }
 
+.navbar-right .dropdown a {
+  color: #88939A;
+}
+
+.navbar-right .dropdown .divider {
+  height: 8px;
+}
+
+.btn.sign-in {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+  font-size: 18px !important;
+}
+
+.btn.sign-in:hover {
+  background-color: transparent;
+}
+
 .navbar-form {
   padding-bottom: 0;
   margin-left: 54px;
@@ -56,7 +76,6 @@ h3.popover-title {
 }
 
 .navbar-form .input-group input[name="query"] {
-  z-index: 2;
   width: 500px;
   height: 40px;
   border: 1px solid #cdd2d5;
@@ -69,7 +88,7 @@ h3.popover-title {
 
 @media(max-width:1200px) {
   .navbar-form .input-group input[name="query"] {
-    width: 450px;
+    width: 350px;
   }
   .navbar-form {
     margin-left: -14px;
@@ -85,7 +104,6 @@ h3.popover-title {
 }
 
 .navbar-form #search-clear {
-  z-index: 3;
   color: #cdd2d5;
   position: absolute;
   right: 60px;
@@ -100,7 +118,6 @@ h3.popover-title {
 }
 
 .navbar-form .input-group .input-group-btn button {
-  z-index: 1;
   margin-top: 0;
   margin-left: -1px;
   margin-bottom: 0;
@@ -110,8 +127,15 @@ h3.popover-title {
   margin-block-start: 3px;
 }
 
-.btn.navbar-text {
-  margin-top: 20px;
+#sign-in, #basic-nav-dropdown {
+  margin-top: 14px !important;
+  border: 1px solid #cdd2d5;
+  border-radius: 26px !important;
+}
+
+#sign-in:hover, #basic-nav-dropdown:hover {
+  color: white !important;
+  background-color: #28394B !important;
 }
 
 h2.member-results {
@@ -196,15 +220,9 @@ ul.ror-identifiers {
   margin-right: 10px;
 }
 
-.col-md-9.search-nav {
-  margin-top: -36px;
-  margin-bottom: -20px;
-  margin-left: 0;
-  padding-left: 0;
-}
-
 #search-nav {
   margin-left: -6px;
+  margin-top: -15px;
   padding-left: 0;
 }
 
