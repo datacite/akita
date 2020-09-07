@@ -16,14 +16,14 @@ describe('PersonContainer', () => {
     cy.get('.panel-body h3.work', { timeout: 30000 }).contains('K. J. Garza')
   })
 
-  it('employment', () => {
-    cy.get('#person-employment', { timeout: 30000 }).contains('Employment')
-    cy.get('.panel.employment').should(($employment) => {
-      expect($employment).to.have.length(1)
-      expect($employment.eq(0)).to.contain('DataCite')
-      expect($employment.eq(0)).to.contain('Since August 2016')
-    })
-  })
+  // it('employment', () => {
+  //   cy.get('#person-employment', { timeout: 30000 }).contains('Employment')
+  //   cy.get('.panel.employment').should(($employment) => {
+  //     expect($employment).to.have.length(1)
+  //     expect($employment.eq(0)).to.contain('DataCite')
+  //     expect($employment.eq(0)).to.contain('Since August 2016')
+  //   })
+  // })
 
   it('links', () => {
     cy.get('.people-links').should(($link) => {

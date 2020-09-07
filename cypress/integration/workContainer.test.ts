@@ -47,20 +47,20 @@ describe('workContainer with usage', () => {
   })
 })
 
-describe('workContainer with funding', () => {
-  before(() => {
-    cy.setCookie('_consent', 'true')
-    cy.visit(`/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`)
-  })
+// describe('workContainer with funding', () => {
+//   before(() => {
+//     cy.setCookie('_consent', 'true')
+//     cy.visit(`/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`)
+//   })
 
-  it('funding', () => {
-    cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
-    cy.get('.panel.funding').should(($funding) => {
-      expect($funding).to.have.length(2)
-      expect($funding.eq(0)).to.contain('Water Ice')
-      expect($funding.eq(1)).to.contain('ARC')
-    })
-  })
-})
+//   it('funding', () => {
+//     cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
+//     cy.get('.panel.funding').should(($funding) => {
+//       expect($funding).to.have.length(2)
+//       expect($funding.eq(0)).to.contain('Water Ice')
+//       expect($funding.eq(1)).to.contain('ARC')
+//     })
+//   })
+// })
 
 export {}
