@@ -75,11 +75,11 @@ describe('WorkMetadata Component', () => {
       .should('be.visible')
   })
 
-  it('actions', () => {
-    mount(<WorkMetadata metadata={data} />)
-    cy.get('.actions')
-    .should(($action) => {
-      expect($action).to.have.length(3)
-    })
-  })
+  // it('actions', () => {
+  //   mount(<WorkMetadata metadata={data} />)
+  //   cy.get('.actions')
+  //   .should(($action) => {
+  //     expect($action).to.have.length(3)
+  //   })
+  // })
 })

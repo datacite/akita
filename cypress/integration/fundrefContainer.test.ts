@@ -16,12 +16,12 @@ describe("FundrefContainer", () => {
       .contains('University of Oxford')
   })
 
-  it('actions', () => {
-    cy.get('.actions', { timeout: 30000 })
-    .should(($action) => {
-      expect($action).to.have.length.at.least(3)
-    })
-  })
+  // it('actions', () => {
+  //   cy.get('.actions', { timeout: 30000 })
+  //   .should(($action) => {
+  //     expect($action).to.have.length.at.least(3)
+  //   })
+  // })
 })
 
 export {}

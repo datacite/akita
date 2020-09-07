@@ -63,11 +63,11 @@ describe('Doi Component', () => {
     cy.get('.citations-list').should('not.be.visible')
   })
 
-  it('actions', () => {
-    mount(<Work doi={data} />)
-    cy.get('.actions')
-    .should(($action) => {
-      expect($action).to.have.length(3)
-    })
-  })
+  // it('actions', () => {
+  //   mount(<Work doi={data} />)
+  //   cy.get('.actions')
+  //   .should(($action) => {
+  //     expect($action).to.have.length(3)
+  //   })
+  // })
 })

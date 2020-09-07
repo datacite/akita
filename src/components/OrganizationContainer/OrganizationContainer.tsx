@@ -4,6 +4,16 @@ import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import { useRouter } from 'next/router'
 import Pluralize from 'react-pluralize'
+import { useFeature } from 'flagged'
+import QRCode from 'react-qr-code'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import Error from '../Error/Error'
 import Organization from '../Organization/Organization'
@@ -282,6 +292,57 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     )
   }
 
+  const shareLink = () => {
+    const pageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)
+        : 'https://commons.stage.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)
+
+    const title = organization.metadata.name
+      ? 'DataCite Commons: ' + organization.metadata.name
+      : 'DataCite Commons: No Name'
+    const showQrCode = useFeature('downloadLink')
+
+    return (
+      <Col md={9} mdOffset={3}>
+        <h3 className="member-results">Share</h3>
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <Row>
+              <Col md={4}>
+                <h5>Email and Social Media</h5>
+                <div>
+                  <EmailShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faEnvelope} /> Email
+                  </EmailShareButton>
+                </div>
+                <div>
+                  <TwitterShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faTwitter} /> Twitter
+                  </TwitterShareButton>
+                </div>
+                <div>
+                  <FacebookShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faFacebook} /> Facebook
+                  </FacebookShareButton>
+                </div>
+              </Col>
+              {showQrCode && (
+                <Col md={4}>
+                  <h5>QR Code</h5>
+                  <QRCode
+                    value={'https://commons.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)}
+                    size={100}
+                  />
+                </Col>
+              )}
+            </Row>
+          </div>
+        </div>
+      </Col>
+    )
+  }
+
   const content = () => {
     return (
       <Col md={9} mdOffset={3} className="panel-list" id="content">
@@ -294,6 +355,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
   return (
     <>
       <Row>{content()}</Row>
+      <Row>{shareLink()}</Row>
       <Row>{relatedContent()}</Row>
     </>
   )

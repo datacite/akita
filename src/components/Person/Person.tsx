@@ -1,12 +1,20 @@
 import React from 'react'
-import { Alert } from 'react-bootstrap'
+import { Alert, Row, Col } from 'react-bootstrap'
 import { useFeature } from 'flagged'
+import QRCode from 'react-qr-code'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
-// import { compactNumbers } from '../../utils/helpers'
-// import Pluralize from 'react-pluralize'
+import { orcidFromUrl } from '../../utils/helpers'
 
 export interface PersonRecord {
   id: string
@@ -75,6 +83,57 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
   const showEmployment = person.employment.length > 0 && useFeature('personEmployment')
+
+  const shareLink = () => {
+    const pageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)
+        : 'https://commons.stage.datacite.org/orcid.org' + orcidFromUrl(person.id)
+
+    const title = person.name
+      ? 'DataCite Commons: ' + person.name
+      : 'DataCite Commons: No Name'
+    const showQrCode = useFeature('downloadLink')
+
+    return (
+      <>
+        <h3 className="member-results">Share</h3>
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <Row>
+              <Col md={4}>
+                <h5>Email and Social Media</h5>
+                <div>
+                  <EmailShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faEnvelope} /> Email
+                  </EmailShareButton>
+                </div>
+                <div>
+                  <TwitterShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faTwitter} /> Twitter
+                  </TwitterShareButton>
+                </div>
+                <div>
+                  <FacebookShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faFacebook} /> Facebook
+                  </FacebookShareButton>
+                </div>
+              </Col>
+              {showQrCode && (
+                <Col md={4}>
+                  <h5>QR Code</h5>
+                  <QRCode
+                    value={'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)}
+                    size={100}
+                  />
+                </Col>
+              )}
+            </Row>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   // const workCount = () => {
   //   if (person.works.totalCount == 0) {
@@ -145,7 +204,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     <>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
-      
+      {shareLink()}
       {showEmployment && (
         <h3 className="member-results" id="person-employment">Employment</h3>
       )}

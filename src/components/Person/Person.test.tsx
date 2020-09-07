@@ -19,13 +19,13 @@ describe('Person Component', () => {
       .and('contains', 'orcid.org/0000-0003-3484-6875')
   })
 
-  it('actions', () => {
-    mount(<Person person={data} />)
-    cy.get('.actions')
-    .should(($action) => {
-      expect($action).to.have.length(3)
-    })
-  })
+  // it('actions', () => {
+  //   mount(<Person person={data} />)
+  //   cy.get('.actions')
+  //   .should(($action) => {
+  //     expect($action).to.have.length(3)
+  //   })
+  // })
 
   // it('citationCount', () => {
   //   mount(<Person person={data} />)

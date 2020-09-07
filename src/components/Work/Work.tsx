@@ -1,7 +1,16 @@
 import React from 'react'
-import { Tabs, Tab, Alert } from 'react-bootstrap'
+import { Tabs, Tab, Alert, Row, Col } from 'react-bootstrap'
 import Pluralize from 'react-pluralize'
 import { useFeature } from 'flagged'
+import QRCode from 'react-qr-code'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import { compactNumbers } from '../../utils/helpers'
 import { WorkType } from '../WorkContainer/WorkContainer'
@@ -17,94 +26,175 @@ type Props = {
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
-  const showFunding = doi.fundingReferences && doi.fundingReferences.length > 0 && useFeature('workFunding')
+  const showFunding =
+    doi.fundingReferences &&
+    doi.fundingReferences.length > 0 &&
+    useFeature('workFunding')
+
+  const shareLink = () => {
+    const pageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/doi.org/' + doi.doi
+        : 'https://commons.stage.datacite.org/doi.org/' + doi.doi
+
+    const title = doi.titles[0]
+      ? 'DataCite Commons: ' + doi.titles[0].title
+      : 'DataCite Commons: No Title'
+
+    const showQrCode = useFeature('downloadLink')
+
+    return (
+      <>
+        <h3 className="member-results">Share</h3>
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <Row>
+              <Col md={4}>
+                <h5>Email and Social Media</h5>
+                <div>
+                  <EmailShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faEnvelope} /> Email
+                  </EmailShareButton>
+                </div>
+                <div>
+                  <TwitterShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faTwitter} /> Twitter
+                  </TwitterShareButton>
+                </div>
+                <div>
+                  <FacebookShareButton url={pageUrl} title={title}>
+                    <FontAwesomeIcon icon={faFacebook} /> Facebook
+                  </FacebookShareButton>
+                </div>
+              </Col>
+              {showQrCode && (
+                <Col md={4}>
+                  <h5>QR Code</h5>
+                  <QRCode
+                    value={'https://commons.datacite.org/doi.org/' + doi.doi}
+                    size={100}
+                  />
+                </Col>
+              )}
+            </Row>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   const exportMetadata = () => {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
+    const showDownloadLink = doi.contentUrl && useFeature('downloadLink')
+
     return (
       <>
-        <h3 className="member-results">Export as</h3>
-        <div className="export-metadata">
-          <span id="export-xml">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={
-                apiUrl + '/application/vnd.datacite.datacite+xml/' + doi.doi
-              }
-            >
-              DataCite XML
-            </a>
-          </span>
-          {' • '}
-          <span id="export-json">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={
-                apiUrl + '/application/vnd.datacite.datacite+json/' + doi.doi
-              }
-            >
-              DataCite JSON
-            </a>
-          </span>
-          {' • '}
-          <span id="export-ld" className="download">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={apiUrl + '/application/vnd.schemaorg.ld+json/' + doi.doi}
-            >
-              Schema.org JSON-LD
-            </a>
-          </span>
-          {' • '}
-          <span id="export-citeproc" className="download">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={
-                apiUrl + '/application/vnd.citationstyles.csl+json/' + doi.doi
-              }
-            >
-              Citeproc JSON
-            </a>
-          </span>
-          {' • '}
-          <span id="export-bibtex" className="download">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={apiUrl + '/application/x-bibtex/' + doi.doi}
-            >
-              BibTeX
-            </a>
-          </span>
-          {' • '}
-          <span id="export-ris" className="download">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={apiUrl + '/application/x-research-info-systems/' + doi.doi}
-            >
-              RIS
-            </a>
-          </span>
-          {doi.types.resourceTypeGeneral === 'Software' && (
-            <>
-              {' • '}
-              <span id="export-codemeta" className="download">
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={apiUrl + '/application/vnd.codemeta.ld+json/' + doi.doi}
-                >
-                  Codemeta
-                </a>
-              </span>
-            </>
-          )}
+        <h3 className="member-results">Download</h3>
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <Row>
+              <Col md={4}>
+                <h5>Full Metadata</h5>
+                <div id="export-xml">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={
+                      apiUrl +
+                      '/application/vnd.datacite.datacite+xml/' +
+                      doi.doi
+                    }
+                  >
+                    DataCite XML
+                  </a>
+                </div>
+                <div id="export-json">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={
+                      apiUrl +
+                      '/application/vnd.datacite.datacite+json/' +
+                      doi.doi
+                    }
+                  >
+                    DataCite JSON
+                  </a>
+                </div>
+                <div id="export-ld" className="download">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={
+                      apiUrl + '/application/vnd.schemaorg.ld+json/' + doi.doi
+                    }
+                  >
+                    Schema.org JSON-LD
+                  </a>
+                </div>
+              </Col>
+              <Col md={4}>
+                <h5>Citation Metadata</h5>
+                <div id="export-citeproc" className="download">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={
+                      apiUrl +
+                      '/application/vnd.citationstyles.csl+json/' +
+                      doi.doi
+                    }
+                  >
+                    Citeproc JSON
+                  </a>
+                </div>
+                <div id="export-bibtex" className="download">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={apiUrl + '/application/x-bibtex/' + doi.doi}
+                  >
+                    BibTeX
+                  </a>
+                </div>
+                <div id="export-ris" className="download">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={
+                      apiUrl + '/application/x-research-info-systems/' + doi.doi
+                    }
+                  >
+                    RIS
+                  </a>
+                </div>
+                {doi.types.resourceTypeGeneral === 'Software' && (
+                  <div id="export-codemeta" className="download">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={
+                        apiUrl + '/application/vnd.codemeta.ld+json/' + doi.doi
+                      }
+                    >
+                      Codemeta
+                    </a>
+                  </div>
+                )}
+              </Col>
+              {showDownloadLink && (
+                <Col md={4}>
+                  <h5>Content</h5>
+                  <div>
+                    <a href={doi.contentUrl} target="_blank" rel="noreferrer">
+                      via Unpaywall
+                    </a>
+                  </div>
+                </Col>
+              )}
+            </Row>
+          </div>
         </div>
       </>
     )
@@ -204,17 +294,22 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
       {exportMetadata()}
+      {shareLink()}
       {formattedCitation()}
       {showFunding && (
-        <h3 className="member-results" id="work-funding">Funding</h3>
+        <h3 className="member-results" id="work-funding">
+          Funding
+        </h3>
       )}
-      {showFunding && (
+      {showFunding &&
         doi.fundingReferences.map((item) => (
-          <div className="panel panel-transparent funding" key={item.funderName}>
+          <div
+            className="panel panel-transparent funding"
+            key={item.funderName}
+          >
             <WorkFunding funding={item} />
           </div>
-        )
-      ))}
+        ))}
       {analyticsBar()}
     </>
   )
