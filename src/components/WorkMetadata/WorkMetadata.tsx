@@ -406,7 +406,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     return (
       <div className="panel-footer">
         <a href={handleUrl}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {handleUrl}
+          <i className="ai ai-doi"></i> {handleUrl}
         </a>        
       </div>
     )

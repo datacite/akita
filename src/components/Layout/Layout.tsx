@@ -23,8 +23,9 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600"
           rel="stylesheet"
         />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
         <link
-          href="https://assets.datacite.org/stylesheets/doi.css?version=3.8.0"
+          href="https://datacite.org/stylesheets/doi.css?version=3.8.0"
           rel="stylesheet"
           type="text/css"
         />
