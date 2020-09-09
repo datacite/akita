@@ -6,7 +6,7 @@ import {
   ApolloProvider
 } from '@apollo/client'
 import withApollo from '../../hooks/withApollo'
-import { session } from '../utils/session'
+// import { session } from '../utils/session'
 import { FlagsProvider } from 'flagged'
 import * as Sentry from '@sentry/node'
 
