@@ -24,6 +24,7 @@ import {
   faMapMarker
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
+import { useFeature } from 'flagged'
 
 import { session } from '../../utils/session'
 
@@ -71,7 +72,9 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     process.env.NEXT_PUBLIC_PROFILES_URL ||
     'https://profiles.stage.datacite.org'
 
-  const user = session()
+  let user = session()
+
+  const showUserAuthentication = useFeature('userAuthentication')
 
   return (
     <Navbar fluid>
@@ -156,7 +159,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           >
             Support
           </NavItem>
-          {user && user.name && (
+          {showUserAuthentication && user && (
             <NavDropdown eventKey={3} title={user.name} id="basic-nav-dropdown">
               {user.beta_tester && (
                 <>
@@ -185,7 +188,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               </MenuItem>
             </NavDropdown>
           )}
-          {!user && (
+          {showUserAuthentication && !user && (
             <NavItem
               id="sign-in"
               className="btn sign-in"

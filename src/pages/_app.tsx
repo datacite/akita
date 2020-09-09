@@ -37,6 +37,10 @@ class MyApp extends App<IProps> {
     // feature flags are below. We can use ENV variables
     // or we are check that the user is logged in and is a beta tester
 
+    // don't show user login in production yet
+    const userAuthentication =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
     // don't show consent cookie in production yet
     const consentCookie =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
@@ -56,6 +60,7 @@ class MyApp extends App<IProps> {
     return (
       <FlagsProvider
         features={{
+          userAuthentication,
           consentCookie,
           downloadLink,
           personEmployment,
