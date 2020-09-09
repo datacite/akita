@@ -7,7 +7,6 @@ export const session = () => {
   let cert = null
 
   const sessionCookie = Cookies.getJSON('_datacite')
-  console.log(sessionCookie)
   if (sessionCookie && sessionCookie.authenticated) {
     jwt = sessionCookie.authenticated.access_token
 
@@ -21,7 +20,6 @@ export const session = () => {
     // verify asymmetric token, using RSA with SHA-256 hash algorithm
     JsonWebToken.verify(jwt, cert, { algorithms: ['RS256'] }, function(error, payload) {
       if (payload) {
-        console.log(payload)
         user = payload
       } else if (error) {
         console.log('JWT verification error: ' + error.message)

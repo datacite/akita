@@ -35,24 +35,23 @@ class MyApp extends App<IProps> {
     const { Component, pageProps, apollo } = this.props
 
     // feature flags are below. We can use ENV variables
-    // or we are checking that the user is logged in and is a beta tester
-    const user = session()
+    // or we are check that the user is logged in and is a beta tester
 
     // don't show consent cookie in production yet
     const consentCookie =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    // show download link only to beta user
-    const downloadLink = user && user.beta_tester
+    // don't show download link in production yet
+    const downloadLink = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    // show person employment only to beta user
-    const personEmployment = user && user.beta_tester
+    // don't show person employment in production yet
+    const personEmployment = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    // show work funding only to beta user
-    const workFunding = user && user.beta_tester
+    // don't show work funding in production yet
+    const workFunding = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
     
-    // don't show organization info from Wikidata in production yet
-    const organizationWikidata = user && user.beta_tester
+    // don't don't show organization info from Wikidata in production yet
+    const organizationWikidata = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
     return (
       <FlagsProvider
