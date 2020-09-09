@@ -26,7 +26,6 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.10",
-    "@next/plugin-google-analytics": "^9.5.2",
     "@sentry/browser": "^5.21.4",
     "@sentry/node": "^5.21.4",
     "@sentry/webpack-plugin": "^1.12.1",
