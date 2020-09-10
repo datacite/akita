@@ -307,3 +307,7 @@ ul.nav.nav-tabs li span {
 #other-profiles, #qrcode {
   margin-top: 10px;
 }
+
+.consent-cookie a {
+  color: #FECD23;
+}

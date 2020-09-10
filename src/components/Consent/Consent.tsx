@@ -3,9 +3,15 @@ import CookieConsent from 'react-cookie-consent'
 
 const Consent = () => {
   let domain = 'localhost'
-  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+  ) {
     domain = '.datacite.org'
-  } else if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org') {
+  } else if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+  ) {
     domain = '.stage.datacite.org'
   }
 
@@ -13,23 +19,25 @@ const Consent = () => {
     <CookieConsent
       containerClasses="consent-cookie"
       location="bottom"
-      buttonText="I accept"
-      declineButtonText="I decline"
+      buttonText="Accept"
+      declineButtonText="Reject"
       sameSite="strict"
       cookieName="_consent"
       extraCookieOptions={{ domain: domain }}
       overlay={true}
       enableDeclineButton
     >
-      This website uses cookies to enable important site functionality including
-      analytics and personalization.{' '}
+      We use cookies on our website. Some are technically necessary, others help
+      us improve your user experience. You can decline non-essential cookies by
+      selecting “Reject”. Please see our{' '}
       <a
         href="https://datacite.org/privacy.html"
         target="_blank"
         rel="noreferrer"
       >
-        Read our privacy policy
+        Privacy Policy
       </a>{' '}
+      for further information about our privacy practices and use of cookies.{' '}
     </CookieConsent>
   )
 }
