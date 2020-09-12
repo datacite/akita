@@ -89,7 +89,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             data={resourceTypes}
             legend={false}
             count={works.totalCount}
-            title='Works by work type'
+            title='Work Type'
             range={typesRange}
             domain={typesDomain}
           ></DonutChart>
@@ -99,7 +99,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             data={licenses}
             legend={false}
             count={works.totalCount}
-            title='Works by license'
+            title='License'
             range={licenseRange}
             domain={licenseDomain}
           ></DonutChart>

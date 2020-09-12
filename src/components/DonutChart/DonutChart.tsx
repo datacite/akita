@@ -125,13 +125,13 @@ const DonutChart: React.FunctionComponent<Props> = ({
 }) => {
   // get current screen size
   const width = useWindowDimensions().width
-  const innerRadius = width >= 1400 ? 68 : 50
+  const innerRadius = width >= 1400 ? 70 : 54
   const outerRadius = width >= 1400 ? 90 : 70
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
-    padding: { left: 5, top: 10, right: 5, bottom: 5 },
+    padding: { left: 10, top: 10, right: 10, bottom: 10 },
     data: {
       name: 'table'
     },
@@ -183,7 +183,7 @@ const DonutChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="donut-chart panel-body">
-        <div className="title">
+        <div className="title text-center">
           <h4>{title}</h4>
         </div>
         <VegaLite

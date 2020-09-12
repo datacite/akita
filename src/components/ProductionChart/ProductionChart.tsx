@@ -21,9 +21,7 @@ const actions = {
   editor: false
 }
 
-const ProductionChart: React.FunctionComponent<Props> = ({
-  data
-}) => {
+const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
   // get current screen size
   const width = useWindowDimensions().width
 
@@ -31,11 +29,12 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const thisYear = new Date().getFullYear() + 1
 
   /* istanbul ignore next */
-  const lowerBoundYear = thisYear - 20
+  // lower bound year should be multiple of 5
+  const lowerBoundYear = Math.floor((thisYear - 20)/5) * 5
 
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear
-  const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
+  const chartWidth = width >= 1400 ? yearsDomain * 20 : yearsDomain * 16
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -78,13 +77,10 @@ const ProductionChart: React.FunctionComponent<Props> = ({
           step: 1,
           maxbins: 10
         },
-        title: null,
         type: 'quantitative',
         axis: {
           format: '1',
-          labelAngle: yearsDomain < 25 ? 45 : 0,
-          labelFlush: false,
-          labelOverlap: true
+          labelExpr: 'datum.label % 5 === 0 ? datum.label : ""',
         },
         scale: {
           domain: [lowerBoundYear, thisYear]
@@ -96,7 +92,10 @@ const ProductionChart: React.FunctionComponent<Props> = ({
       y: {
         field: 'count',
         type: 'quantitative',
-        axis: null
+        axis: {
+          format: 'f',
+          tickMinStep: 1
+        }
       },
       color: {
         field: 'count',
@@ -111,7 +110,9 @@ const ProductionChart: React.FunctionComponent<Props> = ({
         stroke: null
       },
       axis: {
-        grid: false
+        grid: false,
+        title: null,
+        labelFlush: false
       }
     }
   }
@@ -121,7 +122,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <>
-         <h4>Works by publication year</h4>
+        <h4>Publication Year</h4>
       </>
     )
   }
@@ -129,7 +130,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
-        <div className="title">{title()}</div>
+        <div className="title text-center">{title()}</div>
         <VegaLite
           renderer="svg"
           spec={spec}

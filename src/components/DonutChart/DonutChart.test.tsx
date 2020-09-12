@@ -18,7 +18,7 @@ describe('DonutChart Component', () => {
         data={data.works.resourceTypes}
         count={173}
         legend={true}
-        title="Works by work type"
+        title="Work Type"
         range={typesRange}
         domain={typesDomain}
       />
@@ -36,7 +36,7 @@ describe('DonutChart Component', () => {
         data={data.works.resourceTypes}
         count={1730}
         legend={false}
-        title="Works by work type"
+        title="Work Type"
         range={typesRange}
         domain={typesDomain}
       />
