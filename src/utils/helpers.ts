@@ -3,13 +3,20 @@ NumberFormat.__addLocaleData(
   require('@formatjs/intl-numberformat/dist/locale-data/en.json') // locale-data for en
 )
 
-export const compactNumbers = (num) => {
+export const compactNumbers = (num: number) => {
   if (num >= 1e3)
     return toLocaleString(num, 'en', {
       notation: 'compact',
       compactDisplay: 'short'
     })
-  return num
+  return num.toString()
+}
+
+export const pluralize = (val: number, word: string, plural:string = word + 's') => {
+  const uncountable = ['Software']
+  const resultNumber = (typeof val == 'number') ? val.toLocaleString('en-US') + ' ' : ''
+  const resultString = (val === 1 || uncountable.includes(word)) ? word : plural
+  return resultNumber + resultString
 }
 
 export const doiFromUrl = (doiUrl: string) => {

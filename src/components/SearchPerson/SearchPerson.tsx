@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
-import Pluralize from 'react-pluralize'
+import { pluralize } from '../../utils/helpers'
 
 import { PersonType } from '../PersonContainer/PersonContainer'
 import Pager from '../Pager/Pager'
@@ -63,10 +63,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
   )
 
   const renderResults = () => {
-    if (loading)
-      return (
-        <Loading />
-      )
+    if (loading) return <Loading />
 
     if (error)
       return (
@@ -91,13 +88,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
       <Col md={9} mdOffset={3} id="content">
         {data.people.nodes.length > 0 && (
           <h3 className="member-results">
-            {data.people.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Person'}
-              plural={'People'}
-              count={data.people.totalCount}
-              showCount={false}
-            />
+            {pluralize(data.people.totalCount, 'Person', 'People')}
           </h3>
         )}
 

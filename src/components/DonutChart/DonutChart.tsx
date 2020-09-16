@@ -85,7 +85,7 @@ export const licenseRange = [
   '#fccde5',
   '#ccebc5',
   '#ccebc5',
-  '#ffed6f',
+  '#ffed6f'
 ]
 
 export const licenseDomain = [
@@ -115,6 +115,125 @@ export const licenseDomain = [
   'OGL-Canada-2.0'
 ]
 
+export const fieldOfScienceRange = [
+  '#d9d9d9',
+  '#ffffb3',
+  '#ccebc5',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#8dd3c7',
+  '#80b1d3',
+  '#b3de69',
+  '#fdb462',
+  '#fccde5',
+  '#ccebc5',
+  '#ccebc5',
+  '#ffed6f'
+]
+
+export const fieldOfScienceDomain = [
+  'No Field of Science',
+  'Natural sciences',
+  'Mathematics',
+  'Computer and information sciences',
+  'Physical sciences',
+  'Chemical sciences',
+  'Earth and related environmental sciences',
+  'Biological sciences',
+  'Other natural sciences',
+  'Engineering and technology',
+  'Civil engineering',
+  'Electrical engineering, electronic engineering, information engineering',
+  'Mechanical engineering',
+  'Chemical engineering',
+  'Materials engineering',
+  'Medical engineering',
+  'Environmental engineering',
+  'Environmental biotechnology',
+  'Industrial biotechnology',
+  'Nano-technology',
+  'Other engineering and technologies',
+  'Medical and health sciences',
+  'Basic medicine',
+  'Clinical medicine',
+  'Health sciences',
+  'Medical biotechnology',
+  'Other medical sciences',
+  'Agricultural sciences',
+  'Agriculture, forestry, and fisheries',
+  'Animal and dairy science',
+  'Veterinary science',
+  'Agricultural biotechnology',
+  'Other agricultural sciences',
+  'Social sciences',
+  'Psychology',
+  'Economics and business',
+  'Educational sciences',
+  'Sociology',
+  'Law',
+  'Political science',
+  'Social and economic geography',
+  'Media and communications',
+  'Other social sciences',
+  'Humanities',
+  'History and archaeology',
+  'Languages and literature',
+  'Philosophy, ethics and religion',
+  'Arts (arts, history of arts, performing arts, music)',
+  'Other humanities'
+]
+
+export const registrationAgencyRange = [
+  '#d9d9d9',
+  '#ffffb3',
+  '#ccebc5',
+  '#E81A31',
+  '#159DEA',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#8dd3c7',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#80b1d3',
+  '#8dd3c7',
+  '#80b1d3',
+  '#b3de69',
+  '#fdb462',
+  '#fccde5',
+  '#ccebc5',
+  '#ccebc5',
+  '#ffed6f'
+]
+
+export const registrationAgencyDomain = [
+  'No Registration Agency',
+  'Airiti',
+  'CNKI',
+  'Crossref',
+  'DataCite',
+  'ISTIC',
+  'JaLC',
+  'KISTI',
+  'mEDRA',
+  'OP'
+]
+
 const DonutChart: React.FunctionComponent<Props> = ({
   data,
   count,
@@ -125,13 +244,14 @@ const DonutChart: React.FunctionComponent<Props> = ({
 }) => {
   // get current screen size
   const width = useWindowDimensions().width
-  const innerRadius = width >= 1400 ? 70 : 54
+  const innerRadius = width >= 1400 ? 68 : 52
   const outerRadius = width >= 1400 ? 90 : 70
+  const paddingLeft = width >= 1400 ? 55 : 10
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
-    padding: { left: 10, top: 10, right: 10, bottom: 10 },
+    padding: { left: paddingLeft, top: 10, right: 10, bottom: 10 },
     data: {
       name: 'table'
     },

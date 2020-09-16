@@ -22,8 +22,7 @@ type Props = {
   endCursor: string
 }
 
-//TODO: Remove duplication
-interface ContentFacet {
+export interface ContentFacet {
   id: string
   title: string
   count: number
@@ -78,13 +77,13 @@ const WorksListing: React.FunctionComponent<Props> = ({
 
     return (
       <Row>
-        <Col sm={6}>
+        <Col sm={4}>
           <ProductionChart
+            title='Publication Year'
             data={published}
-            doiCount={works.totalCount}
           ></ProductionChart>
         </Col>
-        <Col sm={3}>
+        <Col sm={4}>
           <DonutChart
             data={resourceTypes}
             legend={false}
@@ -94,7 +93,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             domain={typesDomain}
           ></DonutChart>
         </Col>
-        <Col sm={3}>
+        <Col sm={4}>
           <DonutChart
             data={licenses}
             legend={false}

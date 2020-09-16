@@ -3,8 +3,8 @@ import Error from '../Error/Error'
 import { useQuery, gql } from '@apollo/client'
 import Person from '../Person/Person'
 import WorksListing from '../WorksListing/WorksListing'
-import { orcidFromUrl } from '../../utils/helpers'
-import Pluralize from 'react-pluralize'
+import { orcidFromUrl, pluralize } from '../../utils/helpers'
+
 import { useQueryState } from 'next-usequerystate'
 import { Row, Col } from 'react-bootstrap'
 import { WorkType } from '../WorkContainer/WorkContainer'
@@ -158,7 +158,10 @@ interface OrcidQueryVar {
   registrationAgency: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery }) => {
+const PersonContainer: React.FunctionComponent<Props> = ({
+  orcid,
+  searchQuery
+}) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -194,10 +197,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
     }
   )
 
-  if (loading)
-    return (
-      <Loading />
-    )
+  if (loading) return <Loading />
 
   if (error)
     return (
@@ -230,14 +230,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({ orcid, searchQuery })
       <>
         <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
-            <h3 className="member-results">
-              {totalCount.toLocaleString('en-US') + ' '}
-              <Pluralize
-                singular={'Work'}
-                count={totalCount}
-                showCount={false}
-              />
-            </h3>
+            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
           )}
         </Col>
         {/* TODO: I think the pager element within this should be more dynamic

@@ -2,7 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
-import Pluralize from 'react-pluralize'
+import { pluralize } from '../../utils/helpers'
 
 import Pager from '../Pager/Pager'
 import FilterItem from '../FilterItem/FilterItem'
@@ -164,10 +164,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   })
 
   const renderResults = () => {
-    if (loading)
-      return (
-        <Loading />
-      )
+    if (loading) return <Loading />
 
     if (error)
       return (
@@ -199,8 +196,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           alternateNames: node.alternateName,
           types: node.types,
           url: node.url,
-          inceptionYear: node.inceptionYear, 
-          twitter: node.twitter, 
+          inceptionYear: node.inceptionYear,
+          twitter: node.twitter,
           geolocation: node.geolocation,
           wikipediaUrl: node.wikipediaUrl,
           country: node.country,
@@ -235,12 +232,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
       <Col md={9} id="content">
         {results.length > 0 && (
           <h3 className="member-results">
-            {data.organizations.totalCount.toLocaleString('en-US') + ' '}
-            <Pluralize
-              singular={'Organization'}
-              count={data.organizations.totalCount}
-              showCount={false}
-            />
+            {pluralize(data.organizations.totalCount, 'Organization')}
           </h3>
         )}
 

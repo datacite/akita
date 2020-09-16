@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import { useRouter } from 'next/router'
-import Pluralize from 'react-pluralize'
 import { useFeature } from 'flagged'
 import QRCode from 'react-qr-code'
 import {
@@ -20,7 +19,7 @@ import Organization from '../Organization/Organization'
 import { OrganizationMetadataRecord } from '../OrganizationMetadata/OrganizationMetadata'
 import WorksListing from '../WorksListing/WorksListing'
 import Loading from '../Loading/Loading'
-import { rorFromUrl } from '../../utils/helpers'
+import { rorFromUrl, pluralize } from '../../utils/helpers'
 
 import {
   Works,
@@ -242,7 +241,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
 
   if (!organization) return <div></div>
 
-  // if query was for gridId or crossrefFunderId and organization was found 
+  // if query was for gridId or crossrefFunderId and organization was found
   if (!rorId && router) {
     router.push('/ror.org' + rorFromUrl(organization.metadata.id))
     return (
@@ -264,14 +263,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       <div>
         <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
-            <h3 className="member-results">
-              {totalCount.toLocaleString('en-US') + ' '}
-              <Pluralize
-                singular={'Work'}
-                count={totalCount}
-                showCount={false}
-              />
-            </h3>
+            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
           )}
         </Col>
         {/* TODO: I think the pager element within this should be more dynamic
@@ -295,8 +287,10 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
   const shareLink = () => {
     const pageUrl =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)
-        : 'https://commons.stage.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)
+        ? 'https://commons.datacite.org/ror.org' +
+          rorFromUrl(organization.metadata.id)
+        : 'https://commons.stage.datacite.org/ror.org' +
+          rorFromUrl(organization.metadata.id)
 
     const title = organization.metadata.name
       ? 'DataCite Commons: ' + organization.metadata.name
@@ -331,7 +325,10 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
                 <Col md={4}>
                   <h5>QR Code</h5>
                   <QRCode
-                    value={'https://commons.datacite.org/ror.org' + rorFromUrl(organization.metadata.id)}
+                    value={
+                      'https://commons.datacite.org/ror.org' +
+                      rorFromUrl(organization.metadata.id)
+                    }
                     size={100}
                   />
                 </Col>

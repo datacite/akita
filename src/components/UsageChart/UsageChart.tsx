@@ -1,9 +1,15 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
-import Pluralize from 'react-pluralize'
+import { pluralize } from '../../utils/helpers'
 import { Grid, Row } from 'react-bootstrap'
 import { VisualizationSpec } from 'vega-embed'
-import { subYears, isAfter, parseISO, differenceInMonths, getYear } from 'date-fns'
+import {
+  subYears,
+  isAfter,
+  parseISO,
+  differenceInMonths,
+  getYear
+} from 'date-fns'
 
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
 
@@ -136,8 +142,8 @@ const UsageChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <div>
-        <Pluralize singular={type} count={counts.toLocaleString('en-US')} /> reported since publication
-        in {publicationYear}.
+        {pluralize(counts, type)} reported since publication in{' '}
+        {publicationYear}.
       </div>
     )
   }

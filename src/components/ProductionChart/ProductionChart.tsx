@@ -10,8 +10,10 @@ interface ChartRecord {
 }
 
 type Props = {
-  data?: ChartRecord[]
-  doiCount: number
+  title: string
+  data: ChartRecord[]
+  lowerBoundYear?: number
+  color?: string
 }
 
 const actions = {
@@ -21,7 +23,7 @@ const actions = {
   editor: false
 }
 
-const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
+const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBoundYear, color }) => {
   // get current screen size
   const width = useWindowDimensions().width
 
@@ -30,11 +32,17 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
 
   /* istanbul ignore next */
   // lower bound year should be multiple of 5
-  const lowerBoundYear = Math.floor((thisYear - 20)/5) * 5
+  if (typeof lowerBoundYear == 'undefined') {
+    lowerBoundYear = Math.floor((thisYear - 10)/5) * 5
+  }
+
+  if (typeof color == 'undefined') {
+    color = '#1abc9c'
+  }
 
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear
-  const chartWidth = width >= 1400 ? yearsDomain * 20 : yearsDomain * 16
+  const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -53,7 +61,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
         as: 'bin_end'
       },
       {
-        filter: 'toNumber(datum.title) >' + lowerBoundYear
+        filter: 'toNumber(datum.title) >= ' + lowerBoundYear
       }
     ],
     width: chartWidth,
@@ -75,7 +83,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
         bin: {
           binned: true,
           step: 1,
-          maxbins: 10
+          maxbins: thisYear - lowerBoundYear
         },
         type: 'quantitative',
         axis: {
@@ -93,13 +101,13 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
         field: 'count',
         type: 'quantitative',
         axis: {
-          format: 'f',
+          format: ',f',
           tickMinStep: 1
         }
       },
       color: {
         field: 'count',
-        scale: { range: ['#1abc9c'] },
+        scale: { range: [color] },
         type: 'nominal',
         legend: null,
         condition: [{ selection: 'highlight', value: '#34495e' }]
@@ -119,18 +127,10 @@ const ProductionChart: React.FunctionComponent<Props> = ({ data }) => {
 
   const mydata = data
 
-  const title = () => {
-    return (
-      <>
-        <h4>Publication Year</h4>
-      </>
-    )
-  }
-
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
-        <div className="title text-center">{title()}</div>
+        <div className="title text-center"><h4>{title}</h4></div>
         <VegaLite
           renderer="svg"
           spec={spec}

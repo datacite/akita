@@ -3,7 +3,7 @@ import { OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
-import Pluralize from 'react-pluralize'
+import { pluralize } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faQuoteLeft,
@@ -22,7 +22,7 @@ import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
-import { compactNumbers, orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: WorkType
@@ -373,28 +373,19 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {metadata.citationCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            <Pluralize
-              singular={'Citation'}
-              count={compactNumbers(metadata.citationCount)}
-            />{' '}
+            {pluralize(metadata.citationCount, 'Citation')}
           </span>
         )}
         {metadata.viewCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            <Pluralize
-              singular={'View'}
-              count={compactNumbers(metadata.viewCount)}
-            />{' '}
+            {pluralize(metadata.viewCount, 'View')}
           </span>
         )}
         {metadata.downloadCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            <Pluralize
-              singular={'Download'}
-              count={compactNumbers(metadata.downloadCount)}
-            />{' '}
+            {pluralize(metadata.downloadCount, 'Download')}
           </span>
         )}
       </div>
