@@ -311,3 +311,23 @@ ul.nav.nav-tabs li span {
 .consent-cookie a {
   color: #FECD23;
 }
+
+#data-sources {
+  margin-bottom: 20px;
+}
+
+#data-sources h3.work {
+  font-weight: 600;
+}
+
+#data-sources .intro {
+  padding-bottom: 10px;
+}
+
+#data-sources .other {
+  padding-top: 10px;
+}
+
+#data-sources .description {
+  color: #88939a;
+}

@@ -82,7 +82,7 @@ describe('ProductionChart Component', () => {
   it('normal data', () => {
     mount(
       <ProductionChart
-        doiCount={data.works.totalCount}
+        title='Test'
         data={data.works.published}
       />
     )

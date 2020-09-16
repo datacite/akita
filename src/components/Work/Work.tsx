@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs, Tab, Alert, Row, Col } from 'react-bootstrap'
-import Pluralize from 'react-pluralize'
+import { pluralize } from '../../utils/helpers'
 import { useFeature } from 'flagged'
 import QRCode from 'react-qr-code'
 import {
@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
-import { compactNumbers } from '../../utils/helpers'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
@@ -228,16 +227,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     )
   }
 
-  const viewsTabLabel = Pluralize({
-    count: compactNumbers(doi.viewCount),
-    singular: 'View',
-    showCount: true
-  })
-  const downloadsTabLabel = Pluralize({
-    count: compactNumbers(doi.downloadCount),
-    singular: 'Download',
-    showCount: true
-  })
+  const viewsTabLabel = pluralize(doi.viewCount, 'View')
+  const downloadsTabLabel = pluralize(doi.downloadCount, 'View')
 
   const viewsOverTime = doi.viewsOverTime.map((datum) => ({
     yearMonth: datum.yearMonth,

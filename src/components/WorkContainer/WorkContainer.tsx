@@ -5,8 +5,7 @@ import Work from '../Work/Work'
 import { connectionFragment, contentFragment } from '../SearchWork/SearchWork'
 import { useQueryState } from 'next-usequerystate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
-import Pluralize from 'react-pluralize'
-import { compactNumbers } from '../../utils/helpers'
+import { pluralize } from '../../utils/helpers'
 import WorksListing from '../WorksListing/WorksListing'
 import Loading from '../Loading/Loading'
 
@@ -291,16 +290,8 @@ const WorkContainer: React.FunctionComponent<Props> = ({
   }
 
   const relatedContent = () => {
-    const referencesTabLabel = Pluralize({
-      count: compactNumbers(doi.references.totalCount),
-      singular: 'Reference',
-      showCount: true
-    })
-    const citationsTabLabel = Pluralize({
-      count: compactNumbers(doi.citations.totalCount),
-      singular: 'Citation',
-      showCount: true
-    })
+    const referencesTabLabel = pluralize(doi.references.totalCount, 'Reference')
+    const citationsTabLabel = pluralize(doi.citations.totalCount, 'Citation')
 
     const hasNextPageCitations = doi.citations.pageInfo
       ? doi.citations.pageInfo.hasNextPage

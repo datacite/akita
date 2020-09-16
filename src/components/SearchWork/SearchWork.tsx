@@ -2,11 +2,12 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import { Alert, Row, Col } from 'react-bootstrap'
-import Pluralize from 'react-pluralize'
+
 import WorksListing from '../WorksListing/WorksListing'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
+import { pluralize } from '../../utils/helpers'
 
 type Props = {
   searchQuery: string
@@ -217,10 +218,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   )
 
   const renderResults = () => {
-    if (loading)
-      return (
-        <Loading />
-      )
+    if (loading) return <Loading />
 
     if (error)
       return (
@@ -249,14 +247,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
       <div>
         <Col md={9} mdOffset={3} id="content">
           {totalCount > 0 && (
-            <h3 className="member-results">
-              {totalCount.toLocaleString('en-US') + ' '}
-              <Pluralize
-                singular={'Work'}
-                count={totalCount}
-                showCount={false}
-              />
-            </h3>
+            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
           )}
         </Col>
 
