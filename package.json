@@ -36,7 +36,7 @@
     "@types/lodash": "^4.14.154",
     "@types/react-content-loader": "^4.0.0",
     "@types/react-html-parser": "^2.0.1",
-    "@types/testing-library__cypress": "^5.0.6",
+    "@types/testing-library__cypress": "^5.0.5",
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "date-fns": "^2.15.0",
     "flagged": "^2.0.1",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
-    "@cypress/browserify-preprocessor": "^3.0.1",
+    "@cypress/browserify-preprocessor": "^3.0.0",
     "@cypress/code-coverage": "^3.8.1",
     "@testing-library/react": "^10.2.1",
     "@types/jest": "^25.2.3",
