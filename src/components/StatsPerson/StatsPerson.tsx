@@ -28,6 +28,7 @@ interface WorkQueryData {
   downloaded: Works
   claimed: Works
   funded: Works
+  contributed: Works
   affiliated: Works
 }
 
