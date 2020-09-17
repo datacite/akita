@@ -18,7 +18,7 @@
 const browserify = require('@cypress/browserify-preprocessor')
 
 module.exports = (on, config) => {
-  const options = browserify.defaultOptions;
+  let options = browserify.defaultOptions;
   options.browserifyOptions.transform[1][1].babelrc = true;
   options.typescript = require.resolve('typescript');
   on('file:preprocessor', browserify(options));
