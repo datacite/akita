@@ -17,7 +17,7 @@ cache:
   # cache both npm modules and Cypress binary
   directories:
     - ~/.npm
-    # - ~/.cache
+    - ~/.cache
 
 before_install:
   - set -e
