@@ -37,6 +37,7 @@ before_install:
 
 install:
   - yarn install --non-interactive --frozen-lockfile
+  - cypress install
   - sudo pip install awscli
 
 before_script:
