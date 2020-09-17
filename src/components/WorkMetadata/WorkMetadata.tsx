@@ -3,7 +3,7 @@ import { OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
-import { pluralize } from '../../utils/helpers'
+import { pluralize, compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faQuoteLeft,
@@ -373,19 +373,19 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {metadata.citationCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            {pluralize(metadata.citationCount, 'Citation')}
+            {compactNumbers(metadata.citationCount) + ' ' + pluralize(null, 'Citation')}
           </span>
         )}
         {metadata.viewCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            {pluralize(metadata.viewCount, 'View')}
+            {compactNumbers(metadata.viewCount) + ' ' + pluralize(null, 'View')}
           </span>
         )}
         {metadata.downloadCount > 0 && (
           <span className="metrics-counter">
             <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            {pluralize(metadata.downloadCount, 'Download')}
+            {compactNumbers(metadata.downloadCount) + ' ' + pluralize(null, 'Download')}
           </span>
         )}
       </div>

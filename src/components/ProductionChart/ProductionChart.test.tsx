@@ -84,6 +84,7 @@ describe('ProductionChart Component', () => {
       <ProductionChart
         title='Test'
         data={data.works.published}
+        title={'Publication Year'}
       />
     )
     cy.get('.mark-rect > path').should('be.visible').should('have.length', 9)
