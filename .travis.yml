@@ -37,7 +37,7 @@ before_install:
 
 install:
   - yarn install --non-interactive --frozen-lockfile
-  - npm install cypress --save-dev
+  - npm install cypress@5.2.0 --save-dev
   - sudo pip install awscli
 
 before_script:
