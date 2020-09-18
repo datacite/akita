@@ -331,3 +331,7 @@ ul.nav.nav-tabs li span {
 #data-sources .description {
   color: #88939a;
 }
+
+.navbar-header a.navbar-brand {
+  margin-top: 5px !important;
+}
