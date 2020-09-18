@@ -80,9 +80,11 @@ type Props = {
 }
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
-  if (!person) return <Alert bsStyle="warning">No person found.</Alert>
+  const showQrCode = useFeature('downloadLink')
+  const personEmployment = useFeature('personEmployment')
+  const showEmployment = person.employment.length > 0 && personEmployment
 
-  const showEmployment = person.employment.length > 0 && useFeature('personEmployment')
+  if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
   const shareLink = () => {
     const pageUrl =
@@ -93,7 +95,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     const title = person.name
       ? 'DataCite Commons: ' + person.name
       : 'DataCite Commons: No Name'
-    const showQrCode = useFeature('downloadLink')
 
     return (
       <>

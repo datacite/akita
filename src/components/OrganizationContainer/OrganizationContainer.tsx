@@ -37,6 +37,11 @@ type Props = {
 interface OrganizationResult {
   id: string
   name: string
+  memberId: string
+  memberRole: {
+    id: string
+    name: string
+  }
   alternateName: string[]
   inceptionYear: number
   url: string
@@ -105,6 +110,11 @@ export const ORGANIZATION_GQL = gql`
     ) {
       id
       name
+      memberId
+      memberRole {
+        id
+        name
+      }
       alternateName
       inceptionYear
       url
@@ -186,6 +196,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       registrationAgency: registrationAgency as string
     }
   })
+  const showQrCode = useFeature('downloadLink')
 
   if (loading)
     return (
@@ -219,8 +230,10 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     let orgMetadata: OrganizationMetadataRecord = {
       id: organization.id,
       name: organization.name,
+      memberId: organization.memberId,
       alternateNames: organization.alternateName,
       inceptionYear: organization.inceptionYear,
+      memberRole: organization.memberRole,
       types: organization.types,
       url: organization.url,
       wikipediaUrl: organization.wikipediaUrl,
@@ -295,7 +308,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     const title = organization.metadata.name
       ? 'DataCite Commons: ' + organization.metadata.name
       : 'DataCite Commons: No Name'
-    const showQrCode = useFeature('downloadLink')
 
     return (
       <Col md={9} mdOffset={3}>

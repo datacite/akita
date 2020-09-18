@@ -38,23 +38,9 @@ interface FormattedCitationQueryVar {
 const CitationFormatter: React.FunctionComponent<Props> = ({
   id,
   style,
-  locale,
-  input
+  locale
 }) => {
   const cslType = style || 'apa'
-
-  if (!style)
-    return (
-      <div>
-        <h3 className="member-results">Cite</h3>
-        <div className="panel panel-transparent">
-          <div className="formatted-citation panel-body">
-            {ReactHtmlParser(input)}
-          </div>
-        </div>
-      </div>
-    )
-
   const [formatted, setFormattedCitation] = React.useState()
   const { loading, error, data } = useQuery<
     FormattedCitationQueryData,

@@ -13,6 +13,11 @@ import { rorFromUrl } from '../../utils/helpers'
 export interface OrganizationMetadataRecord {
   id: string
   name: string
+  memberId: string
+  memberRole: {
+    id: string
+    name: string
+  }
   alternateNames: string[]
   inceptionYear: number
   url: string
@@ -58,14 +63,15 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
+  const organizationWikidata = useFeature('organizationWikidata')
   const showInceptionYear =
-    metadata.inceptionYear && useFeature('organizationWikidata')
-  const showTwitter = metadata.twitter && useFeature('organizationWikidata')
+    metadata.inceptionYear && organizationWikidata
+  const showTwitter = metadata.twitter && organizationWikidata
   const showLocation =
     metadata.geolocation &&
     metadata.geolocation.pointLongitude &&
     metadata.geolocation.pointLatitude &&
-    useFeature('organizationWikidata')
+    organizationWikidata
 
   const titleLink = () => {
     if (!linkToExternal) {
@@ -80,6 +86,9 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               <div className="subtitle">
                 {metadata.alternateNames.join(', ')}
               </div>
+            )}
+            {metadata.memberId && (
+              <div>{metadata.memberId}</div>
             )}
           </a>
         </Link>
@@ -261,6 +270,9 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               </Label>
             ))}
           </span>
+          {metadata.memberId && (
+            <Label bsStyle="success">DataCite Member ({metadata.memberRole.name})</Label>
+          )}
         </div>
       </div>
       {footer()}

@@ -28,7 +28,8 @@ module.exports = {
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
         "react/react-in-jsx-scope": "warn",
@@ -38,6 +39,8 @@ module.exports = {
             {
                 "args": "none"
             }
-        ]
+        ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 };

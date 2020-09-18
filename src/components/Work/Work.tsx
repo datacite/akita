@@ -23,12 +23,16 @@ type Props = {
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
+  const workFunding = useFeature('workFunding')
+  const showQrCode = useFeature('downloadLink')
+  const downloadLink = useFeature('downloadLink')
+  const [selectedOption, setSelectedOption] = React.useState('')
+  
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
   const showFunding =
     doi.fundingReferences &&
-    doi.fundingReferences.length > 0 &&
-    useFeature('workFunding')
+    doi.fundingReferences.length > 0 && workFunding 
 
   const shareLink = () => {
     const pageUrl =
@@ -39,8 +43,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     const title = doi.titles[0]
       ? 'DataCite Commons: ' + doi.titles[0].title
       : 'DataCite Commons: No Title'
-
-    const showQrCode = useFeature('downloadLink')
 
     return (
       <>
@@ -85,7 +87,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const exportMetadata = () => {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
-    const showDownloadLink = doi.contentUrl && useFeature('downloadLink')
+    const showDownloadLink = doi.contentUrl && downloadLink
 
     return (
       <>
@@ -200,8 +202,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   const formattedCitation = () => {
-    const [selectedOption, setSelectedOption] = React.useState('')
-
     return (
       <div>
         <div id="citation" className="input-group pull-right">

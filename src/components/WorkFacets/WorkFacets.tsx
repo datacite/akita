@@ -36,13 +36,14 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   url,
   loading
 }) => {
+  const router = useRouter()
+  
   if (loading) return <div className="col-md-3"></div>
 
   if (!loading && data.nodes.length == 0)
     return <div className="col-md-3"></div>
 
   function facetLink(param: string, value: string) {
-    const router = useRouter()
     let icon = faSquare
 
     // get current query parameters from next router
