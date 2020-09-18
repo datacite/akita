@@ -1,6 +1,8 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
+import Link from 'next/link'
+
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -186,9 +188,18 @@ const StatsAll: React.FunctionComponent = () => {
                   data.datacite.totalCount + data.crossref.totalCount
                 ).toLocaleString('en-US')}{' '}
                 works, with identifiers and metadata provided by DataCite and
-                Crossref. For the three major work types publication, dataset
-                and software, the respective numbers by publication year are
-                shown below.
+                Crossref. For the three major work types{' '}
+                <Link href="/publications">
+                  <a>publication</a>
+                </Link>,{' '}
+                <Link href="/datasets">
+                  <a>dataset</a>
+                </Link>{' '}
+                and{' '}
+                <Link href="/software">
+                  <a>software</a>
+                </Link>
+                , the respective numbers by publication year are shown below.
               </div>
               <Row>
                 {renderPublications()}

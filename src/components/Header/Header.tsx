@@ -164,10 +164,10 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
             <MenuItem eventKey={1.1} data-cy="about" href="/about">
               About
             </MenuItem>
-            <MenuItem divider />
             <MenuItem eventKey={1.2} data-cy="general" href="/general">
               General
             </MenuItem>
+            <MenuItem divider />
             <MenuItem
               eventKey={1.3}
               data-cy="publications"
@@ -181,6 +181,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
             <MenuItem eventKey={1.5} data-cy="software" href="/software">
               Software
             </MenuItem>
+            <MenuItem divider />
             <MenuItem eventKey={1.6} data-cy="people" href="/people">
               People
             </MenuItem>
@@ -192,29 +193,6 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               Organizations
             </MenuItem>
             <MenuItem divider />
-            <MenuItem eventKey={1.8} data-cy="samples" href="/samples">
-              Samples
-            </MenuItem>
-            <MenuItem eventKey={1.9} data-cy="preprints" href="/preprints">
-              Preprints
-            </MenuItem>
-            <MenuItem
-              eventKey={1.1}
-              data-cy="dissertations"
-              href="/dissertations"
-            >
-              Dissertations
-            </MenuItem>
-            <MenuItem
-              eventKey={1.11}
-              data-cy="data-management-plans"
-              href="/data-management-plans"
-            >
-              Data Management Plans
-            </MenuItem>
-            <MenuItem eventKey={1.12} data-cy="instruments" href="/instruments">
-              Instruments
-            </MenuItem>
           </NavDropdown>
           <NavItem
             eventKey={2}
