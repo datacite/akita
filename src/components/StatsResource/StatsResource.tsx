@@ -208,23 +208,68 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
             <div className="panel-body">
               <h3 className="member">{pluralize(null, resource)}</h3>
               <div>
-                DataCite Commons includes{' '}
-                {pluralize(data.total.totalCount, resource)}, registered with
-                DataCite (
-                {((datacite.count * 100) / data.total.totalCount).toFixed(2) +
-                  '%'}
-                )
-                {crossref && (
-                  <span>
-                    {' '}
-                    or Crossref (
-                    {((crossref.count * 100) / data.total.totalCount).toFixed(
-                      2
-                    ) + '%'}
-                    )
-                  </span>
-                )}
-                .
+                <p>
+                  DataCite Commons includes{' '}
+                  {pluralize(data.total.totalCount, resource)}, registered with
+                  DataCite (
+                  {((datacite.count * 100) / data.total.totalCount).toFixed(2) +
+                    '%'}
+                  )
+                  {crossref && (
+                    <span>
+                      {' '}
+                      or Crossref (
+                      {((crossref.count * 100) / data.total.totalCount).toFixed(
+                        2
+                      ) + '%'}
+                      )
+                    </span>
+                  )}
+                  .
+                </p>
+                <ul>
+                  <li>
+                    {(
+                      (data.claimed.totalCount * 100) /
+                      data.total.totalCount
+                    ).toFixed(2) + '%'}{' '}
+                    of all {pluralize(null, resource).toLowerCase()} are connected
+                    with at least one person via an ORCID ID.
+                  </li>
+                  <li>
+                    {(
+                      (data.associated.totalCount * 100) /
+                      data.total.totalCount
+                    ).toFixed(2) + '%'}{' '}
+                    of all {pluralize(null, resource).toLowerCase()} are connected
+                    with at least one organization via a ROR ID or Crossref
+                    Funder ID.
+                  </li>
+                  <li>
+                    {(
+                      (data.cited.totalCount * 100) /
+                      data.total.totalCount
+                    ).toFixed(2) + '%'}{' '}
+                    of all {pluralize(null, resource).toLowerCase()} have been
+                    cited.
+                  </li>
+                  <li>
+                    {(
+                      (data.viewed.totalCount * 100) /
+                      data.total.totalCount
+                    ).toFixed(2) + '%'}{' '}
+                    of all {pluralize(null, resource).toLowerCase()} have been
+                    viewed.
+                  </li>
+                  <li>
+                    {(
+                      (data.downloaded.totalCount * 100) /
+                      data.total.totalCount
+                    ).toFixed(2) + '%'}{' '}
+                    of all {pluralize(null, resource).toLowerCase()} have been
+                    downloaded.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

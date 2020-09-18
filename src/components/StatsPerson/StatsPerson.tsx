@@ -142,8 +142,8 @@ const StatsPerson: React.FunctionComponent = () => {
                     (data.claimed.totalCount * 100) /
                     data.total.totalCount
                   ).toFixed(2) + '%'}
-                  ) works have been claimed to at least one ORCID record. The
-                  citations and usage for these claimed works are shown below.
+                  ) works have been connected to at least one ORCID record. The
+                  citations and usage for these connected works are shown below.
                 </p>
               </div>
             </div>

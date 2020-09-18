@@ -9,9 +9,9 @@ describe("Organizations", () => {
       .contains('Organizations')
   })
 
-  it("associations", () => {
-    cy.get('#associations .member-results', { timeout: 30000 })
-      .contains('Associations')
+  it("connections", () => {
+    cy.get('#connections .member-results', { timeout: 30000 })
+      .contains('Connections')
   })
 
   it("citations", () => {

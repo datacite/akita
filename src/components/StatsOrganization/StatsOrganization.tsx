@@ -19,7 +19,7 @@ export interface Works {
 interface WorkQueryData {
   organizations: Source
   total: Works
-  associated: Works
+  connected: Works
   cited: Works
   viewed: Works
   downloaded: Works
@@ -40,7 +40,7 @@ export const STATS_GQL = gql`
         count
       }
     }
-    associated: works(
+    connected: works(
       hasOrganization: true
       hasAffiliation: true
       hasFunder: true
@@ -130,7 +130,7 @@ const StatsOrganization: React.FunctionComponent = () => {
     count: x.count
   }))
 
-  const associated = data.associated.published.map((x) => ({
+  const connected = data.connected.published.map((x) => ({
     title: x.title,
     count: x.count
   }))
@@ -184,34 +184,35 @@ const StatsOrganization: React.FunctionComponent = () => {
                   from the ROR REST API.
                 </p>
                 <p>
-                  {data.associated.totalCount.toLocaleString('en-US')} out of
-                  all {data.total.totalCount.toLocaleString('en-US')} (
+                  {data.connected.totalCount.toLocaleString('en-US')} out of all{' '}
+                  {data.total.totalCount.toLocaleString('en-US')} (
                   {(
-                    (data.associated.totalCount * 100) /
+                    (data.connected.totalCount * 100) /
                     data.total.totalCount
                   ).toFixed(2) + '%'}
-                  ) works are associated with at least one organization via ROR
-                  or Crossref Funder ID identifier. We have three kinds of
-                  association:
+                  ) works are connected with at least one organization via ROR
+                  ID or Crossref Funder ID. We have three kinds of
+                  connections:
                 </p>
                 <ul>
                   <li>
                     <strong>Contributed</strong>: Organization is creator or
-                    contributor, associated via nameIdentifier.
+                    contributor, connected via nameIdentifier.
                   </li>
                   <li>
                     <strong>Affiliated</strong>: Organization is creator or
-                    contributor affiliation, associated via
+                    contributor affiliation, connected via
                     affiliationIdentifier.
                   </li>
                   <li>
-                    <strong>Funder</strong>: Organization is funder, associated
+                    <strong>Funded</strong>: Organization is funder, connected
                     via funderIdentifier.
                   </li>
                 </ul>
                 <p>
-                  The citations and usage for these associated works are shown
-                  below.
+                  In addition, organizations can be connected to works via the
+                  DataCite member account. The citations and usage for the connected
+                  works are shown below.
                 </p>
               </div>
             </div>
@@ -243,15 +244,15 @@ const StatsOrganization: React.FunctionComponent = () => {
                     </Col>
                   </>
                 )}
-                {data.associated.totalCount > 0 && (
+                {data.connected.totalCount > 0 && (
                   <>
                     <Col md={4}>
                       <ProductionChart
                         title={
-                          data.associated.totalCount.toLocaleString('en-US') +
+                          data.connected.totalCount.toLocaleString('en-US') +
                           ' Works with Organizations'
                         }
-                        data={associated}
+                        data={connected}
                       ></ProductionChart>
                     </Col>
                   </>
@@ -262,8 +263,8 @@ const StatsOrganization: React.FunctionComponent = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="associations">
-          <h3 className="member-results">Associations</h3>
+        <Col md={9} mdOffset={3} id="connections">
+          <h3 className="member-results">Connections</h3>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <Row>
@@ -273,7 +274,7 @@ const StatsOrganization: React.FunctionComponent = () => {
                   0 && (
                   <Col md={12}>
                     <Alert bsStyle="warning">
-                      <p>No associations found.</p>
+                      <p>No connections found.</p>
                     </Alert>
                   </Col>
                 )}
