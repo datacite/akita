@@ -1,19 +1,12 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
-import clone from 'lodash/clone'
 
 import { pluralize } from '../../utils/helpers'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { ContentFacet } from '../WorksListing/WorksListing'
-import DonutChart, {
-  registrationAgencyRange,
-  registrationAgencyDomain,
-  licenseRange,
-  licenseDomain
-} from '../DonutChart/DonutChart'
 
 type Props = {
   resource: string
@@ -23,9 +16,7 @@ type Props = {
 export interface Works {
   totalCount: number
   published: ContentFacet[]
-  fieldsOfScience?: ContentFacet[]
-  licenses?: ContentFacet[]
-  registrationAgencies?: ContentFacet[]
+  registrationAgencies: ContentFacet[]
 }
 
 interface WorkQueryData {
@@ -34,8 +25,7 @@ interface WorkQueryData {
   viewed: Works
   downloaded: Works
   claimed: Works
-  funded: Works
-  affiliated: Works
+  associated: Works
 }
 
 interface QueryVar {
@@ -51,55 +41,62 @@ export const STATS_GQL = gql`
         title
         count
       }
-      fieldsOfScience {
-        title
-        count
-      }
-      licenses {
-        title
-        count
-      }
       registrationAgencies {
         title
         count
       }
     }
-    cited: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasCitations: 1) {
+    cited: works(
+      resourceTypeId: $resourceTypeId
+      resourceType: $resourceType
+      hasCitations: 1
+    ) {
       totalCount
       published {
         title
         count
       }
     }
-    viewed: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasViews: 1) {
+    viewed: works(
+      resourceTypeId: $resourceTypeId
+      resourceType: $resourceType
+      hasViews: 1
+    ) {
       totalCount
       published {
         title
         count
       }
     }
-    downloaded: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasDownloads: 1) {
+    downloaded: works(
+      resourceTypeId: $resourceTypeId
+      resourceType: $resourceType
+      hasDownloads: 1
+    ) {
       totalCount
       published {
         title
         count
       }
     }
-    claimed: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasPerson: true) {
+    claimed: works(
+      resourceTypeId: $resourceTypeId
+      resourceType: $resourceType
+      hasPerson: true
+    ) {
       totalCount
       published {
         title
         count
       }
     }
-    funded: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasFunder: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    affiliated: works(resourceTypeId: $resourceTypeId, resourceType: $resourceType, hasOrganization: true, hasAffiliation: true) {
+    associated: works(
+      resourceTypeId: $resourceTypeId
+      resourceType: $resourceType
+      hasFunder: true
+      hasAffiliation: true
+      hasOrganization: true
+    ) {
       totalCount
       published {
         title
@@ -176,12 +173,7 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
     count: x.count
   }))
 
-  const funded = data.funded.published.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-
-  const affiliated = data.affiliated.published.map((x) => ({
+  const associated = data.associated.published.map((x) => ({
     title: x.title,
     count: x.count
   }))
@@ -201,36 +193,6 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
   //   count: x.count
   // }))
 
-  const noRegistrationAgencyValue: ContentFacet = {
-    id: 'no-registration-agency',
-    title: 'No Registration Agency',
-    count:
-      data.total.totalCount -
-      data.total.registrationAgencies.reduce((a, b) => a + (b['count'] || 0), 0)
-  }
-  let registrationAgencies = clone(data.total.registrationAgencies)
-  registrationAgencies.unshift(noRegistrationAgencyValue)
-  registrationAgencies = registrationAgencies.map((x) => ({
-    id: x.id,
-    title: x.title,
-    count: x.count
-  }))
-
-  const noLicenseValue: ContentFacet = {
-    id: 'no-license',
-    title: 'No License',
-    count:
-      data.total.totalCount -
-      data.total.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
-  }
-  let licenses = clone(data.total.licenses)
-  licenses.unshift(noLicenseValue)
-  licenses = licenses.map((x) => ({
-    id: x.id,
-    title: x.title,
-    count: x.count
-  }))
-
   const datacite = data.total.registrationAgencies.find(
     (element) => element.title === 'DataCite'
   )
@@ -248,10 +210,21 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
               <div>
                 DataCite Commons includes{' '}
                 {pluralize(data.total.totalCount, resource)}, registered with
-                DataCite ({pluralize(datacite ? datacite.count : 0, resource)}),
-                Crossref ({pluralize(crossref ? crossref.count : 0, resource)}),
-                or with no DOI registration agency information available (
-                {pluralize(noRegistrationAgencyValue ? noRegistrationAgencyValue.count : 0, resource)}).
+                DataCite (
+                {((datacite.count * 100) / data.total.totalCount).toFixed(2) +
+                  '%'}
+                )
+                {crossref && (
+                  <span>
+                    {' '}
+                    or Crossref (
+                    {((crossref.count * 100) / data.total.totalCount).toFixed(
+                      2
+                    ) + '%'}
+                    )
+                  </span>
+                )}
+                .
               </div>
             </div>
           </div>
@@ -273,31 +246,38 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
                   <>
                     <Col md={4}>
                       <ProductionChart
-                        title={'Publication Year'}
+                        title={
+                          data.total.totalCount.toLocaleString('en-US') +
+                          ' Total'
+                        }
                         data={published}
                         color={color}
                       ></ProductionChart>
                     </Col>
-                    <Col sm={4}>
-                      <DonutChart
-                        data={licenses}
-                        legend={false}
-                        count={data.total.totalCount}
-                        title="License"
-                        range={licenseRange}
-                        domain={licenseDomain}
-                      ></DonutChart>
-                    </Col>
-                    <Col sm={4}>
-                      <DonutChart
-                        data={registrationAgencies}
-                        legend={false}
-                        count={data.total.totalCount}
-                        title="Registration Agency"
-                        range={registrationAgencyRange}
-                        domain={registrationAgencyDomain}
-                      ></DonutChart>
-                    </Col>
+                    {data.claimed.totalCount > 0 && (
+                      <Col md={4}>
+                        <ProductionChart
+                          title={
+                            data.claimed.totalCount.toLocaleString('en-US') +
+                            ' with People'
+                          }
+                          data={claimed}
+                          color={color}
+                        ></ProductionChart>
+                      </Col>
+                    )}
+                    {data.associated.totalCount > 0 && (
+                      <Col md={4}>
+                        <ProductionChart
+                          title={
+                            data.associated.totalCount.toLocaleString('en-US') +
+                            ' with Organizations'
+                          }
+                          data={associated}
+                          color={color}
+                        ></ProductionChart>
+                      </Col>
+                    )}
                   </>
                 )}
               </Row>
@@ -311,7 +291,10 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
           <div className="panel panel-transparent">
             <div className="panel-body">
               <Row>
-                {data.cited.totalCount + data.viewed.totalCount + data.downloaded.totalCount == 0 && (
+                {data.cited.totalCount +
+                  data.viewed.totalCount +
+                  data.downloaded.totalCount ==
+                  0 && (
                   <Col md={12}>
                     <Alert bsStyle="warning">
                       <p>No citations and usage found.</p>
@@ -321,7 +304,9 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
                 {data.cited.totalCount > 0 && (
                   <Col md={4}>
                     <ProductionChart
-                      title={data.cited.totalCount.toLocaleString('en-US') + ' Cited'}
+                      title={
+                        data.cited.totalCount.toLocaleString('en-US') + ' Cited'
+                      }
                       data={cited}
                       color={color}
                     ></ProductionChart>
@@ -330,7 +315,10 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
                 {data.viewed.totalCount > 0 && (
                   <Col md={4}>
                     <ProductionChart
-                      title={data.viewed.totalCount.toLocaleString('en-US') + ' Viewed'}
+                      title={
+                        data.viewed.totalCount.toLocaleString('en-US') +
+                        ' Viewed'
+                      }
                       data={viewed}
                       color={color}
                     ></ProductionChart>
@@ -339,53 +327,11 @@ const StatsResource: React.FunctionComponent<Props> = ({ resource, color }) => {
                 {data.downloaded.totalCount > 0 && (
                   <Col md={4}>
                     <ProductionChart
-                      title={data.downloaded.totalCount.toLocaleString('en-US') + ' Downloaded'}
+                      title={
+                        data.downloaded.totalCount.toLocaleString('en-US') +
+                        ' Downloaded'
+                      }
                       data={downloaded}
-                      color={color}
-                    ></ProductionChart>
-                  </Col>
-                )}
-              </Row>
-            </div>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={9} mdOffset={3} id="connections">
-          <h3 className="member-results">Connections</h3>
-          <div className="panel panel-transparent">
-            <div className="panel-body">
-              <Row>
-                {data.claimed.totalCount + data.funded.totalCount + data.affiliated.totalCount == 0 && (
-                  <Col md={12}>
-                    <Alert bsStyle="warning">
-                      <p>No connections found.</p>
-                    </Alert>
-                  </Col>
-                )}
-                {data.claimed.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={data.claimed.totalCount.toLocaleString('en-US') + ' with People'}
-                      data={claimed}
-                      color={color}
-                    ></ProductionChart>
-                  </Col>
-                )}
-                {data.affiliated.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={data.affiliated.totalCount.toLocaleString('en-US') + ' with Organizations'}
-                      data={affiliated}
-                      color={color}
-                    ></ProductionChart>
-                  </Col>
-                )}
-                {data.funded.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={data.funded.totalCount.toLocaleString('en-US') + ' With Funders'}
-                      data={funded}
                       color={color}
                     ></ProductionChart>
                   </Col>

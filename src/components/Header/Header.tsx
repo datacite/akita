@@ -164,8 +164,8 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
             <MenuItem eventKey={1.1} data-cy="about" href="/about">
               About
             </MenuItem>
-            <MenuItem eventKey={1.2} data-cy="general" href="/general">
-              General
+            <MenuItem eventKey={1.2} data-cy="overview" href="/overview">
+              Overview
             </MenuItem>
             <MenuItem divider />
             <MenuItem

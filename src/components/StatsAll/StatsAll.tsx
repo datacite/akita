@@ -148,15 +148,42 @@ const StatsAll: React.FunctionComponent = () => {
         <Col md={9} mdOffset={3} id="intro">
           <div className="panel panel-transparent">
             <div className="panel-body">
-              <h3 className="member">General</h3>
+              <h3 className="member">Overview</h3>
               <div>
                 <p>
                   This page gives an overview of the information about works,
                   people and organizations made available via DataCite Commons.
                   More detailed information about specific work types, people
                   and organizations can be found via the <strong>Pages</strong>{' '}
-                  menu.
+                  menu:
                 </p>
+                <ul>
+                  <li>
+                    <Link href="/publications">
+                      <a>Publications</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/datasets">
+                      <a>Datasets</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/software">
+                      <a>Software</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/people">
+                      <a>People</a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/organizations">
+                      <a>Organizations</a>
+                    </Link>
+                  </li>
+                </ul>
                 <p>
                   Please reach out to{' '}
                   <a href="mailto:support@datacite.org">DataCite Support</a> for
@@ -191,7 +218,8 @@ const StatsAll: React.FunctionComponent = () => {
                 Crossref. For the three major work types{' '}
                 <Link href="/publications">
                   <a>publication</a>
-                </Link>,{' '}
+                </Link>
+                ,{' '}
                 <Link href="/datasets">
                   <a>dataset</a>
                 </Link>{' '}

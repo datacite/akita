@@ -9,14 +9,14 @@ describe("Organizations", () => {
       .contains('Organizations')
   })
 
+  it("associations", () => {
+    cy.get('#associations .member-results', { timeout: 30000 })
+      .contains('Associations')
+  })
+
   it("citations", () => {
     cy.get('#citations .member-results', { timeout: 30000 })
       .contains('Citations and Usage')
-  })
-
-  it("connections", () => {
-    cy.get('#connections .member-results', { timeout: 30000 })
-      .contains('Connections')
   })
 })
 

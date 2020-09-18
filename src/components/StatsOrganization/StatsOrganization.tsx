@@ -14,9 +14,6 @@ export interface Source {
 export interface Works {
   totalCount: number
   published: ContentFacet[]
-  fieldsOfScience?: ContentFacet[]
-  licenses?: ContentFacet[]
-  registrationAgencies?: ContentFacet[]
 }
 
 interface WorkQueryData {
@@ -26,7 +23,6 @@ interface WorkQueryData {
   cited: Works
   viewed: Works
   downloaded: Works
-  claimed: Works
   funded: Works
   contributed: Works
   affiliated: Works
@@ -112,18 +108,6 @@ export const STATS_GQL = gql`
         count
       }
     }
-    claimed: works(
-      hasOrganization: true
-      hasAffiliation: true
-      hasFunder: true
-      hasPerson: true
-    ) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
   }
 `
 
@@ -181,11 +165,6 @@ const StatsOrganization: React.FunctionComponent = () => {
     count: x.count
   }))
 
-  const claimed = data.claimed.published.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-
   return (
     <>
       <Row>
@@ -212,8 +191,27 @@ const StatsOrganization: React.FunctionComponent = () => {
                     data.total.totalCount
                   ).toFixed(2) + '%'}
                   ) works are associated with at least one organization via ROR
-                  or Crossref Funder ID identifier. The citations, usage, and
-                  connections for these associated works are shown below.
+                  or Crossref Funder ID identifier. We have three kinds of
+                  association:
+                </p>
+                <ul>
+                  <li>
+                    <strong>Contributed</strong>: Organization is creator or
+                    contributor, associated via nameIdentifier.
+                  </li>
+                  <li>
+                    <strong>Affiliated</strong>: Organization is creator or
+                    contributor affiliation, associated via
+                    affiliationIdentifier.
+                  </li>
+                  <li>
+                    <strong>Funder</strong>: Organization is funder, associated
+                    via funderIdentifier.
+                  </li>
+                </ul>
+                <p>
+                  The citations and usage for these associated works are shown
+                  below.
                 </p>
               </div>
             </div>
@@ -236,7 +234,10 @@ const StatsOrganization: React.FunctionComponent = () => {
                   <>
                     <Col md={4}>
                       <ProductionChart
-                        title={'Works'}
+                        title={
+                          data.total.totalCount.toLocaleString('en-US') +
+                          ' Works Total'
+                        }
                         data={total}
                       ></ProductionChart>
                     </Col>
@@ -246,7 +247,10 @@ const StatsOrganization: React.FunctionComponent = () => {
                   <>
                     <Col md={4}>
                       <ProductionChart
-                        title={'Associated Works'}
+                        title={
+                          data.associated.totalCount.toLocaleString('en-US') +
+                          ' Works with Organizations'
+                        }
                         data={associated}
                       ></ProductionChart>
                     </Col>
@@ -258,7 +262,7 @@ const StatsOrganization: React.FunctionComponent = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="organizations">
+        <Col md={9} mdOffset={3} id="associations">
           <h3 className="member-results">Associations</h3>
           <div className="panel panel-transparent">
             <div className="panel-body">
@@ -356,35 +360,6 @@ const StatsOrganization: React.FunctionComponent = () => {
                         ' Downloaded'
                       }
                       data={downloaded}
-                    ></ProductionChart>
-                  </Col>
-                )}
-              </Row>
-            </div>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={9} mdOffset={3} id="connections">
-          <h3 className="member-results">Connections</h3>
-          <div className="panel panel-transparent">
-            <div className="panel-body">
-              <Row>
-                {data.claimed.totalCount == 0 && (
-                  <Col md={12}>
-                    <Alert bsStyle="warning">
-                      <p>No connections found.</p>
-                    </Alert>
-                  </Col>
-                )}
-                {data.claimed.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={
-                        data.claimed.totalCount.toLocaleString('en-US') +
-                        ' With People'
-                      }
-                      data={claimed}
                     ></ProductionChart>
                   </Col>
                 )}

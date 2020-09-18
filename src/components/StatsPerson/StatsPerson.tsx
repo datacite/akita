@@ -15,8 +15,6 @@ export interface Source {
 export interface Works {
   totalCount: number
   published: ContentFacet[]
-  fieldsOfScience?: ContentFacet[]
-  licenses?: ContentFacet[]
   registrationAgencies?: ContentFacet[]
 }
 
@@ -27,9 +25,6 @@ interface WorkQueryData {
   viewed: Works
   downloaded: Works
   claimed: Works
-  funded: Works
-  contributed: Works
-  affiliated: Works
 }
 
 export const STATS_GQL = gql`
@@ -70,27 +65,6 @@ export const STATS_GQL = gql`
       }
     }
     downloaded: works(hasPerson: true, hasDownloads: 1) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    funded: works(hasPerson: true, hasFunder: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    contributed: works(hasPerson: true, hasOrganization: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    affiliated: works(hasPerson: true, hasAffiliation: true) {
       totalCount
       published {
         title
@@ -144,21 +118,6 @@ const StatsPerson: React.FunctionComponent = () => {
     count: x.count
   }))
 
-  const funded = data.funded.published.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-
-  const contributed = data.contributed.published.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-
-  const affiliated = data.affiliated.published.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-
   return (
     <>
       <Row>
@@ -184,8 +143,7 @@ const StatsPerson: React.FunctionComponent = () => {
                     data.total.totalCount
                   ).toFixed(2) + '%'}
                   ) works have been claimed to at least one ORCID record. The
-                  citations, usage, and connections for these claimed works are
-                  shown below.
+                  citations and usage for these claimed works are shown below.
                 </p>
               </div>
             </div>
@@ -205,22 +163,25 @@ const StatsPerson: React.FunctionComponent = () => {
                   </Col>
                 )}
                 {data.people.totalCount > 0 && (
-                  <>
-                    <Col md={4}>
-                      <ProductionChart
-                        title={'New ORCID IDs'}
-                        data={people}
-                        lowerBoundYear={2012}
-                        color={'#8dd3c7'}
-                      ></ProductionChart>
-                    </Col>
-                  </>
+                  <Col md={4}>
+                    <ProductionChart
+                      title={'New ORCID IDs'}
+                      data={people}
+                      lowerBoundYear={2012}
+                      color={'#8dd3c7'}
+                    ></ProductionChart>
+                  </Col>
                 )}
+              </Row>
+              <Row>
                 {data.total.totalCount > 0 && (
                   <>
                     <Col md={4}>
                       <ProductionChart
-                        title={'Works'}
+                        title={
+                          data.total.totalCount.toLocaleString('en-US') +
+                          ' Works Total'
+                        }
                         data={total}
                       ></ProductionChart>
                     </Col>
@@ -230,7 +191,10 @@ const StatsPerson: React.FunctionComponent = () => {
                   <>
                     <Col md={4}>
                       <ProductionChart
-                        title={'Claimed Works'}
+                        title={
+                          data.claimed.totalCount.toLocaleString('en-US') +
+                          ' Works with People'
+                        }
                         data={claimed}
                       ></ProductionChart>
                     </Col>
@@ -261,7 +225,8 @@ const StatsPerson: React.FunctionComponent = () => {
                   <Col md={4}>
                     <ProductionChart
                       title={
-                        data.cited.totalCount.toLocaleString('en-US') + ' Cited'
+                        data.cited.totalCount.toLocaleString('en-US') +
+                        ' Works Cited'
                       }
                       data={cited}
                     ></ProductionChart>
@@ -272,7 +237,7 @@ const StatsPerson: React.FunctionComponent = () => {
                     <ProductionChart
                       title={
                         data.viewed.totalCount.toLocaleString('en-US') +
-                        ' Viewed'
+                        ' Works Viewed'
                       }
                       data={viewed}
                     ></ProductionChart>
@@ -283,63 +248,9 @@ const StatsPerson: React.FunctionComponent = () => {
                     <ProductionChart
                       title={
                         data.downloaded.totalCount.toLocaleString('en-US') +
-                        ' Downloaded'
+                        ' Works Downloaded'
                       }
                       data={downloaded}
-                    ></ProductionChart>
-                  </Col>
-                )}
-              </Row>
-            </div>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={9} mdOffset={3} id="connections">
-          <h3 className="member-results">Connections</h3>
-          <div className="panel panel-transparent">
-            <div className="panel-body">
-              <Row>
-                {data.funded.totalCount +
-                  data.contributed.totalCount +
-                  data.affiliated.totalCount ==
-                  0 && (
-                  <Col md={12}>
-                    <Alert bsStyle="warning">
-                      <p>No connections found.</p>
-                    </Alert>
-                  </Col>
-                )}
-                {data.contributed.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={
-                        data.contributed.totalCount.toLocaleString('en-US') +
-                        ' with Organizations'
-                      }
-                      data={contributed}
-                    ></ProductionChart>
-                  </Col>
-                )}
-                {data.affiliated.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={
-                        data.affiliated.totalCount.toLocaleString('en-US') +
-                        ' with Affiliations'
-                      }
-                      data={affiliated}
-                    ></ProductionChart>
-                  </Col>
-                )}
-                {data.funded.totalCount > 0 && (
-                  <Col md={4}>
-                    <ProductionChart
-                      title={
-                        data.funded.totalCount.toLocaleString('en-US') +
-                        ' with Funders'
-                      }
-                      data={funded}
                     ></ProductionChart>
                   </Col>
                 )}
