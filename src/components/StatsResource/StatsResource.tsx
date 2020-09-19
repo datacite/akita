@@ -96,6 +96,7 @@ export const STATS_GQL = gql`
       hasFunder: true
       hasAffiliation: true
       hasOrganization: true
+      hasMember: true
     ) {
       totalCount
       published {

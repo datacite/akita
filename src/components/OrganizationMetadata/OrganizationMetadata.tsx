@@ -14,10 +14,6 @@ export interface OrganizationMetadataRecord {
   id: string
   name: string
   memberId: string
-  memberRole: {
-    id: string
-    name: string
-  }
   alternateNames: string[]
   inceptionYear: number
   url: string
@@ -86,9 +82,6 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               <div className="subtitle">
                 {metadata.alternateNames.join(', ')}
               </div>
-            )}
-            {metadata.memberId && (
-              <div>{metadata.memberId}</div>
             )}
           </a>
         </Link>
@@ -271,7 +264,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
             ))}
           </span>
           {metadata.memberId && (
-            <Label bsStyle="success">DataCite Member ({metadata.memberRole.name})</Label>
+            <Label bsStyle="success">DataCite Member</Label>
           )}
         </div>
       </div>

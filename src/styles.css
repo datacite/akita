@@ -200,6 +200,13 @@ input[type=text] {
   cursor: pointer;
 }
 
+.tags .label-success {
+  background: #ffffff;
+  color: #2DC55E;
+  border: 2px solid #2DC55E;
+  cursor: pointer;
+}
+
 .pager li {
   margin: 3px;
 }

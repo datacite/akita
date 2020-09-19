@@ -42,10 +42,18 @@ export const STATS_GQL = gql`
         title
         count
       }
+      registrationAgencies {
+        title
+        count
+      }
     }
     claimed: works(hasPerson: true) {
       totalCount
       published {
+        title
+        count
+      }
+      registrationAgencies {
         title
         count
       }
@@ -118,6 +126,20 @@ const StatsPerson: React.FunctionComponent = () => {
     count: x.count
   }))
 
+  const datacite = data.total.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossref = data.total.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const dataciteClaimed = data.claimed.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossrefClaimed = data.claimed.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
   return (
     <>
       <Row>
@@ -142,8 +164,15 @@ const StatsPerson: React.FunctionComponent = () => {
                     (data.claimed.totalCount * 100) /
                     data.total.totalCount
                   ).toFixed(2) + '%'}
-                  ) works have been connected to at least one ORCID record. The
-                  citations and usage for these connected works are shown below.
+                  ) works have been connected to at least one ORCID record,
+                  including{' '}
+                  {((dataciteClaimed.count * 100) / datacite.count).toFixed(2) +
+                    '%'}{' '}
+                  of works registered with DataCite, and{' '}
+                  {((crossrefClaimed.count * 100) / crossref.count).toFixed(2) +
+                    '%'}{' '}
+                  of works registered with Crossref.. The citations and usage
+                  for these connected works are shown below.
                 </p>
               </div>
             </div>

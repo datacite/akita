@@ -38,10 +38,6 @@ interface OrganizationResult {
   id: string
   name: string
   memberId: string
-  memberRole: {
-    id: string
-    name: string
-  }
   alternateName: string[]
   inceptionYear: number
   url: string
@@ -111,10 +107,6 @@ export const ORGANIZATION_GQL = gql`
       id
       name
       memberId
-      memberRole {
-        id
-        name
-      }
       alternateName
       inceptionYear
       url
@@ -233,7 +225,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       memberId: organization.memberId,
       alternateNames: organization.alternateName,
       inceptionYear: organization.inceptionYear,
-      memberRole: organization.memberRole,
       types: organization.types,
       url: organization.url,
       wikipediaUrl: organization.wikipediaUrl,

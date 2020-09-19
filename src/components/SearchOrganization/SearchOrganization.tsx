@@ -26,10 +26,6 @@ interface OrganizationsNode {
   id: string
   name: string
   memberId: string
-  memberRole: {
-    id: string
-    name: string
-  }
   alternateName: string[]
   inceptionYear: number
   types: string[]
@@ -131,10 +127,6 @@ export const ORGANIZATIONS_GQL = gql`
         id
         name
         memberId
-        memberRole {
-          id
-          name
-        }
         alternateName
         inceptionYear
         types
@@ -204,7 +196,6 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           id: node.id,
           name: node.name,
           memberId: node.memberId,
-          memberRole: node.memberRole,
           alternateNames: node.alternateName,
           types: node.types,
           url: node.url,

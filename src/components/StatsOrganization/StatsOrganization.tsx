@@ -14,6 +14,7 @@ export interface Source {
 export interface Works {
   totalCount: number
   published: ContentFacet[]
+  registrationAgencies?: ContentFacet[]
 }
 
 interface WorkQueryData {
@@ -26,6 +27,7 @@ interface WorkQueryData {
   funded: Works
   contributed: Works
   affiliated: Works
+  hosted: Works
 }
 
 export const STATS_GQL = gql`
@@ -39,14 +41,23 @@ export const STATS_GQL = gql`
         title
         count
       }
+      registrationAgencies {
+        title
+        count
+      }
     }
     connected: works(
       hasOrganization: true
       hasAffiliation: true
       hasFunder: true
+      hasMember: true
     ) {
       totalCount
       published {
+        title
+        count
+      }
+      registrationAgencies {
         title
         count
       }
@@ -57,10 +68,18 @@ export const STATS_GQL = gql`
         title
         count
       }
+      registrationAgencies {
+        title
+        count
+      }
     }
     affiliated: works(hasAffiliation: true) {
       totalCount
       published {
+        title
+        count
+      }
+      registrationAgencies {
         title
         count
       }
@@ -71,11 +90,27 @@ export const STATS_GQL = gql`
         title
         count
       }
+      registrationAgencies {
+        title
+        count
+      }
+    }
+    hosted: works(hasMember: true) {
+      totalCount
+      published {
+        title
+        count
+      }
+      registrationAgencies {
+        title
+        count
+      }
     }
     cited: works(
       hasOrganization: true
       hasAffiliation: true
       hasFunder: true
+      hasMember: true
       hasCitations: 1
     ) {
       totalCount
@@ -88,6 +123,7 @@ export const STATS_GQL = gql`
       hasOrganization: true
       hasAffiliation: true
       hasFunder: true
+      hasMember: true
       hasViews: 1
     ) {
       totalCount
@@ -100,6 +136,7 @@ export const STATS_GQL = gql`
       hasOrganization: true
       hasAffiliation: true
       hasFunder: true
+      hasMember: true
       hasDownloads: 1
     ) {
       totalCount
@@ -150,6 +187,11 @@ const StatsOrganization: React.FunctionComponent = () => {
     count: x.count
   }))
 
+  const hosted = data.hosted.published.map((x) => ({
+    title: x.title,
+    count: x.count
+  }))
+
   const cited = data.cited.published.map((x) => ({
     title: x.title,
     count: x.count
@@ -164,6 +206,20 @@ const StatsOrganization: React.FunctionComponent = () => {
     title: x.title,
     count: x.count
   }))
+
+  const datacite = data.total.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossref = data.total.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const dataciteConnected = data.connected.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossrefConnected = data.connected.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
 
   return (
     <>
@@ -191,10 +247,24 @@ const StatsOrganization: React.FunctionComponent = () => {
                     data.total.totalCount
                   ).toFixed(2) + '%'}
                   ) works are connected with at least one organization via ROR
-                  ID or Crossref Funder ID. We have three kinds of
-                  connections:
+                  ID or Crossref Funder ID, including{' '}
+                  {((dataciteConnected.count * 100) / datacite.count).toFixed(
+                    2
+                  ) + '%'}{' '}
+                  of works registered with DataCite, and{' '}
+                  {((crossrefConnected.count * 100) / crossref.count).toFixed(
+                    2
+                  ) + '%'}{' '}
+                  of works registered with Crossref.
+                </p>
+                <p>
+                  We have four kinds of connections:
                 </p>
                 <ul>
+                  <li>
+                    <strong>Hosted</strong>: Organization is hosting
+                    institution, connected via repository identifier.
+                  </li>
                   <li>
                     <strong>Contributed</strong>: Organization is creator or
                     contributor, connected via nameIdentifier.
@@ -210,9 +280,8 @@ const StatsOrganization: React.FunctionComponent = () => {
                   </li>
                 </ul>
                 <p>
-                  In addition, organizations can be connected to works via the
-                  DataCite member account. The citations and usage for the connected
-                  works are shown below.
+                  The citations and usage for the connected works are shown
+                  below.
                 </p>
               </div>
             </div>
@@ -237,7 +306,7 @@ const StatsOrganization: React.FunctionComponent = () => {
                       <ProductionChart
                         title={
                           data.total.totalCount.toLocaleString('en-US') +
-                          ' Works Total'
+                          ' Total'
                         }
                         data={total}
                       ></ProductionChart>
@@ -250,7 +319,7 @@ const StatsOrganization: React.FunctionComponent = () => {
                       <ProductionChart
                         title={
                           data.connected.totalCount.toLocaleString('en-US') +
-                          ' Works with Organizations'
+                          ' with Organizations'
                         }
                         data={connected}
                       ></ProductionChart>
@@ -268,15 +337,28 @@ const StatsOrganization: React.FunctionComponent = () => {
           <div className="panel panel-transparent">
             <div className="panel-body">
               <Row>
-                {data.contributed.totalCount +
-                  data.affiliated.totalCount +
-                  data.funded.totalCount ==
+                {data.hosted.totalCount +
+                  data.contributed.totalCount +
+                  data.affiliated.totalCount ==
                   0 && (
                   <Col md={12}>
                     <Alert bsStyle="warning">
                       <p>No connections found.</p>
                     </Alert>
                   </Col>
+                )}
+                {data.hosted.totalCount > 0 && (
+                  <>
+                    <Col md={4}>
+                      <ProductionChart
+                        title={
+                          data.hosted.totalCount.toLocaleString('en-US') +
+                          ' Hosted'
+                        }
+                        data={hosted}
+                      ></ProductionChart>
+                    </Col>
+                  </>
                 )}
                 {data.contributed.totalCount > 0 && (
                   <Col md={4}>
@@ -298,6 +380,15 @@ const StatsOrganization: React.FunctionComponent = () => {
                       }
                       data={affiliated}
                     ></ProductionChart>
+                  </Col>
+                )}
+              </Row>
+              <Row>
+                {data.funded.totalCount == 0 && (
+                  <Col md={12}>
+                    <Alert bsStyle="warning">
+                      <p>No connections found.</p>
+                    </Alert>
                   </Col>
                 )}
                 {data.funded.totalCount > 0 && (
