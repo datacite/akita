@@ -76,6 +76,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
 
   const showUserAuthentication = useFeature('userAuthentication')
   const showBrandLogo = useFeature('brandLogo')
+  const showPagesMenu = useFeature('pagesMenu')
 
   return (
     <Navbar fluid>
@@ -155,45 +156,52 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           </div>
         </Navbar.Form>
         <Nav pullRight>
-          <NavDropdown
-            eventKey={1}
-            title="Pages"
-            id="pages-dropdown"
-            data-cy="pages"
-          >
-            <MenuItem eventKey={1.1} data-cy="about" href="/about">
+          {showPagesMenu && (
+            <NavDropdown
+              eventKey={1}
+              title="Pages"
+              id="pages-dropdown"
+              data-cy="pages"
+            >
+              <MenuItem eventKey={1.1} data-cy="about" href="/about">
+                About
+              </MenuItem>
+              <MenuItem eventKey={1.2} data-cy="overview" href="/overview">
+                Overview
+              </MenuItem>
+              <MenuItem divider />
+              <MenuItem
+                eventKey={1.3}
+                data-cy="publications"
+                href="/publications"
+              >
+                Publications
+              </MenuItem>
+              <MenuItem eventKey={1.4} data-cy="datasets" href="/datasets">
+                Datasets
+              </MenuItem>
+              <MenuItem eventKey={1.5} data-cy="software" href="/software">
+                Software
+              </MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={1.6} data-cy="people" href="/people">
+                People
+              </MenuItem>
+              <MenuItem
+                eventKey={1.7}
+                data-cy="organizations"
+                href="/organizations"
+              >
+                Organizations
+              </MenuItem>
+              <MenuItem divider />
+            </NavDropdown>
+          )}
+          {!showPagesMenu && (
+            <NavItem eventKey={1.1} data-cy="about" href="/about">
               About
-            </MenuItem>
-            <MenuItem eventKey={1.2} data-cy="overview" href="/overview">
-              Overview
-            </MenuItem>
-            <MenuItem divider />
-            <MenuItem
-              eventKey={1.3}
-              data-cy="publications"
-              href="/publications"
-            >
-              Publications
-            </MenuItem>
-            <MenuItem eventKey={1.4} data-cy="datasets" href="/datasets">
-              Datasets
-            </MenuItem>
-            <MenuItem eventKey={1.5} data-cy="software" href="/software">
-              Software
-            </MenuItem>
-            <MenuItem divider />
-            <MenuItem eventKey={1.6} data-cy="people" href="/people">
-              People
-            </MenuItem>
-            <MenuItem
-              eventKey={1.7}
-              data-cy="organizations"
-              href="/organizations"
-            >
-              Organizations
-            </MenuItem>
-            <MenuItem divider />
-          </NavDropdown>
+            </NavItem>
+          )}
           <NavItem
             eventKey={2}
             data-cy="support"
