@@ -13,10 +13,13 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
   const showConsentCookie = useFeature('consentCookie')
-  
+
   // check whether user has given consent to google analytics tracking
-  const hasGivenConsent = (Cookies.get('_consent') == 'true')
+  const hasGivenConsent = Cookies.get('_consent') == 'true'
   const trackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
+
+  // const showUsersnap =
+  //   process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
 
   return (
     <div>
@@ -56,6 +59,14 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
             />
           </>
         )}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                  (function() { var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = '//api.usersnap.com/load/6d0c32c3-844a-47f4-b3c6-3a4cb9e9af7c.js';
+                  var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+                `
+          }}
+        />
       </Head>
       <Header path={path} />
       <div className="container-fluid">{children}</div>
