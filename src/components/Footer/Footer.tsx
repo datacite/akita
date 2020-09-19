@@ -1,4 +1,5 @@
 import React from 'react'
+import useSWR from 'swr'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
@@ -11,17 +12,48 @@ import {
 import Links from '../../../config/links.yml'
 
 const Footer = () => {
+  function StatusPage() {
+    const fetcher = (url: string) => fetch(url).then(res => res.json())
+    const { data, error } = useSWR(
+      'https://nmtzsv0smzk5.statuspage.io/api/v2/status.json',
+      fetcher
+    )
+    if (error) return (
+      <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
+        <span className='color-dot critical'></span>
+        <span className="color-description">Failed to load status</span>
+      </a>
+    )
+    if (!data) return (
+      <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
+      <span className='color-dot loading'></span>
+        <span className="color-description">loading...</span>
+      </a>
+    )
+
+    return (
+      <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
+        <span className={'color-dot ' + data.status.indicator}></span>
+        <span className="color-description">{data.status.description}</span>
+      </a>
+    )
+  }
+
   const baseUrl =
-  process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-    ? 'https://datacite.org'
-    : 'https://www.stage.datacite.org'
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://datacite.org'
+      : 'https://www.stage.datacite.org'
 
   const footerLinks = (links) => {
     return (
       <ul>
         {links.map((link) => (
           <li key={link.name}>
-            <a href={link.url.startsWith('/') ? baseUrl + link.url : link.url} target="_blank" rel="noreferrer">
+            <a
+              href={link.url.startsWith('/') ? baseUrl + link.url : link.url}
+              target="_blank"
+              rel="noreferrer"
+            >
               {link.name}
             </a>
           </li>
@@ -75,6 +107,7 @@ const Footer = () => {
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
             {footerLinks(Links.contact_links)}
+            {StatusPage()}
             <h4>Funding</h4>
             <ul>
               The work on DataCite Commons is supported by funding from the
@@ -89,14 +122,6 @@ const Footer = () => {
               </a>
               .
             </ul>
-            <a
-              href="http://status.datacite.org"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="color-dot"></span>
-              <span className="color-description"></span>
-            </a>
           </Col>
         </Row>
       </Grid>

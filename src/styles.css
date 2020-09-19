@@ -342,3 +342,7 @@ ul.nav.nav-tabs li span {
 .navbar-header a.navbar-brand {
   margin-top: 5px !important;
 }
+
+.color-dot.loading {
+  background-color: #34495e;
+}

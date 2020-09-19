@@ -57,6 +57,7 @@
     "react-qr-code": "^1.0.2",
     "react-share": "^4.2.1",
     "react-vega": "^7.3.0",
+    "swr": "^0.3.2",
     "urijs": "^1.19.2",
     "vega": "^5.13.0",
     "vega-lite": "^4.13.1",
