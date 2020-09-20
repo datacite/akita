@@ -64,6 +64,10 @@ class MyApp extends App<IProps> {
     const pagesMenu =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
+    // don't show pages menu in production yet
+    const dataciteMember =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+
     return (
       <FlagsProvider
         features={{
@@ -74,7 +78,8 @@ class MyApp extends App<IProps> {
           workFunding,
           organizationWikidata,
           brandLogo,
-          pagesMenu
+          pagesMenu,
+          dataciteMember
         }}
       >
         <ApolloProvider client={apollo}>

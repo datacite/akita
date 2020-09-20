@@ -59,6 +59,8 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
+  const dataCiteMember = useFeature('dataciteMember')
+  const showDataCiteMember = metadata.memberId && dataCiteMember
   const organizationWikidata = useFeature('organizationWikidata')
   const showInceptionYear =
     metadata.inceptionYear && organizationWikidata
@@ -263,7 +265,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               </Label>
             ))}
           </span>
-          {metadata.memberId && (
+          {showDataCiteMember && (
             <Label bsStyle="success">DataCite Member</Label>
           )}
         </div>
