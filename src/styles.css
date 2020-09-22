@@ -346,3 +346,11 @@ ul.nav.nav-tabs li span {
 .color-dot.loading {
   background-color: #34495e;
 }
+
+footer .row {
+  margin-bottom: 24px;
+}
+
+footer .funding {
+  font-size: 16px;
+}
