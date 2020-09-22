@@ -347,10 +347,10 @@ ul.nav.nav-tabs li span {
   background-color: #34495e;
 }
 
-footer .row {
-  margin-bottom: 24px;
+footer .funding {
+  font-size: 15px;
 }
 
-footer .funding {
-  font-size: 16px;
+.footer-column h4.share {
+  margin-bottom: 2px;
 }
