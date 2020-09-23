@@ -27,7 +27,7 @@ const Footer = () => {
     if (!data) return (
       <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
       <span className='color-dot loading'></span>
-        <span className="color-description">loading...</span>
+        <span className="color-description">Loading...</span>
       </a>
     )
 
