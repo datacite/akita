@@ -9,7 +9,7 @@ const Consent = () => {
     domain = '.datacite.org'
   }
 
-  const cookieStyle = { fontSize: '16px', height: '90px' }
+  const cookieStyle = { fontSize: '16px', height: '95px' }
   const linkStyle = { color: '#fecd23' }
 
   return (
