@@ -3,21 +3,18 @@ import CookieConsent from 'react-cookie-consent'
 
 const Consent = () => {
   let domain = 'localhost'
-  if (
-    process.env.NODE_ENV === 'production' &&
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-  ) {
-    domain = '.datacite.org'
-  } else if (
-    process.env.NODE_ENV === 'production' &&
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-  ) {
+  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org') {
     domain = '.stage.datacite.org'
+  } else if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org') {
+    domain = '.datacite.org'
   }
+
+  const cookieStyle = { fontSize: '16px', height: '90px' }
+  const linkStyle = { color: '#fecd23' }
 
   return (
     <CookieConsent
-      containerClasses="consent-cookie"
+      style={cookieStyle}
       location="bottom"
       buttonText="Accept"
       declineButtonText="Reject"
@@ -32,6 +29,7 @@ const Consent = () => {
       selecting “Reject”. Please see our{' '}
       <a
         href="https://datacite.org/privacy.html"
+        style={linkStyle}
         target="_blank"
         rel="noreferrer"
       >
