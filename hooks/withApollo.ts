@@ -31,7 +31,15 @@ export default withApollo(({ initialState }) => {
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache().restore(initialState || {})
+    cache: new InMemoryCache({
+      typePolicies: {
+        Creator: {
+          // Singleton types that have no identifying field can use an empty
+          // array for their keyFields.
+          keyFields: false
+        }
+      }
+    })
   })
 
   return client
