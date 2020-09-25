@@ -150,7 +150,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           </div>
         )}
         <Row>
-          <Col md={6}>
+          <Col xs={6} md={6}>
             {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
               <>
                 <h5>Links</h5>
@@ -186,7 +186,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               </>
             )}
           </Col>
-          <Col md={6}>
+          <Col xs={6} md={6}>
             <h5>Other Identifiers</h5>
             <div>
               GRID{' '}

@@ -77,13 +77,13 @@ const WorksListing: React.FunctionComponent<Props> = ({
 
     return (
       <Row>
-        <Col sm={4}>
+        <Col xs={12} sm={4}>
           <ProductionChart
             title='Publication Year'
             data={published}
           ></ProductionChart>
         </Col>
-        <Col sm={4}>
+        <Col xs={6} sm={4}>
           <DonutChart
             data={resourceTypes}
             legend={false}
@@ -93,7 +93,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             domain={typesDomain}
           ></DonutChart>
         </Col>
-        <Col sm={4}>
+        <Col xs={6} sm={4}>
           <DonutChart
             data={licenses}
             legend={false}

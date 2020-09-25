@@ -181,7 +181,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                   </>
                 )}
               </Col>
-              <Col md={6}>
+              <Col xs={6} md={6}>
                 {metadata.identifiers && metadata.identifiers.length > 0 && (
                   <>
                     <h5>Other Identifiers</h5>
@@ -202,7 +202,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
               </Col>
             </Row>
             <Row>
-              <Col md={6} id="other-profiles">
+              <Col xs={6} md={6} id="other-profiles">
                 <h5>Other Profiles</h5>
                 <div id="profile-orcid" className="people-profiles">
                   {orcidLink}

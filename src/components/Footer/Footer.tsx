@@ -63,24 +63,24 @@ const Footer = () => {
   }
 
   return (
-    <footer className="row footer">
+    <footer className="row footer hidden-xs">
       <Grid fluid={true}>
         <Row>
-          <Col sm={4} md={3} className="footer-column">
+          <Col sm={3} md={3} className="footer-column">
             <h4 data-cy="about">About DataCite</h4>
             {footerLinks(Links.about_links)}
           </Col>
-          <Col sm={4} md={3} className="footer-column">
+          <Col sm={3} md={3} className="footer-column">
             <h4>Services</h4>
             {footerLinks(Links.services_links)}
           </Col>
-          <Col sm={4} md={3} className="footer-column">
+          <Col sm={3} md={3} className="footer-column">
             <h4>Resources</h4>
             {footerLinks(Links.resources_links)}
             <h4>Community</h4>
             {footerLinks(Links.community_links)}
           </Col>
-          <Col sm={4} md={3} className="footer-column">
+          <Col sm={3} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
             <a href="mailto:support@datacite.org" className="share">
               <FontAwesomeIcon icon={faEnvelope} />

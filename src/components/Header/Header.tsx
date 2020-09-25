@@ -79,7 +79,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   const showPagesMenu = useFeature('pagesMenu')
 
   return (
-    <Navbar fluid>
+    <Navbar fluid collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
           <a href="/">
@@ -128,7 +128,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
                   eventKey={path}
                   href={path + '?query=' + searchInput}
                 >
-                  <FontAwesomeIcon icon={faMapMarker} /> This Page
+                  <FontAwesomeIcon icon={faMapMarker} /> This&nbsp;Page
                 </NavItem>
               )}
               <NavItem
@@ -155,7 +155,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
             </Nav>
           </div>
         </Navbar.Form>
-        <Nav pullRight>
+        <Nav className="hidden-mobile" pullRight>
           {showPagesMenu && (
             <NavDropdown
               eventKey={1}

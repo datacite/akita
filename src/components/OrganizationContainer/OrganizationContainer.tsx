@@ -306,7 +306,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
         <div className="panel panel-transparent">
           <div className="panel-body">
             <Row>
-              <Col md={4}>
+              <Col xs={6} md={4}>
                 <h5>Email and Social Media</h5>
                 <div>
                   <EmailShareButton url={pageUrl} title={title}>
@@ -325,7 +325,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
                 </div>
               </Col>
               {showQrCode && (
-                <Col md={4}>
+                <Col xs={6} md={4}>
                   <h5>QR Code</h5>
                   <QRCode
                     value={

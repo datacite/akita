@@ -50,7 +50,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <div className="panel panel-transparent">
           <div className="panel-body">
             <Row>
-              <Col md={4}>
+              <Col xs={6} md={4}>
                 <h5>Email and Social Media</h5>
                 <div>
                   <EmailShareButton url={pageUrl} title={title}>
@@ -69,7 +69,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 </div>
               </Col>
               {showQrCode && (
-                <Col md={4}>
+                <Col xs={6} md={4}>
                   <h5>QR Code</h5>
                   <QRCode
                     value={'https://commons.datacite.org/doi.org/' + doi.doi}
@@ -95,7 +95,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <div className="panel panel-transparent">
           <div className="panel-body">
             <Row>
-              <Col md={4}>
+              <Col xs={6} md={4}>
                 <h5>Full Metadata</h5>
                 <div id="export-xml">
                   <a
@@ -135,7 +135,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   </a>
                 </div>
               </Col>
-              <Col md={4}>
+              <Col xs={6} md={4}>
                 <h5>Citation Metadata</h5>
                 <div id="export-citeproc" className="download">
                   <a
@@ -185,7 +185,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 )}
               </Col>
               {showDownloadLink && (
-                <Col md={4}>
+                <Col xs={6} md={4}>
                   <h5>Content</h5>
                   <div>
                     <a href={doi.contentUrl} target="_blank" rel="noreferrer">
