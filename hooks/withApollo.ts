@@ -39,7 +39,7 @@ export default withApollo(({ initialState }) => {
           keyFields: false
         }
       }
-    })
+    }).restore(initialState || {})
   })
 
   return client
