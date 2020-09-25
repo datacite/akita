@@ -243,21 +243,29 @@ const DonutChart: React.FunctionComponent<Props> = ({
   domain
 }) => {
   // get current screen size
-  const width = useWindowDimensions().width
-  let innerRadius = width >= 1400 ? 68 : 52
-  let outerRadius = width >= 1400 ? 90 : 70
-  let paddingLeft = width >= 1400 ? 55 : 10
+  const windowWidth = useWindowDimensions().width
+  let width = windowWidth >= 1200 ? 200 : 175
+  let height = windowWidth >= 1200 ? 200 : 175
   
-  if (width < 768) {
+  let innerRadius = windowWidth >= 1400 ? 68 : 52
+  let outerRadius = windowWidth >= 1400 ? 90 : 70
+  let paddingLeft = windowWidth >= 1400 ? 55 : 10
+
+  
+  if (windowWidth < 768) {
     innerRadius = 44
     outerRadius = 60
     paddingLeft = 0
+    width = 125
+    height = 125
   }
 
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     description: 'A simple donut chart with embedded data.',
     padding: { left: paddingLeft, top: 10, right: 10, bottom: 10 },
+    width: width,
+    height: height,
     data: {
       name: 'table'
     },

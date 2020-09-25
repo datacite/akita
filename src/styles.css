@@ -126,9 +126,6 @@ h3.popover-title {
   .nav.navbar-nav li {
     font-size: 16px;
   }
-  .vega-embed.has-actions {
-    padding-right: 5px;
-  }
   .hidden-mobile {
     display: none;
   }
@@ -390,6 +387,6 @@ footer .funding {
   margin-bottom: 2px;
 }
 
-.registered span {
+.registered span, .metrics span {
   font-size: inherit;
 }
