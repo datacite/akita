@@ -51,7 +51,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           <div className="panel-body">
             <Row>
               <Col xs={6} md={4}>
-                <h5>Email and Social Media</h5>
                 <div>
                   <EmailShareButton url={pageUrl} title={title}>
                     <FontAwesomeIcon icon={faEnvelope} /> Email
@@ -70,7 +69,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               </Col>
               {showQrCode && (
                 <Col xs={6} md={4}>
-                  <h5>QR Code</h5>
                   <QRCode
                     value={'https://commons.datacite.org/doi.org/' + doi.doi}
                     size={100}
