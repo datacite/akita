@@ -143,12 +143,6 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
         {showInceptionYear && (
           <div className="inception-year">Founded {metadata.inceptionYear}</div>
         )}
-        {showLocation && (
-          <div className="location">
-            <h5>Geolocation</h5>
-            {geolocation()}
-          </div>
-        )}
         <Row>
           <Col xs={6} md={6}>
             {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
@@ -256,6 +250,12 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
             )}
           </Col>
         </Row>
+        {showLocation && (
+          <div className="location">
+            <h5>Geolocation</h5>
+            {geolocation()}
+          </div>
+        )}
         <div className="tags">
           <Label bsStyle="info">{metadata.country.name}</Label>
           <span>
