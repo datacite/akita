@@ -11,17 +11,17 @@ type Props = {
 const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
   const name = () => {
     if (!employment.organizationId)
-      return <h3 className="work">{employment.organizationName}</h3>
+      return <h4 className="work">{employment.organizationName}</h4>
 
     return (
-      <h3 className="work">
+      <h4 className="work">
         <Link
           href="/grid.ac/[...organization]"
           as={`/grid.ac${gridFromUrl(employment.organizationId)}`}
         >
           <a>{employment.organizationName}</a>
         </Link>
-      </h3>
+      </h4>
     )
   }
 

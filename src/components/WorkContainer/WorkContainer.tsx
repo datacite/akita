@@ -30,6 +30,17 @@ export const DOI_GQL = gql`
     work(id: $id) {
       ...WorkFragment
       contentUrl
+      contributors {
+        id
+        givenName
+        familyName
+        name
+        contributorType
+        affiliation {
+          id
+          name
+        }
+      }
       fundingReferences {
         funderIdentifier
         funderIdentifierType
@@ -122,6 +133,7 @@ export interface WorkType {
   }
   registered?: Date
   formattedCitation?: string
+  contributors?: Contributor[]
   fundingReferences?: FundingReference[]
   citationCount?: number
   citations?: {
@@ -158,11 +170,26 @@ interface Facet {
   count: number
 }
 
-interface Creator {
+export interface Creator {
   id: string
   name: string
   givenName: string
   familyName: string
+  affiliation: Affiliation[]
+}
+
+interface Contributor {
+  id: string
+  name: string
+  givenName: string
+  familyName: string
+  contributorType: string
+  affiliation: Affiliation[]
+}
+
+interface Affiliation {
+  id: string
+  name: string
 }
 
 interface Title {
