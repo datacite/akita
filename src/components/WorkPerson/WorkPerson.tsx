@@ -41,7 +41,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
         </h4>
         {person.affiliation.length > 0 && (
           <>
-            <div class="affiliation">
+            <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
@@ -78,7 +78,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
         </h4>
         {person.affiliation.length > 0 && (
           <>
-            <div class="affiliation">
+            <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
@@ -107,7 +107,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       <h4 className="work">{name}</h4>
       {person.affiliation.length > 0 && (
         <>
-          <div class="affiliation">
+          <div className="affiliation">
             {person.affiliation.map((item) =>
               item.id ? (
                 <Link
