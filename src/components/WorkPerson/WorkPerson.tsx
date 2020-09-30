@@ -23,7 +23,7 @@ type Props = {
   person: Person
 }
 
-const WorkContributor: React.FunctionComponent<Props> = ({ person }) => {
+const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
   const name = person.familyName
     ? [person.givenName, person.familyName].join(' ')
     : person.name
@@ -41,7 +41,7 @@ const WorkContributor: React.FunctionComponent<Props> = ({ person }) => {
         </h4>
         {person.affiliation.length > 0 && (
           <>
-            <div>
+            <div class="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
@@ -78,7 +78,7 @@ const WorkContributor: React.FunctionComponent<Props> = ({ person }) => {
         </h4>
         {person.affiliation.length > 0 && (
           <>
-            <div>
+            <div class="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
@@ -107,7 +107,7 @@ const WorkContributor: React.FunctionComponent<Props> = ({ person }) => {
       <h4 className="work">{name}</h4>
       {person.affiliation.length > 0 && (
         <>
-          <div>
+          <div class="affiliation">
             {person.affiliation.map((item) =>
               item.id ? (
                 <Link
@@ -132,4 +132,4 @@ const WorkContributor: React.FunctionComponent<Props> = ({ person }) => {
   )
 }
 
-export default WorkContributor
+export default WorkPerson

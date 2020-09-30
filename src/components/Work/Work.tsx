@@ -309,7 +309,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           <div className="panel panel-transparent contributor">
             <div className="panel-body">
               {chunk(doi.contributors, 3).map((row) => (
-                <Row className="creator-list" key={row[0].name}>
+                <Row className="contributor-list" key={row[0].name}>
                   {row.map((item) => (
                     <Col key={item.name} md={4}><WorkPerson person={item} /></Col>
                   ))}
@@ -328,7 +328,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <div className="panel panel-transparent contributor">
           <div className="panel-body">
             {chunk(doi.fundingReferences, 3).map((row) => (
-              <Row className="creator-list" key={row[0].funderName}>
+              <Row className="funder-list" key={row[0].funderName}>
                 {row.map((item) => (
                   <Col key={item.funderName} md={4}><WorkFunding funding={item} /></Col>
                 ))}

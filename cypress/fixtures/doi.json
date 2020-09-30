@@ -13,10 +13,25 @@
     "description": "Example description of the item."
   }],
   "creators": [{
+    "id": "https://orcid.org/0000-0003-3484-6875",
+    "name": "Smith, John",
+    "givenName": "John",
+    "familyName": "Smith",
+    "affiliation": [
+      { "id": "https://ror.org/04wxnsj81",
+        "name": "DataCite" }
+    ]
+  }],
+  "contributors": [{
     "id": null,
     "name": "Smith, John",
     "givenName": "John",
-    "familyName": "Smith"
+    "familyName": "Smith",
+    "contributorType": "Editor",
+    "affiliation": [
+      { "id": "https://ror.org/04wxnsj81",
+        "name": "DataCite" }
+    ]
   }],
   "publisher": "SURFsara",
   "publicationYear": 2019,
