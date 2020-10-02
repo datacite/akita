@@ -11,11 +11,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import chunk from 'lodash/chunk'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import WorkFunding from '../WorkFunding/WorkFunding'
+import WorkPerson from '../WorkPerson/WorkPerson'
 import UsageChart from '../UsageChart/UsageChart'
 
 type Props = {
@@ -27,12 +29,11 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const showQrCode = useFeature('downloadLink')
   const downloadLink = useFeature('downloadLink')
   const [selectedOption, setSelectedOption] = React.useState('')
-  
+
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
   const showFunding =
-    doi.fundingReferences &&
-    doi.fundingReferences.length > 0 && workFunding 
+    doi.fundingReferences && doi.fundingReferences.length > 0 && workFunding
 
   const shareLink = () => {
     const pageUrl =
@@ -282,23 +283,63 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
-      {exportMetadata()}
-      {shareLink()}
-      {formattedCitation()}
+      {doi.creators.length > 0 && (
+        <>
+          <h3 className="member-results" id="work-creators">
+            Creators
+          </h3>
+          <div className="panel panel-transparent creator">
+            <div className="panel-body">
+              {chunk(doi.creators, 3).map((row) => (
+                <Row className="creator-list" key={row[0].name}>
+                  {row.map((item) => (
+                    <Col key={item.name} md={4}><WorkPerson person={item} /></Col>
+                  ))}
+                </Row>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+      {doi.contributors.length > 0 && (
+        <>
+          <h3 className="member-results" id="work-contributors">
+            Contributors
+          </h3>
+          <div className="panel panel-transparent contributor">
+            <div className="panel-body">
+              {chunk(doi.contributors, 3).map((row) => (
+                <Row className="contributor-list" key={row[0].name}>
+                  {row.map((item) => (
+                    <Col key={item.name} md={4}><WorkPerson person={item} /></Col>
+                  ))}
+                </Row>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       {showFunding && (
         <h3 className="member-results" id="work-funding">
           Funding
         </h3>
       )}
-      {showFunding &&
-        doi.fundingReferences.map((item) => (
-          <div
-            className="panel panel-transparent funding"
-            key={item.funderName}
-          >
-            <WorkFunding funding={item} />
+      {showFunding && (
+        <div className="panel panel-transparent contributor">
+          <div className="panel-body">
+            {chunk(doi.fundingReferences, 3).map((row) => (
+              <Row className="funder-list" key={row[0].funderName}>
+                {row.map((item) => (
+                  <Col key={item.funderName} md={4}><WorkFunding funding={item} /></Col>
+                ))}
+              </Row>
+            ))}
           </div>
-        ))}
+        </div>
+      )}
+      {exportMetadata()}
+      {shareLink()}
+      {formattedCitation()}
       {analyticsBar()}
     </>
   )

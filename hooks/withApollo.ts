@@ -37,6 +37,16 @@ export default withApollo(({ initialState }) => {
           // Singleton types that have no identifying field can use an empty
           // array for their keyFields.
           keyFields: false
+        },
+        Contributor: {
+          // Singleton types that have no identifying field can use an empty
+          // array for their keyFields.
+          keyFields: false
+        },
+        Affiliation: {
+          // Singleton types that have no identifying field can use an empty
+          // array for their keyFields.
+          keyFields: false
         }
       }
     }).restore(initialState || {})

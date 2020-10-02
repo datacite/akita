@@ -110,6 +110,10 @@ export const contentFragment = {
         name
         givenName
         familyName
+        affiliation {
+          id
+          name
+        }
       }
       descriptions {
         description
