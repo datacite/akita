@@ -42,6 +42,7 @@ export const DOI_GQL = gql`
       identifiers {
         identifier
         identifierType
+        identifierUrl
       }
       country {
         name
