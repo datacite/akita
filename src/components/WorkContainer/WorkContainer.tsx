@@ -38,6 +38,16 @@ export const DOI_GQL = gql`
         awardUri
         awardNumber
       }
+      claims {
+        sourceId
+        state
+        claimAction
+        claimed
+        errorMessages {
+          status
+          title
+        }
+      }
       formattedCitation
       viewsOverTime {
         yearMonth
@@ -122,6 +132,7 @@ export interface WorkType {
   }
   registered?: Date
   formattedCitation?: string
+  claims?: Claim[]
   fundingReferences?: FundingReference[]
   citationCount?: number
   citations?: {
@@ -175,6 +186,19 @@ interface Rights {
   rightsIdentifier: string
 }
 
+interface Claim {
+  sourceId: string
+  state: string
+  claimAction: string
+  claimed: Date
+  errorMessages: ClaimError[]
+}
+
+interface ClaimError {
+  status?: number
+  title: string
+}
+
 export interface FundingReference {
   funderIdentifier?: string
   funderIdentifierType?: string
@@ -191,15 +215,6 @@ interface FieldOfScience {
 
 interface Description {
   description: string
-}
-
-interface fundingReferences {
-  funderIdentifier: string
-  funderIdentifierType: string
-  funderName: string
-  awardUri: string
-  awardTitle: string
-  awardNumber: string
 }
 
 interface PageInfo {

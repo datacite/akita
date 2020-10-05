@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Tab, Alert, Row, Col } from 'react-bootstrap'
+import { Tabs, Tab, Alert, Row, Col, Label } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 import { useFeature } from 'flagged'
 import QRCode from 'react-qr-code'
@@ -8,6 +8,7 @@ import {
   FacebookShareButton,
   TwitterShareButton
 } from 'react-share'
+import startCase from 'lodash/startCase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -34,6 +35,37 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     doi.fundingReferences &&
     doi.fundingReferences.length > 0 && workFunding 
 
+  const claim = () => {
+    const hasFailed = doi.claims[0].state === 'failed'
+
+    return (
+      <>
+        <h3 className="member-results">Claim</h3>
+        <div className="panel panel-transparent">
+          <div className="panel-body">
+            <div className="tags">
+              {doi.claims.map((item) => (
+                <>
+                  {hasFailed && (
+                    <>
+                      <Label bsStyle="warning">{startCase(item.state)}</Label>
+                      <Label bsStyle="warning">{startCase(item.errorMessages[0].title)}</Label>
+                    </>
+                  )}
+                  {!hasFailed && (
+                    <>
+                      <Label bsStyle="success">{startCase(item.state)}</Label>
+                    </>
+                  )}
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
+  
   const shareLink = () => {
     const pageUrl =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
@@ -283,6 +315,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
       {exportMetadata()}
+      {doi.claims.length > 0 && (
+        claim()
+      )}
       {shareLink()}
       {formattedCitation()}
       {showFunding && (

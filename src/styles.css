@@ -243,6 +243,13 @@ input[type=text] {
   cursor: pointer;
 }
 
+.tags .label-warning {
+  background: #ffffff;
+  color: #EB9E3E;
+  border: 2px solid #EB9E3E;
+  cursor: pointer;
+}
+
 .pager li {
   margin: 3px;
 }
