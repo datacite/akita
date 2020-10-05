@@ -397,3 +397,11 @@ footer .funding {
 .registered span, .metrics span {
   font-size: inherit;
 }
+
+h4.work {
+  margin-bottom: 0;
+}
+
+.creator-list {
+  margin-bottom: 10px;
+}
