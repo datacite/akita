@@ -16,12 +16,12 @@ describe('workContainer with usage', () => {
       .should('contain', 'Joan Starr')
   })
 
-  // it('cite as', () => {
-  //   cy.get('.cite-as')
-  //     .select('ieee')
-  //     .get('.formatted-citation', { timeout: 30000 })
-  //     .should('contain', 'DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.0.')
-  // })
+  it('cite as', () => {
+    cy.get('.cite-as')
+      .select('ieee')
+      .get('.formatted-citation', { timeout: 30000 })
+      .should('contain', 'DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.0.')
+  })
 
   it('chart', () => {
     cy.get('.mark-rect > path', { timeout: 30000 })
