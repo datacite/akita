@@ -37,7 +37,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     doi.fundingReferences && doi.fundingReferences.length > 0 && workFunding
 
   const claim = () => {
-    const hasFailed = doi.claims[0].state === 'failed'
+    const claim = doi.claims[0]
+    const hasFailed = claim.state === 'failed'
 
     return (
       <>
@@ -45,21 +46,17 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <div className="panel panel-transparent">
           <div className="panel-body">
             <div className="tags">
-              {doi.claims.map((item) => (
+              {hasFailed && (
                 <>
-                  {hasFailed && (
-                    <>
-                      <Label bsStyle="warning">{startCase(item.state)}</Label>
-                      <Label bsStyle="warning">{startCase(item.errorMessages[0].title)}</Label>
-                    </>
-                  )}
-                  {!hasFailed && (
-                    <>
-                      <Label bsStyle="success">{startCase(item.state)}</Label>
-                    </>
-                  )}
+                  <Label bsStyle="warning">{startCase(claim.state)}</Label>
+                  <Label bsStyle="warning">{startCase(claim.errorMessages[0].title)}</Label>
                 </>
-              ))}
+              )}
+              {!hasFailed && (
+                <>
+                  <Label bsStyle="success">{startCase(claim.state)}</Label>
+                </>
+              )}
             </div>
           </div>
         </div>
