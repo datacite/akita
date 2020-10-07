@@ -41,10 +41,6 @@ class MyApp extends App<IProps> {
     const userAuthentication =
       process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
-    // don't show consent cookie in production yet
-    const consentCookie =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
     // don't show download link in production yet
     const downloadLink = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
@@ -72,7 +68,6 @@ class MyApp extends App<IProps> {
       <FlagsProvider
         features={{
           userAuthentication,
-          consentCookie,
           downloadLink,
           personEmployment,
           workFunding,

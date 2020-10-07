@@ -1,6 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-import { useFeature } from 'flagged'
 import { Cookies } from 'react-cookie-consent'
 
 import Header from '../Header/Header'
@@ -12,15 +11,10 @@ type Props = {
 }
 
 const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
-  const showConsentCookie = useFeature('consentCookie')
-
   // check whether user has given consent to google analytics tracking
   const hasGivenConsent = Cookies.get('_consent') == 'true'
   const trackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
   const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL || 'https://datacite.org'
-
-  // const showUsersnap =
-  //   process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
 
   return (
     <div>
@@ -71,7 +65,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
       </Head>
       <Header path={path} />
       <div className="container-fluid">{children}</div>
-      {showConsentCookie && <Consent />}
+      <Consent />
       <Footer />
     </div>
   )
