@@ -4,7 +4,6 @@ import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import { useRouter } from 'next/router'
 import { useFeature } from 'flagged'
-import QRCode from 'react-qr-code'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -188,7 +187,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       registrationAgency: registrationAgency as string
     }
   })
-  const showQrCode = useFeature('downloadLink')
 
   if (loading)
     return (
@@ -323,17 +321,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
                   </FacebookShareButton>
                 </div>
               </Col>
-              {showQrCode && (
-                <Col xs={6} md={4}>
-                  <QRCode
-                    value={
-                      'https://commons.datacite.org/ror.org' +
-                      rorFromUrl(organization.metadata.id)
-                    }
-                    size={100}
-                  />
-                </Col>
-              )}
             </Row>
           </div>
         </div>

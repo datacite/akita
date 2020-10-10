@@ -1,7 +1,6 @@
 import React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { useFeature } from 'flagged'
-import QRCode from 'react-qr-code'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -80,7 +79,6 @@ type Props = {
 }
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
-  const showQrCode = useFeature('downloadLink')
   const personEmployment = useFeature('personEmployment')
   const showEmployment = person.employment.length > 0 && personEmployment
 
@@ -119,14 +117,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                   </FacebookShareButton>
                 </div>
               </Col>
-              {showQrCode && (
-                <Col xs={6} md={4}>
-                  <QRCode
-                    value={'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)}
-                    size={100}
-                  />
-                </Col>
-              )}
             </Row>
           </div>
         </div>

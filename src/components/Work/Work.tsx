@@ -2,7 +2,6 @@ import React from 'react'
 import { Tabs, Tab, Alert, Row, Col, Label } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 import { useFeature } from 'flagged'
-import QRCode from 'react-qr-code'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -27,7 +26,6 @@ type Props = {
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const workFunding = useFeature('workFunding')
-  const showQrCode = useFeature('downloadLink')
   const downloadLink = useFeature('downloadLink')
   const [selectedOption, setSelectedOption] = React.useState('')
 
@@ -97,14 +95,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   </FacebookShareButton>
                 </div>
               </Col>
-              {showQrCode && (
-                <Col xs={6} md={4}>
-                  <QRCode
-                    value={'https://commons.datacite.org/doi.org/' + doi.doi}
-                    size={100}
-                  />
-                </Col>
-              )}
             </Row>
           </div>
         </div>
