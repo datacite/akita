@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 import { useRouter } from 'next/router'
-import { useFeature } from 'flagged'
 import {
   EmailShareButton,
   FacebookShareButton,
