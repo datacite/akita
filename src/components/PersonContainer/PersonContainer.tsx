@@ -59,6 +59,9 @@ export const DOI_GQL = gql`
         startDate
         endDate
       }
+      citationCount
+      viewCount
+      downloadCount
       works(
         first: 25
         query: $query
@@ -91,6 +94,9 @@ export interface PersonType {
   givenName: string
   familyName: string
   alternateName: string[]
+  citationCount: number
+  viewCount: number
+  downloadCount: number
   employment: Organization[]
   pageInfo: PageInfo
   works: Works

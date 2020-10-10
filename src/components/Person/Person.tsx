@@ -26,6 +26,9 @@ export interface PersonRecord {
   name: string
   givenName: string
   familyName: string
+  citationCount: number
+  viewCount: number
+  downloadCount: number
   works: Works
 }
 

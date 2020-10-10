@@ -32,6 +32,9 @@ interface OrganizationsNode {
   url: string
   wikipediaUrl: string
   twitter: string
+  citationCount: number
+  viewCount: number
+  downloadCount: number
   geolocation: {
     pointLongitude: number
     pointLatitude: number
@@ -204,6 +207,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           geolocation: node.geolocation,
           wikipediaUrl: node.wikipediaUrl,
           country: node.country,
+          citationCount: node.citationCount,
+          viewCount: node.viewCount,
+          downloadCount: node.downloadCount,
           grid: grid,
           fundref: fundref,
           isni: isni,

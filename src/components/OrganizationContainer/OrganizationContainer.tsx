@@ -42,6 +42,9 @@ interface OrganizationResult {
   wikipediaUrl: string
   twitter: string
   types: string[]
+  citationCount: number
+  viewCount: number
+  downloadCount: number
   country: {
     id: string
     name: string
@@ -123,6 +126,9 @@ export const ORGANIZATION_GQL = gql`
         identifier
         identifierType
       }
+      citationCount
+      viewCount
+      downloadCount
       works(
         first: 25
         after: $cursor
@@ -227,6 +233,9 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       wikipediaUrl: organization.wikipediaUrl,
       twitter: organization.twitter,
       country: organization.country,
+      citationCount: organization.citationCount,
+      viewCount: organization.viewCount,
+      downloadCount: organization.downloadCount,
       geolocation: organization.geolocation,
       grid: grid,
       fundref: fundref,

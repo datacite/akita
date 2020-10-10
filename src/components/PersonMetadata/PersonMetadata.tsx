@@ -1,12 +1,18 @@
 import React from 'react'
 import { Alert, Row, Col, Label } from 'react-bootstrap'
+import { pluralize, compactNumbers } from '../../utils/helpers'
 // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faOrcid
 } from '@fortawesome/free-brands-svg-icons'
-
+import {
+  faQuoteLeft,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-regular-svg-icons'
+import { useFeature } from 'flagged'
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
 
@@ -15,6 +21,8 @@ type Props = {
 }
 
 const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
+  const showMetrics = useFeature('metricsCounter')
+  
   if (!metadata) return <Alert bsStyle="warning">No content found.</Alert>
 
   const name = () => {
@@ -49,6 +57,38 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     )
   }
 
+  const metricsCounter = () => {
+    if (
+      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
+      0
+    ) {
+      return <div></div>
+    }
+
+    return (
+      <div className="metrics">
+        {metadata.citationCount > 0 && (
+          <span className="metrics-counter">
+            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
+            {compactNumbers(metadata.citationCount) + ' ' + pluralize(null, 'Citation')}
+          </span>
+        )}
+        {metadata.viewCount > 0 && (
+          <span className="metrics-counter">
+            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
+            {compactNumbers(metadata.viewCount) + ' ' + pluralize(null, 'View')}
+          </span>
+        )}
+        {metadata.downloadCount > 0 && (
+          <span className="metrics-counter">
+            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
+            {compactNumbers(metadata.downloadCount) + ' ' + pluralize(null, 'Download')}
+          </span>
+        )}
+      </div>
+    )
+  }
+
   const footer = () => {
     return (
       <div className="panel-footer">
@@ -79,54 +119,6 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   //           count={compactNumbers(metadata.works.totalCount)}
   //         />{' '}
   //       </i>
-  //     </div>
-  //   )
-  // }
-
-  // const metricsCounter = () => {
-  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
-  //     return (
-  //       <div className="metrics-counter">
-  //         <i id="work-count">
-  //           <FontAwesomeIcon icon={faScroll} /> No works reported{' '}
-  //         </i>
-  //       </div>
-  //     )
-  //   }
-
-  //   return (
-  //     <div className="metrics-counter">
-  //       <i id="work-count">
-  //         <FontAwesomeIcon icon={faScroll} />{' '}
-  //         <Pluralize
-  //           singular={'Work'}
-  //           count={compactNumbers(metadata.works.totalCount)}
-  //         />{' '}
-  //       </i>
-  //     </div>
-  //   )
-  // }
-
-  // const metricsCounter = () => {
-  //   if (metadata.citationCount + metadata.viewCount + metadata.downloadCount == 0) {
-  //     return (
-  //       <div className="metrics-counter">
-  //         <i><FontAwesomeIcon icon={faInfoCircle}/> No citations, views or downloads reported.</i>
-  //       </div>
-  //     )
-  //   }
-
-  //   return (
-  //     <div className="metrics-counter">
-  //       {metadata.citationCount > 0 &&
-  //         <i><FontAwesomeIcon icon={faQuoteLeft}/> <Pluralize singular={'Citation'} count={compactNumbers(metadata.citationCount)} /> </i>
-  //       }
-  //       {metadata.viewCount > 0 &&
-  //         <i><FontAwesomeIcon icon={faEye}/> <Pluralize singular={'View'} count={compactNumbers(metadata.viewCount)} /> </i>
-  //       }
-  //       {metadata.downloadCount > 0 &&
-  //         <i><FontAwesomeIcon icon={faDownload}/> <Pluralize singular={'Download'} count={compactNumbers(metadata.downloadCount)} /> </i>
-  //       }
   //     </div>
   //   )
   // }
@@ -216,6 +208,9 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
               </Col>
             </Row>
           </>
+        )}
+        {showMetrics && (
+          metricsCounter()
         )}
         {metadata.country && (
           <div className="tags">
