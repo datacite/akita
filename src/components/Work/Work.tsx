@@ -37,25 +37,53 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const claim = () => {
     const claim = doi.claims[0]
     const hasFailed = claim.state === 'failed'
+    const stateColors = {
+      "done": "success",
+      "failed": "danger",
+      "working": "info"
+    }
+
+    const claimSources = {
+      "orcid_update": "Auto-Update",
+      "orcid_search": "Search and Link",
+    }
 
     return (
       <>
         <h3 className="member-results">Claim</h3>
         <div className="panel panel-transparent">
           <div className="panel-body">
-            <div className="tags">
-              {hasFailed && (
-                <>
-                  <Label bsStyle="warning">{startCase(claim.state)}</Label>
-                  <Label bsStyle="warning">{startCase(claim.errorMessages[0].title)}</Label>
-                </>
-              )}
-              {!hasFailed && (
-                <>
-                  <Label bsStyle="success">{startCase(claim.state)}</Label>
-                </>
-              )}
-            </div>
+            <Row>
+              <Col xs={6} md={4}>
+                <Label bsStyle={stateColors[claim.state]}>{startCase(claim.state)}</Label>
+              </Col>
+              <Col xs={6} md={4}>
+                <h5>Source</h5>
+                <a
+                  href="https://support.datacite.org/docs/datacite-profiles-user-documentation#orcid-permissions"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {claimSources[claim.sourceId]}
+                </a>
+                {hasFailed && (
+                  <>
+                    <h5>Error Message</h5>
+                    {startCase(claim.errorMessages[0].title)}
+                  </>
+                )}
+                {!hasFailed && (
+                  <>
+                    <h5>Claimed</h5>
+                    {new Date(claim.claimed).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </>
+                )}
+              </Col>
+            </Row>
           </div>
         </div>
       </>

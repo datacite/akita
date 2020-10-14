@@ -223,30 +223,44 @@ input[type=text] {
   margin-bottom: 3px;
 }
 
-.tags .label {
+.label {
   margin-top: 8px;
   margin-right: 3px;
   font-size: 16px;
 }
 
-.tags .label-info {
+.label-info {
   background: #ffffff;
   color: #2b84d2;
   border: 2px solid #2b84d2;
   cursor: pointer;
 }
 
-.tags .label-success {
+.label-success {
   background: #ffffff;
   color: #2DC55E;
   border: 2px solid #2DC55E;
   cursor: pointer;
 }
 
-.tags .label-warning {
+.label-warning {
   background: #ffffff;
   color: #EB9E3E;
   border: 2px solid #EB9E3E;
+  cursor: pointer;
+}
+
+.label-default {
+  background: #ffffff;
+  color: #66615B;
+  border: 2px solid #66615B;
+  cursor: pointer;
+}
+
+.label-danger {
+  background: #ffffff;
+  color: #EB5E28;
+  border: 2px solid #EB5E28;
   cursor: pointer;
 }
 
