@@ -136,6 +136,9 @@ export const contentFragment = {
         rightsUri
         rightsIdentifier
       }
+      claims {
+        state
+      }
       fieldsOfScience {
         id
         name

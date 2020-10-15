@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Tab, Alert, Row, Col, Label } from 'react-bootstrap'
+import { Tabs, Tab, Alert, Row, Col, Label, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 import { useFeature } from 'flagged'
 import {
@@ -10,7 +10,7 @@ import {
 import startCase from 'lodash/startCase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faFacebook, faOrcid } from '@fortawesome/free-brands-svg-icons'
 import chunk from 'lodash/chunk'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
@@ -42,11 +42,19 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       "failed": "danger",
       "working": "info"
     }
-
+    const stateText = {
+      "done": "Claim done",
+      "failed": "Claim failed",
+      "working": "Claim in progress"
+    }
     const claimSources = {
       "orcid_update": "Auto-Update",
       "orcid_search": "Search and Link",
     }
+
+    const tooltipClaim = (
+      <Tooltip id="tooltipClaim">Status of claiming this DOI into your ORCID record.</Tooltip>
+    )
 
     return (
       <>
@@ -55,7 +63,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           <div className="panel-body">
             <Row>
               <Col xs={6} md={4}>
-                <Label bsStyle={stateColors[claim.state]}>{startCase(claim.state)}</Label>
+                <OverlayTrigger placement="top" overlay={tooltipClaim}>
+                  <Label bsStyle={stateColors[claim.state]}><FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}</Label>
+                </OverlayTrigger>
               </Col>
               <Col xs={6} md={4}>
                 <h5>Source</h5>

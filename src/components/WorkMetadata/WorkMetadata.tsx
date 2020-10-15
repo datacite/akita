@@ -17,6 +17,7 @@ import {
   faCreativeCommonsNd,
   faCreativeCommonsSa,
   faCreativeCommonsZero,
+  faOrcid
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
@@ -130,6 +131,18 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         )}
       </div>
     )
+  }
+
+  const claim = metadata.claims[0]
+  const stateColors = {
+    "done": "success",
+    "failed": "danger",
+    "working": "info"
+  }
+  const stateText = {
+    "done": "Claim done",
+    "failed": "Claim failed",
+    "working": "Claim in progress"
   }
 
   const container = () => {
@@ -328,6 +341,10 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
+  const tooltipClaim = (
+    <Tooltip id="tooltipClaim">Status of claiming this DOI for your ORCID record.</Tooltip>
+  )
+
   const tags = () => {
     return (
       <div className="tags">
@@ -354,6 +371,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
             <Label bsStyle="info">{metadata.language.name}</Label>
+          </OverlayTrigger>
+        )}
+        {claim && (
+          <OverlayTrigger placement="top" overlay={tooltipClaim}>
+            <Label bsStyle={stateColors[claim.state]}><FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}</Label>
           </OverlayTrigger>
         )}
       </div>
