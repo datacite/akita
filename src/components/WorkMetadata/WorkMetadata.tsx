@@ -140,9 +140,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     "working": "info"
   }
   const stateText = {
-    "done": "Claim done",
-    "failed": "Claim failed",
-    "working": "Claim in progress"
+    "done": "Claimed",
+    "failed": "Claiming failed",
+    "working": "Claiming in progress"
   }
 
   const container = () => {

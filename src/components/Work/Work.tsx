@@ -43,9 +43,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
       "working": "info"
     }
     const stateText = {
-      "done": "Claim done",
-      "failed": "Claim failed",
-      "working": "Claim in progress"
+      "done": "Claimed",
+      "failed": "Claiming failed",
+      "working": "Claiming in progress"
     }
     const claimSources = {
       "orcid_update": "Auto-Update",
