@@ -1,5 +1,5 @@
 import React from 'react'
-import { OverlayTrigger, Alert, Label, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Alert, Label, Tooltip, Col, Row } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
@@ -432,6 +432,25 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {metadataTag()}
         {description()}
         {registered()}
+        {metadata.identifiers && metadata.identifiers.length > 0 && (
+          <Row>
+            <Col xs={6} md={6} id="other-identifiers">
+              <h5>Other Identifiers</h5>
+              {metadata.identifiers.map((id) => (
+                <div key={id.identifier} className="work-identifiers">
+                  {id.identifierType}:{' '}
+                  <a
+                    href={id.identifierUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {id.identifier}
+                  </a>
+                </div>
+              ))}
+            </Col>
+          </Row>
+        )}
         {license()}
         {metricsCounter()}
         {tags()}

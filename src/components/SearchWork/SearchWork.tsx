@@ -98,6 +98,11 @@ export const contentFragment = {
     fragment WorkFragment on Work {
       id
       doi
+      identifiers {
+        identifier
+        identifierType
+        identifierUrl
+      }
       types {
         resourceTypeGeneral
         resourceType

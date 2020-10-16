@@ -111,6 +111,7 @@ export interface WorkType {
   id: string
   doi: string
   url: string
+  identifiers?: Identifier[]
   contentUrl: string
   types: {
     resourceTypeGeneral?: string
@@ -187,6 +188,12 @@ export interface Creator {
   givenName: string
   familyName: string
   affiliation: Affiliation[]
+}
+
+interface Identifier {
+  identifier: string
+  identifierType: string
+  identifierUrl: string
 }
 
 interface Contributor {
