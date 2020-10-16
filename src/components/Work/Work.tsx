@@ -53,7 +53,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     }
 
     const tooltipClaim = (
-      <Tooltip id="tooltipClaim">Status of claiming this DOI into your ORCID record.</Tooltip>
+      <Tooltip id="tooltipClaim">Status of claiming this DOI for your ORCID record.</Tooltip>
     )
 
     return (

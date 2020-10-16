@@ -227,6 +227,7 @@ input[type=text] {
   margin-top: 8px;
   margin-right: 3px;
   font-size: 16px;
+  padding: 6px 8px;
 }
 
 .label-info {
