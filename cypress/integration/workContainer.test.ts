@@ -16,6 +16,18 @@ describe('workContainer with usage', () => {
       .should('contain', 'Joan Starr')
   })
 
+  it('share', () => {
+    cy.get('.share .share-list .col-md-4', { timeout: 30000 })
+      .should('have.length', 1)
+      .should('contain', 'Email')
+  })
+
+  it('download', () => {
+    cy.get('.download .download-list .col-md-4', { timeout: 30000 })
+      .should('have.length', 2)
+      .should('contain', 'DataCite XML')
+  })
+
   it('cite as', () => {
     cy.get('.cite-as')
       .select('ieee')
@@ -30,20 +42,30 @@ describe('workContainer with usage', () => {
   })
 })
 
-// describe('workContainer with funding', () => {
-//   before(() => {
-//     cy.setCookie('_consent', 'true')
-//     cy.visit(`/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`)
-//   })
+describe('workContainer with funding', () => {
+  before(() => {
+    cy.setCookie('_consent', 'true')
+    cy.visit(`/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`)
+  })
 
-//   it('funding', () => {
-//     cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
-//     cy.get('.panel.funding').should(($funding) => {
-//       expect($funding).to.have.length(2)
-//       expect($funding.eq(0)).to.contain('Water Ice')
-//       expect($funding.eq(1)).to.contain('ARC')
-//     })
-//   })
-// })
+  it('creators', () => {
+    cy.get('.creator .creator-list .col-md-4', { timeout: 30000 })
+      .should('have.length', 2)
+      .should('contain', 'Jim Banks')
+  })
 
-export {}
+  it('contributors', () => {
+    cy.get('.contributor .contributor-list .col-md-4', { timeout: 30000 })
+      .should('have.length', 2)
+      .should('contain', 'The Editor')
+  })
+
+  it('funding', () => {
+    cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
+    cy.get('.panel.funding .funder-list .col-md-4').should(($funding) => {
+      expect($funding).to.have.length(2)
+      expect($funding.eq(0)).to.contain('Water Ice')
+      expect($funding.eq(1)).to.contain('ARC')
+    })
+  })
+})

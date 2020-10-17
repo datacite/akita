@@ -2,18 +2,16 @@ import { Cookies } from 'react-cookie-consent'
 import JsonWebToken from 'jsonwebtoken'
 
 export const session = () => {
-  let user = null
+  // RSA public key
+  const cert = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY
+      ? process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
+      : null
   let jwt = null
-  let cert = null
+  let user = null
 
   const sessionCookie = Cookies.getJSON('_datacite')
   if (sessionCookie && sessionCookie.authenticated) {
     jwt = sessionCookie.authenticated.access_token
-
-    // RSA public key
-    cert = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY
-      ? process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
-      : null
   }
 
   if (jwt && cert)

@@ -112,10 +112,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
     return (
       <>
-        <h3 className="member-results">Share</h3>
-        <div className="panel panel-transparent">
+        <h3 className="member-results" id="share">Share</h3>
+        <div className="panel panel-transparent share">
           <div className="panel-body">
-            <Row>
+            <Row className="share-list">
               <Col xs={6} md={4}>
                 <div>
                   <EmailShareButton url={pageUrl} title={title}>
@@ -147,10 +147,10 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
     return (
       <>
-        <h3 className="member-results">Download</h3>
-        <div className="panel panel-transparent">
+        <h3 className="member-results" id="download">Download</h3>
+        <div className="panel panel-transparent download">
           <div className="panel-body">
-            <Row>
+            <Row className="download-list">
               <Col xs={6} md={4}>
                 <h5>Full Metadata</h5>
                 <div id="export-xml">
@@ -382,7 +382,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         </h3>
       )}
       {showFunding && (
-        <div className="panel panel-transparent contributor">
+        <div className="panel panel-transparent funding">
           <div className="panel-body">
             {chunk(doi.fundingReferences, 3).map((row) => (
               <Row className="funder-list" key={row[0].funderName}>
