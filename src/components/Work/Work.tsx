@@ -115,8 +115,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <h3 className="member-results" id="share">Share</h3>
         <div className="panel panel-transparent share">
           <div className="panel-body">
-            <Row className="share-list">
-              <Col xs={6} md={4}>
+            <Row>
+              <Col className="share-list" xs={6} md={4}>
                 <div>
                   <EmailShareButton url={pageUrl} title={title}>
                     <FontAwesomeIcon icon={faEnvelope} /> Email
@@ -150,8 +150,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <h3 className="member-results" id="download">Download</h3>
         <div className="panel panel-transparent download">
           <div className="panel-body">
-            <Row className="download-list">
-              <Col xs={6} md={4}>
+            <Row>
+              <Col className="download-list" id="full-metadata" xs={6} md={4}>
                 <h5>Full Metadata</h5>
                 <div id="export-xml">
                   <a
@@ -191,7 +191,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   </a>
                 </div>
               </Col>
-              <Col xs={6} md={4}>
+              <Col className="download-list" id="citation-metadata" xs={6} md={4}>
                 <h5>Citation Metadata</h5>
                 <div id="export-citeproc" className="download">
                   <a
@@ -348,9 +348,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           <div className="panel panel-transparent creator">
             <div className="panel-body">
               {chunk(doi.creators, 3).map((row) => (
-                <Row className="creator-list" key={row[0].name}>
+                <Row key={row[0].name}>
                   {row.map((item) => (
-                    <Col key={item.name} md={4}><WorkPerson person={item} /></Col>
+                    <Col key={item.name} className="creator-list" md={4}><WorkPerson person={item} /></Col>
                   ))}
                 </Row>
               ))}
@@ -366,9 +366,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
           <div className="panel panel-transparent contributor">
             <div className="panel-body">
               {chunk(doi.contributors, 3).map((row) => (
-                <Row className="contributor-list" key={row[0].name}>
+                <Row key={row[0].name}>
                   {row.map((item) => (
-                    <Col key={item.name} md={4}><WorkPerson person={item} /></Col>
+                    <Col key={item.name} className="contributor-list" md={4}><WorkPerson person={item} /></Col>
                   ))}
                 </Row>
               ))}
@@ -385,9 +385,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         <div className="panel panel-transparent funding">
           <div className="panel-body">
             {chunk(doi.fundingReferences, 3).map((row) => (
-              <Row className="funder-list" key={row[0].funderName}>
+              <Row key={row[0].funderName}>
                 {row.map((item) => (
-                  <Col key={item.funderName} md={4}><WorkFunding funding={item} /></Col>
+                  <Col key={item.funderName} className="funder-list" md={4}><WorkFunding funding={item} /></Col>
                 ))}
               </Row>
             ))}

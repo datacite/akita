@@ -12,18 +12,18 @@ describe('workContainer with usage', () => {
 
   it('contributors', () => {
     cy.get('.contributor .contributor-list', { timeout: 30000 })
-      .should('have.length', 6)
+      .should('have.length', 17)
       .should('contain', 'Joan Starr')
   })
 
   it('share', () => {
-    cy.get('.share .share-list .col-md-4', { timeout: 30000 })
+    cy.get('.share .share-list', { timeout: 30000 })
       .should('have.length', 1)
       .should('contain', 'Email')
   })
 
   it('download', () => {
-    cy.get('.download .download-list .col-md-4', { timeout: 30000 })
+    cy.get('.download .download-list', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'DataCite XML')
   })
@@ -49,20 +49,20 @@ describe('workContainer with funding', () => {
   })
 
   it('creators', () => {
-    cy.get('.creator .creator-list .col-md-4', { timeout: 30000 })
+    cy.get('.creator .creator-list', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'Jim Banks')
   })
 
   it('contributors', () => {
-    cy.get('.contributor .contributor-list .col-md-4', { timeout: 30000 })
+    cy.get('.contributor .contributor-list', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'The Editor')
   })
 
   it('funding', () => {
     cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
-    cy.get('.panel.funding .funder-list .col-md-4').should(($funding) => {
+    cy.get('.panel.funding .funder-list').should(($funding) => {
       expect($funding).to.have.length(2)
       expect($funding.eq(0)).to.contain('Water Ice')
       expect($funding.eq(1)).to.contain('ARC')
