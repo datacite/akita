@@ -305,7 +305,7 @@ const DonutChart: React.FunctionComponent<Props> = ({
           fontSize: 27
         },
         encoding: {
-          text: { value: compactNumbers(count) }
+          text: { value: compactNumbers(count, true) }
         }
       }
     ],
