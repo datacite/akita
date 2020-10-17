@@ -38,8 +38,7 @@ class MyApp extends App<IProps> {
     // or we are check that the user is logged in and is a beta tester
 
     // don't show user login in production yet
-    const userAuthentication =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    const userAuthentication = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
     // don't show download link in production yet
     const downloadLink = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
@@ -52,9 +51,6 @@ class MyApp extends App<IProps> {
     
     // don't don't show organization info from Wikidata in production yet
     const organizationWikidata = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't don't show logo in production yet
-    const brandLogo = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
     // don't show pages menu in production yet
     const pagesMenu =
@@ -75,7 +71,6 @@ class MyApp extends App<IProps> {
           personEmployment,
           workFunding,
           organizationWikidata,
-          brandLogo,
           pagesMenu,
           dataciteMember,
           metricsCounter

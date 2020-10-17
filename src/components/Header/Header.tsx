@@ -75,21 +75,13 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   let user = session()
 
   const showUserAuthentication = useFeature('userAuthentication')
-  const showBrandLogo = useFeature('brandLogo')
   const showPagesMenu = useFeature('pagesMenu')
 
   return (
     <Navbar fluid collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">
-            {showBrandLogo && (
-              <>
-                <i className="ai ai-datacite"></i>{' '}
-              </>
-            )}
-            DataCite Commons
-          </a>
+          <a href="/">DataCite Commons</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
