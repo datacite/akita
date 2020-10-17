@@ -1,7 +1,8 @@
 describe("Server error", () => {  
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.route2('POST', '**/graphql', {
+    cy.server()
+    cy.route('POST', '**/graphql', {
       "errors": [
         {
           "message": "Internal Server Error"
@@ -16,8 +17,8 @@ describe("Server error", () => {
       .type('hallett{enter}')
       .get('.alert > h4')
       .should('contain', 'An error occured.')
-      // .get('.alert > p')
-      // .should('contain', 'Internal Server Error')
+      .get('.alert > p')
+      .should('contain', 'Internal Server Error')
   })
 
   it('search people', () => {
@@ -26,8 +27,8 @@ describe("Server error", () => {
       .type('hallett{enter}')
       .get('.alert > h4')
       .should('contain', 'An error occured.')
-      // .get('.alert > p')
-      // .should('contain', 'Internal Server Error')
+      .get('.alert > p')
+      .should('contain', 'Internal Server Error')
   })
 
   it('search organizations', () => {
@@ -36,8 +37,8 @@ describe("Server error", () => {
       .type('cambridge{enter}')
       .get('.alert > h4')
       .should('contain', 'An error occured.')
-      // .get('.alert > p')
-      // .should('contain', 'Internal Server Error')
+      .get('.alert > p')
+      .should('contain', 'Internal Server Error')
   })
 })
 
