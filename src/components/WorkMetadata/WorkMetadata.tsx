@@ -327,7 +327,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   const tooltipResourceTypeGeneral = (
     <Tooltip id="tooltipResourceTypeGeneral">
-      The general type of the content.
+      The content type.
     </Tooltip>
   )
 
@@ -345,13 +345,16 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <Tooltip id="tooltipClaim">Status of claiming this DOI for your ORCID record.</Tooltip>
   )
 
+  let resourceType = metadata.types.resourceTypeGeneral
+  if (metadata.registrationAgency.id === "crossref" && metadata.types.resourceType) resourceType = metadata.types.resourceType
+
   const tags = () => {
     return (
       <div className="tags">
-        {metadata.types.resourceTypeGeneral && (
+        {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
             <Label bsStyle="info">
-              {startCase(metadata.types.resourceTypeGeneral)}
+              {startCase(resourceType)}
             </Label>
           </OverlayTrigger>
         )}
