@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("About", () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
