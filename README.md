@@ -5,7 +5,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b34c0096505296b18f19/test_coverage)](https://codeclimate.com/github/datacite/akita/test_coverage)
 [![akita](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/yur1cf/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/yur1cf/runs)
 
-The web frontend for the DataCite Common DOI Search service (under development).
+The web frontend for the DataCite Commons service.
 
 
 ## Prerequisites
@@ -32,11 +32,15 @@ You will need the following things properly installed on your computer.
 
 ### Running Tests
 
-* `yarn test`
+* `yarn cy:run`
 
 ### Linting
 
 * `yarn lint`
+
+### Type Checking
+
+* `yarn type-checks`
 
 ### Deploying
 
