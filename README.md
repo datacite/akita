@@ -33,6 +33,7 @@ You will need the following things properly installed on your computer.
 ### Running Tests
 
 * `yarn cy:run`
+* `yarn cy:open`
 
 ### Linting
 
@@ -40,7 +41,7 @@ You will need the following things properly installed on your computer.
 
 ### Type Checking
 
-* `yarn type-checks`
+* `yarn type-check`
 
 ### Deploying
 
