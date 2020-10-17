@@ -352,7 +352,7 @@ ul.nav.nav-tabs li span {
   font-size: 25px;
 }
 
-.description.biography, .description, .registered, .other-identifiers .location, .inception-year, .metadata {
+.description.biography, .description, .registered, .other-identifiers, .location, .inception-year, .metadata {
   margin-bottom: 10px;
 }
 

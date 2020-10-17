@@ -197,7 +197,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.descriptions[0]) return ''
 
     const descriptionHtml = truncate(metadata.descriptions[0].description, {
-      length: 750,
+      length: 2500,
       separator: '… '
     })
 
@@ -431,10 +431,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {creators()}
         {metadataTag()}
         {description()}
-        {registered()}
         {metadata.identifiers && metadata.identifiers.length > 0 && (
           <Row>
-            <Col xs={6} md={6} id="other-identifiers">
+            <Col xs={6} md={6} className="other-identifiers">
               <h5>Other Identifiers</h5>
               {metadata.identifiers.map((id) => (
                 <div key={id.identifier} className="work-identifiers">
@@ -451,6 +450,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             </Col>
           </Row>
         )}
+        {registered()}
         {license()}
         {metricsCounter()}
         {tags()}
