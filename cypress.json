@@ -6,5 +6,6 @@
   "componentFolder": "src/components",
   "testFiles": "**/*.test.*",
   "video": false,
-  "projectId": "yur1cf"
+  "projectId": "yur1cf",
+  "retries": 2
 }

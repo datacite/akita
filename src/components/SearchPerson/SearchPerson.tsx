@@ -88,7 +88,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
       <Col md={9} mdOffset={3} id="content">
         {data.people.nodes.length > 0 && (
           <h3 className="member-results">
-            {pluralize(data.people.totalCount, 'Person', 'People')}
+            {pluralize(data.people.totalCount, 'Person', false, 'People')}
           </h3>
         )}
 
