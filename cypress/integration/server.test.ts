@@ -1,11 +1,11 @@
-describe("Server error", () => {  
+describe('Server error', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
     cy.server()
     cy.route('POST', '**/graphql', {
-      "errors": [
+      errors: [
         {
-          "message": "Internal Server Error"
+          message: 'Internal Server Error'
         }
       ]
     })

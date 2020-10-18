@@ -32,7 +32,10 @@ describe('workContainer with usage', () => {
     cy.get('.cite-as')
       .select('ieee')
       .get('.formatted-citation', { timeout: 30000 })
-      .should('contain', 'DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.0.')
+      .should(
+        'contain',
+        'DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.0.'
+      )
   })
 
   it('chart', () => {
@@ -45,7 +48,9 @@ describe('workContainer with usage', () => {
 describe('workContainer with funding', () => {
   before(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit(`/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`)
+    cy.visit(
+      `/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`
+    )
   })
 
   it('creators', () => {

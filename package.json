@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "prettier-format": "prettier --config .prettierrc.json '*.ts|tsx' --write",
+    "prettier-format": "prettier --config .prettierrc.json '**/*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "ci": "NODE_ENV=test yarn dev & wait-on http://localhost:3000 && yarn cy:run --record --quiet",
     "cy:coverage": "npx nyc report --reporter=lcov",

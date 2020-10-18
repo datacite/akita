@@ -1,14 +1,13 @@
 /// <reference types="cypress" />
 
-describe("Beta", () => {
+describe('Beta', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit("/beta")
+    cy.visit('/beta')
   })
 
-  it("header", () => {
-    cy.get('.member', { timeout: 30000 })
-      .contains('Beta Tester Program')
+  it('header', () => {
+    cy.get('.member', { timeout: 30000 }).contains('Beta Tester Program')
   })
 })
 

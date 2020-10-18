@@ -1,14 +1,13 @@
 /// <reference types="cypress" />
 
-describe("About", () => {
+describe('About', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit("/about")
+    cy.visit('/about')
   })
 
-  it("header", () => {
-    cy.get('.member', { timeout: 30000 })
-      .contains('About')
+  it('header', () => {
+    cy.get('.member', { timeout: 30000 }).contains('About')
   })
 })
 
