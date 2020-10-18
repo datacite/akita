@@ -86,6 +86,10 @@ export const STATS_GQL = gql`
     }
     organizations {
       totalCount
+      years {
+        title
+        count
+      }
     }
     publications: works(resourceTypeId: "Text") {
       totalCount
@@ -185,6 +189,11 @@ const StatsAll: React.FunctionComponent = () => {
   )
 
   const people = data.people.years.map((x) => ({
+    title: x.title,
+    count: x.count
+  }))
+
+  const organizations = data.organizations.years.map((x) => ({
     title: x.title,
     count: x.count
   }))
@@ -488,8 +497,48 @@ const StatsAll: React.FunctionComponent = () => {
                     ROR
                   </a>
                   ) identifiers and metadata. This information is retrieved live
-                  from the ROR REST API.
+                  from the ROR REST API, the respective numbers by registration year are shown below.
                 </p>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="organization-count">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <Row>
+                {data.organizations.totalCount == 0 && (
+                  <Col md={12}>
+                    <Alert bsStyle="warning">
+                      <p>No Organizations found.</p>
+                    </Alert>
+                  </Col>
+                )}
+                {data.organizations.totalCount > 0 && (
+                  <Col md={4}>
+                    <ProductionChart
+                      title={
+                        data.organizations.totalCount.toLocaleString('en-US') +
+                        ' Organizations'
+                      }
+                      data={organizations}
+                      lowerBoundYear={2017}
+                      color={'#c2e9ba'}
+                    ></ProductionChart>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="people-count">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <div className="intro">
                 <p>
                   {data.connected.totalCount.toLocaleString('en-US')} out of all{' '}
                   {data.total.totalCount.toLocaleString('en-US')} (
