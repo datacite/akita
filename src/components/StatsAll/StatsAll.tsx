@@ -1,6 +1,6 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 import Link from 'next/link'
 
 import Error from '../Error/Error'
@@ -11,6 +11,7 @@ import { ContentFacet } from '../WorksListing/WorksListing'
 
 export interface Source {
   totalCount: number
+  years: ContentFacet[]
 }
 
 export interface Crossref {
@@ -20,35 +21,83 @@ export interface Crossref {
 
 export interface Works {
   totalCount: number
+  totalCountFromCrossref?: number
   published: ContentFacet[]
+  registrationAgencies?: ContentFacet[]
 }
 
 interface WorkQueryData {
-  datacite: Source
-  crossref: Crossref
+  total: Works
+  claimed: Works
+  cited: Works
+  connected: Works
   people: Source
   organizations: Source
   publications: Works
   datasets: Works
   softwares: Works
+  citedPublications: Works
+  citedDatasets: Works
+  citedSoftwares: Works
 }
 
 export const STATS_GQL = gql`
   query getStatsQuery {
-    datacite: works(registrationAgency: "datacite") {
-      totalCount
-    }
-    crossref: works(registrationAgency: "crossref") {
+    total: works {
       totalCount
       totalCountFromCrossref
+      registrationAgencies {
+        title
+        count
+      }
+    }
+    cited: works(hasCitations: 1) {
+      totalCount
+      registrationAgencies {
+        title
+        count
+      }
+    }
+    claimed: works(hasPerson: true) {
+      totalCount
+      registrationAgencies {
+        title
+        count
+      }
+    }
+    connected: works(
+      hasOrganization: true
+      hasAffiliation: true
+      hasFunder: true
+      hasMember: true
+    ) {
+      totalCount
+      registrationAgencies {
+        title
+        count
+      }
     }
     people {
       totalCount
+      years {
+        title
+        count
+      }
     }
     organizations {
       totalCount
     }
     publications: works(resourceTypeId: "Text") {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    citedPublications: works(
+      resourceTypeId: "Text"
+      hasCitations: 1
+    ) {
       totalCount
       published {
         title
@@ -62,7 +111,27 @@ export const STATS_GQL = gql`
         count
       }
     }
+    citedDatasets: works(
+      resourceTypeId: "Dataset"
+      hasCitations: 1
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
     softwares: works(resourceTypeId: "Software") {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    citedSoftwares: works(
+      resourceTypeId: "Software"
+      hasCitations: 1
+    ) {
       totalCount
       published {
         title
@@ -85,6 +154,40 @@ const StatsAll: React.FunctionComponent = () => {
         <Error title="An error occured." message={error.message} />
       </Col>
     )
+
+  const datacite = data.total.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossref = data.total.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const dataciteCited = data.cited.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossrefCited = data.cited.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const dataciteClaimed = data.claimed.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+
+  const crossrefClaimed = data.claimed.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const dataciteConnected = data.connected.registrationAgencies.find(
+    (element) => element.title === 'DataCite'
+  )
+  const crossrefConnected = data.connected.registrationAgencies.find(
+    (element) => element.title === 'Crossref'
+  )
+
+  const people = data.people.years.map((x) => ({
+    title: x.title,
+    count: x.count
+  }))
 
   const renderPublications = () => {
     const publishedPublication = data.publications.published.map((x) => ({
@@ -133,9 +236,65 @@ const StatsAll: React.FunctionComponent = () => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.softwares.totalCount.toLocaleString('en-US') + '  Software'
+            data.softwares.totalCount.toLocaleString('en-US') + ' Software'
           }
           data={publishedSoftware}
+          color={'#bebada'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderCitedPublications = () => {
+    const citedPublication = data.citedPublications.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.citedPublications.totalCount.toLocaleString('en-US') +
+            ' Cited Publications'
+          }
+          data={citedPublication}
+          color={'#80b1d3'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderCitedDatasets = () => {
+    const citedDataset = data.citedDatasets.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={data.citedDatasets.totalCount.toLocaleString('en-US') + ' Cited Datasets'}
+          data={citedDataset}
+          color={'#fb8072'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderCitedSoftwares = () => {
+    const citedSoftware = data.citedSoftwares.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.citedSoftwares.totalCount.toLocaleString('en-US') + ' Cited Software'
+          }
+          data={citedSoftware}
           color={'#bebada'}
         ></ProductionChart>
       </Col>
@@ -148,47 +307,13 @@ const StatsAll: React.FunctionComponent = () => {
         <Col md={9} mdOffset={3} id="intro">
           <div className="panel panel-transparent">
             <div className="panel-body">
-              <h3 className="member">Overview</h3>
+              <h3 className="member">Statistics</h3>
               <div>
                 <p>
                   This page gives an overview of the information about works,
-                  people and organizations made available via DataCite Commons.
-                  More detailed information about specific work types, people
-                  and organizations can be found via the <strong>Pages</strong>{' '}
-                  menu:
-                </p>
-                <ul>
-                  <li>
-                    <Link href="/publications">
-                      <a>Publications</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/datasets">
-                      <a>Datasets</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/software">
-                      <a>Software</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/people">
-                      <a>People</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/organizations">
-                      <a>Organizations</a>
-                    </Link>
-                  </li>
-                </ul>
-                <p>
-                  Please reach out to{' '}
+                  people and organizations made available via DataCite Commons. Please reach out to{' '}
                   <a href="mailto:support@datacite.org">DataCite Support</a> for
-                  questions or comments regarding the data available in DataCite
-                  Commons.
+                  questions or comments.
                 </p>
               </div>
             </div>
@@ -197,9 +322,9 @@ const StatsAll: React.FunctionComponent = () => {
       </Row>
       <Row>
         <DataSources
-          dataciteCount={data.datacite.totalCount}
-          crossrefCount={data.crossref.totalCount}
-          crossrefApiCount={data.crossref.totalCountFromCrossref}
+          dataciteCount={datacite.count}
+          crossrefCount={crossref.count}
+          crossrefApiCount={data.total.totalCountFromCrossref}
           orcidCount={data.people.totalCount}
           rorCount={data.organizations.totalCount}
         />
@@ -212,7 +337,7 @@ const StatsAll: React.FunctionComponent = () => {
               <div className="intro">
                 DataCite Commons currently includes{' '}
                 {(
-                  data.datacite.totalCount + data.crossref.totalCount
+                  datacite.count + crossref.count
                 ).toLocaleString('en-US')}{' '}
                 works, with identifiers and metadata provided by DataCite and
                 Crossref. For the three major work types{' '}
@@ -234,6 +359,152 @@ const StatsAll: React.FunctionComponent = () => {
                 {renderDatasets()}
                 {renderSoftwares()}
               </Row>
+              <Row>
+                <Col md={12}>
+                  <div className="panel panel-transparent">
+                    <div className="panel-body">
+                      <p>
+                        {data.cited.totalCount.toLocaleString('en-US')} out of all{' '}
+                        {data.total.totalCount.toLocaleString('en-US')} (
+                        {(
+                          (data.cited.totalCount * 100) /
+                          data.total.totalCount
+                        ).toFixed(2) + '%'}
+                        ) works have been cited at least once, including{' '}
+                        {((dataciteCited.count * 100) / datacite.count).toFixed(
+                          2
+                        ) + '%'}{' '}
+                        of works registered with DataCite, and{' '}
+                        {((crossrefCited.count * 100) / crossref.count).toFixed(
+                          2
+                        ) + '%'}{' '}
+                        of works registered with Crossref.
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                {renderCitedPublications()}
+                {renderCitedDatasets()}
+                {renderCitedSoftwares()}
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="people">
+          <h3 className="member-results">People</h3>
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <div className="intro">
+                <p>
+                  DataCite Commons includes all{' '}
+                  {data.people.totalCount.toLocaleString('en-US')}{' '}
+                  <a target="_blank" rel="noreferrer" href="https://orcid.org">
+                    ORCID
+                  </a>{' '}
+                  identifiers, and personal and employment metadata. This
+                  information is retrieved live from the ORCID REST API, 
+                  the respective numbers by registration year are shown below.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="people-count">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <Row>
+                {data.people.totalCount == 0 && (
+                  <Col md={12}>
+                    <Alert bsStyle="warning">
+                      <p>No People found.</p>
+                    </Alert>
+                  </Col>
+                )}
+                {data.people.totalCount > 0 && (
+                  <Col md={4}>
+                    <ProductionChart
+                      title={
+                        data.people.totalCount.toLocaleString('en-US') +
+                        ' People'
+                      }
+                      data={people}
+                      lowerBoundYear={2012}
+                      color={'#8dd3c7'}
+                    ></ProductionChart>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="people-count">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <div className="intro">
+                <p>
+                  {data.claimed.totalCount.toLocaleString('en-US')} out of all{' '}
+                  {data.total.totalCount.toLocaleString('en-US')} (
+                  {(
+                    (data.claimed.totalCount * 100) /
+                    data.total.totalCount
+                  ).toFixed(2) + '%'}
+                  ) works have been connected to at least one ORCID record,
+                  including{' '}
+                  {((dataciteClaimed.count * 100) / datacite.count).toFixed(2) +
+                    '%'}{' '}
+                  of works registered with DataCite, and{' '}
+                  {((crossrefClaimed.count * 100) / crossref.count).toFixed(2) +
+                    '%'}{' '}
+                  of works registered with Crossref.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={9} mdOffset={3} id="intro">
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <h3 className="member">Organizations</h3>
+              <div>
+                <p>
+                  DataCite Commons includes all{' '}
+                  {data.organizations.totalCount.toLocaleString('en-US')}{' '}
+                  Research Organization Registry (
+                  <a target="_blank" rel="noreferrer" href="https://ror.org">
+                    ROR
+                  </a>
+                  ) identifiers and metadata. This information is retrieved live
+                  from the ROR REST API.
+                </p>
+                <p>
+                  {data.connected.totalCount.toLocaleString('en-US')} out of all{' '}
+                  {data.total.totalCount.toLocaleString('en-US')} (
+                  {(
+                    (data.connected.totalCount * 100) /
+                    data.total.totalCount
+                  ).toFixed(2) + '%'}
+                  ) works are connected with at least one organization via ROR
+                  ID or Crossref Funder ID, including{' '}
+                  {((dataciteConnected.count * 100) / datacite.count).toFixed(
+                    2
+                  ) + '%'}{' '}
+                  of works registered with DataCite, and{' '}
+                  {((crossrefConnected.count * 100) / crossref.count).toFixed(
+                    2
+                  ) + '%'}{' '}
+                  of works registered with Crossref.
+                </p>
+              </div>
             </div>
           </div>
         </Col>

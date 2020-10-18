@@ -1,11 +1,11 @@
 describe('Overview', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit('/overview')
+    cy.visit('/statistics')
   })
 
   it('header', () => {
-    cy.get('.member', { timeout: 30000 }).contains('Overview')
+    cy.get('.member', { timeout: 30000 }).contains('Statistics')
   })
 
   it('data-sources', () => {

@@ -158,35 +158,9 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               <MenuItem eventKey={1.1} data-cy="about" href="/about">
                 About
               </MenuItem>
-              <MenuItem eventKey={1.2} data-cy="overview" href="/overview">
-                Overview
+              <MenuItem eventKey={1.2} data-cy="statistics" href="/statistics">
+                Statistics
               </MenuItem>
-              <MenuItem divider />
-              <MenuItem
-                eventKey={1.3}
-                data-cy="publications"
-                href="/publications"
-              >
-                Publications
-              </MenuItem>
-              <MenuItem eventKey={1.4} data-cy="datasets" href="/datasets">
-                Datasets
-              </MenuItem>
-              <MenuItem eventKey={1.5} data-cy="software" href="/software">
-                Software
-              </MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={1.6} data-cy="people" href="/people">
-                People
-              </MenuItem>
-              <MenuItem
-                eventKey={1.7}
-                data-cy="organizations"
-                href="/organizations"
-              >
-                Organizations
-              </MenuItem>
-              <MenuItem divider />
             </NavDropdown>
           )}
           {!showPagesMenu && (
