@@ -74,3 +74,5 @@ describe('workContainer with funding', () => {
     })
   })
 })
+
+export {}

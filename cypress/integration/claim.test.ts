@@ -25,3 +25,5 @@ describe('Claim', () => {
       .contains('Claim failed')
   })
 })
+
+export {}
