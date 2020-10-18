@@ -255,8 +255,8 @@ const StatsAll: React.FunctionComponent = () => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.citedPublications.totalCount.toLocaleString('en-US') +
-            ' Cited Publications'
+            data.citedPublications.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.citedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Cited Publications'
           }
           data={citedPublication}
           color={'#80b1d3'}
@@ -274,7 +274,10 @@ const StatsAll: React.FunctionComponent = () => {
     return (
       <Col md={4}>
         <ProductionChart
-          title={data.citedDatasets.totalCount.toLocaleString('en-US') + ' Cited Datasets'}
+          title={
+            data.citedDatasets.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.citedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Cited Datasets'
+          }
           data={citedDataset}
           color={'#fb8072'}
         ></ProductionChart>
@@ -292,7 +295,8 @@ const StatsAll: React.FunctionComponent = () => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.citedSoftwares.totalCount.toLocaleString('en-US') + ' Cited Software'
+            data.citedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.citedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Cited Software'
           }
           data={citedSoftware}
           color={'#bebada'}
