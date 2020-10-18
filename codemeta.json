@@ -2,7 +2,7 @@
 	"@context": "https://raw.githubusercontent.com/codemeta/codemeta/master/codemeta.jsonld",
 	"@type": "SoftwareSourceCode",
 	"@id": "https://doi.org/10.14454/qgk4-zs88",
-	"agents": {
+	"agents": [{
 		"@id": "https://orcid.org/0000-0003-1419-2405",
 		"@type": "person",
 		"name": "Martin Fenner",
@@ -11,6 +11,33 @@
 		"isMaintainer": true,
 		"isRightsHolder": true
   },
+  {
+		"@id": "https://orcid.org/0000-0002-8599-0773",
+		"@type": "person",
+		"name": "Richard Hallett",
+		"affiliation": "DataCite",
+		"mustBeCited": true,
+		"isMaintainer": true,
+		"isRightsHolder": true
+  },
+  {
+		"@id": "https://orcid.org/0000-0003-3484-6875",
+		"@type": "person",
+		"name": "Kristian Garza",
+		"affiliation": "DataCite",
+		"mustBeCited": true,
+		"isMaintainer": true,
+		"isRightsHolder": true
+  },
+  {
+		"@id": "https://orcid.org/0000-0002-5355-2576",
+		"@type": "person",
+		"name": "Sarala Wimalaratne",
+		"affiliation": "DataCite",
+		"mustBeCited": true,
+		"isMaintainer": true,
+		"isRightsHolder": true
+  }],
 	"identifier": "https://doi.org/10.14454/qgk4-zs88",
 	"codeRepository": "https://github.com/datacite/akita",
 	"controlledTem": "software",
