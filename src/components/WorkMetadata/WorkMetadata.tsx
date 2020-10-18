@@ -428,7 +428,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div key={metadata.id} className="panel panel-transparent">
+    <div key={metadata.id} className="panel panel-transparent work-list">
       <div className="panel-body">
         {title()}
         {creators()}

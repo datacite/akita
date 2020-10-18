@@ -59,7 +59,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     return (
       <>
         <h3 className="member-results">Claim</h3>
-        <div className="panel panel-transparent">
+        <div className="panel panel-transparent claim">
           <div className="panel-body">
             <Row>
               <Col xs={6} md={4}>

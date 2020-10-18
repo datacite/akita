@@ -20,6 +20,9 @@
 const browserify = require('@cypress/browserify-preprocessor')
 
 module.exports = (on, config) => {
+  config.env = config.env || {}
+  config.env.USER_COOKIE = process.env.USER_COOKIE
+
   let options = browserify.defaultOptions
   options.browserifyOptions.transform[1][1].babelrc = true
   options.typescript = require.resolve('typescript')

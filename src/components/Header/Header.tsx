@@ -213,21 +213,22 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
                   <MenuItem divider />
                 </>
               )}
-              <MenuItem eventKey={3.2} href={profilesUrl + '/settings/me'}>
+              <MenuItem eventKey={3.2} data-cy="settings" href={profilesUrl + '/settings/me'}>
                 <FontAwesomeIcon icon={faUserCog} /> Settings
               </MenuItem>
-              <MenuItem eventKey={3.3} href={'/orcid.org/' + user.uid}>
+              <MenuItem eventKey={3.3} data-cy="commons-page" href={'/orcid.org/' + user.uid}>
                 <FontAwesomeIcon icon={faAddressCard} /> Commons Page
               </MenuItem>
               <MenuItem
                 eventKey={3.4}
+                data-cy="orcid"
                 href={'https://orcid.org/' + user.uid}
                 target="_blank"
                 rel="noreferrer"
               >
                 <FontAwesomeIcon icon={faOrcid} /> ORCID Record
               </MenuItem>
-              <MenuItem eventKey={3.5} href={profilesUrl + '/sign_out'}>
+              <MenuItem eventKey={3.5} data-cy="signout" href={profilesUrl + '/sign_out'}>
                 <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
               </MenuItem>
             </NavDropdown>
