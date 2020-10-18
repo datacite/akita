@@ -1,5 +1,5 @@
 # Akita
-
+[![Identifier](https://img.shields.io/badge/doi-10.14454%2Fqgk4--zs88-fca709.svg)](https://doi.org/10.14454/qgk4-zs88)
 [![Build Status](https://travis-ci.com/datacite/akita.svg?branch=master)](https://travis-ci.com/datacite/akita)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b34c0096505296b18f19/maintainability)](https://codeclimate.com/github/datacite/akita/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b34c0096505296b18f19/test_coverage)](https://codeclimate.com/github/datacite/akita/test_coverage)
