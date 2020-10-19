@@ -284,7 +284,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   const viewsTabLabel = pluralize(doi.viewCount, 'View')
-  const downloadsTabLabel = pluralize(doi.downloadCount, 'View')
+  const downloadsTabLabel = pluralize(doi.downloadCount, 'Download')
 
   const viewsOverTime = doi.viewsOverTime.map((datum) => ({
     yearMonth: datum.yearMonth,
