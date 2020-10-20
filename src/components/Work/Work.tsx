@@ -36,11 +36,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   const claim = () => {
     const claim = doi.claims[0]
-    const hasFailed = claim.state === 'failed'
+    const isDone = claim.state === 'done'
     const stateColors = {
       "done": "success",
       "failed": "danger",
-      "working": "info"
+      "working": "info",
+      "waiting": "info"
     }
     const stateText = {
       "done": "Claimed",
@@ -77,13 +78,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                 >
                   {claimSources[claim.sourceId]}
                 </a>
-                {hasFailed && (
-                  <>
-                    <h5>Error Message</h5>
-                    {startCase(claim.errorMessages[0].title)}
-                  </>
-                )}
-                {!hasFailed && (
+                {isDone && (
                   <>
                     <h5>Claimed</h5>
                     {new Date(claim.claimed).toLocaleDateString('en-US', {
@@ -91,6 +86,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                       month: 'long',
                       day: 'numeric'
                     })}
+                  </>
+                )}
+                {!isDone && claim.errorMessages && claim.errorMessages.length > 0 && (
+                  <>
+                    <h5>Error Message</h5>
+                    {startCase(claim.errorMessages[0].title)}
                   </>
                 )}
               </Col>

@@ -137,7 +137,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const stateColors = {
     "done": "success",
     "failed": "danger",
-    "working": "info"
+    "working": "info",
+    "waiting": "info"
   }
   const stateText = {
     "done": "Claimed",
