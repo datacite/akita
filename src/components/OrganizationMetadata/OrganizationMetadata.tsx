@@ -72,6 +72,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
         <Link
           href="/ror.org/[organization]"
           as={`/ror.org${rorFromUrl(metadata.id)}`}
+          prefetch={false}
         >
           <a>
             {metadata.name}
