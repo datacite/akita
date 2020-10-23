@@ -250,6 +250,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
   })()
 
   if (!organization) return <div></div>
+  console.log(organization)
 
   // if query was for gridId or crossrefFunderId and organization was found
   if (!rorId && router) {
@@ -336,6 +337,44 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     )
   }
 
+  const workCount = () => {
+    if (
+      organization.metadata.citationCount + organization.metadata.viewCount + organization.metadata.downloadCount ==
+      0
+    ) {
+      return <div></div>
+    }
+
+    return (
+      <>
+        <Col md={9} mdOffset={3}>
+          <h3 className="member-results">Aggregated Citations, Views and Downloads</h3>
+          <div className="panel panel-transparent aggregations">
+            <div className="panel-body">
+              <Row>
+                {organization.metadata.citationCount > 0 && (
+                  <Col xs={4} className="text-center">
+                  <h4 className="work">{pluralize(organization.metadata.citationCount, 'Citation', true)}</h4>
+                  </Col>
+                )}
+                {organization.metadata.viewCount > 0 && (
+                  <Col xs={4} className="text-center">
+                    <h4 className="work">{pluralize(organization.metadata.viewCount, 'View', true)}</h4>
+                  </Col>
+                )}
+                {organization.metadata.downloadCount > 0 && (
+                  <Col xs={4} className="text-center">
+                  <h4 className="work">{pluralize(organization.metadata.downloadCount, 'Download', true)}</h4>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </>
+    )
+  }
+
   const content = () => {
     return (
       <Col md={9} mdOffset={3} className="panel-list" id="content">
@@ -349,6 +388,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     <>
       <Row>{content()}</Row>
       <Row>{shareLink()}</Row>
+      <Row>{workCount()}</Row>
       <Row>{relatedContent()}</Row>
     </>
   )

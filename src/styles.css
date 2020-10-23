@@ -422,3 +422,7 @@ h4.work {
 .creator-list {
   margin-bottom: 10px;
 }
+
+.panel.aggregations {
+  margin-bottom: 20px;
+}

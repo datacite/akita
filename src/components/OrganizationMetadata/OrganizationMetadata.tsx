@@ -1,17 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { Label, Col, Row } from 'react-bootstrap'
-import { pluralize, compactNumbers } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faExternalLinkAlt,
-  faQuoteLeft,
-  faDownload,
+  faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-regular-svg-icons'
-
 import { decimalToSexagesimal } from 'geolib'
-import { useFeature } from 'flagged'
 
 import { rorFromUrl } from '../../utils/helpers'
 
@@ -71,39 +65,6 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     metadata.geolocation &&
     metadata.geolocation.pointLongitude &&
     metadata.geolocation.pointLatitude
-  const showMetrics = useFeature('metricsCounter')
-
-  const metricsCounter = () => {
-    if (
-      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
-      0
-    ) {
-      return <div></div>
-    }
-
-    return (
-      <div className="metrics">
-        {metadata.citationCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            {compactNumbers(metadata.citationCount) + ' ' + pluralize(null, 'Citation')}
-          </span>
-        )}
-        {metadata.viewCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            {compactNumbers(metadata.viewCount) + ' ' + pluralize(null, 'View')}
-          </span>
-        )}
-        {metadata.downloadCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            {compactNumbers(metadata.downloadCount) + ' ' + pluralize(null, 'Download')}
-          </span>
-        )}
-      </div>
-    )
-  }
 
   const titleLink = () => {
     if (!linkToExternal) {
@@ -289,9 +250,6 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
             <h5>Geolocation</h5>
             {geolocation()}
           </div>
-        )}
-        {showMetrics && (
-          metricsCounter()
         )}
         <div className="tags">
           <Label bsStyle="info">{metadata.country.name}</Label>

@@ -7,7 +7,7 @@ import {
 } from '@apollo/client'
 import withApollo from '../../hooks/withApollo'
 // import { session } from '../utils/session'
-import { FlagsProvider } from 'flagged'
+// import { FlagsProvider } from 'flagged'
 import * as Sentry from '@sentry/node'
 
 // properly handle fontawesome icons
@@ -38,19 +38,19 @@ class MyApp extends App<IProps> {
     // or we are check that the user is logged in and is a beta tester
 
     // don't show aggregate stats in production yet
-    const metricsCounter = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+    // const metricsCounter = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
     return (
-      <FlagsProvider
-        features={{
-          metricsCounter
-        }}
-      >
+      // <FlagsProvider
+      //   features={{
+      //     metricsCounter
+      //   }}
+      // >
         <ApolloProvider client={apollo}>
           {/* adds the apollo provider to provide it's children with the apollo scope. */}
           <Component {...pageProps} />
         </ApolloProvider>
-      </FlagsProvider>
+      // </FlagsProvider>
     )
   }
 }

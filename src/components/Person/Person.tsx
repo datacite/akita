@@ -12,7 +12,7 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
-import { orcidFromUrl } from '../../utils/helpers'
+import { pluralize, orcidFromUrl } from '../../utils/helpers'
 
 export interface PersonRecord {
   id: string
@@ -123,70 +123,38 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
-  // const workCount = () => {
-  //   if (person.works.totalCount == 0) {
-  //     return ''
-  //   }
+  const workCount = () => {
+    if (person.works.totalCount === 0) {
+      return ''
+    }
 
-  //   return (
-  //     <div className="metrics-counter">
-  //       <ul className="counter-list">
-  //         <li>
-  //           {/* <h4>Works</h4> */}
-  //           <Row>
-  //             <Col xs={4}>
-  //               {/* <h3 id="work-count"> */}
-  //               {/* {compactNumbers(person.works.totalCount)} */}
-  //               {/* </h3> */}
-  //             </Col>
-  //           </Row>
-  //           <Row>
-  //             {person.citationCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'Citation'}
-  //                     count={compactNumbers(person.citationCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="citation-count">
-  //                   {compactNumbers(person.citationCount)}
-  //                 </div>
-  //               </Col>
-  //             )}
-  //             {person.viewCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'View'}
-  //                     count={compactNumbers(person.viewCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="view-count">{compactNumbers(person.viewCount)}</div>
-  //               </Col>
-  //             )}
-  //             {person.downloadCount > 0 && (
-  //               <Col xs={4}>
-  //                 <h5>
-  //                   <Pluralize
-  //                     singular={'Download'}
-  //                     count={compactNumbers(person.downloadCount)}
-  //                     showCount={false}
-  //                   />
-  //                 </h5>
-  //                 <div id="download-count">
-  //                   {compactNumbers(person.downloadCount)}
-  //                 </div>
-  //               </Col>
-  //             )}
-  //           </Row>
-  //         </li>
-  //       </ul>
-  //     </div>
-  //   )
-  // }
+    return (
+      <>
+        <h3 className="member-results">Aggregated Citations, Views and Downloads</h3>
+        <div className="panel panel-transparent aggregations">
+          <div className="panel-body">
+            <Row>
+              {person.citationCount > 0 && (
+                <Col xs={4} className="text-center">
+                <h4 className="work">{pluralize(person.citationCount, 'Citation', true)}</h4>
+                </Col>
+              )}
+              {person.viewCount > 0 && (
+                <Col xs={4} className="text-center">
+                  <h4 className="work">{pluralize(person.viewCount, 'View', true)}</h4>
+                </Col>
+              )}
+              {person.downloadCount > 0 && (
+                <Col xs={4} className="text-center">
+                <h4 className="work">{pluralize(person.downloadCount, 'Download', true)}</h4>
+                </Col>
+              )}
+            </Row>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   return (
     <>
@@ -199,6 +167,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
           <PersonEmployment employment={item} />
         </div>
       ))}
+      {workCount()}
     </>
   )
 }
