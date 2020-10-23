@@ -1,7 +1,6 @@
 import React from 'react'
 import { Tabs, Tab, Alert, Row, Col, Label, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
-import { useFeature } from 'flagged'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -25,14 +24,12 @@ type Props = {
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
-  const workFunding = useFeature('workFunding')
-  const downloadLink = useFeature('downloadLink')
   const [selectedOption, setSelectedOption] = React.useState('')
 
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
   const showFunding =
-    doi.fundingReferences && doi.fundingReferences.length > 0 && workFunding
+    doi.fundingReferences && doi.fundingReferences.length > 0
 
   const claim = () => {
     const claim = doi.claims[0]
@@ -145,7 +142,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const exportMetadata = () => {
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
-    const showDownloadLink = doi.contentUrl && downloadLink
 
     return (
       <>
@@ -242,7 +238,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   </div>
                 )}
               </Col>
-              {showDownloadLink && (
+              {doi.contentUrl && (
                 <Col xs={6} md={4}>
                   <h5>Content</h5>
                   <div>

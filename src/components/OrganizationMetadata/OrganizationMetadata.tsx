@@ -67,17 +67,10 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal
 }) => {
-  const dataCiteMember = useFeature('dataciteMember')
-  const showDataCiteMember = metadata.memberId && dataCiteMember
-  const organizationWikidata = useFeature('organizationWikidata')
-  const showInceptionYear =
-    metadata.inceptionYear && organizationWikidata
-  const showTwitter = metadata.twitter && organizationWikidata
   const showLocation =
     metadata.geolocation &&
     metadata.geolocation.pointLongitude &&
-    metadata.geolocation.pointLatitude &&
-    organizationWikidata
+    metadata.geolocation.pointLatitude
   const showMetrics = useFeature('metricsCounter')
 
   const metricsCounter = () => {
@@ -181,7 +174,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
         <h3 className="work">{titleLink()}</h3>
-        {showInceptionYear && (
+        {metadata.inceptionYear && (
           <div className="inception-year">Founded {metadata.inceptionYear}</div>
         )}
         <Row>
@@ -207,7 +200,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                     </a>
                   </div>
                 )}
-                {showTwitter && (
+                {metadata.twitter && (
                   <div>
                     <a
                       href={'https://twitter.com/' + metadata.twitter}
@@ -309,7 +302,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
               </Label>
             ))}
           </span>
-          {showDataCiteMember && (
+          {metadata.memberId && (
             <Label bsStyle="success">DataCite Member</Label>
           )}
         </div>

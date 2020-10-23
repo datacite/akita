@@ -1,6 +1,5 @@
 import React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
-import { useFeature } from 'flagged'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -82,9 +81,6 @@ type Props = {
 }
 
 const Person: React.FunctionComponent<Props> = ({ person }) => {
-  const personEmployment = useFeature('personEmployment')
-  const showEmployment = person.employment.length > 0 && personEmployment
-
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
   const shareLink = () => {
@@ -197,15 +193,11 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {shareLink()}
-      {showEmployment && (
-        <h3 className="member-results" id="person-employment">Employment</h3>
-      )}
-      {showEmployment && (
-        person.employment.map((item) => (
-          <div className="panel panel-transparent employment" key={item.organizationName}>
-            <PersonEmployment employment={item} />
-          </div>
-        )
+      <h3 className="member-results" id="person-employment">Employment</h3>
+      {person.employment.map((item) => (
+        <div className="panel panel-transparent employment" key={item.organizationName}>
+          <PersonEmployment employment={item} />
+        </div>
       ))}
     </>
   )

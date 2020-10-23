@@ -37,42 +37,12 @@ class MyApp extends App<IProps> {
     // feature flags are below. We can use ENV variables
     // or we are check that the user is logged in and is a beta tester
 
-    // don't show user login in production yet
-    const userAuthentication = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't show download link in production yet
-    const downloadLink = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't show person employment in production yet
-    const personEmployment = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't show work funding in production yet
-    const workFunding = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-    
-    // don't don't show organization info from Wikidata in production yet
-    const organizationWikidata = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't show pages menu in production yet
-    const pagesMenu =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
-    // don't show pages menu in production yet
-    const dataciteMember =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
-
     // don't show aggregate stats in production yet
     const metricsCounter = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
 
     return (
       <FlagsProvider
         features={{
-          userAuthentication,
-          downloadLink,
-          personEmployment,
-          workFunding,
-          organizationWikidata,
-          pagesMenu,
-          dataciteMember,
           metricsCounter
         }}
       >

@@ -24,8 +24,6 @@ import {
   faMapMarker
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import { useFeature } from 'flagged'
-
 import { session } from '../../utils/session'
 
 type Props = {
@@ -73,9 +71,6 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     'https://profiles.stage.datacite.org'
 
   let user = session()
-
-  const showUserAuthentication = useFeature('userAuthentication')
-  const showPagesMenu = useFeature('pagesMenu')
 
   return (
     <Navbar fluid collapseOnSelect>
@@ -148,26 +143,19 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           </div>
         </Navbar.Form>
         <Nav className="hidden-mobile" pullRight>
-          {showPagesMenu && (
-            <NavDropdown
-              eventKey={1}
-              title="Pages"
-              id="pages-dropdown"
-              data-cy="pages"
-            >
-              <MenuItem eventKey={1.1} data-cy="about" href="/about">
-                About
-              </MenuItem>
-              <MenuItem eventKey={1.2} data-cy="statistics" href="/statistics">
-                Statistics
-              </MenuItem>
-            </NavDropdown>
-          )}
-          {!showPagesMenu && (
-            <NavItem eventKey={1.1} data-cy="about" href="/about">
+          <NavDropdown
+            eventKey={1}
+            title="Pages"
+            id="pages-dropdown"
+            data-cy="pages"
+          >
+            <MenuItem eventKey={1.1} data-cy="about" href="/about">
               About
-            </NavItem>
-          )}
+            </MenuItem>
+            <MenuItem eventKey={1.2} data-cy="statistics" href="/statistics">
+              Statistics
+            </MenuItem>
+          </NavDropdown>
           <NavItem
             eventKey={2}
             data-cy="support"
@@ -177,7 +165,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           >
             Support
           </NavItem>
-          {showUserAuthentication && user && (
+          {user && (
             <NavDropdown eventKey={3} title={user.name} id="basic-nav-dropdown">
               {user.beta_tester && (
                 <>
@@ -207,7 +195,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               </MenuItem>
             </NavDropdown>
           )}
-          {showUserAuthentication && !user && (
+          {!user && (
             <NavItem
               id="sign-in"
               className="btn sign-in"
