@@ -36,7 +36,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   // submit pushes new path instead of updating only query parameter,
   // to allow queries from Navbar when on a page for a single record
   let searchQuery = ''
-  const paths = ['/', '/doi.org', '/orcid.org', '/ror.org']
+  const paths = ['/', '/doi.org', '/orcid.org', '/ror.org', '/about', '/statistics']
   let onSubmit = () => {}
 
   const router = useRouter()
