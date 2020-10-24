@@ -36,6 +36,7 @@ interface OrganizationResult {
   id: string
   name: string
   memberId: string
+  memberRoleId: string
   alternateName: string[]
   inceptionYear: number
   url: string
@@ -108,6 +109,7 @@ export const ORGANIZATION_GQL = gql`
       id
       name
       memberId
+      memberRoleId
       alternateName
       inceptionYear
       url
@@ -226,6 +228,7 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
       id: organization.id,
       name: organization.name,
       memberId: organization.memberId,
+      memberRoleId: organization.memberRoleId,
       alternateNames: organization.alternateName,
       inceptionYear: organization.inceptionYear,
       types: organization.types,
@@ -250,7 +253,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
   })()
 
   if (!organization) return <div></div>
-  console.log(organization)
 
   // if query was for gridId or crossrefFunderId and organization was found
   if (!rorId && router) {

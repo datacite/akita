@@ -13,6 +13,7 @@ export interface OrganizationMetadataRecord {
   id: string
   name: string
   memberId: string
+  memberRoleId: string
   alternateNames: string[]
   inceptionYear: number
   url: string
@@ -65,6 +66,14 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     metadata.geolocation &&
     metadata.geolocation.pointLongitude &&
     metadata.geolocation.pointLatitude
+
+  const memberRoles = {
+    "direct_member": "DataCite Member",
+    "member_only": "DataCite Member",
+    "for-profit_provider": "DataCite Member",
+    "consortium": "DataCite Consortium",
+    "consortium_organization": "DataCite Consortium Organization"
+  }
 
   const titleLink = () => {
     if (!linkToExternal) {
@@ -262,7 +271,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
             ))}
           </span>
           {metadata.memberId && (
-            <Label bsStyle="success">DataCite Member</Label>
+            <Label bsStyle="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Label>
           )}
         </div>
       </div>
