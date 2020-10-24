@@ -124,8 +124,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   }
 
   const workCount = () => {
-    if (person.works.totalCount === 0) {
-      return ''
+    if (person.citationCount + person.viewCount + person.downloadCount === 0) {
+      return <div></div>
     }
 
     return (
