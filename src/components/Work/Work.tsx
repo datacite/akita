@@ -140,6 +140,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   const exportMetadata = () => {
+    const showCrossrefMetadata = doi.registrationAgency.id === "crossref"
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
 
@@ -151,6 +152,20 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             <Row>
               <Col className="download-list" id="full-metadata" xs={6} md={4}>
                 <h5>Full Metadata</h5>
+                {showCrossrefMetadata && (
+                  <div id="export-crossref">
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={
+                        'https://api.crossref.org/works/' + doi.doi + 
+                        '/transform/application/vnd.crossref.unixsd+xml'
+                      }
+                    >
+                      Crossref UNIXREF
+                    </a>
+                  </div>
+                )}
                 <div id="export-xml">
                   <a
                     target="_blank"
