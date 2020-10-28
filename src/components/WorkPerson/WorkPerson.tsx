@@ -33,8 +33,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       <>
         <h4 className="work">
           <Link
-            href="/orcid.org/[person]"
-            as={`/orcid.org${orcidFromUrl(person.id)}`}
+            href={'/orcid.org' + orcidFromUrl(person.id)}
           >
             <a>{name}</a>
           </Link>
@@ -45,8 +44,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
-                    href="/ror.org/[organization]"
-                    as={`/ror.org${rorFromUrl(item.id)}`}
+                    href={'/ror.org/' + rorFromUrl(item.id)}
                   >
                     <a>{item.name}</a>
                   </Link>
@@ -70,8 +68,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       <>
         <h4 className="work">
           <Link
-            href="/ror.org/[organization]"
-            as={`/ror.org${rorFromUrl(person.id)}`}
+            href={'/ror.org' + rorFromUrl(person.id)}
           >
             <a>{name}</a>
           </Link>
@@ -82,8 +79,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
-                    href="/ror.org/[organization]"
-                    as={`/ror.org${rorFromUrl(item.id)}`}
+                    href={'/ror.org' + rorFromUrl(item.id)}
                   >
                     <a>{item.name}</a>
                   </Link>
@@ -111,8 +107,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             {person.affiliation.map((item) =>
               item.id ? (
                 <Link
-                  href="/ror.org/[organization]"
-                  as={`/ror.org${rorFromUrl(item.id)}`}
+                  href={'/ror.org' + rorFromUrl(item.id)}
                 >
                   <a>{item.name}</a>
                 </Link>

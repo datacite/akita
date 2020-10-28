@@ -16,8 +16,7 @@ const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
     return (
       <h4 className="work">
         <Link
-          href="/grid.ac/[...organization]"
-          as={`/grid.ac${gridFromUrl(employment.organizationId)}`}
+          href={'/grid.ac' + gridFromUrl(employment.organizationId)}
         >
           <a>{employment.organizationName}</a>
         </Link>

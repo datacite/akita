@@ -17,8 +17,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
       return (
         <h4 className="work">
           <Link
-            href="/doi.org/[...doi]"
-            as={`/doi.org${doiFromUrl(funding.funderIdentifier)}`}
+            href={'/doi.org' + doiFromUrl(funding.funderIdentifier)}
           >
             <a>{funding.funderName}</a>
           </Link>

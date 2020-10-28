@@ -47,7 +47,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.titles[0])
       return (
         <h3 className="work">
-          <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`} prefetch={false}>
+          <Link href={'/doi.org/' + metadata.doi}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -57,7 +57,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <h3 className="work">
-        <Link href="/doi.org/[...doi]" as={`/doi.org/${metadata.doi}`} prefetch={false}>
+        <Link href={'/doi.org/' + metadata.doi}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -119,9 +119,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {creatorList.map((c, index) =>
           c.id !== null ? (
             <Link
-              href="/orcid.org/[orcid]"
+              href={'/orcid.org/' + c.id}
               key={index}
-              as={`/orcid.org${c.id}`}
             >
               <a>{c.displayName}</a>
             </Link>

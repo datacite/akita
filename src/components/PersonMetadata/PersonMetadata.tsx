@@ -21,9 +21,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
       return (
         <h3 className="work">
           <Link
-            href="/orcid.org/[person]"
-            as={`/orcid.org${orcidFromUrl(metadata.id)}`}
-            prefetch={false}
+            href={'/orcid.org' + orcidFromUrl(metadata.id)}
           >
             <a>No Title</a>
           </Link>
@@ -33,9 +31,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     return (
       <h3 className="work">
         <Link
-          href="/orcid.org/[person]"
-          as={`/orcid.org${orcidFromUrl(metadata.id)}`}
-          prefetch={false}
+          href={'/orcid.org' + orcidFromUrl(metadata.id)}
         >
           <a id="orcid-link">
             {metadata.name}
