@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook, faOrcid } from '@fortawesome/free-brands-svg-icons'
 import chunk from 'lodash/chunk'
+import truncate from 'lodash/truncate'
+import Head from 'next/head'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
@@ -27,6 +29,29 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const [selectedOption, setSelectedOption] = React.useState('')
 
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
+
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/doi.org/' + doi.doi
+      : 'https://commons.stage.datacite.org/doi.org/' + doi.doi
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/images/logo.png'
+      : 'https://commons.stage.datacite.org/images/logo.png'
+
+  const title = doi.titles[0]
+    ? 'DataCite Commons: ' + doi.titles[0].title
+    : 'DataCite Commons: No Title'
+
+  const description = !doi.descriptions[0] ? null : truncate(doi.descriptions[0].description, {
+    length: 2500,
+    separator: '… '
+  })
+
+  let resourceType:string = doi.types.resourceTypeGeneral.toLowerCase()
+  if (doi.registrationAgency.id === "crossref" && doi.types.resourceType) resourceType = doi.types.resourceType.toLowerCase()
+
 
   const showFunding =
     doi.fundingReferences && doi.fundingReferences.length > 0
@@ -100,15 +125,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
   
   const shareLink = () => {
-    const pageUrl =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/doi.org/' + doi.doi
-        : 'https://commons.stage.datacite.org/doi.org/' + doi.doi
-
-    const title = doi.titles[0]
-      ? 'DataCite Commons: ' + doi.titles[0].title
-      : 'DataCite Commons: No Title'
-
     return (
       <>
         <h3 className="member-results" id="share">Share</h3>
@@ -351,6 +367,20 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        {description && (
+          <>
+            <meta name="description" content={description} />
+            <meta name="og:description" content={description} />
+          </>
+        )}
+        <meta name="og:url" content={pageUrl} />
+        <meta name="og:image" content={imageUrl} />
+        <meta name="og:type" content={resourceType} />
+        <script type="application/ld+json">{doi.schemaOrg}</script>
+      </Head>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
       {doi.creators.length > 0 && (

@@ -44,7 +44,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <Link
-                    href={'/ror.org/' + rorFromUrl(item.id)}
+                    href={'/ror.org' + rorFromUrl(item.id)}
                   >
                     <a>{item.name}</a>
                   </Link>

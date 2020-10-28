@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import Head from 'next/head'
 
 import Error from '../Error/Error'
 import Organization from '../Organization/Organization'
@@ -252,6 +253,22 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
     }
   })()
 
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/ror.org' +
+        rorFromUrl(organization.metadata.id)
+      : 'https://commons.stage.datacite.org/ror.org' +
+        rorFromUrl(organization.metadata.id)
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/images/logo.png'
+      : 'https://commons.stage.datacite.org/images/logo.png'
+
+  const title = organization.metadata.name
+    ? 'DataCite Commons: ' + organization.metadata.name
+    : 'DataCite Commons: No Name'
+
   if (!organization) return <div></div>
 
   // if query was for gridId or crossrefFunderId and organization was found
@@ -298,17 +315,6 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
   }
 
   const shareLink = () => {
-    const pageUrl =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/ror.org' +
-          rorFromUrl(organization.metadata.id)
-        : 'https://commons.stage.datacite.org/ror.org' +
-          rorFromUrl(organization.metadata.id)
-
-    const title = organization.metadata.name
-      ? 'DataCite Commons: ' + organization.metadata.name
-      : 'DataCite Commons: No Name'
-
     return (
       <Col md={9} mdOffset={3}>
         <h3 className="member-results">Share</h3>
@@ -388,6 +394,13 @@ const OrganizationContainer: React.FunctionComponent<Props> = ({
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        <meta name="og:url" content={pageUrl} />
+        <meta name="og:image" content={imageUrl} />
+        <meta name="og:type" content="organization" />
+      </Head>
       <Row>{content()}</Row>
       <Row>{shareLink()}</Row>
       <Row>{workCount()}</Row>

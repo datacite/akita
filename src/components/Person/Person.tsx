@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import Head from 'next/head'
 
 import { WorkType } from '../WorkContainer/WorkContainer'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
@@ -83,15 +84,21 @@ type Props = {
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
-  const shareLink = () => {
-    const pageUrl =
-      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-        ? 'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)
-        : 'https://commons.stage.datacite.org/orcid.org' + orcidFromUrl(person.id)
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)
+      : 'https://commons.stage.datacite.org/orcid.org' + orcidFromUrl(person.id)
 
-    const title = person.name
-      ? 'DataCite Commons: ' + person.name
-      : 'DataCite Commons: No Name'
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/images/logo.png'
+      : 'https://commons.stage.datacite.org/images/logo.png'
+
+  const title = person.name
+    ? 'DataCite Commons: ' + person.name
+    : 'DataCite Commons: No Name'
+
+  const shareLink = () => {
 
     return (
       <>
@@ -158,6 +165,19 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        {person.description && (
+          <>
+            <meta name="description" content={person.description} />
+            <meta name="og:description" content={person.description} />
+          </>
+        )}
+        <meta name="og:url" content={pageUrl} />
+        <meta name="og:image" content={imageUrl} />
+        <meta name="og:type" content="person" />
+      </Head>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {shareLink()}

@@ -60,6 +60,7 @@ export const DOI_GQL = gql`
         }
       }
       formattedCitation
+      schemaOrg
       viewsOverTime {
         yearMonth
         total
@@ -144,6 +145,7 @@ export interface WorkType {
   }
   registered?: Date
   formattedCitation?: string
+  schemaOrg: string
   claims?: Claim[]
   contributors?: Contributor[]
   fundingReferences?: FundingReference[]
