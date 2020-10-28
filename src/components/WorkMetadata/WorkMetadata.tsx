@@ -119,7 +119,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {creatorList.map((c, index) =>
           c.id !== null ? (
             <Link
-              href={'/orcid.org/' + c.id}
+              href={'/orcid.org' + c.id}
               key={index}
             >
               <a>{c.displayName}</a>
