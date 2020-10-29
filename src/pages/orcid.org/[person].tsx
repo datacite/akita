@@ -1,25 +1,18 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import PersonContainer from '../../components/PersonContainer/PersonContainer'
-import { GetServerSideProps } from 'next'
-import { useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
 
-const PersonPage = ({ personPath }) => {
-  const [searchQuery] = useQueryState<string>('query')
+const PersonPage = () => {
+  const router = useRouter()
+  const orcid = router.asPath.substring(11)
+  const query = router.query.query as string
 
   return (
-    <Layout path={'/orcid.org/' + personPath} >
-      <PersonContainer orcid={personPath} searchQuery={searchQuery} />
+    <Layout path={'/orcid.org/' + orcid} >
+      <PersonContainer orcid={orcid} searchQuery={query} />
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const personPath = context.params.person
-
-  return {
-    props: { personPath } // will be passed to the page component as props
-  }
 }
 
 export default PersonPage

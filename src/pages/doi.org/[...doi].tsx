@@ -2,33 +2,27 @@ import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import WorkContainer from '../../components/WorkContainer/WorkContainer'
 import OrganizationContainer from '../../components/OrganizationContainer/OrganizationContainer'
-import { GetServerSideProps } from 'next'
-import { useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
 
-const DoisPage = ({ doiPath }) => {
-  const [searchQuery] = useQueryState<string>('query')
+const DoisPage = () => {
+  const router = useRouter()
+  // workaround as doi may contain slashes
+  const doi = router.asPath.substring(9)
+  const query = router.query.query as string
 
   // if DOI is a Crossref Funder ID
-  if (doiPath.startsWith('10.13039'))
+  if (doi.startsWith('10.13039'))
     return (
-      <Layout path={doiPath} >
-        <OrganizationContainer crossrefFunderId={doiPath} searchQuery={searchQuery} />
+      <Layout path={doi} >
+        <OrganizationContainer crossrefFunderId={doi} searchQuery={query} />
       </Layout>
     )
 
   return (
-    <Layout path={'/doi.org/' + doiPath } >
-      <WorkContainer item={doiPath} searchQuery={searchQuery} />
+    <Layout path={'/doi.org/' + doi } >
+      <WorkContainer item={doi} searchQuery={query} />
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const doiPath = (context.params.doi as String[]).join('/')
-
-  return {
-    props: { doiPath }
-  }
 }
 
 export default DoisPage

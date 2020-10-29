@@ -1,25 +1,18 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import OrganizationContainer from '../../components/OrganizationContainer/OrganizationContainer'
-import { GetServerSideProps } from 'next'
-import { useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
 
-const OrganizationPage = ({ organizationPath }) => {
-  const [searchQuery] = useQueryState<string>('query')
+const OrganizationPage = () => {
+  const router = useRouter()
+  const rorId = router.asPath.substring(9)
+  const query = router.query.query as string
 
   return (
-    <Layout path={'/ror.org/' + organizationPath} >
-      <OrganizationContainer rorId={organizationPath} searchQuery={searchQuery} />
+    <Layout path={'/ror.org/' + rorId} >
+      <OrganizationContainer rorId={rorId} searchQuery={query} />
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const organizationPath = context.params.organization
-
-  return {
-    props: { organizationPath }
-  }
 }
 
 export default OrganizationPage

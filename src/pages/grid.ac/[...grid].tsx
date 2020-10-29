@@ -1,25 +1,18 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import OrganizationContainer from '../../components/OrganizationContainer/OrganizationContainer'
-import { GetServerSideProps } from 'next'
-import { useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
 
 const GridPage = ({ gridPath }) => {
-  const [searchQuery] = useQueryState<string>('query')
+  const router = useRouter()
+  const gridId = router.asPath.substring(10)
+  const query = router.query.query as string
 
   return (
     <Layout path={gridPath} >
-      <OrganizationContainer gridId={gridPath} searchQuery={searchQuery} />
+      <OrganizationContainer gridId={gridId} searchQuery={query} />
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const gridPath = 'grid.ac/' + (context.params.grid as String[]).join('/')
-
-  return {
-    props: { gridPath }
-  }
 }
 
 export default GridPage
