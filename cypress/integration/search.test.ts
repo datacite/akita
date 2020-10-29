@@ -93,27 +93,27 @@ describe('Search', () => {
     })
 
     context('people', () => {
-      // it('search with enter', () => {
-      //   cy.visit('/orcid.org')
-      //   cy.get('input[name="query"]')
-      //     .type('Josiah Carberry{enter}')
-      //     .get('#search-nav li.active', { timeout: 60000 })
-      //     .should('contain', 'People')
-      //     .get('.member-results', { timeout: 60000 })
-      //     .should('contain', 'People')
-      // })
+      it('search with enter', () => {
+        cy.visit('/orcid.org')
+        cy.get('input[name="query"]')
+          .type('Josiah Carberry{enter}')
+          .get('#search-nav li.active', { timeout: 60000 })
+          .should('contain', 'People')
+          .get('.member-results', { timeout: 60000 })
+          .should('contain', 'People')
+      })
 
-      // it('search with submit', () => {
-      //   cy.visit('/orcid.org')
-      //   cy.get('input[name="query"]')
-      //     .type('Josiah Carberry')
-      //     .get('.search-submit')
-      //     .click()
-      //     .get('#search-nav li.active', { timeout: 60000 })
-      //     .should('contain', 'People')
-      //     .get('.member-results', { timeout: 60000 })
-      //     .should('contain', 'People')
-      // })
+      it('search with submit', () => {
+        cy.visit('/orcid.org')
+        cy.get('input[name="query"]')
+          .type('Josiah Carberry')
+          .get('.search-submit')
+          .click()
+          .get('#search-nav li.active', { timeout: 60000 })
+          .should('contain', 'People')
+          .get('.member-results', { timeout: 60000 })
+          .should('contain', 'People')
+      })
 
       it('search with click', () => {
         cy.visit('/orcid.org')

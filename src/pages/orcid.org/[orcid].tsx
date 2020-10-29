@@ -274,7 +274,7 @@ const PersonPage: React.FunctionComponent<Props> = ({
       <>
         <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
-            <h3 className="member-results">{pluralize(totalCount, 'Person', false, 'People')}</h3>
+            <h3 className="member-results">{pluralize(totalCount, 'Works')}</h3>
           )}
         </Col>
         <WorksListing
