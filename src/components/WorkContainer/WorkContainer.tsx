@@ -1,6 +1,8 @@
 import React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
+import Head from 'next/head'
+import truncate from 'lodash/truncate'
 import Work from '../Work/Work'
 import { connectionFragment, contentFragment } from '../SearchWork/SearchWork'
 import { useQueryState } from 'next-usequerystate'
@@ -332,6 +334,28 @@ const WorkContainer: React.FunctionComponent<Props> = ({
 
   const doi = data.work
 
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/doi.org/' + doi.doi
+      : 'https://commons.stage.datacite.org/doi.org/' + doi.doi
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/images/logo.png'
+      : 'https://commons.stage.datacite.org/images/logo.png'
+
+  const title = doi.titles[0]
+    ? 'DataCite Commons: ' + doi.titles[0].title
+    : 'DataCite Commons: No Title'
+
+  const description = !doi.descriptions[0] ? null : truncate(doi.descriptions[0].description, {
+    length: 2500,
+    separator: '… '
+  })
+
+  let type:string = doi.types.resourceTypeGeneral.toLowerCase()
+  if (doi.registrationAgency.id === "crossref" && doi.types.resourceType) type = doi.types.resourceType.toLowerCase()
+
   const content = () => {
     return (
       <Col md={9} mdOffset={3} className="panel-list" id="content">
@@ -432,6 +456,20 @@ const WorkContainer: React.FunctionComponent<Props> = ({
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        {description && (
+          <>
+            <meta name="description" content={description} />
+            <meta name="og:description" content={description} />
+          </>
+        )}
+        <meta name="og:url" content={pageUrl} />
+        <meta name="og:image" content={imageUrl} />
+        <meta name="og:type" content={type} />
+        <script type="application/ld+json">{doi.schemaOrg}</script>
+      </Head>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </>
