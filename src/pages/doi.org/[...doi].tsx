@@ -354,6 +354,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
   const work = data.work
 
   const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/doi.org/' + work.doi
       : 'https://commons.stage.datacite.org/doi.org/' + work.doi
 
