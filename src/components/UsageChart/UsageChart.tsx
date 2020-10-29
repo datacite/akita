@@ -40,7 +40,8 @@ const UsageChart: React.FunctionComponent<Props> = ({
   type
 }) => {
   // get current screen size
-  const width = useWindowDimensions().width
+  const windowDimensions:any = useWindowDimensions()
+  const width = windowDimensions.width
 
   // current date
   /* istanbul ignore next */

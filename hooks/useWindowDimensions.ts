@@ -8,7 +8,7 @@ function getWindowDimensions() {
   }
 }
 
-export default function useWindowDimensions() {
+function ResizeWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   )
@@ -23,4 +23,12 @@ export default function useWindowDimensions() {
   }, [])
 
   return windowDimensions
+}
+
+export default function useWindowDimensions() {
+  if (typeof window !== 'undefined') {
+    return ResizeWindowDimensions
+  } else {
+    return { width: 1024, height: 1400 }
+  }
 }

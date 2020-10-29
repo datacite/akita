@@ -25,7 +25,8 @@ const actions = {
 
 const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBoundYear, color }) => {
   // get current screen size
-  const width = useWindowDimensions().width
+  const windowDimensions:any = useWindowDimensions()
+  const width = windowDimensions.width
 
   /* istanbul ignore next */
   const thisYear = new Date().getFullYear() + 1
