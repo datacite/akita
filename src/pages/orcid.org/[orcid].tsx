@@ -1,23 +1,26 @@
 import React from 'react'
-import Error from '../Error/Error'
-import { useQuery, gql } from '@apollo/client'
-import Person from '../Person/Person'
-import WorksListing from '../WorksListing/WorksListing'
-import { orcidFromUrl, pluralize } from '../../utils/helpers'
-
-import { useQueryState } from 'next-usequerystate'
+import { gql, useQuery } from '@apollo/client'
+import { GetServerSideProps } from 'next'
+import Head from 'next/head'
+import truncate from 'lodash/truncate'
 import { Row, Col } from 'react-bootstrap'
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { useQueryState } from 'next-usequerystate'
+
+import Layout from '../../components/Layout/Layout'
+import Error from '../../components/Error/Error'
+import Person from '../../components/Person/Person'
+import { WorkType } from '../doi.org/[...doi]'
+import WorksListing from '../../components/WorksListing/WorksListing'
+import Loading from '../../components/Loading/Loading'
+import { pluralize } from '../../utils/helpers'
 import {
   PageInfo,
   connectionFragment,
   contentFragment
-} from '../SearchWork/SearchWork'
-import Loading from '../Loading/Loading'
+} from '../../components/SearchWork/SearchWork'
 
 type Props = {
   orcid?: string
-  searchQuery: string
 }
 
 export const DOI_GQL = gql`
@@ -165,10 +168,18 @@ interface OrcidQueryVar {
   registrationAgency: string
 }
 
-const PersonContainer: React.FunctionComponent<Props> = ({
-  orcid,
-  searchQuery
+export const getServerSideProps: GetServerSideProps = async (context) => {	
+  const orcid = (context.params.orcid as String)
+
+  return {	
+    props: { orcid }	
+  }	
+}
+
+const PersonPage: React.FunctionComponent<Props> = ({
+  orcid
 }) => {
+  const [query] = useQueryState<string>('query')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -184,7 +195,6 @@ const PersonContainer: React.FunctionComponent<Props> = ({
   const [registrationAgency] = useQueryState('registration-agency', {
     history: 'push'
   })
-  // eslint-disable-next-line no-unused-vars
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
     DOI_GQL,
@@ -192,7 +202,7 @@ const PersonContainer: React.FunctionComponent<Props> = ({
       errorPolicy: 'all',
       variables: {
         id: 'http://orcid.org/' + orcid,
-        query: searchQuery,
+        query: query,
         cursor: cursor,
         published: published as string,
         resourceTypeId: resourceType as string,
@@ -204,54 +214,78 @@ const PersonContainer: React.FunctionComponent<Props> = ({
     }
   )
 
-  if (loading) return <Loading />
+  if (loading) return (
+    <Layout path={'/orcid.org/' + orcid } >
+      <Col md={9} mdOffset={3}>
+        <Loading />
+      </Col>
+    </Layout>
+  )
 
   if (error)
     return (
-      <Col md={9} mdOffset={3}>
-        <Error title="An error occured." message={error.message} />
-      </Col>
+      <Layout path={'/orcid.org/' + orcid } >
+        <Col md={9} mdOffset={3}>
+          <Error title="An error occured." message={error.message} />
+        </Col>
+      </Layout>
     )
 
-  const orcidRecord = data.person
+  const person = data.person
+
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/orcid.org/' + person.id
+      : 'https://commons.stage.datacite.org/orcid.org/' + person.id
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://commons.datacite.org/images/logo.png'
+      : 'https://commons.stage.datacite.org/images/logo.png'
+
+  const title = person.name
+    ? 'DataCite Commons: ' + person.name
+    : 'DataCite Commons: ' + person.id
+
+  const description = !person.description ? null : truncate(person.description, {
+    length: 2500,
+    separator: '… '
+  })
 
   const content = () => {
     return (
       <Col md={9} mdOffset={3}>
-        <Person person={orcidRecord} />
+        <Person person={person} />
       </Col>
     )
   }
 
   const relatedContent = () => {
-    const hasNextPage = orcidRecord.works.pageInfo
-      ? orcidRecord.works.pageInfo.hasNextPage
+    const hasNextPage = person.works.pageInfo
+      ? person.works.pageInfo.hasNextPage
       : false
-    const endCursor = orcidRecord.works.pageInfo
-      ? orcidRecord.works.pageInfo.endCursor
+    const endCursor = person.works.pageInfo
+      ? person.works.pageInfo.endCursor
       : ''
 
-    const totalCount = orcidRecord.works.totalCount
+    const totalCount = person.works.totalCount
 
     return (
       <>
         <Col md={9} mdOffset={3}>
           {totalCount > 0 && (
-            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
+            <h3 className="member-results">{pluralize(totalCount, 'Person', false, 'People')}</h3>
           )}
         </Col>
-        {/* TODO: I think the pager element within this should be more dynamic
-        and not need to rely on passing in precalculated //
-        hasNextPage/endCursor instead calculate based on data provided */}
         <WorksListing
-          works={orcidRecord.works}
+          works={person.works}
           loading={loading}
           showFacets={true}
           showAnalytics={true}
-          hasPagination={orcidRecord.works.totalCount > 25}
+          hasPagination={person.works.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'person'}
-          url={'/orcid.org' + orcidFromUrl(orcidRecord.id) + '/?'}
+          url={'/orcid.org' + orcid + '/?'}
           endCursor={endCursor}
         />
       </>
@@ -259,11 +293,24 @@ const PersonContainer: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <>
+    <Layout path={'/orcid.org/' + orcid } >
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        {description && (
+          <>
+            <meta name="description" content={description} />
+            <meta name="og:description" content={description} />
+          </>
+        )}
+        <meta name="og:url" content={pageUrl} />
+        <meta name="og:image" content={imageUrl} />
+        <meta name="og:type" content="person" />
+      </Head>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
-    </>
+    </Layout>
   )
 }
 
-export default PersonContainer
+export default PersonPage

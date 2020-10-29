@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../../pages/doi.org/[...doi]'
 import Link from 'next/link'
 
 type Props = {

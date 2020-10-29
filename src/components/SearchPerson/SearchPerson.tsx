@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import { pluralize } from '../../utils/helpers'
 
-import { PersonType } from '../PersonContainer/PersonContainer'
+import { PersonType } from '../../pages/orcid.org/[orcid]'
 import Pager from '../Pager/Pager'
 import Error from '../Error/Error'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'

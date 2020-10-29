@@ -7,10 +7,7 @@ import { pluralize } from '../../utils/helpers'
 import Pager from '../Pager/Pager'
 import FilterItem from '../FilterItem/FilterItem'
 import Error from '../Error/Error'
-import {
-  OrganizationMetadata,
-  OrganizationMetadataRecord
-} from '../OrganizationMetadata/OrganizationMetadata'
+import { OrganizationMetadata } from '../OrganizationMetadata/OrganizationMetadata'
 import Loading from '../Loading/Loading'
 
 type Props = {
@@ -44,30 +41,6 @@ interface OrganizationsNode {
     id: string
     name: string
   }
-  grid: [
-    {
-      identifier: string
-      identifierType: string
-    }
-  ]
-  fundref: [
-    {
-      identifier: string
-      identifierType: string
-    }
-  ]
-  isni: [
-    {
-      identifier: string
-      identifierType: string
-    }
-  ]
-  wikidata: [
-    {
-      identifier: string
-      identifierType: string
-    }
-  ]
   identifiers: [
     {
       identifier: string
@@ -180,56 +153,12 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </Col>
       )
 
-    const results: OrganizationMetadataRecord[] = []
-
-    if (data) {
-      data.organizations.nodes.map((node) => {
-        let grid = node.identifiers.filter((i) => {
-          return i.identifierType === 'grid'
-        })
-        let fundref = node.identifiers.filter((i) => {
-          return i.identifierType === 'fundref'
-        })
-        let isni = node.identifiers.filter((i) => {
-          return i.identifierType === 'isni'
-        })
-        let wikidata = node.identifiers.filter((i) => {
-          return i.identifierType === 'wikidata'
-        })
-
-        let orgMetadata: OrganizationMetadataRecord = {
-          id: node.id,
-          name: node.name,
-          memberId: node.memberId,
-          memberRoleId: node.memberRoleId,
-          alternateNames: node.alternateName,
-          types: node.types,
-          url: node.url,
-          inceptionYear: node.inceptionYear,
-          twitter: node.twitter,
-          geolocation: node.geolocation,
-          wikipediaUrl: node.wikipediaUrl,
-          country: node.country,
-          citationCount: node.citationCount,
-          viewCount: node.viewCount,
-          downloadCount: node.downloadCount,
-          grid: grid,
-          fundref: fundref,
-          isni: isni,
-          wikidata: wikidata,
-          identifiers: node.identifiers
-        }
-
-        results.push(orgMetadata)
-
-        return results
-      })
-    }
-
-    if (results.length == 0)
+    if (data.organizations.nodes.length == 0)
       return (
         <Col md={9} mdOffset={3}>
-          <Alert bsStyle="warning">No organizations found.</Alert>
+          <div className="alert-works">
+            <Alert bsStyle="warning">No organizations found.</Alert>
+          </div>
         </Col>
       )
 
@@ -242,18 +171,18 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
 
     return (
       <Col md={9} id="content">
-        {results.length > 0 && (
+        {data.organizations.nodes.length > 0 && (
           <h3 className="member-results">
             {pluralize(data.organizations.totalCount, 'Organization')}
           </h3>
         )}
 
-        {results.map((item) => (
+        {data.organizations.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <OrganizationMetadata
               metadata={item}
               linkToExternal={false}
-            ></OrganizationMetadata>
+          ></OrganizationMetadata>
           </React.Fragment>
         ))}
 

@@ -22,7 +22,7 @@ import {
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../../pages/doi.org/[...doi]'
 import { orcidFromUrl } from '../../utils/helpers'
 
 type Props = {

@@ -30,6 +30,7 @@ export default withApollo(({ initialState }) => {
   })
 
   const client = new ApolloClient({
+    ssrMode: true,
     link: authLink.concat(httpLink),
     cache: new InMemoryCache({
       typePolicies: {

@@ -8,9 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import Head from 'next/head'
 
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../../pages/doi.org/[...doi]'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
 import { pluralize, orcidFromUrl } from '../../utils/helpers'
@@ -89,17 +88,11 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       ? 'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)
       : 'https://commons.stage.datacite.org/orcid.org' + orcidFromUrl(person.id)
 
-  const imageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/images/logo.png'
-      : 'https://commons.stage.datacite.org/images/logo.png'
-
   const title = person.name
     ? 'DataCite Commons: ' + person.name
     : 'DataCite Commons: No Name'
 
   const shareLink = () => {
-
     return (
       <>
         <h3 className="member-results">Share</h3>
@@ -165,19 +158,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="og:title" content={title} />
-        {person.description && (
-          <>
-            <meta name="description" content={person.description} />
-            <meta name="og:description" content={person.description} />
-          </>
-        )}
-        <meta name="og:url" content={pageUrl} />
-        <meta name="og:image" content={imageUrl} />
-        <meta name="og:type" content="person" />
-      </Head>
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {shareLink()}

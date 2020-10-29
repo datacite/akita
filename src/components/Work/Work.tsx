@@ -12,7 +12,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook, faOrcid } from '@fortawesome/free-brands-svg-icons'
 import chunk from 'lodash/chunk'
 
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../../pages/doi.org/[...doi]'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import WorkFunding from '../WorkFunding/WorkFunding'
@@ -36,10 +36,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const title = doi.titles[0]
     ? 'DataCite Commons: ' + doi.titles[0].title
     : 'DataCite Commons: No Title'
-
-  let resourceType:string = doi.types.resourceTypeGeneral.toLowerCase()
-  if (doi.registrationAgency.id === "crossref" && doi.types.resourceType) resourceType = doi.types.resourceType.toLowerCase()
-
 
   const showFunding =
     doi.fundingReferences && doi.fundingReferences.length > 0

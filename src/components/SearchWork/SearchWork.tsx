@@ -4,7 +4,7 @@ import { useQueryState } from 'next-usequerystate'
 import { Alert, Row, Col } from 'react-bootstrap'
 
 import WorksListing from '../WorksListing/WorksListing'
-import { WorkType } from '../WorkContainer/WorkContainer'
+import { WorkType } from '../../pages/doi.org/[...doi]'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
 import { pluralize } from '../../utils/helpers'
