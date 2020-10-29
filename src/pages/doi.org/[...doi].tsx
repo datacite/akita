@@ -336,9 +336,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
   if (loading) 
     return (
       <Layout path={'/doi.org/' + doi } >
-        <Col md={9} mdOffset={3}>
-          <Loading />
-        </Col>
+        <Loading />
       </Layout>
     )
 
