@@ -94,3 +94,4 @@ export declare type ErrorProps = {
 } & NextErrorProps
 
 export default AkitaError
+
