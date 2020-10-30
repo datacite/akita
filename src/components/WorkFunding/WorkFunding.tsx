@@ -9,6 +9,10 @@ type Props = {
 }
 
 const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
+  const showAwardLink = funding.funderIdentifier &&
+    funding.funderIdentifier.startsWith('https://doi.org/10.13039') &&
+    funding.awardNumber
+
   const funder = () => {
     if (
       funding.funderIdentifier &&
@@ -27,46 +31,20 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
     return <h4 className="work">{funding.funderName}</h4>
   }
 
-  const hasAward = funding.awardTitle || funding.awardNumber || funding.awardUri
-
-  const award = () => {
-    let title = 'No award title or number'
-    if (funding.awardTitle && funding.awardNumber) {
-      title = funding.awardTitle + ' (' + funding.awardNumber + ')'
-    } else if (funding.awardTitle) {
-      title = funding.awardTitle
-    } else if (funding.awardNumber) {
-      title = funding.awardNumber
-    }
-
-    let url = null
-    if (funding.awardUri && funding.awardUri.startsWith('http')) {
-      url = funding.awardUri
-    } else if (
-      (funding.awardUri &&
-        funding.awardUri.startsWith('info:eu-repo/grantAgreement')) ||
-      (funding.awardNumber && funding.funderIdentifier && 
-        funding.funderIdentifier == 'https://doi.org/10.13039/501100000780')
-    ) {
-      // provide url for EC funding
-      url = 'https://cordis.europa.eu/project/id/' + funding.awardNumber
-    }
-
-    if (!url) return <div className="award">{title}</div>
-
-    return (
-      <div className="award">
-        <a target="_blank" rel="noreferrer" href={url}>
-          {title}
-        </a>
-      </div>
-    )
-  }
-
   return (
     <>
       {funding.funderName && funder()}
-      {hasAward && award()}
+      {funding.awardTitle && (
+        <div className="award">{funding.awardTitle}</div>
+      )}
+      {showAwardLink && (
+        <div className="award">
+          <Link
+            href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:' + funding.awardNumber}
+          ><a>{funding.awardNumber}</a>
+          </Link>
+        </div>
+      )}
     </>
   )
 }
