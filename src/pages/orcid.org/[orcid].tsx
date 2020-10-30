@@ -216,9 +216,7 @@ const PersonPage: React.FunctionComponent<Props> = ({
 
   if (loading) return (
     <Layout path={'/orcid.org/' + orcid } >
-      <Col md={9} mdOffset={3}>
-        <Loading />
-      </Col>
+      <Loading />
     </Layout>
   )
 
