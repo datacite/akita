@@ -1,12 +1,13 @@
 import React from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 import Link from 'next/link'
-import { gql, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { gql } from '@apollo/client'
 
 import ProductionChart from '../components/ProductionChart/ProductionChart'
 import DataSources from '../components/DataSources/DataSources'
 import { ContentFacet } from '../components/WorksListing/WorksListing'
 import Layout from '../components/Layout/Layout'
+import apolloClient from '../../hooks/apolloClient'
 
 export interface Source {
   totalCount: number
@@ -143,16 +144,6 @@ export const STATS_GQL = gql`
     }
   }
 `
-
-const apolloClient = new ApolloClient({
-  link: createHttpLink({
-    uri:
-      (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
-      '/graphql',
-    credentials: 'same-origin'
-  }),
-  cache: new InMemoryCache()
-})
 
 export const getStaticProps = async () => {
   const { data } = await apolloClient.query({
