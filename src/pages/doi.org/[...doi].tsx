@@ -370,7 +370,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
     separator: '… '
   })
 
-  let type:string = work.types.resourceTypeGeneral.toLowerCase()
+  let type:string = work.types.resourceTypeGeneral ? work.types.resourceTypeGeneral.toLowerCase() : null
   if (work.registrationAgency.id === "crossref" && work.types.resourceType) type = work.types.resourceType.toLowerCase()
 
   const content = () => {
@@ -485,7 +485,9 @@ const WorkPage: React.FunctionComponent<Props> = ({
         )}
         <meta name="og:url" content={pageUrl} />
         <meta name="og:image" content={imageUrl} />
-        <meta name="og:type" content={type} />
+        {type && (
+          <meta name="og:type" content={type} />
+        )}
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
       <Row>{content()}</Row>
