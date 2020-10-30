@@ -108,6 +108,29 @@ export const STATS_GQL = gql`
         count
       }
     }
+    claimedPublications: works(
+      resourceTypeId: "Text"
+      hasPerson: true
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    connectedPublications: works(
+      resourceTypeId: "Text"
+      hasOrganization: true
+      hasAffiliation: true
+      hasFunder: true
+      hasMember: true
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
     datasets: works(resourceTypeId: "Dataset") {
       totalCount
       published {
@@ -125,6 +148,29 @@ export const STATS_GQL = gql`
         count
       }
     }
+    claimedDatasets: works(
+      resourceTypeId: "Dataset"
+      hasPerson: true
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    connectedDatasets: works(
+      resourceTypeId: "Dataset"
+      hasOrganization: true
+      hasAffiliation: true
+      hasFunder: true
+      hasMember: true
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
     softwares: works(resourceTypeId: "Software") {
       totalCount
       published {
@@ -135,6 +181,29 @@ export const STATS_GQL = gql`
     citedSoftwares: works(
       resourceTypeId: "Software"
       hasCitations: 1
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    claimedSoftwares: works(
+      resourceTypeId: "Software"
+      hasPerson: true
+    ) {
+      totalCount
+      published {
+        title
+        count
+      }
+    }
+    connectedSoftwares: works(
+      resourceTypeId: "Software"
+      hasOrganization: true
+      hasAffiliation: true
+      hasFunder: true
+      hasMember: true
     ) {
       totalCount
       published {
@@ -313,6 +382,126 @@ const StatisticsPage = ({ data }) => {
     )
   }
 
+  const renderClaimedPublications = () => {
+    const claimedPublication = data.claimedPublications.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.claimedPublications.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.claimedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Claimed Publications'
+          }
+          data={claimedPublication}
+          color={'#80b1d3'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderClaimedDatasets = () => {
+    const claimedDataset = data.claimedDatasets.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.claimedDatasets.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.claimedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Claimed Datasets'
+          }
+          data={claimedDataset}
+          color={'#fb8072'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderClaimedSoftwares = () => {
+    const claimedSoftware = data.claimedSoftwares.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.claimedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.claimedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Claimed Software'
+          }
+          data={claimedSoftware}
+          color={'#bebada'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderConnectedPublications = () => {
+    const connectedPublication = data.connectedPublications.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.connectedPublications.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.connectedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Connected Publications'
+          }
+          data={connectedPublication}
+          color={'#80b1d3'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderConnectedDatasets = () => {
+    const connectedDataset = data.connectedDatasets.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.connectedDatasets.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.connectedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Connected Datasets'
+          }
+          data={connectedDataset}
+          color={'#fb8072'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
+  const renderConnectedSoftwares = () => {
+    const connectedSoftware = data.connectedSoftwares.published.map((x) => ({
+      title: x.title,
+      count: x.count
+    }))
+
+    return (
+      <Col md={4}>
+        <ProductionChart
+          title={
+            data.connectedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
+            ((data.connectedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Connected Software'
+          }
+          data={connectedSoftware}
+          color={'#bebada'}
+        ></ProductionChart>
+      </Col>
+    )
+  }
+
   return (
     <Layout path={'/statistics'} >
       <Row>
@@ -468,7 +657,7 @@ const StatisticsPage = ({ data }) => {
                     (data.claimed.totalCount * 100) /
                     data.total.totalCount
                   ).toFixed(2) + '%'}
-                  ) works have been connected to at least one ORCID record,
+                  ) works have been claimed (connected) to at least one ORCID record,
                   including{' '}
                   {((dataciteClaimed.count * 100) / datacite.count).toFixed(2) +
                     '%'}{' '}
@@ -478,6 +667,11 @@ const StatisticsPage = ({ data }) => {
                   of works registered with Crossref.
                 </p>
               </div>
+              <Row>
+                {renderClaimedPublications()}
+                {renderClaimedDatasets()}
+                {renderClaimedSoftwares()}
+              </Row>
             </div>
           </div>
         </Col>
@@ -557,6 +751,11 @@ const StatisticsPage = ({ data }) => {
                   of works registered with Crossref.
                 </p>
               </div>
+              <Row>
+                {renderConnectedPublications()}
+                {renderConnectedDatasets()}
+                {renderConnectedSoftwares()}
+              </Row>
             </div>
           </div>
         </Col>
