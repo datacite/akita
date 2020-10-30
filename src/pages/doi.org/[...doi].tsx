@@ -1,22 +1,20 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 
 import apolloClient from '../../../hooks/apolloClient'
 import Layout from '../../components/Layout/Layout'
-import Error from '../../components/Error/Error'
 import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
-import Loading from '../../components/Loading/Loading'
 import { connectionFragment, contentFragment } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 
 type Props = {
-  doi: string
+  doi: string,
+  data: WorkQueryData
 }
 
 export const CROSSREF_FUNDER_GQL = gql`
@@ -316,9 +314,9 @@ interface QueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {	
-  const doi = (context.params.doi as String[]).join('/')	
+  const doi = (context.query.doi as String[]).join('/')	
   const query = (context.query.query as String)
-  
+
   if (doi.startsWith('10.13039')) {
     const { data } = await apolloClient.query({
       query: CROSSREF_FUNDER_GQL,
@@ -329,59 +327,36 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context.res.setHeader('Location', query ? location + '?query=' + query : location)
     return {props: {}}
   } else {
+    const cursor = (context.query.cursor as String)
+    const published = (context.query.published as String)
+    const resourceType = (context.query['resource-type'] as String)
+    const language = (context.query.language as String)
+    const license = (context.query.license as String)
+    const registrationAgency = (context.query['field-of-science'] as String)
+    const fieldOfScience = (context.query['registration-agency'] as String)
+    const { data } = await apolloClient.query({
+      query: DOI_GQL,
+      variables: { 
+        id: doi,
+        cursor: cursor,
+        query: query,
+        published: published as string,
+        resourceTypeId: resourceType as string,
+        fieldOfScience: fieldOfScience as string,
+        language: language as string,
+        license: license as string,
+        registrationAgency: registrationAgency as string }
+    })
     return {	
-      props: { doi }	
+      props: { doi, data }	
     }
   }
 }
 
 const WorkPage: React.FunctionComponent<Props> = ({
-  doi
+  doi,
+  data
 }) => {
-  const [query] = useQueryState<string>('query')
-  const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [published] = useQueryState('published', { history: 'push' })
-  const [resourceType] = useQueryState('resource-type', { history: 'push' })
-  const [fieldOfScience] = useQueryState('field-of-science', {
-    history: 'push'
-  })
-  const [language] = useQueryState('language', { history: 'push' })
-  const [license] = useQueryState('license', { history: 'push' })
-  const [registrationAgency] = useQueryState('registration-agency', {
-    history: 'push'
-  })
-
-  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      id: doi,
-      cursor: cursor,
-      query: query,
-      published: published as string,
-      resourceTypeId: resourceType as string,
-      fieldOfScience: fieldOfScience as string,
-      language: language as string,
-      license: license as string,
-      registrationAgency: registrationAgency as string
-    }
-  })
-
-  if (loading) 
-    return (
-      <Layout path={'/doi.org/' + doi } >
-        <Loading />
-      </Layout>
-    )
-
-  if (error)
-    return (
-      <Layout path={'/doi.org/' + doi } >
-        <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
-        </Col>
-      </Layout>
-    )
-
   const work = data.work
 
   const pageUrl =
