@@ -31,9 +31,9 @@ const About: React.FunctionComponent<Props> = ({ title }) => {
               others.
             </p>
             <p>
-              DataCite Commons is work in progress and will officially launch in
-              October 2020. The work is supported by funding from the European
-              Union’s Horizon 2020 research and innovation programme.
+              DataCite Commons was officially launched in October 2020. The work is 
+              supported by funding from the European Union’s Horizon 2020 research 
+              and innovation programme under grant agreement No 777523.
             </p>
             <p>
               <a
