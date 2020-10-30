@@ -1,25 +1,7 @@
-import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { GetServerSideProps } from 'next'
-import { Col } from 'react-bootstrap'
-import { useRouter } from 'next/router'
-
-import Layout from '../../components/Layout/Layout'
-import Error from '../../components/Error/Error'
-import Loading from '../../components/Loading/Loading'
 import { rorFromUrl } from '../../utils/helpers'
-
-type Props = {
-  gridId?: string
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {	
-  const gridId = 'grid.ac/' + (context.params.grid as String[]).join('/')	
-
-  return {	
-    props: { gridId }	
-  }	
-}
+import apolloClient from '../../../hooks/apolloClient'
 
 export const GRID_GQL = gql`
   query getOrganizationQuery(
@@ -33,65 +15,28 @@ export const GRID_GQL = gql`
   }
 `
 
-interface GridType {
-  id: string
-}
-
 interface GridQueryData {
   organization: GridType
 }
 
-interface GridQueryVar {
-  gridId: string
+interface GridType {
+  id: string
 }
 
-const GridPage: React.FunctionComponent<Props> = ({
-  gridId
-}) => {
-  const router = useRouter()
-  const { loading, error, data } = useQuery<
-    GridQueryData,
-    GridQueryVar
-  >(GRID_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      gridId: gridId
-    }
+export const getServerSideProps: GetServerSideProps = async (context) => {	
+  const gridId = 'grid.ac/' + (context.params.grid as String[]).join('/')	
+  const { data } = await apolloClient.query({
+    query: GRID_GQL,
+    variables: { gridId }
   })
 
-  if (loading)
-    return (
-      <Layout path={'/grid.ac/' + gridId } >
-        <Loading />
-      </Layout>
-    )
+  context.res.statusCode = 302
+  context.res.setHeader('Location', '/ror.org' + rorFromUrl(data.organization.id))
+  return {props: {}}
+}
 
-  if (error)
-    return (
-      <Layout path={'/grid.ac/' + gridId } >
-        <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
-        </Col>
-      </Layout>
-    )
-
-  if (data && data.organization.id && typeof window !== 'undefined') {
-    const path = '/ror.org' + rorFromUrl(data.organization.id)
-    router.push({ pathname: path })
-    return (
-      <div className="row">
-        <Loading />
-      </div>
-    )
-  }
-
-  return (
-    <Layout path={'/grid.ac/' + gridId } >
-      <Col md={9} mdOffset={3}>
-        <Error title="An error occured." message='GRID ID not found.' />
-      </Col>
-    </Layout>
-  )
+function GridPage() {
+  return null
 }
 
 export default GridPage

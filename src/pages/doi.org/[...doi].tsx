@@ -6,16 +6,37 @@ import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 
+import apolloClient from '../../../hooks/apolloClient'
 import Layout from '../../components/Layout/Layout'
 import Error from '../../components/Error/Error'
 import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import { connectionFragment, contentFragment } from '../../components/SearchWork/SearchWork'
-import { pluralize } from '../../utils/helpers'
+import { pluralize, rorFromUrl } from '../../utils/helpers'
 
 type Props = {
   doi: string
+}
+
+export const CROSSREF_FUNDER_GQL = gql`
+  query getOrganizationQuery(
+    $crossrefFunderId: ID
+  ) {
+    organization(
+      crossrefFunderId: $crossrefFunderId
+    ) {
+      id
+    }
+  }
+`
+
+interface CrossrefFunderData {
+  organization: CrossrefFunderType
+}
+
+interface CrossrefFunderType {
+  id: string
 }
 
 export const DOI_GQL = gql`
@@ -296,10 +317,22 @@ interface QueryVar {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {	
   const doi = (context.params.doi as String[]).join('/')	
-
-  return {	
-    props: { doi }	
-  }	
+  const query = (context.query.query as String)
+  
+  if (doi.startsWith('10.13039')) {
+    const { data } = await apolloClient.query({
+      query: CROSSREF_FUNDER_GQL,
+      variables: { crossrefFunderId: doi }
+    })
+    const location = '/ror.org' + rorFromUrl(data.organization.id)
+    context.res.statusCode = 302
+    context.res.setHeader('Location', query ? location + '?query=' + query : location)
+    return {props: {}}
+  } else {
+    return {	
+      props: { doi }	
+    }
+  }
 }
 
 const WorkPage: React.FunctionComponent<Props> = ({
