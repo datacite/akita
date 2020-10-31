@@ -32,6 +32,14 @@ export const CROSSREF_FUNDER_GQL = gql`
   }
 `
 
+interface CrossrefFunderData {
+  organization: CrossrefFunderType
+}
+
+interface CrossrefFunderType {
+  id: string
+}
+
 const METADATA_GQL = gql`
   query getMetadataQuery(
     $id: ID!
@@ -57,14 +65,6 @@ const METADATA_GQL = gql`
     }
   }
 `
-
-interface CrossrefFunderData {
-  organization: CrossrefFunderType
-}
-
-interface CrossrefFunderType {
-  id: string
-}
 
 export interface MetadataQueryVar {
   id: string
@@ -369,7 +369,8 @@ interface QueryVar {
 export const getServerSideProps: GetServerSideProps = async (context) => {	
   const doi = (context.query.doi as String[]).join('/')	
   const query = (context.query.query as String)
-
+console.log(doi)
+console.log(query)
   // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
     const { data } = await apolloClient.query({
@@ -377,11 +378,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       variables: { crossrefFunderId: doi },
       errorPolicy: 'all'
     })
-    const location = '/ror.org' + rorFromUrl(data.organization.id)
-
-    context.res.writeHead(302, { Location: query ? location + '?query=' + query : location });
-    context.res.end();
-    return {props: {}}
+    // redirect to our 404 page if funder is not found
+    if (!data) {
+      context.res.writeHead(302, { Location: '/404' });
+      context.res.end();
+      return {props: {}}
+    } else {
+      const location = '/ror.org' + rorFromUrl(data.organization.id)
+      context.res.writeHead(302, { Location: query ? location + '?query=' + query : location });
+      context.res.end();
+      return {props: {}}
+    }
   } else {
     const { data } = await apolloClient.query({
       query: METADATA_GQL,
