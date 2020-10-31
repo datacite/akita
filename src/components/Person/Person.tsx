@@ -161,7 +161,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
       <h3 className="member-results">{person.id}</h3>
       <PersonMetadata metadata={person} />
       {shareLink()}
-      <h3 className="member-results" id="person-employment">Employment</h3>
+      {person.employment.length > 0 && (
+        <h3 className="member-results" id="person-employment">Employment</h3>
+      )}
       {person.employment.map((item) => (
         <div className="panel panel-transparent employment" key={item.organizationName}>
           <PersonEmployment employment={item} />
