@@ -370,22 +370,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const doi = (context.query.doi as String[]).join('/')	
   const query = (context.query.query as String)
 
+  // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
     const { data } = await apolloClient.query({
       query: CROSSREF_FUNDER_GQL,
-      variables: { crossrefFunderId: doi }
+      variables: { crossrefFunderId: doi },
+      errorPolicy: 'all'
     })
     const location = '/ror.org' + rorFromUrl(data.organization.id)
-    context.res.statusCode = 302
-    context.res.setHeader('Location', query ? location + '?query=' + query : location)
-    return { props: {} }
+
+    context.res.writeHead(302, { Location: query ? location + '?query=' + query : location });
+    context.res.end();
+    return {props: {}}
   } else {
     const { data } = await apolloClient.query({
       query: METADATA_GQL,
-      variables: { id: doi }
+      variables: { id: doi },
+      errorPolicy: 'all'
     })
-    return {	
-      props: { doi, metadata: data }	
+    // redirect to our 404 page if doi is not found
+    if (!data) {
+      context.res.writeHead(302, { Location: '/404' });
+      context.res.end();
+      return {props: {}}
+    } else {
+      return {props: { doi, metadata: data }}
     }
   }
 }
