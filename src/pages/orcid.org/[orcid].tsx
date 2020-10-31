@@ -283,7 +283,7 @@ const PersonPage: React.FunctionComponent<Props> = ({
           hasPagination={person.works.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'person'}
-          url={'/orcid.org' + orcid + '/?'}
+          url={'/orcid.org/' + orcid + '/?'}
           endCursor={endCursor}
         />
       </>
