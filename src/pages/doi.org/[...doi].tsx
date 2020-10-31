@@ -378,7 +378,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const location = '/ror.org' + rorFromUrl(data.organization.id)
     context.res.statusCode = 302
     context.res.setHeader('Location', query ? location + '?query=' + query : location)
-    return {props: {}}
+    return { props: {} }
   } else {
     const { data } = await apolloClient.query({
       query: METADATA_GQL,
@@ -393,7 +393,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const WorkPage: React.FunctionComponent<Props> = ({
   doi,
   metadata
-}) => {
+}) => {  
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/doi.org/' + metadata.work.doi
