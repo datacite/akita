@@ -1,20 +1,23 @@
 import React from 'react'
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 
 import apolloClient from '../../../hooks/apolloClient'
 import Layout from '../../components/Layout/Layout'
+import Error from '../../components/Error/Error'
 import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
+import Loading from '../../components/Loading/Loading'
 import { connectionFragment, contentFragment } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 
 type Props = {
   doi: string,
-  data: WorkQueryData
+  metadata: MetadataQueryData
 }
 
 export const CROSSREF_FUNDER_GQL = gql`
@@ -29,12 +32,62 @@ export const CROSSREF_FUNDER_GQL = gql`
   }
 `
 
+const METADATA_GQL = gql`
+  query getMetadataQuery(
+    $id: ID!
+  ) {
+    work(id: $id) {
+      id
+      doi
+      types {
+        resourceTypeGeneral
+        resourceType
+      }
+      titles {
+        title
+      }
+      descriptions {
+        description
+      }
+      registrationAgency {
+        id
+        name
+      }
+      schemaOrg
+    }
+  }
+`
+
 interface CrossrefFunderData {
   organization: CrossrefFunderType
 }
 
 interface CrossrefFunderType {
   id: string
+}
+
+export interface MetadataQueryVar {
+  id: string
+}
+export interface MetadataQueryData {
+  work: MetadataType
+}
+
+interface MetadataType {
+  id: string
+  doi: string
+  types: {
+    resourceTypeGeneral?: string
+    resourceType?: string
+  }
+  creators: Creator[]
+  titles: Title[]
+  descriptions: Description[]
+  registrationAgency: {
+    id: string
+    name: string
+  }
+  schemaOrg: string
 }
 
 export const DOI_GQL = gql`
@@ -327,59 +380,87 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context.res.setHeader('Location', query ? location + '?query=' + query : location)
     return {props: {}}
   } else {
-    const cursor = (context.query.cursor as String)
-    const published = (context.query.published as String)
-    const resourceType = (context.query['resource-type'] as String)
-    const language = (context.query.language as String)
-    const license = (context.query.license as String)
-    const registrationAgency = (context.query['field-of-science'] as String)
-    const fieldOfScience = (context.query['registration-agency'] as String)
     const { data } = await apolloClient.query({
-      query: DOI_GQL,
-      variables: { 
-        id: doi,
-        cursor: cursor,
-        query: query,
-        published: published as string,
-        resourceTypeId: resourceType as string,
-        fieldOfScience: fieldOfScience as string,
-        language: language as string,
-        license: license as string,
-        registrationAgency: registrationAgency as string }
+      query: METADATA_GQL,
+      variables: { id: doi }
     })
     return {	
-      props: { doi, data }	
+      props: { doi, metadata: data }	
     }
   }
 }
 
 const WorkPage: React.FunctionComponent<Props> = ({
   doi,
-  data
+  metadata
 }) => {
-  const work = data.work
-
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/doi.org/' + work.doi
-      : 'https://commons.stage.datacite.org/doi.org/' + work.doi
+      ? 'https://commons.datacite.org/doi.org/' + metadata.work.doi
+      : 'https://commons.stage.datacite.org/doi.org/' + metadata.work.doi
 
   const imageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/images/logo.png'
       : 'https://commons.stage.datacite.org/images/logo.png'
 
-  const title = work.titles[0]
-    ? 'DataCite Commons: ' + work.titles[0].title
+  const title = metadata.work.titles[0]
+    ? 'DataCite Commons: ' + metadata.work.titles[0].title
     : 'DataCite Commons: No Title'
 
-  const description = !work.descriptions[0] ? null : truncate(work.descriptions[0].description, {
+  const description = !metadata.work.descriptions[0] ? null : truncate(metadata.work.descriptions[0].description, {
     length: 2500,
     separator: '… '
   })
 
-  let type:string = work.types.resourceTypeGeneral ? work.types.resourceTypeGeneral.toLowerCase() : null
-  if (work.registrationAgency.id === "crossref" && work.types.resourceType) type = work.types.resourceType.toLowerCase()
+  let type:string = metadata.work.types.resourceTypeGeneral ? metadata.work.types.resourceTypeGeneral.toLowerCase() : null
+  if (metadata.work.registrationAgency.id === "crossref" && metadata.work.types.resourceType) type = metadata.work.types.resourceType.toLowerCase()
+
+  const [query] = useQueryState<string>('query')
+  const [cursor] = useQueryState('cursor', { history: 'push' })
+  const [published] = useQueryState('published', { history: 'push' })
+  const [resourceType] = useQueryState('resource-type', { history: 'push' })
+  const [fieldOfScience] = useQueryState('field-of-science', {
+    history: 'push'
+  })
+  const [language] = useQueryState('language', { history: 'push' })
+  const [license] = useQueryState('license', { history: 'push' })
+  const [registrationAgency] = useQueryState('registration-agency', {
+    history: 'push'
+  })
+
+  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
+    errorPolicy: 'all',
+    variables: {
+      id: doi,
+      cursor: cursor,
+      query: query,
+      published: published as string,
+      resourceTypeId: resourceType as string,
+      fieldOfScience: fieldOfScience as string,
+      language: language as string,
+      license: license as string,
+      registrationAgency: registrationAgency as string
+    }
+  })
+
+  if (loading) 
+    return (
+      <Layout path={'/doi.org/' + doi } >
+        <Loading />
+      </Layout>
+    )
+
+  if (error)
+    return (
+      <Layout path={'/doi.org/' + doi } >
+        <Col md={9} mdOffset={3}>
+          <Error title="An error occured." message={error.message} />
+        </Col>
+      </Layout>
+    )
+
+  const work = data.work
 
   const content = () => {
     return (
@@ -484,7 +565,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
     <Layout path={'/doi.org/' + doi } >
       <Head>
         <title key="title">{title}</title>
-        <meta name="og:title" content={title} />
+        <meta name='og:title' content={title} />
         {description && (
           <>
             <meta name="description" content={description} />
