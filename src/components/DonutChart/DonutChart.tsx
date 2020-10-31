@@ -247,10 +247,10 @@ const DonutChart: React.FunctionComponent<Props> = ({
   const windowWidth = windowDimensions.width
   let width = windowWidth >= 1200 ? 200 : 175
   let height = windowWidth >= 1200 ? 200 : 175
+  let paddingLeft = windowWidth >= 1200 ? 70 : 60
   
   let innerRadius = windowWidth >= 1400 ? 68 : 52
   let outerRadius = windowWidth >= 1400 ? 90 : 70
-  let paddingLeft = windowWidth >= 1400 ? 55 : 10
 
   if (windowWidth < 768) {
     innerRadius = 44

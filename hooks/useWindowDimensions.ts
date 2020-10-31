@@ -29,6 +29,6 @@ export default function useWindowDimensions() {
   if (typeof window !== 'undefined') {
     return ResizeWindowDimensions
   } else {
-    return { width: 1024, height: 1400 }
+    return { width: 1200, height: 1024 }
   }
 }
