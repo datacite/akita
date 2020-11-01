@@ -11,9 +11,21 @@ server {
 
     add_header x-amzn-oidc-data $http_x_amzn_oidc_data always;
 
+    set $backend {{ default .Env.SITEMAPS_BUCKET_URL "http://search.test.datacite.org.s3.amazonaws.com" }}$request_uri;
+
     location /heartbeat {
         return 200 'OK';
         add_header Content-Type text/plain;
+    }
+
+    location /sitemaps {
+        proxy_pass $backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
     }
 
     #
