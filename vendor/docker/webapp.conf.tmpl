@@ -11,7 +11,7 @@ server {
 
     add_header x-amzn-oidc-data $http_x_amzn_oidc_data always;
 
-    set $backend {{ default .Env.SITEMAPS_BUCKET_URL "http://search.test.datacite.org.s3.amazonaws.com" }}$request_uri;
+    set $backend {{ default .Env.SITEMAPS_BUCKET_URL "http://commons.stage.datacite.org.s3.amazonaws.com" }}$request_uri;
 
     location /heartbeat {
         return 200 'OK';
