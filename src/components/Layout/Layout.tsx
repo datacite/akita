@@ -5,6 +5,7 @@ import { Cookies } from 'react-cookie-consent'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Consent from '../Consent/Consent'
+import { GA_TRACKING_ID } from '../../utils/gtag'
 
 type Props = {
   path: string
@@ -13,7 +14,6 @@ type Props = {
 const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
   // check whether user has given consent to google analytics tracking
   const hasGivenConsent = Cookies.get('_consent') == 'true'
-  const trackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
   const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL || 'https://datacite.org'
 
   return (
@@ -36,11 +36,11 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
           type="text/css"
         />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        {hasGivenConsent && trackingId && (
+        {hasGivenConsent && GA_TRACKING_ID && (
           <>
             <script
               async
-              src={'https://www.googletagmanager.com/gtag/js?id=' + trackingId}
+              src={'https://www.googletagmanager.com/gtag/js?id=' + GA_TRACKING_ID}
             />
             <script
               dangerouslySetInnerHTML={{
@@ -48,7 +48,9 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
-                    gtag('config', '${trackingId}');
+                    gtag('config', '${GA_TRACKING_ID}', {
+                      page_path: window.location.pathname,
+                    });
                 `
               }}
             />

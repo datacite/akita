@@ -7,7 +7,7 @@ import ProductionChart from '../components/ProductionChart/ProductionChart'
 import DataSources from '../components/DataSources/DataSources'
 import { ContentFacet } from '../components/WorksListing/WorksListing'
 import Layout from '../components/Layout/Layout'
-import apolloClient from '../../hooks/apolloClient'
+import apolloClient from '../utils/apolloClient'
 
 export interface Source {
   totalCount: number

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import { GetServerSideProps } from 'next'
 import { rorFromUrl } from '../../utils/helpers'
-import apolloClient from '../../../hooks/apolloClient'
+import apolloClient from '../../utils/apolloClient'
 
 export const GRID_GQL = gql`
   query getOrganizationQuery(

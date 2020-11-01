@@ -6,7 +6,7 @@ import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 
-import apolloClient from '../../../hooks/apolloClient'
+import apolloClient from '../../utils/apolloClient'
 import Layout from '../../components/Layout/Layout'
 import Error from '../../components/Error/Error'
 import Work from '../../components/Work/Work'
@@ -369,8 +369,7 @@ interface QueryVar {
 export const getServerSideProps: GetServerSideProps = async (context) => {	
   const doi = (context.query.doi as String[]).join('/')	
   const query = (context.query.query as String)
-console.log(doi)
-console.log(query)
+  
   // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
     const { data } = await apolloClient.query({

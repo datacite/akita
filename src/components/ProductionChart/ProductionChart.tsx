@@ -2,7 +2,7 @@ import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
-import useWindowDimensions from '../../../hooks/useWindowDimensions'
+import useWindowDimensions from '../../utils/useWindowDimensions'
 
 interface ChartRecord {
   title: string

@@ -11,7 +11,7 @@ import {
   getYear
 } from 'date-fns'
 
-import useWindowDimensions from '../../../hooks/useWindowDimensions'
+import useWindowDimensions from '../../utils/useWindowDimensions'
 
 interface ChartRecord {
   yearMonth: string

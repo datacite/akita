@@ -3,7 +3,7 @@ import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
 import { compactNumbers } from '../../utils/helpers'
-import useWindowDimensions from '../../../hooks/useWindowDimensions'
+import useWindowDimensions from '../../utils/useWindowDimensions'
 
 interface ChartRecord {
   title: string
