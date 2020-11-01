@@ -3,6 +3,7 @@ LABEL maintainer="mfenner@datacite.org"
 
 # Set correct environment variables
 ENV HOME /home/app
+ENV DOCKERIZE_VERSION v0.6.0
 
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
@@ -26,9 +27,12 @@ RUN apt-get update && \
 # Preserve env variables for nginx
 RUN rm -f /etc/service/nginx/down && \
     rm /etc/nginx/sites-enabled/default
-COPY vendor/docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY vendor/docker/00_app_env.conf /etc/nginx/conf.d/00_app_env.conf
 COPY vendor/docker/env.conf /etc/nginx/main.d/env.conf
+
+# Install dockerize
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Use Amazon NTP servers
 COPY vendor/docker/ntp.conf /etc/ntp.conf
@@ -56,6 +60,10 @@ COPY vendor/docker/10_ssh.sh /etc/my_init.d/10_ssh.sh
 
 # Build next js
 COPY vendor/docker/20_next_build.sh /etc/my_init.d/20_next_build.sh
+
+# Run additional scripts during container startup (i.e. not at build time)
+RUN mkdir -p /etc/my_init.d
+COPY vendor/docker/70_templates.sh /etc/my_init.d/70_templates.sh
 
 # Expose web
 EXPOSE 80
