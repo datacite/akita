@@ -103,17 +103,17 @@ const Organization: React.FunctionComponent<Props> = ({
             <Row>
               {organization.citationCount > 0 && (
                 <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(organization.citationCount, 'Citation', true)}</h4>
+                <h4 className="work">{pluralize(organization.citationCount, 'Citation')}</h4>
                 </Col>
               )}
               {organization.viewCount > 0 && (
                 <Col xs={4} className="text-center">
-                  <h4 className="work">{pluralize(organization.viewCount, 'View', true)}</h4>
+                  <h4 className="work">{pluralize(organization.viewCount, 'View')}</h4>
                 </Col>
               )}
               {organization.downloadCount > 0 && (
                 <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(organization.downloadCount, 'Download', true)}</h4>
+                <h4 className="work">{pluralize(organization.downloadCount, 'Download')}</h4>
                 </Col>
               )}
             </Row>
