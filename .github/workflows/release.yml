@@ -27,7 +27,7 @@ jobs:
           NODE_ENV: test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  deploy:
+  release:
     needs: test
     runs-on: ubuntu-latest
     steps:
