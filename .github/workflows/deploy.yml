@@ -2,7 +2,8 @@ name: Deploy
 on:
   push:
     branches:
-      - "master"
+      - 'master'
+      - 'stage'
 jobs:
   test:
     runs-on: ubuntu-latest
