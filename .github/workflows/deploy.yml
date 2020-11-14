@@ -4,7 +4,7 @@ on:
     branches:
       - "master"
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -22,7 +22,17 @@ jobs:
           quiet: true
           record: true
           parallel: true
+          group: 'Tests'
         env:
           NODE_ENV: test
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vercel deploy
+        uses: amondnet/vercel-action@v19
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID}}
+          vercel-project-id: ${{ secrets.PROJECT_ID}}
