@@ -4,4 +4,4 @@
 # User-agent: *
 # Disallow: /
 
-Sitemap: https://commons.stage.datacite.org/sitemaps/sitemap.xml.gz
+Sitemap: https://commons.datacite.org/sitemaps/sitemap.xml.gz
