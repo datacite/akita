@@ -136,17 +136,17 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             <Row>
               {person.citationCount > 0 && (
                 <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(person.citationCount, 'Citation', true)}</h4>
+                <h4 className="work">{pluralize(person.citationCount, 'Citation')}</h4>
                 </Col>
               )}
               {person.viewCount > 0 && (
                 <Col xs={4} className="text-center">
-                  <h4 className="work">{pluralize(person.viewCount, 'View', true)}</h4>
+                  <h4 className="work">{pluralize(person.viewCount, 'View')}</h4>
                 </Col>
               )}
               {person.downloadCount > 0 && (
                 <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(person.downloadCount, 'Download', true)}</h4>
+                <h4 className="work">{pluralize(person.downloadCount, 'Download')}</h4>
                 </Col>
               )}
             </Row>
