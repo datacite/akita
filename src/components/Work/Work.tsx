@@ -255,7 +255,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               </Col>
               {doi.contentUrl && (
                 <Col xs={6} md={4}>
-                  <h5>Content</h5>
+                  <h5>Fulltext Article</h5>
                   <div>
                     <a href={doi.contentUrl} target="_blank" rel="noreferrer">
                       via Unpaywall
