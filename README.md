@@ -1,11 +1,11 @@
 # Akita
 [![Identifier](https://img.shields.io/badge/doi-10.14454%2Fqgk4--zs88-fca709.svg)](https://doi.org/10.14454/qgk4-zs88)
-[![Build Status](https://travis-ci.com/datacite/akita.svg?branch=master)](https://travis-ci.com/datacite/akita)
+![Release](https://github.com/datacite/akita/workflows/Release/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b34c0096505296b18f19/maintainability)](https://codeclimate.com/github/datacite/akita/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b34c0096505296b18f19/test_coverage)](https://codeclimate.com/github/datacite/akita/test_coverage)
 [![akita](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/detailed/yur1cf/master&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/yur1cf/runs)
 
-The web frontend for the DataCite Commons service.
+The web frontend for the [DataCite Commons](https://commons.datacite.org) service.
 
 ## Prerequisites
 
