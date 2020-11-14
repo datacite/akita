@@ -41,5 +41,5 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           vercel-args: '--prod'
-          scope: 'datacite'
+          scope: ${{ secrets.TEAM_ID}}
           vercel-project-name: 'akita'
