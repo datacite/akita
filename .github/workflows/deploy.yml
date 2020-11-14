@@ -13,6 +13,9 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          start: NODE_ENV=test yarn dev
+          wait-on: 'http://localhost:3000'
+          quiet: true
           record: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
