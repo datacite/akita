@@ -73,13 +73,13 @@ describe('PersonContainer', () => {
     })
     cy.get('#work-type-facets').should('be.visible')
     cy.get('#work-type-facets > li').should(($facets) => {
-      expect($facets).to.have.length.at.least(2)
+      expect($facets).to.have.length.at.least(1)
     })
     cy.get('#registration-agency-facets').should('not.be.visible')
   })
 
   it('production chart', () => {
-    cy.get('.mark-rect > path').should('be.visible').should('have.length.gt', 1)
+    cy.get('.mark-rect > path').should('be.visible').should('have.length', 1)
   })
 
   it('types chart', () => {
