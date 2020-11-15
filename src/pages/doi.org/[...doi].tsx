@@ -429,7 +429,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
   })
 
   let type:string = metadata.work.types.resourceTypeGeneral ? metadata.work.types.resourceTypeGeneral.toLowerCase() : null
-  if (metadata.work.registrationAgency.id === "crossref" && metadata.work.types.resourceType) type = metadata.work.types.resourceType.toLowerCase()
+  if (metadata.work.registrationAgency.id !== "datacite" && metadata.work.types.resourceType) type = metadata.work.types.resourceType.toLowerCase()
 
   const [query] = useQueryState<string>('query')
   const [cursor] = useQueryState('cursor', { history: 'push' })

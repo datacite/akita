@@ -347,7 +347,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   )
 
   let resourceType = metadata.types.resourceTypeGeneral
-  if (metadata.registrationAgency.id === "crossref" && metadata.types.resourceType) resourceType = metadata.types.resourceType
+  if (metadata.registrationAgency.id !== "datacite" && metadata.types.resourceType) resourceType = metadata.types.resourceType
 
   const tags = () => {
     return (
