@@ -25,13 +25,13 @@ describe('PersonContainer', () => {
   //   })
   // })
 
-  it('links', () => {
-    cy.get('.people-links').should(($link) => {
-      expect($link).to.have.length.at.least(1)
-      expect($link.eq(0)).to.contain('Mendeley profile')
-      expect($link.eq(1)).to.contain('github')
-    })
-  })
+  // it('links', () => {
+  //   cy.get('.people-links').should(($link) => {
+  //     expect($link).to.have.length.at.least(1)
+  //     expect($link.eq(0)).to.contain('Mendeley profile')
+  //     expect($link.eq(1)).to.contain('github')
+  //   })
+  // })
 
   it('identifiers', () => {
     cy.get('.people-identifiers').should(($id) => {
