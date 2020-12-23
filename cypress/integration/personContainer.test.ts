@@ -27,7 +27,7 @@ describe('PersonContainer', () => {
 
   it('links', () => {
     cy.get('.people-links').should(($link) => {
-      expect($link).to.have.length(2)
+      expect($link).to.have.length.at.least(1)
       expect($link.eq(0)).to.contain('Mendeley profile')
       expect($link.eq(1)).to.contain('github')
     })
