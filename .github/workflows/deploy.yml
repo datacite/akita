@@ -54,6 +54,7 @@ jobs:
           vercel-project-name: 'akita'
           alias-domains: |
             commons.datacite.vercel.app
+            commons.stage.datacite.org
     
       - name: Notify Slack
         uses: edge/simple-slack-notify@master
