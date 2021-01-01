@@ -1,10 +1,8 @@
 import React from 'react'
-import { Alert, Row, Col, Label } from 'react-bootstrap'// eslint-disable-next-line no-unused-vars
+import { Alert, Row, Col, Label } from 'react-bootstrap' // eslint-disable-next-line no-unused-vars
 import { PersonRecord } from '../Person/Person'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faOrcid
-} from '@fortawesome/free-brands-svg-icons'
+import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
 
@@ -13,16 +11,13 @@ type Props = {
 }
 
 const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
-  
   if (!metadata) return <Alert bsStyle="warning">No content found.</Alert>
 
   const name = () => {
     if (!metadata.name)
       return (
         <h3 className="work">
-          <Link
-            href={'/orcid.org' + orcidFromUrl(metadata.id)}
-          >
+          <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -30,9 +25,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return (
       <h3 className="work">
-        <Link
-          href={'/orcid.org' + orcidFromUrl(metadata.id)}
-        >
+        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
           <a id="orcid-link">
             {metadata.name}
             {metadata.alternateName && metadata.alternateName.length > 0 && (
@@ -64,7 +57,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
   const impactLink = (
     <a
-      href={'https://profiles.impactstory.org/u/' + orcidFromUrl(metadata.id)}
+      href={'https://profiles.impactstory.org/u' + orcidFromUrl(metadata.id)}
       target="_blank"
       rel="noreferrer"
     >
@@ -74,7 +67,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
   const europePMCLink = (
     <a
-      href={'http://europepmc.org/authors/' + orcidFromUrl(metadata.id)}
+      href={'https://europepmc.org/authors' + orcidFromUrl(metadata.id)}
       target="_blank"
       rel="noreferrer"
     >
