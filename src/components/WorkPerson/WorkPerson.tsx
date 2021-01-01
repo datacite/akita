@@ -28,13 +28,11 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     ? [person.givenName, person.familyName].join(' ')
     : person.name
 
-  if (person.id && person.id.startsWith('https://orcid.org'))
+  if (person.id && person.id.startsWith('https://orcid.org/0'))
     return (
       <>
         <h4 className="work">
-          <Link
-            href={'/orcid.org' + orcidFromUrl(person.id)}
-          >
+          <Link href={'/orcid.org' + orcidFromUrl(person.id)}>
             <a>{name}</a>
           </Link>
         </h4>
@@ -43,9 +41,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
-                  <Link
-                    href={'/ror.org' + rorFromUrl(item.id)}
-                  >
+                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
                     <a>{item.name}</a>
                   </Link>
                 ) : (
@@ -63,13 +59,11 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       </>
     )
 
-  if (person.id && person.id.startsWith('https://ror.org'))
+  if (person.id && person.id.startsWith('https://ror.org/0'))
     return (
       <>
         <h4 className="work">
-          <Link
-            href={'/ror.org' + rorFromUrl(person.id)}
-          >
+          <Link href={'/ror.org' + rorFromUrl(person.id)}>
             <a>{name}</a>
           </Link>
         </h4>
@@ -78,9 +72,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
-                  <Link
-                    href={'/ror.org' + rorFromUrl(item.id)}
-                  >
+                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
                     <a>{item.name}</a>
                   </Link>
                 ) : (
@@ -106,9 +98,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
           <div className="affiliation">
             {person.affiliation.map((item) =>
               item.id ? (
-                <Link
-                  href={'/ror.org' + rorFromUrl(item.id)}
-                >
+                <Link href={'/ror.org' + rorFromUrl(item.id)}>
                   <a>{item.name}</a>
                 </Link>
               ) : (
