@@ -53,7 +53,7 @@ jobs:
           scope: ${{ secrets.TEAM_ID}}
           vercel-project-name: 'akita'
           alias-domains: |
-            commons.{{BRANCH}}.datacite.vercel.app
+            commons.datacite.vercel.app
     
       - name: Notify Slack
         uses: edge/simple-slack-notify@master
