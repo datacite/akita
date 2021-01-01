@@ -45,13 +45,15 @@ jobs:
         id: extract_variables
 
       - name: Vercel deploy
-        uses: amondnet/vercel-action@v19
+        uses: amondnet/vercel-action@latest
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           scope: ${{ secrets.TEAM_ID}}
           vercel-project-name: 'akita'
+          alias-domains: |
+            commons.{{BRANCH}}.datacite.vercel.app
     
       - name: Notify Slack
         uses: edge/simple-slack-notify@master
