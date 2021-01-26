@@ -9,8 +9,9 @@ const Consent = () => {
     domain = '.datacite.org'
   }
 
-  const cookieStyle = { fontSize: '16px', height: '95px' }
+  const cookieStyle = { fontSize: '16px', height: '95px', flexWrap: 'nowrap !important' }
   const linkStyle = { color: '#fecd23' }
+  const myContentStyle = {}
 
   return (
     <CookieConsent
@@ -23,6 +24,11 @@ const Consent = () => {
       extraCookieOptions={{ domain: domain }}
       overlay={true}
       enableDeclineButton
+      buttonWrapperClasses="MY_BUTTON_WRAPPER_CLASS"
+      containerClasses="CookieConsent MY_CONTAINER_CLASS"
+      contentClasses="MY_CONTENT_CLASS"
+      contentStyle={myContentStyle}
+      declineButtonClasses="MY_DECLINE_BUTTON_CLASS"
     >
       We use cookies on our website. Some are technically necessary, others help
       us improve your user experience. You can decline non-essential cookies by
