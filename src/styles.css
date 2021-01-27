@@ -449,8 +449,7 @@ h4.work {
 
 .panel.aggregations {
   margin-bottom: 20px;
-}
-
+}  
 
 /* New styles for mobile-friendly cookie bar. */
 
@@ -461,7 +460,6 @@ h4.work {
 @media screen and (min-width: 376px) {
   .MY_CONTENT_CLASS {
     flex: 1 0 180px !important;
-    margin: 15px !important;
   }
 }
 
@@ -472,8 +470,7 @@ h4.work {
 
   .MY_CONTENT_CLASS {
     flex: 1 0 160px !important;
-    margin: 15px !important;
-    font-size: 12px !important;
+		font-size: 12px;
     position: relative;
     top: -25px;
   }
@@ -489,6 +486,6 @@ h4.work {
   }
 
   .MY_BUTTON_WRAPPER_CLASS button {
-    height: 50px !important;
+    height: 50px;
   }
 }
