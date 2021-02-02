@@ -10,8 +10,8 @@
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "ci": "NODE_ENV=test yarn dev & wait-on http://localhost:3000 && yarn cy:run --record --quiet",
     "cy:coverage": "npx nyc report --reporter=lcov",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:open": "./node_modules/.bin/cypress open",
+    "cy:run": "./node_modules/.bin/cypress run"
   },
   "nyc": {
     "reporter": [
@@ -84,7 +84,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "cypress": "6.3.0",
+    "cypress": "6.4.0",
     "cypress-react-unit-test": "^4.16.7",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",

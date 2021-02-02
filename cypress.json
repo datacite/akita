@@ -1,7 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
   "experimentalComponentTesting": true,
-  "experimentalNetworkStubbing": true,
   "experimentalFetchPolyfill": true,
   "componentFolder": "src/components",
   "testFiles": "**/*.test.*",
