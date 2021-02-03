@@ -3,11 +3,20 @@ import CookieConsent from 'react-cookie-consent'
 
 const Consent = () => {
   let domain = 'localhost'
-  if (process.env.VERCEL_GIT_COMMIT_REF === 'stage') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+  ) {
     domain = '.stage.datacite.org'
-  } else if (process.env.VERCEL_GIT_COMMIT_REF === 'master') {
+  } else if (
+    process.env.NODE_ENV === 'production' &&
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+  ) {
     domain = '.datacite.org'
-  } else if (process.env.VERCEL_GIT_COMMIT_REF) {
+  } else if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.NEXT_PUBLIC_VERCEL_URL
+  ) {
     domain = '.vercel.app'
   }
 
