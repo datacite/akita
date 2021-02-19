@@ -21,19 +21,25 @@ const About: React.FunctionComponent<Props> = ({ title }) => {
               >
                 PID Graph
               </a>
-              , the graph formed by the collection of scholarly resources such as
-              publications, datasets, people and research organizations, and their
-              connections. The PID Graph uses persistent identifiers and{' '}
+              , the graph formed by the collection of scholarly resources such
+              as publications, datasets, people and research organizations, and
+              their connections. The PID Graph uses persistent identifiers and{' '}
               <a href="https://graphql.org/" target="_blank" rel="noreferrer">
                 GraphQL
               </a>
-              , with PIDs and metadata provided by DataCite, Crossref, ORCID, and
-              others.
+              , with PIDs and metadata provided by DataCite, Crossref, ORCID,
+              and others.
             </p>
             <p>
-              DataCite Commons was officially launched in October 2020. The work is 
-              supported by funding from the European Union’s Horizon 2020 research 
-              and innovation programme under grant agreement No 777523.
+              DataCite Commons was officially launched in October 2020. Initial
+              funding was from the European Union’s Horizon 2020 research and
+              innovation programme under grant agreement No 777523.
+            </p>
+            <p>
+              DataCite Commons is partially supported by the PARSEC project
+              funded by the Belmont Forum (Collaborative Research Action on
+              Science-Driven e-Infrastructures Innovation) managed through the
+              National Science Foundation (Grant ID 1929464).
             </p>
             <p>
               <a
