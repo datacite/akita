@@ -31,12 +31,26 @@ const About: React.FunctionComponent<Props> = ({ title }) => {
               and others.
             </p>
             <p>
-              DataCite Commons was officially launched in October 2020. Initial
-              funding was from the European Union’s Horizon 2020 research and
+              DataCite Commons was officially launched in October 2020 by the{' '}
+              <a
+                href="https://www.project-freya.eu/en/about/mission"
+                target="_blank"
+                rel="noreferrer"
+              >
+                FREYA project
+              </a>
+              , funded by the European Union’s Horizon 2020 research and
               innovation programme under grant agreement No 777523.
             </p>
             <p>
-              DataCite Commons is partially supported by the PARSEC project
+              DataCite Commons is partially supported by the{' '}
+              <a
+                href="https://parsecproject.org"
+                target="_blank"
+                rel="noreferrer"
+              >
+                PARSEC project
+              </a>{' '}
               funded by the Belmont Forum (Collaborative Research Action on
               Science-Driven e-Infrastructures Innovation) managed through the
               National Science Foundation (Grant ID 1929464).
