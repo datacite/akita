@@ -37,7 +37,7 @@ const Consent = () => {
       sameSite="strict"
       cookieName="_consent"
       extraCookieOptions={{ domain: domain }}
-      overlay={true}
+      overlay={false}
       enableDeclineButton
       buttonWrapperClasses="MY_BUTTON_WRAPPER_CLASS"
       containerClasses="CookieConsent MY_CONTAINER_CLASS"
