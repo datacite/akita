@@ -22,9 +22,7 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
     <div>
       <Head>
         <title>DataCite Commons</title>
-        {!isProduction && (
-          <meta name="robots" content="noindex">
-        )}
+        {!isProduction && <meta name="robots" content="noindex" />}
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
@@ -45,7 +43,9 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
           <>
             <script
               async
-              src={'https://www.googletagmanager.com/gtag/js?id=' + GA_TRACKING_ID}
+              src={
+                'https://www.googletagmanager.com/gtag/js?id=' + GA_TRACKING_ID
+              }
             />
             <script
               dangerouslySetInnerHTML={{
@@ -62,7 +62,12 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
           </>
         )}
         {isProduction && (
-          <script async defer data-domain="commons.datacite.org" src="https://plausible.io/js/plausible.js"></script>
+          <script
+            async
+            defer
+            data-domain="commons.datacite.org"
+            src="https://plausible.io/js/plausible.js"
+          ></script>
         )}
         <script
           dangerouslySetInnerHTML={{
