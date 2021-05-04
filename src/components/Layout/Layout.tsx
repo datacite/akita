@@ -22,6 +22,9 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
     <div>
       <Head>
         <title>DataCite Commons</title>
+        {!isProduction && (
+          <meta name="robots" content="noindex">
+        )}
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
