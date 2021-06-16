@@ -1,6 +1,7 @@
 import React from 'react'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
+import { faSquare, faCheckSquare, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import Link from 'next/link'
@@ -38,6 +39,10 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   loading
 }) => {
   const router = useRouter()
+
+  const tooltipAuthors = (
+    <Tooltip id="tooltipAuthors">This list includes only co-authors with ORCID ids.</Tooltip>
+  )
 
   if (loading) return <div className="col-md-3"></div>
 
@@ -194,10 +199,12 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       {data.authors && data.authors.length > 0 && (
         < div className="panel facets add">
           <div className="panel-body">
-            <h4>Authors</h4>
+            <OverlayTrigger placement="top" overlay={tooltipAuthors}>
+              <h4>Co-authors <FontAwesomeIcon icon={faQuestionCircle} /></h4>
+            </OverlayTrigger>
             <ul id="authors-facets">
               {data.authors.map((facet) => (
-                <li key={facet.id} id={facet.id}>
+                <li key={facet.id} id={"co-authors-facet-" + facet.id}>
                   {facetLink('query', "creators.nameIdentifiers.nameIdentifier:\"" + facet.id + "\"")}
                   <div className="facet-title">{facet.title}</div>
                   <span className="number pull-right">
