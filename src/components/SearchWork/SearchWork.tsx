@@ -89,6 +89,11 @@ export const connectionFragment = {
         title
         count
       }
+      authors {
+        id
+        title
+        count
+      }
     }
   `
 }

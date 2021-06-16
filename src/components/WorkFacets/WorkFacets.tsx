@@ -21,6 +21,7 @@ interface Facets {
   affiliations?: Facet[]
   fieldsOfScience?: Facet[]
   registrationAgencies?: Facet[]
+  authors?: Facet[]
   nodes: WorkType[]
 }
 
@@ -37,7 +38,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   loading
 }) => {
   const router = useRouter()
-  
+
   if (loading) return <div className="col-md-3"></div>
 
   if (!loading && data.nodes.length == 0)
@@ -188,6 +189,29 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           </div>
         </div>
       )}
+
+      {console.log(data)}
+      {data.authors && data.authors.length > 0 && (
+        < div className="panel facets add">
+          <div className="panel-body">
+            <h4>Authors</h4>
+            <ul id="authors-facets">
+              {data.authors.map((facet) => (
+                <li key={facet.id} id={facet.id}>
+                  {facetLink('query', "creators.nameIdentifiers.nameIdentifier:\"" + facet.id + "\"")}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )
+      }
+
     </div>
   )
 }
