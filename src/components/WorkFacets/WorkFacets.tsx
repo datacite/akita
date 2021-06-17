@@ -195,7 +195,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         </div>
       )}
 
-      {console.log(data)}
       {data.authors && data.authors.length > 0 && (
         < div className="panel facets add">
           <div className="panel-body">
