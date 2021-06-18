@@ -1,19 +1,13 @@
 describe('workContainer with usage', () => {
   before(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit(`/doi.org/${encodeURIComponent('10.70048/findable101')}`)
+    cy.visit(`/doi.org/${encodeURIComponent('10.5061/dryad.585qk')}`)
   })
 
   it('creators', () => {
     cy.get('.creator .creator-list', { timeout: 30000 })
-      .should('have.length', 1)
-      .should('contain', 'DataCite Metadata Working Group')
-  })
-
-  it('contributors', () => {
-    cy.get('.contributor .contributor-list', { timeout: 30000 })
-      .should('have.length', 17)
-      .should('contain', 'Joan Starr')
+      .should('have.length', 2)
+      .should('contain', 'J. David Aguirre')
   })
 
   it('share', () => {
@@ -34,14 +28,14 @@ describe('workContainer with usage', () => {
       .get('.formatted-citation', { timeout: 30000 })
       .should(
         'contain',
-        'DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.0.'
+        'Data from: Does genetic diversity reduce sibling competition'
       )
   })
 
   it('chart', () => {
     cy.get('.mark-rect > path', { timeout: 30000 })
       .should('be.visible')
-      .should('have.length', 4)
+      .should('have.length', 15)
   })
 })
 
@@ -49,29 +43,23 @@ describe('workContainer with funding', () => {
   before(() => {
     cy.setCookie('_consent', 'true')
     cy.visit(
-      `/doi.org/${encodeURIComponent('10.70131/test_doi_5d2bc48749f14')}`
+      `/doi.org/${encodeURIComponent('10.5438/6423')}`
     )
   })
 
   it('creators', () => {
     cy.get('.creator .creator-list', { timeout: 30000 })
-      .should('have.length', 2)
-      .should('contain', 'Jim Banks')
+      .should('contain', 'Kristian Garza')
   })
 
   it('contributors', () => {
     cy.get('.contributor .contributor-list', { timeout: 30000 })
-      .should('have.length', 2)
-      .should('contain', 'The Editor')
+      .should('contain', 'The British Library')
   })
 
   it('funding', () => {
     cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
-    cy.get('.panel.funding .funder-list').should(($funding) => {
-      expect($funding).to.have.length(2)
-      expect($funding.eq(0)).to.contain('Water Ice')
-      expect($funding.eq(1)).to.contain('ARC')
-    })
+    cy.get('.panel.funding .funder-list').should('contain', 'European Commission')
   })
 })
 
