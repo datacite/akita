@@ -25,6 +25,7 @@ jobs:
           group: 'Tests'
         env:
           NODE_ENV: test
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release:
@@ -53,7 +54,7 @@ jobs:
           vercel-args: '--prod'
           scope: ${{ secrets.TEAM_ID}}
           vercel-project-name: 'akita'
-            
+
       - name: Notify Slack
         uses: edge/simple-slack-notify@master
         with:

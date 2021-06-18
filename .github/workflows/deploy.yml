@@ -25,6 +25,7 @@ jobs:
           group: 'Tests'
         env:
           NODE_ENV: test
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
@@ -55,7 +56,7 @@ jobs:
           alias-domains: |
             commons.datacite.vercel.app
             commons.stage.datacite.org
-    
+
       - name: Notify Slack
         uses: edge/simple-slack-notify@master
         with:
