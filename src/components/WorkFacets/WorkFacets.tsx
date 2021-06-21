@@ -1,4 +1,5 @@
 import React from 'react'
+import { Feature } from 'flagged';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
@@ -196,7 +197,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {data.authors && data.authors.length > 0 && (
-        < div className="panel facets add">
+        <Feature name="parsec">
+          <div className="panel facets add">
           <div className="panel-body">
             <OverlayTrigger placement="top" overlay={tooltipAuthors}>
               <h4>Co-authors <FontAwesomeIcon icon={faQuestionCircle} /></h4>
@@ -215,6 +217,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
             </ul>
           </div>
         </div>
+        </Feature>
       )
       }
 
