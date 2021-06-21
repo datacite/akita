@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Sentry from '@sentry/node'
 import { ApolloProvider } from '@apollo/client'
-// import { FlagsProvider } from 'flagged'
+import { FlagsProvider } from 'flagged'
 import { AppProps } from "next/app"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
@@ -36,23 +36,22 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, [router.events])
 
-  // feature flags are below. We can use ENV variables
-  // or we are check that the user is logged in and is a beta tester
-
-  // don't show aggregate stats in production yet
-  // const metricsCounter = process.env.NEXT_PUBLIC_API_URL === 'https://api.stage.datacite.org'
+  // Construct feature flags based on query param, we have to wrap into array as
+  // the query string can parse into string || string[]
+  // Use like ?features=feature1&?features=feature2
+  const features: string[] = (router.query["features"] instanceof Array ? router.query["features"] : [router.query["features"]]);
 
   return (
-    // <FlagsProvider
-    //   features={{
-    //     metricsCounter
-    //   }}
-    // >
+    <FlagsProvider
+      features={
+        features
+      }
+    >
       <ApolloProvider client={apolloClient}>
         {/* adds the apollo provider to provide it's children with the apollo scope. */}
         <Component {...pageProps} />
       </ApolloProvider>
-    // </FlagsProvider>
+    </FlagsProvider>
   )
 }
 
