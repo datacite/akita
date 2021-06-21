@@ -35,7 +35,6 @@ describe('workContainer with usage', () => {
   it('chart', () => {
     cy.get('.mark-rect > path', { timeout: 30000 })
       .should('be.visible')
-      .should('have.length', 15)
   })
 })
 
