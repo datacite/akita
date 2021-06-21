@@ -78,6 +78,19 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     )
   }
 
+  // Used for checking filter shouldnt show author that is already filtered
+  function checkAuthorForPerson(author) {
+    // Only works on person model
+    if (model == "person") {
+      let orcid_id = url.substring(11, url.length - 2)
+      if (!author.id.includes(orcid_id)) {
+        return author
+      }
+    } else {
+      return author
+    }
+  }
+
   return (
     <div className="panel panel-transparent">
       <div className="panel facets add">
@@ -204,7 +217,11 @@ const WorkFacets: React.FunctionComponent<Props> = ({
               <h4>Co-authors <FontAwesomeIcon icon={faQuestionCircle} /></h4>
             </OverlayTrigger>
             <ul id="authors-facets">
-              {data.authors.map((facet) => (
+                {
+                  data.authors
+                    .filter(checkAuthorForPerson)
+                    .map((facet) =>
+                    (
                 <li key={facet.id} id={"co-authors-facet-" + facet.id}>
                   {facetLink('query', "creators.nameIdentifiers.nameIdentifier:\"" + facet.id + "\"")}
                   <div className="facet-title">{facet.title}</div>
