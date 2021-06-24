@@ -17,15 +17,19 @@
 
 /// <reference types="cypress" />
 
+const dotenvFlowPlugin = require('cypress-dotenv-flow')
 const browserify = require('@cypress/browserify-preprocessor')
 
 module.exports = (on, config) => {
   let options = browserify.defaultOptions
   options.browserifyOptions.transform[1][1].babelrc = true
   options.typescript = require.resolve('typescript')
-  on('file:preprocessor', browserify(options));
+  on('file:preprocessor', browserify(options))
 
   require('@cypress/code-coverage/task')(on, config)
+
+  // load ENV variables via dotenv
+  config = dotenvFlowPlugin(config)
 
   return config
 }
