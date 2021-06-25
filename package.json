@@ -87,6 +87,7 @@
     "babel-preset-react": "^6.24.1",
     "cypress": "7.6.0",
     "cypress-dotenv-flow": "^1.2.2",
+    "cypress-react-unit-test": "^4.17.2",
     "dotenv-flow": "^3.2.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",

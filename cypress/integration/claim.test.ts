@@ -1,7 +1,7 @@
 describe('Claim', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.setCookie('_datacite', Cypress.env('USER_COOKIE'))
+    cy.setCookie('_datacite', Cypress.env('USER_COOKIE'), { log: false })
   })
 
   it('claim list', () => {
