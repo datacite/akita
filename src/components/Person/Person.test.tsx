@@ -13,10 +13,10 @@ describe('Person Component', () => {
 
   it('orcid', () => {
     mount(<Person person={data} />)
-    cy.get('a#orcid-link').contains('Juan Perez')
+    cy.get('a#orcid-link').contains('Martin Fenner')
     cy.get('a#orcid-link')
       .should('have.attr', 'href')
-      .and('contains', 'orcid.org/0000-0003-3484-6875')
+      .and('contains', 'orcid.org/0000-0001-6528-2027')
   })
 
   // it('actions', () => {

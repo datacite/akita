@@ -14,7 +14,7 @@ describe('Person Metadata Component', () => {
   it('orcid', () => {
     mount(<PersonMetadata metadata={data} />)
     cy.get('a#orcid-link')
-      .contains('orcid.org/0000-0003-3484-6875')
+      .contains('orcid.org/0000-0001-6528-2027')
       .should('be.visible')
   })
 
