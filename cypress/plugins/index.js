@@ -26,7 +26,7 @@ module.exports = (on, config) => {
   options.typescript = require.resolve('typescript')
   on('file:preprocessor', browserify(options))
 
-  require('@cypress/code-coverage/task')(on, config)
+  // require('@cypress/code-coverage/task')(on, config)
 
   // load ENV variables via dotenv
   config = dotenvFlowPlugin(config)
