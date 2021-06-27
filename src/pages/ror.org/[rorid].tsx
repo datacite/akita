@@ -121,12 +121,6 @@ interface OrganizationType {
   works: Works
 }
 
-interface ContentFacet {
-  id: string
-  title: string
-  count: number
-}
-
 interface OrganizationQueryData {
   organization: OrganizationType
 }
@@ -145,12 +139,12 @@ interface OrganizationQueryVar {
   registrationAgency: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {	
-  const rorId = (context.params.rorid as String)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const rorId = context.params.rorid as String
 
-  return {	
-    props: { rorId }	
-  }	
+  return {
+    props: { rorId }
+  }
 }
 
 const OrganizationPage: React.FunctionComponent<Props> = ({
@@ -197,14 +191,14 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
 
   if (loading)
     return (
-      <Layout path={'/ror.org/' + rorId } >
+      <Layout path={'/ror.org/' + rorId}>
         <Loading />
       </Layout>
     )
 
   if (error)
     return (
-      <Layout path={'/ror.org/' + rorId } >
+      <Layout path={'/ror.org/' + rorId}>
         <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
@@ -276,7 +270,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Layout path={'/ror.org/' + rorId} >
+    <Layout path={'/ror.org/' + rorId}>
       <Head>
         <title>{title}</title>
         <meta name="og:title" content={title} />

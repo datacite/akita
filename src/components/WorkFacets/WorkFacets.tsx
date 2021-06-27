@@ -60,7 +60,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     let icon = faSquare
 
     // get current query parameters from next router
-    let params = new URLSearchParams(router.query as any)
+    const params = new URLSearchParams(router.query as any)
 
     // delete model and cursor parameters
     params.delete(model)
@@ -88,7 +88,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   function checkAuthorForPerson(author) {
     // Only works on person model
     if (model == 'person') {
-      let orcid_id = url.substring(11, url.length - 2)
+      const orcid_id = url.substring(11, url.length - 2)
       if (!author.id.includes(orcid_id)) {
         return author
       }

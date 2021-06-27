@@ -26,21 +26,6 @@ export interface Works {
   registrationAgencies?: ContentFacet[]
 }
 
-interface WorkQueryData {
-  total: Works
-  claimed: Works
-  cited: Works
-  connected: Works
-  people: Source
-  organizations: Source
-  publications: Works
-  datasets: Works
-  softwares: Works
-  citedPublications: Works
-  citedDatasets: Works
-  citedSoftwares: Works
-}
-
 export const STATS_GQL = gql`
   query getStatsQuery {
     total: works {
@@ -98,20 +83,14 @@ export const STATS_GQL = gql`
         count
       }
     }
-    citedPublications: works(
-      resourceTypeId: "Text"
-      hasCitations: 1
-    ) {
+    citedPublications: works(resourceTypeId: "Text", hasCitations: 1) {
       totalCount
       published {
         title
         count
       }
     }
-    claimedPublications: works(
-      resourceTypeId: "Text"
-      hasPerson: true
-    ) {
+    claimedPublications: works(resourceTypeId: "Text", hasPerson: true) {
       totalCount
       published {
         title
@@ -138,20 +117,14 @@ export const STATS_GQL = gql`
         count
       }
     }
-    citedDatasets: works(
-      resourceTypeId: "Dataset"
-      hasCitations: 1
-    ) {
+    citedDatasets: works(resourceTypeId: "Dataset", hasCitations: 1) {
       totalCount
       published {
         title
         count
       }
     }
-    claimedDatasets: works(
-      resourceTypeId: "Dataset"
-      hasPerson: true
-    ) {
+    claimedDatasets: works(resourceTypeId: "Dataset", hasPerson: true) {
       totalCount
       published {
         title
@@ -178,20 +151,14 @@ export const STATS_GQL = gql`
         count
       }
     }
-    citedSoftwares: works(
-      resourceTypeId: "Software"
-      hasCitations: 1
-    ) {
+    citedSoftwares: works(resourceTypeId: "Software", hasCitations: 1) {
       totalCount
       published {
         title
         count
       }
     }
-    claimedSoftwares: works(
-      resourceTypeId: "Software"
-      hasPerson: true
-    ) {
+    claimedSoftwares: works(resourceTypeId: "Software", hasPerson: true) {
       totalCount
       published {
         title
@@ -332,8 +299,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.citedPublications.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.citedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Cited Publications'
+            data.citedPublications.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.citedPublications.totalCount * 100) /
+              data.publications.totalCount
+            ).toFixed(2) +
+            '%) Cited Publications'
           }
           data={citedPublication}
           color={'#80b1d3'}
@@ -352,8 +324,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.citedDatasets.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.citedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Cited Datasets'
+            data.citedDatasets.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.citedDatasets.totalCount * 100) /
+              data.datasets.totalCount
+            ).toFixed(2) +
+            '%) Cited Datasets'
           }
           data={citedDataset}
           color={'#fb8072'}
@@ -372,8 +349,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.citedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.citedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Cited Software'
+            data.citedSoftwares.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.citedSoftwares.totalCount * 100) /
+              data.softwares.totalCount
+            ).toFixed(2) +
+            '%) Cited Software'
           }
           data={citedSoftware}
           color={'#bebada'}
@@ -392,8 +374,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.claimedPublications.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.claimedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Claimed Publications'
+            data.claimedPublications.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.claimedPublications.totalCount * 100) /
+              data.publications.totalCount
+            ).toFixed(2) +
+            '%) Claimed Publications'
           }
           data={claimedPublication}
           color={'#80b1d3'}
@@ -412,8 +399,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.claimedDatasets.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.claimedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Claimed Datasets'
+            data.claimedDatasets.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.claimedDatasets.totalCount * 100) /
+              data.datasets.totalCount
+            ).toFixed(2) +
+            '%) Claimed Datasets'
           }
           data={claimedDataset}
           color={'#fb8072'}
@@ -432,8 +424,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.claimedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.claimedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Claimed Software'
+            data.claimedSoftwares.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.claimedSoftwares.totalCount * 100) /
+              data.softwares.totalCount
+            ).toFixed(2) +
+            '%) Claimed Software'
           }
           data={claimedSoftware}
           color={'#bebada'}
@@ -443,17 +440,24 @@ const StatisticsPage = ({ data }) => {
   }
 
   const renderConnectedPublications = () => {
-    const connectedPublication = data.connectedPublications.published.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
+    const connectedPublication = data.connectedPublications.published.map(
+      (x) => ({
+        title: x.title,
+        count: x.count
+      })
+    )
 
     return (
       <Col md={4}>
         <ProductionChart
           title={
-            data.connectedPublications.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.connectedPublications.totalCount * 100) / data.publications.totalCount).toFixed(2) + '%) Connected Publications'
+            data.connectedPublications.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.connectedPublications.totalCount * 100) /
+              data.publications.totalCount
+            ).toFixed(2) +
+            '%) Connected Publications'
           }
           data={connectedPublication}
           color={'#80b1d3'}
@@ -472,8 +476,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.connectedDatasets.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.connectedDatasets.totalCount * 100) / data.datasets.totalCount).toFixed(2) + '%) Connected Datasets'
+            data.connectedDatasets.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.connectedDatasets.totalCount * 100) /
+              data.datasets.totalCount
+            ).toFixed(2) +
+            '%) Connected Datasets'
           }
           data={connectedDataset}
           color={'#fb8072'}
@@ -492,8 +501,13 @@ const StatisticsPage = ({ data }) => {
       <Col md={4}>
         <ProductionChart
           title={
-            data.connectedSoftwares.totalCount.toLocaleString('en-US') + ' (' +
-            ((data.connectedSoftwares.totalCount * 100) / data.softwares.totalCount).toFixed(2) + '%) Connected Software'
+            data.connectedSoftwares.totalCount.toLocaleString('en-US') +
+            ' (' +
+            (
+              (data.connectedSoftwares.totalCount * 100) /
+              data.softwares.totalCount
+            ).toFixed(2) +
+            '%) Connected Software'
           }
           data={connectedSoftware}
           color={'#bebada'}
@@ -503,7 +517,7 @@ const StatisticsPage = ({ data }) => {
   }
 
   return (
-    <Layout path={'/statistics'} >
+    <Layout path={'/statistics'}>
       <Row>
         <Col md={9} mdOffset={3} id="intro">
           <div className="panel panel-transparent">
@@ -512,7 +526,8 @@ const StatisticsPage = ({ data }) => {
               <div>
                 <p>
                   This page gives an overview of the information about works,
-                  people and organizations made available via DataCite Commons. Please reach out to{' '}
+                  people and organizations made available via DataCite Commons.
+                  Please reach out to{' '}
                   <a href="mailto:support@datacite.org">DataCite Support</a> for
                   questions or comments.
                 </p>
@@ -537,9 +552,7 @@ const StatisticsPage = ({ data }) => {
             <div className="panel-body">
               <div className="intro">
                 DataCite Commons currently includes{' '}
-                {(
-                  datacite.count + crossref.count
-                ).toLocaleString('en-US')}{' '}
+                {(datacite.count + crossref.count).toLocaleString('en-US')}{' '}
                 works, with identifiers and metadata provided by DataCite and
                 Crossref. For the three major work types{' '}
                 <Link href="/publications">
@@ -565,8 +578,8 @@ const StatisticsPage = ({ data }) => {
                   <div className="panel panel-transparent">
                     <div className="panel-body">
                       <p>
-                        {data.cited.totalCount.toLocaleString('en-US')} out of all{' '}
-                        {data.total.totalCount.toLocaleString('en-US')} (
+                        {data.cited.totalCount.toLocaleString('en-US')} out of
+                        all {data.total.totalCount.toLocaleString('en-US')} (
                         {(
                           (data.cited.totalCount * 100) /
                           data.total.totalCount
@@ -607,8 +620,8 @@ const StatisticsPage = ({ data }) => {
                     ORCID
                   </a>{' '}
                   identifiers, and personal and employment metadata. This
-                  information is retrieved live from the ORCID REST API, 
-                  the respective numbers by registration year are shown below.
+                  information is retrieved live from the ORCID REST API, the
+                  respective numbers by registration year are shown below.
                 </p>
               </div>
             </div>
@@ -657,8 +670,8 @@ const StatisticsPage = ({ data }) => {
                     (data.claimed.totalCount * 100) /
                     data.total.totalCount
                   ).toFixed(2) + '%'}
-                  ) works have been claimed (connected) to at least one ORCID record,
-                  including{' '}
+                  ) works have been claimed (connected) to at least one ORCID
+                  record, including{' '}
                   {((dataciteClaimed.count * 100) / datacite.count).toFixed(2) +
                     '%'}{' '}
                   of works registered with DataCite, and{' '}
@@ -690,7 +703,8 @@ const StatisticsPage = ({ data }) => {
                     ROR
                   </a>
                   ) identifiers and metadata. This information is retrieved live
-                  from the ROR REST API, the respective numbers by registration year are shown below.
+                  from the ROR REST API, the respective numbers by registration
+                  year are shown below.
                 </p>
               </div>
             </div>

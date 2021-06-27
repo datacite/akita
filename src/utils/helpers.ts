@@ -1,13 +1,11 @@
-import { NumberFormat, toLocaleString } from '@formatjs/intl-numberformat'
-NumberFormat.__addLocaleData(
-  require('@formatjs/intl-numberformat/dist/locale-data/en.json') // locale-data for en
-)
+import '@formatjs/intl-numberformat/polyfill'
+import '@formatjs/intl-numberformat/locale-data/en'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
   let options = {}
   if (compact && num >= 1e3)
     options = { notation: 'compact', compactDisplay: 'short' }
-  return toLocaleString(num, 'en-US', options)
+  return num.toLocaleString('en-US', options)
 }
 
 export const pluralize = (

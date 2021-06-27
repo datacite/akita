@@ -23,7 +23,7 @@ const Pager: React.FunctionComponent<Props> = ({
   let nextPageUrl = null
 
   // let params = new URLSearchParams(router.query as any)
-  let params = isNested
+  const params = isNested
     ? new URLSearchParams('')
     : new URLSearchParams(router.query as any)
 

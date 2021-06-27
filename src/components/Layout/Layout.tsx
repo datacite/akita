@@ -61,14 +61,6 @@ const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
             />
           </>
         )}
-        {isProduction && (
-          <script
-            async
-            defer
-            data-domain="commons.datacite.org"
-            src="https://plausible.io/js/plausible.js"
-          ></script>
-        )}
         <script
           dangerouslySetInnerHTML={{
             __html: `

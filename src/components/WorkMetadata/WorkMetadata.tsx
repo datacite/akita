@@ -1,14 +1,19 @@
 import React from 'react'
-import { OverlayTrigger, Alert, Label, Tooltip, Col, Row } from 'react-bootstrap'
+import {
+  OverlayTrigger,
+  Alert,
+  Label,
+  Tooltip,
+  Col,
+  Row
+} from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
+import Image from 'next/image'
 import { pluralize } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faQuoteLeft,
-  faDownload,
-} from '@fortawesome/free-solid-svg-icons'
+import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
   faCreativeCommons,
@@ -118,10 +123,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link
-              href={'/orcid.org' + c.id}
-              key={index}
-            >
+            <Link href={'/orcid.org' + c.id} key={index}>
               <a>{c.displayName}</a>
             </Link>
           ) : (
@@ -134,16 +136,16 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   const claim = metadata.claims[0]
   const stateColors = {
-    "done": "success",
-    "failed": "danger",
-    "working": "info",
-    "waiting": "info"
+    done: 'success',
+    failed: 'danger',
+    working: 'info',
+    waiting: 'info'
   }
   const stateText = {
-    "done": "Claimed",
-    "failed": "Claim failed",
-    "working": "Claim in progress",
-    "waiting": "Claim waiting"
+    done: 'Claimed',
+    failed: 'Claim failed',
+    working: 'Claim in progress',
+    waiting: 'Claim waiting'
   }
 
   const container = () => {
@@ -206,7 +208,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const license = () => {
-    let rights = [...metadata.rights]
+    const rights = [...metadata.rights]
     const uniqueRights = uniqBy(rights, 'rightsIdentifier')
     const ccRights = uniqueRights.reduce((sum, r) => {
       if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
@@ -298,7 +300,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             target="_blank"
             rel="noreferrer"
           >
-            <img
+            <Image
               src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
             />
           </a>
@@ -327,9 +329,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const tooltipResourceTypeGeneral = (
-    <Tooltip id="tooltipResourceTypeGeneral">
-      The content type.
-    </Tooltip>
+    <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
   )
 
   const tooltipFieldsOfScience = (
@@ -343,20 +343,24 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   )
 
   const tooltipClaim = (
-    <Tooltip id="tooltipClaim">Status of claiming this DOI for your ORCID record.</Tooltip>
+    <Tooltip id="tooltipClaim">
+      Status of claiming this DOI for your ORCID record.
+    </Tooltip>
   )
 
   let resourceType = metadata.types.resourceTypeGeneral
-  if (metadata.registrationAgency.id !== "datacite" && metadata.types.resourceType) resourceType = metadata.types.resourceType
+  if (
+    metadata.registrationAgency.id !== 'datacite' &&
+    metadata.types.resourceType
+  )
+    resourceType = metadata.types.resourceType
 
   const tags = () => {
     return (
       <div className="tags">
         {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Label bsStyle="info">
-              {startCase(resourceType)}
-            </Label>
+            <Label bsStyle="info">{startCase(resourceType)}</Label>
           </OverlayTrigger>
         )}
         {metadata.fieldsOfScience && (
@@ -379,7 +383,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         )}
         {claim && (
           <OverlayTrigger placement="top" overlay={tooltipClaim}>
-            <Label bsStyle={stateColors[claim.state]}><FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}</Label>
+            <Label bsStyle={stateColors[claim.state]}>
+              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
+            </Label>
           </OverlayTrigger>
         )}
       </div>
@@ -423,7 +429,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="panel-footer">
         <a href={handleUrl}>
           <i className="ai ai-doi"></i> {handleUrl}
-        </a>        
+        </a>
       </div>
     )
   }
@@ -442,11 +448,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
               {metadata.identifiers.map((id) => (
                 <div key={id.identifier} className="work-identifiers">
                   {id.identifierType}:{' '}
-                  <a
-                    href={id.identifierUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href={id.identifierUrl} target="_blank" rel="noreferrer">
                     {id.identifier}
                   </a>
                 </div>
