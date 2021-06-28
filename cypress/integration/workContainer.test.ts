@@ -29,9 +29,9 @@ describe('workContainer with usage', () => {
       .should('contain', 'NEXUS Head CT')
   })
 
-  // it('chart', () => {
-  //   cy.get('.mark-rect > path', { timeout: 30000 }).should('be.visible')
-  // })
+  it('chart', () => {
+    cy.get('.mark-rect > path', { timeout: 30000 }).should('be.visible')
+  })
 })
 
 describe('workContainer with funding', () => {
