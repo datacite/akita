@@ -302,6 +302,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           >
             <Image
               src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
+              width={76}
+              height={20}
             />
           </a>
         ))}

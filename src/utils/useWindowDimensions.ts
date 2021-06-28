@@ -25,10 +25,12 @@ function ResizeWindowDimensions() {
   return windowDimensions
 }
 
-export default function useWindowDimensions() {
+function useWindowDimensions() {
   if (typeof window !== 'undefined') {
     return ResizeWindowDimensions
   } else {
     return { width: 1200, height: 1024 }
   }
 }
+
+export default useWindowDimensions

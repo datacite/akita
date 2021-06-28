@@ -21,9 +21,6 @@
     "types": ["jest"],
     "baseUrl": "."
   },
-  "paths": {
-    "@config/*": ["config/*"]
-  },
   "exclude": [
     "node_modules"
   ],
