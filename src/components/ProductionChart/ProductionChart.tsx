@@ -50,6 +50,11 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   const yearsDomain = thisYear - lowerBoundYear
   const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
 
+  // type Expand<VisualizationSpec> = VisualizationSpec extends Record<string, unknown>
+  // interface ExtendedVisualizationSpec extends VisualizationSpec {
+  //   UserId: string
+  // }
+
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
@@ -116,6 +121,8 @@ const ProductionChart: React.FunctionComponent<Props> = ({
         scale: { range: [color] },
         type: 'nominal',
         legend: null,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         condition: [{ selection: 'highlight', value: '#34495e' }]
       }
     },

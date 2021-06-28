@@ -140,7 +140,7 @@ interface OrganizationQueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const rorId = context.params.rorid as String
+  const rorId = context.params.rorid as string
 
   return {
     props: { rorId }
@@ -180,12 +180,12 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       crossrefFunderId: crossrefFunderId,
       cursor: cursor,
       query: query,
-      published: published as string,
-      resourceTypeId: resourceType as string,
-      fieldOfScience: fieldOfScience as string,
-      language: language as string,
-      license: license as string,
-      registrationAgency: registrationAgency as string
+      published: published,
+      resourceTypeId: resourceType,
+      fieldOfScience: fieldOfScience,
+      language: language,
+      license: license,
+      registrationAgency: registrationAgency
     }
   })
 

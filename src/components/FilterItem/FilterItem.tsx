@@ -18,18 +18,18 @@ const FilterItem: React.FunctionComponent<Props> = ({
 }) => {
   const [activeFilter, setActiveFilter] = useQueryState<string>(name)
 
-  const activeIcon = (id: string) => {
+  const activeIcon = (fid: string) => {
     let icon = faSquare
-    if (id == activeFilter) {
+    if (fid == activeFilter) {
       icon = faCheckSquare
     }
 
     return <FontAwesomeIcon icon={icon} />
   }
 
-  const toggleFilter = (id: string) => {
-    if (activeFilter !== id) {
-      setActiveFilter(id)
+  const toggleFilter = (fid: string) => {
+    if (activeFilter !== fid) {
+      setActiveFilter(fid)
     } else {
       setActiveFilter(null)
     }

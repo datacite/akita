@@ -27,6 +27,12 @@ module.exports = withSourceMaps({
     // import yaml files
     config.module.rules.push({ test: /\.ya?ml$/, use: 'js-yaml-loader' })
 
+    // workaround for package not defined as module
+    config.module.rules.push({
+      test: /\.js/,
+      include: /node_modules\/next-usequerystate/,
+      type: 'javascript/auto'
+    })
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
     // @sentry/node will run in a Node.js environment. @sentry/node will use
     // Node.js-only APIs to catch even more unhandled exceptions.

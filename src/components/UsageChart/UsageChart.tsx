@@ -40,7 +40,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
   type
 }) => {
   // get current screen size
-  const windowDimensions:any = useWindowDimensions()
+  const windowDimensions: any = useWindowDimensions()
   const width = windowDimensions.width
 
   // current date
@@ -127,6 +127,8 @@ const UsageChart: React.FunctionComponent<Props> = ({
         scale: { range: ['#1abc9c'] },
         type: 'nominal',
         legend: null,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         condition: [{ selection: 'highlight', value: '#34495e' }]
       }
     },

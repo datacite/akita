@@ -3,11 +3,12 @@ import { Cookies } from 'react-cookie-consent'
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 
-// declare global {
-//   interface Window {
-//     gtag: any
-//   }
-// }
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface Window {
+    gtag: any
+  }
+}
 
 const hasGivenConsent = Cookies.get('_consent') == 'true'
 
