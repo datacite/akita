@@ -72,7 +72,7 @@ export const DOI_GQL = gql`
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
-        language: $language
+      language: $language
         license: $license
         registrationAgency: $registrationAgency
       ) {
@@ -131,6 +131,7 @@ interface Country {
 
 interface Works {
   totalCount: number
+  totalContentUrl: number
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
@@ -168,12 +169,12 @@ interface OrcidQueryVar {
   registrationAgency: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {	
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const orcid = (context.params.orcid as String)
 
-  return {	
-    props: { orcid }	
-  }	
+  return {
+    props: { orcid }
+  }
 }
 
 const PersonPage: React.FunctionComponent<Props> = ({

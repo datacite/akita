@@ -26,6 +26,7 @@ export interface PageInfo {
 
 export interface Works {
   totalCount: number
+  totalContentUrl: number
   pageInfo: PageInfo
   published: Facet[]
   resourceTypes: Facet[]
@@ -55,6 +56,7 @@ export const connectionFragment = {
   workConnection: gql`
     fragment WorkConnectionFragment on WorkConnectionWithTotal {
       totalCount
+      totalContentUrl
       pageInfo {
         endCursor
         hasNextPage
