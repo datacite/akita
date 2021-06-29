@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Sentry from '@sentry/node'
 import { ApolloProvider } from '@apollo/client'
 import { FlagsProvider } from 'flagged'
 import PlausibleProvider from 'next-plausible'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
-// import { session } from '../utils/session'
 import apolloClient from '../utils/apolloClient'
 import * as gtag from '../utils/gtag'
 
