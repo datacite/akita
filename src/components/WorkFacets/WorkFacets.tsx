@@ -1,5 +1,4 @@
 import React from 'react'
-import { Feature } from 'flagged'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
