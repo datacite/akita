@@ -216,7 +216,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {data.authors && data.authors.length > 0 && (
-        <Feature name="parsec">
           <div className="panel facets add">
             <div className="panel-body">
               <OverlayTrigger placement="top" overlay={tooltipAuthors}>
@@ -243,7 +242,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
               </ul>
             </div>
           </div>
-        </Feature>
       )}
     </div>
   )
