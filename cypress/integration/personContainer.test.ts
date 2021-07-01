@@ -3,17 +3,17 @@
 describe('PersonContainer', () => {
   before(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit(`/orcid.org/${encodeURIComponent('0000-0003-3484-6875')}`)
+    cy.visit(`/orcid.org/${encodeURIComponent('0000-0001-6528-2027')}`)
   })
 
   it('id', () => {
     cy.get('h3.member-results', { timeout: 30000 }).contains(
-      'https://orcid.org/0000-0003-3484-6875'
+      'https://orcid.org/0000-0001-6528-2027'
     )
   })
 
   it('name', () => {
-    cy.get('.panel-body h3.work', { timeout: 30000 }).contains('K. J. Garza')
+    cy.get('.panel-body h3.work', { timeout: 30000 }).contains('Martin Fenner')
   })
 
   // it('employment', () => {
@@ -25,13 +25,12 @@ describe('PersonContainer', () => {
   //   })
   // })
 
-  // it('links', () => {
-  //   cy.get('.people-links').should(($link) => {
-  //     expect($link).to.have.length.at.least(1)
-  //     expect($link.eq(0)).to.contain('Mendeley profile')
-  //     expect($link.eq(1)).to.contain('github')
-  //   })
-  // })
+  it('links', () => {
+    cy.get('.people-links').should(($link) => {
+      expect($link).to.have.length(1)
+      expect($link.eq(0)).to.contain('Blog')
+    })
+  })
 
   it('identifiers', () => {
     cy.get('.people-identifiers').should(($id) => {
@@ -55,15 +54,15 @@ describe('PersonContainer', () => {
     cy.get('#profile-orcid').contains('ORCID').should('be.visible')
     cy.get('#profile-orcid a')
       .should('have.attr', 'href')
-      .should('eq', 'https://orcid.org/0000-0003-3484-6875')
+      .should('eq', 'https://orcid.org/0000-0001-6528-2027')
     cy.get('#profile-impactstory').contains('Impactstory').should('be.visible')
     cy.get('#profile-impactstory a')
       .should('have.attr', 'href')
-      .should('eq', 'https://profiles.impactstory.org/u/0000-0003-3484-6875')
+      .should('eq', 'https://profiles.impactstory.org/u/0000-0001-6528-2027')
     cy.get('#profile-europepmc').contains('Europe PMC').should('be.visible')
     cy.get('#profile-europepmc a')
       .should('have.attr', 'href')
-      .should('eq', 'https://europepmc.org/authors/0000-0003-3484-6875')
+      .should('eq', 'https://europepmc.org/authors/0000-0001-6528-2027')
   })
 
   it('facets', () => {
@@ -75,10 +74,10 @@ describe('PersonContainer', () => {
     cy.get('#work-type-facets > li').should(($facets) => {
       expect($facets).to.have.length.at.least(1)
     })
-    // cy.get('#registration-agency-facets').should('be.visible')
-    // cy.get('#registration-agency-facets > li').should(($facets) => {
-    //   expect($facets).to.have.length.at.least(1)
-    // })
+    cy.get('#registration-agency-facets').should('be.visible')
+    cy.get('#registration-agency-facets > li').should(($facets) => {
+      expect($facets).to.have.length.at.least(1)
+    })
   })
 
   it('production chart', () => {

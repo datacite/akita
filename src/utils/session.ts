@@ -21,6 +21,7 @@ export const session = () => {
       payload
     ) {
       if (payload) {
+        console.log(payload)
         user = payload
       } else if (error) {
         console.log('JWT verification error: ' + error.message)

@@ -4,8 +4,9 @@ import { Cookies } from 'react-cookie-consent'
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
-    gtag:any
+    gtag: any
   }
 }
 
@@ -14,7 +15,7 @@ const hasGivenConsent = Cookies.get('_consent') == 'true'
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: URL) => {
   if (hasGivenConsent && GA_TRACKING_ID && typeof window !== 'undefined') {
-    window.gtag("config", GA_TRACKING_ID, {
+    window.gtag('config', GA_TRACKING_ID, {
       page_path: url
     })
   }
@@ -30,7 +31,7 @@ type GTagEvent = {
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const event = ({ action, category, label, value }: GTagEvent) => {
   if (hasGivenConsent && GA_TRACKING_ID && typeof window !== 'undefined') {
-    window.gtag("event", action, {
+    window.gtag('event', action, {
       event_category: category,
       event_label: label,
       value: value

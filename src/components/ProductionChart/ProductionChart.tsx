@@ -23,9 +23,14 @@ const actions = {
   editor: false
 }
 
-const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBoundYear, color }) => {
+const ProductionChart: React.FunctionComponent<Props> = ({
+  title,
+  data,
+  lowerBoundYear,
+  color
+}) => {
   // get current screen size
-  const windowDimensions:any = useWindowDimensions()
+  const windowDimensions: any = useWindowDimensions()
   const width = windowDimensions.width
 
   /* istanbul ignore next */
@@ -34,7 +39,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBou
   /* istanbul ignore next */
   // lower bound year should be multiple of 5
   if (typeof lowerBoundYear == 'undefined') {
-    lowerBoundYear = Math.floor((thisYear - 10)/5) * 5
+    lowerBoundYear = Math.floor((thisYear - 10) / 5) * 5
   }
 
   if (typeof color == 'undefined') {
@@ -44,6 +49,11 @@ const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBou
   /* istanbul ignore next */
   const yearsDomain = thisYear - lowerBoundYear
   const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
+
+  // type Expand<VisualizationSpec> = VisualizationSpec extends Record<string, unknown>
+  // interface ExtendedVisualizationSpec extends VisualizationSpec {
+  //   UserId: string
+  // }
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -89,7 +99,7 @@ const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBou
         type: 'quantitative',
         axis: {
           format: '1',
-          labelExpr: 'datum.label % 5 === 0 ? datum.label : ""',
+          labelExpr: 'datum.label % 5 === 0 ? datum.label : ""'
         },
         scale: {
           domain: [lowerBoundYear, thisYear]
@@ -111,6 +121,8 @@ const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBou
         scale: { range: [color] },
         type: 'nominal',
         legend: null,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         condition: [{ selection: 'highlight', value: '#34495e' }]
       }
     },
@@ -131,7 +143,9 @@ const ProductionChart: React.FunctionComponent<Props> = ({ title, data, lowerBou
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
-        <div className="title text-center"><h4>{title}</h4></div>
+        <div className="title text-center">
+          <h4>{title}</h4>
+        </div>
         <VegaLite
           renderer="svg"
           spec={spec}

@@ -9,7 +9,7 @@ const OrganizationIndexPage = () => {
   const [searchQuery] = useQueryState<string>('query')
 
   return (
-    <Layout path={'/ror.org'} >
+    <Layout path={'/ror.org'}>
       {!searchQuery || searchQuery === '' ? (
         <Teaser title={'organizations'} />
       ) : (

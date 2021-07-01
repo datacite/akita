@@ -121,12 +121,6 @@ interface OrganizationType {
   works: Works
 }
 
-interface ContentFacet {
-  id: string
-  title: string
-  count: number
-}
-
 interface OrganizationQueryData {
   organization: OrganizationType
 }
@@ -145,12 +139,12 @@ interface OrganizationQueryVar {
   registrationAgency: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {	
-  const rorId = (context.params.rorid as String)
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const rorId = context.params.rorid as string
 
-  return {	
-    props: { rorId }	
-  }	
+  return {
+    props: { rorId }
+  }
 }
 
 const OrganizationPage: React.FunctionComponent<Props> = ({
@@ -186,25 +180,25 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       crossrefFunderId: crossrefFunderId,
       cursor: cursor,
       query: query,
-      published: published as string,
-      resourceTypeId: resourceType as string,
-      fieldOfScience: fieldOfScience as string,
-      language: language as string,
-      license: license as string,
-      registrationAgency: registrationAgency as string
+      published: published,
+      resourceTypeId: resourceType,
+      fieldOfScience: fieldOfScience,
+      language: language,
+      license: license,
+      registrationAgency: registrationAgency
     }
   })
 
   if (loading)
     return (
-      <Layout path={'/ror.org/' + rorId } >
+      <Layout path={'/ror.org/' + rorId}>
         <Loading />
       </Layout>
     )
 
   if (error)
     return (
-      <Layout path={'/ror.org/' + rorId } >
+      <Layout path={'/ror.org/' + rorId}>
         <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
@@ -276,7 +270,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Layout path={'/ror.org/' + rorId} >
+    <Layout path={'/ror.org/' + rorId}>
       <Head>
         <title>{title}</title>
         <meta name="og:title" content={title} />

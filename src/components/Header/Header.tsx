@@ -36,7 +36,14 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
   // submit pushes new path instead of updating only query parameter,
   // to allow queries from Navbar when on a page for a single record
   let searchQuery = ''
-  const paths = ['/', '/doi.org', '/orcid.org', '/ror.org', '/about', '/statistics']
+  const paths = [
+    '/',
+    '/doi.org',
+    '/orcid.org',
+    '/ror.org',
+    '/about',
+    '/statistics'
+  ]
   let onSubmit = () => {}
 
   const router = useRouter()
@@ -70,7 +77,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     process.env.NEXT_PUBLIC_PROFILES_URL ||
     'https://profiles.stage.datacite.org'
 
-  let user = session()
+  const user = session()
 
   return (
     <Navbar fluid collapseOnSelect>
@@ -175,10 +182,18 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
                   <MenuItem divider />
                 </>
               )}
-              <MenuItem eventKey={3.2} data-cy="settings" href={profilesUrl + '/settings/me'}>
+              <MenuItem
+                eventKey={3.2}
+                data-cy="settings"
+                href={profilesUrl + '/settings/me'}
+              >
                 <FontAwesomeIcon icon={faUserCog} /> Settings
               </MenuItem>
-              <MenuItem eventKey={3.3} data-cy="commons-page" href={'/orcid.org/' + user.uid}>
+              <MenuItem
+                eventKey={3.3}
+                data-cy="commons-page"
+                href={'/orcid.org/' + user.uid}
+              >
                 <FontAwesomeIcon icon={faAddressCard} /> Commons Page
               </MenuItem>
               <MenuItem
@@ -190,7 +205,11 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               >
                 <FontAwesomeIcon icon={faOrcid} /> ORCID Record
               </MenuItem>
-              <MenuItem eventKey={3.5} data-cy="signout" href={profilesUrl + '/sign_out'}>
+              <MenuItem
+                eventKey={3.5}
+                data-cy="signout"
+                href={profilesUrl + '/sign_out'}
+              >
                 <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
               </MenuItem>
             </NavDropdown>

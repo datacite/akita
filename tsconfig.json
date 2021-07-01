@@ -27,6 +27,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/pages/overviewtsx"  ]
+    "**/*.tsx", "src/pages/overviewtsx"
+  ]
 }

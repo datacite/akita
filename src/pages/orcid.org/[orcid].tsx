@@ -124,11 +124,6 @@ interface Organization {
   endDate: Date
 }
 
-interface Country {
-  id: string
-  name: string
-}
-
 interface Works {
   totalCount: number
   totalContentUrl: number
@@ -172,16 +167,14 @@ interface OrcidQueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const orcid = (context.params.orcid as String)
+  const orcid = context.params.orcid as String
 
   return {
     props: { orcid }
   }
 }
 
-const PersonPage: React.FunctionComponent<Props> = ({
-  orcid
-}) => {
+const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
   const [query] = useQueryState<string>('query')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
@@ -217,15 +210,16 @@ const PersonPage: React.FunctionComponent<Props> = ({
     }
   )
 
-  if (loading) return (
-    <Layout path={'/orcid.org/' + orcid } >
-      <Loading />
-    </Layout>
-  )
+  if (loading)
+    return (
+      <Layout path={'/orcid.org/' + orcid}>
+        <Loading />
+      </Layout>
+    )
 
   if (error)
     return (
-      <Layout path={'/orcid.org/' + orcid } >
+      <Layout path={'/orcid.org/' + orcid}>
         <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
@@ -248,10 +242,12 @@ const PersonPage: React.FunctionComponent<Props> = ({
     ? 'DataCite Commons: ' + person.name
     : 'DataCite Commons: ' + person.id
 
-  const description = !person.description ? null : truncate(person.description, {
-    length: 2500,
-    separator: '… '
-  })
+  const description = !person.description
+    ? null
+    : truncate(person.description, {
+        length: 2500,
+        separator: '… '
+      })
 
   const content = () => {
     return (
@@ -294,7 +290,7 @@ const PersonPage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Layout path={'/orcid.org/' + orcid } >
+    <Layout path={'/orcid.org/' + orcid}>
       <Head>
         <title>{title}</title>
         <meta name="og:title" content={title} />

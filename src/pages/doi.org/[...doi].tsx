@@ -12,38 +12,27 @@ import Error from '../../components/Error/Error'
 import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
-import { connectionFragment, contentFragment } from '../../components/SearchWork/SearchWork'
+import {
+  connectionFragment,
+  contentFragment
+} from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 
 type Props = {
-  doi: string,
+  doi: string
   metadata: MetadataQueryData
 }
 
 export const CROSSREF_FUNDER_GQL = gql`
-  query getOrganizationQuery(
-    $crossrefFunderId: ID
-  ) {
-    organization(
-      crossrefFunderId: $crossrefFunderId
-    ) {
+  query getOrganizationQuery($crossrefFunderId: ID) {
+    organization(crossrefFunderId: $crossrefFunderId) {
       id
     }
   }
 `
 
-interface CrossrefFunderData {
-  organization: CrossrefFunderType
-}
-
-interface CrossrefFunderType {
-  id: string
-}
-
 const METADATA_GQL = gql`
-  query getMetadataQuery(
-    $id: ID!
-  ) {
+  query getMetadataQuery($id: ID!) {
     work(id: $id) {
       id
       doi
@@ -366,10 +355,10 @@ interface QueryVar {
   registrationAgency: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {	
-  const doi = (context.query.doi as String[]).join('/')	
-  const query = (context.query.query as String)
-  
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const doi = (context.query.doi as String[]).join('/')
+  const query = context.query.query as String
+
   // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
     const { data } = await apolloClient.query({
@@ -379,14 +368,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
     // redirect to our 404 page if funder is not found
     if (!data) {
-      context.res.writeHead(302, { Location: '/404' });
-      context.res.end();
-      return {props: {}}
+      context.res.writeHead(302, { Location: '/404' })
+      context.res.end()
+      return { props: {} }
     } else {
       const location = '/ror.org' + rorFromUrl(data.organization.id)
-      context.res.writeHead(302, { Location: query ? location + '?query=' + query : location });
-      context.res.end();
-      return {props: {}}
+      context.res.writeHead(302, {
+        Location: query ? location + '?query=' + query : location
+      })
+      context.res.end()
+      return { props: {} }
     }
   } else {
     const { data } = await apolloClient.query({
@@ -396,19 +387,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
     // redirect to our 404 page if doi is not found
     if (!data) {
-      context.res.writeHead(302, { Location: '/404' });
-      context.res.end();
-      return {props: {}}
+      context.res.writeHead(302, { Location: '/404' })
+      context.res.end()
+      return { props: {} }
     } else {
-      return {props: { doi, metadata: data }}
+      return { props: { doi, metadata: data } }
     }
   }
 }
 
-const WorkPage: React.FunctionComponent<Props> = ({
-  doi,
-  metadata
-}) => {  
+const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/doi.org/' + metadata.work.doi
@@ -423,13 +411,21 @@ const WorkPage: React.FunctionComponent<Props> = ({
     ? 'DataCite Commons: ' + metadata.work.titles[0].title
     : 'DataCite Commons: No Title'
 
-  const description = !metadata.work.descriptions[0] ? null : truncate(metadata.work.descriptions[0].description, {
-    length: 2500,
-    separator: '… '
-  })
+  const description = !metadata.work.descriptions[0]
+    ? null
+    : truncate(metadata.work.descriptions[0].description, {
+        length: 2500,
+        separator: '… '
+      })
 
-  let type:string = metadata.work.types.resourceTypeGeneral ? metadata.work.types.resourceTypeGeneral.toLowerCase() : null
-  if (metadata.work.registrationAgency.id !== "datacite" && metadata.work.types.resourceType) type = metadata.work.types.resourceType.toLowerCase()
+  let type: string = metadata.work.types.resourceTypeGeneral
+    ? metadata.work.types.resourceTypeGeneral.toLowerCase()
+    : null
+  if (
+    metadata.work.registrationAgency.id !== 'datacite' &&
+    metadata.work.types.resourceType
+  )
+    type = metadata.work.types.resourceType.toLowerCase()
 
   const [query] = useQueryState<string>('query')
   const [cursor] = useQueryState('cursor', { history: 'push' })
@@ -459,16 +455,16 @@ const WorkPage: React.FunctionComponent<Props> = ({
     }
   })
 
-  if (loading) 
+  if (loading)
     return (
-      <Layout path={'/doi.org/' + doi } >
+      <Layout path={'/doi.org/' + doi}>
         <Loading />
       </Layout>
     )
 
   if (error)
     return (
-      <Layout path={'/doi.org/' + doi } >
+      <Layout path={'/doi.org/' + doi}>
         <Col md={9} mdOffset={3}>
           <Error title="An error occured." message={error.message} />
         </Col>
@@ -486,7 +482,10 @@ const WorkPage: React.FunctionComponent<Props> = ({
   }
 
   const relatedContent = () => {
-    const referencesTabLabel = pluralize(work.references.totalCount, 'Reference')
+    const referencesTabLabel = pluralize(
+      work.references.totalCount,
+      'Reference'
+    )
     const citationsTabLabel = pluralize(work.citations.totalCount, 'Citation')
 
     const hasNextPageCitations = work.citations.pageInfo
@@ -508,7 +507,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
     if (work.references.totalCount + work.citations.totalCount == 0) return ''
 
     const defaultActiveKey =
-    work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
+      work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
 
     return (
       <div className="panel panel-transparent">
@@ -577,10 +576,10 @@ const WorkPage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Layout path={'/doi.org/' + doi } >
+    <Layout path={'/doi.org/' + doi}>
       <Head>
         <title key="title">{title}</title>
-        <meta name='og:title' content={title} />
+        <meta name="og:title" content={title} />
         {description && (
           <>
             <meta name="description" content={description} />
@@ -589,9 +588,7 @@ const WorkPage: React.FunctionComponent<Props> = ({
         )}
         <meta name="og:url" content={pageUrl} />
         <meta name="og:image" content={imageUrl} />
-        {type && (
-          <meta name="og:type" content={type} />
-        )}
+        {type && <meta name="og:type" content={type} />}
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
       <Row>{content()}</Row>

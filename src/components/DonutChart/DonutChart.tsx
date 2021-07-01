@@ -243,12 +243,12 @@ const DonutChart: React.FunctionComponent<Props> = ({
   domain
 }) => {
   // get current screen size
-  const windowDimensions:any = useWindowDimensions()
+  const windowDimensions: any = useWindowDimensions()
   const windowWidth = windowDimensions.width
   let width = windowWidth >= 1200 ? 200 : 175
   let height = windowWidth >= 1200 ? 200 : 175
   let paddingLeft = windowWidth >= 1200 ? 70 : 60
-  
+
   let innerRadius = windowWidth >= 1400 ? 68 : 52
   let outerRadius = windowWidth >= 1400 ? 90 : 70
 

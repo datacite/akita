@@ -27,7 +27,7 @@ describe('Search People', () => {
       // timeout for the query results to return
       .get('.member-results', { timeout: 60000 })
       // results are found
-      .should('contain', 'People')
+      .should('contain', 'Person')
       .get('#search-clear >')
       .click()
       .get('input[name="query"]')
@@ -36,7 +36,7 @@ describe('Search People', () => {
 
   it('search for specific ORCID', () => {
     cy.get('input[name="query"]')
-      .type('0000-0003-3484-6875{enter}')
+      .type('0000-0001-6528-2027{enter}')
       // the results are rendered
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
