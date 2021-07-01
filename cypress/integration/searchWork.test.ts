@@ -24,13 +24,14 @@ describe('Search Works', () => {
       // all facets are rendered
       .get('.panel.facets')
       .should(($facet) => {
-        expect($facet).to.have.length.at.least(3)
-        expect($facet.eq(0)).to.contain('Publication Year')
-        expect($facet.eq(1)).to.contain('Work Type')
-        expect($facet.eq(2)).to.contain('License')
-        expect($facet.eq(3)).to.contain('Language')
-        expect($facet.eq(4)).to.contain('Field of Science')
-        expect($facet.eq(5)).to.contain('Registration Agency')
+        expect($facet).to.have.length.at.least(4)
+        expect($facet.eq(0)).to.contain('Search in Works')
+        expect($facet.eq(1)).to.contain('Publication Year')
+        expect($facet.eq(2)).to.contain('Work Type')
+        expect($facet.eq(3)).to.contain('License')
+        expect($facet.eq(4)).to.contain('Language')
+        expect($facet.eq(5)).to.contain('Field of Science')
+        expect($facet.eq(6)).to.contain('Registration Agency')
       })
   })
 

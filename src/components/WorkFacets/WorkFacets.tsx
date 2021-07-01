@@ -99,14 +99,16 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
-
+  console.log(url)
   return (
     <div className="panel panel-transparent">
-      <div className="panel facets">
-        <div className="panel-body">
-          <SearchBox path={path} />
+      {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
+        <div className="panel facets">
+          <div className="panel-body">
+            <SearchBox path={path} />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="panel facets add">
         <div className="panel-body">
@@ -225,32 +227,30 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {data.authors && data.authors.length > 0 && (
-          <div className="panel facets add">
-            <div className="panel-body">
-              <OverlayTrigger placement="top" overlay={tooltipAuthors}>
-                <h4>
-                  Co-authors <FontAwesomeIcon icon={faQuestionCircle} />
-                </h4>
-              </OverlayTrigger>
-              <ul id="authors-facets">
-                {data.authors.filter(checkAuthorForPerson).map((facet) => (
-                  <li key={facet.id} id={'co-authors-facet-' + facet.id}>
-                    {facetLink(
-                      'query',
-                      'creators.nameIdentifiers.nameIdentifier:"' +
-                        facet.id +
-                        '"'
-                    )}
-                    <div className="facet-title">{facet.title}</div>
-                    <span className="number pull-right">
-                      {facet.count.toLocaleString('en-US')}
-                    </span>
-                    <div className="clearfix" />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="panel facets add">
+          <div className="panel-body">
+            <OverlayTrigger placement="top" overlay={tooltipAuthors}>
+              <h4>
+                Co-authors <FontAwesomeIcon icon={faQuestionCircle} />
+              </h4>
+            </OverlayTrigger>
+            <ul id="authors-facets">
+              {data.authors.filter(checkAuthorForPerson).map((facet) => (
+                <li key={facet.id} id={'co-authors-facet-' + facet.id}>
+                  {facetLink(
+                    'query',
+                    'creators.nameIdentifiers.nameIdentifier:"' + facet.id + '"'
+                  )}
+                  <div className="facet-title">{facet.title}</div>
+                  <span className="number pull-right">
+                    {facet.count.toLocaleString('en-US')}
+                  </span>
+                  <div className="clearfix" />
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
       )}
     </div>
   )

@@ -217,7 +217,7 @@ h3.popover-title {
 
 @media(max-width:1200px) {
   .input-group input[name="query-facets"] {
-    width: 155px;
+    width: 140px;
   }
 }
 

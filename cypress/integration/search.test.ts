@@ -15,7 +15,7 @@ describe('Search', () => {
           .should('contain', 'Works')
       })
 
-      it('search with submit', () => {
+      it.only('search with submit', () => {
         cy.visit('/doi.org')
         cy.get('input[name="query"]')
           .type('climate')
@@ -39,10 +39,10 @@ describe('Search', () => {
           .should('contain', 'Works')
       })
 
-      it('search with query url', () => {
-        cy.visit('/doi.org?query=climate')
-        cy.get('.member-results', { timeout: 60000 }).should('contain', 'Works')
-      })
+      // it('search with query url', () => {
+      //   cy.visit('/doi.org?query=climate')
+      //   cy.get('.member-results', { timeout: 60000 }).should('contain', 'Works')
+      // })
     })
   })
 
@@ -52,8 +52,8 @@ describe('Search', () => {
     })
 
     context('work record', () => {
-      // it("search with enter", () => {
-      //   cy.visit("/doi.org/10.17863/cam.10544")
+      // it('search with enter', () => {
+      //   cy.visit('/doi.org/10.17863/cam.10544')
       //   cy.get('input[name="query"]')
       //     .type('climate{enter}')
       //     .get('#search-nav li.active', { timeout: 60000 })
@@ -149,36 +149,30 @@ describe('Search', () => {
     context('person record', () => {
       it('search with enter', () => {
         cy.visit('/orcid.org/0000-0001-6528-2027')
-        cy.get('input[name="query"]')
+        cy.get('input[name="query-facets"]')
           .type('datacite{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Page')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'Work')
       })
 
       it('search with submit', () => {
         cy.visit('/orcid.org/0000-0001-6528-2027')
-        cy.get('input[name="query"]')
+        cy.get('input[name="query-facets"]')
           .type('datacite')
-          .get('.search-submit')
+          .get('.search-submit-facets')
           .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Page')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'Work')
       })
 
       it('search with click', () => {
         cy.visit('/orcid.org/0000-0001-6528-2027')
-        cy.get('input[name="query"]')
-          .type('Josiah Carberry')
-          .get('#people-link')
+        cy.get('input[name="query-facets"]')
+          .type('Richard Hallett')
+          .get('.search-submit-facets')
           .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'People')
           .get('.member-results', { timeout: 60000 })
-          .should('contain', 'People')
+          .should('contain', '1 Work')
       })
     })
   })
@@ -191,7 +185,7 @@ describe('Search', () => {
     context('organizations', () => {
       it('search with enter', () => {
         cy.visit('/ror.org')
-        cy.get('input[name="query"]')
+        cy.get('input[name="query-facets"]')
           .type('Cambridge{enter}')
           .get('#search-nav li.active', { timeout: 60000 })
           .should('contain', 'Organizations')
@@ -201,7 +195,7 @@ describe('Search', () => {
 
       it('search with submit', () => {
         cy.visit('/ror.org')
-        cy.get('input[name="query"]')
+        cy.get('input[name="query-facets"]')
           .type('Cambridge')
           .get('.search-submit')
           .click()
@@ -213,9 +207,9 @@ describe('Search', () => {
 
       it('search with click', () => {
         cy.visit('/ror.org')
-        cy.get('input[name="query"]')
+        cy.get('input[name="query-facets"]')
           .type('Cambridge')
-          .get('#organizations-link')
+          .get('.search-submit-facets')
           .click()
           .get('#search-nav li.active', { timeout: 60000 })
           .should('contain', 'Organizations')
