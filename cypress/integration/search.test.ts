@@ -15,7 +15,7 @@ describe('Search', () => {
           .should('contain', 'Works')
       })
 
-      it.only('search with submit', () => {
+      it('search with submit', () => {
         cy.visit('/doi.org')
         cy.get('input[name="query"]')
           .type('climate')
