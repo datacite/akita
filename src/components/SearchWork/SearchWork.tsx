@@ -26,7 +26,6 @@ export interface PageInfo {
 
 export interface Works {
   totalCount: number
-  totalContentUrl: number
   pageInfo: PageInfo
   published: Facet[]
   resourceTypes: Facet[]
