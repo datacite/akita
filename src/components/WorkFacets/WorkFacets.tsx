@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
 import { WorkType } from '../../pages/doi.org/[...doi]'
+import SearchBox from '../SearchBox/SearchBox'
 import Link from 'next/link'
 
 type Props = {
@@ -97,8 +98,17 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     }
   }
 
+  // remove %2F? at the end of url
+  const path = url.substring(0, url.length - 2)
+
   return (
     <div className="panel panel-transparent">
+      <div className="panel facets">
+        <div className="panel-body">
+          <SearchBox path={path} />
+        </div>
+      </div>
+
       <div className="panel facets add">
         <div className="panel-body">
           <h4>Publication Year</h4>

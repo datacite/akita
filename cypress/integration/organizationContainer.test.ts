@@ -18,12 +18,21 @@ describe('OrganizationContainer', () => {
     )
   })
 
-  // it('actions', () => {
-  //   cy.get('.actions', { timeout: 30000 })
-  //   .should(($action) => {
-  //     expect($action).to.have.length.at.least(3)
-  //   })
-  // })
+  describe('Works', () => {
+    it('results', () => {
+      cy.get('input[name="query-facets"]')
+        .type('carbon-fixing bacteria{enter}')
+        .get('.member-results', { timeout: 60000 })
+        .should('contain', '1 Work')
+    })
+
+    it('creators', () => {
+      cy.get('input[name="query-facets"]')
+        .type('carbon-fixing bacteria{enter}')
+        .get('.creators', { timeout: 30000 })
+        .should('contain', 'Xiaoyan Jing')
+    })
+  })
 })
 
 export {}

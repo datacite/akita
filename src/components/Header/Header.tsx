@@ -20,8 +20,7 @@ import {
   faSearch,
   faNewspaper,
   faUserGraduate,
-  faUniversity,
-  faMapMarker
+  faUniversity
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { session } from '../../utils/session'
@@ -116,15 +115,6 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
           </InputGroup>
           <div>
             <Nav id="search-nav" activeKey={path}>
-              {!paths.includes(path) && (
-                <NavItem
-                  id="this-link"
-                  eventKey={path}
-                  href={path + '?query=' + searchInput}
-                >
-                  <FontAwesomeIcon icon={faMapMarker} /> This&nbsp;Page
-                </NavItem>
-              )}
               <NavItem
                 id="works-link"
                 eventKey={'/doi.org'}
