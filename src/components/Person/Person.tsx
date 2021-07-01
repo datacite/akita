@@ -1,5 +1,6 @@
 import React from 'react'
 import { Alert, Row, Col } from 'react-bootstrap'
+import { Feature } from 'flagged'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -46,6 +47,9 @@ export interface EmploymentRecord {
 
 interface Works {
   totalCount: number
+  totalContentUrl: number
+  totalOpenLicenses: number
+  openLicenseResourceTypes: ContentFacet[]
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
@@ -91,6 +95,35 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   const title = person.name
     ? 'DataCite Commons: ' + person.name
     : 'DataCite Commons: No Name'
+
+  var has_open_access_software = false;
+  var has_open_access_paper = false;
+  var has_open_access_dataset = false;
+  person.works.openLicenseResourceTypes.forEach(
+    (v) => {
+      if (v.id == "software" && v.count > 0) {
+        has_open_access_software = true
+      }
+
+      if (v.id == "dataset" && v.count > 0) {
+        has_open_access_dataset = true
+      }
+
+      if ((v.id == "text" || v.id == "journalarticle") && v.count > 0) {
+        has_open_access_paper = true
+      }
+    }
+  )
+
+  const open_license_count = person.works.totalOpenLicenses
+
+  const is_open_hero = open_license_count == person.works.totalCount
+  const is_open_license = open_license_count > 0
+  const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
+  const is_open_access = person.works.totalContentUrl > 0
+
+  const percentage_open_license = Math.round((open_license_count / person.works.totalCount) * 100)
+  const percentage_open_url = Math.round((person.works.totalContentUrl / person.works.totalCount) * 100)
 
   const shareLink = () => {
     return (
@@ -156,6 +189,34 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     )
   }
 
+  const accessAchievements = () => {
+    if (!is_open_hero && !is_open_license && !is_open_access && !is_os_triathlete) {
+      return
+    }
+
+    return (
+      <>
+        <h3 className="member-results">Accessibility Achievements</h3>
+        <div className="panel panel-transparent achievements">
+          <div className="panel-body">
+            {is_open_hero &&
+              <p>Every single one of your papers is free to read online. Open access helps real people, and that's pretty heroic.</p>
+            }
+            {is_open_license &&
+              <p>{percentage_open_license}% of the researcher's associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.</p>
+            }
+            {is_os_triathlete &&
+              <p>Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.</p>
+            }
+            {is_open_access &&
+              <p>{percentage_open_url}% of your research is free to read online.</p>
+            }
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <h3 className="member-results">{person.id}</h3>
@@ -170,6 +231,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         </div>
       ))}
       {workCount()}
+      <Feature name="parsec">
+        {accessAchievements()}
+      </Feature>
     </>
   )
 }

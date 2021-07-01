@@ -132,6 +132,8 @@ interface Country {
 interface Works {
   totalCount: number
   totalContentUrl: number
+  totalOpenLicenses: number
+  openLicenseResourceTypes: ContentFacet[]
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]

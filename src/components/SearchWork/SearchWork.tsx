@@ -57,11 +57,17 @@ export const connectionFragment = {
     fragment WorkConnectionFragment on WorkConnectionWithTotal {
       totalCount
       totalContentUrl
+      totalOpenLicenses
       pageInfo {
         endCursor
         hasNextPage
       }
       resourceTypes {
+        id
+        title
+        count
+      }
+      openLicenseResourceTypes {
         id
         title
         count
