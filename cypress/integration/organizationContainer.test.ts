@@ -18,21 +18,21 @@ describe('OrganizationContainer', () => {
     )
   })
 
-  describe('Works', () => {
-    it('results', () => {
-      cy.get('input[name="query-facets"]')
-        .type('carbon-fixing bacteria{enter}')
-        .get('.member-results', { timeout: 60000 })
-        .should('contain', '1 Work')
-    })
+  // describe('Works', () => {
+  //   it('results', () => {
+  //     cy.get('input[name="query-facets"]')
+  //       .type('carbon-fixing bacteria{enter}')
+  //       .get('.member-results', { timeout: 60000 })
+  //       .should('contain', '1 Work')
+  //   })
 
-    it('creators', () => {
-      cy.get('input[name="query-facets"]')
-        .type('carbon-fixing bacteria{enter}')
-        .get('.creators', { timeout: 30000 })
-        .should('contain', 'Xiaoyan Jing')
-    })
-  })
+  //   it('creators', () => {
+  //     cy.get('input[name="query-facets"]')
+  //       .type('carbon-fixing bacteria{enter}')
+  //       .get('.creators', { timeout: 30000 })
+  //       .should('contain', 'Xiaoyan Jing')
+  //   })
+  // })
 })
 
 export {}
