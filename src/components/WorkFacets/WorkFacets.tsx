@@ -1,10 +1,8 @@
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faSquare,
-  faCheckSquare,
-  faQuestionCircle
+  faCheckSquare
 } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
 import { WorkType } from '../../pages/doi.org/[...doi]'
@@ -45,12 +43,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 }) => {
   const router = useRouter()
 
-  const tooltipAuthors = (
-    <Tooltip id="tooltipAuthors">
-      This list includes only co-authors with ORCID ids.
-    </Tooltip>
-  )
-
   if (loading) return <div className="col-md-3"></div>
 
   if (!loading && data.nodes.length == 0)
@@ -83,20 +75,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       </Link>
     )
   }
-
-  // Used for checking filter shouldnt show author that is already filtered
-  function checkAuthorForPerson(author) {
-    // Only works on person model
-    if (model == 'person') {
-      const orcid_id = url.substring(11, url.length - 2)
-      if (!author.id.includes(orcid_id)) {
-        return author
-      }
-    } else {
-      return author
-    }
-  }
-
 
   return (
     <div className="panel panel-transparent">
