@@ -1,5 +1,4 @@
 import React from 'react'
-import { Feature } from 'flagged'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -226,7 +225,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {data.authors && data.authors.length > 0 && (
-        <Feature name="parsec">
           <div className="panel facets add">
             <div className="panel-body">
               <OverlayTrigger placement="top" overlay={tooltipAuthors}>
@@ -253,7 +251,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
               </ul>
             </div>
           </div>
-        </Feature>
       )}
     </div>
   )

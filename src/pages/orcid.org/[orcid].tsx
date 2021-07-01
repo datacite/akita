@@ -72,7 +72,7 @@ export const DOI_GQL = gql`
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
-        language: $language
+      language: $language
         license: $license
         registrationAgency: $registrationAgency
       ) {
@@ -126,6 +126,9 @@ interface Organization {
 
 interface Works {
   totalCount: number
+  totalContentUrl: number
+  totalOpenLicenses: number
+  openLicenseResourceTypes: ContentFacet[]
   resourceTypes: ContentFacet[]
   pageInfo: PageInfo
   published: ContentFacet[]
