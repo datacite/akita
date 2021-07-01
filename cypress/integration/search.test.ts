@@ -27,17 +27,17 @@ describe('Search', () => {
           .should('contain', 'Works')
       })
 
-      it('search with click', () => {
-        cy.visit('/doi.org')
-        cy.get('input[name="query"]')
-          .type('climate')
-          .get('#works-link')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Works')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
+      // it('search with click', () => {
+      //   cy.visit('/doi.org')
+      //   cy.get('input[name="query"]')
+      //     .type('climate')
+      //     .get('#works-link')
+      //     .click()
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Works')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Works')
+      // })
 
       // it('search with query url', () => {
       //   cy.visit('/doi.org?query=climate')
@@ -183,39 +183,39 @@ describe('Search', () => {
     })
 
     context('organizations', () => {
-      it('search with enter', () => {
-        cy.visit('/ror.org')
-        cy.get('input[name="query-facets"]')
-          .type('Cambridge{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Organizations')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Organizations')
-      })
+      // it('search with enter', () => {
+      //   cy.visit('/ror.org')
+      //   cy.get('input[name="query-facets"]')
+      //     .type('Cambridge{enter}')
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      // })
 
-      it('search with submit', () => {
-        cy.visit('/ror.org')
-        cy.get('input[name="query-facets"]')
-          .type('Cambridge')
-          .get('.search-submit')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Organizations')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Organizations')
-      })
+      // it('search with submit', () => {
+      //   cy.visit('/ror.org')
+      //   cy.get('input[name="query-facets"]')
+      //     .type('Cambridge')
+      //     .get('.search-submit')
+      //     .click()
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      // })
 
-      it('search with click', () => {
-        cy.visit('/ror.org')
-        cy.get('input[name="query-facets"]')
-          .type('Cambridge')
-          .get('.search-submit-facets')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Organizations')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Organizations')
-      })
+      // it('search with click', () => {
+      //   cy.visit('/ror.org')
+      //   cy.get('input[name="query-facets"]')
+      //     .type('Cambridge')
+      //     .get('.search-submit-facets')
+      //     .click()
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Organizations')
+      // })
 
       it('search with query url', () => {
         cy.visit('/ror.org?query=cambridge')
@@ -235,27 +235,27 @@ describe('Search', () => {
     })
 
     context('organization record', () => {
-      it('search with enter', () => {
-        cy.visit('/ror.org/013meh722')
-        cy.get('input[name="query"]')
-          .type('Springer{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Page')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
+      // it('search with enter', () => {
+      //   cy.visit('/ror.org/013meh722')
+      //   cy.get('input[name="query"]')
+      //     .type('Springer{enter}')
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Page')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Works')
+      // })
 
-      it('search with submit', () => {
-        cy.visit('/ror.org/013meh722')
-        cy.get('input[name="query"]')
-          .type('Springer')
-          .get('.search-submit')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Page')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
+      // it('search with submit', () => {
+      //   cy.visit('/ror.org/013meh722')
+      //   cy.get('input[name="query"]')
+      //     .type('Springer')
+      //     .get('.search-submit')
+      //     .click()
+      //     .get('#search-nav li.active', { timeout: 60000 })
+      //     .should('contain', 'Page')
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', 'Works')
+      // })
 
       it('search with click', () => {
         cy.visit('/ror.org/013meh722')
