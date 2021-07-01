@@ -96,9 +96,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     ? 'DataCite Commons: ' + person.name
     : 'DataCite Commons: No Name'
 
-  var has_open_access_software = false;
-  var has_open_access_paper = false;
-  var has_open_access_dataset = false;
+  let has_open_access_software = false;
+  let has_open_access_paper = false;
+  let has_open_access_dataset = false;
   person.works.openLicenseResourceTypes.forEach(
     (v) => {
       if (v.id == "software" && v.count > 0) {
@@ -200,10 +200,10 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         <div className="panel panel-transparent achievements">
           <div className="panel-body">
             {is_open_hero &&
-              <p>Every single one of your papers is free to read online. Open access helps real people, and that's pretty heroic.</p>
+              <p>Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.</p>
             }
             {is_open_license &&
-              <p>{percentage_open_license}% of the researcher's associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.</p>
+              <p>{percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.</p>
             }
             {is_os_triathlete &&
               <p>Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.</p>
