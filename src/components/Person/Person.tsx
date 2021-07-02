@@ -33,6 +33,7 @@ export interface PersonRecord {
   citationCount: number
   viewCount: number
   downloadCount: number
+  totalWorks: Works
   works: Works
 }
 
@@ -103,7 +104,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   let has_open_access_software = false;
   let has_open_access_paper = false;
   let has_open_access_dataset = false;
-  person.works.openLicenseResourceTypes.forEach(
+  person.totalWorks.openLicenseResourceTypes.forEach(
     (v) => {
       if (v.id == "software" && v.count > 0) {
         has_open_access_software = true
@@ -119,15 +120,15 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     }
   )
 
-  const open_license_count = person.works.totalOpenLicenses
+  const open_license_count = person.totalWorks.totalOpenLicenses
 
-  const is_open_hero = open_license_count == person.works.totalCount
+  const is_open_hero = open_license_count == person.totalWorks.totalCount
   const is_open_license = open_license_count > 0
   const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
-  const is_open_access = person.works.totalContentUrl > 0
+  const is_open_access = person.totalWorks.totalContentUrl > 0
 
-  const percentage_open_license = Math.round((open_license_count / person.works.totalCount) * 100)
-  const percentage_open_url = Math.round((person.works.totalContentUrl / person.works.totalCount) * 100)
+  const percentage_open_license = Math.round((open_license_count / person.totalWorks.totalCount) * 100)
+  const percentage_open_url = Math.round((person.totalWorks.totalContentUrl / person.totalWorks.totalCount) * 100)
 
   const shareLink = () => {
     return (
