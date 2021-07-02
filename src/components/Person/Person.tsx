@@ -1,4 +1,8 @@
 import React from 'react'
+import Image from 'next/image'
+import heroImage from '../../../public/images/hero.png'
+import unlockImage from '../../../public/images/unlock.png'
+import scienceImage from '../../../public/images/science.png'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { Feature } from 'flagged'
 import {
@@ -200,16 +204,56 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         <div className="panel panel-transparent achievements">
           <div className="panel-body">
             {is_open_hero &&
-              <p>Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.</p>
+              <Row className="align-items-center">
+                <Col xs={1}>
+                  <Image
+                    src={heroImage}
+                    title="Superhero by tulpahn from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.
+                </Col>
+              </Row>
             }
             {is_open_license &&
-              <p>{percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.</p>
+              <Row>
+                <Col xs={1}>
+                  <Image
+                    src={heroImage}
+                    title="Superhero by tulpahn from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  {percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.
+                </Col>
+              </Row>
             }
             {is_os_triathlete &&
-              <p>Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.</p>
+              <Row >
+                <Col xs={1}>
+                  <Image
+                    src={unlockImage}
+                    title="unlock by Alexandr Cherkinsky from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.
+                </Col>
+              </Row>
             }
             {is_open_access &&
-              <p>{percentage_open_url}% of your research is free to read online.</p>
+              <Row className="mb-1">
+                <Col xs={1}>
+                  <Image
+                    src={scienceImage}
+                    title="science education by Vectors Market from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  {percentage_open_url}% of your research is free to read online.
+                </Col>
+              </Row>
             }
           </div>
         </div>
