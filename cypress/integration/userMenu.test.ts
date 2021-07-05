@@ -3,7 +3,6 @@
 describe('User Menu', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    console.log(Cypress.env('userCookie'))
     cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false })
   })
 
