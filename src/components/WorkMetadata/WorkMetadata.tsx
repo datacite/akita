@@ -270,14 +270,15 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     }, [])
 
     const otherRights = uniqueRights.reduce((sum, r) => {
-      let rightsIdentifier = r.rightsIdentifier
-      if (rightsIdentifier && !rightsIdentifier.startsWith('cc')) {
-        if (rightsIdentifier.startsWith('apache')) {
-          rightsIdentifier = 'Apache%202.0'
-        } else if (rightsIdentifier.startsWith('ogl')) {
-          rightsIdentifier = 'OGL%20Canada'
+      if (r.rightsIdentifier && !r.rightsIdentifier.startsWith('cc')) {
+        if (r.rightsIdentifier.startsWith('apache')) {
+          r.rightsIdentifier = 'Apache%202.0'
+        } else if (r.rightsIdentifier.startsWith('ogl')) {
+          r.rightsIdentifier = 'OGL%20Canada'
         } else {
-          rightsIdentifier = rightsIdentifier.replace(/-/g, '%20').toUpperCase()
+          r.rightsIdentifier = r.rightsIdentifier
+            .replace(/-/g, '%20')
+            .toUpperCase()
         }
         sum.push(r)
       }
