@@ -30,6 +30,7 @@ module.exports = (on, config) => {
 
   // load ENV variables via dotenv
   config = dotenvFlowPlugin(config)
+  config.env.userCookie = process.env.CYPRESS_USER_COOKIE
 
   return config
 }
