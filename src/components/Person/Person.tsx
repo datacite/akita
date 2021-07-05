@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import heroImage from '../../../public/images/hero.png'
-import unlockImage from '../../../public/images/unlock.png'
-import scienceImage from '../../../public/images/science.png'
+import heroImage from '../../../public/images/hero.svg'
+import unlockImage from '../../../public/images/unlock.svg'
+import scienceImage from '../../../public/images/science.svg'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { Feature } from 'flagged'
 import {
@@ -234,8 +234,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
               <Row >
                 <Col xs={1}>
                   <Image
-                    src={unlockImage}
-                    title="unlock by Alexandr Cherkinsky from the Noun Project"
+                  src={scienceImage}
+                  title="science education by Vectors Market from the Noun Project"
                   />
                 </Col>
                 <Col>
@@ -246,9 +246,9 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
             {is_open_access &&
               <Row className="mb-1">
                 <Col xs={1}>
-                  <Image
-                    src={scienceImage}
-                    title="science education by Vectors Market from the Noun Project"
+                <Image
+                  src={unlockImage}
+                  title="unlock by Alexandr Cherkinsky from the Noun Project"
                   />
                 </Col>
                 <Col>
