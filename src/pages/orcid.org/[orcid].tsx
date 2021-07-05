@@ -65,6 +65,16 @@ export const DOI_GQL = gql`
       citationCount
       viewCount
       downloadCount
+      totalWorks: works {
+        totalCount
+        totalContentUrl
+        totalOpenLicenses
+        openLicenseResourceTypes {
+          id
+          title
+          count
+        }
+      }
       works(
         first: 25
         query: $query
@@ -102,6 +112,7 @@ export interface PersonType {
   downloadCount: number
   employment: Organization[]
   pageInfo: PageInfo
+  totalWorks: Works
   works: Works
 }
 

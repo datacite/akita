@@ -1,4 +1,8 @@
 import React from 'react'
+import Image from 'next/image'
+import heroImage from '../../../public/images/hero.png'
+import unlockImage from '../../../public/images/unlock.png'
+import scienceImage from '../../../public/images/science.png'
 import { Alert, Row, Col } from 'react-bootstrap'
 import { Feature } from 'flagged'
 import {
@@ -29,6 +33,7 @@ export interface PersonRecord {
   citationCount: number
   viewCount: number
   downloadCount: number
+  totalWorks: Works
   works: Works
 }
 
@@ -99,7 +104,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
   let has_open_access_software = false;
   let has_open_access_paper = false;
   let has_open_access_dataset = false;
-  person.works.openLicenseResourceTypes.forEach(
+  person.totalWorks.openLicenseResourceTypes.forEach(
     (v) => {
       if (v.id == "software" && v.count > 0) {
         has_open_access_software = true
@@ -115,15 +120,15 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     }
   )
 
-  const open_license_count = person.works.totalOpenLicenses
+  const open_license_count = person.totalWorks.totalOpenLicenses
 
-  const is_open_hero = open_license_count == person.works.totalCount
+  const is_open_hero = open_license_count == person.totalWorks.totalCount
   const is_open_license = open_license_count > 0
   const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
-  const is_open_access = person.works.totalContentUrl > 0
+  const is_open_access = person.totalWorks.totalContentUrl > 0
 
-  const percentage_open_license = Math.round((open_license_count / person.works.totalCount) * 100)
-  const percentage_open_url = Math.round((person.works.totalContentUrl / person.works.totalCount) * 100)
+  const percentage_open_license = Math.round((open_license_count / person.totalWorks.totalCount) * 100)
+  const percentage_open_url = Math.round((person.totalWorks.totalContentUrl / person.totalWorks.totalCount) * 100)
 
   const shareLink = () => {
     return (
@@ -200,16 +205,56 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         <div className="panel panel-transparent achievements">
           <div className="panel-body">
             {is_open_hero &&
-              <p>Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.</p>
+              <Row className="align-items-center">
+                <Col xs={1}>
+                  <Image
+                    src={heroImage}
+                    title="Superhero by tulpahn from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.
+                </Col>
+              </Row>
             }
             {is_open_license &&
-              <p>{percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.</p>
+              <Row>
+                <Col xs={1}>
+                  <Image
+                    src={heroImage}
+                    title="Superhero by tulpahn from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  {percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.
+                </Col>
+              </Row>
             }
             {is_os_triathlete &&
-              <p>Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.</p>
+              <Row >
+                <Col xs={1}>
+                  <Image
+                    src={unlockImage}
+                    title="unlock by Alexandr Cherkinsky from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.
+                </Col>
+              </Row>
             }
             {is_open_access &&
-              <p>{percentage_open_url}% of your research is free to read online.</p>
+              <Row className="mb-1">
+                <Col xs={1}>
+                  <Image
+                    src={scienceImage}
+                    title="science education by Vectors Market from the Noun Project"
+                  />
+                </Col>
+                <Col>
+                  {percentage_open_url}% of your research is free to read online.
+                </Col>
+              </Row>
             }
           </div>
         </div>

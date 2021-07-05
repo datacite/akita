@@ -1,14 +1,13 @@
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faSquare,
-  faCheckSquare,
-  faQuestionCircle
+  faCheckSquare
 } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import SearchBox from '../SearchBox/SearchBox'
+import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import Link from 'next/link'
 
 type Props = {
@@ -45,12 +44,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 }) => {
   const router = useRouter()
 
-  const tooltipAuthors = (
-    <Tooltip id="tooltipAuthors">
-      This list includes only co-authors with ORCID ids.
-    </Tooltip>
-  )
-
   if (loading) return <div className="col-md-3"></div>
 
   if (!loading && data.nodes.length == 0)
@@ -84,22 +77,9 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     )
   }
 
-  // Used for checking filter shouldnt show author that is already filtered
-  function checkAuthorForPerson(author) {
-    // Only works on person model
-    if (model == 'person') {
-      const orcid_id = url.substring(11, url.length - 2)
-      if (!author.id.includes(orcid_id)) {
-        return author
-      }
-    } else {
-      return author
-    }
-  }
-
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
-  console.log(url)
+
   return (
     <div className="panel panel-transparent">
       {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
@@ -226,32 +206,11 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         </div>
       )}
 
-      {data.authors && data.authors.length > 0 && (
-        <div className="panel facets add">
-          <div className="panel-body">
-            <OverlayTrigger placement="top" overlay={tooltipAuthors}>
-              <h4>
-                Co-authors <FontAwesomeIcon icon={faQuestionCircle} />
-              </h4>
-            </OverlayTrigger>
-            <ul id="authors-facets">
-              {data.authors.filter(checkAuthorForPerson).map((facet) => (
-                <li key={facet.id} id={'co-authors-facet-' + facet.id}>
-                  {facetLink(
-                    'query',
-                    'creators.nameIdentifiers.nameIdentifier:"' + facet.id + '"'
-                  )}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      {model == "person"
+        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
+        : <AuthorsFacet authors={data.authors} title="Authors" url={url} model={model} />
+      }
+
     </div>
   )
 }
