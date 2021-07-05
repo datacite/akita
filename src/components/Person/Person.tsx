@@ -122,7 +122,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   const open_license_count = person.totalWorks.totalOpenLicenses
 
-  const is_open_hero = open_license_count == person.totalWorks.totalCount
+  const is_open_hero = open_license_count == person.totalWorks.totalCount && person.totalWorks.totalCount > 0
   const is_open_license = open_license_count > 0
   const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
   const is_open_access = person.totalWorks.totalContentUrl > 0
@@ -196,7 +196,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   const accessAchievements = () => {
     if (!is_open_hero && !is_open_license && !is_open_access && !is_os_triathlete) {
-      return
+      return <div></div>
     }
 
     return (
