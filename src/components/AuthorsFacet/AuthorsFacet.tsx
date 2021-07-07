@@ -36,7 +36,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         </Tooltip>
     )
 
-    function facetLink(param: string, value: string) {
+    function facetLink(param: string, value: string, id: string) {
         let icon = faSquare
 
         // get current query parameters from next router
@@ -57,7 +57,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
 
         return (
             <Link href={url + params.toString()}>
-                <a>
+                <a id={id}>
                     <FontAwesomeIcon icon={icon} />{' '}
                 </a>
             </Link>
@@ -89,12 +89,13 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                         </OverlayTrigger>
                         <ul id="authors-facets">
                             {authors.filter(checkAuthorForPerson).map((facet) => (
-                                <li key={facet.id} id={'co-authors-facet-' + facet.id}>
+                                <li key={facet.id}>
                                     {facetLink(
                                         'query',
                                         'creators.nameIdentifiers.nameIdentifier:"' +
                                         facet.id +
-                                        '"'
+                                        '"',
+                                        'co-authors-facet-' + facet.id
                                     )}
                                     <div className="facet-title">{facet.title}</div>
                                     <span className="number pull-right">
