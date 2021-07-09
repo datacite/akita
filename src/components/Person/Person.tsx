@@ -122,10 +122,16 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   const open_license_count = person.totalWorks.totalOpenLicenses
 
-  const is_open_hero = open_license_count == person.totalWorks.totalCount && person.totalWorks.totalCount > 0
-  const is_open_license = open_license_count > 0
-  const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
-  const is_open_access = person.totalWorks.totalContentUrl > 0
+  // const is_open_hero = open_license_count == person.totalWorks.totalCount && person.totalWorks.totalCount > 0
+  // const is_open_license = open_license_count > 0
+  // const is_os_triathlete = has_open_access_software && has_open_access_paper && has_open_access_dataset
+  // const is_open_access = person.totalWorks.totalContentUrl > 0
+
+  const is_open_hero = true
+  const is_open_license = true
+  const is_os_triathlete = true
+  const is_open_access = true
+
 
   const percentage_open_license = Math.round((open_license_count / person.totalWorks.totalCount) * 100)
   const percentage_open_url = Math.round((person.totalWorks.totalContentUrl / person.totalWorks.totalCount) * 100)
@@ -209,6 +215,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
+                  width="64"
+                  height="64"
                     title="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
@@ -222,6 +230,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
+                  width="64"
+                  height="64"
                     title="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
@@ -235,6 +245,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                   src={scienceImage}
+                  width="64"
+                  height="64"
                   title="science education by Vectors Market from the Noun Project"
                   />
                 </Col>
@@ -248,6 +260,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                 <Image
                   src={unlockImage}
+                  width="64"
+                  height="64"
                   title="unlock by Alexandr Cherkinsky from the Noun Project"
                   />
                 </Col>
