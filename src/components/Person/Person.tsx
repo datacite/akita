@@ -209,8 +209,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
-                  width="64"
-                  height="64"
+                  width="74"
+                  height="74"
                     title="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
@@ -224,8 +224,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
-                  width="64"
-                  height="64"
+                  width="74"
+                  height="74"
                     title="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
@@ -239,8 +239,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                   src={scienceImage}
-                  width="64"
-                  height="64"
+                  width="74"
+                  height="74"
                   title="science education by Vectors Market from the Noun Project"
                   />
                 </Col>
@@ -254,8 +254,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                 <Image
                   src={unlockImage}
-                  width="64"
-                  height="64"
+                  width="74"
+                  height="74"
                   title="unlock by Alexandr Cherkinsky from the Noun Project"
                   />
                 </Col>
