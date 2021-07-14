@@ -34,7 +34,7 @@ describe('PersonContainer', () => {
 
   it('identifiers', () => {
     cy.get('.people-identifiers').should(($id) => {
-      expect($id).to.have.length(1)
+      expect($id).to.have.length.at.least(1)
       expect($id.eq(0)).to.contain('GitHub')
     })
   })
