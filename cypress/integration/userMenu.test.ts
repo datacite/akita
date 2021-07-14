@@ -19,26 +19,34 @@ describe('User Menu', () => {
 
   it('settings', () => {
     cy.visit('/')
-    cy.get('#sign-in', { timeout: 30000 }).click()
-    cy.get('[data-cy=settings]').contains('Settings')
+    cy.get('#sign-in', { timeout: 30000 })
+      .click()
+      .get('[data-cy=settings]')
+      .contains('Settings')
   })
 
   it('commons page', () => {
     cy.visit('/')
-    cy.get('#sign-in', { timeout: 30000 }).click()
-    cy.get('[data-cy=commons-page]').contains('Commons Page')
+    cy.get('#sign-in', { timeout: 30000 })
+      .click()
+      .get('[data-cy=commons-page]')
+      .contains('Commons Page')
   })
 
   it('orcid', () => {
     cy.visit('/')
-    cy.get('#sign-in', { timeout: 30000 }).click()
-    cy.get('[data-cy=orcid]').contains('ORCID Record')
+    cy.get('#sign-in', { timeout: 30000 })
+      .click()
+      .get('[data-cy=orcid]')
+      .contains('ORCID Record')
   })
 
   it('sign out', () => {
     cy.visit('/')
-    cy.get('#sign-in', { timeout: 30000 }).click()
-    cy.get('[data-cy=signout]').contains('Sign Out')
+    cy.get('#sign-in', { timeout: 30000 })
+      .click()
+      .get('[data-cy=signout]')
+      .contains('Sign Out')
   })
 })
 
