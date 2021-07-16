@@ -34,33 +34,33 @@ describe('workContainer with usage', () => {
   })
 })
 
-describe('workContainer with funding', () => {
-  before(() => {
-    cy.setCookie('_consent', 'true')
-    cy.visit(`/doi.org/${encodeURIComponent('10.1594/ieda/100004')}`)
-  })
+// describe('workContainer with funding', () => {
+//   before(() => {
+//     cy.setCookie('_consent', 'true')
+//     cy.visit(`/doi.org/${encodeURIComponent('10.1594/ieda/100004')}`)
+//   })
 
-  it('creators', () => {
-    cy.get('.creator .creator-list', { timeout: 30000 }).should(
-      'contain',
-      'Allison Shaw'
-    )
-  })
+//   it('creators', () => {
+//     cy.get('.creator .creator-list', { timeout: 30000 }).should(
+//       'contain',
+//       'Allison Shaw'
+//     )
+//   })
 
-  // it('contributors', () => {
-  //   cy.get('.contributor .contributor-list', { timeout: 30000 }).should(
-  //     'contain',
-  //     'The British Library'
-  //   )
-  // })
+// it('contributors', () => {
+//   cy.get('.contributor .contributor-list', { timeout: 30000 }).should(
+//     'contain',
+//     'The British Library'
+//   )
+// })
 
-  it('funding', () => {
-    cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
-    cy.get('.panel.funding .funder-list').should(
-      'contain',
-      'National Science Foundation'
-    )
-  })
-})
+// it('funding', () => {
+//   cy.get('#work-funding', { timeout: 30000 }).contains('Funding')
+//   cy.get('.panel.funding .funder-list').should(
+//     'contain',
+//     'National Science Foundation'
+//   )
+// })
+// })
 
 export {}
