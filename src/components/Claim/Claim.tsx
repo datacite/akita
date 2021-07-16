@@ -36,8 +36,13 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
   if (!user) return null
 
   const [createClaim, { data }] = useMutation(CLAIM_GQL)
-
-  const c = doi.claims[0] || { state: 'ready', sourceId: null }
+  console.log(data)
+  const c = doi.claims[0] || {
+    state: 'ready',
+    sourceId: null,
+    claimed: null,
+    errorMessages: null
+  }
   const isDone = c.state === 'done'
   const stateColors = {
     done: 'success',

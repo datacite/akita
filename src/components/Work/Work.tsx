@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  Tabs,
-  Tab,
-  Alert,
-  Row,
-  Col,
-  Button,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import { Tabs, Tab, Alert, Row, Col } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 import {
   EmailShareButton,
@@ -17,11 +8,7 @@ import {
 } from 'react-share'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import {
-  faTwitter,
-  faFacebook,
-  faOrcid
-} from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import chunk from 'lodash/chunk'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
