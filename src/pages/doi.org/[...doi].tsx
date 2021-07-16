@@ -173,6 +173,7 @@ export const DOI_GQL = gql`
   ${connectionFragment.workConnection}
   ${contentFragment.work}
 `
+
 export interface WorkType {
   id: string
   doi: string
@@ -356,8 +357,8 @@ interface QueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const doi = (context.query.doi as String[]).join('/')
-  const query = context.query.query as String
+  const doi = (context.query.doi as string[]).join('/')
+  const query = context.query.query as string
 
   // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {

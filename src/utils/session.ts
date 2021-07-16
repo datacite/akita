@@ -16,17 +16,18 @@ export const session = () => {
 
   if (jwt && cert)
     // verify asymmetric token, using RSA with SHA-256 hash algorithm
-    JsonWebToken.verify(jwt, cert, { algorithms: ['RS256'] }, function (
-      error,
-      payload
-    ) {
-      if (payload) {
-        console.log(payload)
-        user = payload
-      } else if (error) {
-        console.log('JWT verification error: ' + error.message)
+    JsonWebToken.verify(
+      jwt,
+      cert,
+      { algorithms: ['RS256'] },
+      function (error, payload) {
+        if (payload) {
+          user = payload
+        } else if (error) {
+          console.log('JWT verification error: ' + error.message)
+        }
       }
-    })
+    )
 
   return user
 }

@@ -329,6 +329,36 @@ input[type=text] {
   cursor: pointer;
 }
 
+.btn-default {
+  background: #ffffff;
+  color: #66615B;
+  border: 2px solid #66615B;
+  margin: 8px 3px 3px 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background: #ffffff;
+  color: #2DC55E;
+  border: 2px solid #2DC55E;
+  margin: 8px 3px 3px 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #ffffff;
+  color: #EB5E28;
+  border: 2px solid #EB5E28;
+  margin: 8px 3px 3px 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .pager li {
   margin: 3px;
 }

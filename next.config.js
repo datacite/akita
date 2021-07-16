@@ -23,6 +23,9 @@ const COMMIT_SHA =
   VERCEL_BITBUCKET_COMMIT_SHA
 
 module.exports = withSourceMaps({
+  images: {
+    domains: ['img.shields.io']
+  },
   webpack: (config, options) => {
     // import yaml files
     config.module.rules.push({ test: /\.ya?ml$/, use: 'js-yaml-loader' })

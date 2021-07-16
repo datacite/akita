@@ -1,15 +1,27 @@
 import React from 'react'
-import { Tabs, Tab, Alert, Row, Col, Label, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {
+  Tabs,
+  Tab,
+  Alert,
+  Row,
+  Col,
+  Button,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
 } from 'react-share'
-import startCase from 'lodash/startCase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook, faOrcid } from '@fortawesome/free-brands-svg-icons'
+import {
+  faTwitter,
+  faFacebook,
+  faOrcid
+} from '@fortawesome/free-brands-svg-icons'
 import chunk from 'lodash/chunk'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
@@ -18,6 +30,7 @@ import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import WorkFunding from '../WorkFunding/WorkFunding'
 import WorkPerson from '../WorkPerson/WorkPerson'
 import UsageChart from '../UsageChart/UsageChart'
+import Claim from '../Claim/Claim'
 
 type Props = {
   doi: WorkType
@@ -37,81 +50,14 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     ? 'DataCite Commons: ' + doi.titles[0].title
     : 'DataCite Commons: No Title'
 
-  const showFunding =
-    doi.fundingReferences && doi.fundingReferences.length > 0
+  const showFunding = doi.fundingReferences && doi.fundingReferences.length > 0
 
-  const claim = () => {
-    const claim = doi.claims[0]
-    const isDone = claim.state === 'done'
-    const stateColors = {
-      "done": "success",
-      "failed": "danger",
-      "working": "info",
-      "waiting": "info"
-    }
-    const stateText = {
-      "done": "Claimed",
-      "failed": "Claim failed",
-      "working": "Claim in progress",
-      "waiting": "Claim waiting"
-    }
-    const claimSources = {
-      "orcid_update": "Auto-Update",
-      "orcid_search": "Search and Link",
-    }
-
-    const tooltipClaim = (
-      <Tooltip id="tooltipClaim">Status of claiming this DOI for your ORCID record.</Tooltip>
-    )
-
-    return (
-      <>
-        <h3 className="member-results">Claim</h3>
-        <div className="panel panel-transparent claim">
-          <div className="panel-body">
-            <Row>
-              <Col xs={6} md={4}>
-                <OverlayTrigger placement="top" overlay={tooltipClaim}>
-                  <Label bsStyle={stateColors[claim.state]}><FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}</Label>
-                </OverlayTrigger>
-              </Col>
-              <Col xs={6} md={4}>
-                <h5>Source</h5>
-                <a
-                  href="https://support.datacite.org/docs/datacite-profiles-user-documentation#orcid-permissions"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {claimSources[claim.sourceId]}
-                </a>
-                {isDone && (
-                  <>
-                    <h5>Claimed</h5>
-                    {new Date(claim.claimed).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </>
-                )}
-                {!isDone && claim.errorMessages && claim.errorMessages.length > 0 && (
-                  <>
-                    <h5>Error Message</h5>
-                    {startCase(claim.errorMessages[0].title)}
-                  </>
-                )}
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </>
-    )
-  }
-  
   const shareLink = () => {
     return (
       <>
-        <h3 className="member-results" id="share">Share</h3>
+        <h3 className="member-results" id="share">
+          Share
+        </h3>
         <div className="panel panel-transparent share">
           <div className="panel-body">
             <Row>
@@ -140,13 +86,15 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   }
 
   const exportMetadata = () => {
-    const showCrossrefMetadata = doi.registrationAgency.id === "crossref"
+    const showCrossrefMetadata = doi.registrationAgency.id === 'crossref'
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
 
     return (
       <>
-        <h3 className="member-results" id="download">Download</h3>
+        <h3 className="member-results" id="download">
+          Download
+        </h3>
         <div className="panel panel-transparent download">
           <div className="panel-body">
             <Row>
@@ -158,7 +106,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                       target="_blank"
                       rel="noreferrer"
                       href={
-                        'https://api.crossref.org/works/' + doi.doi + 
+                        'https://api.crossref.org/works/' +
+                        doi.doi +
                         '/transform/application/vnd.crossref.unixsd+xml'
                       }
                     >
@@ -204,7 +153,12 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
                   </a>
                 </div>
               </Col>
-              <Col className="download-list" id="citation-metadata" xs={6} md={4}>
+              <Col
+                className="download-list"
+                id="citation-metadata"
+                xs={6}
+                md={4}
+              >
                 <h5>Citation Metadata</h5>
                 <div id="export-citeproc" className="download">
                   <a
@@ -363,7 +317,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               {chunk(doi.creators, 3).map((row) => (
                 <Row key={row[0].name}>
                   {row.map((item) => (
-                    <Col key={item.name} className="creator-list" md={4}><WorkPerson person={item} /></Col>
+                    <Col key={item.name} className="creator-list" md={4}>
+                      <WorkPerson person={item} />
+                    </Col>
                   ))}
                 </Row>
               ))}
@@ -381,7 +337,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               {chunk(doi.contributors, 3).map((row) => (
                 <Row key={row[0].name}>
                   {row.map((item) => (
-                    <Col key={item.name} className="contributor-list" md={4}><WorkPerson person={item} /></Col>
+                    <Col key={item.name} className="contributor-list" md={4}>
+                      <WorkPerson person={item} />
+                    </Col>
                   ))}
                 </Row>
               ))}
@@ -400,7 +358,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
             {chunk(doi.fundingReferences, 3).map((row) => (
               <Row key={row[0].funderName}>
                 {row.map((item) => (
-                  <Col key={item.funderName} className="funder-list" md={4}><WorkFunding funding={item} /></Col>
+                  <Col key={item.funderName} className="funder-list" md={4}>
+                    <WorkFunding funding={item} />
+                  </Col>
                 ))}
               </Row>
             ))}
@@ -408,9 +368,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         </div>
       )}
       {exportMetadata()}
-      {doi.claims.length > 0 && (
-        claim()
-      )}
+      <Claim doi={doi} />
       {shareLink()}
       {formattedCitation()}
       {analyticsBar()}
