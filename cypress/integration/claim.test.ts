@@ -4,11 +4,11 @@ describe('Claim', () => {
     cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false })
   })
 
-  it('menu item', () => {
-    cy.visit('/orcid.org/0000-0001-6528-2027')
-      .get('#sign-in', { timeout: 30000 })
-      .contains('Martin Fenner')
-  })
+  // it('menu item', () => {
+  //   cy.visit('/orcid.org/0000-0001-6528-2027')
+  //     .get('#sign-in', { timeout: 30000 })
+  //     .contains('Martin Fenner')
+  // })
 
   it('claim list', () => {
     cy.visit('/orcid.org/0000-0001-6528-2027')
