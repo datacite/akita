@@ -165,15 +165,15 @@ describe('Search', () => {
           .should('contain', 'Work')
       })
 
-      it('search with click', () => {
-        cy.visit('/orcid.org/0000-0001-6528-2027')
-        cy.get('input[name="query-facets"]')
-          .type('Richard Hallett')
-          .get('.search-submit-facets')
-          .click()
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', '1 Work')
-      })
+      // it('search with click', () => {
+      //   cy.visit('/orcid.org/0000-0001-6528-2027')
+      //   cy.get('input[name="query-facets"]')
+      //     .type('Richard Hallett')
+      //     .get('.search-submit-facets')
+      //     .click()
+      //     .get('.member-results', { timeout: 60000 })
+      //     .should('contain', '1 Work')
+      // })
     })
   })
 
