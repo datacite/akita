@@ -335,7 +335,6 @@ input[type=text] {
   border: 2px solid #66615B;
   margin: 8px 3px 3px 0;
   padding: 6px 8px;
-  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -345,7 +344,6 @@ input[type=text] {
   border: 2px solid #2DC55E;
   margin: 8px 3px 3px 0;
   padding: 6px 8px;
-  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -355,7 +353,6 @@ input[type=text] {
   border: 2px solid #EB5E28;
   margin: 8px 3px 3px 0;
   padding: 6px 8px;
-  border-radius: 10px;
   cursor: pointer;
 }
 
