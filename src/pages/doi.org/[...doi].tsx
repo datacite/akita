@@ -212,7 +212,7 @@ export interface WorkType {
   registered?: Date
   formattedCitation?: string
   schemaOrg: string
-  claims?: Claim[]
+  claims?: ClaimType[]
   contributors?: Contributor[]
   fundingReferences?: FundingReference[]
   citationCount?: number
@@ -288,7 +288,8 @@ interface Rights {
   rightsIdentifier: string
 }
 
-interface Claim {
+export interface ClaimType {
+  id: string
   sourceId: string
   state: string
   claimAction: string
