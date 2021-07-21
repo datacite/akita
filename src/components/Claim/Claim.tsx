@@ -1,13 +1,6 @@
 import React from 'react'
-import { gql, useMutation, useQuery } from '@apollo/client'
-import {
-  Row,
-  Col,
-  Button,
-  OverlayTrigger,
-  Tooltip,
-  Label
-} from 'react-bootstrap'
+import { gql, useMutation } from '@apollo/client'
+import { Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import startCase from 'lodash/startCase'
@@ -20,32 +13,6 @@ import Error from '../Error/Error'
 type Props = {
   doi: WorkType
 }
-
-export interface WorkQueryData {
-  work: WorkType
-}
-
-interface QueryVar {
-  id: string
-}
-
-const DOI_GQL = gql`
-  query getContentQuery($id: ID!) {
-    work(id: $id) {
-      claims {
-        id
-        sourceId
-        state
-        claimAction
-        claimed
-        errorMessages {
-          status
-          title
-        }
-      }
-    }
-  }
-`
 
 const CREATE_CLAIM_GQL = gql`
   mutation createClaim($doi: String!, $sourceId: String!) {
@@ -81,20 +48,15 @@ const DELETE_CLAIM_GQL = gql`
 
 const Claim: React.FunctionComponent<Props> = ({ doi }) => {
   // don't show claim option if user is not logged in
+  // don't show claim option if user is not staff_admin
   // don't show claim option if registration agency is not datacite
   const user = session()
   if (
     !user ||
+    user.role_id !== 'staff_admin' ||
     (doi.registrationAgency && doi.registrationAgency.id !== 'datacite')
   )
     return null
-
-  const { data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      id: doi.doi
-    }
-  })
 
   const [createClaim, { loading, error }] = useMutation(CREATE_CLAIM_GQL, {
     errorPolicy: 'all'
