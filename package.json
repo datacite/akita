@@ -19,7 +19,7 @@
     ]
   },
   "dependencies": {
-    "@apollo/client": "^3.3.20",
+    "@apollo/client": "^3.3.21",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
     "@cypress/webpack-dev-server": "^1.4.0",

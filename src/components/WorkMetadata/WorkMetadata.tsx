@@ -11,7 +11,7 @@ import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Image from 'next/image'
-import { pluralize } from '../../utils/helpers'
+import { pluralize, orcidFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
@@ -28,7 +28,6 @@ import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
-import { orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
   metadata: WorkType

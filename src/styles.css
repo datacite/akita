@@ -329,7 +329,7 @@ input[type=text] {
   cursor: pointer;
 }
 
-.btn-default {
+.btn-default.claim {
   background: #ffffff;
   color: #66615B;
   border: 2px solid #66615B;
@@ -338,7 +338,7 @@ input[type=text] {
   cursor: pointer;
 }
 
-.btn-success {
+.btn-success.claim {
   background: #ffffff;
   color: #2DC55E;
   border: 2px solid #2DC55E;
@@ -347,7 +347,7 @@ input[type=text] {
   cursor: pointer;
 }
 
-.btn-danger {
+.btn-danger.claim {
   background: #ffffff;
   color: #EB5E28;
   border: 2px solid #EB5E28;

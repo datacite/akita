@@ -1,42 +1,120 @@
 import React from 'react'
-import { gql, useMutation } from '@apollo/client'
-import { Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { gql, useMutation, useQuery } from '@apollo/client'
+import {
+  Row,
+  Col,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+  Label
+} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import startCase from 'lodash/startCase'
 
 import { session } from '../../utils/session'
 import { WorkType } from '../../pages/doi.org/[...doi]'
+import Loading from '../Loading/Loading'
+import Error from '../Error/Error'
 
 type Props = {
   doi: WorkType
 }
 
-const CLAIM_GQL = gql`
-  mutation createClaim($doi: String, $sourceId: String) {
-    claim {
-      id
-      state
-      sourceId
-      errorMessages {
+export interface WorkQueryData {
+  work: WorkType
+}
+
+interface QueryVar {
+  id: string
+}
+
+const DOI_GQL = gql`
+  query getContentQuery($id: ID!) {
+    work(id: $id) {
+      claims {
+        id
+        sourceId
+        state
+        claimAction
+        claimed
+        errorMessages {
+          status
+          title
+        }
+      }
+    }
+  }
+`
+
+const CREATE_CLAIM_GQL = gql`
+  mutation createClaim($doi: String!, $sourceId: String!) {
+    createClaim(doi: $doi, sourceId: $sourceId) {
+      claim {
+        id
+        state
+        sourceId
+        errorMessages {
+          title
+        }
+      }
+      errors {
+        status
+        source
         title
       }
     }
-    errors {
-      status
-      source
-      title
+  }
+`
+
+const DELETE_CLAIM_GQL = gql`
+  mutation deleteClaim($id: String!) {
+    deleteClaim(id: $id) {
+      message
+      errors {
+        status
+        title
+      }
     }
   }
 `
 
 const Claim: React.FunctionComponent<Props> = ({ doi }) => {
   // don't show claim option if user is not logged in
+  // don't show claim option if registration agency is not datacite
   const user = session()
-  if (!user) return null
+  if (
+    !user ||
+    (doi.registrationAgency && doi.registrationAgency.id !== 'datacite')
+  )
+    return null
 
-  const [createClaim, { data }] = useMutation(CLAIM_GQL)
-  console.log(data)
+  const { data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
+    errorPolicy: 'all',
+    variables: {
+      id: doi.doi
+    }
+  })
+
+  const [createClaim, { loading, error }] = useMutation(CREATE_CLAIM_GQL, {
+    errorPolicy: 'all'
+  })
+  const [deleteClaim] = useMutation(DELETE_CLAIM_GQL, {
+    errorPolicy: 'all'
+  })
+  if (loading) return <Loading />
+  if (error)
+    return (
+      <>
+        <h3 className="member-results">Claim</h3>
+        <div className="panel panel-transparent claim">
+          <div className="panel-body">
+            <Error title="An error occured." message={error.message} />
+          </div>
+        </div>
+      </>
+    )
+
   const c = doi.claims[0] || {
     state: 'ready',
     sourceId: null,
@@ -45,14 +123,14 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
   }
   const isDone = c.state === 'done'
   const stateColors = {
-    done: 'success',
+    done: 'warning',
     failed: 'danger',
     working: 'info',
     waiting: 'info',
     ready: 'default'
   }
   const stateText = {
-    done: 'Claimed',
+    done: 'Delete Claim',
     failed: 'Claim failed',
     working: 'Claim in progress',
     waiting: 'Claim waiting',
@@ -69,9 +147,14 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
     </Tooltip>
   )
 
-  const onSubmit = () => {
+  const onCreate = () => {
     createClaim({
       variables: { doi: doi.doi, sourceId: 'orcid_search' }
+    })
+  }
+  const onDelete = () => {
+    deleteClaim({
+      variables: { id: doi.claims[0].id }
     })
   }
 
@@ -83,7 +166,11 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
           <Row>
             <Col xs={6} md={4}>
               <OverlayTrigger placement="top" overlay={tooltipClaim}>
-                <Button bsStyle={stateColors[c.state]} onClick={onSubmit}>
+                <Button
+                  bsStyle={stateColors[c.state]}
+                  className="claim"
+                  onClick={isDone ? onDelete : onCreate}
+                >
                   <FontAwesomeIcon icon={faOrcid} /> {stateText[c.state]}
                 </Button>
               </OverlayTrigger>

@@ -7,7 +7,7 @@ const httpLink = createHttpLink({
   uri:
     (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
     '/graphql',
-  credentials: 'same-origin'
+  credentials: 'include'
 })
 
 const authLink = setContext((_, { headers }) => {
