@@ -19,11 +19,11 @@ describe('Claim', () => {
       })
   })
 
-  it('single claim', () => {
-    cy.visit('/doi.org/10.70048/2603202113012')
-      .get('.panel.work-list', { timeout: 30000 })
-      .contains('Example for related items')
-  })
+  // it('single claim', () => {
+  //   cy.visit('/doi.org/10.70048/2603202113012')
+  //     .get('.panel.work-list', { timeout: 30000 })
+  //     .contains('Example for related items')
+  // })
 
   // it('single claim claim section', () => {
   //   cy.visit('/doi.org/10.70048/2603202113012')
