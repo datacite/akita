@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
   Navbar,
@@ -30,21 +30,24 @@ type Props = {
 }
 
 const Header: React.FunctionComponent<Props> = ({ path }) => {
-  let searchQuery = ''
-  let onSubmit = () => {}
-
   const router = useRouter()
-  if (router) {
-    searchQuery = router.query.query as string
-    onSubmit = () => {
+
+  const [searchInput, setSearchInput] = useState('' || router.query.query)
+
+  useEffect(() => {
+    if (router && router.query.query && !searchInput) {
+      setSearchInput(router.query.query)
+    }
+  }, [router.query.query])
+
+  const onSubmit = () => {
+    if (router) {
       router.push({
         pathname: path,
         query: { query: searchInput }
       })
     }
   }
-
-  const [searchInput, setSearchInput] = useState(searchQuery || '')
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter') {
