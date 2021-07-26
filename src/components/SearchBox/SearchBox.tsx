@@ -10,23 +10,15 @@ type Props = {
 
 const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
   let searchQuery = ''
-  // const paths = [
-  //   '/',
-  //   '/doi.org',
-  //   '/orcid.org',
-  //   '/ror.org',
-  //   '/about',
-  //   '/statistics'
-  // ]
   let onSubmit = () => {}
 
   const router = useRouter()
   if (router) {
-    searchQuery = router.query.query as string
+    searchQuery = router.query.filterQuery as string
     onSubmit = () => {
       router.push({
         pathname: path,
-        query: { query: searchInput }
+        query: { filterQuery: searchInput }
       })
     }
   }

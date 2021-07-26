@@ -26,7 +26,7 @@ type Props = {
 export const DOI_GQL = gql`
   query getContentQuery(
     $id: ID!
-    $query: String
+    $filterQuery: String
     $cursor: String
     $published: String
     $resourceTypeId: String
@@ -77,7 +77,7 @@ export const DOI_GQL = gql`
       }
       works(
         first: 25
-        query: $query
+        query: $filterQuery
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -167,7 +167,7 @@ export interface OrcidDataQuery {
 
 interface OrcidQueryVar {
   id: string
-  query: string
+  filterQuery: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -186,7 +186,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
-  const [query] = useQueryState<string>('query')
+  const [filterQuery] = useQueryState<string>('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'
@@ -209,7 +209,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
       errorPolicy: 'all',
       variables: {
         id: 'http://orcid.org/' + orcid,
-        query: query,
+        filterQuery: filterQuery,
         cursor: cursor,
         published: published as string,
         resourceTypeId: resourceType as string,

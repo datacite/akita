@@ -30,7 +30,7 @@ export const ORGANIZATION_GQL = gql`
     $gridId: ID
     $crossrefFunderId: ID
     $cursor: String
-    $query: String
+    $filterQuery: String
     $published: String
     $resourceTypeId: String
     $fieldOfScience: String
@@ -71,7 +71,7 @@ export const ORGANIZATION_GQL = gql`
       works(
         first: 25
         after: $cursor
-        query: $query
+        query: $filterQuery
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
@@ -129,7 +129,7 @@ interface OrganizationQueryVar {
   id: string
   gridId: string
   crossrefFunderId: string
-  query: string
+  filterQuery: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -153,7 +153,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   crossrefFunderId
 }) => {
   const router = useRouter()
-  const [query] = useQueryState<string>('query')
+  const [filterQuery] = useQueryState<string>('filterQuery')
   const [published] = useQueryState('published', {
     history: 'push'
   })
@@ -179,7 +179,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       gridId: gridId,
       crossrefFunderId: crossrefFunderId,
       cursor: cursor,
-      query: query,
+      filterQuery: filterQuery,
       published: published,
       resourceTypeId: resourceType,
       fieldOfScience: fieldOfScience,

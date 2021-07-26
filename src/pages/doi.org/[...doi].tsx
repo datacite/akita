@@ -82,7 +82,7 @@ interface MetadataType {
 export const DOI_GQL = gql`
   query getContentQuery(
     $id: ID!
-    $query: String
+    $filterQuery: String
     $cursor: String
     $published: String
     $resourceTypeId: String
@@ -136,7 +136,7 @@ export const DOI_GQL = gql`
       }
       citations(
         first: 25
-        query: $query
+        query: $filterQuery
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -153,7 +153,7 @@ export const DOI_GQL = gql`
       }
       references(
         first: 25
-        query: $query
+        query: $filterQuery
         after: $cursor
         published: $published
         resourceTypeId: $resourceTypeId
@@ -347,7 +347,7 @@ export interface WorkQueryData {
 
 interface QueryVar {
   id: string
-  query: string
+  filterQuery: string
   cursor: string
   published: string
   resourceTypeId: string
@@ -359,7 +359,7 @@ interface QueryVar {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const doi = (context.query.doi as string[]).join('/')
-  const query = context.query.query as string
+  const filterQuery = context.query.filterQuery as string
 
   // redirect to organization page if doi is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
@@ -376,7 +376,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     } else {
       const location = '/ror.org' + rorFromUrl(data.organization.id)
       context.res.writeHead(302, {
-        Location: query ? location + '?query=' + query : location
+        Location: filterQuery ? location + '?filterQuery=' + filterQuery : location
       })
       context.res.end()
       return { props: {} }
@@ -429,7 +429,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   )
     type = metadata.work.types.resourceType.toLowerCase()
 
-  const [query] = useQueryState<string>('query')
+  const [filterQuery] = useQueryState<string>('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })
@@ -447,7 +447,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     variables: {
       id: doi,
       cursor: cursor,
-      query: query,
+      filterQuery: filterQuery,
       published: published as string,
       resourceTypeId: resourceType as string,
       fieldOfScience: fieldOfScience as string,
@@ -578,7 +578,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   }
 
   return (
-    <Layout path={'/doi.org/' + doi}>
+    <Layout path={'/doi.org'}>
       <Head>
         <title key="title">{title}</title>
         <meta name="og:title" content={title} />
