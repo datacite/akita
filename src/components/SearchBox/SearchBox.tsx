@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,11 +9,9 @@ type Props = {
 }
 
 const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
-  let searchQuery = ''
-
   const router = useRouter()
 
-  const [searchInput, setSearchInput] = useState(searchQuery || router.query.filterQuery)
+  const [searchInput, setSearchInput] = useState('' || router.query.filterQuery)
 
   const onSubmit = () => {
     if (router) {
