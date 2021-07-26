@@ -301,7 +301,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
   }
 
   return (
-    <Layout path={'/orcid.org/' + orcid}>
+    <Layout path={'/orcid.org'}>
       <Head>
         <title>{title}</title>
         <meta name="og:title" content={title} />

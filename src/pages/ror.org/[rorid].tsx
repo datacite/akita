@@ -270,7 +270,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Layout path={'/ror.org/' + rorId}>
+    <Layout path={'/ror.org'}>
       <Head>
         <title>{title}</title>
         <meta name="og:title" content={title} />

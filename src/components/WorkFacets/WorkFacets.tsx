@@ -84,7 +84,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     <div className="panel panel-transparent">
       {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
         <div className="panel facets add">
-          <div className="panel-body">
+        <div id="filter-works" className="panel-body">
             <SearchBox path={path} />
           </div>
         </div>

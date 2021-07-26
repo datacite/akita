@@ -30,19 +30,7 @@ type Props = {
 }
 
 const Header: React.FunctionComponent<Props> = ({ path }) => {
-  // store query in useState(), default is current query parameter
-  // update query parameter only after submit
-  // submit pushes new path instead of updating only query parameter,
-  // to allow queries from Navbar when on a page for a single record
   let searchQuery = ''
-  // const paths = [
-  //   '/',
-  //   '/doi.org',
-  //   '/orcid.org',
-  //   '/ror.org',
-  //   '/about',
-  //   '/statistics'
-  // ]
   let onSubmit = () => {}
 
   const router = useRouter()
