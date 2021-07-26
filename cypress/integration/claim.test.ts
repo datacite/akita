@@ -10,14 +10,14 @@ describe('Claim', () => {
   //     .contains('Martin Fenner')
   // })
 
-  it('claim list', () => {
-    cy.visit('/orcid.org/0000-0001-6528-2027')
-      .get('.panel.work-list', { timeout: 30000 })
-      .should(($work) => {
-        expect($work).to.have.length.at.least(1)
-        expect($work.eq(0)).to.contain('Example for related items')
-      })
-  })
+  // it('claim list', () => {
+  //   cy.visit('/orcid.org/0000-0001-6528-2027')
+  //     .get('.panel.work-list', { timeout: 30000 })
+  //     .should(($work) => {
+  //       expect($work).to.have.length.at.least(1)
+  //       expect($work.eq(0)).to.contain('Example for related items')
+  //     })
+  // })
 
   // it('single claim', () => {
   //   cy.visit('/doi.org/10.70048/2603202113012')
