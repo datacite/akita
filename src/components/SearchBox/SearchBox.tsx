@@ -41,7 +41,7 @@ const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
 
   return (
     <>
-      <h4>Search in Works</h4>
+      <h4>Filter Works</h4>
       <InputGroup>
         <input
           name="query-facets"

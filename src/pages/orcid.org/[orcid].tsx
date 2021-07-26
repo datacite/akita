@@ -281,9 +281,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
     return (
       <>
         <Col md={9} mdOffset={3}>
-          {totalCount > 0 && (
-            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
-          )}
+          <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
         <WorksListing
           works={person.works}

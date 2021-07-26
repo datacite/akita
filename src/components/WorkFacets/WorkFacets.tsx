@@ -46,9 +46,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 
   if (loading) return <div className="col-md-3"></div>
 
-  if (!loading && data.nodes.length == 0)
-    return <div className="col-md-3"></div>
-
   function facetLink(param: string, value: string) {
     let icon = faSquare
 
@@ -90,6 +87,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         </div>
       )}
 
+      {data.published && data.published.length > 0 && (
       <div className="panel facets add">
         <div className="panel-body">
           <h4>Publication Year</h4>
@@ -107,7 +105,9 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           </ul>
         </div>
       </div>
+      )}
 
+      {data.resourceTypes && data.resourceTypes.length > 0 && (
       <div className="panel facets add">
         <div className="panel-body">
           <h4>Work Type</h4>
@@ -125,6 +125,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           </ul>
         </div>
       </div>
+      )}
 
       {data.licenses && data.licenses.length > 0 && (
         <div className="panel facets add">

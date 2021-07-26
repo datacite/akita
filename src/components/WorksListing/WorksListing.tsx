@@ -39,17 +39,11 @@ const WorksListing: React.FunctionComponent<Props> = ({
   hasNextPage,
   endCursor
 }) => {
-  if (works.totalCount == 0)
-    return (
-      <Col md={9} mdOffset={3}>
-        <div className="alert-works">
-          <Alert bsStyle="warning">No works found.</Alert>
-        </div>
-      </Col>
-    )
+
+  const hasNoWorks = works.totalCount == 0
 
   const analyticsBar = () => {
-    if (!works.totalCount) return ''
+    if (hasNoWorks) return ''
 
     const published = works.published.map((x) => ({
       title: x.title,
@@ -120,10 +114,18 @@ const WorksListing: React.FunctionComponent<Props> = ({
     )
   }
 
-  return (
-    <>
-      {showFacets && renderFacets()}
+  const renderNoWorks = () => {
+    return (
+      <Col md={9}>
+        <div className="alert-works">
+          <Alert bsStyle="warning">No works found.</Alert>
+        </div>
+      </Col>
+    )
+  }
 
+  const renderWorks = () => {
+    return (
       <Col md={9} id="content">
         {showAnalytics && analyticsBar()}
 
@@ -141,6 +143,14 @@ const WorksListing: React.FunctionComponent<Props> = ({
           ></Pager>
         )}
       </Col>
+    )
+  }
+
+  return (
+    <>
+      {showFacets && renderFacets()}
+
+      {hasNoWorks ? renderNoWorks() : renderWorks()}
     </>
   )
 }
