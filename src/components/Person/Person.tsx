@@ -4,7 +4,6 @@ import heroImage from '../../../public/images/hero.svg'
 import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
 import { Alert, Row, Col } from 'react-bootstrap'
-import { Feature } from 'flagged'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -284,9 +283,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
         </div>
       ))}
       {workCount()}
-      <Feature name="parsec">
-        {accessAchievements()}
-      </Feature>
+
+      {accessAchievements()}
     </>
   )
 }
