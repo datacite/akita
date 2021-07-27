@@ -214,7 +214,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                   />
                 </Col>
                 <Col>
-                  Every single one of your papers is free to read online. Open access helps real people, and that&apos;s pretty heroic.
+                  Every single one of your publications is free to access online. Open access helps real people, and that&apos;s pretty heroic.
                 </Col>
               </Row>
             }
