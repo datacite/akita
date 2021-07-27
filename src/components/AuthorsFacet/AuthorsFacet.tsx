@@ -91,7 +91,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                             {authors.filter(checkAuthorForPerson).map((facet) => (
                                 <li key={facet.id}>
                                     {facetLink(
-                                        'query',
+                                        'filterQuery',
                                         'creators.nameIdentifiers.nameIdentifier:"' +
                                         facet.id +
                                         '"',
