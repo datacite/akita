@@ -32,11 +32,11 @@ type Props = {
 const Header: React.FunctionComponent<Props> = ({ path }) => {
   const router = useRouter()
 
-  const [searchInput, setSearchInput] = useState('' || router.query.query)
+  const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
     if (router && router.query.query && !searchInput) {
-      setSearchInput(router.query.query)
+      setSearchInput(router.query.query.toString())
     }
   }, [router.query.query])
 
