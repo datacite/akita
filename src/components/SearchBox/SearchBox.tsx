@@ -52,6 +52,7 @@ const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
           type="text"
         />
         <Button
+          id="filter-works"
           type="submit"
           className="search-submit-facets"
           onClick={onSubmit}
