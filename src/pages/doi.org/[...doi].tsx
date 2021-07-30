@@ -115,6 +115,7 @@ export const DOI_GQL = gql`
         awardNumber
       }
       claims {
+        id
         sourceId
         state
         claimAction
