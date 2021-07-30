@@ -15,7 +15,7 @@ type Props = {
 }
 
 const CREATE_CLAIM_GQL = gql`
-  mutation createClaim($doi: String!, $sourceId: String!) {
+  mutation createClaim($doi: ID!, $sourceId: ID!) {
     createClaim(doi: $doi, sourceId: $sourceId) {
       claim {
         id
@@ -35,7 +35,7 @@ const CREATE_CLAIM_GQL = gql`
 `
 
 const DELETE_CLAIM_GQL = gql`
-  mutation deleteClaim($id: String!) {
+  mutation deleteClaim($id: ID!) {
     deleteClaim(id: $id) {
       message
       errors {
