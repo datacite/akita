@@ -11,6 +11,7 @@ const Loading: React.FunctionComponent = () => (
       viewBox="0 0 1000 250"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
+      uniqueKey="r1x6b4d-rph"
     >
       <rect x="117" y="34" rx="3" ry="3" width="198" height="14" />
       <rect x="117" y="75" rx="3" ry="3" width="117" height="14" />
