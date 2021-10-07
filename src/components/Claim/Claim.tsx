@@ -15,7 +15,7 @@ type Props = {
 }
 
 const CREATE_CLAIM_GQL = gql`
-  mutation createClaim($doi: ID!, $sourceId: ID!) {
+  mutation createClaim($doi: ID!, $sourceId: String!) {
     createClaim(doi: $doi, sourceId: $sourceId) {
       claim {
         id
@@ -53,7 +53,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
   const user = session()
   if (
     !user ||
-    user.role_id !== 'staff_admin' ||
     (doi.registrationAgency && doi.registrationAgency.id !== 'datacite')
   )
     return null
