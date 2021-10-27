@@ -88,7 +88,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
           format: ",d",
           tickMinStep: 1
         },
-        scale: { type: "linear" }
+        scale: { type: "sqrt" }
       },
       color: {
         field: "count",
