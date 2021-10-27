@@ -7,6 +7,7 @@ import useWindowDimensions from '../../utils/useWindowDimensions'
 interface ChartRecord {
   title: string
   count: number
+  color?: string
 }
 
 type Props = {
@@ -109,8 +110,17 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
     }
   }
 
+
+  const mydata = data.map(item => {
+    if(item.title === "missing") {
+      return {...item, color: "#e74c3c"}
+    }else{
+      return {...item, color: "#1abc9c"}
+    }
+  })
+
   // more than ten items would be too much
-  const mydata = data.slice(0, 10)
+  const newdata = mydata.slice(0, 10)
 
   return (
     <div className="panel panel-transparent">
@@ -121,7 +131,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
         <VegaLite
           renderer="svg"
           spec={spec}
-          data={{ table: mydata }}
+          data={{ table: newdata }}
           actions={actions}
         />
       </div>
