@@ -76,7 +76,7 @@ export const typesDomain = [
   'Journal',
   'Journal Article',
   'Model',
-  'Output Managment Plan',
+  'Output Management Plan',
   'Peer Review',
   'Physical Object',
   'Preprint',
