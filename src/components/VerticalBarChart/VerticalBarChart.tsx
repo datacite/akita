@@ -119,9 +119,6 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
     }
   })
 
-  // more than ten items would be too much
-  const newdata = mydata.slice(0, 10)
-
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
@@ -131,7 +128,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
         <VegaLite
           renderer="svg"
           spec={spec}
-          data={{ table: newdata }}
+          data={{ table: mydata.slice(0, 10) }}
           actions={actions}
         />
       </div>
