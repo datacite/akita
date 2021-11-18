@@ -138,13 +138,15 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     done: 'success',
     failed: 'danger',
     working: 'info',
-    waiting: 'info'
+    waiting: 'info',
+    deleted: 'info'
   }
   const stateText = {
     done: 'Claimed',
     failed: 'Claim failed',
     working: 'Claim in progress',
-    waiting: 'Claim waiting'
+    waiting: 'Claim waiting',
+    deleted: 'Claim deleted'
   }
 
   const container = () => {

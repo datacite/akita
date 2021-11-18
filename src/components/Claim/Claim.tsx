@@ -6,7 +6,7 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import startCase from 'lodash/startCase'
 
 import { session } from '../../utils/session'
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { WorkType, ClaimType } from '../../pages/doi.org/[...doi]'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 
@@ -76,26 +76,30 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
       </>
     )
 
-  const c = doi.claims[0] || {
-    state: 'ready',
+  const c: ClaimType = doi.claims[0] || {
+    id: null,
     sourceId: null,
+    state: 'ready',
+    claimAction: null,
     claimed: null,
     errorMessages: null
   }
-  const isDone = c.state === 'done'
+  const isDone = c.state === 'done' && c.claimed != null
   const stateColors = {
     done: 'warning',
     failed: 'danger',
     working: 'info',
     waiting: 'info',
-    ready: 'default'
+    ready: 'default',
+    deleted: 'warning'
   }
   const stateText = {
     done: 'Delete Claim',
     failed: 'Claim failed',
     working: 'Claim in progress',
     waiting: 'Claim waiting',
-    ready: 'Add to ORCID record'
+    ready: 'Add to ORCID record',
+    deleted: 'Add to ORCID record'
   }
   const claimSources = {
     orcid_update: 'Auto-Update',
