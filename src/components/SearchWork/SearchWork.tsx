@@ -280,6 +280,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
           loading={loading}
           showFacets={true}
           showAnalytics={false}
+          showClaimStatus={true}
           model={'doi'}
           url={'/doi.org?'}
           hasPagination={data.works.totalCount > 25}

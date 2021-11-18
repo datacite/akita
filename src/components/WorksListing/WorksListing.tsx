@@ -14,6 +14,7 @@ type Props = {
   works: Works
   showAnalytics: boolean
   showFacets: boolean
+  showClaimStatus: boolean
   loading: boolean
   model: string
   url: string
@@ -32,6 +33,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   works,
   showAnalytics,
   showFacets,
+  showClaimStatus,
   loading,
   model,
   url,
@@ -131,7 +133,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
 
         {works.nodes.map((doi) => (
           <React.Fragment key={doi.doi}>
-            <WorkMetadata metadata={doi} linkToExternal={false}></WorkMetadata>
+            <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus}></WorkMetadata>
           </React.Fragment>
         ))}
 

@@ -32,11 +32,13 @@ import { WorkType } from '../../pages/doi.org/[...doi]'
 type Props = {
   metadata: WorkType
   linkToExternal?: boolean
+  showClaimStatus?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
-  linkToExternal
+  linkToExternal,
+  showClaimStatus
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -386,7 +388,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             <Label bsStyle="info">{metadata.language.name}</Label>
           </OverlayTrigger>
         )}
-        {claim && (
+        {claim && showClaimStatus && (
           <OverlayTrigger placement="top" overlay={tooltipClaim}>
             <Label bsStyle={stateColors[claim.state]}>
               <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}

@@ -80,7 +80,7 @@ interface MetadataType {
 }
 
 export const DOI_GQL = gql`
-  query getContentQuery(
+  query getDoiQuery(
     $id: ID!
     $filterQuery: String
     $cursor: String
@@ -546,6 +546,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
                       model={'doi'}
@@ -562,6 +563,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
                       model={'doi'}
