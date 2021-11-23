@@ -1,6 +1,6 @@
 import React from 'react'
 import { gql, useMutation, useQuery } from '@apollo/client'
-import { Row, Col, Button, Tooltip } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
@@ -155,12 +155,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     orcid_update: 'Auto-Update',
     orcid_search: 'Search and Link'
   }
-
-  const tooltipClaimStatus = (
-    <Tooltip id="tooltipClaim">
-      Status of claiming this DOI for your ORCID record.
-    </Tooltip>
-  )
 
   const checkForStatusUpdate = () => {
     const timer = setTimeout(() => {
