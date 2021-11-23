@@ -21,8 +21,7 @@ import {
   faCreativeCommonsNc,
   faCreativeCommonsNd,
   faCreativeCommonsSa,
-  faCreativeCommonsZero,
-  faOrcid
+  faCreativeCommonsZero
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
