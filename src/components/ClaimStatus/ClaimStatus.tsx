@@ -19,6 +19,7 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
         deleted: 'info'
     }
     const stateText = {
+        ready: 'Unclaimed',
         done: 'Claimed',
         failed: 'Claim failed',
         working: 'Claim in progress',
