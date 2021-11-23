@@ -213,6 +213,13 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
               </>
             )}
 
+            {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
+              <>
+                <h5>Error Message</h5>
+                {claim.errorMessages[0].title}
+              </>
+            )}
+
           </Col>
           <Col xs={6} md={4}>
             {isActionPossible && (
