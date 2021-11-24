@@ -45,7 +45,7 @@ You will need the following things properly installed on your computer.
 
 ### Deploying
 
-The application is built as a Docker container `datacite/akita`.
+The application is built and delpoyed using Vercel and GitHub Actions
 
 ### Note on Patches/Pull Requests
 
