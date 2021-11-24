@@ -1,8 +1,7 @@
-name: Release
+name: Release to Production
 on:
-  push:
-    branches:
-      - 'master'
+  release:
+    types: [published]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -47,7 +46,7 @@ jobs:
         id: extract_variables
 
       - name: Vercel deploy
-        uses: amondnet/vercel-action@v19
+        uses: amondnet/vercel-action@v20.0.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID}}
