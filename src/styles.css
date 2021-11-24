@@ -329,6 +329,10 @@ input[type=text] {
   cursor: pointer;
 }
 
+.claim {
+  margin-top: 8px;
+}
+
 .btn-default.claim {
   background: #ffffff;
   color: #66615B;
@@ -524,7 +528,7 @@ h4.work {
 
 .panel.aggregations {
   margin-bottom: 20px;
-}  
+}
 
 /* New styles for mobile-friendly cookie bar. */
 

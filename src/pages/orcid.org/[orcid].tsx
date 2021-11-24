@@ -288,6 +288,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
           loading={loading}
           showFacets={true}
           showAnalytics={true}
+          showClaimStatus={true}
           hasPagination={person.works.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'person'}

@@ -21,22 +21,24 @@ import {
   faCreativeCommonsNc,
   faCreativeCommonsNd,
   faCreativeCommonsSa,
-  faCreativeCommonsZero,
-  faOrcid
+  faCreativeCommonsZero
 } from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
+import ClaimStatus from '../ClaimStatus/ClaimStatus'
 
 type Props = {
   metadata: WorkType
   linkToExternal?: boolean
+  showClaimStatus?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
-  linkToExternal
+  linkToExternal,
+  showClaimStatus
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -134,18 +136,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const claim = metadata.claims[0]
-  const stateColors = {
-    done: 'success',
-    failed: 'danger',
-    working: 'info',
-    waiting: 'info'
-  }
-  const stateText = {
-    done: 'Claimed',
-    failed: 'Claim failed',
-    working: 'Claim in progress',
-    waiting: 'Claim waiting'
-  }
 
   const container = () => {
     if (metadata.container && metadata.container.identifier) {
@@ -345,12 +335,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
-  const tooltipClaim = (
-    <Tooltip id="tooltipClaim">
-      Status of claiming this DOI for your ORCID record.
-    </Tooltip>
-  )
-
   let resourceType = metadata.types.resourceTypeGeneral
   if (
     metadata.registrationAgency.id !== 'datacite' &&
@@ -384,12 +368,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             <Label bsStyle="info">{metadata.language.name}</Label>
           </OverlayTrigger>
         )}
-        {claim && (
-          <OverlayTrigger placement="top" overlay={tooltipClaim}>
-            <Label bsStyle={stateColors[claim.state]}>
-              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
-            </Label>
-          </OverlayTrigger>
+        {claim && showClaimStatus && (
+          <ClaimStatus claim={claim} />
         )}
       </div>
     )

@@ -67,6 +67,11 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     process.env.NEXT_PUBLIC_PROFILES_URL ||
     'https://profiles.stage.datacite.org'
 
+  const orcidUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+      ? 'https://orcid.org/'
+      : 'https://sandbox.orcid.org/'
+
   const user = session()
 
   return (
@@ -180,7 +185,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               <MenuItem
                 eventKey={3.4}
                 data-cy="orcid"
-                href={'https://orcid.org/' + user.uid}
+                href={orcidUrl + user.uid}
                 target="_blank"
                 rel="noreferrer"
               >

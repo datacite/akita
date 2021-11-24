@@ -293,7 +293,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   return (
     <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <WorkMetadata metadata={doi} linkToExternal={true}></WorkMetadata>
+      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false}></WorkMetadata>
       {doi.creators.length > 0 && (
         <>
           <h3 className="member-results" id="work-creators">
@@ -355,7 +355,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         </div>
       )}
       {exportMetadata()}
-      <Claim doi={doi} />
+      <Claim doi_id={doi.doi} />
       {shareLink()}
       {formattedCitation()}
       {analyticsBar()}

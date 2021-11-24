@@ -1,27 +1,68 @@
 import React from 'react'
-import { gql, useMutation } from '@apollo/client'
-import { Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { gql, useMutation, useQuery } from '@apollo/client'
+import { Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import startCase from 'lodash/startCase'
 
 import { session } from '../../utils/session'
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { ClaimType } from '../../pages/doi.org/[...doi]'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
+import ClaimStatus from '../ClaimStatus/ClaimStatus'
 
 type Props = {
-  doi: WorkType
+  doi_id: string
 }
+
+interface QueryData {
+  work: {
+    id
+    registrationAgency: {
+      id: string
+    }
+    claims: ClaimType[]
+  }
+}
+
+interface QueryVar {
+  id: string
+}
+
+const GET_CLAIM_GQL = gql`
+query getDoiClaimQuery(
+  $id: ID!
+) {
+  work(id: $id) {
+    id
+    registrationAgency {
+      id
+    }
+    claims {
+      id
+      sourceId
+      state
+      claimAction
+      claimed
+      errorMessages {
+        status
+        title
+      }
+    }
+  }
+}
+`
 
 const CREATE_CLAIM_GQL = gql`
   mutation createClaim($doi: ID!, $sourceId: String!) {
     createClaim(doi: $doi, sourceId: $sourceId) {
       claim {
         id
-        state
         sourceId
+        state
+        claimAction
+        claimed
         errorMessages {
+          status
           title
         }
       }
@@ -37,32 +78,44 @@ const CREATE_CLAIM_GQL = gql`
 const DELETE_CLAIM_GQL = gql`
   mutation deleteClaim($id: ID!) {
     deleteClaim(id: $id) {
-      message
+      claim {
+        id
+        sourceId
+        state
+        claimAction
+        claimed
+        errorMessages {
+          status
+          title
+        }
+      }
       errors {
         status
+        source
         title
       }
     }
   }
 `
 
-const Claim: React.FunctionComponent<Props> = ({ doi }) => {
-  // don't show claim option if user is not logged in
-  // don't show claim option if user is not staff_admin
-  // don't show claim option if registration agency is not datacite
-  const user = session()
-  if (
-    !user ||
-    (doi.registrationAgency && doi.registrationAgency.id !== 'datacite')
-  )
-    return null
+const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
-  const [createClaim, { loading, error }] = useMutation(CREATE_CLAIM_GQL, {
+  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(GET_CLAIM_GQL, {
+    fetchPolicy: "network-only",
+    errorPolicy: 'all',
+    variables: {
+      id: doi_id,
+    }
+  })
+
+  const [createClaim] = useMutation(CREATE_CLAIM_GQL, {
     errorPolicy: 'all'
   })
+
   const [deleteClaim] = useMutation(DELETE_CLAIM_GQL, {
     errorPolicy: 'all'
   })
+
   if (loading) return <Loading />
   if (error)
     return (
@@ -76,68 +129,68 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
       </>
     )
 
-  const c = doi.claims[0] || {
-    state: 'ready',
+  // don't show claim option if user is not logged in
+  // don't show claim option if user is not staff_admin
+  // don't show claim option if registration agency is not datacite
+  const user = session()
+  if (
+    !user ||
+    (data.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
+  )
+    return null
+
+  const claim: ClaimType = data.work.claims[0] || {
+    id: null,
     sourceId: null,
+    state: 'ready',
+    claimAction: null,
     claimed: null,
     errorMessages: null
   }
-  const isDone = c.state === 'done'
-  const stateColors = {
-    done: 'warning',
-    failed: 'danger',
-    working: 'info',
-    waiting: 'info',
-    ready: 'default'
-  }
-  const stateText = {
-    done: 'Delete Claim',
-    failed: 'Claim failed',
-    working: 'Claim in progress',
-    waiting: 'Claim waiting',
-    ready: 'Add to ORCID record'
-  }
+
+  const isClaimed = claim.state === 'done' && claim.claimed != null
+  const isActionPossible = claim.state !== 'waiting'
+
   const claimSources = {
     orcid_update: 'Auto-Update',
     orcid_search: 'Search and Link'
   }
 
-  const tooltipClaim = (
-    <Tooltip id="tooltipClaim">
-      Status of claiming this DOI for your ORCID record.
-    </Tooltip>
-  )
+  const checkForStatusUpdate = () => {
+    const timer = setTimeout(() => {
+      console.log("refetch")
+      refetch()
+    }, 5000);
+    return () => clearTimeout(timer);
+  }
 
   const onCreate = () => {
     createClaim({
-      variables: { doi: doi.doi, sourceId: 'orcid_search' }
+      variables: { doi: doi_id, sourceId: 'orcid_search' }
     })
+
+    checkForStatusUpdate()
   }
+
   const onDelete = () => {
     deleteClaim({
-      variables: { id: doi.claims[0].id }
+      variables: { id: claim.id }
     })
+
+    checkForStatusUpdate()
   }
 
   return (
     <>
-      <h3 className="member-results">Claim</h3>
-      <div className="panel panel-transparent claim">
-        <div className="panel-body">
-          <Row>
-            <Col xs={6} md={4}>
-              <OverlayTrigger placement="top" overlay={tooltipClaim}>
-                <Button
-                  bsStyle={stateColors[c.state]}
-                  className="claim"
-                  onClick={isDone ? onDelete : onCreate}
-                >
-                  <FontAwesomeIcon icon={faOrcid} /> {stateText[c.state]}
-                </Button>
-              </OverlayTrigger>
-            </Col>
-            <Col xs={6} md={4}>
-              {c.sourceId && (
+      <h3 className="member-results">ORCID Claim</h3>
+      <div className="panel panel-transparent claim"></div>
+      <div className="panel-body">
+        <Row>
+          <Col xs={6} md={4}>
+            <h5>Claim Status</h5>
+            <ClaimStatus claim={claim} />
+
+            {claim.sourceId && (
                 <>
                   <h5>Source</h5>
                   <a
@@ -145,29 +198,54 @@ const Claim: React.FunctionComponent<Props> = ({ doi }) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {claimSources[c.sourceId]}
+                  {claimSources[claim.sourceId]}
                   </a>
                 </>
               )}
-              {isDone && (
-                <>
-                  <h5>Claimed</h5>
-                  {new Date(c.claimed).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </>
-              )}
-              {!isDone && c.errorMessages && c.errorMessages.length > 0 && (
-                <>
-                  <h5>Error Message</h5>
-                  {startCase(c.errorMessages[0].title)}
-                </>
-              )}
-            </Col>
-          </Row>
-        </div>
+            {isClaimed && (
+              <>
+                <h5>Claimed</h5>
+                {new Date(claim.claimed).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </>
+            )}
+
+            {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
+              <>
+                <h5>Error Message</h5>
+                {claim.errorMessages[0].title}
+              </>
+            )}
+
+          </Col>
+          <Col xs={6} md={4}>
+            {isActionPossible && (
+              <>
+                <h5>Actions</h5>
+                {isClaimed ?
+                  <Button
+                    bsStyle={'warning'}
+                    className="claim"
+                    onClick={onDelete}
+                  >
+                    <FontAwesomeIcon icon={faOrcid} /> Remove Claim
+                  </Button>
+                  :
+                  <Button
+                    bsStyle={'info'}
+                    className="claim"
+                    onClick={onCreate}
+                  >
+                    <FontAwesomeIcon icon={faOrcid} /> Claim DOI
+                  </Button>
+                }
+              </>
+            )}
+          </Col>
+        </Row>
       </div>
     </>
   )
