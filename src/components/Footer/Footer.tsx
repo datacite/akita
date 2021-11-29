@@ -19,7 +19,7 @@ const Links = {
     { name: 'Governance', url: '/governance.html' },
     { name: 'Members', url: '/members.html' },
     { name: 'Steering groups', url: '/steering.html' },
-    { name: 'Staff', url: '/staff.html' },
+    { name: 'Team', url: '/team.html' },
     { name: 'Job opportunities', url: '/jobopportunities.html' }
   ],
   services_links: [
