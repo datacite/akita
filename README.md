@@ -13,11 +13,13 @@ The web frontend for the [DataCite Commons](https://commons.datacite.org) servic
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
+* [Node.js](https://nodejs.org/) (with NPM) - Suggestion is to use a version manager like [N](https://github.com/tj/n)
+* [Yarn 1 Classic](https://classic.yarnpkg.com/lang/en/)
 
 ## Installation
 
 * `git clone <repository-url>` this repository
+* `yarn install`
 
 ## Running / Client
 
