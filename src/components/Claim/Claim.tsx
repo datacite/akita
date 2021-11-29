@@ -151,11 +151,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   const isClaimed = claim.state === 'done' && claim.claimed != null
   const isActionPossible = claim.state !== 'waiting'
 
-  const claimSources = {
-    orcid_update: 'Auto-Update',
-    orcid_search: 'Search and Link'
-  }
-
   const checkForStatusUpdate = () => {
     const timer = setTimeout(() => {
       console.log("refetch")
@@ -188,20 +183,8 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
         <Row>
           <Col xs={6} md={4}>
             <h5>Claim Status</h5>
-            <ClaimStatus claim={claim} />
-
-            {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
+            {isActionPossible ? (
               <>
-                <h5>Error Message</h5>
-                {claim.errorMessages[0].title}
-              </>
-            )}
-
-          </Col>
-          <Col xs={6} md={4}>
-            {isActionPossible && (
-              <>
-                <h5>Actions</h5>
                 {isClaimed ?
                   <Button
                     bsStyle={'warning'}
@@ -220,7 +203,16 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   </Button>
                 }
               </>
+            ) : <ClaimStatus claim={claim} />
+            }
+
+            {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
+              <>
+                <h5>Error</h5>
+                {claim.errorMessages[0].title}
+              </>
             )}
+
           </Col>
         </Row>
       </div>
