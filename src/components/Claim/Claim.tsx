@@ -190,29 +190,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
             <h5>Claim Status</h5>
             <ClaimStatus claim={claim} />
 
-            {claim.sourceId && (
-                <>
-                  <h5>Source</h5>
-                  <a
-                    href="https://support.datacite.org/docs/datacite-profiles-user-documentation#orcid-permissions"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                  {claimSources[claim.sourceId]}
-                  </a>
-                </>
-              )}
-            {isClaimed && (
-              <>
-                <h5>Claimed</h5>
-                {new Date(claim.claimed).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </>
-            )}
-
             {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
               <>
                 <h5>Error Message</h5>
