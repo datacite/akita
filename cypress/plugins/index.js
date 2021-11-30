@@ -27,6 +27,7 @@ module.exports = (on, config) => {
   on('file:preprocessor', browserify(options))
 
   // require('@cypress/code-coverage/task')(on, config)
+  require('@cypress/react/plugins/react-scripts')(on, config)
 
   // load ENV variables via dotenv
   config = dotenvFlowPlugin(config)

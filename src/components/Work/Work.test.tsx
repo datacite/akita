@@ -1,5 +1,5 @@
 // import React from 'react'
-// import { mount } from 'cypress-react-unit-test'
+// import { mount } from '@cypress/react'
 // import Work from './Work'
 
 // describe('Doi Component', () => {
