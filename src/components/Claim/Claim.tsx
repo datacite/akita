@@ -183,8 +183,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
       <div className="panel panel-transparent claim"></div>
       <div className="panel-body">
         <Row>
-          <Col xs={6} md={4}>
-            <h5>Claim Status</h5>
+            <Col xs={6} md={4}>
             {isActionPossible ? (
               <>
                 {isClaimed ?
