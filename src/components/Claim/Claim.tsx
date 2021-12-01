@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRef, useEffect } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client'
 import { Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -109,6 +110,8 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     }
   })
 
+  const intervalRef = useRef(null);
+
   const [createClaim] = useMutation(CREATE_CLAIM_GQL, {
     errorPolicy: 'all'
   })
@@ -131,7 +134,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     )
 
   // don't show claim option if user is not logged in
-  // don't show claim option if user is not staff_admin
   // don't show claim option if registration agency is not datacite
   const user = session()
   if (
@@ -152,28 +154,31 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   const isClaimed = claim.state === 'done' && claim.claimed != null
   const isActionPossible = claim.state !== 'waiting'
 
-  const checkForStatusUpdate = () => {
-    const timer = setTimeout(() => {
-      console.log("refetch")
-      refetch()
-    }, 5000);
-    return () => clearTimeout(timer);
-  }
+  // Start interval to refresh claim status
+  useEffect(() => {
+
+    if (claim.state === 'waiting') {
+      intervalRef.current = setInterval(() => {
+        console.log("refetching");
+        refetch()
+      }, 1000);
+    } else {
+      return () => clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [claim])
 
   const onCreate = () => {
     createClaim({
       variables: { doi: doi_id, sourceId: 'orcid_search' }
     })
-
-    checkForStatusUpdate()
   }
 
   const onDelete = () => {
     deleteClaim({
       variables: { id: claim.id }
     })
-
-    checkForStatusUpdate()
   }
 
   return (
