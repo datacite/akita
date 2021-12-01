@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 import React from 'react'
-import { mount } from '@cypress/react'
-import ProductionChart from './ProductionChart'
+import { mount } from 'cypress-react-unit-test'
+import VerticalBarChart from './VerticalBarChart'
 
 const data = {
   works: {
@@ -78,15 +78,15 @@ const data = {
   }
 }
 
-describe('ProductionChart Component', () => {
+describe('VerticalBarChart Component', () => {
   it('normal data', () => {
     mount(
-      <ProductionChart
+      <VerticalBarChart
         title='Test'
-        data={data.works.published}
+        data={data.works.resourceTypes}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 9)
+    cy.get('.mark-rect > path').should('be.visible').should('have.length', 6)
     cy.get('.production-chart .title').should('be.visible').contains('Test')
   })
 })
