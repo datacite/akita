@@ -159,7 +159,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
     if (claim.state === 'waiting') {
       intervalRef.current = setInterval(() => {
-        console.log("refetching");
         refetch()
       }, 1000);
     } else {
