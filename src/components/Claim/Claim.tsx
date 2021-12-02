@@ -157,16 +157,16 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   // Start interval to refresh claim status
   useEffect(() => {
 
-    if (claim.state === 'waiting') {
+    if (data.work.claims[0].state === 'waiting') {
       intervalRef.current = setInterval(() => {
         refetch()
-      }, 1000);
+      }, 2000);
     } else {
       return () => clearInterval(intervalRef.current);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [claim])
+  }, [data])
 
   const onCreate = () => {
     createClaim({
