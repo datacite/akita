@@ -1,6 +1,6 @@
 import React from 'react'
-import { useRef, useEffect } from 'react';
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useRef, useEffect, useState } from 'react';
+import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
 import { Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -11,6 +11,8 @@ import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { Feature } from 'flagged'
+import { is } from 'cypress/types/bluebird';
+import es from 'date-fns/esm/locale/es/index.js';
 
 type Props = {
   doi_id: string
@@ -103,21 +105,51 @@ const DELETE_CLAIM_GQL = gql`
 const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
   const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(GET_CLAIM_GQL, {
-    fetchPolicy: "network-only",
     errorPolicy: 'all',
     variables: {
       id: doi_id,
     }
   })
 
-  const intervalRef = useRef(null);
+  const addOrUpdateExistingClaim = (cache: ApolloCache<any>, updatedClaim: ClaimType) => {
+    const existingClaims = cache.readQuery<QueryData, QueryVar>({ query: GET_CLAIM_GQL, variables: { id: doi_id } });
+
+    // Add or update the claim in the cache
+    let newClaims = [];
+    if (existingClaims && existingClaims.work && existingClaims.work.claims.length > 0) {
+      // Update existing claims with new claim
+      const existingClaimsUpdated = existingClaims.work.claims.map(claim => {
+        if (claim.id === updatedClaim.id) {
+          return updatedClaim;
+        }
+        return claim;
+      });
+
+      newClaims = existingClaimsUpdated;
+
+    } else {
+      newClaims = [...existingClaims.work.claims, updatedClaim];
+    }
+
+    cache.writeQuery({ query: GET_CLAIM_GQL, variables: { id: doi_id }, data: { work: { ...existingClaims.work, claims: newClaims } } });
+  }
 
   const [createClaim] = useMutation(CREATE_CLAIM_GQL, {
-    errorPolicy: 'all'
+    errorPolicy: 'all',
+    update(cache, { data: { createClaim } }) {
+      if (createClaim.claim) {
+        addOrUpdateExistingClaim(cache, createClaim.claim);
+      }
+    }
   })
 
   const [deleteClaim] = useMutation(DELETE_CLAIM_GQL, {
-    errorPolicy: 'all'
+    errorPolicy: 'all',
+    update(cache, { data: { deleteClaim } }) {
+      if (deleteClaim.claim) {
+        addOrUpdateExistingClaim(cache, deleteClaim.claim);
+      }
+    }
   })
 
   if (loading) return <Loading />
@@ -154,19 +186,16 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   const isClaimed = claim.state === 'done' && claim.claimed != null
   const isActionPossible = claim.state !== 'waiting'
 
-  // Start interval to refresh claim status
   useEffect(() => {
-
-    if (data.work.claims[0].state === 'waiting') {
-      intervalRef.current = setInterval(() => {
+    if (!isActionPossible) {
+      const timer = setInterval(() => {
         refetch()
-      }, 2000);
-    } else {
-      return () => clearInterval(intervalRef.current);
-    }
+      }, 10000);
 
-    return () => clearInterval(intervalRef.current);
-  }, [data])
+      return () => clearInterval(timer);
+    }
+  }, [isActionPossible])
+
 
   const onCreate = () => {
     createClaim({
