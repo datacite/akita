@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
 import { Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,8 +11,6 @@ import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { Feature } from 'flagged'
-import { is } from 'cypress/types/bluebird';
-import es from 'date-fns/esm/locale/es/index.js';
 
 type Props = {
   doi_id: string
