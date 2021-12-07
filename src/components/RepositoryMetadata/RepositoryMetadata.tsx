@@ -3,9 +3,6 @@ import Link from 'next/link'
 import { Label, Col, Row } from 'react-bootstrap'
 import truncate from 'lodash/truncate'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faExternalLinkAlt
-} from '@fortawesome/free-solid-svg-icons'
 
 
 export interface RepositoriesNode {
@@ -27,6 +24,21 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   repo
 }) => {
 
+  const re3DataURL = () => {
+    return "https://doi.org/" + repo.re3dataId
+  }
+
+  const description = () => {
+    if (!repo.description) return ''
+
+    const descriptionHtml = truncate(repo.description, {
+      length: 2500,
+      separator: '… '
+    })
+
+    return <div className="description">{descriptionHtml}</div>
+  }
+
   const tags = () => {
     return (
       <div className="tags">
@@ -40,32 +52,38 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
       </div>
     )
   }
-
+  const links = () => {
+    return (
+      <>
+        { (repo.url || repo.re3dataId) && (
+          <>
+            { repo.re3dataId && (
+              <div>
+                <a href={re3DataURL()}>
+                  More info about {repo.name} Repository</a>
+              </div>
+            )}
+            {repo.url && (
+              <div>
+                <a href={repo.url}>Go to {repo.name} Repository</a>
+              </div>
+            )}
+          </>
+        )}
+      </>
+    )
+  }
 
   return (
-            <div key={repo.id} className="panel panel-transparent">
-              <div className="panel-body">
-                <h3>{repo.name}</h3>
-                <div className="description">{repo.description}</div>
-                {tags()}
-                { (repo.url || repo.re3dataId) && (
-                  <>
-                    { repo.re3dataId && (
-                      <div>
-
-                        <a href={"https://re3data.org/repository/" + repo.re3dataId}>
-                        More info about {repo.name} Repository</a>
-                      </div>
-                    )}
-                    {repo.url && (
-                      <div>
-                        <a href={repo.url}>Go to {repo.name} Repository</a>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
+    <div key={repo.id} className="panel panel-transparent">
+      <div className="panel-body">
+        <h3>{repo.name}</h3>
+        {description()}
+        <div className="description">{truncate(repo.description, 250)}</div>
+        {tags()}
+        {links()}
+      </div>
+    </div>
   )
 }
 
