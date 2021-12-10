@@ -1,6 +1,14 @@
 import React from 'react'
+import { gql } from '@apollo/client'
 import FilterItem from "../FilterItem/FilterItem"
 
+export const FACET_FIELDS = gql`
+  fragment facetFields on Facet{
+    id
+    title
+    count
+  }
+`
 export interface Facet {
 	name: string
 	id: string
@@ -12,8 +20,8 @@ type Props = {
 	title: string
 	name: string
 	facets: Facet[]
-
 }
+
 
 export const FacetList: React.FunctionComponent<Props> = ({
 	title,

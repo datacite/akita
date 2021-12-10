@@ -1,9 +1,20 @@
 import React from 'react'
-import Link from 'next/link'
-import { Label, Col, Row } from 'react-bootstrap'
+import { Label} from 'react-bootstrap'
+import { gql } from '@apollo/client'
 import truncate from 'lodash/truncate'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+export const REPOSITORY_FIELDS = gql`
+  fragment repoFields on Repository{
+        id
+        re3dataId
+        name
+        language
+        description
+        type
+        repositoryType
+        url
+  }
+`
 
 export interface RepositoriesNode {
   id: string

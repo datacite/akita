@@ -4,10 +4,11 @@ import { Row, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 
 import Pager from '../Pager/Pager'
-import {Facet, FacetList} from '../FacetList/FacetList'
+import {FACET_FIELDS, Facet, FacetList} from '../FacetList/FacetList'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
-import { RepositoriesNode, RepositoryMetadata } from '../RepositoryMetadata/RepositoryMetadata'
+import { RepositoriesNode, RepositoryMetadata,
+  REPOSITORY_FIELDS } from '../RepositoryMetadata/RepositoryMetadata'
 
 
 type Props = {
@@ -38,17 +39,20 @@ interface RepositoriesQueryData{
 }
 
 export const REPOSITORIES_GQL = gql`
+  ${FACET_FIELDS}
+  ${REPOSITORY_FIELDS}
+
   query getRepositoryQuery(
-  $query: String
-  $cursor: String
-  $certificate: String
-  $software: String
+    $query: String
+    $cursor: String
+    $certificate: String
+    $software: String
   ) {
     repositories(
-    query: $query
-    after: $cursor
-    certificate: $certificate
-    software: $software
+      query: $query
+      after: $cursor
+      certificate: $certificate
+      software: $software
     ) {
       totalCount
 
@@ -56,28 +60,10 @@ export const REPOSITORIES_GQL = gql`
         endCursor
         hasNextPage
       }
-      nodes {
-        ...repoFields
-      }
+      nodes {...repoFields}
       certificates{...facetFields}
       software{...facetFields}
     }
-  }
-
-  fragment repoFields on Repository{
-        id
-        re3dataId
-        name
-        language
-        description
-        type
-        repositoryType
-        url
-  }
-  fragment facetFields on Facet{
-    id
-    title
-    count
   }
 `
 const SearchRepositories: React.FunctionComponent<Props> = ({
@@ -119,20 +105,8 @@ const renderFacets = () => {
   )
 }
 
-const renderResults = () => {
-  //if (loading) return <Loading />
-
-  if (error)
-  return (
-    <Error title="An error occured." message={error.message} />
-    )
-
-  if (data.repositories.nodes.length == 0)
-    return (
-      <div className="alert-works">
-        <Alert bsStyle="warning">No repositories found.</Alert>
-      </div>
-    )
+const renderPager = () => {
+  if (data.repositories.totalCount < 20) return ""
 
   const hasNextPage = data.repositories.pageInfo
     ? data.repositories.pageInfo.hasNextPage
@@ -141,26 +115,39 @@ const renderResults = () => {
     ? data.repositories.pageInfo.endCursor
     : ''
 
-  return (
-    <>
-      <h3 className="member-results">
-        {data.repositories.totalCount} Repositories
-      </h3>
-    {data.repositories.nodes.map((repo) => (
-      <React.Fragment key={repo.id}>
-        <RepositoryMetadata repo={repo}></RepositoryMetadata>
-      </React.Fragment>
-  ))}
-    {data.repositories.totalCount > 20 && (
+  return(
       <Pager
         url={'/repositories?'}
         hasNextPage={hasNextPage}
         endCursor={endCursor}
       ></Pager>
-    )}
-  </>
-)
-  }
+  )
+}
+const renderResults = () => {
+  if (error)
+    return (
+      <Error title="An error occured." message={error.message} />
+    )
+
+  if (data.repositories.nodes.length == 0)
+    return (
+      <div className="alert-works">
+        <Alert bsStyle="warning">No repositories found.</Alert>
+      </div>
+    )
+  return (
+    <>
+      <h3 className="member-results">
+        {data.repositories.totalCount} Repositories
+      </h3>
+      {data.repositories.nodes.map((repo) => (
+        <React.Fragment key={repo.id}>
+          <RepositoryMetadata repo={repo}></RepositoryMetadata>
+        </React.Fragment>
+      ))}
+    </>
+  )
+}
 
   return (
     <Row>
@@ -171,6 +158,7 @@ const renderResults = () => {
           </div>
           <div className="col-md-6" id="content">
             {renderResults()}
+            {renderPager()}
           </div>
         </>
     )}
