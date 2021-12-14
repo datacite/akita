@@ -21,6 +21,7 @@ import {
   faNewspaper,
   faUserGraduate,
   faUniversity,
+  faDatabase,
   faBoxOpen
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -140,7 +141,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
                   eventKey={'/repositories'}
                   href={'/repositories?query=' + searchInput}
                 >
-                  <FontAwesomeIcon icon={faBoxOpen} /> Repositories
+                  <FontAwesomeIcon icon={faDatabase} /> Repositories
                 </NavItem>
               </Feature>
             </Nav>
