@@ -10,6 +10,7 @@ import { ClaimType } from '../../pages/doi.org/[...doi]'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import { Feature } from 'flagged'
 
 type Props = {
   doi_id: string
@@ -208,6 +209,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
   return (
     <>
+      <Feature name="orcidclaiming">
       <h3 className="member-results">ORCID Claim</h3>
       <div className="panel panel-transparent claim"></div>
       <div className="panel-body">
@@ -246,6 +248,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
           </Col>
         </Row>
       </div>
+      </Feature>
     </>
   )
 }
