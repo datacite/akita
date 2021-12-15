@@ -22,7 +22,6 @@ import {
   faUserGraduate,
   faUniversity,
   faDatabase,
-  faBoxOpen
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Feature } from 'flagged'
