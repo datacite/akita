@@ -36,9 +36,13 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
     return (
         <>
             <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
+            {claim.state != "deleted" ?
                 <Label bsStyle={stateColors[claim.state]}>
                     <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
                 </Label>
+            :
+                <></>
+            }
             </OverlayTrigger>
         </>
     )
