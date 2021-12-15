@@ -90,7 +90,6 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
       <div className="panel-body">
         <h3>{repo.name}</h3>
         {description()}
-        <div className="description">{truncate(repo.description, 250)}</div>
         {tags()}
         {links()}
       </div>
