@@ -355,7 +355,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
         </div>
       )}
       {exportMetadata()}
-      <Claim doi_id={doi.doi} />
+      { doi.registrationAgency.id == "datacite" && ( 
+        <Claim doi_id={doi.doi} />
+      )}
       {shareLink()}
       {formattedCitation()}
       {analyticsBar()}
