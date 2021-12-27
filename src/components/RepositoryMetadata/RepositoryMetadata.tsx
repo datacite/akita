@@ -2,6 +2,8 @@ import React from 'react'
 import { Label} from 'react-bootstrap'
 import { gql } from '@apollo/client'
 import truncate from 'lodash/truncate'
+import Link from 'next/link'
+
 
 export const REPOSITORY_FIELDS = gql`
   fragment repoFields on Repository{
@@ -35,8 +37,12 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   repo
 }) => {
 
+  const detailUrl = () => {
+    return `/repositories/${repo.id}`
+  }
+
   const re3DataURL = () => {
-    return "https://doi.org/" + repo.re3dataId
+    return `https://doi.org/${repo.re3dataId}`
   }
 
   const description = () => {
@@ -88,7 +94,9 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   return (
     <div key={repo.id} className="panel panel-transparent">
       <div className="panel-body">
-        <h3>{repo.name}</h3>
+        <h3><Link href={detailUrl()}>
+            <a>{repo.name}</a>
+        </Link></h3>
         {description()}
         {tags()}
         {links()}
