@@ -1,0 +1,51 @@
+.metrics {
+  dl {
+    display: grid;
+    grid-template: auto 1fr / auto;
+    grid-column-gap: 2rem;
+  }
+  dt {
+    grid-row: 1;
+    border-top: 2px solid black;
+  }
+  dd{
+    grid-row: 2;
+  }
+}
+
+.metadata {
+  display: grid;
+  grid-template: auto / 1fr 300px;
+  grid-template-areas: "mdmain mdsidebar";
+  grid-column-gap: 4rem;
+}
+
+.mdmain {
+  grid-area: mdmain;
+}
+.mdsidebar {
+  grid-area: mdsidebar;
+  background: grey;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: white;
+}
+.tags {
+  background: lightblue;
+  min-height: 50px;
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+}
+.dashboard {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+}
+.advise {
+  margin-top: 2rem;
+  padding: 1rem;
+  display: grid;
+  border: 1px solid green;
+}

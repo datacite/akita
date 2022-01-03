@@ -7,10 +7,10 @@ import Layout from '../../components/Layout/Layout'
 import Loading from '../../components/Loading/Loading'
 import { Row, Col } from 'react-bootstrap'
 import {
-  RepositoriesNode,
-  RepositoryMetadata,
-  REPOSITORY_FIELDS
-} from '../../components/RepositoryMetadata/RepositoryMetadata'
+  REPOSITORY_DETAIL_FIELDS,
+  RepositoryDetailNode,
+  RepositoryDetail
+} from '../../components/RepositoryDetail/RepositoryDetail'
 
 type Props = {
   repoId?: string
@@ -23,23 +23,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
+
 interface RepositoryQueryData {
-  repository: RepositoriesNode
+  repository: RepositoryDetailNode
 }
 interface RepositoryQueryVar {
   id: string
 }
 
 export const REPOSITORY_DETAIL_QUERY = gql`
-  ${REPOSITORY_FIELDS}
+  ${REPOSITORY_DETAIL_FIELDS}
   query repositoryDetailQuery(
     $id: ID!
   ) {
   repository(id: $id){
-    ...repoFields
-    citationCount
-    downloadCount
-    viewCount
+    ...repositoryDetailFields
   }
 }
 `
@@ -56,9 +54,6 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
     }
 })
 
-  const title = "Temp Title"
-  const pageUrl = "https://temp_url.org"
-  const imageUrl = "https://temp_url.org/image.jpg"
 
   const content = () => {
     if (error)
@@ -68,7 +63,7 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
     return (
       <Col md={9}>
         <h1> Repository Detail Page {repoId}</h1>
-        <RepositoryMetadata repo={data.repository}></RepositoryMetadata>
+        <RepositoryDetail repo={data.repository}></RepositoryDetail>
       </Col>
     )
   }
@@ -81,6 +76,18 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
   }
 
   const headMetadata = () => {
+    const title = data.repository.name
+      ? 'DataCite Commons: ' + data.repository.name
+      : 'DataCite Commons: No Name'
+    const pageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/repositories/' + repoId
+        : 'https://commons.stage.datacite.org/repositories/' + repoId
+
+    const imageUrl =
+      process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+        ? 'https://commons.datacite.org/images/logo.png'
+        : 'https://commons.stage.datacite.org/images/logo.png'
     return (
       <>
           <title>{title}</title>
