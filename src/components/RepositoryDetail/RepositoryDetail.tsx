@@ -1,13 +1,12 @@
 import React from 'react'
 import { gql } from '@apollo/client'
-import {FACET_FIELDS, Facet, FacetList} from '../FacetList/FacetList'
+import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
 
 import {
   RepositoriesNode,
   REPOSITORY_FIELDS,
-  RepositoryMetadata
 }from '../RepositoryMetadata/RepositoryMetadata'
 import styles from './RepositoryDetail.module.scss'
 
@@ -65,7 +64,6 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
 
   const gotoRepositoryButton = () => {
-    
     return "GO TO REPOSTIORY"
   }
 
@@ -177,6 +175,12 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
         </div>
         <div className={styles.advise}>
           {advise()}
+        </div>
+        <div className={styles.contacts}>
+          {contacts()}
+        </div>
+        <div className={styles.gotoRepositoryButton}>
+          {gotoRepositoryButton()}
         </div>
       </>
   )
