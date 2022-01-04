@@ -117,7 +117,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
               &nbsp; go to <a href={repo.url}>{repo.url}</a>
             </>
           )}
-          { repo.contacts && (
+          { repo.url && (
             <>
               or contact the repository for more information via <a href={repo.url}>{repo.url}</a>
             </>
