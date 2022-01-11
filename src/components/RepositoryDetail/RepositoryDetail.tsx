@@ -1,8 +1,19 @@
 import React from 'react'
+import Link from 'next/link'
+import { Button } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton
+} from 'react-share'
+import { faEnvelope, faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import {
   RepositoriesNode,
@@ -57,46 +68,156 @@ function facetToData(facetList){
   }))
 }
 
+
+type ConditionaBarChartProps = {
+  title: string,
+  data: [Facet]
+}
+type ConditionaDonutChartProps = {
+  title: string,
+  count: number,
+  data: [Facet]
+}
+
+const ConditionalBarChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
+  if (data.length>0){
+    return <VerticalBarChart title={title} data={data} />
+  }
+  return <div className="empty-chart"></div>
+}
+const ConditionalDonutChart: React.FunctionComponent<ConditionaDonutChartProps> = ({title, data, count}) => {
+  if (data.length>0){
+    return <DonutChart
+        data={data}
+        count={count}
+        legend={false}
+        title={title}
+        range={typesRange}
+        domain={typesDomain}
+      />
+  }
+  return <div className="empty-chart"></div>
+}
+
+const pageInfo = (repo) => {
+  const title = repo.name
+    ? 'DataCite Commons: ' + repo.name
+    : 'DataCite Commons: No Name'
+  const pageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+    ? 'https://commons.datacite.org/repositories/' + repo.id
+    : 'https://commons.stage.datacite.org/repositories/' + repo.id
+
+  const imageUrl =
+    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+    ? 'https://commons.datacite.org/images/logo.png'
+    : 'https://commons.stage.datacite.org/images/logo.png'
+  return {
+    'title': title,
+    'pageUrl': pageUrl,
+    'imageUrl': imageUrl
+  }
+}
+
+export const RepositoryHeaderInfo: React.FunctionComponent<Props> = ({
+  repo
+}) => {
+    const info = pageInfo(repo);
+    return (
+      <>
+          <title>{info.title}</title>
+          <meta name="og:title" content={info.title} />
+          <meta name="og:url" content={info.pageUrl} />
+          <meta name="og:image" content={info.imageUrl} />
+          <meta name="og:type" content="organization" />
+      </>
+    )
+
+  }
+
+export const RepositorySidebar: React.FunctionComponent<Props> = ({
+  repo
+}) => {
+  const gotoRepositoryButton = () => {
+    return (
+      <>
+        { repo.url && (
+          <Button block href={repo.url}>
+              <FontAwesomeIcon icon={faSignInAlt} />
+              &nbsp;
+              Go to Repository
+            </Button>
+        )}
+        { repo.works && repo.works.totalCount && (
+          <Link href={"/doi.org?query=client.uid:" + repo.id}>
+          <Button block bsStyle="primary">
+              <FontAwesomeIcon icon={faNewspaper} />
+              &nbsp;
+              Find Related Works
+            </Button>
+          </Link>
+        )}
+      </>
+    )
+  }
+
+  const contacts = () => {
+    return <h3>CONTACTS</h3>
+  }
+
+  const shareDisplay = () => {
+    const info = pageInfo(repo);
+    return (
+      <>
+        <h3>SHARE</h3>
+        <EmailShareButton url={info.pageUrl} title={info.title}>
+          <FontAwesomeIcon icon={faEnvelope} /> Email
+        </EmailShareButton>
+        <TwitterShareButton url={info.pageUrl} title={info.title}>
+          <FontAwesomeIcon icon={faTwitter} /> Twitter
+        </TwitterShareButton>
+        <FacebookShareButton url={info.pageUrl} title={info.title}>
+          <FontAwesomeIcon icon={faFacebook} /> Facebook
+        </FacebookShareButton>
+      </>
+    )
+  }
+  return (
+    <>
+        <div className={styles.gotoRepositoryButton}>
+          {gotoRepositoryButton()}
+        </div>
+        <div className={styles.contacts}>
+          {contacts()}
+        </div>
+        <div className={styles.share}>
+          {shareDisplay()}
+        </div>
+      </>
+    )
+
+}
 export const RepositoryDetail: React.FunctionComponent<Props> = ({
   repo
 }) => {
 
 
 
-  const gotoRepositoryButton = () => {
-    return "GO TO REPOSTIORY"
-  }
-
-  const contacts = () => {
-    return "CONTACTS"
-  }
-
   const dashboard = () => {
     return (
       <>
-      { repo.works.languages.length>0 && (
-        <VerticalBarChart title="Deposit Language" data={repo.works.languages} />
-      )}
-      <DonutChart
+
+      <ConditionalBarChart title="Deposit Language" data={repo.works.languages} />
+
+      <ConditionalDonutChart
         data={facetToData(repo.works.resourceTypes)}
         count={repo.works.totalCount}
-        legend={false}
         title="Deposit Type"
-        range={typesRange}
-        domain={typesDomain}
       />
-      { repo.works.fieldsOfScience.length>0 && (
-      <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-      )}
-      { repo.works.authors.length>0 && (
-      <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
-      )}
-      { repo.works.licenses.length>0 && (
-      <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
-      )}
-      { repo.works.published.length>0 && (
-      <VerticalBarChart title="Year of Publication" data={repo.works.published}/>
-      )}
+      <ConditionalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
+      <ConditionalBarChart title="Top Depositors" data={repo.works.authors} />
+      <ConditionalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+      <ConditionalBarChart title="Year of Publication" data={repo.works.published}/>
       </>
     )
   }
@@ -140,18 +261,40 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   }
 
 
-  const metrics = () => {
+  const metricsDisplay = () => {
+    const metricsData = [
+      {
+        "label": "Deposits",
+        "count": repo.works.totalCount
+      },
+      {
+        "label": "Citations",
+        "count": repo.citationCount
+      },
+      {
+        "label": "Views",
+        "count": repo.viewCount
+      },
+      {
+        "label": "Downloads",
+        "count": repo.downloadCount
+      }
+    ];
+
+    const metricList = metricsData.map( (metric) => 
+    <>
+      {metric.count>0 &&(
+        <>
+          <dt>{metric.label}</dt>
+          <dd>{metric.count}</dd>
+        </>
+      )}
+      </>
+    )
     return (
         <div className={styles.metrics}>
           <dl>
-            <dt>Deposits</dt>
-            <dd>{ repo.works.totalCount }</dd>
-            <dt>Citations</dt>
-            <dd>{repo.citationCount}</dd>
-            <dt>Views</dt>
-            <dd>{repo.viewCount}</dd>
-            <dt>Downloads</dt>
-            <dd>{repo.downloadCount}</dd>
+            {metricList}
           </dl>
         </div>
     )
@@ -160,7 +303,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   return (
     <>
         <h3>{repo.name}</h3>
-        {metrics()}
+        {metricsDisplay()}
         <div className={styles.metadata}>
           <div className={styles.mdmain}>{repo.description}</div>
           <div className={styles.mdsidebar}>
@@ -175,12 +318,6 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
         </div>
         <div className={styles.advise}>
           {advise()}
-        </div>
-        <div className={styles.contacts}>
-          {contacts()}
-        </div>
-        <div className={styles.gotoRepositoryButton}>
-          {gotoRepositoryButton()}
         </div>
       </>
   )
