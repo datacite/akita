@@ -59,6 +59,11 @@
     padding: 0;
   }
 }
+.gotoButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .share {
   display: flex;
   flex-direction: column;

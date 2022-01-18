@@ -138,7 +138,7 @@ export const RepositoryHeaderInfo: React.FunctionComponent<Props> = ({
 export const RepositorySidebar: React.FunctionComponent<Props> = ({
   repo
 }) => {
-  const gotoRepositoryButton = () => {
+  const gotoButtons = () => {
     return (
       <>
         { repo.url && (
@@ -148,7 +148,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
               Go to Repository
             </Button>
         )}
-        { repo.works && repo.works.totalCount && (
+      { repo.works && (repo.works.totalCount>0) && (
           <Link href={"/doi.org?query=client.uid:" + repo.id}>
           <Button block bsStyle="primary">
               <FontAwesomeIcon icon={faNewspaper} />
@@ -184,8 +184,8 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
   }
   return (
     <>
-        <div className={styles.gotoRepositoryButton}>
-          {gotoRepositoryButton()}
+        <div className={styles.gotoButtons}>
+          {gotoButtons()}
         </div>
         <div className={styles.contacts}>
           {contacts()}
@@ -238,7 +238,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
           )}
           { repo.url && (
             <>
-              or contact the repository for more information via <a href={repo.url}>{repo.url}</a>
+              &nbsp; or contact the repository for more information via <a href={repo.url}>{repo.url}</a>
             </>
           )}.
         </p>
