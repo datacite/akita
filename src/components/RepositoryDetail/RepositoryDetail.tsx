@@ -5,6 +5,7 @@ import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
+import ProductionChart from '../ProductionChart/ProductionChart'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -79,11 +80,35 @@ type ConditionaDonutChartProps = {
   data: [Facet]
 }
 
+type EmptyChartProps ={
+  title: string
+}
+
+const EmptyChart: React.FunctionComponent<EmptyChartProps> = ({title}) => {
+  return (
+    <div className={`panel panel-transparent`}>
+    <div className={`panel-body ${styles.emptyChart}`}>
+      <div className={styles.title}>
+        <h4>{title}</h4>
+      </div>
+      <div>No data available</div>
+  </div>
+  </div>
+)
+}
+
+const ConditionalProductionChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
+  if (data.length>0){
+    return <ProductionChart title={title} data={data} />
+  }
+  return <EmptyChart title={title} />
+}
+
 const ConditionalBarChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
   if (data.length>0){
     return <VerticalBarChart title={title} data={data} />
   }
-  return <div className="empty-chart"></div>
+  return <EmptyChart title={title} />
 }
 const ConditionalDonutChart: React.FunctionComponent<ConditionaDonutChartProps> = ({title, data, count}) => {
   if (data.length>0){
@@ -96,7 +121,7 @@ const ConditionalDonutChart: React.FunctionComponent<ConditionaDonutChartProps> 
         domain={typesDomain}
       />
   }
-  return <div className="empty-chart"></div>
+  return <EmptyChart title={title} />
 }
 
 const pageInfo = (repo) => {
@@ -217,7 +242,10 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       <ConditionalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
       <ConditionalBarChart title="Top Depositors" data={repo.works.authors} />
       <ConditionalBarChart title="Deposit Licenses" data={repo.works.licenses} />
-      <ConditionalBarChart title="Year of Publication" data={repo.works.published}/>
+      <ConditionalProductionChart 
+        title="Year of Publication"
+        data={facetToData(repo.works.published)}
+      />
       </>
     )
   }
