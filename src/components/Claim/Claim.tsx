@@ -225,8 +225,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   </Button>
                   :
                   <Button
-                    bsStyle={'info'}
-                    className="claim"
+                    bsStyle={'btn-default'}
                     onClick={onCreate}
                   >
                     <FontAwesomeIcon icon={faOrcid} /> Claim DOI
