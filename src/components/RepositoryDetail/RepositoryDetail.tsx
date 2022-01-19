@@ -16,6 +16,7 @@ import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
+import { compactNumbers } from '../../utils/helpers'
 import {
   RepositoriesNode,
   REPOSITORY_FIELDS,
@@ -191,7 +192,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
     return (
       <>
       { repo.contacts && (
-        <h3>CONTACTS</h3>
+        <h3>Contacts</h3>
       )}
     </>
     )
@@ -201,7 +202,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
     const info = pageInfo(repo);
     return (
       <>
-        <h3>SHARE</h3>
+        <h3>Share</h3>
         <EmailShareButton url={info.pageUrl} title={info.title}>
           <FontAwesomeIcon icon={faEnvelope} /> Email
         </EmailShareButton>
@@ -238,21 +239,23 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   const dashboard = () => {
     return (
       <>
+      <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
 
-      <ConditionalBarChart title="Deposit Language" data={repo.works.languages} />
-
-      <ConditionalDonutChart
-        data={facetToData(repo.works.resourceTypes)}
-        count={repo.works.totalCount}
-        title="Deposit Type"
-      />
-      <ConditionalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-      <ConditionalBarChart title="Top Depositors" data={repo.works.authors} />
-      <ConditionalBarChart title="Deposit Licenses" data={repo.works.licenses} />
-      <ConditionalProductionChart 
-        title="Year of Publication"
-        data={facetToData(repo.works.published)}
-      />
+      <div className={styles.grid}>
+        <ConditionalProductionChart 
+          title="Year of Publication"
+          data={facetToData(repo.works.published)}
+        />
+        <ConditionalDonutChart
+          data={facetToData(repo.works.resourceTypes)}
+          count={repo.works.totalCount}
+          title="Deposit Type"
+        />
+        <ConditionalBarChart title="Top Depositors" data={repo.works.authors} />
+        <ConditionalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
+        <ConditionalBarChart title="Deposit Languages" data={repo.works.languages} />
+        <ConditionalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+      </div>
       </>
     )
   }
@@ -321,7 +324,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       {metric.count>0 &&(
         <>
           <dt>{metric.label}</dt>
-          <dd>{metric.count}</dd>
+          <dd>{compactNumbers(metric.count)}</dd>
         </>
       )}
       </>
@@ -337,24 +340,26 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
   return (
     <>
+      <div className={styles.header}>
         <h3>{repo.name}</h3>
         {metricsDisplay()}
-        <div className={styles.metadata}>
-          <div className={styles.mdmain}>{repo.description}</div>
-          <div className={styles.mdsidebar}>
-            {extended_metadata()}
-          </div>
+      </div>
+      <div className={styles.metadata}>
+        <div className={styles.mdmain}>{repo.description}</div>
+        <div className={styles.mdsidebar}>
+          {extended_metadata()}
         </div>
-        <div className={styles.tags}>
-          {tags()}
-        </div>
-        <div className={styles.dashboard}>
-          {dashboard()}
-        </div>
-        <div className={styles.advise}>
-          {advise()}
-        </div>
-      </>
+      </div>
+      <div className={styles.tags}>
+        {tags()}
+      </div>
+      <div className={styles.dashboard}>
+        {dashboard()}
+      </div>
+      <div className={styles.advise}>
+        {advise()}
+      </div>
+    </>
   )
 }
 

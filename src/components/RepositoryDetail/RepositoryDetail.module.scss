@@ -1,4 +1,18 @@
+@mixin header-style () {
+  h3 {
+    font-weight: 600;
+    color: #1abc9c;
+    border-bottom: 1px solid #cdd2d5;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.header {
+  background: #F07C7340;
+}
 .metrics {
+
   dl {
     display: grid;
     grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
@@ -41,44 +55,40 @@
   visibility: hidden;
 }
 .dashboard {
+  @include header-style();
+
+  .grid {
+
   margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
   grid-gap: 1rem;
 }
+}
+
 .advise {
   margin-top: 2rem;
+  margin-bottom: 2rem;
   padding: 1rem;
   display: grid;
   border: 1px solid green;
 }
 
 .contacts {
-  h3 {
-    font-weight: 600;
-    color: #1abc9c;
-    border-bottom: 1px solid #cdd2d5;
-    padding: 0;
-  }
+  @include header-style();
 }
 .gotoButtons {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 3em;
 }
 .share {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
-  h3 {
-    font-weight: 600;
-    color: #1abc9c;
-    border-bottom: 1px solid #cdd2d5;
-    padding: 0;
-    width: 100%;
-  }
-
+  @include header-style();
 }
 .emptyChart {
 
