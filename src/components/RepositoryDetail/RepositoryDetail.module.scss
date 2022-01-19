@@ -31,6 +31,7 @@
   place-items: center;
   text-align: center;
   color: white;
+  visibility: hidden;
 }
 .tags {
   background: lightblue;
@@ -38,6 +39,7 @@
   display: grid;
   place-items: center;
   margin-top: 1rem;
+  visibility: hidden;
 }
 .dashboard {
   margin-top: 2rem;
@@ -87,6 +89,7 @@
   color: #666;
   width: 100%;
   height: 100%;
+  visibility:hidden;
 
   .title {
     align-self: flex-start;
