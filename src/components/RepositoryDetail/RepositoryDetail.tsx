@@ -56,6 +56,7 @@ export interface RepositoryDetailNode extends RepositoriesNode{
   downloadCount: number
   viewCount: number
   works: RepositoryWorks
+  contacts: [string]
 }
 
 type Props = {
@@ -187,7 +188,13 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
   }
 
   const contacts = () => {
-    return <h3>CONTACTS</h3>
+    return (
+      <>
+      { repo.contacts && (
+        <h3>CONTACTS</h3>
+      )}
+    </>
+    )
   }
 
   const shareDisplay = () => {
