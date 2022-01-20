@@ -1,6 +1,7 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
+import EmptyChart from '../EmptyChart/EmptyChart'
 
 import { compactNumbers } from '../../utils/helpers'
 import useWindowDimensions from '../../utils/useWindowDimensions'
@@ -271,6 +272,9 @@ const DonutChart: React.FunctionComponent<Props> = ({
   range,
   domain
 }) => {
+  if (data.length==0){
+    return <EmptyChart title={title}/>
+  }
   // get current screen size
   const windowDimensions: any = useWindowDimensions()
   const windowWidth = windowDimensions.width

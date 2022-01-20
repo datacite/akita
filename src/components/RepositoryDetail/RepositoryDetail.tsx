@@ -6,7 +6,6 @@ import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import EmptyChart from '../EmptyChart/EmptyChart'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -72,43 +71,6 @@ function facetToData(facetList){
   }))
 }
 
-
-type ConditionaBarChartProps = {
-  title: string,
-  data: [Facet]
-}
-type ConditionaDonutChartProps = {
-  title: string,
-  count: number,
-  data: [Facet]
-}
-
-const ConditionalProductionChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
-  if (data.length>0){
-    return <ProductionChart title={title} data={data} />
-  }
-  return <EmptyChart title={title} />
-}
-
-const ConditionalBarChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
-  if (data.length>0){
-    return <VerticalBarChart title={title} data={data} />
-  }
-  return <EmptyChart title={title} />
-}
-const ConditionalDonutChart: React.FunctionComponent<ConditionaDonutChartProps> = ({title, data, count}) => {
-  if (data.length>0){
-    return <DonutChart
-        data={data}
-        count={count}
-        legend={false}
-        title={title}
-        range={typesRange}
-        domain={typesDomain}
-      />
-  }
-  return <EmptyChart title={title} />
-}
 
 const pageInfo = (repo) => {
   const title = repo.name
@@ -226,19 +188,22 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
 
       <div className={styles.grid}>
-        <ConditionalProductionChart 
+        <ProductionChart 
           title="Year of Publication"
           data={facetToData(repo.works.published)}
         />
-        <ConditionalDonutChart
+        <DonutChart
           data={facetToData(repo.works.resourceTypes)}
           count={repo.works.totalCount}
+          legend={false}
           title="Deposit Type"
+          range={typesRange}
+          domain={typesDomain}
         />
-        <ConditionalBarChart title="Top Depositors" data={repo.works.authors} />
-        <ConditionalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-        <ConditionalBarChart title="Deposit Languages" data={repo.works.languages} />
-        <ConditionalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+        <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
+        <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
+        <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
+        <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
       </div>
       </>
     )
