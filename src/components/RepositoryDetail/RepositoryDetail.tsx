@@ -6,6 +6,7 @@ import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
+import EmptyChart from '../EmptyChart/EmptyChart'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -80,23 +81,6 @@ type ConditionaDonutChartProps = {
   title: string,
   count: number,
   data: [Facet]
-}
-
-type EmptyChartProps ={
-  title: string
-}
-
-const EmptyChart: React.FunctionComponent<EmptyChartProps> = ({title}) => {
-  return (
-    <div className={`panel panel-transparent`}>
-    <div className={`panel-body ${styles.emptyChart}`}>
-      <div className={styles.title}>
-        <h4>{title}</h4>
-      </div>
-      <div>Not enough data to render</div>
-  </div>
-  </div>
-)
 }
 
 const ConditionalProductionChart: React.FunctionComponent<ConditionaBarChartProps> = ({title, data}) => {
