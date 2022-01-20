@@ -38,11 +38,17 @@ const App = ({ Component, pageProps }: AppProps) => {
   // Construct feature flags based on query param, we have to wrap into array as
   // the query string can parse into string || string[]
   // Use like ?features=feature1&?features=feature2
-  const features: string[] =
+  const DEFAULT_FEATURES:string[] = process.env.NEXT_PUBLIC_FEATURE_FLAGS ? 
+    process.env.NEXT_PUBLIC_FEATURE_FLAGS.split(","):
+    []
+
+  const query_features: string[] =
     router.query['features'] instanceof Array
       ? router.query['features']
       : [router.query['features']]
 
+  const features: string[] =
+    DEFAULT_FEATURES.concat(query_features)
   return (
     <FlagsProvider features={features}>
       <ApolloProvider client={apolloClient}>

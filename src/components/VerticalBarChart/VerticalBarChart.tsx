@@ -3,6 +3,7 @@ import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
 import useWindowDimensions from '../../utils/useWindowDimensions'
+import EmptyChart from '../EmptyChart/EmptyChart'
 
 interface ChartRecord {
   title: string
@@ -28,6 +29,9 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
   data,
   color
 }) => {
+  if (data.length==0){
+    return <EmptyChart title={title}/>
+  }
   // get current screen size
   const windowDimensions: any = useWindowDimensions()
   const width = windowDimensions.width
@@ -37,13 +41,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
   }
 
   /* istanbul ignore next */
-  // const chartHeight = data.length * 22
   const chartWidth = width >= 1400 ? 11 * 22 : 11 * 18
-
-  // type Expand<VisualizationSpec> = VisualizationSpec extends Record<string, unknown>
-  // interface ExtendedVisualizationSpec extends VisualizationSpec {
-  //   UserId: string
-  // }
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
@@ -69,6 +67,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
       }
     },
     width: chartWidth,
+    height: 200,
     encoding: {
       y: {
         field: "title",

@@ -3,6 +3,7 @@ import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
 import useWindowDimensions from '../../utils/useWindowDimensions'
+import EmptyChart from '../EmptyChart/EmptyChart'
 
 interface ChartRecord {
   title: string
@@ -29,6 +30,9 @@ const ProductionChart: React.FunctionComponent<Props> = ({
   lowerBoundYear,
   color
 }) => {
+  if (data.length==0){
+    return <EmptyChart title={title}/>
+  }
   // get current screen size
   const windowDimensions: any = useWindowDimensions()
   const width = windowDimensions.width
