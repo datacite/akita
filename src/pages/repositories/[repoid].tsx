@@ -13,6 +13,7 @@ import {
   RepositoryHeaderInfo,
   RepositoryDetail
 } from '../../components/RepositoryDetail/RepositoryDetail'
+import { Feature } from 'flagged'
 
 type Props = {
   repoId?: string
@@ -57,25 +58,27 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
 
   return (
     <Layout path={'/repositories'}>
-      {loading? <Loading/>:(
-        <>
-          {error? <Error title="An error occured." message={error.message} />:(
-            <>
-              <Head>
-                <RepositoryHeaderInfo repo={data.repository}/>
-              </Head>
-              <Row>
-                <Col md={3}>
-                  <RepositorySidebar repo={data.repository}/>
-                </Col>
-                <Col md={9}>
-                  <RepositoryDetail repo={data.repository}></RepositoryDetail>
-                </Col>
-              </Row>
-            </>
-          )}
-        </>
-      )}
+      <Feature name="repository-search-commons">
+        {loading? <Loading/>:(
+          <>
+            {error? <Error title="An error occured." message={error.message} />:(
+              <>
+                <Head>
+                  <RepositoryHeaderInfo repo={data.repository}/>
+                </Head>
+                <Row>
+                  <Col md={3}>
+                    <RepositorySidebar repo={data.repository}/>
+                  </Col>
+                  <Col md={9}>
+                    <RepositoryDetail repo={data.repository}></RepositoryDetail>
+                  </Col>
+                </Row>
+              </>
+            )}
+          </>
+        )}
+      </Feature>
     </Layout>
   )
 }
