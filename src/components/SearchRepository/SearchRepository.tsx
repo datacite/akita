@@ -110,21 +110,21 @@ const renderNoneFound = () => {
   return (
     <Alert bsStyle="warning">
 
+      <p>No repositories found. If a domain repository is not available for your
+        kind of data, you may be able to use a general repository such as:</p>
 
-  <p>No repositories found. If a domain repository is not available for your kind of data, you may be able to use a general repository such as:</p>
+      <ul>
+        <li><Link href="/repositories/cdl.dryad">Dryad</Link></li>
+        <li><Link href="/repositories/figshare.ars">Figshare</Link></li>
+        <li><Link href="/repositories/datacite.harvard">Harvard Dataverse</Link></li>
+        <li><Link href="/repositories/bl.mendeley">Mendeley Data</Link></li>
+        <li><Link href="/repositories/cdl.cos">Open Science Framework</Link></li>
+        <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
+      </ul>
 
-  <ul>
-    <li><Link href="/repositories/cdl.dryad">Dryad</Link></li>
-    <li><Link href="/repositories/figshare.ars">Figshare</Link></li>
-    <li><Link href="/repositories/datacite.harvard">Harvard Dataverse</Link></li>
-    <li><Link href="/repositories/?query=mendelay">Mendeley Data</Link></li>
-    <li><Link href="/repositories/cdl.cos">Open Science Framework</Link></li>
-    <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
-  </ul>
-
-  <p>You may also have an institutional repository or other local resources at your organization available to you.
-  Contact your data librarian or computing facility for local data services.</p>
-
+      <p>You may also have an institutional repository or other local resources
+        at your organization available to you.  Contact your data librarian or
+        computing facility for local data services.</p>
 
     </Alert>
   )
