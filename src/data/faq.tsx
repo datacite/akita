@@ -61,9 +61,9 @@ const FAQ = [
 	},
 	{
 		question: 'Why are there fewer repositories in Repository Finder compared to the re3data website?',
-		answer: `Repository Finder only shows the repositories from
-		[re3data](https://www.re3data.org) that allow data uploads (properties
-		<em>open</em> or <em>restricted</em>).`
+		answer: `Repository Finder only shows the repositories from <a
+		href="https://www.re3data.org">re3data</a> that allow data uploads
+		(properties <em>open</em> or <em>restricted</em>).`
 	},
 	{
 		question: 'A repository that I expected to see isn&apos;t listed in the results. What can I do?',
@@ -76,14 +76,6 @@ const FAQ = [
 		answer: `We&apos;re interested in problems you&apos;re experiencing with
 		the tool and your ideas for improving it. Please contact us at <a
 		href="mailto:repositoryfinder@datacite.org">repositoryfinder@datacite.org</a>.`
-	},
-	{
-		question: '',
-		answer: ``
-	},
-	{
-		question: '',
-		answer: ``
 	},
 ]
 export default FAQ

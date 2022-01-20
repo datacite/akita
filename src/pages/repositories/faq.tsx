@@ -18,7 +18,7 @@ type FaqItemProps = {
 const FaqItem: React.FunctionComponent<FaqItemProps>= (props) => {
   return(
     <>
-      <h4 className="repository">{props.question}</h4>
+      <h4 className="repository">{ReactHtmlParser(props.question)}</h4>
       <p>{ReactHtmlParser(props.answer)}</p>
     </>
   )
