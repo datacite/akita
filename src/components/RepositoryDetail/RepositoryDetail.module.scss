@@ -42,12 +42,10 @@
   grid-area: mdmain;
 }
 .mdsidebar {
-  grid-area: mdsidebar;
-  background: grey;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  color: white;
+  dd {
+    display: inline;
+    margin-right: 1rem;
+  }
 }
 
 .tags {

@@ -76,10 +76,10 @@ export interface RepositoryRe3Data {
   contacts: [string]
   keywords: string
   pidSystems: [string]
-  providetTypes: [string]
+  providerTypes: [string]
   dataUploads: [TextRestriction]
   dataAccesses: [TextRestriction]
-  certificate: [DefinedTerm]
+  certificates: [DefinedTerm]
   subjects: [DefinedTerm]
 }
 export interface RepositoryWorks {
@@ -274,7 +274,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     return (
       <>
         { subjectList.map((keyword, index) => (
-          <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
+          <Label key={"subject-" + index} bsStyle="info">{keyword}</Label>
         ))}
         { keywordList.map((keyword, index) => (
           <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
@@ -320,10 +320,50 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     return `https://doi.org/${repo.re3dataId}`
   }
   const extended_metadata = () => {
-    if (repo.re3dataId) return `EXTENDED METADATA for ${re3DataURL()}`;
-    return "NO EXTENDED METADATA"
+    if (repo.re3data == null) return "";
+    const metadata = [
+      {
+        label: "Data Access",
+        values: repo.re3data.dataAccesses.map((term) => (
+          term.type
+        ))
+      },
+      {
+        label: "Persistent Identifier",
+        values: repo.re3data.pidSystems
+      },
+      {
+        label: "Certificates",
+        values: repo.re3data.certificates.map((term) => (
+          term.name
+        ))
+      },
+      {
+        label: "Data Upload",
+        values: repo.re3data.dataUploads.map((term) => (
+          term.type
+        ))
+      },
+      {
+        label: "Provider Type",
+        values: repo.re3data.providerTypes
+      },
+    ]
+    const mdList = metadata.map( (field) => (
+      <>
+          <dt>{field.label}</dt>
+          {(field.values.length ==0)&& (<dd>none</dd>)}
+          {field.values.map( (value, index) => (
+            <dd key={"metadata-" + field.label + index}>{value}</dd>
+          ))}
+      </>
+    ))
+    return (
+      <dl>
+        {mdList}
+      </dl>
+    )
   }
-
 
   const metricsDisplay = () => {
     const metricsData = [
