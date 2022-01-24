@@ -316,9 +316,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       </>
     )
   }
-  const re3DataURL = () => {
-    return `https://doi.org/${repo.re3dataId}`
-  }
+
   const extended_metadata = () => {
     if (repo.re3data == null) return "";
     const metadata = [
