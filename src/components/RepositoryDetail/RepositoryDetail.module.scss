@@ -10,20 +10,24 @@
 
 .header {
   background: #F07C7340;
-}
-.metrics {
-
-  dl {
-    display: grid;
-    grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
-    grid-column-gap: 2rem;
-  }
-  dt {
-    grid-row: 1;
-    border-top: 2px solid black;
-  }
-  dd{
+  display: grid;
+  grid-template: auto / 1fr 300px;
+  grid-gap: 1rem;
+  .metrics {
     grid-row: 2;
+    dl {
+      display: grid;
+      grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
+      grid-column-gap: 2rem;
+      margin:0;
+    }
+    dt {
+      grid-row: 1;
+      border-top: 2px solid black;
+    }
+    dd{
+      grid-row: 2;
+    }
   }
 }
 
@@ -44,15 +48,13 @@
   place-items: center;
   text-align: center;
   color: white;
-  visibility: hidden;
 }
+
 .tags {
-  background: lightblue;
-  min-height: 50px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
   margin-top: 1rem;
-  visibility: hidden;
 }
 .dashboard {
   @include header-style();
@@ -76,6 +78,8 @@
 
 .contacts {
   @include header-style();
+  display: flex;
+  flex-direction: column;
 }
 .gotoButtons {
   display: flex;

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Button } from 'react-bootstrap';
+import { Button, Label } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
@@ -31,6 +31,29 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     citationCount
     downloadCount
     viewCount
+    re3dataId
+    re3data{
+      id
+      name
+      contacts
+      keywords
+      pidSystems
+      providerTypes
+
+      dataUploads{
+        type
+      }
+
+      dataAccesses {
+        type
+      }
+      certificates {
+        name
+      }
+      subjects {
+        name
+      }
+    }
     works {
       totalCount
       languages{...facetFields}
@@ -42,6 +65,23 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     }
   }
 `
+export interface TextRestriction {
+  type: string
+}
+export interface DefinedTerm {
+  name: string
+}
+export interface RepositoryRe3Data {
+  id: string
+  contacts: [string]
+  keywords: string
+  pidSystems: [string]
+  providetTypes: [string]
+  dataUploads: [TextRestriction]
+  dataAccesses: [TextRestriction]
+  certificate: [DefinedTerm]
+  subjects: [DefinedTerm]
+}
 export interface RepositoryWorks {
   totalCount: number
   languages: [Facet]
@@ -52,12 +92,13 @@ export interface RepositoryWorks {
   published: [Facet]
 }
 
+
 export interface RepositoryDetailNode extends RepositoriesNode{
   citationCount: number
   downloadCount: number
   viewCount: number
   works: RepositoryWorks
-  contacts: [string]
+  re3data: RepositoryRe3Data
 }
 
 type Props = {
@@ -135,10 +176,25 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
   }
 
   const contacts = () => {
+    if (repo.re3data == null) return "";
+
+    const contactsData = repo.re3data.contacts.map((contact) => (
+      {
+        text: contact,
+        link: contact.startsWith('http')? contact: "mailto:"+contact
+      }
+    ));
+
     return (
       <>
-      { repo.contacts && (
+      { (repo.re3data && repo.re3data.contacts) && (
+        <>
         <h3>Contacts</h3>
+        { contactsData.map((contact, index) => (
+          <a key={"contact-"+ index} href={contact.link}>{contact.text}</a>
+        ))}
+
+      </>
       )}
     </>
     )
@@ -210,7 +266,22 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   }
 
   const tags = () => {
-    return "TAGS"
+    if (repo.re3data == null) return "";
+    const keywordList = repo.re3data.keywords.toLowerCase().split(", ")
+    const subjectList = repo.re3data.subjects.map((subject) => (
+      subject.name.toLowerCase()
+    ))
+    return (
+      <>
+        { subjectList.map((keyword, index) => (
+          <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
+        ))}
+        { keywordList.map((keyword, index) => (
+          <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
+        ))}
+      </>
+
+    )
   }
 
   const advise = () => {
