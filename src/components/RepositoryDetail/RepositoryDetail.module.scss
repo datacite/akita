@@ -10,20 +10,23 @@
 
 .header {
   background: #F07C7340;
-}
-.metrics {
-
-  dl {
-    display: grid;
-    grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
-    grid-column-gap: 2rem;
-  }
-  dt {
-    grid-row: 1;
-    border-top: 2px solid black;
-  }
-  dd{
+  display: grid;
+  grid-template: auto / 1fr 300px;
+  grid-gap: 1rem;
+  .metrics {
     grid-row: 2;
+    dl {
+      display: grid;
+      grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
+      grid-column-gap: 2rem;
+    }
+    dt {
+      grid-row: 1;
+      border-top: 2px solid black;
+    }
+    dd{
+      grid-row: 2;
+    }
   }
 }
 
