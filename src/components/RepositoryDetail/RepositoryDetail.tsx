@@ -31,6 +31,9 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     citationCount
     downloadCount
     viewCount
+    re3data{
+      contacts
+    }
     works {
       totalCount
       languages{...facetFields}
@@ -52,12 +55,16 @@ export interface RepositoryWorks {
   published: [Facet]
 }
 
+export interface RepositoryRe3Data {
+  contacts: [string]
+}
+
 export interface RepositoryDetailNode extends RepositoriesNode{
   citationCount: number
   downloadCount: number
   viewCount: number
   works: RepositoryWorks
-  contacts: [string]
+  re3data: RepositoryRe3Data
 }
 
 type Props = {
@@ -135,10 +142,25 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
   }
 
   const contacts = () => {
+    if (repo.re3data == null) return "";
+
+    const contactsData = repo.re3data.contacts.map((contact) => (
+      {
+        text: contact,
+        link: contact.startsWith('http')? contact: "mailto:"+contact
+      }
+    ));
+
     return (
       <>
-      { repo.contacts && (
+      { (repo.re3data && repo.re3data.contacts) && (
+        <>
         <h3>Contacts</h3>
+        { contactsData.map((contact, index) => (
+          <a key={"contact-"+ index} href={contact.link}>{contact.text}</a>
+        ))}
+
+      </>
       )}
     </>
     )

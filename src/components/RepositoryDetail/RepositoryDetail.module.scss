@@ -19,6 +19,7 @@
       display: grid;
       grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
       grid-column-gap: 2rem;
+      margin:0;
     }
     dt {
       grid-row: 1;
@@ -79,6 +80,8 @@
 
 .contacts {
   @include header-style();
+  display: flex;
+  flex-direction: column;
 }
 .gotoButtons {
   display: flex;
