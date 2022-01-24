@@ -48,15 +48,13 @@
   place-items: center;
   text-align: center;
   color: white;
-  visibility: hidden;
 }
+
 .tags {
-  background: lightblue;
-  min-height: 50px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
   margin-top: 1rem;
-  visibility: hidden;
 }
 .dashboard {
   @include header-style();
