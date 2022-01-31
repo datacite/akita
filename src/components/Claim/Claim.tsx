@@ -166,10 +166,25 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   // don't show claim option if registration agency is not datacite
   const user = session()
   if (
-    !user ||
     (data.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
   )
     return null
+
+  if (!user){
+    return (
+      <>
+      <h3 className="member-results">ORCID Claim</h3>
+      <div className="panel panel-transparent claim"></div>
+      <div className="panel-body">
+        <Row>
+            <Col xs={6} md={4}>
+              <Button bsStyle={'btn-default'} disabled title="Sign in to Add to ORCID record">Claim DOI</Button>
+            </Col>
+        </Row>
+      </div>
+    </>
+    )
+  }
 
   const claim: ClaimType = data.work.claims[0] || {
     id: null,
