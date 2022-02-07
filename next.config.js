@@ -23,6 +23,7 @@ const COMMIT_SHA =
   VERCEL_BITBUCKET_COMMIT_SHA
 
 module.exports = withSourceMaps({
+  swcMinify: true,
   images: {
     domains: ['img.shields.io']
   },
