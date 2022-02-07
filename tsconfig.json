@@ -18,8 +18,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["jest"],
-    "baseUrl": "."
+    "types": [
+      "jest"
+    ],
+    "baseUrl": ".",
+    "incremental": true
   },
   "exclude": [
     "node_modules"
@@ -27,6 +30,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "src/pages/overviewtsx"
+    "**/*.tsx",
+    "src/pages/overviewtsx"
   ]
 }
