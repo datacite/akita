@@ -24,7 +24,7 @@ const Links = {
   ],
   services_links: [
     { name: 'Assign DOIs', url: '/dois.html' },
-    { name: 'Metadata search', url: '/governance.html' },
+    { name: 'Metadata search', url: 'https://search.datacite.org/' },
     { name: 'Event data', url: '/eventdata.html' },
     { name: 'Profiles', url: '/profiles.html' },
     { name: 're3data', url: '/re3data.html' },
