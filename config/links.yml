@@ -15,7 +15,7 @@ services_links:
  - name: Assign DOIs
    url: /dois.html
  - name: Metadata search
-   url: /search.html
+   url: https://search.datacite.org/
  - name: Event data
    url: /eventdata.html
  - name: Profiles
