@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 jobs:
   test:
-    uses: ./github/workflows/cypress_tests.yml
+    uses: ./.github/workflows/cypress_tests.yml
     secrets:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
