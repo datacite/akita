@@ -9,7 +9,6 @@ jobs:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release:
     needs: test
     runs-on: ubuntu-latest
