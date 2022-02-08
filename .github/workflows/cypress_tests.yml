@@ -8,8 +8,6 @@ on:
         required: true
       CYPRESS_USER_COOKIE:
         required: true
-      GITHUB_TOKEN:
-        required: true
 
 jobs:
   cypress:
