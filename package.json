@@ -104,5 +104,8 @@
     "tsify": "^4.0.2",
     "typescript": "^4.3.2"
   },
+  "resolutions": {
+    "**/@fortawesome/fontawesome-common-types": "^0.3.0"
+  },
   "license": "MIT"
 }
