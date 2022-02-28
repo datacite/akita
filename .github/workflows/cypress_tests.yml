@@ -1,0 +1,37 @@
+name: Run Tests on Cypress.IO
+on:
+  workflow_call:
+    secrets:
+      NEXT_PUBLIC_API_URL:
+        required: true
+      CYPRESS_RECORD_KEY:
+        required: true
+      CYPRESS_USER_COOKIE:
+        required: true
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn dev
+          wait-on: 'http://localhost:3000'
+          quiet: true
+          record: true
+          parallel: true
+          group: 'Tests'
+        env:
+          NODE_ENV: test
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
