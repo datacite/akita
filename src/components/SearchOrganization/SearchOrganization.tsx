@@ -127,8 +127,8 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
   searchQuery
 }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [types] = useQueryState<string>('types')
-  const [country] = useQueryState<string>('country')
+  const [types] = useQueryState('types')
+  const [country] = useQueryState('country')
 
   const { loading, error, data } = useQuery<
     OrganizationsQueryData,

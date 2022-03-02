@@ -6,7 +6,7 @@ import Teaser from '../../components/Teaser/Teaser'
 import SearchPerson from '../../components/SearchPerson/SearchPerson'
 
 const IndexPersonPage = () => {
-  const [searchQuery] = useQueryState<string>('query')
+  const [searchQuery] = useQueryState('query')
   
   return (
     <Layout path={'/orcid.org'} >

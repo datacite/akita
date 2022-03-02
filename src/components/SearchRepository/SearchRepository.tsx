@@ -71,8 +71,8 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
   searchQuery
 }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [certificate] = useQueryState<string>('certificate')
-  const [software] = useQueryState<string>('software')
+  const [certificate] = useQueryState('certificate')
+  const [software] = useQueryState('software')
   const { loading, error, data } = useQuery<
     RepositoriesQueryData, RepositoriesQueryVar
   >(REPOSITORIES_GQL, {

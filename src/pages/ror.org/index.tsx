@@ -6,7 +6,7 @@ import Layout from '../../components/Layout/Layout'
 import SearchOrganization from '../../components/SearchOrganization/SearchOrganization'
 
 const OrganizationIndexPage = () => {
-  const [searchQuery] = useQueryState<string>('query')
+  const [searchQuery] = useQueryState('query')
 
   return (
     <Layout path={'/ror.org'}>

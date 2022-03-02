@@ -186,7 +186,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
-  const [filterQuery] = useQueryState<string>('filterQuery')
+  const [filterQuery] = useQueryState('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
     history: 'push'

@@ -153,7 +153,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   crossrefFunderId
 }) => {
   const router = useRouter()
-  const [filterQuery] = useQueryState<string>('filterQuery')
+  const [filterQuery] = useQueryState('filterQuery')
   const [published] = useQueryState('published', {
     history: 'push'
   })
