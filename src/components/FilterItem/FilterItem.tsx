@@ -16,7 +16,7 @@ const FilterItem: React.FunctionComponent<Props> = ({
   title,
   count
 }) => {
-  const [activeFilter, setActiveFilter] = useQueryState<string>(name)
+  const [activeFilter, setActiveFilter] = useQueryState(name)
 
   const activeIcon = (fid: string) => {
     let icon = faSquare

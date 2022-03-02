@@ -6,7 +6,7 @@ import Teaser from '../../components/Teaser/Teaser'
 import SearchWork from '../../components/SearchWork/SearchWork'
 
 const IndexPage = () => {
-  const [searchQuery] = useQueryState<string>('query')
+  const [searchQuery] = useQueryState('query')
 
   return (
     <Layout path={'/doi.org'} >

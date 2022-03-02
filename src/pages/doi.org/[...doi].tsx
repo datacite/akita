@@ -430,7 +430,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   )
     type = metadata.work.types.resourceType.toLowerCase()
 
-  const [filterQuery] = useQueryState<string>('filterQuery')
+  const [filterQuery] = useQueryState('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })

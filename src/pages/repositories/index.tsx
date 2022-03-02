@@ -7,7 +7,7 @@ import Layout from '../../components/Layout/Layout'
 import SearchRepository from '../../components/SearchRepository/SearchRepository'
 
 const RepositoryIndexPage = () => {
-  const [searchQuery] = useQueryState<string>('query')
+  const [searchQuery] = useQueryState('query')
 
   return (
     <Layout path={'/repositories'}>
