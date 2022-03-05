@@ -156,7 +156,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
     return (
       <>
         { repo.url && (
-          <Button block href={repo.url}>
+          <Button id="go-to-repo" block href={repo.url}>
               <FontAwesomeIcon icon={faSignInAlt} />
               &nbsp;
               Go to Repository
@@ -164,7 +164,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         )}
       { repo.works && (repo.works.totalCount>0) && (
           <Link href={"/doi.org?query=client.uid:" + repo.id}>
-          <Button block bsStyle="primary">
+          <Button block bsStyle="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
               Find Related Works
@@ -191,7 +191,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         <>
         <h3>Contacts</h3>
         { contactsData.map((contact, index) => (
-          <a key={"contact-"+ index} href={contact.link}>{contact.text}</a>
+          <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
         ))}
 
       </>

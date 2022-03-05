@@ -37,7 +37,7 @@ const FilterItem: React.FunctionComponent<Props> = ({
 
   return (
     <div>
-      <a onClick={() => toggleFilter(id)}>{activeIcon(id)}</a>
+      <a id={"facet-"+id} onClick={() => toggleFilter(id)}>{activeIcon(id)}</a>
       <div className="facet-title">{title}</div>
       <span className="number pull-right">{count.toLocaleString('en-US')}</span>
       <div className="clearfix" />
