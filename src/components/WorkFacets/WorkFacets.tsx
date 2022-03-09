@@ -67,7 +67,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 
     return (
       <Link href={url + params.toString()}>
-        <a id={"facet-"+param}>
+        <a className={"facet-"+param}>
           <FontAwesomeIcon icon={icon} />{' '}
         </a>
       </Link>
