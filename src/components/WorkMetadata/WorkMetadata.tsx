@@ -162,7 +162,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         <>
           {' '}
           in{' '}
-          <a href={'/doi.org?query=client.uid:' + metadata.repository.id}>
+          <a href={'/repositories/' + metadata.repository.id}>
             {metadata.repository.name}
           </a>
         </>
