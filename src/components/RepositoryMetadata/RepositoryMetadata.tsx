@@ -76,13 +76,13 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
           <>
             { repo.re3dataId && (
               <div>
-                <a href={re3DataURL()}>
+                <a className="re3data-link" href={re3DataURL()}>
                   More info about {repo.name} Repository</a>
               </div>
             )}
             {repo.url && (
               <div>
-                <a href={repo.url}>Go to {repo.name} Repository</a>
+                <a className="go-to-repository-link" href={repo.url}>Go to {repo.name} Repository</a>
               </div>
             )}
           </>
