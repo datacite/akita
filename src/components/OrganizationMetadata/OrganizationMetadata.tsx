@@ -155,24 +155,26 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           </Col>
           <Col xs={6} md={6}>
             <h5>Other Identifiers</h5>
-            <div>
-              GRID{' '}
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={
-                  'https://grid.ac/institutes/' + grid[0].identifier
-                }
-              >
-                {grid[0].identifier}
-              </a>
-            </div>
+            {grid.length > 0 && (
+              <div className="identifier id-type-grid">
+                GRID{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={
+                    'https://grid.ac/institutes/' + grid[0].identifier
+                  }
+                >
+                  {grid[0].identifier}
+                </a>
+              </div>
+            )}
             {fundref.length > 0 && (
               <>
                 {fundref
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
-                    <div key={id.identifier}>
+                    <div key={id.identifier} className="identifier id-type-crossref-funder">
                       Crossref Funder ID{' '}
                       <a
                         target="_blank"
@@ -190,7 +192,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                 {isni
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
-                    <div key={id.identifier}>
+                    <div key={id.identifier} className="identifier id-type-isni">
                       ISNI{' '}
                       <a
                         target="_blank"
@@ -208,7 +210,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
                 {wikidata
                   .filter((_, idx) => idx < 5)
                   .map((id) => (
-                    <div key={id.identifier}>
+                    <div key={id.identifier} className="identifier id-type-wikidata">
                       Wikidata{' '}
                       <a
                         target="_blank"
