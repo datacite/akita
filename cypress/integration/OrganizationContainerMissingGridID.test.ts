@@ -9,7 +9,7 @@ describe('OrganizationContainer Display GridID if it exists', () => {
       .should('include.text','GRID')
   })
   it('visit site without gridID, id element not should exist', () => {
-    cy.visit('ror.org/02hhf2525')
+    cy.visit('/ror.org/02hhf2525')
     cy
       .get('.identifier')
       .should('not.include.text','GRID')
