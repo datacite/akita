@@ -7,8 +7,8 @@ import Link from 'next/link'
 
 export const REPOSITORY_FIELDS = gql`
   fragment repoFields on Repository{
-        id
-        re3dataId
+        uid
+        re3dataDoi
         name
         language
         description
@@ -19,8 +19,8 @@ export const REPOSITORY_FIELDS = gql`
 `
 
 export interface RepositoriesNode {
-  id: string
-  re3dataId: string
+  uid: string
+  re3dataDoi: string
   name: string
   language: string[]
   description: string
@@ -38,11 +38,11 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
 }) => {
 
   const detailUrl = () => {
-    return `/repositories/${repo.id}`
+    return `/repositories/${repo.uid}`
   }
 
   const re3DataURL = () => {
-    return `https://doi.org/${repo.re3dataId}`
+    return `https://doi.org/${repo.re3dataDoi}`
   }
 
   const description = () => {
@@ -72,9 +72,9 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   const links = () => {
     return (
       <>
-        { (repo.url || repo.re3dataId) && (
+        { (repo.url || repo.re3dataDoi) && (
           <>
-            { repo.re3dataId && (
+            { repo.re3dataDoi && (
               <div>
                 <a className="re3data-link" href={re3DataURL()}>
                   More info about {repo.name} Repository</a>
@@ -92,7 +92,7 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div key={repo.id} className="panel panel-transparent">
+    <div key={repo.uid} className="panel panel-transparent">
       <div className="panel-body">
         <h3><Link href={detailUrl()}>
             <a>{repo.name}</a>

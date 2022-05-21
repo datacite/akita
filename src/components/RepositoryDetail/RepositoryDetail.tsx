@@ -31,7 +31,7 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     citationCount
     downloadCount
     viewCount
-    re3dataId
+    re3dataDoi
     re3data{
       id
       name
@@ -163,7 +163,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
             </Button>
         )}
       { repo.works && (repo.works.totalCount>0) && (
-          <Link href={"/doi.org?query=client.uid:" + repo.id}>
+          <Link href={"/doi.org?query=" + repo.uid}>
           <Button block bsStyle="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
