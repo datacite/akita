@@ -21,7 +21,7 @@ const FairFilter: React.FunctionComponent<Props> = () => {
 
     const tooltipFAIRfilters = (
         <Tooltip id="tooltipFAIRfilters">
-            See the repositoriesin re3data that meet the FAIR criterias.
+            See the repositories in re3data that meet the FAIR criterias.
         </Tooltip>
     )
 

@@ -30,15 +30,15 @@ interface RepositoryQueryData {
   repository: RepositoryDetailNode
 }
 interface RepositoryQueryVar {
-  id: string
+  uid: string
 }
 
 export const REPOSITORY_DETAIL_QUERY = gql`
   ${REPOSITORY_DETAIL_FIELDS}
   query repositoryDetailQuery(
-    $id: ID!
+    $uid: ID!
   ) {
-  repository(id: $id){
+  repository(id: $uid){
     ...repositoryDetailFields
   }
 }
@@ -52,7 +52,7 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
   >(REPOSITORY_DETAIL_QUERY, {
     errorPolicy: 'all',
     variables: {
-      id : repoId,
+      uid : repoId,
     }
 })
 
