@@ -31,57 +31,59 @@ const FairFilter: React.FunctionComponent<Props> = () => {
     const criterias = [
         {id: "fair-filter-1", title: "Enabling FAIR Data Project"},
         {id: "fair-filter-2", title: "FAIR's FAIR Project"},
-        {id: "fair-filter-3", title: "none CLEAR"},
     ]
 
-    const activeIcon = (fid: boolean) => {
+    const activeIcon = (fid: string) => {
         let icon = faSquare
-        if (fid == true) {
+        if (fid == activeFairFilter()) {
           icon = faCheckSquare
         }
     
         return <FontAwesomeIcon icon={icon} />
       }
 
-    const toggleFilter = (fid: boolean, filterId: string) => {
-        if (true == fid) {
-            switch (filterId) {
-                case "fair-filter-1":
-                    setFairCriteria({
-                        hasPid: "true",
-                        isOpen: "true",
-                        subjectId: "34"
-                    })
-                    break;
-                case "fair-filter-2":
-                    setFairCriteria({
-                        hasPid: "true",
-                        isOpen: "true",
-                        subjectId: null
-                    })
-                    break;
-                default:
-                    setFairCriteria({
-                        hasPid: null,
-                        isOpen: null,
-                        subjectId: null
-                    })
-                    break;
-                    }
-        } else {
+    function activeFairFilter(): string {
+        switch(true) {
+            case hasPid == 'true' && isOpen == 'true' && subjectId == '34':
+                return "fair-filter-1"
+            case hasPid == 'true' && isOpen == 'true' && !subjectId:
+                return "fair-filter-2"
+            default:
+                return "none"
+        }
+    }
+
+    const toggleFilter = (filterId: string) => {
+        switch (filterId) {
+            case "fair-filter-1":
+                setFairCriteria({
+                    hasPid: "true",
+                    isOpen: "true",
+                    subjectId: "34"
+                })
+                break;
+            case "fair-filter-2":
+                setFairCriteria({
+                    hasPid: "true",
+                    isOpen: "true",
+                    subjectId: null
+                })
+                break;
+        }
+        if (filterId == activeFairFilter()) {
             setFairCriteria({
-                hasPid: hasPid,
-                isOpen: isOpen,
-                subjectId: subjectId
+                hasPid: null,
+                isOpen: null,
+                subjectId: null
             })
         }
-      }
+    }
 
     function filterLink(value: string, filterId: string) {
 
         return (
             <div>
-                <a className={"facet-"} onClick={() => toggleFilter(true, filterId)}>{activeIcon(false)}</a>
+                <a id={filterId} className={"facet-"+filterId} onClick={() => toggleFilter(filterId)}>{activeIcon(filterId)}</a>
                 <div className="facet-title">{value}</div>
                 <div className="clearfix" />
             </div>
