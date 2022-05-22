@@ -31,28 +31,19 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     citationCount
     downloadCount
     viewCount
-    re3dataId
-    re3data{
-      id
+    contact
+    keyword
+    pidSystem
+    providerType
+    dataUpload{
+      type
+    }
+    dataAccess {
+      type
+    }
+    certificate
+    subject {
       name
-      contacts
-      keywords
-      pidSystems
-      providerTypes
-
-      dataUploads{
-        type
-      }
-
-      dataAccesses {
-        type
-      }
-      certificates {
-        name
-      }
-      subjects {
-        name
-      }
     }
     works {
       totalCount
@@ -65,40 +56,32 @@ export const REPOSITORY_DETAIL_FIELDS = gql`
     }
   }
 `
+
 export interface TextRestriction {
   type: string
 }
-export interface DefinedTerm {
-  name: string
-}
-export interface RepositoryRe3Data {
-  id: string
-  contacts: [string]
-  keywords: string
-  pidSystems: [string]
-  providerTypes: [string]
-  dataUploads: [TextRestriction]
-  dataAccesses: [TextRestriction]
-  certificates: [DefinedTerm]
-  subjects: [DefinedTerm]
-}
+
 export interface RepositoryWorks {
   totalCount: number
-  languages: [Facet]
-  resourceTypes: [Facet]
-  fieldsOfScience: [Facet]
-  authors: [Facet]
-  licenses: [Facet]
-  published: [Facet]
+  languages: Facet[]
+  resourceTypes: Facet[]
+  fieldsOfScience: Facet[]
+  authors: Facet[]
+  licenses: Facet[]
+  published: Facet[]
 }
-
 
 export interface RepositoryDetailNode extends RepositoriesNode{
   citationCount: number
   downloadCount: number
   viewCount: number
   works: RepositoryWorks
-  re3data: RepositoryRe3Data
+  contact: string[]
+  pidSystem: string[]
+  providerType: string[]
+  dataUpload: TextRestriction[]
+  dataAccess: TextRestriction[]
+  certificate: string[]
 }
 
 type Props = {
@@ -163,7 +146,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
             </Button>
         )}
       { repo.works && (repo.works.totalCount>0) && (
-          <Link href={"/doi.org?query=client.uid:" + repo.id}>
+          <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
           <Button block bsStyle="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
@@ -176,9 +159,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
   }
 
   const contacts = () => {
-    if (repo.re3data == null) return "";
-
-    const contactsData = repo.re3data.contacts.map((contact) => (
+    const contactsData = repo.contact.map((contact) => (
       {
         text: contact,
         link: contact.startsWith('http')? contact: "mailto:"+contact
@@ -187,7 +168,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
 
     return (
       <>
-      { (repo.re3data && repo.re3data.contacts) && (
+      { (repo.contact) && (
         <>
         <h3>Contacts</h3>
         { contactsData.map((contact, index) => (
@@ -244,7 +225,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
 
       <div className={styles.grid}>
-        <ProductionChart 
+        <ProductionChart
           title="Year of Publication"
           data={facetToData(repo.works.published)}
         />
@@ -266,9 +247,11 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   }
 
   const tags = () => {
-    if (repo.re3data == null) return "";
-    const keywordList = repo.re3data.keywords.toLowerCase().split(", ")
-    const subjectList = repo.re3data.subjects.map((subject) => (
+    if (repo.re3dataDoi == null) return "";
+    const keywordList = repo.keyword.map((kw) => (
+      kw.toLowerCase()
+    ))
+    const subjectList = repo.subject.map((subject) => (
       subject.name.toLowerCase()
     ))
     return (
@@ -289,8 +272,8 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       <>
         { repo.url && (
           <p>
-            If you plan to deposit your research data in this repository, 
-            &nbsp; go to <a href={repo.url}>{repo.url}.</a>
+            If you plan to deposit your research data in this repository,
+            &nbsp;go to <a href={repo.url}>{repo.url}.</a>
           </p>
         )}
         <h5>More information about research data management</h5>
@@ -318,33 +301,31 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
   }
 
   const extended_metadata = () => {
-    if (repo.re3data == null) return "";
+    if (repo.re3dataDoi == null) return "";
     const metadata = [
       {
         label: "Data Access",
-        values: repo.re3data.dataAccesses.map((term) => (
+        values: repo.dataAccess.map((term) => (
           term.type
         ))
       },
       {
         label: "Persistent Identifier",
-        values: repo.re3data.pidSystems
+        values: repo.pidSystem
       },
       {
         label: "Certificates",
-        values: repo.re3data.certificates.map((term) => (
-          term.name
-        ))
+        values: repo.certificate
       },
       {
         label: "Data Upload",
-        values: repo.re3data.dataUploads.map((term) => (
+        values: repo.dataUpload.map((term) => (
           term.type
         ))
       },
       {
         label: "Provider Type",
-        values: repo.re3data.providerTypes
+        values: repo.providerType
       },
     ]
     const mdList = metadata.map( (field) => (

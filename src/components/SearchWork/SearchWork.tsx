@@ -145,7 +145,7 @@ export const contentFragment = {
         title
       }
       repository {
-        id
+        id:uid
         name
       }
       rights {
