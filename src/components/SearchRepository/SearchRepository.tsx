@@ -178,11 +178,11 @@ const renderResults = () => {
       {loading? <Loading/>:(
         <>
           <div className="col-md-3 hidden-xs hidden-sm" id="sidebar">
-            {renderFacets()}
+            {data && renderFacets()}
           </div>
           <div className="col-md-6" id="content">
             {renderResults()}
-            {renderPager()}
+            {data && renderPager()}
           </div>
         </>
     )}
