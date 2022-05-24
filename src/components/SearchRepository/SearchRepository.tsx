@@ -181,7 +181,7 @@ const renderResults = () => {
         {data.repositories.totalCount} Repositories
       </h3>
       {data.repositories.nodes.map((repo) => (
-        <React.Fragment key={repo.uid}>
+        <React.Fragment key={repo.id}>
           <RepositoryMetadata repo={repo}></RepositoryMetadata>
         </React.Fragment>
       ))}

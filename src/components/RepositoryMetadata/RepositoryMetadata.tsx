@@ -49,7 +49,7 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
 }) => {
 
   const detailUrl = () => {
-    return `/repositories/${repo.uid}`
+    return `/repositories/${repo.id}`
   }
 
   const re3DataURL = () => {
@@ -108,7 +108,7 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div key={repo.uid} className="panel panel-transparent">
+    <div key={repo.id} className="panel panel-transparent">
       <div className="panel-body">
         <h3><Link href={detailUrl()}>
             <a>{repo.name}</a>
