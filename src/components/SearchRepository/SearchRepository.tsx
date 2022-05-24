@@ -5,6 +5,7 @@ import { Row, Alert } from 'react-bootstrap'
 import { useQueryState } from 'next-usequerystate'
 
 import Pager from '../Pager/Pager'
+import FairFilter from '../FairFilter/FairFilter'
 import {FACET_FIELDS, Facet, FacetList} from '../FacetList/FacetList'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
@@ -27,6 +28,9 @@ interface RepositoriesQueryVar {
   cursor: string
   certificate: string
   software: string
+  hasPid: string
+  isOpen: string
+  subjectId: string
 }
 
 interface RepositoriesQueryData{
@@ -48,12 +52,18 @@ export const REPOSITORIES_GQL = gql`
     $cursor: String
     $certificate: String
     $software: String
+    $hasPid: String
+    $isOpen: String
+    $subjectId: String
   ) {
     repositories(
       query: $query
       after: $cursor
       certificate: $certificate
       software: $software
+      hasPid: $hasPid
+      isOpen: $isOpen
+      subjectId: $subjectId
     ) {
       totalCount
 
@@ -73,6 +83,9 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [certificate] = useQueryState('certificate')
   const [software] = useQueryState('software')
+  const [hasPid] = useQueryState('hasPid')
+  const [isOpen] = useQueryState('isOpen')
+  const [subjectId] = useQueryState('subjectId')
   const { loading, error, data } = useQuery<
     RepositoriesQueryData, RepositoriesQueryVar
   >(REPOSITORIES_GQL, {
@@ -82,6 +95,9 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
       cursor: cursor,
       certificate: certificate,
       software: software,
+      hasPid: hasPid,
+      isOpen: isOpen,
+      subjectId: subjectId,
     }
 })
 
@@ -178,6 +194,7 @@ const renderResults = () => {
       {loading? <Loading/>:(
         <>
           <div className="col-md-3 hidden-xs hidden-sm" id="sidebar">
+            <FairFilter></FairFilter>
             {data && renderFacets()}
           </div>
           <div className="col-md-6" id="content">
