@@ -24,7 +24,6 @@ import {
   faDatabase,
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import { Feature } from 'flagged'
 import { session } from '../../utils/session'
 
 type Props = {
@@ -134,7 +133,6 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
               >
                 <FontAwesomeIcon icon={faUniversity} /> Organizations
               </NavItem>
-              <Feature name="repository-search-commons">
                 <NavItem
                   id="repositories-link"
                   eventKey={'/repositories'}
@@ -142,7 +140,6 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
                 >
                   <FontAwesomeIcon icon={faDatabase} /> Repositories
                 </NavItem>
-              </Feature>
             </Nav>
           </div>
         </Navbar.Form>

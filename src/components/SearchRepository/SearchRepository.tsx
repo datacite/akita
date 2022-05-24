@@ -195,11 +195,11 @@ const renderResults = () => {
         <>
           <div className="col-md-3 hidden-xs hidden-sm" id="sidebar">
             <FairFilter></FairFilter>
-            {renderFacets()}
+            {data && renderFacets()}
           </div>
           <div className="col-md-6" id="content">
             {renderResults()}
-            {renderPager()}
+            {data && renderPager()}
           </div>
         </>
     )}

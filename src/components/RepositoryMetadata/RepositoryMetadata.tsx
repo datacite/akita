@@ -7,26 +7,37 @@ import Link from 'next/link'
 
 export const REPOSITORY_FIELDS = gql`
   fragment repoFields on Repository{
-        uid
+        id:uid
         re3dataDoi
+        clientId
         name
         language
+        keyword
+        subject {
+          name
+        }
         description
         type
         repositoryType
         url
   }
 `
+export interface DefinedTerm {
+  name: string
+}
 
 export interface RepositoriesNode {
-  uid: string
+  id: string
   re3dataDoi: string
+  clientId: string
   name: string
   language: string[]
   description: string
   type: string
   repositoryType: string[]
   url: string
+  keyword: string[]
+  subject: DefinedTerm[]
 }
 
 type Props = {
@@ -57,15 +68,20 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   }
 
   const tags = () => {
+    const keywordList = repo.keyword.map((kw) => (
+      kw.toLowerCase()
+    ))
+    const subjectList = repo.subject.map((subject) => (
+      subject.name.toLowerCase()
+    ))
     return (
       <div className="tags">
-      {repo.language && (
-        <span>
-         { repo.language.map((lang, index) => (
-             <Label key={index} bsStyle="info">{lang}</Label>
-         ))}
-        </span>
-      )}
+        { subjectList.map((keyword, index) => (
+          <Label key={"subject-" + index} bsStyle="info">{keyword}</Label>
+        ))}
+        { keywordList.map((keyword, index) => (
+          <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
+        ))}
       </div>
     )
   }
