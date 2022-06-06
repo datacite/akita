@@ -168,7 +168,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
 
     return (
       <>
-      { (repo.contact) && (
+        { (repo.contact?.length > 0) && (
         <>
         <h3>Contacts</h3>
         { contactsData.map((contact, index) => (
@@ -364,13 +364,13 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       }
     ];
 
-    const metricList = metricsData.map( (metric) => 
+    const metricList = metricsData.map( (metric, index) => 
     <>
       {metric.count>0 &&(
-        <>
+        <React.Fragment key={"metric-"+index}>
           <dt>{metric.label}</dt>
           <dd>{compactNumbers(metric.count)}</dd>
-        </>
+        </React.Fragment >
       )}
       </>
     )
