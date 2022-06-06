@@ -16,7 +16,8 @@ const FairFilter: React.FunctionComponent<Props> = () => {
     const [fairCriterias, setFairCriteria] = useQueryStates({
         hasPid: queryTypes.string.withDefault(''),
         isOpen: queryTypes.string.withDefault(''),
-        subjectId: queryTypes.string.withDefault('')
+        subjectId: queryTypes.string.withDefault(''),
+        isCertified: queryTypes.string.withDefault('')
     })
 
     const tooltipFAIRfilters = (
@@ -59,6 +60,7 @@ const FairFilter: React.FunctionComponent<Props> = () => {
                 setFairCriteria({
                     hasPid: "true",
                     isOpen: "true",
+                    isCertified: null,
                     subjectId: "34"
                 })
                 break;
@@ -66,6 +68,7 @@ const FairFilter: React.FunctionComponent<Props> = () => {
                 setFairCriteria({
                     hasPid: "true",
                     isOpen: "true",
+                    isCertified: "true",
                     subjectId: null
                 })
                 break;
@@ -74,6 +77,7 @@ const FairFilter: React.FunctionComponent<Props> = () => {
             setFairCriteria({
                 hasPid: null,
                 isOpen: null,
+                isCertified: null,
                 subjectId: null
             })
         }
