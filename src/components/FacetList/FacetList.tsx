@@ -35,8 +35,8 @@ export const FacetList: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>{title}</h4>
             <ul>
-              {facets.map((facet) => (
-                  <li key={facet.id}>
+              {facets.map((facet, index) => (
+                  <li key={`facet-${name}-${facet.id}-${index}`}>
                     <FilterItem
                       name={name}
                       id={facet.id}

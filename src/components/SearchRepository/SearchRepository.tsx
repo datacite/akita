@@ -30,6 +30,7 @@ interface RepositoriesQueryVar {
   software: string
   hasPid: string
   isOpen: string
+  isCertified: string
   subjectId: string
 }
 
@@ -54,6 +55,7 @@ export const REPOSITORIES_GQL = gql`
     $software: String
     $hasPid: String
     $isOpen: String
+    $isCertified: String
     $subjectId: String
   ) {
     repositories(
@@ -63,6 +65,7 @@ export const REPOSITORIES_GQL = gql`
       software: $software
       hasPid: $hasPid
       isOpen: $isOpen
+      isCertified: $isCertified
       subjectId: $subjectId
     ) {
       totalCount
@@ -85,6 +88,7 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
   const [software] = useQueryState('software')
   const [hasPid] = useQueryState('hasPid')
   const [isOpen] = useQueryState('isOpen')
+  const [isCertified] = useQueryState('isCertified')
   const [subjectId] = useQueryState('subjectId')
   const { loading, error, data } = useQuery<
     RepositoriesQueryData, RepositoriesQueryVar
@@ -97,6 +101,7 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
       software: software,
       hasPid: hasPid,
       isOpen: isOpen,
+      isCertified: isCertified,
       subjectId: subjectId,
     }
 })

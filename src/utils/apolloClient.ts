@@ -46,6 +46,9 @@ const apolloClient = new ApolloClient({
         // Singleton types that have no identifying field can use an empty
         // array for their keyFields.
         keyFields: false
+      },
+      Facet: {
+        keyFields: false
       }
     }
   })
