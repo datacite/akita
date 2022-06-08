@@ -12,6 +12,8 @@ import Loading from '../Loading/Loading'
 import { RepositoriesNode, RepositoryMetadata,
   REPOSITORY_FIELDS } from '../RepositoryMetadata/RepositoryMetadata'
 
+import { Feature } from 'flagged'
+
 
 type Props = {
   searchQuery: string
@@ -199,7 +201,9 @@ const renderResults = () => {
       {loading? <Loading/>:(
         <>
           <div className="col-md-3 hidden-xs hidden-sm" id="sidebar">
-            <FairFilter></FairFilter>
+            <Feature name="fair-filter">
+              <FairFilter></FairFilter>
+            </Feature>
             {data && renderFacets()}
           </div>
           <div className="col-md-6" id="content">
