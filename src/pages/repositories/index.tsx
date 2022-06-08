@@ -1,6 +1,5 @@
 import React from 'react'
 import { useQueryState } from 'next-usequerystate'
-import { Feature } from 'flagged'
 
 import Teaser from '../../components/Teaser/Teaser'
 import Layout from '../../components/Layout/Layout'
@@ -11,13 +10,11 @@ const RepositoryIndexPage = () => {
 
   return (
     <Layout path={'/repositories'}>
-      <Feature name="repository-search-commons">
         {!searchQuery || searchQuery === '' ? (
           <Teaser title={'repositories'} />
         ) : (
           <SearchRepository searchQuery={searchQuery} />
         )}
-      </Feature>
     </Layout>
   )
 }
