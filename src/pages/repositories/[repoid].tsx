@@ -13,7 +13,6 @@ import {
   RepositoryHeaderInfo,
   RepositoryDetail
 } from '../../components/RepositoryDetail/RepositoryDetail'
-import { Feature } from 'flagged'
 
 type Props = {
   repoId?: string
@@ -58,7 +57,6 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
 
   return (
     <Layout path={'/repositories'}>
-      <Feature name="repository-search-commons">
         {loading? <Loading/>:(
           <>
             {error? <Error title="An error occured." message={error.message} />:(
@@ -78,7 +76,6 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
             )}
           </>
         )}
-      </Feature>
     </Layout>
   )
 }
