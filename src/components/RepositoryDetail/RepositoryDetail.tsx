@@ -218,8 +218,11 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 }) => {
 
 
-
   const dashboard = () => {
+    if(repo.works.totalCount<1){
+      return (<></>)
+    }
+
     return (
       <>
       <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
