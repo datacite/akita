@@ -563,4 +563,32 @@ h4.work {
   .MY_BUTTON_WRAPPER_CLASS button {
     height: 50px;
   }
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap');
+
+.logo{
+  font-family: 'Barlow', sans-serif;
+  color: #243B54;
+  display: grid;
+  align-items: center;
+  grid-gap: .66em;
+  grid-template-columns: min-content auto;
+  grid-template-rows: 1fr;
+}
+.brand-schwoop {
+  height: 1.3em;
+}
+.brand-primary {
+  color: #00b1e2 !important;
+  font-weight: bold;
+}
+.logo .brand-secondary{
+  font-weight: normal;
+}
+.logo .logo-subbrand {
+  font-weight: semi-bold;
+  font-size: 1.3em;
+  grid-column: 2;
 }
