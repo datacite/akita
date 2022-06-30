@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { DataCiteBrand } from '../DataCiteBrand/DataCiteBrand'
 import {
   Navbar,
   Nav,
@@ -80,14 +81,7 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
       <Navbar.Header>
         <Navbar.Brand>
           <a href="/">
-            <div className="logo">
-                <img  className="brand-schwoop" src="https://datacite.org/assets/DataCite-Logo_Schwoop.svg" alt="DataCite Schwoop Logo"/>
-                <div className="logo-brand">
-                  <span className="brand-primary">Data</span>
-                  <span className="brand-secondary">Cite</span>
-                </div>
-              <span className="logo-subbrand">Commons</span>
-            </div>
+            <DataCiteBrand subbrand="Commons"/>
           </a>
         </Navbar.Brand>
         <Navbar.Toggle />

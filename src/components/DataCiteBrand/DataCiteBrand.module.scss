@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap');
+
+.logo {
+  font-family: 'Barlow', sans-serif;
+  color: #243B54;
+  display: grid;
+  align-items: center;
+  grid-column-gap: .33em;
+  grid-template-columns: min-content auto;
+  grid-auto-rows: 1fr;
+
+  .schwoop {
+    height: 1.3em;
+  }
+
+  .brand {
+    .primary {
+      color: #00b1e2 !important;
+      font-weight: bold;
+    }
+
+    .secondary{
+      font-weight: normal;
+    }
+  }
+
+  .subbrand {
+    font-weight: 600;
+    font-size: 1.3em;
+    grid-column: 2;
+  }
+}
