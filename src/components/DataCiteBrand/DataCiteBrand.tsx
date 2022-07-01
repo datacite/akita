@@ -9,7 +9,7 @@ type SchwoopProps = {
 export const DataCiteSchwoop: React.FunctionComponent<SchwoopProps> = 
   ({primaryColor="#00b1e2", secondaryColor="#243B54"}) => {
   return (
-    <svg className={styles.schwoop} id="Ebene_1" data-name="Ebene 1"
+    <svg className={styles.schwoop} id="Ebene_1" data-name="Ebene 1" height="1.3em"
       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 103.8">
       <title>DataCite-Logo</title>
       <path fill={primaryColor} d="M5,73.55c.86.15,1.64.3,2.65.46C51.2,82.55,116,71,124.25,49.83c6.5-17.07-30-29.06-72.72-27.48a14,14,0,0,0-2.5.16C71.78,24.72,92.28,33.7,84.14,47.82,75.22,63.26,37.32,73.63,5,73.55"/>
