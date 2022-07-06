@@ -2,7 +2,6 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
 import Error from '../../components/Error/Error'
-import Head from 'next/head'
 import Layout from '../../components/Layout/Layout'
 import Loading from '../../components/Loading/Loading'
 import { Row, Col } from 'react-bootstrap'
@@ -10,7 +9,7 @@ import {
   REPOSITORY_DETAIL_FIELDS,
   RepositoryDetailNode,
   RepositorySidebar,
-  RepositoryHeaderInfo,
+  RepositoryHeadInfo,
   RepositoryDetail
 } from '../../components/RepositoryDetail/RepositoryDetail'
 
@@ -61,9 +60,7 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
           <>
             {error? <Error title="An error occured." message={error.message} />:(
               <>
-                <Head>
-                  <RepositoryHeaderInfo repo={data.repository}/>
-                </Head>
+                <RepositoryHeadInfo repo={data.repository}/>
                 <Row>
                   <Col md={3}>
                     <RepositorySidebar repo={data.repository}/>

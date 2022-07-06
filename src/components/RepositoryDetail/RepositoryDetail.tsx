@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import { Button, Label } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
@@ -116,18 +117,18 @@ const pageInfo = (repo) => {
   }
 }
 
-export const RepositoryHeaderInfo: React.FunctionComponent<Props> = ({
+export const RepositoryHeadInfo: React.FunctionComponent<Props> = ({
   repo
 }) => {
     const info = pageInfo(repo);
     return (
-      <>
+      <Head>
           <title>{info.title}</title>
           <meta name="og:title" content={info.title} />
           <meta name="og:url" content={info.pageUrl} />
           <meta name="og:image" content={info.imageUrl} />
           <meta name="og:type" content="organization" />
-      </>
+      </Head>
     )
 
   }
