@@ -138,7 +138,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const claim = metadata.claims[0]
 
   const container = () => {
-    if (metadata.container && metadata.container.identifier) {
+    if (metadata.container 
+      && metadata.container.identifier
+      && metadata.container.title) {
       return (
         <>
           {' '}
