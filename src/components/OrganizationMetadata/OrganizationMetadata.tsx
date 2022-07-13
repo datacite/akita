@@ -157,16 +157,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
             <h5>Other Identifiers</h5>
             {grid.length > 0 && (
               <div className="identifier id-type-grid">
-                GRID{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={
-                    'https://grid.ac/institutes/' + grid[0].identifier
-                  }
-                >
-                  {grid[0].identifier}
-                </a>
+                GRID{' '}{grid[0].identifier}
               </div>
             )}
             {fundref.length > 0 && (
