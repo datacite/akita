@@ -5,8 +5,16 @@ import clone from 'lodash/clone'
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import { Works } from '../SearchWork/SearchWork'
-import DonutChart, { typesRange, typesDomain, licenseRange, licenseDomain } from '../DonutChart/DonutChart'
+import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
+// import ChordChart from '../ChordChart/ChordChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
+import dynamic from 'next/dynamic'
+
+
+const ChordChart = dynamic(
+  () => import('../ChordChart/ChordChart'),
+   { ssr: false }
+);
 
 import Pager from '../Pager/Pager'
 
@@ -90,14 +98,8 @@ const WorksListing: React.FunctionComponent<Props> = ({
           ></DonutChart>
         </Col>
         <Col xs={6} sm={4}>
-          <DonutChart
-            data={licenses}
-            legend={false}
-            count={works.totalCount}
-            title='License'
-            range={licenseRange}
-            domain={licenseDomain}
-          ></DonutChart>
+        <ChordChart></ChordChart>
+
         </Col>
       </Row>
     )
