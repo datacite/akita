@@ -6,7 +6,9 @@ import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import { Works } from '../SearchWork/SearchWork'
 import DonutChart, { typesRange, typesDomain, licenseRange, licenseDomain } from '../DonutChart/DonutChart'
+// import ChordChart from '../ChordChart/ChordChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
+import dynamic from 'next/dynamic';
 
 import Pager from '../Pager/Pager'
 
@@ -28,6 +30,9 @@ export interface ContentFacet {
   title: string
   count: number
 }
+
+const ChordChart = dynamic(()=>{return import('../ChordChart/ChordChart')}, {ssr: false});
+
 
 const WorksListing: React.FunctionComponent<Props> = ({
   works,
@@ -88,6 +93,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             range={typesRange}
             domain={typesDomain}
           ></DonutChart>
+          <ChordChart></ChordChart>
         </Col>
         <Col xs={6} sm={4}>
           <DonutChart
