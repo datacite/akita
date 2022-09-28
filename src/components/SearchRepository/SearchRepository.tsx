@@ -137,12 +137,12 @@ const renderNoneFound = () => {
         kind of data, you may be able to use a general repository such as:</p>
 
       <ul>
-        <li><Link href="/repositories/cdl.dryad">Dryad</Link></li>
-        <li><Link href="/repositories/figshare.ars">Figshare</Link></li>
-        <li><Link href="/repositories/datacite.harvard">Harvard Dataverse</Link></li>
-        <li><Link href="/repositories/bl.mendeley">Mendeley Data</Link></li>
-        <li><Link href="/repositories/cdl.cos">Open Science Framework</Link></li>
-        <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
+        <li><Link href="/repositories/10.17616/R34S33">Dryad</Link></li>
+        <li><Link href="/repositories/10.17616/R3PK5R">Figshare</Link></li>
+        <li><Link href="/repositories/10.17616/R3C880">Harvard Dataverse</Link></li>
+        <li><Link href="/repositories/10.17616/R3DD11">Mendeley Data</Link></li>
+        <li><Link href="/repositories/10.17616/R3N03T">Open Science Framework</Link></li>
+        <li><Link href="/repositories/10.17616/R3QP53">Zenodo</Link></li>
       </ul>
 
       <p>You may also have an institutional repository or other local resources
