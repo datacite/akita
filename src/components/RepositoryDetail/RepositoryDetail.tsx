@@ -101,15 +101,16 @@ const pageInfo = (repo) => {
   const title = repo.name
     ? 'DataCite Commons: ' + repo.name
     : 'DataCite Commons: No Name'
-  const pageUrl =
+  const baseUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-    ? 'https://commons.datacite.org/repositories/' + repo.id
-    : 'https://commons.stage.datacite.org/repositories/' + repo.id
+    ? 'https://commons.datacite.org/'
+    : 'https://commons.stage.datacite.org/'
 
-  const imageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-    ? 'https://commons.datacite.org/images/logo.png'
-    : 'https://commons.stage.datacite.org/images/logo.png'
+  const pageUrl = repo.re3dataDoi
+    ? baseUrl + "repositories/" + repo.re3dataDoi
+    : baseUrl + "repositories/" + repo.id
+
+  const imageUrl = baseUrl + "images/logo.png"
   return {
     'title': title,
     'pageUrl': pageUrl,
@@ -127,7 +128,7 @@ export const RepositoryHeadInfo: React.FunctionComponent<Props> = ({
           <meta name="og:title" content={info.title} />
           <meta name="og:url" content={info.pageUrl} />
           <meta name="og:image" content={info.imageUrl} />
-          <meta name="og:type" content="organization" />
+          <meta name="og:type" content="repository" />
       </Head>
     )
 
