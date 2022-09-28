@@ -18,7 +18,8 @@ type Props = {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const repoId = context.params.repoid as string
+  const repoId = (context.params.repoid as string[]).join('/')
+  //const doi = (context.query.doi as string[]).join('/')
   return {
     props: { repoId }
   }
