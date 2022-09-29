@@ -223,13 +223,19 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [registrationAgency] = useQueryState('registration-agency', {
     history: 'push'
   })
+  const [filterQuery] = useQueryState('filterQuery', {history: 'push'})
   const [cursor] = useQueryState('cursor', { history: 'push' })
+
+  const queryStatement = filterQuery?
+    searchQuery + " AND " + filterQuery:
+    searchQuery
+
   const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(
     CONTENT_GQL,
     {
       errorPolicy: 'all',
       variables: {
-        query: searchQuery,
+        query: queryStatement,
         cursor: cursor,
         published: published as string,
         resourceTypeId: resourceType as string,
