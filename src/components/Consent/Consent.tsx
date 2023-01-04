@@ -20,17 +20,16 @@ const Consent = () => {
     domain = '.vercel.app'
   }
 
-  const cookieStyle = {
-    fontSize: '16px',
-    height: '95px',
-    flexWrap: 'nowrap !important'
-  }
   const linkStyle = { color: '#fecd23' }
   const myContentStyle = {}
 
   return (
     <CookieConsent
-      style={cookieStyle}
+      style={{
+        fontSize: '16px',
+        height: '95px',
+        flexWrap: 'nowrap'
+      }}
       location="bottom"
       buttonText="Accept"
       declineButtonText="Reject"
