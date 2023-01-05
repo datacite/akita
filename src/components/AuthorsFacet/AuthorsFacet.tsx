@@ -30,12 +30,6 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
 }) => {
     const router = useRouter()
 
-    const tooltipAuthors = (
-        <Tooltip id="tooltipAuthors">
-            This list includes only {title} with ORCID ids.
-        </Tooltip>
-    )
-
     function facetLink(param: string, value: string, id: string) {
         let icon = faSquare
 
@@ -82,10 +76,14 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
             {authors && authors.length > 0 && (
                 <div className="panel facets add">
                     <div className="panel-body">
-                        <OverlayTrigger placement="top" overlay={tooltipAuthors}>
-                            <h4>
-                                {title} <FontAwesomeIcon icon={faQuestionCircle} />
-                            </h4>
+                        <OverlayTrigger 
+                            placement="top"
+                            overlay={
+                                <Tooltip id="tooltipAuthors">
+                                    This list includes only {title} with ORCID ids.
+                                </Tooltip>
+                            }>
+                            <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
                         </OverlayTrigger>
                         <ul id="authors-facets">
                             {authors.filter(checkAuthorForPerson).map((facet) => (

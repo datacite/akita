@@ -41,7 +41,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
-                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                  <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
                     <a>{item.name}</a>
                   </Link>
                 ) : (
@@ -72,7 +72,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             <div className="affiliation">
               {person.affiliation.map((item) =>
                 item.id ? (
-                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                  <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
                     <a>{item.name}</a>
                   </Link>
                 ) : (
@@ -98,7 +98,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
           <div className="affiliation">
             {person.affiliation.map((item) =>
               item.id ? (
-                <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
                   <a>{item.name}</a>
                 </Link>
               ) : (
