@@ -15,7 +15,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Extract variables
         shell: bash
@@ -33,17 +33,3 @@ jobs:
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           scope: ${{ secrets.TEAM_ID}}
           vercel-project-name: 'akita'
-
-      - name: Notify Slack
-        uses: edge/simple-slack-notify@master
-        with:
-          channel: '#ops'
-          color: 'good'
-          text: "A development branch [${{steps.extract_variables.outputs.BRANCH}}] of Commons has been deployed to vercel"
-          failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build failed'
-          fields: |
-            [{ "title": "Commit message", "value": "${{ steps.extract_variables.outputs.MESSAGE }}" },
-             { "title": "Committed by", "value": "<https://github.com/${{ github.repository }}/commits?author=${{ github.actor }}|${{ github.actor }}>", "short": true },
-             { "title": "Commit SHA", "value": "<https://github.com/${{ github.repository }}/commit/${{ steps.extract_variables.outputs.GIT_SHA }}|${{ steps.extract_variables.outputs.GIT_SHA_SHORT }}>", "short": true },
-             { "title": "Repository", "value": "<https://github.com/${{ github.repository }}|${{ github.repository }}>", "short": true },
-             { "title": "Branch", "value": "<https://github.com/${{ github.repository }}/tree/${{ steps.extract_variables.outputs.BRANCH }}|${{ steps.extract_variables.outputs.BRANCH }}>", "short": true }]
