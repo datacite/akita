@@ -18,10 +18,10 @@ jobs:
         containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v3
         with:
           start: yarn dev
           wait-on: 'http://localhost:3000'

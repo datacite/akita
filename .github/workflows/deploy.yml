@@ -17,7 +17,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Extract variables
         shell: bash
@@ -38,17 +38,3 @@ jobs:
           alias-domains: |
             commons.datacite.vercel.app
             commons.stage.datacite.org
-
-      - name: Notify Slack
-        uses: edge/simple-slack-notify@master
-        with:
-          channel: '#ops'
-          color: 'good'
-          text: 'A new version of <https://commons.stage.datacite.org|Commons> has been deployed to stage.'
-          failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build failed'
-          fields: |
-            [{ "title": "Commit message", "value": "${{ steps.extract_variables.outputs.MESSAGE }}" },
-             { "title": "Committed by", "value": "<https://github.com/${{ github.repository }}/commits?author=${{ github.actor }}|${{ github.actor }}>", "short": true },
-             { "title": "Commit SHA", "value": "<https://github.com/${{ github.repository }}/commit/${{ steps.extract_variables.outputs.GIT_SHA }}|${{ steps.extract_variables.outputs.GIT_SHA_SHORT }}>", "short": true },
-             { "title": "Repository", "value": "<https://github.com/${{ github.repository }}|${{ github.repository }}>", "short": true },
-             { "title": "Branch", "value": "<https://github.com/${{ github.repository }}/tree/${{ steps.extract_variables.outputs.BRANCH }}|${{ steps.extract_variables.outputs.BRANCH }}>", "short": true }]
