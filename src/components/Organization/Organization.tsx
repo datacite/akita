@@ -102,7 +102,7 @@ const Organization: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <Row>
               {stat(works[0], works[1])}
-              {stat(citations[0], citations[1], '')}
+              {stat(citations[0], citations[1], 'citations-and-references')}
               {stat(views[0], views[1], 'views-and-downloads')}
               {stat(downloads[0], downloads[1], 'views-and-downloads')}
             </Row>
