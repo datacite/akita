@@ -13,11 +13,13 @@ import { rorFromUrl } from '../../utils/helpers'
 type Props = {
   metadata: OrganizationRecord
   linkToExternal?: boolean
+  showTitle?: boolean
 }
 
 export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   metadata,
-  linkToExternal
+  linkToExternal,
+  showTitle = true
 }) => {
   const showLocation =
     metadata.geolocation &&
@@ -112,10 +114,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   return (
     <div key={metadata.id} className="panel panel-transparent">
       <div className="panel-body">
-        <h3 className="work">{titleLink()}</h3>
-        {metadata.inceptionYear && (
-          <div className="inception-year">Founded {metadata.inceptionYear}</div>
-        )}
+        {showTitle && <h3 className="work">{titleLink()}</h3>}
         <Row>
           <Col xs={6} md={6}>
             {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
