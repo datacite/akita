@@ -96,7 +96,7 @@ const Organization: React.FunctionComponent<Props> = ({
         <h3 className="member-results">
           {organization.name}
           <a target="_blank" rel="noreferrer" href={organization.id} style={{fontSize: '0.82em', marginLeft: '1.5em'}}>{organization.id}</a>
-          <span className='inception-year'>Founded {organization.inceptionYear}</span>
+          {organization.inceptionYear && <span className='inception-year'>Founded {organization.inceptionYear}</span>}
         </h3>
         <div className="panel panel-transparent aggregations">
           <div className="panel-body">
