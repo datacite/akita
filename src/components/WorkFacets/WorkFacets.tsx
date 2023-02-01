@@ -87,6 +87,11 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         </div>
       )}
 
+      {model == "person"
+        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
+        : <AuthorsFacet authors={data.authors} title="Authors & Contributors" url={url} model={model} />
+      }
+
       {data.published && data.published.length > 0 && (
       <div className="panel facets add">
         <div className="panel-body">
@@ -206,11 +211,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           </div>
         </div>
       )}
-
-      {model == "person"
-        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.authors} title="Authors" url={url} model={model} />
-      }
 
     </div>
   )
