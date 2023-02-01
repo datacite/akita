@@ -13,7 +13,7 @@ describe('OrganizationContainer', () => {
   })
 
   it('name', () => {
-    cy.get('.panel-body h3.work', { timeout: 30000 }).contains(
+    cy.get('h3.member-results', { timeout: 30000 }).contains(
       'University of Oxford'
     )
   })
