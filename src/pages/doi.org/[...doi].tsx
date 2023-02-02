@@ -477,7 +477,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     )
 
   const work = data.work
-  console.log(data)
+  const isDMP = work.types.resourceTypeGeneral === 'OutputManagementPlan'
 
   const content = () => {
     const showCrossrefMetadata = work.registrationAgency.id === 'crossref'
@@ -603,29 +603,37 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           )}
         </Row>
       </div>)
+    
+    const downloadMetadataButton = () => {
+      if (!isDMP) return
+      
+      return (<>
+        <Button
+          bsStyle={'btn-default'}
+          title="Download Metadata"
+          onClick={() => setShowDownloadMetadataModal(true)}
+          id="download-metadata-button"
+        >
+          Download Metadata
+        </Button>
+
+        <Modal show={showDownloadMetadataModal} onHide={() => setShowDownloadMetadataModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Download Metadata</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{downloadMetada()}</Modal.Body>
+          <Modal.Footer style={{padding: 10}}>
+            <Button id='close-modal' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </>)
+    }
 
 
     return (
       <>
         <Col md={3} className="panel-list" id="side-bar">
-          <Button
-            bsStyle={'btn-default'}
-            title="Download Metadata"
-            onClick={() => setShowDownloadMetadataModal(true)}
-            id="download-metadata-button"
-          >
-            Download Metadata
-          </Button>
-
-          <Modal show={showDownloadMetadataModal} onHide={() => setShowDownloadMetadataModal(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Download Metadata</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{downloadMetada()}</Modal.Body>
-            <Modal.Footer style={{padding: 10}}>
-              <Button id='close-modal' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
-            </Modal.Footer>
-          </Modal>
+          {downloadMetadataButton()}
         </Col>
         <Col md={9} className="panel-list" id="content">
           <Work doi={work}></Work>
