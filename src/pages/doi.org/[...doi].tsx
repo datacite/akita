@@ -612,6 +612,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             bsStyle={'btn-default'}
             title="Download Metadata"
             onClick={() => setShowDownloadMetadataModal(true)}
+            id="download-metadata-button"
           >
             Download Metadata
           </Button>
@@ -622,7 +623,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             </Modal.Header>
             <Modal.Body>{downloadMetada()}</Modal.Body>
             <Modal.Footer style={{padding: 10}}>
-              <Button onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
+              <Button id='close-modal' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
             </Modal.Footer>
           </Modal>
         </Col>
