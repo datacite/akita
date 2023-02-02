@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
-import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
+import { Row, Col, Tab, Nav, NavItem, Button, Modal } from 'react-bootstrap'
 
 import apolloClient from '../../utils/apolloClient'
 import Layout from '../../components/Layout/Layout'
@@ -458,6 +458,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     }
   })
 
+  const [showDownloadMetadataModal, setShowDownloadMetadataModal] = useState(false)
+
   if (loading)
     return (
       <Layout path={'/doi.org/' + doi}>
@@ -475,12 +477,159 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     )
 
   const work = data.work
+  console.log(data)
 
   const content = () => {
+    const showCrossrefMetadata = work.registrationAgency.id === 'crossref'
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
+
+    const downloadMetada = () => (
+      <div className="panel-body">
+        <Row>
+          <Col className="download-list" id="full-metadata" xs={6} md={6}>
+            <h5>Full Metadata</h5>
+            {showCrossrefMetadata && (
+              <div id="export-crossref">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={
+                    'https://api.crossref.org/works/' +
+                    work.doi +
+                    '/transform/application/vnd.crossref.unixsd+xml'
+                  }
+                >
+                  Crossref UNIXREF
+                </a>
+              </div>
+            )}
+            <div id="export-xml">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  apiUrl +
+                  '/application/vnd.datacite.datacite+xml/' +
+                  work.doi
+                }
+              >
+                DataCite XML
+              </a>
+            </div>
+            <div id="export-json">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  apiUrl +
+                  '/application/vnd.datacite.datacite+json/' +
+                  work.doi
+                }
+              >
+                DataCite JSON
+              </a>
+            </div>
+            <div id="export-ld" className="download">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  apiUrl + '/application/vnd.schemaorg.ld+json/' + work.doi
+                }
+              >
+                Schema.org JSON-LD
+              </a>
+            </div>
+          </Col>
+          <Col className="download-list" id="citation-metadata" xs={6} md={4}>
+            <h5>Citation Metadata</h5>
+            <div id="export-citeproc" className="download">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  apiUrl +
+                  '/application/vnd.citationstyles.csl+json/' +
+                  work.doi
+                }
+              >
+                Citeproc JSON
+              </a>
+            </div>
+            <div id="export-bibtex" className="download">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={apiUrl + '/application/x-bibtex/' + work.doi}
+              >
+                BibTeX
+              </a>
+            </div>
+            <div id="export-ris" className="download">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={
+                  apiUrl + '/application/x-research-info-systems/' + work.doi
+                }
+              >
+                RIS
+              </a>
+            </div>
+            {work.types.resourceTypeGeneral === 'Software' && (
+              <div id="export-codemeta" className="download">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={
+                    apiUrl + '/application/vnd.codemeta.ld+json/' + work.doi
+                  }
+                >
+                  Codemeta
+                </a>
+              </div>
+            )}
+          </Col>
+          {work.contentUrl && (
+            <Col xs={6} md={4}>
+              <h5>Fulltext Article</h5>
+              <div>
+                <a href={work.contentUrl} target="_blank" rel="noreferrer">
+                  via Unpaywall
+                </a>
+              </div>
+            </Col>
+          )}
+        </Row>
+      </div>)
+
+
     return (
-      <Col md={9} mdOffset={3} className="panel-list" id="content">
-        <Work doi={work}></Work>
-      </Col>
+      <>
+        <Col md={3} className="panel-list" id="side-bar">
+          <Button
+            bsStyle={'btn-default'}
+            title="Download Metadata"
+            onClick={() => setShowDownloadMetadataModal(true)}
+          >
+            Download Metadata
+          </Button>
+
+          <Modal show={showDownloadMetadataModal} onHide={() => setShowDownloadMetadataModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Download Metadata</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{downloadMetada()}</Modal.Body>
+            <Modal.Footer style={{padding: 10}}>
+              <Button onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        </Col>
+        <Col md={9} className="panel-list" id="content">
+          <Work doi={work}></Work>
+        </Col>
+      </>
     )
   }
 
