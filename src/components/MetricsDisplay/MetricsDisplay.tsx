@@ -8,10 +8,10 @@ import styles from './MetricsDisplay.module.scss'
 
 type Props = {
   counts: {
-    works: number
-    citations: number
-    views: number
-    downloads: number
+    works?: number
+    citations?: number
+    views?: number
+    downloads?: number
   }
 
   links?: {
