@@ -18,6 +18,7 @@ import WorkFunding from '../WorkFunding/WorkFunding'
 import WorkPerson from '../WorkPerson/WorkPerson'
 import UsageChart from '../UsageChart/UsageChart'
 import Claim from '../Claim/Claim'
+import { MetadataTable } from '../MetadataTable/MetadataTable'
 
 type Props = {
   doi: WorkType
@@ -154,6 +155,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   return (
     <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
+      <MetadataTable metadata={doi} />
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false}></WorkMetadata>
       {doi.creators.length > 0 && (
         <>

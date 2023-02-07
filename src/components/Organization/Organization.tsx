@@ -10,9 +10,8 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
-import { pluralize, rorFromUrl } from '../../utils/helpers'
+import { rorFromUrl } from '../../utils/helpers'
 import { Works } from '../SearchWork/SearchWork'
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 
 export interface OrganizationRecord {
@@ -59,59 +58,6 @@ const Organization: React.FunctionComponent<Props> = ({
   const title = organization.name
     ? 'DataCite Commons: ' + organization.name
     : 'DataCite Commons: No Name'
-  
-  const statSummary = () => {
-    const works = pluralize(organization.works.totalCount, 'Work').split(' ')
-    const citations = pluralize(organization.citationCount, 'Citation').split(' ')
-    const views = pluralize(organization.viewCount, 'View').split(' ')
-    const downloads = pluralize(organization.downloadCount, 'Download').split(' ')
-
-    const stat = (count: string, name: string, link?: string) => {
-      if (Number(count) <= 0) return null
-
-      const helpIcon = () =>
-        // <OverlayTrigger 
-        //   placement="top"
-        //   overlay={<Tooltip id="tooltipAuthors">This list includes only Authors with ORCID ids.</Tooltip>}>
-          <a
-            href={`https://support.datacite.org/docs/${link}`}
-            target="_blank"
-            rel="noreferrer"
-            className='help-icon'
-          >
-            <FontAwesomeIcon icon={faQuestionCircle} />
-          </a>
-        // </OverlayTrigger>
-
-      return (
-        <Col xs={3} className="org-metadata">
-            <p className="count">{count}</p>
-            <p className="name">{name}{link !== undefined ? helpIcon() : null}</p>
-        </Col>
-      )
-    }
-
-    // TODO: Add appropriate links below
-    return (
-      <>
-        <h3 className="member-results">
-          {organization.name}
-          <a target="_blank" rel="noreferrer" href={organization.id} style={{fontSize: '0.82em', marginLeft: '1.5em'}}>{organization.id}</a>
-          {organization.inceptionYear && <span className='inception-year'>Founded {organization.inceptionYear}</span>}
-        </h3>
-        <div className="panel panel-transparent aggregations">
-          <div className="panel-body">
-            <Row>
-              {stat(works[0], works[1])}
-              {stat(citations[0], citations[1], 'citations-and-references')}
-              {stat(views[0], views[1], 'views-and-downloads')}
-              {stat(downloads[0], downloads[1], 'views-and-downloads')}
-            </Row>
-          </div>
-        </div>
-      </>
-    )
-  }
 
   const shareLink = () => {
     return (
