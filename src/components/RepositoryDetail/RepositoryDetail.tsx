@@ -23,6 +23,7 @@ import {
   REPOSITORY_FIELDS,
 }from '../RepositoryMetadata/RepositoryMetadata'
 import styles from './RepositoryDetail.module.scss'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -227,7 +228,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
     return (
       <>
-      <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
+      <h3>{compactNumbers(repo.works.totalCount)} Works</h3>
 
       <div className={styles.grid}>
         <ProductionChart
@@ -238,14 +239,14 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
           data={facetToData(repo.works.resourceTypes)}
           count={repo.works.totalCount}
           legend={false}
-          title="Deposit Type"
+          title="Work Type"
           range={typesRange}
           domain={typesDomain}
         />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-        <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
-        <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+        <VerticalBarChart title="Work Languages" data={repo.works.languages} />
+        <VerticalBarChart title="Work Licenses" data={repo.works.licenses} />
       </div>
       </>
     )
@@ -349,50 +350,11 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     )
   }
 
-  const metricsDisplay = () => {
-    const metricsData = [
-      {
-        "label": "Deposits",
-        "count": repo.works.totalCount
-      },
-      {
-        "label": "Citations",
-        "count": repo.citationCount
-      },
-      {
-        "label": "Views",
-        "count": repo.viewCount
-      },
-      {
-        "label": "Downloads",
-        "count": repo.downloadCount
-      }
-    ];
-
-    const metricList = metricsData.map( (metric, index) => 
-    <>
-      {metric.count>0 &&(
-        <React.Fragment key={"metric-"+index}>
-          <dt>{metric.label}</dt>
-          <dd>{compactNumbers(metric.count)}</dd>
-        </React.Fragment >
-      )}
-      </>
-    )
-    return (
-        <div className={styles.metrics}>
-          <dl>
-            {metricList}
-          </dl>
-        </div>
-    )
-  }
-
   return (
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        {metricsDisplay()}
+        <MetricsDisplay counts={{ works: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>

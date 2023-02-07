@@ -13,6 +13,7 @@ import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 import { Works } from '../SearchWork/SearchWork'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 
 export interface OrganizationRecord {
   id: string
@@ -145,7 +146,23 @@ const Organization: React.FunctionComponent<Props> = ({
 
   return (
     <>
-      {statSummary()}
+      <h3 className="member-results" style={{ borderWidth: 0 }}>
+        {organization.name}
+        <a target="_blank" rel="noreferrer" href={organization.id} style={{fontSize: '0.82em', marginLeft: '1.5em'}}>{organization.id}</a>
+        {organization.inceptionYear && <span className='inception-year'>Founded {organization.inceptionYear}</span>}
+      </h3>
+      <div className="panel panel-transparent aggregations">
+        <div className="panel-body">
+          <MetricsDisplay
+            counts={{ works: organization.works.totalCount, citations: organization.citationCount, views: organization.viewCount, downloads: organization.downloadCount }}
+            links={{
+              citations: 'https://support.datacite.org/docs/citations-and-references',
+              views: 'https://support.datacite.org/docs/views-and-downloads',
+              downloads: 'https://support.datacite.org/docs/views-and-downloads'
+            }}
+          />
+        </div>
+      </div>
       <OrganizationMetadata metadata={organization} showTitle={false} />
       {shareLink()}
     </>
