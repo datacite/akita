@@ -9,13 +9,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import chunk from 'lodash/chunk'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import WorkFunding from '../WorkFunding/WorkFunding'
-import WorkPerson from '../WorkPerson/WorkPerson'
 import UsageChart from '../UsageChart/UsageChart'
 import Claim from '../Claim/Claim'
 
@@ -36,8 +33,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   const title = doi.titles[0]
     ? 'DataCite Commons: ' + doi.titles[0].title
     : 'DataCite Commons: No Title'
-
-  const showFunding = doi.fundingReferences && doi.fundingReferences.length > 0
 
   const shareLink = () => {
     return (
@@ -155,66 +150,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false}></WorkMetadata>
-      {doi.creators.length > 0 && (
-        <>
-          <h3 className="member-results" id="work-creators">
-            Creators
-          </h3>
-          <div className="panel panel-transparent creator">
-            <div className="panel-body">
-              {chunk(doi.creators, 3).map((row) => (
-                <Row key={row[0].name}>
-                  {row.map((item) => (
-                    <Col key={item.name} className="creator-list" md={4}>
-                      <WorkPerson person={item} />
-                    </Col>
-                  ))}
-                </Row>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-      {doi.contributors.length > 0 && (
-        <>
-          <h3 className="member-results" id="work-contributors">
-            Contributors
-          </h3>
-          <div className="panel panel-transparent contributor">
-            <div className="panel-body">
-              {chunk(doi.contributors, 3).map((row) => (
-                <Row key={row[0].name}>
-                  {row.map((item) => (
-                    <Col key={item.name} className="contributor-list" md={4}>
-                      <WorkPerson person={item} />
-                    </Col>
-                  ))}
-                </Row>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-      {showFunding && (
-        <h3 className="member-results" id="work-funding">
-          Funding
-        </h3>
-      )}
-      {showFunding && (
-        <div className="panel panel-transparent funding">
-          <div className="panel-body">
-            {chunk(doi.fundingReferences, 3).map((row) => (
-              <Row key={row[0].funderName}>
-                {row.map((item) => (
-                  <Col key={item.funderName} className="funder-list" md={4}>
-                    <WorkFunding funding={item} />
-                  </Col>
-                ))}
-              </Row>
-            ))}
-          </div>
-        </div>
-      )}
       { doi.registrationAgency.id == "datacite" && ( 
         <Claim doi_id={doi.doi} />
       )}
