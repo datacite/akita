@@ -15,6 +15,7 @@ import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 import Claim from '../Claim/Claim'
+import { MetadataTable } from '../MetadataTable/MetadataTable'
 
 type Props = {
   doi: WorkType
@@ -149,7 +150,8 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   return (
     <>
       <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false}></WorkMetadata>
+      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideSomeMetadata={true}></WorkMetadata>
+      <MetadataTable metadata={doi} />
       { doi.registrationAgency.id == "datacite" && ( 
         <Claim doi_id={doi.doi} />
       )}

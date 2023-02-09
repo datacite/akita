@@ -9,6 +9,8 @@ import ReactHtmlParser from 'react-html-parser'
 import WorkPerson from '../WorkPerson/WorkPerson'
 import WorkFunding from '../WorkFunding/WorkFunding'
 
+import styles from './MetadataTable.module.scss'
+
 
 type Props = {
   metadata: WorkType
@@ -27,22 +29,30 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     })
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-        <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
-      </Tab>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
+        </div>
+      </div>
+    </Tab>
   }
 
   const otherIdentifiers = (title, key) => {
     if (!metadata.identifiers || metadata.identifiers.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      {metadata.identifiers.map((id) => (
-        <div key={id.identifier} className="work-identifiers">
-          {id.identifierType}:{' '}
-          <a href={id.identifierUrl} target="_blank" rel="noreferrer">
-            {id.identifier}
-          </a>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          {metadata.identifiers.map((id) => (
+            <div key={id.identifier} className="work-identifiers">
+              {id.identifierType}:{' '}
+              <a href={id.identifierUrl} target="_blank" rel="noreferrer">
+                {id.identifier}
+              </a>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </Tab>
   }
   
@@ -50,15 +60,19 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.creators || metadata.creators.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      {chunk(metadata.creators, 3).map((row) => (
-        <Row key={row[0].name}>
-          {row.map((item) => (
-            <Col key={item.name} className="creator-list" md={4}>
-              <WorkPerson person={item} />
-            </Col>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          {chunk(metadata.creators, 3).map((row) => (
+            <Row key={row[0].name}>
+              {row.map((item) => (
+                <Col key={item.name} className="creator-list" md={4}>
+                  <WorkPerson person={item} />
+                </Col>
+              ))}
+            </Row>
           ))}
-        </Row>
-      ))}
+        </div>
+      </div>
     </Tab>
   }
 
@@ -67,15 +81,19 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.contributors || metadata.contributors.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      {chunk(metadata.contributors, 3).map((row) => (
-        <Row key={row[0].name}>
-          {row.map((item) => (
-            <Col key={item.name} className="contributor-list" md={4}>
-              <WorkPerson person={item} />
-            </Col>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          {chunk(metadata.contributors, 3).map((row) => (
+            <Row key={row[0].name}>
+              {row.map((item) => (
+                <Col key={item.name} className="contributor-list" md={4}>
+                  <WorkPerson person={item} />
+                </Col>
+              ))}
+            </Row>
           ))}
-        </Row>
-      ))}
+        </div>
+      </div>
     </Tab>
   }
   
@@ -83,15 +101,19 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.fundingReferences || metadata.fundingReferences.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      {chunk(metadata.fundingReferences, 3).map((row) => (
-        <Row key={row[0].funderName}>
-          {row.map((item) => (
-            <Col key={item.funderName} className="funder-list" md={4}>
-              <WorkFunding funding={item} />
-            </Col>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          {chunk(metadata.fundingReferences, 3).map((row) => (
+            <Row key={row[0].funderName}>
+              {row.map((item) => (
+                <Col key={item.funderName} className="funder-list" md={4}>
+                  <WorkFunding funding={item} />
+                </Col>
+              ))}
+            </Row>
           ))}
-        </Row>
-      ))}
+        </div>
+      </div>
     </Tab>
   }
 
@@ -99,18 +121,22 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.registrationAgency) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      DOI registered
-      {metadata.registered && (
-        <span>
-          {' '}
-          {new Date(metadata.registered).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </span>
-      )}{' '}
-      via {metadata.registrationAgency.name}.
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          DOI registered
+          {metadata.registered && (
+            <span>
+              {' '}
+              {new Date(metadata.registered).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </span>
+          )}{' '}
+          via {metadata.registrationAgency.name}
+        </div>
+      </div>.
     </Tab>
   }
 
@@ -127,12 +153,12 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
   }
   
   return (
-      <div style={{ minHeight: 250, marginTop: 50 }}>
-        <Tabs bsStyle='tabs' justified>
-          {METADATA_TYPES.map((type, index) => tab(type, index)
-          )}
-        </Tabs>
-      </div>
+    <div className={styles.container + ' nav-tabs-member'}>
+      <Tabs className="content-tabs">
+        {METADATA_TYPES.map((type, index) => tab(type, index)
+        )}
+      </Tabs>
+    </div>
   )
 }
 

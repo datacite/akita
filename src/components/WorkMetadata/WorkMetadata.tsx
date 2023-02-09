@@ -4,14 +4,15 @@ import {
   Alert,
   Label,
   Tooltip,
+  Col,
+  Row
 } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
+import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Image from 'next/image'
-import { pluralize } from '../../utils/helpers'
+import { orcidFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -25,18 +26,20 @@ import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
-import { MetadataTable } from '../MetadataTable/MetadataTable'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 
 type Props = {
   metadata: WorkType
   linkToExternal?: boolean
   showClaimStatus?: boolean
+  hideSomeMetadata?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal,
-  showClaimStatus
+  showClaimStatus,
+  hideSomeMetadata = false
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -90,6 +93,49 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     }
   }
 
+  const creators = () => {
+    if (!metadata.creators || !metadata.creators[0]) {
+      return <div className="creators">No creators</div>
+    }
+
+    const creatorList = metadata.creators.reduce(
+      (sum, creator, index, array) => {
+        const c = creator.familyName
+          ? [creator.givenName, creator.familyName].join(' ')
+          : creator.name
+
+        // padding depending on position in creators list
+        switch (true) {
+          case array.length > index + 2:
+            sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
+            break
+          case array.length > index + 1:
+            sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
+            break
+          default:
+            sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
+            break
+        }
+        return sum
+      },
+      []
+    )
+
+    return (
+      <div className="creators">
+        {creatorList.map((c, index) =>
+          c.id !== null ? (
+            <Link href={'/orcid.org' + c.id} key={index}>
+              <a>{c.displayName}</a>
+            </Link>
+          ) : (
+            c.displayName
+          )
+        )}
+      </div>
+    )
+  }
+
   const claim = metadata.claims[0]
 
   const container = () => {
@@ -140,6 +186,17 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {container()}
       </div>
     )
+  }
+
+  const description = () => {
+    if (!metadata.descriptions[0]) return ''
+
+    const descriptionHtml = truncate(metadata.descriptions[0].description, {
+      length: 2500,
+      separator: '… '
+    })
+
+    return <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
   }
 
   const license = () => {
@@ -248,6 +305,25 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
+  const registered = () => {
+    return (
+      <div className="registered">
+        DOI registered
+        {metadata.registered && (
+          <span>
+            {' '}
+            {new Date(metadata.registered).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </span>
+        )}{' '}
+        via {metadata.registrationAgency.name}.
+      </div>
+    )
+  }
+
   const tooltipResourceTypeGeneral = (
     <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
   )
@@ -302,38 +378,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
-  const metricsCounter = () => {
-    if (
-      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
-      0
-    ) {
-      return <div></div>
-    }
-
-    return (
-      <div className="metrics">
-        {metadata.citationCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            {pluralize(metadata.citationCount, 'Citation', true)}
-          </span>
-        )}
-        {metadata.viewCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            {pluralize(metadata.viewCount, 'View', true)}
-          </span>
-        )}
-        {metadata.downloadCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            {pluralize(metadata.downloadCount, 'Download', true)}
-          </span>
-        )}
-      </div>
-    )
-  }
-
   const footer = () => {
     return (
       <div className="panel-footer">
@@ -348,10 +392,27 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent work-list">
       <div className="panel-body">
         {title()}
-        <MetadataTable metadata={metadata} />
+        {hideSomeMetadata && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
+        {!hideSomeMetadata && creators()}
         {metadataTag()}
+        {!hideSomeMetadata && <>{description()}
+        {metadata.identifiers && metadata.identifiers.length > 0 && (
+          <Row>
+            <Col xs={6} md={6} className="other-identifiers">
+              <h5>Other Identifiers</h5>
+              {metadata.identifiers.map((id) => (
+                <div key={id.identifier} className="work-identifiers">
+                  {id.identifierType}:{' '}
+                  <a href={id.identifierUrl} target="_blank" rel="noreferrer">
+                    {id.identifier}
+                  </a>
+                </div>
+              ))}
+            </Col>
+          </Row>
+        )}
+        {registered()}</>}
         {license()}
-        {metricsCounter()}
         {tags()}
       </div>
       {footer()}
