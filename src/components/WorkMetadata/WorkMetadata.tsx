@@ -28,6 +28,7 @@ import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import { MetadataTable } from '../MetadataTable/MetadataTable'
 
 type Props = {
   metadata: WorkType
@@ -423,6 +424,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent work-list">
       <div className="panel-body">
         {title()}
+        <MetadataTable metadata={metadata} />
         {creators()}
         {metadataTag()}
         {description()}

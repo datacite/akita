@@ -99,7 +99,18 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.registrationAgency) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      {metadata.registrationAgency.name}
+      DOI registered
+      {metadata.registered && (
+        <span>
+          {' '}
+          {new Date(metadata.registered).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </span>
+      )}{' '}
+      via {metadata.registrationAgency.name}.
     </Tab>
   }
 
@@ -116,7 +127,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
   }
   
   return (
-      <div style={{ minHeight: 250 }}>
+      <div style={{ minHeight: 250, marginTop: 50 }}>
         <Tabs bsStyle='tabs' justified>
           {METADATA_TYPES.map((type, index) => tab(type, index)
           )}
