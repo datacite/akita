@@ -11,10 +11,8 @@ import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import uniqBy from 'lodash/uniqBy'
 import Image from 'next/image'
-import { pluralize, orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from '../../utils/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-regular-svg-icons'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -28,17 +26,20 @@ import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 
 type Props = {
   metadata: WorkType
   linkToExternal?: boolean
   showClaimStatus?: boolean
+  hideSomeMetadata?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal,
-  showClaimStatus
+  showClaimStatus,
+  hideSomeMetadata = false
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -377,38 +378,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
-  const metricsCounter = () => {
-    if (
-      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
-      0
-    ) {
-      return <div></div>
-    }
-
-    return (
-      <div className="metrics">
-        {metadata.citationCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            {pluralize(metadata.citationCount, 'Citation', true)}
-          </span>
-        )}
-        {metadata.viewCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            {pluralize(metadata.viewCount, 'View', true)}
-          </span>
-        )}
-        {metadata.downloadCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            {pluralize(metadata.downloadCount, 'Download', true)}
-          </span>
-        )}
-      </div>
-    )
-  }
-
   const footer = () => {
     return (
       <div className="panel-footer">
@@ -423,9 +392,10 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     <div key={metadata.id} className="panel panel-transparent work-list">
       <div className="panel-body">
         {title()}
-        {creators()}
+        {hideSomeMetadata && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
+        {!hideSomeMetadata && creators()}
         {metadataTag()}
-        {description()}
+        {!hideSomeMetadata && <>{description()}
         {metadata.identifiers && metadata.identifiers.length > 0 && (
           <Row>
             <Col xs={6} md={6} className="other-identifiers">
@@ -441,9 +411,8 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             </Col>
           </Row>
         )}
-        {registered()}
+        {registered()}</>}
         {license()}
-        {metricsCounter()}
         {tags()}
       </div>
       {footer()}
