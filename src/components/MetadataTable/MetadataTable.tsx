@@ -136,7 +136,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
           )}{' '}
           via {metadata.registrationAgency.name}
         </div>
-      </div>.
+      </div>
     </Tab>
   }
 
@@ -153,11 +153,15 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
   }
   
   return (
-    <div className={styles.container + ' nav-tabs-member'}>
-      <Tabs className="content-tabs">
-        {METADATA_TYPES.map((type, index) => tab(type, index)
-        )}
-      </Tabs>
+    <div className="panel panel-transparent">
+      <div className="panel-body">
+        <div className={styles.container + ' nav-tabs-member'}>
+          <Tabs className="content-tabs">
+            {METADATA_TYPES.map((type, index) => tab(type, index)
+            )}
+          </Tabs>
+        </div>
+      </div>
     </div>
   )
 }
