@@ -25,7 +25,7 @@ describe('Search Works', () => {
       .get('.panel.facets.add')
       .should(($facet) => {
         expect($facet).to.have.length.at.least(4)
-        expect($facet.eq(0)).to.contain('Authors & Contributors')
+        expect($facet.eq(0)).to.contain('Authors')
         expect($facet.eq(1)).to.contain('Publication Year')
         expect($facet.eq(2)).to.contain('Work Type')
         expect($facet.eq(3)).to.contain('License')

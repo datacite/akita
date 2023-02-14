@@ -8,7 +8,7 @@ import { Alert, Row, Col } from 'react-bootstrap'
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
-import { pluralize, orcidFromUrl } from '../../utils/helpers'
+import { pluralize } from '../../utils/helpers'
 
 export interface PersonRecord {
   id: string
