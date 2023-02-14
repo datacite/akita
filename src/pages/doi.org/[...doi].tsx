@@ -17,6 +17,7 @@ import {
   contentFragment
 } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
+import ShareLinks from '../../components/ShareLinks/ShareLinks'
 
 type Props = {
   doi: string
@@ -625,6 +626,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           title="Download Metadata"
           onClick={() => setShowDownloadMetadataModal(true)}
           id="download-metadata-button"
+          style={{marginBottom: 20}}
         >
           Download Metadata
         </Button>
@@ -646,6 +648,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       <>
         <Col md={3} className="panel-list" id="side-bar">
           {downloadMetadataButton()}
+          <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} className="panel-list" id="content">
           <Work doi={work}></Work>

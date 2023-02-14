@@ -84,10 +84,3 @@
   align-items: flex-start;
   margin-top: 3em;
 }
-.share {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  @include header-style();
-}
