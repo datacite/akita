@@ -7,13 +7,7 @@ import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { faEnvelope, faNewspaper } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,6 +18,7 @@ import {
 }from '../RepositoryMetadata/RepositoryMetadata'
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
+import ShareLinks from '../ShareLinks/ShareLinks';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -184,23 +179,6 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
     )
   }
 
-  const shareDisplay = () => {
-    const info = pageInfo(repo);
-    return (
-      <>
-        <h3>Share</h3>
-        <EmailShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faEnvelope} /> Email
-        </EmailShareButton>
-        <TwitterShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faTwitter} /> Twitter
-        </TwitterShareButton>
-        <FacebookShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faFacebook} /> Facebook
-        </FacebookShareButton>
-      </>
-    )
-  }
   return (
     <>
         <div className={styles.gotoButtons}>
@@ -210,7 +188,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
           {contacts()}
         </div>
         <div className={styles.share}>
-          {shareDisplay()}
+          <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi: repo.id)} title={repo.name} />
         </div>
       </>
     )

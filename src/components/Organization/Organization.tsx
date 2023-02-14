@@ -1,16 +1,6 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
-import { rorFromUrl } from '../../utils/helpers'
 import { Works } from '../SearchWork/SearchWork'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 
@@ -50,45 +40,6 @@ type Props = {
 const Organization: React.FunctionComponent<Props> = ({
   organization
 }) => {
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/ror.org' + rorFromUrl(organization.id)
-      : 'https://commons.stage.datacite.org/ror.org' + rorFromUrl(organization.id)
-
-  const title = organization.name
-    ? 'DataCite Commons: ' + organization.name
-    : 'DataCite Commons: No Name'
-
-  const shareLink = () => {
-    return (
-      <>
-        <h3 className="member-results">Share</h3>
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <Row>
-              <Col xs={6} md={4}>
-                <div>
-                  <EmailShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faEnvelope} /> Email
-                  </EmailShareButton>
-                </div>
-                <div>
-                  <TwitterShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faTwitter} /> Twitter
-                  </TwitterShareButton>
-                </div>
-                <div>
-                  <FacebookShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faFacebook} /> Facebook
-                  </FacebookShareButton>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </>
-    )
-  }
 
   return (
     <>
@@ -110,7 +61,6 @@ const Organization: React.FunctionComponent<Props> = ({
         </div>
       </div>
       <OrganizationMetadata metadata={organization} showTitle={false} />
-      {shareLink()}
     </>
   )
 }
