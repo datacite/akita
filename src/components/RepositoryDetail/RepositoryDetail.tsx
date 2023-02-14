@@ -187,7 +187,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         <div className={styles.contacts}>
           {contacts()}
         </div>
-        <div className={styles.share}>
+        <div>
           <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi: repo.id)} title={repo.name} />
         </div>
       </>
