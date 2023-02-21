@@ -32,14 +32,18 @@ type Props = {
   metadata: WorkType
   linkToExternal?: boolean
   showClaimStatus?: boolean
-  hideSomeMetadata?: boolean
+  hideTitle?: boolean
+  hideMetadataInTable?: boolean
+  includeMetricsDisplay?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal,
   showClaimStatus,
-  hideSomeMetadata = false
+  hideTitle = false,
+  hideMetadataInTable = false,
+  includeMetricsDisplay = false
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -391,11 +395,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   return (
     <div key={metadata.id} className="panel panel-transparent work-list">
       <div className="panel-body">
-        {title()}
-        {hideSomeMetadata && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
-        {!hideSomeMetadata && creators()}
+        {!hideTitle && title()}
+        {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
+        {!hideMetadataInTable && creators()}
         {metadataTag()}
-        {!hideSomeMetadata && <>{description()}
+        {!hideMetadataInTable && <>{description()}
         {metadata.identifiers && metadata.identifiers.length > 0 && (
           <Row>
             <Col xs={6} md={6} className="other-identifiers">

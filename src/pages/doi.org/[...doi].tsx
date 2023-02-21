@@ -4,6 +4,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
+import ReactHtmlParser from 'react-html-parser'
 import { Row, Col, Tab, Nav, NavItem, Button, Modal } from 'react-bootstrap'
 
 import apolloClient from '../../utils/apolloClient'
@@ -18,6 +19,8 @@ import {
 } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
+import { Title } from '../../components/Title/Title'
+import CiteAs from 'src/components/CiteAs/CiteAs'
 
 type Props = {
   doi: string
@@ -642,16 +645,25 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         </Modal>
       </>)
     }
+    // const handleUrl =
+    // work.registrationAgency.id === 'datacite'
+    //   ? work.id
+    //   : 'https://doi.org/' + work.doi
 
+    // const titleHtml = work.titles[0].title
+  
 
     return (
       <>
         <Col md={3} className="panel-list" id="side-bar">
           {downloadMetadataButton()}
+          <CiteAs doi={work} />
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} className="panel-list" id="content">
-          <Work doi={work}></Work>
+            {/* <Title title={ReactHtmlParser(titleHtml)} url={handleUrl} link={'https://doi.org/' + work.doi} /> */}
+            {/* <Title title={'this is a super long title for a super long titled DOI that has a super long title.'} url={handleUrl} link={'https://doi.org/' + work.doi} /> */}
+            <Work doi={work}></Work>
         </Col>
       </>
     )
