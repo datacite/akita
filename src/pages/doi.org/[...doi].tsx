@@ -645,12 +645,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         </Modal>
       </>)
     }
-    // const handleUrl =
-    // work.registrationAgency.id === 'datacite'
-    //   ? work.id
-    //   : 'https://doi.org/' + work.doi
-
-    // const titleHtml = work.titles[0].title
   
 
     return (
@@ -661,8 +655,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} className="panel-list" id="content">
-            {/* <Title title={ReactHtmlParser(titleHtml)} url={handleUrl} link={'https://doi.org/' + work.doi} /> */}
-            {/* <Title title={'this is a super long title for a super long titled DOI that has a super long title.'} url={handleUrl} link={'https://doi.org/' + work.doi} /> */}
             <Work doi={work}></Work>
         </Col>
       </>

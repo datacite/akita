@@ -70,7 +70,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <>
-      {/* <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3> */}
       <MetadataTable metadata={doi} />
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
       { doi.registrationAgency.id == "datacite" && ( 
