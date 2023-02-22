@@ -5,7 +5,7 @@ describe('workContainer with usage', () => {
   })
 
   it('creators', () => {
-    cy.get('.creator-list', { timeout: 30000 })
+    cy.get('.creator-list .table .person-table tr', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'William Mower')
   })

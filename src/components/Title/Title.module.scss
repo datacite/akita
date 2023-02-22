@@ -1,0 +1,35 @@
+.row {
+  padding: 5px 30px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 20px;
+
+  .title {
+    margin: 0
+  }
+
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 20px;
+
+    .icons {
+      display: flex;
+      column-gap: 2px;
+
+      .license {
+        display: flex;
+        align-items: center;
+      }
+    }
+  
+    .link a {
+      color: gray
+    }
+  }
+}

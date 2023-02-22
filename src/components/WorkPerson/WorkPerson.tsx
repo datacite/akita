@@ -5,7 +5,7 @@ import startCase from 'lodash/startCase'
 import { orcidFromUrl } from '../../utils/helpers'
 import { rorFromUrl } from '../../utils/helpers'
 
-interface Person {
+export interface Person {
   id: string
   name: string
   givenName?: string

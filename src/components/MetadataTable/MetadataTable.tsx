@@ -6,10 +6,10 @@ import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
 import ReactHtmlParser from 'react-html-parser'
 
-import WorkPerson from '../WorkPerson/WorkPerson'
 import WorkFunding from '../WorkFunding/WorkFunding'
 
 import styles from './MetadataTable.module.scss'
+import PersonTable from '../PersonTable/PersonTable'
 
 
 type Props = {
@@ -61,16 +61,8 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
       <div className="panel panel-transparent">
-        <div className="panel-body">
-          {chunk(metadata.creators, 3).map((row) => (
-            <Row key={row[0].name}>
-              {row.map((item) => (
-                <Col key={item.name} className="creator-list" md={4}>
-                  <WorkPerson person={item} />
-                </Col>
-              ))}
-            </Row>
-          ))}
+        <div className="panel-body creator-list">
+          <PersonTable people={metadata.creators} />
         </div>
       </div>
     </Tab>
@@ -81,17 +73,9 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.contributors || metadata.contributors.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      <div className="panel panel-transparent">
+      <div className="panel panel-transparent contributor-list">
         <div className="panel-body">
-          {chunk(metadata.contributors, 3).map((row) => (
-            <Row key={row[0].name}>
-              {row.map((item) => (
-                <Col key={item.name} className="contributor-list" md={4}>
-                  <WorkPerson person={item} />
-                </Col>
-              ))}
-            </Row>
-          ))}
+          <PersonTable people={metadata.contributors} />
         </div>
       </div>
     </Tab>

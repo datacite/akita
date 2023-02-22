@@ -3,7 +3,6 @@ import { Tabs, Tab, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
-import CitationFormatter from '../CitationFormatter/CitationFormatter'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 import Claim from '../Claim/Claim'
@@ -14,35 +13,7 @@ type Props = {
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
-  const [selectedOption, setSelectedOption] = React.useState('')
-
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
-
-  const formattedCitation = () => {
-    return (
-      <div>
-        <div id="citation" className="input-group pull-right">
-          <select
-            className="cite-as"
-            onChange={(e) => setSelectedOption(e.target.value)}
-          >
-            <option value="apa">APA</option>
-            <option value="harvard-cite-them-right">Harvard</option>
-            <option value="modern-language-association">MLA</option>
-            <option value="vancouver">Vancouver</option>
-            <option value="chicago-fullnote-bibliography">Chicago</option>
-            <option value="ieee">IEEE</option>
-          </select>
-        </div>
-        <CitationFormatter
-          id={doi.doi}
-          input={doi.formattedCitation}
-          locale="en"
-          style={selectedOption}
-        ></CitationFormatter>
-      </div>
-    )
-  }
 
   const viewsTabLabel = pluralize(doi.viewCount, 'View')
   const downloadsTabLabel = pluralize(doi.downloadCount, 'Download')
@@ -99,13 +70,11 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <>
-      <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3>
-      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideSomeMetadata={true}></WorkMetadata>
       <MetadataTable metadata={doi} />
+      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
       { doi.registrationAgency.id == "datacite" && ( 
         <Claim doi_id={doi.doi} />
       )}
-      {formattedCitation()}
       {analyticsBar()}
     </>
   )
