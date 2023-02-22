@@ -1,4 +1,5 @@
 import React from 'react'
+import { Col, Row } from 'react-bootstrap'
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 
@@ -11,6 +12,15 @@ const CiteAs: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <div>
+      <Row><Col xs={12}>
+        <CitationFormatter
+          id={doi.doi}
+          input={doi.formattedCitation}
+          locale="en"
+          style={selectedOption}
+        />
+      </Col></Row>
+      <Row><Col xs={12}>
         <div id="citation" className="input-group pull-right">
           <select
             className="cite-as"
@@ -24,13 +34,8 @@ const CiteAs: React.FunctionComponent<Props> = ({ doi }) => {
             <option value="ieee">IEEE</option>
           </select>
         </div>
-        <CitationFormatter
-          id={doi.doi}
-          input={doi.formattedCitation}
-          locale="en"
-          style={selectedOption}
-        />
-      </div>
+        </Col></Row>
+    </div>
   )
 }
 
