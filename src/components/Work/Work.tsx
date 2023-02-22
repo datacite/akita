@@ -6,6 +6,9 @@ import { WorkType } from '../../pages/doi.org/[...doi]'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 import { MetadataTable } from '../MetadataTable/MetadataTable'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styles from './Work.module.scss'
+import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   doi: WorkType
@@ -25,6 +28,19 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     yearMonth: datum.yearMonth,
     total: datum.total
   }))
+
+  const citations = () => {
+    if (doi.citationCount === 0) return
+
+    return <div className="panel panel-transparent">
+      <div className={"panel-body " + styles.citation}>
+        <span className="metrics-counter">
+            <FontAwesomeIcon icon={faQuoteLeft} size="sm" color='black'/>{' '}
+            {pluralize(doi.citationCount, 'Citation', true)}
+          </span>
+      </div>
+    </div>
+  }
 
   const analyticsBar = () => {
     if (doi.viewCount == 0 && doi.downloadCount == 0) return ''
@@ -69,6 +85,7 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <>
+      {citations()}
       <MetadataTable metadata={doi} />
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
       {analyticsBar()}

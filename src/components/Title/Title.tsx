@@ -142,9 +142,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, url, link, rights
               </a>
             </h3>
             <div className={styles.details}>
-              <div className={styles.icons}>
-                {license()}
-              </div>
+              {license()}
               <div className={styles.link}>
                 <a href={link} target="_blank" rel="noreferrer">
                   {link}

@@ -4,7 +4,7 @@
 
 .container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   flex-wrap: wrap;
   column-gap: 20px;
 
@@ -18,14 +18,9 @@
     align-items: center;
     column-gap: 20px;
 
-    .icons {
+    .license {
       display: flex;
-      column-gap: 2px;
-
-      .license {
-        display: flex;
-        align-items: center;
-      }
+      align-items: center;
     }
   
     .link a {
