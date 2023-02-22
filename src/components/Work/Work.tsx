@@ -1,14 +1,12 @@
 import React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
-import ReactHtmlParser from 'react-html-parser'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 import Claim from '../Claim/Claim'
 import { MetadataTable } from '../MetadataTable/MetadataTable'
-import { Title } from '../Title/Title'
 
 type Props = {
   doi: WorkType
@@ -70,17 +68,9 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     )
   }
 
-  const handleUrl =
-    doi.registrationAgency.id === 'datacite'
-      ? doi.id
-      : 'https://doi.org/' + doi.doi
-
-    const titleHtml = doi.titles[0].title
-
   return (
     <>
       {/* <h3 className="member-results">{'https://doi.org/' + doi.doi}</h3> */}
-      <Title title={ReactHtmlParser(titleHtml)} url={handleUrl} link={'https://doi.org/' + doi.doi} />
       <MetadataTable metadata={doi} />
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
       { doi.registrationAgency.id == "datacite" && ( 

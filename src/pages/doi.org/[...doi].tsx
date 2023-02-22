@@ -287,7 +287,7 @@ interface Title {
   title: string
 }
 
-interface Rights {
+export interface Rights {
   rights: string
   rightsUri: string
   rightsIdentifier: string
@@ -765,6 +765,13 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     )
   }
 
+  const handleUrl =
+    work.registrationAgency.id === 'datacite'
+      ? work.id
+      : 'https://doi.org/' + work.doi
+
+    const titleHtml = work.titles[0].title
+
   return (
     <Layout path={'/doi.org'}>
       <Head>
@@ -781,6 +788,9 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         {type && <meta name="og:type" content={type} />}
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
+      
+      <Title title={ReactHtmlParser(titleHtml)} url={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+           
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

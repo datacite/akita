@@ -6,7 +6,6 @@ import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
 import ReactHtmlParser from 'react-html-parser'
 
-import WorkPerson from '../WorkPerson/WorkPerson'
 import WorkFunding from '../WorkFunding/WorkFunding'
 
 import styles from './MetadataTable.module.scss'
@@ -62,7 +61,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
       <div className="panel panel-transparent">
-        <div className="panel-body">
+        <div className="panel-body creator-list">
           <PersonTable people={metadata.creators} />
         </div>
       </div>
@@ -74,7 +73,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.contributors || metadata.contributors.length === 0) return
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
-      <div className="panel panel-transparent">
+      <div className="panel panel-transparent contributor-list">
         <div className="panel-body">
           <PersonTable people={metadata.contributors} />
         </div>

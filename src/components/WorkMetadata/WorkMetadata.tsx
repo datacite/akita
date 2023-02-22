@@ -416,7 +416,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           </Row>
         )}
         {registered()}</>}
-        {license()}
+        {!hideMetadataInTable && license()}
         {tags()}
       </div>
       {footer()}
