@@ -20,7 +20,8 @@ import {
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title } from '../../components/Title/Title'
-import CiteAs from 'src/components/CiteAs/CiteAs'
+import CiteAs from '../../components/CiteAs/CiteAs'
+import Claim from '../../components/Claim/Claim'
 
 type Props = {
   doi: string
@@ -629,7 +630,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           title="Download Metadata"
           onClick={() => setShowDownloadMetadataModal(true)}
           id="download-metadata-button"
-          style={{marginBottom: 20}}
+          block
         >
           Download Metadata
         </Button>
@@ -650,7 +651,12 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     return (
       <>
         <Col md={3} className="panel-list" id="side-bar">
-          {downloadMetadataButton()}
+          <div className='left-menu-buttons'>
+            { work.registrationAgency.id == "datacite" && ( 
+              <Claim doi_id={work.doi} />
+            )}
+            {downloadMetadataButton()}
+          </div>
           <CiteAs doi={work} />
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>

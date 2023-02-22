@@ -5,7 +5,6 @@ import { pluralize } from '../../utils/helpers'
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
-import Claim from '../Claim/Claim'
 import { MetadataTable } from '../MetadataTable/MetadataTable'
 
 type Props = {
@@ -72,9 +71,6 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
     <>
       <MetadataTable metadata={doi} />
       <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
-      { doi.registrationAgency.id == "datacite" && ( 
-        <Claim doi_id={doi.doi} />
-      )}
       {analyticsBar()}
     </>
   )
