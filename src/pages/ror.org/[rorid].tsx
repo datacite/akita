@@ -18,6 +18,7 @@ import {
 } from '../../components/SearchWork/SearchWork'
 import { rorFromUrl, pluralize } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
+import { Title } from 'src/components/Title/Title'
 
 type Props = {
   rorId?: string
@@ -285,6 +286,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         <meta name="og:image" content={imageUrl} />
         <meta name="og:type" content="organization" />
       </Head>
+      <Title title={organization.name} url={organization.id} link={organization.id} />
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

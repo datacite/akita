@@ -17,7 +17,7 @@ import { Rights } from 'src/pages/doi.org/[...doi]'
 
 
 type Props = {
-  title: React.ReactElement<any, string | React.JSXElementConstructor<any>>[]
+  title: React.ReactElement<any, string | React.JSXElementConstructor<any>>[] | string
   url: string
   link: string
   rights?: Rights[]

@@ -43,11 +43,6 @@ const Organization: React.FunctionComponent<Props> = ({
 
   return (
     <>
-      <h3 className="member-results" style={{ borderWidth: 0 }}>
-        {organization.name}
-        <a target="_blank" rel="noreferrer" href={organization.id} style={{fontSize: '0.82em', marginLeft: '1.5em'}}>{organization.id}</a>
-        {organization.inceptionYear && <span className='inception-year'>Founded {organization.inceptionYear}</span>}
-      </h3>
       <div className="panel panel-transparent aggregations">
         <div className="panel-body">
           <MetricsDisplay
@@ -57,7 +52,8 @@ const Organization: React.FunctionComponent<Props> = ({
               views: 'https://support.datacite.org/docs/views-and-downloads',
               downloads: 'https://support.datacite.org/docs/views-and-downloads'
             }}
-          />
+            />
+            {organization.inceptionYear && 'Founded '+ organization.inceptionYear}
         </div>
       </div>
       <OrganizationMetadata metadata={organization} showTitle={false} />
