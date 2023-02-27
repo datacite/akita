@@ -9,18 +9,7 @@ import {
 } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
-import uniqBy from 'lodash/uniqBy'
-import Image from 'next/image'
 import { orcidFromUrl } from '../../utils/helpers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCreativeCommons,
-  faCreativeCommonsBy,
-  faCreativeCommonsNc,
-  faCreativeCommonsNd,
-  faCreativeCommonsSa,
-  faCreativeCommonsZero
-} from '@fortawesome/free-brands-svg-icons'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 

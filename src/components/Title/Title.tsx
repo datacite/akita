@@ -18,10 +18,10 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
 
   return (
     <Row className={styles.row}>
-      <Col smOffset={3} className="panel panel-transparent" id="title">
+      <Col smOffset={3} className="panel panel-transparent">
         <div className="panel-body">
           <div className={styles.container}>
-            <h3 className={styles.title}>
+            <h3 className={styles.title} id='title'>
               <a target="_blank" rel="noreferrer" href={titleLink}>
                 {title}
               </a>
@@ -29,7 +29,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
             <div className={styles.details}>
               <License rights={rights} />
               <div className={styles.link}>
-                <a href={link} target="_blank" rel="noreferrer">
+                <a href={link} target="_blank" rel="noreferrer" id="title-link">
                   {link}
                 </a>
               </div>

@@ -7,13 +7,13 @@ describe('OrganizationContainer', () => {
   })
 
   it('id', () => {
-    cy.get('h3.member-results', { timeout: 30000 }).contains(
+    cy.get('#title-link', { timeout: 30000 }).contains(
       'https://ror.org/052gg0110'
     )
   })
 
   it('name', () => {
-    cy.get('h3.member-results', { timeout: 30000 }).contains(
+    cy.get('#title', { timeout: 30000 }).contains(
       'University of Oxford'
     )
   })
