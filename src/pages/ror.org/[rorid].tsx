@@ -286,7 +286,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         <meta name="og:image" content={imageUrl} />
         <meta name="og:type" content="organization" />
       </Head>
-      <Title title={organization.name} url={organization.id} link={organization.id} />
+      <Title title={organization.name} titleLink={organization.id} link={organization.id} />
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

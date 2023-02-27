@@ -453,36 +453,6 @@ ul.nav.nav-tabs li span {
   margin-bottom: 10px;
 }
 
-.inception-year {
-  float: right;
-  font-size: .82em;
-  color: #34495e;
-  line-height: 1.86em;
-  font-weight: normal;
-}
-
-.org-metadata {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.org-metadata .count {
-  margin: 0;
-  font-size: 30px;
-}
-
-.org-metadata .name {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.org-metadata .help-icon {
-  margin-left: 0.6em;
-  color: #1abc9c;
-  font-size: 0.8em;
-}
-
 .alert-works {
   margin: 10px;
 }

@@ -622,7 +622,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
       
-      <Title title={ReactHtmlParser(titleHtml)} url={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+      <Title title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
