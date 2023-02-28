@@ -1,34 +1,30 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import useSWR from 'swr'
 
 type Props = {
   url: string
   title?: string
+  variables: {
+    id: string,
+    gridId: string,
+    crossrefFunderId: string,
+    cursor: string,
+    filterQuery: string,
+    published: string,
+    resourceTypeId: string,
+    fieldOfScience: string,
+    language: string,
+    license: string,
+    registrationAgency: string
+  }
 }
 
-const DownloadReports: React.FunctionComponent<Props> = ({ url, title }) => {
+const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
 
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/' + url
-      : 'https://commons.stage.datacite.org/' + url
+  const filteredVariables = Object.fromEntries(Object.entries(variables).filter(([, value]) => value))
+  const params = new URLSearchParams(filteredVariables).toString()
 
-  const pageTitle = title
-    ? 'DataCite Commons: ' + title
-    : 'DataCite Commons: No Title'
-  
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-  const { data, error, isLoading } = useSWR('/api/download-reports', fetcher)
-  console.log(data)
+  const apiurlBase = '/api/download-reports'
 
 
   const downloadReports = () => {
@@ -42,37 +38,27 @@ const DownloadReports: React.FunctionComponent<Props> = ({ url, title }) => {
             <Col className="download-list" id="full-metadata" xs={12}>
               <div id="export-xml">
                 <a
-                  target="_blank"
+                  // target="_blank"
                   rel="noreferrer"
-                  href={
-                    apiUrl +
-                    '/dois?query=%22german+internet+panel%22&data-center-id=gesis.gesis&style=apa&page[size]=200'
-                    // '/application/vnd.datacite.datacite+xml/' +
-                    // work.doi
-                  }
-                  // https://api.datacite.org/dois?query=%22german+internet+panel%22&data-center-id=gesis.gesis&style=apa&page[size]=200
+                  href={`${apiurlBase}/related-works?${params}`}
                 >
                   Related Works
                 </a>
               </div>
               <div id="export-json">
                 <a
-                  target="_blank"
+                  // target="_blank"
                   rel="noreferrer"
-                  href={
-                    '/api/download-reports'
-                  }
+                  href={`${apiurlBase}/abstracts?${params}`}
                 >
                   Abstracts
                 </a>
               </div>
               <div id="export-ld" className="download">
                 <a
-                  target="_blank"
+                  // target="_blank"
                   rel="noreferrer"
-                  href={
-                    apiUrl + '/application/vnd.schemaorg.ld+json/' // + work.doi
-                  }
+                  href={`${apiurlBase}/funders?${params}`}
                 >
                   Funders
                 </a>
@@ -88,29 +74,6 @@ const DownloadReports: React.FunctionComponent<Props> = ({ url, title }) => {
     <>
       <h3 className="member-results">Download Reports</h3>
       {downloadReports()}
-      {/* <div className="panel panel-transparent share">
-        <div className="panel-body">
-          <Row>
-            <Col className="share-list" xs={12}>
-              <div>
-                <EmailShareButton url={pageUrl} title={pageTitle}>
-                  <FontAwesomeIcon icon={faEnvelope} /> Email
-                </EmailShareButton>
-              </div>
-              <div>
-                <TwitterShareButton url={pageUrl} title={pageTitle}>
-                  <FontAwesomeIcon icon={faTwitter} /> Twitter
-                </TwitterShareButton>
-              </div>
-              <div>
-                <FacebookShareButton url={pageUrl} title={pageTitle}>
-                  <FontAwesomeIcon icon={faFacebook} /> Facebook
-                </FacebookShareButton>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </div> */}
     </>
   )
 }

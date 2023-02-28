@@ -239,7 +239,19 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
     return (
       <>
         <Col md={3} className="panel-list" id="side-bar">
-          <DownloadReports url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
+          <DownloadReports url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} variables={{
+      id: rorId,
+      gridId: gridId,
+      crossrefFunderId: crossrefFunderId,
+      cursor: cursor,
+      filterQuery: filterQuery,
+      published: published,
+      resourceTypeId: resourceType,
+      fieldOfScience: fieldOfScience,
+      language: language,
+      license: license,
+      registrationAgency: registrationAgency
+    }} />
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9}>
