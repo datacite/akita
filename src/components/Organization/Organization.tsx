@@ -3,6 +3,7 @@ import React from 'react'
 import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
 import { Works } from '../SearchWork/SearchWork'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
+import { Col } from 'react-bootstrap'
 
 export interface OrganizationRecord {
   id: string
@@ -44,7 +45,7 @@ const Organization: React.FunctionComponent<Props> = ({
   return (
     <>
       <div className="panel panel-transparent aggregations">
-        <div className="panel-body">
+        <Col className="panel-body" sm={9}>
           <MetricsDisplay
             counts={{ works: organization.works.totalCount, citations: organization.citationCount, views: organization.viewCount, downloads: organization.downloadCount }}
             links={{
@@ -54,7 +55,7 @@ const Organization: React.FunctionComponent<Props> = ({
             }}
             />
             {organization.inceptionYear && 'Founded '+ organization.inceptionYear}
-        </div>
+        </Col>
       </div>
       <OrganizationMetadata metadata={organization} showTitle={false} />
     </>

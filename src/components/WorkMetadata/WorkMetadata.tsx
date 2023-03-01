@@ -17,6 +17,7 @@ import { WorkType } from '../../pages/doi.org/[...doi]'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { License } from '../License/License'
+import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
 
 type Props = {
   metadata: WorkType
@@ -278,7 +279,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   return (
     <div key={metadata.id} className="panel panel-transparent work-list">
-      <div className="panel-body">
+      <Col className="panel-body" sm={9}>
         {!hideTitle && title()}
         {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
         {!hideMetadataInTable && creators()}
@@ -301,8 +302,9 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         )}
         {registered()}</>}
         {!hideMetadataInTable && <License rights={metadata.rights} />}
+        {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
-      </div>
+      </Col>
       {footer()}
     </div>
   )

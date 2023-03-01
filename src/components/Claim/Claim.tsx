@@ -10,6 +10,7 @@ import { ClaimType } from '../../pages/doi.org/[...doi]'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import styles from './Claim.module.scss'
 
 type Props = {
   doi_id: string
@@ -171,7 +172,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     return null
 
   if (!user){
-    return <Button bsStyle={'btn-default'} disabled title="Sign in to Add to ORCID record" block>
+    return <Button bsStyle={'btn-default'} className={styles.claimButton} disabled title="Sign in to Add to ORCID record" block>
       <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
     </Button>
   }
@@ -227,6 +228,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   <Button
                     bsStyle={'btn-default'}
                     onClick={onCreate}
+                    className={styles.claimButton}
                   >
                     <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
                   </Button>

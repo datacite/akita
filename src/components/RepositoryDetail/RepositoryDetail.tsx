@@ -168,11 +168,14 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
       <>
         { (repo.contact?.length > 0) && (
         <>
-        <h3>Contacts</h3>
-        { contactsData.map((contact, index) => (
-          <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
-        ))}
-
+        <h3 className="member-results">Contacts</h3>
+        <div className="panel panel-transparent share">
+          <div className="panel-body">
+            { contactsData.map((contact, index) => (
+              <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
+            ))}
+          </div>
+        </div>
       </>
       )}
     </>
@@ -187,7 +190,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         <div className={styles.contacts}>
           {contacts()}
         </div>
-        <div>
+        <div className={styles.share}>
           <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi: repo.id)} title={repo.name} />
         </div>
       </>

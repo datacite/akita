@@ -267,7 +267,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
         <Col md={3} className="panel-list" id="side-bar">
           <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
         </Col>
-        <Col md={9} mdOffset={3}>
+        <Col md={9}>
           <Person person={person} />
         </Col>
       </>
