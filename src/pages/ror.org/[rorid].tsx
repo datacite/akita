@@ -19,7 +19,7 @@ import {
 import { rorFromUrl, pluralize } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title } from 'src/components/Title/Title'
-import HorizontalStackedBarChart from '../../components/HorizontalStackedBarChart/HorizontalStackedBarChart'
+import OrganizationDashboard from 'src/components/OrganizationDashboard/OrganizationDashboard'
 
 type Props = {
   rorId?: string
@@ -242,7 +242,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         </Col>
         <Col md={9}>
           <Organization organization={organization} />
-          <HorizontalStackedBarChart title="Work Languages" data={organization.works.licenses} />
+          <OrganizationDashboard works={organization.works} />
         </Col>
       </>
     )
