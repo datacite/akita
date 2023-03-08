@@ -209,7 +209,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
     return (
       <>
-      <h3>{compactNumbers(repo.works.totalCount)} Works</h3>
+      <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
 
       <div className={styles.grid}>
         <ProductionChart
@@ -220,14 +220,14 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
           data={facetToData(repo.works.resourceTypes)}
           count={repo.works.totalCount}
           legend={false}
-          title="Work Type"
+          title="Deposit Type"
           range={typesRange}
           domain={typesDomain}
         />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-        <VerticalBarChart title="Work Languages" data={repo.works.languages} />
-        <VerticalBarChart title="Work Licenses" data={repo.works.licenses} />
+        <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
+        <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
       </div>
       </>
     )

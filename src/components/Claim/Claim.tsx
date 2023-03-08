@@ -172,7 +172,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     return null
 
   if (!user){
-    return <Button bsStyle={'btn-default'} className={styles.claimButton} disabled title="Sign in to Add to ORCID record" block>
+    return <Button bsStyle='primary' className={styles.claimButton} disabled title="Sign in to Add to ORCID record" block>
       <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
     </Button>
   }
@@ -226,7 +226,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   </Button>
                   :
                   <Button
-                    bsStyle={'btn-default'}
+                    bsStyle='primary'
                     onClick={onCreate}
                     className={styles.claimButton}
                   >

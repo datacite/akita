@@ -269,11 +269,11 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   const footer = () => {
     return (
-      <div className="panel-footer">
+      <Col className="panel-footer" sm={12}>
         <a href={handleUrl}>
           <i className="ai ai-doi"></i> {handleUrl}
         </a>
-      </div>
+      </Col>
     )
   }
 
@@ -305,6 +305,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
       </Col>
+      
       {footer()}
     </div>
   )
