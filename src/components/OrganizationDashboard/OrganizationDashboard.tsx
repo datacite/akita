@@ -76,6 +76,12 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({ works }) => {
       <Row>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
+            titlePercent={-1}
+            titleText={[`of scholarly outputs use`, `a persistent identifier (i.e. DOI)`]}
+            data={[{title: 'PLACEHOLDER', count: 0}]} />
+        </Col>
+        <Col xs={12} sm={4}>
+          <HorizontalStackedBarChart
             titlePercent={resourceTypes.topPercent}
             titleText={`of scholarly outputs are ${resourceTypes.topCategory}`}
             data={resourceTypes.data} />

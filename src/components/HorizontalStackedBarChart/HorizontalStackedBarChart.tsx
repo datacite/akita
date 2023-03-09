@@ -1,9 +1,17 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
+import { typesRange } from '../DonutChart/DonutChart'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
 
+export const barColors = ['#32A251FF',
+'#FF7F0FFF',
+'#3CB7CCFF',
+'#FFD94AFF',
+'#39737CFF',
+'#B85A0DFF',
+]
 export interface HorizontalBarRecord {
   title: string
   count: number
@@ -12,7 +20,7 @@ export interface HorizontalBarRecord {
 
 type Props = {
   titlePercent: number
-  titleText: string
+  titleText: string | string[]
   data: HorizontalBarRecord[]
   color?: string
 }
@@ -83,7 +91,12 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
             axis: {"format": ".0%"},
             title: ''
         },
-        color: { field: "title" },
+        color: {
+          field: "title",
+          scale: {
+            range: barColors
+          }
+        },
         order: {
             "aggregate": "sum",
             "sort": "descending",
