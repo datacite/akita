@@ -9,6 +9,7 @@ import styles from './MetricsDisplay.module.scss'
 type Props = {
   counts: {
     works?: number
+    deposits?: number
     citations?: number
     views?: number
     downloads?: number
@@ -16,6 +17,7 @@ type Props = {
 
   links?: {
     works?: string
+    deposits?: string
     citations?: string
     views?: string
     downloads?: string
@@ -29,6 +31,11 @@ export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links =
       "label": "Works",
       "count": counts.works,
       "link": links.works
+    },
+    {
+      "label": "Deposits",
+      "count": counts.deposits,
+      "link": links.deposits
     },
     {
       "label": "Citations",

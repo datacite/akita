@@ -335,7 +335,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        <MetricsDisplay counts={{ works: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
+        <MetricsDisplay counts={{ deposits: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>

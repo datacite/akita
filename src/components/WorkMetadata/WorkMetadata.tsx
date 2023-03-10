@@ -279,7 +279,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
   return (
     <div key={metadata.id} className="panel panel-transparent work-list">
-      <Col className="panel-body" sm={9}>
+      <Col className="panel-body">
         {!hideTitle && title()}
         {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
         {!hideMetadataInTable && creators()}
