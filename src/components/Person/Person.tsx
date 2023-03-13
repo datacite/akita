@@ -223,7 +223,7 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   return (
     <>
-      <h3 className="member-results">{person.id}</h3>
+      {/* <h3 className="member-results">{person.id}</h3> */}
       <PersonMetadata metadata={person} />
       {person.employment.length > 0 && (
         <h3 className="member-results" id="person-employment">Employment</h3>

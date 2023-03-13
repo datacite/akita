@@ -485,7 +485,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   const content = () => {
     return (
       <>
-        <Col md={3} className="panel-list" id="side-bar">
+        <Col md={3} id="side-bar">
           <div className='left-menu-buttons'>
             { work.registrationAgency.id == "datacite" && ( 
               <Claim doi_id={work.doi} />
@@ -495,7 +495,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           <CiteAs doi={work} />
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
-        <Col md={9} className="panel-list" id="content">
+        <Col md={9} id="content">
             <Work doi={work}></Work>
         </Col>
       </>

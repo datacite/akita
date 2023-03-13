@@ -264,7 +264,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
   const content = () => {
     return (
       <>
-        <Col md={3} className="panel-list" id="side-bar">
+        <Col md={3} id="side-bar">
           <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
         </Col>
         <Col md={9}>
@@ -320,6 +320,11 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
         <meta name="og:image" content={imageUrl} />
         <meta name="og:type" content="person" />
       </Head>
+      <Row>
+        <Col md={9} mdOffset={3}>
+          <h3 className="member-results">{person.id}</h3>
+        </Col>
+      </Row>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

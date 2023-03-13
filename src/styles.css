@@ -1,7 +1,3 @@
-.panel-list {
-  margin-top: 20px;
-}
-
 .panel-body h3.member>i {
   color: #1abc9c;
   font-size: 100%;
@@ -81,6 +77,14 @@ h3.popover-title {
   font-size: 18px;
   font-weight: 400;
   color: #34495e;
+}
+
+a.navbar-brand {
+  height: unset
+}
+
+.navbar-form {
+  margin-left: 150px;
 }
 
 @media(max-width:1200px) {
@@ -526,7 +530,7 @@ h4.work {
 }
 
 .left-menu-buttons {
-  padding: 15px
+  padding: 0 15px 15px
 }
 
 /* New styles for mobile-friendly cookie bar. */

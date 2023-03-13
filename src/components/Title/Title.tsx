@@ -18,8 +18,8 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
 
   return (
     <Row className={styles.row}>
-      <Col smOffset={3} className="panel panel-transparent">
-        <div className="panel-body">
+      <Col mdOffset={3} className={"panel panel-transparent " + styles.col}>
+        <div className={"panel-body " + styles.body}>
           <div className={styles.container}>
             <h3 className={styles.title} id='title'>
               <a target="_blank" rel="noreferrer" href={titleLink}>

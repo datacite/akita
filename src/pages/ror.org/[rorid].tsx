@@ -236,7 +236,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   const content = () => {
     return (
       <>
-        <Col md={3} className="panel-list" id="side-bar">
+        <Col md={3} id="side-bar">
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9}>
