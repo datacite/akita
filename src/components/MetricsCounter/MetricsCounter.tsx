@@ -27,20 +27,18 @@ export const MetricsCounter: React.FunctionComponent<Props> = ({ metadata }) => 
           {pluralize(metadata.citationCount, 'Citation', true)}
         </span>
       )}
-      {/* {metadata.viewCount > 0 && ( */}
+      {metadata.viewCount > 0 && (
         <span className="metrics-counter">
           <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-          {/* {pluralize(metadata.viewCount, 'View', true)} */}
-          {pluralize(1832, 'View', true)}
+          {pluralize(metadata.viewCount, 'View', true)}
         </span>
-      {/* )} */}
-      {/* {metadata.downloadCount > 0 && ( */}
+      )}
+      {metadata.downloadCount > 0 && (
         <span className="metrics-counter">
           <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-          {/* {pluralize(metadata.downloadCount, 'Download', true)} */}
-          {pluralize(72, 'Download', true)}
+          {pluralize(metadata.downloadCount, 'Download', true)}
         </span>
-      {/* )} */}
+      )}
     </div>
   )
 }
