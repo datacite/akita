@@ -172,7 +172,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     return null
 
   if (!user){
-    return <Button bsStyle='primary' className={styles.claimButton} disabled title="Sign in to Add to ORCID record" block>
+    return <Button bsStyle='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
       <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
     </Button>
   }
@@ -219,8 +219,8 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                 {isClaimed ?
                   <Button
                     bsStyle={'warning'}
-                    className="claim"
                     onClick={onDelete}
+                    block
                   >
                     <FontAwesomeIcon icon={faOrcid} /> Remove Claim
                   </Button>
@@ -228,7 +228,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   <Button
                     bsStyle='primary'
                     onClick={onCreate}
-                    className={styles.claimButton}
+                    block
                   >
                     <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
                   </Button>
@@ -239,8 +239,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
             {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
               <>
-                <h5>Error</h5>
-                {claim.errorMessages[0].title}
+                <p>Error: {claim.errorMessages[0].title}</p>
               </>
             )}
     </>
