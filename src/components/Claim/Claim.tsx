@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
@@ -10,6 +10,7 @@ import { ClaimType } from '../../pages/doi.org/[...doi]'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import styles from './Claim.module.scss'
 
 type Props = {
   doi_id: string
@@ -171,19 +172,9 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     return null
 
   if (!user){
-    return (
-      <>
-      <h3 className="member-results">ORCID Claim</h3>
-      <div className="panel panel-transparent claim"></div>
-      <div className="panel-body">
-        <Row>
-            <Col xs={6} md={4}>
-              <Button bsStyle={'btn-default'} disabled title="Sign in to Add to ORCID record">Claim DOI</Button>
-            </Col>
-        </Row>
-      </div>
-    </>
-    )
+    return <Button bsStyle='primary' className={styles.claimButton} disabled title="Sign in to Add to ORCID record" block>
+      <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
+    </Button>
   }
 
   const claim: ClaimType = data.work.claims[0] || {
@@ -223,11 +214,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
   return (
     <>
-      <h3 className="member-results">ORCID Claim</h3>
-      <div className="panel panel-transparent claim"></div>
-      <div className="panel-body">
-        <Row>
-            <Col xs={6} md={4}>
             {isActionPossible ? (
               <>
                 {isClaimed ?
@@ -240,10 +226,11 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                   </Button>
                   :
                   <Button
-                    bsStyle={'btn-default'}
+                    bsStyle='primary'
                     onClick={onCreate}
+                    className={styles.claimButton}
                   >
-                    <FontAwesomeIcon icon={faOrcid} /> Claim DOI
+                    <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
                   </Button>
                 }
               </>
@@ -256,10 +243,6 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
                 {claim.errorMessages[0].title}
               </>
             )}
-
-          </Col>
-        </Row>
-      </div>
     </>
   )
 }

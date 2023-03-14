@@ -4,19 +4,11 @@ import heroImage from '../../../public/images/hero.svg'
 import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
 import { Alert, Row, Col } from 'react-bootstrap'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
-import { pluralize, orcidFromUrl } from '../../utils/helpers'
+import { pluralize } from '../../utils/helpers'
 
 export interface PersonRecord {
   id: string
@@ -91,15 +83,6 @@ type Props = {
 const Person: React.FunctionComponent<Props> = ({ person }) => {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/orcid.org' + orcidFromUrl(person.id)
-      : 'https://commons.stage.datacite.org/orcid.org' + orcidFromUrl(person.id)
-
-  const title = person.name
-    ? 'DataCite Commons: ' + person.name
-    : 'DataCite Commons: No Name'
-
   let has_open_access_software = false;
   let has_open_access_paper = false;
   let has_open_access_dataset = false;
@@ -128,37 +111,6 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   const percentage_open_license = Math.round((open_license_count / person.totalWorks.totalCount) * 100)
   const percentage_open_url = Math.round((person.totalWorks.totalContentUrl / person.totalWorks.totalCount) * 100)
-
-  const shareLink = () => {
-    return (
-      <>
-        <h3 className="member-results">Share</h3>
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <Row>
-              <Col xs={6} md={4}>
-                <div>
-                  <EmailShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faEnvelope} /> Email
-                  </EmailShareButton>
-                </div>
-                <div>
-                  <TwitterShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faTwitter} /> Twitter
-                  </TwitterShareButton>
-                </div>
-                <div>
-                  <FacebookShareButton url={pageUrl} title={title}>
-                    <FontAwesomeIcon icon={faFacebook} /> Facebook
-                  </FacebookShareButton>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </>
-    )
-  }
 
   const workCount = () => {
     if (person.citationCount + person.viewCount + person.downloadCount === 0) {
@@ -271,9 +223,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
 
   return (
     <>
-      <h3 className="member-results">{person.id}</h3>
+      {/* <h3 className="member-results">{person.id}</h3> */}
       <PersonMetadata metadata={person} />
-      {shareLink()}
       {person.employment.length > 0 && (
         <h3 className="member-results" id="person-employment">Employment</h3>
       )}

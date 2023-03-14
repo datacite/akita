@@ -1,0 +1,30 @@
+.row {
+  padding: 5px 30px;
+}
+
+.container {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 20px;
+
+  .title {
+    margin: 0
+  }
+
+  .details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 20px;
+
+    .license {
+      display: flex;
+      align-items: center;
+    }
+  
+    .link a {
+      color: gray
+    }
+  }
+}

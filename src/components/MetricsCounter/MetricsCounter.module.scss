@@ -1,0 +1,22 @@
+.metrics {
+  grid-row: 2;
+  padding-bottom: 30px;
+  dl {
+    display: grid;
+    grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
+    grid-column-gap: 2rem;
+    margin:0;
+  }
+  dt {
+    grid-row: 2;
+    font-size: 2rem;
+  }
+  dd{
+    grid-row: 1;
+    border-top: 2px solid black;
+    font-size: 2.5rem;
+  }
+  dt, dd{
+    line-height: 1;
+  }
+}

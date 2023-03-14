@@ -7,13 +7,7 @@ import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  TwitterShareButton
-} from 'react-share'
-import { faEnvelope, faNewspaper } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -23,6 +17,8 @@ import {
   REPOSITORY_FIELDS,
 }from '../RepositoryMetadata/RepositoryMetadata'
 import styles from './RepositoryDetail.module.scss'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
+import ShareLinks from '../ShareLinks/ShareLinks';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -172,34 +168,20 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
       <>
         { (repo.contact?.length > 0) && (
         <>
-        <h3>Contacts</h3>
-        { contactsData.map((contact, index) => (
-          <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
-        ))}
-
+        <h3 className="member-results">Contacts</h3>
+        <div className="panel panel-transparent share">
+          <div className="panel-body">
+            { contactsData.map((contact, index) => (
+              <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
+            ))}
+          </div>
+        </div>
       </>
       )}
     </>
     )
   }
 
-  const shareDisplay = () => {
-    const info = pageInfo(repo);
-    return (
-      <>
-        <h3>Share</h3>
-        <EmailShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faEnvelope} /> Email
-        </EmailShareButton>
-        <TwitterShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faTwitter} /> Twitter
-        </TwitterShareButton>
-        <FacebookShareButton url={info.pageUrl} title={info.title}>
-          <FontAwesomeIcon icon={faFacebook} /> Facebook
-        </FacebookShareButton>
-      </>
-    )
-  }
   return (
     <>
         <div className={styles.gotoButtons}>
@@ -209,7 +191,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
           {contacts()}
         </div>
         <div className={styles.share}>
-          {shareDisplay()}
+          <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi: repo.id)} title={repo.name} />
         </div>
       </>
     )
@@ -349,50 +331,11 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     )
   }
 
-  const metricsDisplay = () => {
-    const metricsData = [
-      {
-        "label": "Deposits",
-        "count": repo.works.totalCount
-      },
-      {
-        "label": "Citations",
-        "count": repo.citationCount
-      },
-      {
-        "label": "Views",
-        "count": repo.viewCount
-      },
-      {
-        "label": "Downloads",
-        "count": repo.downloadCount
-      }
-    ];
-
-    const metricList = metricsData.map( (metric, index) => 
-    <>
-      {metric.count>0 &&(
-        <React.Fragment key={"metric-"+index}>
-          <dt>{metric.label}</dt>
-          <dd>{compactNumbers(metric.count)}</dd>
-        </React.Fragment >
-      )}
-      </>
-    )
-    return (
-        <div className={styles.metrics}>
-          <dl>
-            {metricList}
-          </dl>
-        </div>
-    )
-  }
-
   return (
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        {metricsDisplay()}
+        <MetricsDisplay counts={{ deposits: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>

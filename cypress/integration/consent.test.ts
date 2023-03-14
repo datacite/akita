@@ -19,7 +19,7 @@ describe('Consent', () => {
       )
       cy.get('#rcc-confirm-button').click()
       cy.getCookie('_consent').should('have.property', 'value', 'true')
-      cy.get('.navbar-brand', { timeout: 30000 }).contains('DataCite Commons')
+      cy.get('.navbar-brand .commons-logo', { timeout: 30000 }).should('have.attr', 'src').should('include','commons-logo.svg')
     })
   })
 
@@ -32,7 +32,7 @@ describe('Consent', () => {
     )
     cy.get('#rcc-confirm-button').click()
     cy.getCookie('_consent').should('have.property', 'value', 'true')
-    cy.get('.navbar-brand', { timeout: 30000 }).contains('DataCite Commons')
+    cy.get('.navbar-brand .commons-logo', { timeout: 30000 }).should('have.attr', 'src').should('include','commons-logo.svg')
   })
 
   it('people', () => {
@@ -44,7 +44,7 @@ describe('Consent', () => {
     )
     cy.get('#rcc-confirm-button').click()
     cy.getCookie('_consent').should('have.property', 'value', 'true')
-    cy.get('.navbar-brand', { timeout: 30000 }).contains('DataCite Commons')
+    cy.get('.navbar-brand .commons-logo', { timeout: 30000 }).should('have.attr', 'src').should('include','commons-logo.svg')
   })
 
   it('organizations', () => {
@@ -56,7 +56,7 @@ describe('Consent', () => {
     )
     cy.get('#rcc-confirm-button').click()
     cy.getCookie('_consent').should('have.property', 'value', 'true')
-    cy.get('.navbar-brand', { timeout: 30000 }).contains('DataCite Commons')
+    cy.get('.navbar-brand .commons-logo', { timeout: 30000 }).should('have.attr', 'src').should('include','commons-logo.svg')
   })
 })
 

@@ -5,7 +5,7 @@ describe('workContainer with usage', () => {
   })
 
   it('creators', () => {
-    cy.get('.creator .creator-list', { timeout: 30000 })
+    cy.get('.creator-list .table .person-table tr', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'William Mower')
   })
@@ -17,9 +17,11 @@ describe('workContainer with usage', () => {
   })
 
   it('download', () => {
-    cy.get('.download .download-list', { timeout: 30000 })
+    cy.get('#download-metadata-button', { timeout: 30000 }).click()
+    cy.get('.download-list', { timeout: 30000 })
       .should('have.length', 2)
       .should('contain', 'DataCite XML')
+    cy.get('#close-modal', { timeout: 30000 }).click()
   })
 
   it('cite as', () => {

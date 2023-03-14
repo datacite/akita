@@ -12,12 +12,13 @@ import Person from '../../components/Person/Person'
 import { WorkType } from '../doi.org/[...doi]'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
-import { pluralize } from '../../utils/helpers'
+import { orcidFromUrl, pluralize } from '../../utils/helpers'
 import {
   PageInfo,
   connectionFragment,
   contentFragment
 } from '../../components/SearchWork/SearchWork'
+import ShareLinks from '../../components/ShareLinks/ShareLinks'
 
 type Props = {
   orcid?: string
@@ -262,9 +263,14 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
 
   const content = () => {
     return (
-      <Col md={9} mdOffset={3}>
-        <Person person={person} />
-      </Col>
+      <>
+        <Col md={3} id="side-bar">
+          <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
+        </Col>
+        <Col md={9}>
+          <Person person={person} />
+        </Col>
+      </>
     )
   }
 
@@ -314,6 +320,11 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
         <meta name="og:image" content={imageUrl} />
         <meta name="og:type" content="person" />
       </Head>
+      <Row>
+        <Col md={9} mdOffset={3}>
+          <h3 className="member-results">{person.id}</h3>
+        </Col>
+      </Row>
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>
