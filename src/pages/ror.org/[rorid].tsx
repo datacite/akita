@@ -242,7 +242,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         </Col>
         <Col md={9}>
           <Organization organization={organization} />
-          <OrganizationDashboard works={organization.works} />
+          <OrganizationDashboard rorId={rorId} gridId={gridId} crossrefFunderId={crossrefFunderId} works={organization.works} />
         </Col>
       </>
     )

@@ -1,7 +1,9 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
-import { typesRange } from '../DonutChart/DonutChart'
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
 
@@ -25,13 +27,6 @@ type Props = {
   color?: string
 }
 
-const actions = {
-  export: true,
-  source: false,
-  compiled: false,
-  editor: false
-}
-
 const HorizontalBarChart: React.FunctionComponent<Props> = ({
   titlePercent,
   titleText,
@@ -39,7 +34,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   color
 }) => {
   if (data.length==0){
-    return <EmptyChart title={titleText}/>
+    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
   }
 
   if (typeof color == 'undefined') {
@@ -83,25 +78,23 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       //  }
       ],
     encoding: {
-        x: {
-            aggregate: "sum",
-            field: "count",
-            stack: "normalize",
-            type: "quantitative",
-            axis: {"format": ".0%"},
-            title: ''
-        },
-        color: {
-          field: "title",
-          scale: {
-            range: barColors
-          }
-        },
-        order: {
-            "aggregate": "sum",
-            "sort": "descending",
-            "field": "count"
-        },
+      x: {
+        aggregate: "sum",
+        field: "count",
+        stack: "normalize",
+        type: "quantitative",
+        axis: {"format": ".0%"},
+        title: ''
+      },
+      color: {
+        field: "title",
+        scale: { range: barColors }
+      },
+      order: {
+          "aggregate": "sum",
+          "sort": "descending",
+          "field": "count"
+      },
         
     },
     config: {
@@ -111,6 +104,20 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
     }
   }
 
+  const helpIcon = () => { 
+    return (
+      <OverlayTrigger 
+          placement="top"
+          overlay={
+              <Tooltip id="tooltipAuthors">
+                  The field {"{field}"} from DOI metadata was used to generate this chart.
+              </Tooltip>
+          }>
+          <FontAwesomeIcon icon={faQuestionCircle} fontSize={24} style={{ position: 'absolute', top: 0, right: 0 }} />
+      </OverlayTrigger>
+    )
+  }
+
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
@@ -118,9 +125,10 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
           renderer="svg"
           spec={stackedBarChartSpec}
           data={{ table: data }}
-          actions={actions}
+          actions={false}
         />
       </div>
+      {helpIcon()}
     </div>
   )
 }

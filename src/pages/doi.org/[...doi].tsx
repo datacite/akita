@@ -19,7 +19,7 @@ import {
 } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
-import { Title } from '../../components/Title/Title'
+import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
@@ -622,7 +622,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
       
-      <Title title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+      <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
