@@ -23,6 +23,7 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
+import DoiDashboard from 'src/components/DoiDashboard/DoiDashboard'
 
 type Props = {
   doi: string
@@ -496,7 +497,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} id="content">
-            <Work doi={work}></Work>
+          <Work doi={work}></Work>
+          <DoiDashboard works={work.citations} />
         </Col>
       </>
     )
