@@ -1,12 +1,10 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
-import { barColors } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
+import { typesDomain, typesRange } from '../DonutChart/DonutChart'
+import HelpIcon from '../HelpIcon/HelpIcon'
 
 export interface HorizontalBarRecord {
   title: string
@@ -49,31 +47,17 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
   const forceDirectedGraphSpec: VisualizationSpec = {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     width: 600,
-    height: 400,
+    height: 250,
     autosize: "none",
-    title: {
-      text: "TEST"
-      // text: titlePercent + '%',
-    //   text: titleText,
-    //   align: 'left',
-    //   anchor: 'start',
-    //   // font: 'Source Sans Pro',
-    //   // fontSize: 34,
-    //   // fontWeight: 'normal',
-    //   // color: '#1abc9c',
-    //   font: 'Source Sans Pro',
-    //   fontSize: 21,
-    //   color: '#1abc9c'
-    },
     signals: [
-      { name: "nodeRadius", value: 10 },
-      { name: "nodeCharge", value: -2 },
-      { name: "linkDistance", value: 30 },
-      { name: "static", value: false },
+      { name: "nodeRadius", value: 10}, // , bind: {input: "range", min: 0, max: 50, step: 1} },
+      { name: "nodeCharge", value: -30}, // , bind: {input: "range", min: -100, max: 30, step: 1} },
+      { name: "linkDistance", value: 20}, // , bind: {input: "range", min: 5, max: 100, step: 1} },
+      { name: "static", value: true}, // , bind: {input: "checkbox"} },
       { name: "cx", update: "width / 2" },
       { name: "cy", update: "height / 2" },
-      // { name: "gravityX", value: 1, bind: {input: "range", min: 0, max: 1} },
-      // { name: "gravityY", value: 1, bind: {input: "range", min: 0, max: 1} },
+      { name: "gravityX", value: 0.05}, // , bind: {input: "range", min: 0, max: 0.1} },
+      { name: "gravityY", value: 0.12}, // , bind: {input: "range", min: 0, max: 0.2} },
       {
         description: "State variable for active node fix status.",
         name: "fix", value: false,
@@ -145,11 +129,8 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
       {
         name: "color",
         type: "ordinal",
-        domain: {
-          data: "node-data",
-          field: "group"
-        },
-        range: barColors
+        domain: typesDomain,
+        range: typesRange,
       }
     ],
     marks: [
@@ -160,10 +141,14 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
         encode: {
           enter: {
             fill: { scale: "color", field: "group" },
+            xfocus: {signal: "cx"},
+            yfocus: {signal: "cy"}
           },
           update: {
             size: { signal: "2 * nodeRadius * nodeRadius" },
-            tooltip: { field: "name" },            
+            tooltip: {
+              signal: "{title: datum.name, Type: datum.group}"
+            },
             cursor: {
               value: "pointer"
             }
@@ -182,8 +167,8 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
                 x: { signal: "cx" },
                 y: { signal: "cy" }
               },
-              // { force: "x", x: "xfocus", strength: {signal: "gravityX"} },
-              // { force: "y", y: "yfocus", strength: {signal: "gravityY"} },
+              { force: "x", x: "xfocus", strength: {signal: "gravityX"} },
+              { force: "y", y: "yfocus", strength: {signal: "gravityY"} },
               {
                 force: "collide",
                 radius: { signal: "nodeRadius" }
@@ -204,25 +189,22 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
       },
       {
         type: "path",
-        from: { data: "link-data" },
+        from: {data: "link-data"},
         interactive: false,
         encode: {
-          update: {
-            stroke: { value: "#ccc" },
-            strokeWidth: { value: 0.5 }
-          }
+          update: {stroke: {value: "#ccc"}, strokeWidth: {value: 0.5}}
         },
         transform: [
           {
             type: "linkpath",
-            require: { signal: "force" },
+            require: {signal: "force"},
             shape: "line",
             sourceX: "datum.source.x",
             sourceY: "datum.source.y",
             targetX: "datum.target.x",
             targetY: "datum.target.y"
           }
-        ]
+        ],
       }
     ],
     config: {
@@ -232,22 +214,12 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
     }
   }
 
-  const helpIcon = () => {
-    return (
-      <OverlayTrigger 
-          placement="top"
-          overlay={
-              <Tooltip id="tooltipAuthors">
-                  Not all nodes connected to this organisation are shown. Only 100 nodes are being shown
-              </Tooltip>
-          }>
-          <FontAwesomeIcon icon={faQuestionCircle} fontSize={24} style={{ position: 'absolute', top: 0, right: 0 }} />
-      </OverlayTrigger>
-    )
-  }
-
   return (
     <div className="panel panel-transparent">
+      <div className="panel-body" style={{ font: 'Source Sans Pro', fontSize: 21, color: '#1abc9c' }}>
+        {titleText}
+        <HelpIcon text='Not all nodes connected to this organisation are shown. Only 100 nodes are being shown' color='black' />
+      </div>
       <div className="panel-body production-chart">
         <VegaLite
           renderer="svg"
@@ -256,7 +228,6 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
           actions={false}
         />
       </div>
-      {helpIcon()}
     </div>
   )
 }

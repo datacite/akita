@@ -1,51 +1,77 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-
+import { Facet } from '../FacetList/FacetList'
 import EmptyChart from '../EmptyChart/EmptyChart'
+import HelpIcon from '../HelpIcon/HelpIcon'
 
-export const barColors = ['#32A251FF',
-'#FF7F0FFF',
-'#3CB7CCFF',
-'#FFD94AFF',
-'#39737CFF',
-'#B85A0DFF',
-]
-export interface HorizontalBarRecord {
-  title: string
-  count: number
-  color?: string
-}
 
 type Props = {
   titlePercent: number
   titleText: string | string[]
   data: HorizontalBarRecord[]
-  color?: string
+  range: string[]
+  domain: string[]
 }
+
+export interface HorizontalBarRecord {
+  title: string
+  count: number
+}
+
+export function toBarRecord(data: Facet) {
+  return { title: data.title, count: data.count }
+}
+
+function getTotalCount(sum: number, data: HorizontalBarRecord) { return sum + data.count }
+
+export function getTopFive(data: HorizontalBarRecord[]) {
+  if (data.length === 0) {
+    return {
+      data: [],
+      topCategory: "",
+      topPercent: -1
+    }
+  }
+
+  const sorted = data.sort((a, b) => b.count - a.count)
+
+  const topFive = sorted.slice(0, 5)
+  const other = sorted.slice(5)
+
+  if (other.length > 0) {
+    const otherCount = other.reduce(getTotalCount, 0)
+    topFive.push({ title: 'Other', count: otherCount})
+  }
+
+  return {
+    data: topFive,
+    topCategory: topFive[0].title,
+    topPercent: Math.round(topFive[0].count / topFive.reduce(getTotalCount, 0) * 100)
+  }
+}
+
 
 const HorizontalBarChart: React.FunctionComponent<Props> = ({
   titlePercent,
   titleText,
   data,
-  color
+  range,
+  domain
 }) => {
-  if (data.length==0){
+  if (data.length==0) {
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
   }
 
-  if (typeof color == 'undefined') {
-    color = '#1abc9c'
+  if (domain) {
+    const indices = data.map(d => domain.findIndex(dom => dom === d.title))
+    domain = domain.filter((_, i) => indices.includes(i))
+    range = range.filter((_, i) => indices.includes(i))
   }
 
   const stackedBarChartSpec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
-    data: {
-        name: 'table'
-    },
+    data: { name: 'rawData' },
     title: {
       text: titlePercent + '%',
       subtitle: titleText,
@@ -58,25 +84,19 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       subtitleFont: 'Source Sans Pro',
       subtitleFontSize: 21,
       subtitleColor: '#1abc9c'
-
     },
     width: 300,
+    height: 5,
     mark: {
       type: "bar",
       tooltip: true,
       height: 50,
       baseline: 'bottom'
-      
     },
-    transform: [
-      {
-        calculate: "datum.count * 100",
-        as: "percentage"
-      },
-      // {calculate: "datum.Name == '__missing__'? '__missing__' : 'complete'",
-      //  as: "completenes"
-      //  }
-      ],
+    transform: [{
+      calculate: "datum.count * 100",
+      as: "percentage"
+    }],
     encoding: {
       x: {
         aggregate: "sum",
@@ -87,35 +107,19 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         title: ''
       },
       color: {
-        field: "title",
-        scale: { range: barColors }
+        field: 'title',
+        type: 'nominal',
+        title: 'type',
+        // legend: false,
+        scale: { range: range, domain: domain }
       },
       order: {
-          "aggregate": "sum",
-          "sort": "descending",
-          "field": "count"
+        "aggregate": "sum",
+        "sort": "descending",
+        "field": "count"
       },
-        
     },
-    config: {
-      legend: {
-        orient: 'bottom'
-      }
-    }
-  }
-
-  const helpIcon = () => { 
-    return (
-      <OverlayTrigger 
-          placement="top"
-          overlay={
-              <Tooltip id="tooltipAuthors">
-                  The field {"{field}"} from DOI metadata was used to generate this chart.
-              </Tooltip>
-          }>
-          <FontAwesomeIcon icon={faQuestionCircle} fontSize={24} style={{ position: 'absolute', top: 0, right: 0 }} />
-      </OverlayTrigger>
-    )
+    config: { legend: { orient: 'bottom' } }
   }
 
   return (
@@ -124,11 +128,11 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         <VegaLite
           renderer="svg"
           spec={stackedBarChartSpec}
-          data={{ table: data }}
+          data={{ rawData: data }}
           actions={false}
         />
       </div>
-      {helpIcon()}
+      <HelpIcon text='The field {"{field}"} from DOI metadata was used to generate this chart.' />
     </div>
   )
 }
