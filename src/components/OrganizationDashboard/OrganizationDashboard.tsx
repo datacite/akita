@@ -3,11 +3,11 @@ import { gql, useQuery } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'
 
-import HorizontalStackedBarChart, { HorizontalBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
-import { Facet } from '../FacetList/FacetList'
+import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 import { Works } from '../SearchWork/SearchWork'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import ForceDirectedGraph, { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
+import { licenseDomain, licenseRange, typesDomain, typesRange } from '../DonutChart/DonutChart'
 
 type Props = {
   rorId?: string
@@ -72,30 +72,6 @@ interface ForceDirectedQueryVar {
   crossrefFunderId: string
 }
 
-function toBarRecord(data: Facet) {
-  return { title: data.title, count: data.count }
-}
-
-function getTotalCount(sum: number, data: HorizontalBarRecord) { return sum + data.count }
-
-function getTopFive(data: HorizontalBarRecord[]) {
-  const sorted = data.sort((a, b) => b.count - a.count)
-
-  const topFive = sorted.slice(0, 5)
-  const other = sorted.slice(5)
-
-  if (other.length > 0) {
-    const otherCount = other.reduce(getTotalCount, 0)
-    topFive.push({ title: 'Other', count: otherCount})
-  }
-
-  return {
-    data: topFive,
-    topCategory: topFive[0].title,
-    topPercent: Math.round(topFive[0].count / topFive.reduce(getTotalCount, 0) * 100)
-  }
-}
-
 const OrganizationDashboard: React.FunctionComponent<Props> = ({
   works,
   rorId,
@@ -128,7 +104,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
 
   const noLicenseValue: ContentFacet = {
     id: 'no-license',
-    title: 'no license',
+    title: 'No License',
     count:
       works.totalCount -
       works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
@@ -141,8 +117,12 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   const nodes: ForceDirectedGraphNode[] = []
   const links: ForceDirectedGraphLink[] = []
   forceDirectedWorks.forEach((work, index) => {
-    const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'unknown'
-    const type = work.types && work.types.resourceTypeGeneral ? work.types.resourceTypeGeneral : 'unknown type'
+    const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'Unknown'
+
+    const type = work.types && work.types.resourceTypeGeneral ?
+      typesDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
+      : 'Missing'
+
     const node = { name: title, group: type}
     nodes.push(node)
 
@@ -153,25 +133,20 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
 
 
 
-    // // TESTING RANDOM LINKS
-    // for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
-    //   const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
-    //   links.push(randomLink)
-    // }
+    // TESTING RANDOM LINKS
+    for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
+      const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
+      links.push(randomLink)
+    }
 
     
   })
   // const nodes: ForceDirectedGraphNode[] = forceDirectedWorks.map(w => ({ name: w.titles[0] && w.titles[0].title ? w.titles[0].title : 'unknown', group: w.types[0] && w.types[0].resourceTypeGeneral ? w.types[0].resourceTypeGeneral : 'unknown'}))
-  console.log('DATA')
-  console.log(rorId, gridId, crossrefFunderId)
-  console.log(loading)
-  console.log(data)
-  console.log(nodes)
-  console.log(links)
 
   // Links between nodes
   // Authors -> dois
   // Dois -> dois
+  
 
   return (
     <>
@@ -193,19 +168,26 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
           <HorizontalStackedBarChart
             titlePercent={-1}
             titleText={[`of scholarly outputs use`, `a persistent identifier (i.e. DOI)`]}
-            data={[{title: 'PLACEHOLDER', count: 0}]} />
+            data={[{title: 'PLACEHOLDER', count: 0}]}
+            domain={[]}
+            range={[]} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             titlePercent={resourceTypes.topPercent}
             titleText={`of scholarly outputs are ${resourceTypes.topCategory}`}
-            data={resourceTypes.data} />
+            data={resourceTypes.data}
+            domain={typesDomain}
+            range={typesRange} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
             titlePercent={licenses.topPercent}
             titleText={`of scholarly outputs use ${licenses.topCategory}`}
-            data={licenses.data} />
+            data={licenses.data}
+            domain={licenseDomain}
+            range={licenseRange}
+            />
         </Col>
       </Row>
     </>
