@@ -14,7 +14,7 @@ type Props = {
 const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
   // check whether user has given consent to google analytics tracking
   const hasGivenConsent = Cookies.get('_consent') == 'true'
-  const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL || 'https://datacite.org'
+  const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL || 'https://assets.datacite.org'
   const isProduction =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
 
