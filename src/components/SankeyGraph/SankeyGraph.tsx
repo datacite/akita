@@ -366,7 +366,7 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
     <div className="panel panel-transparent">
       <div className="panel-body" style={{ font: 'Source Sans Pro', fontSize: 21, color: '#1abc9c' }}>
         {titleText}
-        <HelpIcon text='Connections data comes from Event Data service' color='black' />
+        <HelpIcon text='Connections data comes from Event Data service' />
       </div>
       <div className="panel-body production-chart">
         <VegaLite

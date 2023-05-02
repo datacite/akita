@@ -1,7 +1,6 @@
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { compactNumbers } from '../../utils/helpers'
+import HelpIcon from '../HelpIcon/HelpIcon'
 
 import styles from './MetricsDisplay.module.scss'
 
@@ -54,26 +53,12 @@ export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links =
     }
   ];
 
-  const helpIcon = (link) => {
-    if (!link) return 
-    return (
-      <a
-        href={link}
-        target="_blank"
-        rel="noreferrer"
-        className='help-icon'
-      >
-        <FontAwesomeIcon icon={faQuestionCircle} />
-      </a>
-    )
-  }
-
   const metricList = metricsData.map( (metric, index) => 
   <>
     {metric.count>0 &&(
       <React.Fragment key={"metric-"+index}>
         <dd>{compactNumbers(metric.count)}</dd>
-        <dt>{metric.label} {helpIcon(metric.link)}</dt>
+        <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>
       </React.Fragment >
     )}
     </>
