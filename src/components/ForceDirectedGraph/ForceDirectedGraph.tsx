@@ -124,7 +124,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
         }
       }
     }],
-    data: [ { name: "node-data" }, { name: "link-data" } ],
+    data: [ { name: "nodeData" }, { name: "linkData" } ],
     scales: [
       {
         name: "color",
@@ -137,7 +137,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
       {
         name: "nodes",
         type: "symbol",
-        from: { data: "node-data" },
+        from: { data: "nodeData" },
         encode: {
           enter: {
             fill: { scale: "color", field: "group" },
@@ -179,7 +179,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
               },
               {
                 force: "link",
-                links: "link-data",
+                links: "linkData",
                 distance: { signal: "linkDistance" }
               }
             ]
@@ -189,7 +189,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
       },
       {
         type: "path",
-        from: {data: "link-data"},
+        from: {data: "linkData"},
         interactive: false,
         encode: {
           update: {stroke: {value: "#ccc"}, strokeWidth: {value: 0.5}}
@@ -218,13 +218,13 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({
     <div className="panel panel-transparent">
       <div className="panel-body" style={{ font: 'Source Sans Pro', fontSize: 21, color: '#1abc9c' }}>
         {titleText}
-        <HelpIcon text='Not all nodes connected to this organisation are shown. Only 100 nodes are being shown' color='black' />
+        <HelpIcon text='Not all nodes connected to this organisation are shown. Only 100 nodes are being shown' />
       </div>
       <div className="panel-body production-chart">
         <VegaLite
           renderer="svg"
           spec={forceDirectedGraphSpec}
-          data={{ "node-data": nodes, "link-data": links }}
+          data={{ "nodeData": nodes, "linkData": links }}
           actions={false}
         />
       </div>
