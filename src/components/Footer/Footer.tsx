@@ -23,17 +23,10 @@ const Links = {
     { name: 'Job opportunities', url: '/jobopportunities.html' }
   ],
   services_links: [
-    { name: 'Assign DOIs', url: '/dois.html' },
-    { name: 'Metadata search', url: 'https://search.datacite.org/' },
-    { name: 'Event data', url: '/eventdata.html' },
-    { name: 'Profiles', url: '/profiles.html' },
-    { name: 're3data', url: '/re3data.html' },
-    { name: 'Citation formatter', url: '/citation.html' },
-    { name: 'Statistics', url: '/stats.html' },
-    { name: 'Service status', url: '/service.html' },
-    { name: 'Content negotiation', url: '/content.html' },
-    { name: 'OAI-PMH', url: '/oaipmh.html' },
-    { name: 'Test environment', url: '/test.html' }
+    { name: 'Create DOIs with Fabrica', url: 'https://doi.datacite.org/' },
+    { name: 'Discover metadata with Commons', url: 'https://commons.datacite.org/' },
+    { name: 'Integrate with APIs', url: 'https://datacite.org/integratorapis.html' },
+    { name: 'Partner Services', url: 'https://datacite.org/partnerservices.html' },
   ],
   resources_links: [
     { name: 'Metadata schema', url: 'https://schema.datacite.org' },
