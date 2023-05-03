@@ -23,7 +23,8 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-import DoiDashboard from 'src/components/DoiDashboard/DoiDashboard'
+import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
+import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
 
 type Props = {
   doi: string
@@ -498,7 +499,11 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         </Col>
         <Col md={9} id="content">
           <Work doi={work}></Work>
-          <DoiDashboard works={work.citations} />
+          <WorksDashboard works={work.citations}>
+            <SankeyGraph
+                titleText='Contributors of scholarly works in the DMP'
+                data={TEST_DATA} />
+          </WorksDashboard>
         </Col>
       </>
     )
