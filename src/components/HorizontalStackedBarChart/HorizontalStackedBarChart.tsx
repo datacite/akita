@@ -103,13 +103,13 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         field: "count",
         stack: "normalize",
         type: "quantitative",
-        axis: {"format": ".0%"},
+        axis: { format: ".0%", domainColor: 'lightgray', tickColor: 'lightgray' },
         title: ''
       },
       color: {
         field: 'title',
         type: 'nominal',
-        title: 'type',
+        title: 'Type',
         // legend: false,
         scale: { range: range, domain: domain }
       },

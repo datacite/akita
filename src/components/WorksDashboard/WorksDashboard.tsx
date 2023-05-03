@@ -4,7 +4,6 @@ import clone from 'lodash/clone'
 import { ContentFacet } from '../WorksListing/WorksListing'
 import { Works } from '../SearchWork/SearchWork'
 import { typesDomain, typesRange, licenseDomain, licenseRange } from '../DonutChart/DonutChart'
-import SankeyGraph, { TEST_DATA } from '../SankeyGraph/SankeyGraph'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 
@@ -12,7 +11,7 @@ type Props = {
   works: Works
 }
 
-const DoiDashboard: React.FunctionComponent<Props> = ({ works }) => {
+const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => {
   if (works.totalCount == 0) return null
   // const hasNoWorks = works.totalCount == 0
 
@@ -39,9 +38,7 @@ const DoiDashboard: React.FunctionComponent<Props> = ({ works }) => {
     <>
       <Row>
         <Col xs={12} sm={8}>
-          <SankeyGraph
-              titleText='Contributors of scholarly works in the DMP'
-              data={TEST_DATA} />
+          {children}
         </Col>
         <Col xs={12} sm={4}>
           <ProductionChart
@@ -79,4 +76,4 @@ const DoiDashboard: React.FunctionComponent<Props> = ({ works }) => {
   )
 }
 
-export default DoiDashboard
+export default WorksDashboard
