@@ -4,6 +4,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
+import ReactHtmlParser from 'react-html-parser'
 import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
 
 import apolloClient from '../../utils/apolloClient'
@@ -17,6 +18,11 @@ import {
   contentFragment
 } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
+import ShareLinks from '../../components/ShareLinks/ShareLinks'
+import { Title } from '../../components/Title/Title'
+import CiteAs from '../../components/CiteAs/CiteAs'
+import Claim from '../../components/Claim/Claim'
+import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 
 type Props = {
   doi: string
@@ -283,7 +289,7 @@ interface Title {
   title: string
 }
 
-interface Rights {
+export interface Rights {
   rights: string
   rightsUri: string
   rightsIdentifier: string
@@ -478,9 +484,21 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
   const content = () => {
     return (
-      <Col md={9} mdOffset={3} className="panel-list" id="content">
-        <Work doi={work}></Work>
-      </Col>
+      <>
+        <Col md={3} id="side-bar">
+          <div className='left-menu-buttons'>
+            { work.registrationAgency.id == "datacite" && ( 
+              <Claim doi_id={work.doi} />
+            )}
+            <DownloadMetadata doi={work} />
+          </div>
+          <CiteAs doi={work} />
+          <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
+        </Col>
+        <Col md={9} id="content">
+            <Work doi={work}></Work>
+        </Col>
+      </>
     )
   }
 
@@ -580,6 +598,13 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     )
   }
 
+  const handleUrl =
+    work.registrationAgency.id === 'datacite'
+      ? work.id
+      : 'https://doi.org/' + work.doi
+
+    const titleHtml = work.titles[0].title
+
   return (
     <Layout path={'/doi.org'}>
       <Head>
@@ -596,6 +621,9 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         {type && <meta name="og:type" content={type} />}
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
+      
+      <Title title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+           
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

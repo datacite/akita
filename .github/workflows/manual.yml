@@ -4,27 +4,13 @@ on: workflow_dispatch
 jobs:
   test:
     uses: ./.github/workflows/cypress_tests.yml
-    secrets:
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
+    secrets: inherit
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Extract variables
-        shell: bash
-        run: |
-          echo "::set-output name=BRANCH::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
-          echo "::set-output name=GIT_SHA::$(git rev-parse HEAD)"
-          echo "::set-output name=GIT_SHA_SHORT::$(git rev-parse --short HEAD)"
-        id: extract_variables
-
       - name: Vercel deploy
         uses: amondnet/vercel-action@v25.1.0
         with:

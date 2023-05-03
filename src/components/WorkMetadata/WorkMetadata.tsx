@@ -9,36 +9,32 @@ import {
 } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
-import uniqBy from 'lodash/uniqBy'
-import Image from 'next/image'
-import { pluralize, orcidFromUrl } from '../../utils/helpers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-regular-svg-icons'
-import {
-  faCreativeCommons,
-  faCreativeCommonsBy,
-  faCreativeCommonsNc,
-  faCreativeCommonsNd,
-  faCreativeCommonsSa,
-  faCreativeCommonsZero
-} from '@fortawesome/free-brands-svg-icons'
+import { orcidFromUrl } from '../../utils/helpers'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
 import { WorkType } from '../../pages/doi.org/[...doi]'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
+import { License } from '../License/License'
+import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
 
 type Props = {
   metadata: WorkType
   linkToExternal?: boolean
   showClaimStatus?: boolean
+  hideTitle?: boolean
+  hideMetadataInTable?: boolean
+  includeMetricsDisplay?: boolean
 }
 
 const WorkMetadata: React.FunctionComponent<Props> = ({
   metadata,
   linkToExternal,
-  showClaimStatus
+  showClaimStatus,
+  hideTitle = false,
+  hideMetadataInTable = false,
+  includeMetricsDisplay = false
 }) => {
   if (metadata == null)
     return <Alert bsStyle="warning">No content found.</Alert>
@@ -198,112 +194,6 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     return <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
   }
 
-  const license = () => {
-    const rights = [...metadata.rights]
-    const uniqueRights = uniqBy(rights, 'rightsIdentifier')
-    const ccRights = uniqueRights.reduce((sum, r) => {
-      if (r.rightsIdentifier && r.rightsIdentifier.startsWith('cc')) {
-        const splitIdentifier = r.rightsIdentifier
-          .split('-')
-          .filter((l) => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l))
-        splitIdentifier.forEach((l) => {
-          switch (l) {
-            case 'by':
-              sum.push({
-                icon: faCreativeCommonsBy,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              break
-            case 'nc':
-              sum.push({
-                icon: faCreativeCommonsNc,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              break
-            case 'nd':
-              sum.push({
-                icon: faCreativeCommonsNd,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              break
-            case 'sa':
-              sum.push({
-                icon: faCreativeCommonsSa,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              break
-            case 'cc0':
-              sum.push({
-                icon: faCreativeCommons,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              sum.push({
-                icon: faCreativeCommonsZero,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-              break
-            default:
-              sum.push({
-                icon: faCreativeCommons,
-                rightsUri: r.rightsUri,
-                rightsIdentifier: r.rightsIdentifier
-              })
-          }
-        })
-      }
-      return sum
-    }, [])
-
-    const otherRights = uniqueRights.reduce((sum, r) => {
-      const ri = { rightsIdentifier: null }
-      if (r.rightsIdentifier && !r.rightsIdentifier.startsWith('cc')) {
-        if (r.rightsIdentifier.startsWith('apache')) {
-          ri.rightsIdentifier = 'Apache%202.0'
-        } else if (r.rightsIdentifier.startsWith('ogl')) {
-          ri.rightsIdentifier = 'OGL%20Canada'
-        } else {
-          ri.rightsIdentifier = r.rightsIdentifier
-            .replace(/-/g, '%20')
-            .toUpperCase()
-        }
-        sum.push(ri)
-      }
-      return sum
-    }, [])
-
-    if (!ccRights[0] && !otherRights[0]) return ''
-
-    return (
-      <div className="license">
-        {ccRights.map((r, index) => (
-          <a href={r.rightsUri} key={index} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon key={r.rightsIdentifier} icon={r.icon} />
-          </a>
-        ))}
-        {otherRights.map((r) => (
-          <a
-            href={r.rightsUri}
-            key={r.rightsIdentifier}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Image
-              src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
-              width={76}
-              height={20}
-            />
-          </a>
-        ))}
-      </div>
-    )
-  }
-
   const registered = () => {
     return (
       <div className="registered">
@@ -377,55 +267,24 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
-  const metricsCounter = () => {
-    if (
-      metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
-      0
-    ) {
-      return <div></div>
-    }
-
-    return (
-      <div className="metrics">
-        {metadata.citationCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-            {pluralize(metadata.citationCount, 'Citation', true)}
-          </span>
-        )}
-        {metadata.viewCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-            {pluralize(metadata.viewCount, 'View', true)}
-          </span>
-        )}
-        {metadata.downloadCount > 0 && (
-          <span className="metrics-counter">
-            <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-            {pluralize(metadata.downloadCount, 'Download', true)}
-          </span>
-        )}
-      </div>
-    )
-  }
-
   const footer = () => {
     return (
-      <div className="panel-footer">
+      <Col className="panel-footer" sm={12}>
         <a href={handleUrl}>
           <i className="ai ai-doi"></i> {handleUrl}
         </a>
-      </div>
+      </Col>
     )
   }
 
   return (
     <div key={metadata.id} className="panel panel-transparent work-list">
-      <div className="panel-body">
-        {title()}
-        {creators()}
+      <Col className="panel-body">
+        {!hideTitle && title()}
+        {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
+        {!hideMetadataInTable && creators()}
         {metadataTag()}
-        {description()}
+        {!hideMetadataInTable && <>{description()}
         {metadata.identifiers && metadata.identifiers.length > 0 && (
           <Row>
             <Col xs={6} md={6} className="other-identifiers">
@@ -441,11 +300,12 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
             </Col>
           </Row>
         )}
-        {registered()}
-        {license()}
-        {metricsCounter()}
+        {registered()}</>}
+        {!hideMetadataInTable && <License rights={metadata.rights} />}
+        {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
-      </div>
+      </Col>
+      
       {footer()}
     </div>
   )

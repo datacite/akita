@@ -17,6 +17,8 @@ import {
   contentFragment
 } from '../../components/SearchWork/SearchWork'
 import { rorFromUrl, pluralize } from '../../utils/helpers'
+import ShareLinks from '../../components/ShareLinks/ShareLinks'
+import { Title } from 'src/components/Title/Title'
 
 type Props = {
   rorId?: string
@@ -233,9 +235,14 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
 
   const content = () => {
     return (
-      <Col md={9} mdOffset={3}>
-        <Organization organization={organization} />
-      </Col>
+      <>
+        <Col md={3} id="side-bar">
+          <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
+        </Col>
+        <Col md={9}>
+          <Organization organization={organization} />
+        </Col>
+      </>
     )
   }
 
@@ -279,6 +286,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         <meta name="og:image" content={imageUrl} />
         <meta name="og:type" content="organization" />
       </Head>
+      <Title title={organization.name} titleLink={organization.id} link={organization.id} />
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
     </Layout>

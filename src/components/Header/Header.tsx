@@ -79,7 +79,9 @@ const Header: React.FunctionComponent<Props> = ({ path }) => {
     <Navbar fluid collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">DataCite Commons</a>
+          <a href="/">
+            <img src="/images/commons-logo.svg" height="50" className="commons-logo"/>
+          </a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
