@@ -27,6 +27,9 @@ const actions = {
   editor: false
 }
 
+export const otherRange = [ 'gray', 'black' ]
+export const otherDomain = [ 'Other', 'Missing' ]
+
 // Source:  https://r-charts.com/color-palettes/#discrete
 // paletteer_d("ggsci::category20_d3") + some from original set
 export const typesRange = [
@@ -57,7 +60,7 @@ export const typesRange = [
   '#bc80bd',
   '#fccde5',
   '#8dd3c7',
-  '#ffed6f',
+  ...otherRange
 ]
 // Source: https://schema.datacite.org/meta/kernel-4/include/datacite-resourceType-v4.xsd
 export const typesDomain = [
@@ -88,8 +91,33 @@ export const typesDomain = [
   'Standard',
   'Text',
   'Workflow',
-  'Other'
+  ...otherDomain
 ]
+
+export const contributorRange = [
+  'red',
+  'green',
+  'blue'
+]
+
+export const contributorDomain = [
+  'Creator',
+  'Data Curator',
+  'Project Leader'
+]
+
+export const affiliationRange = [
+  'red',
+  'green',
+  'blue'
+]
+
+export const affiliationDomain = [
+  'Affiliation 1',
+  'Affiliation 2',
+  'Affiliation 3'
+]
+
 
 export const licenseRange = [
   '#d9d9d9',
@@ -115,7 +143,8 @@ export const licenseRange = [
   '#fccde5',
   '#ccebc5',
   '#ccebc5',
-  '#ffed6f'
+  '#ffed6f',
+  ...otherRange
 ]
 
 export const licenseDomain = [
@@ -142,7 +171,8 @@ export const licenseDomain = [
   'ISC',
   'MIT',
   'MPL-2.0',
-  'OGL-Canada-2.0'
+  'OGL-Canada-2.0',
+  ...otherDomain
 ]
 
 export const fieldOfScienceRange = [
