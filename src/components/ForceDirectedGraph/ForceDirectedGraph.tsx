@@ -27,21 +27,11 @@ type Props = {
   titleText: string | string[]
   nodes: ForceDirectedGraphNode[]
   links: ForceDirectedGraphLink[]
-  color?: string
 }
 
-const ForceDirectedGraph: React.FunctionComponent<Props> = ({
-  titleText,
-  nodes,
-  links,
-  color
-}) => {
+const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links }) => {
   if (nodes.length==0){
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
-  }
-
-  if (typeof color == 'undefined') {
-    color = '#1abc9c'
   }
 
   const forceDirectedGraphSpec: VisualizationSpec = {

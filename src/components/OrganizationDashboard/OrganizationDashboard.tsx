@@ -75,7 +75,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   gridId,
   crossrefFunderId
 }) => {
-  const { loading, error, data } = useQuery<
+  const { loading, data } = useQuery<
     ForceDirectedQueryData,
     ForceDirectedQueryVar
   >(FORCE_DIRECTED_GRAPH_GQL, {
@@ -87,8 +87,10 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
     }
   })
 
-  console.log(error)
-
+  // Links between nodes
+  // Authors -> dois
+  // Dois -> dois
+  
   const forceDirectedWorks = loading ? [] : data.organization.works.nodes
   const nodes: ForceDirectedGraphNode[] = []
   const links: ForceDirectedGraphLink[] = []
@@ -114,15 +116,9 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
       const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
       links.push(randomLink)
     }
-
-    
   })
 
-  // Links between nodes
-  // Authors -> dois
-  // Dois -> dois
   
-
   return (
     <WorksDashboard works={works}>
       <ForceDirectedGraph

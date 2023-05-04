@@ -42,8 +42,6 @@ const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=2
 		)
 	}
 
-	// const link = 
-
   return (<>
 		{text !== null && (
 			<OverlayTrigger
