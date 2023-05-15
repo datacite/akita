@@ -86,7 +86,7 @@ module.exports = withSourceMaps({
     return [
       {
         source: '/sitemaps/:path*',
-        destination: `${process.env.SITEMAPS_URL}/:path*`
+        destination: `${process.env.SITEMAPS_URL}/sitemaps/:path*`
       },
     ]
   }
