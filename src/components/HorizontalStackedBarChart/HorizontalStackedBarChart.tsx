@@ -34,16 +34,28 @@ export function getTopFive(data: HorizontalBarRecord[]) {
     }
   }
 
+  const otherData = data.filter(d => d.title === "Other")
+  let otherCount = otherData.reduce(getTotalCount, 0)
+
+  const missingData = data.filter(d => d.title === "Missing")
+  const missingCount = missingData.reduce(getTotalCount, 0)
+
+  data = data.filter(d => d.title !== "Other" && d.title !== "Missing")
   const sorted = data.sort((a, b) => b.count - a.count)
 
   const topFive = sorted.slice(0, 5)
-  const other = sorted.slice(5)
+  const others = sorted.slice(5)
+  otherCount += others.reduce(getTotalCount, 0)
 
-  if (other.length > 0) {
-    const otherCount = other.reduce(getTotalCount, 0)
-    topFive.push({ title: 'Other', count: otherCount})
-  }
+  if (otherCount > 0)
+    topFive.push({ title: 'Other', count: otherCount })
 
+  if (missingCount > 0)
+    topFive.push({ title: 'Missing', count: missingCount })
+  
+
+  topFive.sort((a, b) => b.count - a.count)[0]
+  
   return {
     data: topFive,
     topCategory: topFive[0].title,

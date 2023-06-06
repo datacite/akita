@@ -1,7 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'
-import { ContentFacet } from '../WorksListing/WorksListing'
 import { Works } from '../SearchWork/SearchWork'
 import { typesDomain, typesRange, licenseDomain, licenseRange } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -21,17 +20,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
   }))
 
   const resourceTypes = getTopFive(works.resourceTypes.map(toBarRecord))
-  
-
-  const noLicenseValue: ContentFacet = {
-    id: 'no-license',
-    title: 'No License',
-    count:
-      works.totalCount -
-      works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
-  }
   const licensesData = clone(works.licenses)
-  licensesData.unshift(noLicenseValue)
   const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
