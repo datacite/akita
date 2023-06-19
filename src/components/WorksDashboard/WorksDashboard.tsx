@@ -5,6 +5,7 @@ import { Works } from '../SearchWork/SearchWork'
 import { typesDomain, typesRange, licenseDomain, licenseRange } from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
+import { resourceTypeDomain, resourceTypeRange, licenseRange, identifierDomain, identifierRange, otherDomain, otherRange } from '../../data/color_palettes'
 
 type Props = {
   works: Works
@@ -12,7 +13,6 @@ type Props = {
 
 const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => {
   if (works.totalCount == 0) return null
-  // const hasNoWorks = works.totalCount == 0
 
   const published = works.published.map((x) => ({
     title: x.title,
@@ -38,27 +38,29 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
       <Row>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
-            titlePercent={-1}
-            titleText={[`of scholarly outputs use`, `a persistent identifier (i.e. DOI)`]}
-            data={[{title: 'PLACEHOLDER', count: 0}]}
-            domain={[]}
-            range={[]} />
+            titlePercent={100}
+            titleText={['of scholarly outputs', 'use a persistent identifier (i.e. DOI)']}
+            data={[{title: 'DOI', count: 1}]}
+            domain={identifierDomain}
+            range={identifierRange} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             titlePercent={resourceTypes.topPercent}
             titleText={`of scholarly outputs are ${resourceTypes.topCategory}`}
             data={resourceTypes.data}
-            domain={typesDomain}
-            range={typesRange} />
+            domain={resourceTypeDomain}
+            range={resourceTypeRange}
+            sourceField='resourceTypes' />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
             titlePercent={licenses.topPercent}
             titleText={`of scholarly outputs use ${licenses.topCategory}`}
             data={licenses.data}
-            domain={licenseDomain}
-            range={licenseRange} />
+            domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
+            range={[...otherRange, ...licenseRange]}
+            sourceField='licenses' />
         </Col>
       </Row>
     </>

@@ -3,8 +3,8 @@ import { gql, useQuery } from '@apollo/client'
 
 import { Works } from '../SearchWork/SearchWork'
 import ForceDirectedGraph, { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
-import { typesDomain } from '../DonutChart/DonutChart'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
+import { resourceTypeDomain } from 'src/data/color_palettes'
 
 type Props = {
   rorId?: string
@@ -98,7 +98,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
     const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'Unknown'
 
     const type = work.types && work.types.resourceTypeGeneral ?
-      typesDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
+    resourceTypeDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
       : 'Missing'
 
     const node = { name: title, group: type}
@@ -124,7 +124,9 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
       <ForceDirectedGraph
           titleText='Organization Works'
           nodes={nodes}
-          links={links} />
+          links={links}
+          domain={resourceTypeDomain}
+          range={resourceTypeDomain} />
     </WorksDashboard>
   )
 }

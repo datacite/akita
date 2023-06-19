@@ -12,6 +12,7 @@ type Props = {
   data: HorizontalBarRecord[]
   range: string[]
   domain: string[]
+  sourceField?: string
 }
 
 export interface HorizontalBarRecord {
@@ -69,10 +70,11 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   titleText,
   data,
   range,
-  domain
+  domain,
+  sourceField
 }) => {
   if (data.length==0) {
-    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
+    return <EmptyChart title={`Percent ${Array.isArray(titleText) ? titleText.join(' ') : titleText}`}/>
   }
 
   if (domain) {
@@ -98,40 +100,47 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       subtitleColor: '#1abc9c'
     },
     width: 300,
-    height: 5,
+    height: 50,
     mark: {
-      type: "bar",
+      type: 'bar',
       tooltip: true,
       height: 50,
-      baseline: 'bottom'
+      baseline: 'middle'
     },
     transform: [{
-      calculate: "datum.count * 100",
-      as: "percentage"
+      calculate: 'datum.count * 100',
+      as: 'percentage'
     }],
     encoding: {
       x: {
-        aggregate: "sum",
-        field: "count",
-        stack: "normalize",
-        type: "quantitative",
-        axis: { format: ".0%", domainColor: 'lightgray', tickColor: 'lightgray' },
-        title: ''
+        aggregate: 'sum',
+        field: 'count',
+        stack: 'normalize',
+        type: 'quantitative',
+        axis: { format: '.0%', domainColor: 'lightgray', tickColor: 'lightgray' },
+        title: '',
       },
       color: {
         field: 'title',
         type: 'nominal',
         title: 'Type',
         // legend: false,
-        scale: { range: range, domain: domain }
+        scale: { domain: domain, range: range },
+        sort: { field: 'title', order: 'ascending', op: 'count'}
       },
       order: {
-        "aggregate": "sum",
-        "sort": "descending",
-        "field": "count"
+        field: 'count',
+        aggregate: 'sum',
+        sort: 'descending'
       },
     },
-    config: { legend: { orient: 'bottom' } }
+    config: {
+      legend: {
+        orient: 'bottom',
+        direction: 'horizontal',
+        columns: 5,
+      }
+    }
   }
 
   return (
@@ -144,7 +153,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
           actions={false}
         />
       </div>
-      <HelpIcon text='The field {"{field}"} from DOI metadata was used to generate this chart.' />
+      {sourceField && <HelpIcon text={`The field "${sourceField}" from DOI metadata was used to generate this chart.`} />}
     </div>
   )
 }

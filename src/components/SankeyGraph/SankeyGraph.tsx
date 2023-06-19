@@ -1,7 +1,7 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
-import { affiliationDomain, affiliationRange, contributorDomain, contributorRange, typesDomain, typesRange } from '../DonutChart/DonutChart'
+import { affiliationDomain, affiliationRange, contributorDomain, contributorRange, resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
 import { BaseData, Mark } from 'vega'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
@@ -215,8 +215,8 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
 
 
   const names = Array.from(new Set(TEST_DATA.map(d => d.name)))
-  const range = typesRange.concat(contributorRange).concat(affiliationRange)
-  const domain = typesDomain.concat(contributorDomain).concat(affiliationDomain).concat(names)
+  const range = resourceTypeDomain.concat(contributorRange).concat(affiliationRange)
+  const domain = resourceTypeRange.concat(contributorDomain).concat(affiliationDomain).concat(names)
 
 
   const sankeyGraphSpec: VisualizationSpec = {

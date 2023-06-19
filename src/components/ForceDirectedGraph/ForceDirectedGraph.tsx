@@ -3,14 +3,7 @@ import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
-import { typesDomain, typesRange } from '../DonutChart/DonutChart'
 import HelpIcon from '../HelpIcon/HelpIcon'
-
-export interface HorizontalBarRecord {
-  title: string
-  count: number
-  color?: string
-}
 
 export interface ForceDirectedGraphNode {
   name: string
@@ -27,9 +20,11 @@ type Props = {
   titleText: string | string[]
   nodes: ForceDirectedGraphNode[]
   links: ForceDirectedGraphLink[]
+  range: string[]
+  domain: string[]
 }
 
-const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links }) => {
+const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links, domain, range }) => {
   if (nodes.length==0){
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
   }
@@ -119,8 +114,8 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
       {
         name: "color",
         type: "ordinal",
-        domain: typesDomain,
-        range: typesRange,
+        domain: domain,
+        range: range,
       }
     ],
     marks: [
