@@ -90,7 +90,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                                 <li key={facet.id}>
                                     {facetLink(
                                         'filterQuery',
-                                        'creators.nameIdentifiers.nameIdentifier:"' +
+                                        'creators_and_contributors.nameIdentifiers.nameIdentifier:"' +
                                         facet.id +
                                         '"',
                                         'co-authors-facet-' + facet.id
