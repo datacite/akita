@@ -215,8 +215,8 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
 
 
   const names = Array.from(new Set(TEST_DATA.map(d => d.name)))
-  const range = resourceTypeDomain.concat(contributorRange).concat(affiliationRange)
-  const domain = resourceTypeRange.concat(contributorDomain).concat(affiliationDomain).concat(names)
+  const range = resourceTypeRange.concat(contributorRange).concat(affiliationRange)
+  const domain = resourceTypeDomain.concat(contributorDomain).concat(affiliationDomain).concat(names)
 
 
   const sankeyGraphSpec: VisualizationSpec = {

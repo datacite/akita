@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Works } from '../SearchWork/SearchWork'
 import ForceDirectedGraph, { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
-import { resourceTypeDomain } from 'src/data/color_palettes'
+import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
 
 type Props = {
   rorId?: string
@@ -118,6 +118,8 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
     }
   })
 
+  console.log(resourceTypeRange)
+
   
   return (
     <WorksDashboard works={works}>
@@ -126,7 +128,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
           nodes={nodes}
           links={links}
           domain={resourceTypeDomain}
-          range={resourceTypeDomain} />
+          range={resourceTypeRange} />
     </WorksDashboard>
   )
 }
