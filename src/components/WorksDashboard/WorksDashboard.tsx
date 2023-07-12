@@ -40,16 +40,15 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             titlePercent={100}
-            titleText={'of scholarly outputs use a PID'}
+            titleText={['of scholarly outputs use', 'a persistent identifier (i.e. DOI)']}
             data={[{title: 'DOI', count: 1}]}
             domain={identifierDomain}
-            range={identifierRange}
-            tooltipText={'PID: Persistent Identifier (i.e. DOI)'}/>
+            range={identifierRange} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             titlePercent={resourceTypes.topPercent}
-            titleText={`of scholarly outputs are ${resourceTypes.topCategory}`}
+            titleText={[`of scholarly outputs are ${resourceTypes.topCategory}`, '']}
             data={resourceTypes.data}
             domain={resourceTypeDomain}
             range={resourceTypeRange}
@@ -58,7 +57,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
             titlePercent={licenses.topPercent}
-            titleText={`of scholarly outputs use ${licenses.topCategory}`}
+            titleText={[`of scholarly outputs use ${licenses.topCategory}`, '']}
             data={licenses.data}
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
