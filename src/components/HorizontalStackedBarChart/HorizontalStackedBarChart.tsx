@@ -71,7 +71,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   data,
   range,
   domain,
-  tooltipText: tooltipText
+  tooltipText
 }) => {
   if (data.length==0) {
     return <EmptyChart title={`Percent ${Array.isArray(titleText) ? titleText.join(' ') : titleText}`}/>
