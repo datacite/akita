@@ -12,6 +12,7 @@ type Props = {
   data: HorizontalBarRecord[]
   range: string[]
   domain: string[]
+  tooltipText?: string
 }
 
 export interface HorizontalBarRecord {
@@ -34,16 +35,28 @@ export function getTopFive(data: HorizontalBarRecord[]) {
     }
   }
 
+  const otherData = data.filter(d => d.title === "Other")
+  let otherCount = otherData.reduce(getTotalCount, 0)
+
+  const missingData = data.filter(d => d.title === "Missing")
+  const missingCount = missingData.reduce(getTotalCount, 0)
+
+  data = data.filter(d => d.title !== "Other" && d.title !== "Missing")
   const sorted = data.sort((a, b) => b.count - a.count)
 
   const topFive = sorted.slice(0, 5)
-  const other = sorted.slice(5)
+  const others = sorted.slice(5)
+  otherCount += others.reduce(getTotalCount, 0)
 
-  if (other.length > 0) {
-    const otherCount = other.reduce(getTotalCount, 0)
-    topFive.push({ title: 'Other', count: otherCount})
-  }
+  if (otherCount > 0)
+    topFive.push({ title: 'Other', count: otherCount })
 
+  if (missingCount > 0)
+    topFive.push({ title: 'Missing', count: missingCount })
+  
+
+  topFive.sort((a, b) => b.count - a.count)[0]
+  
   return {
     data: topFive,
     topCategory: topFive[0].title,
@@ -57,10 +70,11 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   titleText,
   data,
   range,
-  domain
+  domain,
+  tooltipText
 }) => {
   if (data.length==0) {
-    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
+    return <EmptyChart title={`Percent ${Array.isArray(titleText) ? titleText.join(' ') : titleText}`}/>
   }
 
   if (domain) {
@@ -86,40 +100,47 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       subtitleColor: '#1abc9c'
     },
     width: 300,
-    height: 5,
+    height: 50,
     mark: {
-      type: "bar",
+      type: 'bar',
       tooltip: true,
       height: 50,
-      baseline: 'bottom'
+      baseline: 'middle'
     },
     transform: [{
-      calculate: "datum.count * 100",
-      as: "percentage"
+      calculate: 'datum.count * 100',
+      as: 'percentage'
     }],
     encoding: {
       x: {
-        aggregate: "sum",
-        field: "count",
-        stack: "normalize",
-        type: "quantitative",
-        axis: { format: ".0%", domainColor: 'lightgray', tickColor: 'lightgray' },
-        title: ''
+        aggregate: 'sum',
+        field: 'count',
+        stack: 'normalize',
+        type: 'quantitative',
+        axis: { format: '.0%', domainColor: 'lightgray', tickColor: 'lightgray' },
+        title: '',
       },
       color: {
         field: 'title',
         type: 'nominal',
         title: 'Type',
         // legend: false,
-        scale: { range: range, domain: domain }
+        scale: { domain: domain, range: range },
+        sort: { field: 'title', order: 'ascending', op: 'count'}
       },
       order: {
-        "aggregate": "sum",
-        "sort": "descending",
-        "field": "count"
+        field: 'count',
+        aggregate: 'sum',
+        sort: 'descending'
       },
     },
-    config: { legend: { orient: 'bottom' } }
+    config: {
+      legend: {
+        orient: 'bottom',
+        direction: 'horizontal',
+        columns: 5,
+      }
+    }
   }
 
   return (
@@ -132,7 +153,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
           actions={false}
         />
       </div>
-      <HelpIcon text='The field {"{field}"} from DOI metadata was used to generate this chart.' />
+      {tooltipText && <HelpIcon text={tooltipText} />}
     </div>
   )
 }

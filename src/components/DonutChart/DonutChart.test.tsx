@@ -2,7 +2,8 @@
 
 import React from 'react'
 import { mount } from '@cypress/react'
-import DonutChart, { typesRange, typesDomain } from './DonutChart'
+import DonutChart from './DonutChart'
+import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes'
 
 describe('DonutChart Component', () => {
   let data
@@ -19,8 +20,8 @@ describe('DonutChart Component', () => {
         count={173}
         legend={true}
         title="Work Type"
-        range={typesRange}
-        domain={typesDomain}
+        range={resourceTypeRange}
+        domain={resourceTypeDomain}
       />
     )
     cy.get('.mark-arc > path').should('be.visible')
@@ -37,8 +38,8 @@ describe('DonutChart Component', () => {
         count={1730}
         legend={false}
         title="Work Type"
-        range={typesRange}
-        domain={typesDomain}
+        range={resourceTypeRange}
+        domain={resourceTypeDomain}
       />
     )
     cy.get('.mark-arc > path').should('be.visible').should('have.length', 6)

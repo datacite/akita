@@ -5,7 +5,7 @@ import { Button, Label } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
-import DonutChart, { typesRange, typesDomain } from '../DonutChart/DonutChart'
+import DonutChart from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,6 +19,7 @@ import {
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 import ShareLinks from '../ShareLinks/ShareLinks';
+import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -221,8 +222,8 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
           count={repo.works.totalCount}
           legend={false}
           title="Deposit Type"
-          range={typesRange}
-          domain={typesDomain}
+          range={resourceTypeRange}
+          domain={resourceTypeDomain}
         />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
