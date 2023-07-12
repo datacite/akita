@@ -12,7 +12,7 @@ type Props = {
   data: HorizontalBarRecord[]
   range: string[]
   domain: string[]
-  sourceField?: string
+  tooltipText?: string
 }
 
 export interface HorizontalBarRecord {
@@ -71,7 +71,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   data,
   range,
   domain,
-  sourceField
+  tooltipText: tooltipText
 }) => {
   if (data.length==0) {
     return <EmptyChart title={`Percent ${Array.isArray(titleText) ? titleText.join(' ') : titleText}`}/>
@@ -153,7 +153,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
           actions={false}
         />
       </div>
-      {sourceField && <HelpIcon text={`The field "${sourceField}" from DOI metadata was used to generate this chart.`} />}
+      {tooltipText && <HelpIcon text={tooltipText} />}
     </div>
   )
 }

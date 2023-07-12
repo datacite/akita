@@ -10,6 +10,8 @@ type Props = {
   works: Works
 }
 
+const tooltipText = (sourceField: string) => `The field "${sourceField}" from DOI metadata was used to generate this chart.`
+
 const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => {
   if (works.totalCount == 0) return null
 
@@ -38,10 +40,11 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             titlePercent={100}
-            titleText={['of scholarly outputs', 'use a persistent identifier (i.e. DOI)']}
+            titleText={'of scholarly outputs use a PID'}
             data={[{title: 'DOI', count: 1}]}
             domain={identifierDomain}
-            range={identifierRange} />
+            range={identifierRange}
+            tooltipText={'PID: Persistent Identifier (i.e. DOI)'}/>
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
@@ -50,7 +53,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             data={resourceTypes.data}
             domain={resourceTypeDomain}
             range={resourceTypeRange}
-            sourceField='resourceTypes' />
+            tooltipText={tooltipText('resourceTypes')} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
@@ -59,7 +62,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             data={licenses.data}
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
-            sourceField='licenses' />
+            tooltipText={tooltipText('licenses')} />
         </Col>
       </Row>
     </>

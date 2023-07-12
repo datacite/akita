@@ -66,8 +66,8 @@ export const resourceTypeRange = [
 	'#FD8D3C',
 	'#FDAE6B',
 	'#FDD0A2',
-	'#31A354',
-	'#74C476'
+	'#9F4639',
+	'#C59088'
 ]
 
 
