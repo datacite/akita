@@ -101,6 +101,11 @@ export const connectionFragment = {
         title
         count
       }
+      creatorsAndContributors {
+        id
+        title
+        count
+      }
     }
   `
 }
