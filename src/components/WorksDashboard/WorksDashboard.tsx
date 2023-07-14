@@ -27,9 +27,11 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
   return (
     <>
       <Row>
-        <Col xs={12} sm={8}>
-          {children}
-        </Col>
+        {children && 
+          <Col xs={12} sm={8}>
+            {children}
+          </Col>
+        }
         <Col xs={12} sm={4}>
           <ProductionChart
             title='Publication Year'

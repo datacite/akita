@@ -24,7 +24,7 @@ import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
-import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
+// import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
 
 type Props = {
   doi: string
@@ -500,9 +500,9 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         <Col md={9} id="content">
           <Work doi={work}></Work>
           <WorksDashboard works={work.citations}>
-            <SankeyGraph
+            {/* <SankeyGraph
                 titleText='Contributors of scholarly works in the DMP'
-                data={TEST_DATA} />
+                data={TEST_DATA} /> */}
           </WorksDashboard>
         </Col>
       </>
@@ -570,7 +570,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.references}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={true}
+                      showAnalytics={false}
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
@@ -587,7 +587,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.citations}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={true}
+                      showAnalytics={false}
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}

@@ -2,7 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import { Works } from '../SearchWork/SearchWork'
-import ForceDirectedGraph, { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
+import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
 import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
 
@@ -123,12 +123,12 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   
   return (
     <WorksDashboard works={works}>
-      <ForceDirectedGraph
+      {/* <ForceDirectedGraph
           titleText='Organization Works'
           nodes={nodes}
           links={links}
           domain={resourceTypeDomain}
-          range={resourceTypeRange} />
+          range={resourceTypeRange} /> */}
     </WorksDashboard>
   )
 }
