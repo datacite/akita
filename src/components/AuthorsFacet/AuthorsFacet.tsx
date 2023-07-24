@@ -71,6 +71,11 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
     }
 
+    function removeNullAuthors(author) {
+        if (author.title)
+            return author
+    }
+
     return (
         <React.Fragment>
             {authors && authors.length > 0 && (
@@ -86,7 +91,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                             <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
                         </OverlayTrigger>
                         <ul id="authors-facets">
-                            {authors.filter(checkAuthorForPerson).map((facet) => (
+                            {authors.filter(removeNullAuthors).filter(checkAuthorForPerson).map((facet) => (
                                 <li key={facet.id}>
                                     {facetLink(
                                         'filterQuery',
