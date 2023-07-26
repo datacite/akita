@@ -4,11 +4,15 @@ import { VisualizationSpec } from 'vega-embed'
 import { Facet } from '../FacetList/FacetList'
 import EmptyChart from '../EmptyChart/EmptyChart'
 import HelpIcon from '../HelpIcon/HelpIcon'
+import styles from './HorizontalStackedBarChart.module.scss'
 
 
 type Props = {
-  titlePercent: number
-  titleText: string | string[]
+  chartTitle: string
+  topCategory: { title: string, percent: number }
+  // topPercent: number
+  // titlePercent: number | string
+  // titleText: string | string[]
   data: HorizontalBarRecord[]
   range: string[]
   domain: string[]
@@ -66,15 +70,15 @@ export function getTopFive(data: HorizontalBarRecord[]) {
 
 
 const HorizontalBarChart: React.FunctionComponent<Props> = ({
-  titlePercent,
-  titleText,
+  chartTitle,
+  topCategory,
   data,
   range,
   domain,
   tooltipText
 }) => {
   if (data.length==0) {
-    return <EmptyChart title={`Percent ${Array.isArray(titleText) ? titleText.join(' ') : titleText}`}/>
+    return <EmptyChart title={`Percent ${Array.isArray(chartTitle) ? chartTitle.join(' ') : chartTitle}`}/>
   }
 
   if (domain) {
@@ -86,19 +90,6 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   const stackedBarChartSpec: VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
     data: { name: 'rawData' },
-    title: {
-      text: titlePercent + '%',
-      subtitle: titleText,
-      align: 'left',
-      anchor: 'start',
-      font: 'Source Sans Pro',
-      fontSize: 34,
-      fontWeight: 'normal',
-      color: '#1abc9c',
-      subtitleFont: 'Source Sans Pro',
-      subtitleFontSize: 21,
-      subtitleColor: '#1abc9c'
-    },
     width: 300,
     height: 50,
     mark: {
@@ -138,7 +129,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       legend: {
         orient: 'bottom',
         direction: 'horizontal',
-        columns: 5,
+        columns: 4,
       }
     }
   }
@@ -146,14 +137,22 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart">
+        <div className={styles.chartText}>
+          {chartTitle}
+          {tooltipText && <HelpIcon text={tooltipText} padding={25} color='#7C8998' />}
+        </div>
+        <div className={styles.chartDetail}>
+          <span className={styles.chartDetailText}>{topCategory.title}</span>
+          <span className={styles.chartDetailText}>{topCategory.percent}%</span>
+        </div>
         <VegaLite
           renderer="svg"
           spec={stackedBarChartSpec}
           data={{ rawData: data }}
           actions={false}
+          padding={0}
         />
       </div>
-      {tooltipText && <HelpIcon text={tooltipText} />}
     </div>
   )
 }

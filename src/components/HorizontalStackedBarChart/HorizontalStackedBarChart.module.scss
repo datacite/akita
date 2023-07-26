@@ -1,0 +1,28 @@
+.chartText {
+
+  font-family: 'Source Sans Pro';
+  font-size: 21px;
+
+  color: #7C8998;
+}
+
+.chartDetail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.chartDetailText {
+  font-family: 'Source Sans Pro';
+  font-size: 34px !important;
+
+  color: #1ABC9C;
+}
+
+// .topCategory {
+//   float: left;
+// }
+
+// .topPercent {
+//   float: right;
+// }

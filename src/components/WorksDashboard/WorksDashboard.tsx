@@ -39,21 +39,21 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
-            titlePercent={resourceTypes.topPercent}
-            titleText={[`of scholarly outputs are ${resourceTypes.topCategory}`, '']}
+            chartTitle={'Resource Types'}
+            topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent}}
             data={resourceTypes.data}
             domain={resourceTypeDomain}
             range={resourceTypeRange}
-            tooltipText={tooltipText('resourceTypes')} />
+            tooltipText={tooltipText('resourceType')} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
-            titlePercent={licenses.topPercent}
-            titleText={[`of scholarly outputs use ${licenses.topCategory}`, '']}
+            chartTitle='Licenses'
+            topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
             data={licenses.data}
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
-            tooltipText={tooltipText('licenses')} />
+            tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         </Col>
       </Row>
     </>
