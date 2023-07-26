@@ -139,7 +139,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       <div className="panel-body production-chart">
         <div className={styles.chartText}>
           {chartTitle}
-          {tooltipText && <HelpIcon text={tooltipText} padding={25} color='#7C8998' />}
+          {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </div>
         <div className={styles.chartDetail}>
           <span className={styles.chartDetailText}>{topCategory.title}</span>

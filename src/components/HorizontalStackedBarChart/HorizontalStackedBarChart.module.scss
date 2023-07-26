@@ -2,8 +2,14 @@
 
   font-family: 'Source Sans Pro';
   font-size: 21px;
+  font-weight: 700;
 
-  color: #7C8998;
+  color: #34495E;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .chartDetail {
@@ -14,15 +20,7 @@
 
 .chartDetailText {
   font-family: 'Source Sans Pro';
-  font-size: 34px !important;
+  font-size: 28px !important;
 
   color: #1ABC9C;
 }
-
-// .topCategory {
-//   float: left;
-// }
-
-// .topPercent {
-//   float: right;
-// }

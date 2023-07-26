@@ -5,6 +5,7 @@ import { Works } from '../SearchWork/SearchWork'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
+import styles from './WorksDashboard.module.scss'
 
 type Props = {
   works: Works
@@ -25,7 +26,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
   const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
-    <>
+    <div className={styles.graphsContainer}>
       <Row>
         {children && 
           <Col xs={12} sm={8}>
@@ -39,7 +40,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
-            chartTitle={'Resource Types'}
+            chartTitle={'Work Types'}
             topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent}}
             data={resourceTypes.data}
             domain={resourceTypeDomain}
@@ -56,7 +57,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 
