@@ -85,7 +85,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                             placement="top"
                             overlay={
                                 <Tooltip id="tooltipAuthors">
-                                    This list includes only {title} with ORCID ids.
+                                    This list includes only {title} with ORCID iDs in DOI metadata.
                                 </Tooltip>
                             }>
                             <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
