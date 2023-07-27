@@ -9,12 +9,13 @@ type Props = {
 	size?: number
 	color?: string
 	position?: 'inline' | 'top-right'
+	padding?: number
 }
 
-const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=24, color='gray', position='top-right' }) => {
+const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=24, color='gray', position='top-right', padding=0 }) => {
 	if (text === null && link === null) return <></>;
 
-	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: 0 } : null
+	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding	 } : null
 
 	const icon = () => {
 		if (link !== null) return (

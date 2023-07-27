@@ -4,7 +4,8 @@ import clone from 'lodash/clone'
 import { Works } from '../SearchWork/SearchWork'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
-import { resourceTypeDomain, resourceTypeRange, licenseRange, identifierDomain, identifierRange, otherDomain, otherRange } from '../../data/color_palettes'
+import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
+import styles from './WorksDashboard.module.scss'
 
 type Props = {
   works: Works
@@ -25,7 +26,7 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
   const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
-    <>
+    <div className={styles.graphsContainer}>
       <Row>
         {children && 
           <Col xs={12} sm={8}>
@@ -37,36 +38,26 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             title='Publication Year'
             data={published} />
         </Col>
-      </Row>
-      <Row>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
-            titlePercent={100}
-            titleText={['of scholarly outputs use', 'a persistent identifier (i.e. DOI)']}
-            data={[{title: 'DOI', count: 1}]}
-            domain={identifierDomain}
-            range={identifierRange} />
-        </Col>
-        <Col xs={12} sm={4}>
-          <HorizontalStackedBarChart
-            titlePercent={resourceTypes.topPercent}
-            titleText={[`of scholarly outputs are ${resourceTypes.topCategory}`, '']}
+            chartTitle={'Work Types'}
+            topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent}}
             data={resourceTypes.data}
             domain={resourceTypeDomain}
             range={resourceTypeRange}
-            tooltipText={tooltipText('resourceTypes')} />
+            tooltipText={tooltipText('resourceType')} />
         </Col>
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart 
-            titlePercent={licenses.topPercent}
-            titleText={[`of scholarly outputs use ${licenses.topCategory}`, '']}
+            chartTitle='Licenses'
+            topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
             data={licenses.data}
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
-            tooltipText={tooltipText('licenses')} />
+            tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         </Col>
       </Row>
-    </>
+    </div>
   )
 }
 
