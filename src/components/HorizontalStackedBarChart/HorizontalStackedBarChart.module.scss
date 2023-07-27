@@ -1,4 +1,5 @@
 .chartText {
+  max-width: 300px;
 
   font-family: 'Source Sans Pro';
   font-size: 21px;
@@ -13,6 +14,8 @@
 }
 
 .chartDetail {
+  max-width: 300px;
+  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
