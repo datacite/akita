@@ -10,9 +10,6 @@ import styles from './HorizontalStackedBarChart.module.scss'
 type Props = {
   chartTitle: string
   topCategory: { title: string, percent: number }
-  // topPercent: number
-  // titlePercent: number | string
-  // titleText: string | string[]
   data: HorizontalBarRecord[]
   range: string[]
   domain: string[]
