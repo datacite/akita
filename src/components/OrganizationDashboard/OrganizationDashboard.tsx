@@ -118,8 +118,6 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
     }
   })
 
-  console.log(resourceTypeRange)
-
   
   return (
     <WorksDashboard works={works}>
