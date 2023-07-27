@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Works } from '../SearchWork/SearchWork'
 import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
-import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
+import { resourceTypeDomain } from '../../data/color_palettes'
 
 type Props = {
   rorId?: string
