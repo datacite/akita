@@ -1,0 +1,29 @@
+.chartText {
+  max-width: 300px;
+
+  font-family: 'Source Sans Pro';
+  font-size: 21px;
+  font-weight: 700;
+
+  color: #34495E;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chartDetail {
+  max-width: 300px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.chartDetailText {
+  font-family: 'Source Sans Pro';
+  font-size: 28px !important;
+
+  color: #1ABC9C;
+}

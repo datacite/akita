@@ -71,6 +71,11 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
     }
 
+    function removeNullAuthors(author) {
+        if (author.title)
+            return author
+    }
+
     return (
         <React.Fragment>
             {authors && authors.length > 0 && (
@@ -80,17 +85,17 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
                             placement="top"
                             overlay={
                                 <Tooltip id="tooltipAuthors">
-                                    This list includes only {title} with ORCID ids.
+                                    This list includes only {title} with ORCID iDs in DOI metadata.
                                 </Tooltip>
                             }>
                             <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
                         </OverlayTrigger>
                         <ul id="authors-facets">
-                            {authors.filter(checkAuthorForPerson).map((facet) => (
+                            {authors.filter(removeNullAuthors).filter(checkAuthorForPerson).map((facet) => (
                                 <li key={facet.id}>
                                     {facetLink(
                                         'filterQuery',
-                                        'creators.nameIdentifiers.nameIdentifier:"' +
+                                        'creators_and_contributors.nameIdentifiers.nameIdentifier:"' +
                                         facet.id +
                                         '"',
                                         'co-authors-facet-' + facet.id

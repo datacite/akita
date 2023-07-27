@@ -19,10 +19,12 @@ import {
 } from '../../components/SearchWork/SearchWork'
 import { pluralize, rorFromUrl } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
-import { Title } from '../../components/Title/Title'
+import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
+import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
+// import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
 
 type Props = {
   doi: string
@@ -496,7 +498,12 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} id="content">
-            <Work doi={work}></Work>
+          <Work doi={work}></Work>
+          <WorksDashboard works={work.citations}>
+            {/* <SankeyGraph
+                titleText='Contributors of scholarly works in the DMP'
+                data={TEST_DATA} /> */}
+          </WorksDashboard>
         </Col>
       </>
     )
@@ -563,7 +570,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.references}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={true}
+                      showAnalytics={false}
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
@@ -580,7 +587,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.citations}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={true}
+                      showAnalytics={false}
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
@@ -622,7 +629,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         <script type="application/ld+json">{work.schemaOrg}</script>
       </Head>
       
-      <Title title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+      <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       <Row>{content()}</Row>
       <Row>{relatedContent()}</Row>
