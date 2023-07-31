@@ -7,6 +7,7 @@ type Props = {
   crossrefApiCount: number
   orcidCount: number
   rorCount: number
+  lastUpdatedDate: String
 }
 
 const DataSources: React.FunctionComponent<Props> = ({
@@ -14,7 +15,8 @@ const DataSources: React.FunctionComponent<Props> = ({
   crossrefCount,
   crossrefApiCount,
   orcidCount,
-  rorCount
+  rorCount,
+  lastUpdatedDate,
 }) => {
   const dataciteSource = () => {
     return (
@@ -83,6 +85,8 @@ const DataSources: React.FunctionComponent<Props> = ({
       <div className="panel panel-transparent">
         <div className="panel-body">
           <div className="intro">
+            <p>Last updated as of {lastUpdatedDate}</p>
+
             The following main data sources are used in DataCite Commons for a
             total of currently{' '}
             {(

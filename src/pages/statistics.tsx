@@ -516,6 +516,15 @@ const StatisticsPage = ({ data }) => {
     )
   }
 
+  //const lastUpdatedDate = new Date().toString()
+  const lastUpdatedDate = () => {
+    return new Date().toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
+
   return (
     <Layout path={'/statistics'}>
       <Row>
@@ -547,6 +556,7 @@ const StatisticsPage = ({ data }) => {
           crossrefApiCount={data.total.totalCountFromCrossref}
           orcidCount={data.people.totalCount}
           rorCount={data.organizations.totalCount}
+          lastUpdatedDate={lastUpdatedDate()}
         />
       </Row>
       <Row>
