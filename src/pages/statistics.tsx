@@ -181,7 +181,7 @@ export const STATS_GQL = gql`
   }
 `
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const { data } = await apolloClient.query({
     query: STATS_GQL
   })
@@ -527,6 +527,10 @@ const StatisticsPage = ({ data }) => {
                 <p>
                   This page gives an overview of the information about works,
                   people and organizations made available via DataCite Commons.
+
+                  <br />
+                  The is not a live dashboard, but updated on a regular basis.
+
                   Please reach out to{' '}
                   <a href="mailto:support@datacite.org">DataCite Support</a> for
                   questions or comments.
