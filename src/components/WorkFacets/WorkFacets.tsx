@@ -37,6 +37,10 @@ interface Facet {
   count: number
 }
 
+function removeOtherAndMissing(facet: Facet) {
+  return facet.id !== '__other__' && facet.id !== '__missing__'
+}
+
 const WorkFacets: React.FunctionComponent<Props> = ({
   data,
   model,
@@ -118,7 +122,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         <div className="panel-body">
           <h4>Work Type</h4>
           <ul id="work-type-facets">
-            {data.resourceTypes.map((facet) => (
+            {data.resourceTypes.filter(removeOtherAndMissing).map((facet) => (
               <li key={facet.id}>
                 {facetLink('resource-type', facet.id)}
                 <div className="facet-title">{facet.title}</div>
@@ -138,7 +142,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           <div className="panel-body">
             <h4>License</h4>
             <ul id="license-facets">
-              {data.licenses.map((facet) => (
+              {data.licenses.filter(removeOtherAndMissing).map((facet) => (
                 <li key={facet.id}>
                   {facetLink('license', facet.id)}
                   <div className="facet-title">{facet.title}</div>
