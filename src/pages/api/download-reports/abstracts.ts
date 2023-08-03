@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
+import apolloClient from '../../../utils/apolloClient'
 import { WorkType } from "../../doi.org/[...doi]";
 
 const QUERY = gql`
@@ -51,25 +52,14 @@ const QUERY = gql`
   }
 `
 
-// const DEFAULT_VARIABLES = {
-//   gridId: undefined,
-//   crossrefFunderId: undefined,
-//   cursor: null,
-//   filterQuery: null,
-//   published: null,
-//   resourceTypeId: null,
-//   fieldOfScience: null,
-//   language: null,
-//   license: null,
-//   registrationAgency: null
-// }
+type WorkInfo = Pick<WorkType, 'titles' | 'descriptions' | 'doi' | 'publicationYear'>
 
 const SEP = '\t'
-function formatLine(w: Pick<WorkType, 'titles' | 'descriptions' | 'doi' | 'publicationYear'>) {
+function formatLine(w: WorkInfo) {
   return `${w.titles[0] ? w.titles[0].title : ''}${SEP}${w.publicationYear}${SEP}${w.doi}${SEP}${w.descriptions[0] ? w.descriptions[0].description : ''}`
 }
 
-function formatResults(data: Pick<WorkType, 'titles' | 'descriptions' | 'doi' | 'publicationYear'>[]) {
+function formatResults(data: WorkInfo[]) {
   const header = `Title${SEP}Publication Year${SEP}DOI${SEP}Description\n`
   return header + [ ...data ]
     .sort((a, b) => b.publicationYear - a.publicationYear)
@@ -84,17 +74,11 @@ export default async function downloadReportsHandler(
 ) {
   const variables = req.query
 
-  const client = new ApolloClient({
-    uri: 'https://api.datacite.org/graphql',
-    cache: new InMemoryCache()
-  });
-
-  const { data } = await client.query({
+  const { data } = await apolloClient.query({
     query: QUERY,
     variables: variables
   });
-  console.log(formatResults(data.organization.works.nodes))
 	
-	res.setHeader('Content-Disposition',  `attachment; filename="abstracts_${variables.id}.csv"`)
+	res.setHeader('Content-Disposition', `attachment; filename="abstracts_${variables.id}.csv"`)
   return res.status(200).json(formatResults(data.organization.works.nodes))
 }

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
+import apolloClient from '../../../utils/apolloClient'
 import { WorkType } from "../../doi.org/[...doi]";
 
 const QUERY = gql`
@@ -44,21 +45,10 @@ const QUERY = gql`
   }
 `
 
-// const DEFAULT_VARIABLES = {
-//   gridId: undefined,
-//   crossrefFunderId: undefined,
-//   cursor: null,
-//   filterQuery: null,
-//   published: null,
-//   resourceTypeId: null,
-//   fieldOfScience: null,
-//   language: null,
-//   license: null,
-//   registrationAgency: null
-// }
 
 function formatResults(data: Pick<WorkType, 'formattedCitation' | 'publicationYear'>[]) {
-  return [ ...data ]
+  const header = `Formatted citation\n`
+  return header + [ ...data ]
     .sort((a, b) => b.publicationYear - a.publicationYear)
     .map(d => d.formattedCitation)
     .join('\n')
@@ -71,17 +61,11 @@ export default async function downloadReportsHandler(
 ) {
   const variables = req.query
 
-  const client = new ApolloClient({
-    uri: 'https://api.datacite.org/graphql',
-    cache: new InMemoryCache()
-  });
-
-  const { data } = await client.query({
+  const { data } = await apolloClient.query({
     query: QUERY,
     variables: variables
   });
-  console.log(formatResults(data.organization.works.nodes))
 	
-	res.setHeader('Content-Disposition',  `attachment; filename="related-works_${variables.id}.txt"`)
+	res.setHeader('Content-Disposition', `attachment; filename="related-works_${variables.id}.csv"`)
   return res.status(200).json(formatResults(data.organization.works.nodes))
 }

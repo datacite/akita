@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { WorkType } from "../../doi.org/[...doi]";
+import { gql } from '@apollo/client';
+import apolloClient from '../../../utils/apolloClient'
+import { Facet } from "src/components/FacetList/FacetList";
 
 const QUERY = gql`
   query getOrganizationQuery(
@@ -32,35 +33,25 @@ const QUERY = gql`
         license: $license
         registrationAgency: $registrationAgency
       ) {
-        nodes {
-          ...WorkFragment
+        funders {
+          id
+          title
+          count
         }
       }
     }
   }
-  fragment WorkFragment on Work {
-    formattedCitation(style: "apa", locale: "en-US")
-    publicationYear
-  }
 `
 
-// const DEFAULT_VARIABLES = {
-//   gridId: undefined,
-//   crossrefFunderId: undefined,
-//   cursor: null,
-//   filterQuery: null,
-//   published: null,
-//   resourceTypeId: null,
-//   fieldOfScience: null,
-//   language: null,
-//   license: null,
-//   registrationAgency: null
-// }
+const SEP = '\t'
+function formatLine(f: Facet) {
+  return `${f.id}${SEP}${f.title}${SEP}${f.count}`
+}
 
-function formatResults(data: Pick<WorkType, 'formattedCitation' | 'publicationYear'>[]) {
-  return [ ...data ]
-    .sort((a, b) => b.publicationYear - a.publicationYear)
-    .map(d => d.formattedCitation)
+function formatResults(data: Facet[]) {
+  const header = `Funder ID${SEP}Title${SEP}Work count\n`
+  return header + [ ...data ]
+    .map(formatLine)
     .join('\n')
 }
 
@@ -69,19 +60,13 @@ export default async function downloadReportsHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // const variables = req.query
+  const variables = req.query
 
-  // const client = new ApolloClient({
-  //   uri: 'https://api.datacite.org/graphql',
-  //   cache: new InMemoryCache()
-  // });
-
-  // const { data } = await client.query({
-  //   query: QUERY,
-  //   variables: variables
-  // });
-  // console.log(formatResults(data.organization.works.nodes))
+  const { data } = await apolloClient.query({
+    query: QUERY,
+    variables: variables
+  });
 	
-	// res.setHeader('Content-Disposition',  `attachment; filename="funders_${variables.id}.txt"`)
-  return res.status(200)
+	res.setHeader('Content-Disposition', `attachment; filename="funders_${variables.id}.csv"`)
+  return res.status(200).json(formatResults(data.organization.works.funders))
 }

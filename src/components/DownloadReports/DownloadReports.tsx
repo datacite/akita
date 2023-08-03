@@ -27,10 +27,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
   const apiurlBase = '/api/download-reports'
 
 
-  const downloadReports = () => {
-    const apiUrl =
-      process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
-  
+  const downloadReports = () => {  
     return (
       <div className="panel panel-transparent download-reports">
         <div className="panel-body">
