@@ -32,6 +32,7 @@ const QUERY = gql`
         language: $language
         license: $license
         registrationAgency: $registrationAgency
+        facetCount: 200
       ) {
         funders {
           id
