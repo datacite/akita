@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { gql } from '@apollo/client';
 import apolloClient from '../../../utils/apolloClient'
-import { WorkType } from "../../doi.org/[...doi]";
+import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
   query getOrganizationQuery(
@@ -52,21 +52,6 @@ const QUERY = gql`
   }
 `
 
-type WorkInfo = Pick<WorkType, 'titles' | 'descriptions' | 'doi' | 'publicationYear'>
-
-const SEP = '\t'
-function formatLine(w: WorkInfo) {
-  return `${w.titles[0] ? w.titles[0].title : ''}${SEP}${w.publicationYear}${SEP}${w.doi}${SEP}${w.descriptions[0] ? w.descriptions[0].description : ''}`
-}
-
-function formatResults(data: WorkInfo[]) {
-  const header = `Title${SEP}Publication Year${SEP}DOI${SEP}Description\n`
-  return header + [ ...data ]
-    .sort((a, b) => b.publicationYear - a.publicationYear)
-    .map(formatLine)
-    .join('\n')
-}
-
 
 export default async function downloadReportsHandler(
   req: NextApiRequest,
@@ -77,8 +62,26 @@ export default async function downloadReportsHandler(
   const { data } = await apolloClient.query({
     query: QUERY,
     variables: variables
-  });
-	
-	res.setHeader('Content-Disposition', `attachment; filename="abstracts_${variables.id}.csv"`)
-  return res.status(200).json(formatResults(data.organization.works.nodes))
+  })
+
+  const sortedData = [...data.organization.works.nodes].sort((a, b) => b.publicationYear - a.publicationYear)
+
+  const csv = stringify(sortedData, {
+    header: true,
+    columns: [
+      { key: 'titles[0].title', header: 'Title' },
+      { key: 'publicationYear', header: 'Publication Year' },
+      { key: 'doi', header: 'DOI' },
+      { key: 'descriptions[0].description', header: 'Description' }
+    ]
+  })
+
+  try {
+    res.status(200)
+    res.setHeader('Content-Type', 'text/csv')
+    res.setHeader('Content-Disposition', `attachment; filename="abstracts_${variables.id}.csv"`)
+    res.send(csv)
+  } catch (error) {
+    res.status(400).json({ error })
+  }
 }

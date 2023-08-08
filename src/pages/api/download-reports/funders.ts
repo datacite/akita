@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { gql } from '@apollo/client';
 import apolloClient from '../../../utils/apolloClient'
-import { Facet } from "src/components/FacetList/FacetList";
+import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
   query getOrganizationQuery(
@@ -23,7 +23,7 @@ const QUERY = gql`
       crossrefFunderId: $crossrefFunderId
     ) {
       works(
-        first: 200
+        first: 0
         after: $cursor
         query: $filterQuery
         published: $published
@@ -43,18 +43,6 @@ const QUERY = gql`
   }
 `
 
-const SEP = '\t'
-function formatLine(f: Facet) {
-  return `${f.id}${SEP}${f.title}${SEP}${f.count}`
-}
-
-function formatResults(data: Facet[]) {
-  const header = `Funder ID${SEP}Title${SEP}Work count\n`
-  return header + [ ...data ]
-    .map(formatLine)
-    .join('\n')
-}
-
 
 export default async function downloadReportsHandler(
   req: NextApiRequest,
@@ -65,8 +53,21 @@ export default async function downloadReportsHandler(
   const { data } = await apolloClient.query({
     query: QUERY,
     variables: variables
-  });
+  })
+  
 	
-	res.setHeader('Content-Disposition', `attachment; filename="funders_${variables.id}.csv"`)
-  return res.status(200).json(formatResults(data.organization.works.funders))
+  const csv = stringify(data.organization.works.funders, {
+    header: true,
+    columns: [ { key: 'id', header: 'Funder ID' }, { key: 'title', header: 'Title' }, { key: 'count', header: 'Work Count' } ]
+  })
+
+
+  try {
+    res.status(200)
+    res.setHeader('Content-Type', 'text/csv')
+    res.setHeader('Content-Disposition', `attachment; filename="funders_${variables.id}.csv"`)
+    res.send(csv)
+  } catch (error) {
+    res.status(400).json({ error })
+  }
 }

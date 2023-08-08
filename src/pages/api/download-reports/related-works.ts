@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { gql } from '@apollo/client';
 import apolloClient from '../../../utils/apolloClient'
-import { WorkType } from "../../doi.org/[...doi]";
+import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
   query getOrganizationQuery(
@@ -46,15 +46,6 @@ const QUERY = gql`
 `
 
 
-function formatResults(data: Pick<WorkType, 'formattedCitation' | 'publicationYear'>[]) {
-  const header = `Formatted citation\n`
-  return header + [ ...data ]
-    .sort((a, b) => b.publicationYear - a.publicationYear)
-    .map(d => d.formattedCitation)
-    .join('\n')
-}
-
-
 export default async function downloadReportsHandler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -64,8 +55,22 @@ export default async function downloadReportsHandler(
   const { data } = await apolloClient.query({
     query: QUERY,
     variables: variables
-  });
+  })
+
+  const sortedData = [...data.organization.works.nodes].sort((a, b) => b.publicationYear - a.publicationYear)
+
+  const csv = stringify(sortedData, {
+    header: true,
+    columns: [ { key: 'formattedCitation', header: 'Formatted citation' } ]
+  })
 	
-	res.setHeader('Content-Disposition', `attachment; filename="related-works_${variables.id}.csv"`)
-  return res.status(200).json(formatResults(data.organization.works.nodes))
+  try {
+    res.status(200)
+    res.setHeader('Content-Type', 'text/csv')
+    res.setHeader('Content-Disposition', `attachment; filename="related-works_${variables.id}.csv"`)
+    res.send(csv)
+  } catch (error) {
+    res.status(400).json({ error })
+  }
+
 }
