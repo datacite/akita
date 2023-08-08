@@ -33,7 +33,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
         <div className="panel-body">
           <Row>
             <Col className="download-list" id="full-metadata" xs={12}>
-              <div id="export-xml">
+              <div id="download-related-works">
                 <a
                   // target="_blank"
                   rel="noreferrer"
@@ -42,7 +42,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                   Related Works
                 </a>
               </div>
-              <div id="export-json">
+              <div id="download-abstracts">
                 <a
                   // target="_blank"
                   rel="noreferrer"
@@ -51,7 +51,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                   Abstracts
                 </a>
               </div>
-              <div id="export-ld" className="download">
+              <div id="download-funders" className="download">
                 <a
                   // target="_blank"
                   rel="noreferrer"
