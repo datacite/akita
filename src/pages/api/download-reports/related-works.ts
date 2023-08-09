@@ -40,6 +40,14 @@ const QUERY = gql`
     }
   }
   fragment WorkFragment on Work {
+    titles {
+      title
+    }
+    descriptions {
+      description
+      descriptionType
+    }
+    doi
     formattedCitation(style: "apa", locale: "en-US")
     publicationYear
   }
@@ -61,7 +69,13 @@ export default async function downloadReportsHandler(
 
   const csv = stringify(sortedData, {
     header: true,
-    columns: [ { key: 'formattedCitation', header: 'Formatted citation' } ]
+    columns: [
+      { key: 'titles[0].title', header: 'Title' },
+      { key: 'publicationYear', header: 'Publication Year' },
+      { key: 'doi', header: 'DOI' },
+      { key: 'descriptions[0].description', header: 'Description' },
+      { key: 'formattedCitation', header: 'Formatted Citation' }
+    ]
   })
 	
   try {
