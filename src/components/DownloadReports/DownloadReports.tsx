@@ -35,29 +35,18 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
             <Col className="download-list" id="full-metadata" xs={12}>
               <div id="download-related-works">
                 <a
-                  // target="_blank"
                   rel="noreferrer"
                   href={`${apiurlBase}/related-works?${params}`}
                 >
-                  Related Works
-                </a>
-              </div>
-              <div id="download-abstracts">
-                <a
-                  // target="_blank"
-                  rel="noreferrer"
-                  href={`${apiurlBase}/abstracts?${params}`}
-                >
-                  Abstracts
+                  Related Works (CSV)
                 </a>
               </div>
               <div id="download-funders" className="download">
                 <a
-                  // target="_blank"
                   rel="noreferrer"
                   href={`${apiurlBase}/funders?${params}`}
                 >
-                  Funders
+                  Funders (CSV)
                 </a>
               </div>
             </Col>
