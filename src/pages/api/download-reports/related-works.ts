@@ -48,7 +48,7 @@ const QUERY = gql`
       descriptionType
     }
     doi
-    formattedCitation(style: "apa", locale: "en-US")
+    formattedCitation(style: "apa", locale: "en-US", format: text)
     publicationYear
   }
 `
