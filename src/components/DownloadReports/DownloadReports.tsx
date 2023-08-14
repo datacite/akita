@@ -37,6 +37,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                 <a
                   rel="noreferrer"
                   href={`${apiurlBase}/related-works?${params}`}
+                  download
                 >
                   Related Works (CSV)
                 </a>
@@ -45,6 +46,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                 <a
                   rel="noreferrer"
                   href={`${apiurlBase}/funders?${params}`}
+                  download
                 >
                   Funders (CSV)
                 </a>
