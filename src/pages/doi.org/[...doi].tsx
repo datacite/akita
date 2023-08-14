@@ -23,7 +23,8 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-// import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
+import SankeyGraph from 'src/components/SankeyGraph/SankeyGraph'
+import { TEST_DATA, TEST_PERSON_ROLES, TEST_PERSON_WORKS } from 'src/components/SankeyGraph/SankeySpec'
 
 type Props = {
   doi: string
@@ -572,9 +573,9 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       url={url}
                       endCursor={endCursorReferences}
                       >
-                        {/* <SankeyGraph
+                        <SankeyGraph
                           titleText='Contributors of scholarly works in the DMP'
-                          data={TEST_DATA} /> */}
+                          data={TEST_DATA} />
                       </WorksListing>
                   </Tab.Pane>
                 )}
@@ -593,9 +594,9 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       url={url}
                       endCursor={endCursorCitations}
                     >
-                      {/* <SankeyGraph
+                      <SankeyGraph
                         titleText='Contributors of scholarly works in the DMP'
-                        data={TEST_DATA} /> */}
+                        data={TEST_DATA} />
                     </WorksListing>
                   </Tab.Pane>
                 )}

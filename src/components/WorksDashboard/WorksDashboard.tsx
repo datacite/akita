@@ -27,12 +27,12 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
 
   return (
     <div className={styles.graphsContainer}>
-      <Row>
         {children && 
-          <Col xs={12} sm={8}>
+          <Row>
             {children}
-          </Col>
+          </Row>
         }
+      <Row>
         <Col xs={12} sm={4}>
           <ProductionChart
             title='Publication Year'
