@@ -212,7 +212,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
     return (
       <>
-      <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
+      <h3>{compactNumbers(repo.works.totalCount)} Works</h3>
 
       <div className={styles.grid}>
         <ProductionChart
@@ -228,8 +228,8 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
             tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-        <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
-        <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+        <VerticalBarChart title="Work Languages" data={repo.works.languages} />
+        <VerticalBarChart title="Work Licenses" data={repo.works.licenses} />
       </div>
       </>
     )
@@ -337,7 +337,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        <MetricsDisplay counts={{ deposits: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
+        <MetricsDisplay counts={{ works: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>
