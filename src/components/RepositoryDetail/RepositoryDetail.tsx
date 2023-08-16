@@ -5,7 +5,6 @@ import { Button, Label } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
-import DonutChart from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,6 +19,7 @@ import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 import ShareLinks from '../ShareLinks/ShareLinks';
 import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes';
+import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -208,6 +208,8 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       return (<></>)
     }
 
+    const works = getTopFive(repo.works.resourceTypes.map(toBarRecord))
+
     return (
       <>
       <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
@@ -217,14 +219,13 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
           title="Year of Publication"
           data={facetToData(repo.works.published)}
         />
-        <DonutChart
-          data={facetToData(repo.works.resourceTypes)}
-          count={repo.works.totalCount}
-          legend={false}
-          title="Deposit Type"
-          range={resourceTypeRange}
-          domain={resourceTypeDomain}
-        />
+        <HorizontalStackedBarChart
+            chartTitle={'Work Types'}
+            topCategory={{ title: works.topCategory, percent: works.topPercent}}
+            data={facetToData(repo.works.resourceTypes)}
+            domain={resourceTypeDomain}
+            range={resourceTypeRange}
+            tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
         <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
