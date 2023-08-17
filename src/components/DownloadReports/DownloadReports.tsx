@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
+import HelpIcon from '../HelpIcon/HelpIcon'
 
 type Props = {
   url: string
@@ -41,7 +42,8 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                 >
                   Related Works (CSV)
                 </a>
-              </div>
+                <HelpIcon text='Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.' size={20} position='inline' />
+                </div>
               <div id="download-funders" className="download">
                 <a
                   rel="noreferrer"
@@ -50,6 +52,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
                 >
                   Funders (CSV)
                 </a>
+                <HelpIcon text='Includes up to 200 funders associated with related works.' size={20} position='inline' />
               </div>
             </Col>
           </Row>
