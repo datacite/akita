@@ -18,7 +18,7 @@ import {
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 import ShareLinks from '../ShareLinks/ShareLinks';
-import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes';
+import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
@@ -209,6 +209,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     }
 
     const works = getTopFive(repo.works.resourceTypes.map(toBarRecord))
+    const licenses = getTopFive(repo.works.licenses.map(toBarRecord))
 
     return (
       <>
@@ -216,7 +217,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
 
       <div className={styles.grid}>
         <ProductionChart
-          title="Year of Publication"
+          title="Publication Year"
           data={facetToData(repo.works.published)}
         />
         <HorizontalStackedBarChart
@@ -226,10 +227,16 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
             domain={resourceTypeDomain}
             range={resourceTypeRange}
             tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
+        <HorizontalStackedBarChart 
+          chartTitle='Licenses'
+          topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
+          data={licenses.data}
+          domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
+          range={[...otherRange, ...licenseRange]}
+          tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
         <VerticalBarChart title="Work Languages" data={repo.works.languages} />
-        <VerticalBarChart title="Work Licenses" data={repo.works.licenses} />
       </div>
       </>
     )
