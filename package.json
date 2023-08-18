@@ -44,6 +44,7 @@
     "@types/react-html-parser": "^2.0.1",
     "@types/testing-library__cypress": "^5.0.5",
     "@zeit/next-source-maps": "0.0.4-canary.1",
+    "csv-stringify": "^6.4.0",
     "date-fns": "^2.22.1",
     "flagged": "^2.0.1",
     "geolib": "^3.3.1",
