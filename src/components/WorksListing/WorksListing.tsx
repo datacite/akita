@@ -1,15 +1,12 @@
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
-import clone from 'lodash/clone'
+import { Col, Alert } from 'react-bootstrap'
 
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import { Works } from '../SearchWork/SearchWork'
-import DonutChart from '../DonutChart/DonutChart'
-import ProductionChart from '../ProductionChart/ProductionChart'
-import { licenseRange, otherDomain, otherRange, resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes'
 
 import Pager from '../Pager/Pager'
+import WorksDashboard from '../WorksDashboard/WorksDashboard'
 
 type Props = {
   works: Works
@@ -40,69 +37,11 @@ const WorksListing: React.FunctionComponent<Props> = ({
   url,
   hasPagination,
   hasNextPage,
-  endCursor
+  endCursor,
+  children
 }) => {
 
   const hasNoWorks = works.totalCount == 0
-
-  const analyticsBar = () => {
-    if (hasNoWorks) return ''
-
-    const published = works.published.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-    const resourceTypes = works.resourceTypes.map((x) => ({
-      title: x.title,
-      count: x.count
-    }))
-
-    const noLicenseValue: ContentFacet = {
-      id: 'no-license',
-      title: 'No License',
-      count:
-        works.totalCount -
-        works.licenses.reduce((a, b) => a + (b['count'] || 0), 0)
-    }
-    let licenses = clone(works.licenses)
-    licenses.unshift(noLicenseValue)
-    licenses = licenses.map((x) => ({
-      id: x.id,
-      title: x.title,
-      count: x.count
-    }))
-
-    return (
-      <Row>
-        <Col xs={12} sm={4}>
-          <ProductionChart
-            title='Publication Year'
-            data={published}
-          ></ProductionChart>
-        </Col>
-        <Col xs={6} sm={4}>
-          <DonutChart
-            data={resourceTypes}
-            legend={false}
-            count={works.totalCount}
-            title='Work Type'
-            range={resourceTypeRange}
-            domain={resourceTypeDomain}
-          ></DonutChart>
-        </Col>
-        <Col xs={6} sm={4}>
-          <DonutChart
-            data={licenses}
-            legend={false}
-            count={works.totalCount}
-            title='License'
-            domain={[...otherDomain, ...licenses.map(l => l.title)]}
-            range={[...otherRange, ...licenseRange]}
-          ></DonutChart>
-        </Col>
-      </Row>
-    )
-  }
 
   const renderFacets = () => {
     return (
@@ -130,7 +69,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   const renderWorks = () => {
     return (
       <Col md={9} id="content">
-        {showAnalytics && analyticsBar()}
+        {showAnalytics && <WorksDashboard works={works}>{children}</WorksDashboard>}
 
         {works.nodes.map((doi) => (
           <React.Fragment key={doi.doi}>

@@ -19,7 +19,6 @@ import {
   contentFragment
 } from '../../components/SearchWork/SearchWork'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
-import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
 
 type Props = {
   orcid?: string
@@ -270,7 +269,6 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
         </Col>
         <Col md={9}>
           <Person person={person} />
-          <WorksDashboard works={person.works} />
         </Col>
       </>
     )
@@ -295,7 +293,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
           works={person.works}
           loading={loading}
           showFacets={true}
-          showAnalytics={false}
+          showAnalytics={true}
           showClaimStatus={true}
           hasPagination={person.works.totalCount > 25}
           hasNextPage={hasNextPage}
