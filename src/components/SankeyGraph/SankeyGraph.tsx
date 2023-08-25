@@ -2,14 +2,26 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Vega } from 'react-vega'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
-import HelpIcon from '../HelpIcon/HelpIcon'
 import sankeySpec, { SankeyGraphData } from './SankeySpec'
+import { MultilevelFacet } from '../SearchWork/SearchWork'
 
 
 type Props = {
   titleText: string
   data: SankeyGraphData[]
   labels?: string[]
+}
+
+
+export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[] {
+  let data: SankeyGraphData[] = []
+  facets = facets.filter(f => f.title)
+  facets.forEach(facet => {
+    const arr: SankeyGraphData[] = facet.inner.map(i => ({ data: [facet.title, i.title], count: i.count }))
+    data = data.concat(arr)
+  })
+
+  return data
 }
 
 const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
@@ -21,7 +33,7 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
       if (!graphDivRef.current) return
       setWidth(graphDivRef.current.offsetWidth);
     }
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
 
@@ -37,7 +49,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
     <div className="panel panel-transparent">
       <div className="panel-body" style={{ font: 'Source Sans Pro', fontSize: 21, color: '#1abc9c' }}>
         {titleText}
-        <HelpIcon text='Connections data comes from Event Data service' />
       </div>
       <div className="panel-body production-chart" ref={graphDivRef}>
         <Vega
@@ -45,11 +56,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
           spec={{ ...sankeySpec, width: width }}
           data={{ "rawData": data }}
           actions={false}
-          // logLevel={4}
-          onNewView={view => {
-            console.log('NEW VIEW DATA')
-            console.log(view._runtime.data)
-          }}
         />
       </div>
     </div>

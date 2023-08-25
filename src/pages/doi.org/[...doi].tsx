@@ -14,6 +14,7 @@ import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import {
+  Works,
   connectionFragment,
   contentFragment
 } from '../../components/SearchWork/SearchWork'
@@ -23,8 +24,7 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-import SankeyGraph from 'src/components/SankeyGraph/SankeyGraph'
-import { TEST_DATA, TEST_PERSON_ROLES, TEST_PERSON_WORKS } from 'src/components/SankeyGraph/SankeySpec'
+
 
 type Props = {
   doi: string
@@ -225,38 +225,12 @@ export interface WorkType {
   contributors?: Contributor[]
   fundingReferences?: FundingReference[]
   citationCount?: number
-  citations?: {
-    published: Facet[]
-    resourceTypes: Facet[]
-    languages: Facet[]
-    licenses: Facet[]
-    fieldsOfScience: Facet[]
-    registrationAgencies: Facet[]
-    nodes: WorkType[]
-    pageInfo: PageInfo
-    totalCount: number
-  }
+  citations?: Works
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
-  references?: {
-    published: Facet[]
-    resourceTypes: Facet[]
-    languages: Facet[]
-    licenses: Facet[]
-    fieldsOfScience: Facet[]
-    registrationAgencies: Facet[]
-    nodes: WorkType[]
-    pageInfo: PageInfo
-    totalCount: number
-  }
-}
-
-interface Facet {
-  id: string
-  title: string
-  count: number
+  references?: Works
 }
 
 export interface Creator {
@@ -327,11 +301,6 @@ interface FieldOfScience {
 
 interface Description {
   description: string
-}
-
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
 }
 
 export interface UsageMonth {
@@ -566,17 +535,15 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showSankey
+                      sankeyTitle='Person → Work Type'
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorReferences}
-                      >
-                        <SankeyGraph
-                          titleText='Contributors of scholarly works in the DMP'
-                          data={TEST_DATA} />
-                      </WorksListing>
+                      />
                   </Tab.Pane>
                 )}
 
@@ -587,17 +554,15 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showSankey
+                      sankeyTitle='People → Work Type'
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorCitations}
-                    >
-                      <SankeyGraph
-                        titleText='Contributors of scholarly works in the DMP'
-                        data={TEST_DATA} />
-                    </WorksListing>
+                    />
                   </Tab.Pane>
                 )}
               </Tab.Content>
