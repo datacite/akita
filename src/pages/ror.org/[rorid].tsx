@@ -20,7 +20,6 @@ import { rorFromUrl, pluralize } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title } from 'src/components/Title/Title'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
-import OrganizationDashboard from 'src/components/OrganizationDashboard/OrganizationDashboard'
 
 type Props = {
   rorId?: string
@@ -256,7 +255,6 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
         </Col>
         <Col md={9}>
           <Organization organization={organization} />
-          <OrganizationDashboard rorId={rorId} gridId={gridId} crossrefFunderId={crossrefFunderId} works={organization.works} />
         </Col>
       </>
     )
@@ -281,7 +279,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
           works={organization.works}
           loading={loading}
           showFacets={true}
-          showAnalytics={false}
+          showAnalytics={true}
           showClaimStatus={true}
           hasPagination={organization.works.totalCount > 25}
           hasNextPage={hasNextPage}

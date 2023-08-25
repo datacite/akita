@@ -23,7 +23,6 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
 // import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
 
 type Props = {
@@ -499,11 +498,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         </Col>
         <Col md={9} id="content">
           <Work doi={work}></Work>
-          <WorksDashboard works={work.citations}>
-            {/* <SankeyGraph
-                titleText='Contributors of scholarly works in the DMP'
-                data={TEST_DATA} /> */}
-          </WorksDashboard>
         </Col>
       </>
     )
@@ -570,14 +564,18 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.references}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={false}
+                      showAnalytics={true}
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorReferences}
-                    />
+                      >
+                        {/* <SankeyGraph
+                          titleText='Contributors of scholarly works in the DMP'
+                          data={TEST_DATA} /> */}
+                      </WorksListing>
                   </Tab.Pane>
                 )}
 
@@ -587,14 +585,18 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.citations}
                       loading={false}
                       showFacets={true}
-                      showAnalytics={false}
+                      showAnalytics={true}
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorCitations}
-                    />
+                    >
+                      {/* <SankeyGraph
+                        titleText='Contributors of scholarly works in the DMP'
+                        data={TEST_DATA} /> */}
+                    </WorksListing>
                   </Tab.Pane>
                 )}
               </Tab.Content>

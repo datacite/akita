@@ -91,14 +91,10 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
     height: 50,
     mark: {
       type: 'bar',
-      tooltip: true,
+      tooltip: { signal: "datum.title + ': ' + round((datum.sum_count_end - datum.sum_count_start) * 100) + '%'" },
       height: 50,
       baseline: 'middle'
     },
-    transform: [{
-      calculate: 'datum.count * 100',
-      as: 'percentage'
-    }],
     encoding: {
       x: {
         aggregate: 'sum',
@@ -106,15 +102,14 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         stack: 'normalize',
         type: 'quantitative',
         axis: { format: '.0%', domainColor: 'lightgray', tickColor: 'lightgray' },
-        title: '',
+        title: ''
       },
       color: {
         field: 'title',
         type: 'nominal',
-        title: 'Type',
-        // legend: false,
         scale: { domain: domain, range: range },
-        sort: { field: 'title', order: 'ascending', op: 'count'}
+        sort: { field: 'title', order: 'ascending', op: 'count'},
+        title: ''
       },
       order: {
         field: 'count',
@@ -126,7 +121,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
       legend: {
         orient: 'bottom',
         direction: 'horizontal',
-        columns: 4,
+        columns: 4
       }
     }
   }
