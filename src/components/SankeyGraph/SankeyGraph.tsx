@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Vega } from 'react-vega'
 
 import EmptyChart from '../EmptyChart/EmptyChart'
@@ -13,6 +13,21 @@ type Props = {
 }
 
 const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
+  const [width, setWidth] = useState(500);
+  const graphDivRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!graphDivRef.current) return
+      setWidth(graphDivRef.current.offsetWidth);
+    }
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   if (data.length==0){
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
   }
@@ -24,10 +39,10 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
         {titleText}
         <HelpIcon text='Connections data comes from Event Data service' />
       </div>
-      <div className="panel-body production-chart">
+      <div className="panel-body production-chart" ref={graphDivRef}>
         <Vega
           renderer="svg"
-          spec={sankeySpec}
+          spec={{ ...sankeySpec, width: width }}
           data={{ "rawData": data }}
           actions={false}
           // logLevel={4}

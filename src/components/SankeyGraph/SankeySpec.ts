@@ -1,5 +1,5 @@
 import { VisualizationSpec } from 'vega-embed'
-import { affiliationDomain, affiliationRange, contributorDomain, contributorRange, resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
+import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
 import { BaseData, Mark } from 'vega'
 
 
@@ -11,50 +11,6 @@ export interface SankeyGraphData {
   data: string[]
   count: number
 }
-
-
-export const TEST_DATA: SankeyGraphData[] = [
-  { data: [ "Erin Robinson",     "Project Leader", "Audiovisual" ], count: 7 },
-  { data: [ "Neil Davies",       "Creator",        "Audiovisual" ], count: 4 },
-  { data: [ "Maria Praetzellis", "Project Leader", "Audiovisual" ], count: 8 },
-  { data: [ "Maria Praetzellis", "Creator",        "Software"    ], count: 6 },
-  { data: [ "Brian Riley",       "Data Curator",   "Dataset"     ], count: 3 },
-  { data: [ "Brian Riley",       "Creator",        "Dataset"     ], count: 9 }
-]
-
-export const TEST_PERSON_ROLES: SankeyGraphData[] = [
-  { data: [ "Erin Robinson",     "Project Leader" ], count: 7 },
-  { data: [ "Neil Davies",       "Creator"        ], count: 4 },
-  { data: [ "Maria Praetzellis", "Project Leader" ], count: 8 },
-  { data: [ "Maria Praetzellis", "Creator"        ], count: 6 },
-  { data: [ "Brian Riley",       "Data Curator"   ], count: 3 },
-  { data: [ "Brian Riley",       "Creator"        ], count: 9 }
-]
-
-export const TEST_PERSON_WORKS: SankeyGraphData[] = [
-  { data: [ "Erin Robinson",     "Audiovisual" ], count: 7 },
-  { data: [ "Neil Davies",       "Audiovisual" ], count: 4 },
-  { data: [ "Maria Praetzellis", "Audiovisual" ], count: 8 },
-  { data: [ "Maria Praetzellis", "Software"    ], count: 6 },
-  { data: [ "Brian Riley",       "Dataset"     ], count: 3 },
-  { data: [ "Brian Riley",       "Software"     ], count: 9 }
-]
-
-
-export const TEST_PERSON_WORK_ROLE: SankeyGraphData[] = [
-  { data: [ "Erin Robinson",     "Audiovisual", "Project Leader", ], count: 7 },
-  { data: [ "Neil Davies",       "Audiovisual", "Creator",        ], count: 4 },
-  { data: [ "Maria Praetzellis", "Dataset", "Project Leader", ], count: 8 },
-  { data: [ "Maria Praetzellis", "Audiovisual"   , "Creator",        ], count: 6 },
-  { data: [ "Brian Riley",       "Dataset"    , "Data Curator",   ], count: 3 },
-  // { data: [ "Brian Riley",       "Dataset"    , "Creator",        ], count: 9 }
-]
-
-// export const TEST_DATA: SankeyGraphData[] = [
-// 	{ data: [ "Name 1", "Dataset"  ], count: 1 },
-// 	{ data: [ "Name 1", "Software" ], count: 2 },
-// 	{ data: [ "Name 2", "Dataset"  ], count: 2 }
-// ]
 
 
 // const BUTTON_MARK: Mark = {
@@ -113,14 +69,6 @@ export const TEST_PERSON_WORK_ROLE: SankeyGraphData[] = [
 //     }
 //   ]
 // }
-
-
-
-
-const names = Array.from(new Set(TEST_DATA.map(d => d.data[0])))
-const range = resourceTypeRange.concat(contributorRange).concat(affiliationRange)
-const domain = resourceTypeDomain.concat(contributorDomain).concat(affiliationDomain).concat(names)
-
 
 
 
@@ -252,7 +200,7 @@ const groupLabels: Mark = {
 			baseline: { value: "middle" },
 			
 			align: { signal: "datum.stack == 0 ? 'left' : 'right'" },
-			x: { signal: "scale('x', datum.stack) + (datum.stack == 0 ? bandwidth('x') + 5 : -2)" },
+			x: { signal: "scale('x', datum.stack) + (datum.stack == 0 ? bandwidth('x') + 10 : -5)" },
 			yc: { signal: "(datum.y0 + datum.y1) / 2" },
 		}
 	},
@@ -305,11 +253,12 @@ const linkMark: Mark = {
 	clip: true,
 	encode: {
 		enter: {
-			path: { field: "path" },
 			strokeWidth: { field: "strokeWidth" },
 		},
 
 		update: {
+			path: { field: "path" },
+
 			stroke: { scale: "color", signal: "datum.data[data('meta')[0].columns - 1]" },
 			strokeOpacity: { signal: "indexof(datum.id, onHover.data) > -1 ? 1 : 0.6" },
 
@@ -323,8 +272,8 @@ const linkMark: Mark = {
 
 const sankeySpec: VisualizationSpec = {
 	$schema: "https://vega.github.io/schema/vega/v5.0.json",
-	height: 300,
 	width: 500,
+	height: 300,
 	data: [
 		{ name: "rawData" },
 		{ name: "meta", source: "rawData", transform: [
@@ -344,8 +293,8 @@ const sankeySpec: VisualizationSpec = {
 		{
 			name: "color",
 			type: "ordinal",
-			range: range,
-			domain: domain
+			range: resourceTypeRange,
+			domain: resourceTypeDomain
 		},
 		{
 			// Calculate horizontal stack positioning
@@ -417,21 +366,6 @@ const sankeySpec: VisualizationSpec = {
 		// }
 	]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export default sankeySpec
