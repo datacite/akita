@@ -35,7 +35,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   showAnalytics,
   showFacets,
   showSankey,
-  sankeyTitle = 'SANKEY',
+  sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
   loading,
   model,
@@ -77,7 +77,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
         {showAnalytics && <WorksDashboard works={works} />}
         {showSankey && <Row>
           <Col xs={12}>
-            <SankeyGraph titleText={sankeyTitle} data={sankeyData} />
+            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='Example Tooltip' />
           </Col>
         </Row>}
 

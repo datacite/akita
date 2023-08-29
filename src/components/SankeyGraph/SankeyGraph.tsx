@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Vega } from 'react-vega'
 
+import HelpIcon from '../HelpIcon/HelpIcon'
 import EmptyChart from '../EmptyChart/EmptyChart'
-import sankeySpec, { SankeyGraphData } from './SankeySpec'
 import { MultilevelFacet } from '../SearchWork/SearchWork'
+import sankeySpec, { SankeyGraphData } from './SankeySpec'
+
+import styles from './SankeyGraph.module.scss'
 
 
 type Props = {
   titleText: string
   data: SankeyGraphData[]
   labels?: string[]
+  tooltipText?: string
 }
 
 
@@ -24,14 +28,14 @@ export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[]
   return data
 }
 
-const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
+const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipText }) => {
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
       if (!graphDivRef.current) return
-      setWidth(graphDivRef.current.offsetWidth);
+      setWidth(graphDivRef.current.offsetWidth - 20);
     }
 
     handleResize();
@@ -47,10 +51,12 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data }) => {
   
   return (
     <div className="panel panel-transparent">
-      <div className="panel-body" style={{ font: 'Source Sans Pro', fontSize: 21, color: '#1abc9c' }}>
-        {titleText}
-      </div>
       <div className="panel-body production-chart" ref={graphDivRef}>
+        <div className={styles.chartTitle}>
+          {titleText}
+          {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
+        </div>
+
         <Vega
           renderer="svg"
           spec={{ ...sankeySpec, width: width }}
