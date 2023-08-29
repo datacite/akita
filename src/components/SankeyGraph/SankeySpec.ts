@@ -78,63 +78,6 @@ const groupTransform: BaseData['transform'] = [
 
 
 
-const groupMarks: Mark = {
-	type: "rect",
-	name: "groupMarks",
-	from: { data: "groups" },
-
-	encode: {
-		enter: {
-			width: { value: STACK_WIDTH },
-
-			fill: { value: 'black' },
-			fillOpacity: { value: 0.6 },
-			tooltip: { signal: "datum.data + '   ' + round(datum.count) + '   (' + format(datum.count / data('meta')[0].total, '.0%') + ')'" }
-		},
-
-		update: {
-			x: { scale: "x", field: "stack" },
-			y: { signal: "scale('y', datum.y0)" },
-			y2: { signal: "scale('y', datum.y1)" },
-			fillOpacity: { value: 0.6 },
-		},
-
-		hover: { fillOpacity: { value: 1 } }
-	}
-}
-
-
-const groupLabels: Mark = {
-	type: "text",
-	name: "labelMarks",
-	from: { data: "groups" },
-
-	encode: {
-		enter: {
-			text: { signal: "datum.y1-datum.y0 > 13 ? datum.data : ''" },
-			
-			x: { signal: `scale('x', datum.stack) + (datum.stack == 0 ? ${STACK_WIDTH} + 4 : -4)` },
-			yc: { signal: "scale('y', (datum.y0 + datum.y1) / 2)" },
-
-			align: { signal: "datum.stack == 0 ? 'left' : 'right'" },
-			baseline: { value: "middle" },
-			
-			fill: { value: "black" },
-
-			font: { value: "Source Sans Pro" },
-			fontSize: { value: 16 },
-
-			stroke: { value: "white" },
-			strokeWidth: { value: 0.2 }
-		}
-	},
-
-	interactive: false,
-	zindex: 10
-}
-
-
-
 
 ///// Links Transform ///////////////////////////
 const linkTransform: BaseData['transform'] = [
@@ -164,6 +107,67 @@ const linkTransform: BaseData['transform'] = [
 		targetY: { expr: "scale('y', datum.yGroupTarget + datum.ycNodeTarget)" },
 	}
 ]
+
+
+
+
+///// Marks /////////////////////////////////////
+const groupMarks: Mark = {
+	type: "rect",
+	name: "groupMarks",
+	from: { data: "groups" },
+
+	encode: {
+		enter: {
+			width: { value: STACK_WIDTH },
+
+			fill: { value: '#243B54' },
+			fillOpacity: { value: 0.6 },
+			tooltip: { signal: "datum.data + '   ' + round(datum.count) + '   (' + format(datum.count / data('meta')[0].total, '.0%') + ')'" }
+		},
+
+		update: {
+			x: { scale: "x", field: "stack" },
+			y: { signal: "scale('y', datum.y0)" },
+			y2: { signal: "scale('y', datum.y1)" },
+			fillOpacity: { value: 0.6 },
+		},
+
+		hover: { fillOpacity: { value: 1 } }
+	}
+}
+
+
+const groupLabels: Mark = {
+	type: "text",
+	name: "labelMarks",
+	from: { data: "groups" },
+
+	encode: {
+		enter: {
+			align: { signal: "datum.stack == 0 ? 'left' : 'right'" },
+			baseline: { value: "middle" },
+			
+			fill: { value: "black" },
+
+			font: { value: "Source Sans Pro" },
+			fontSize: { value: 16 },
+
+			stroke: { value: "white" },
+			strokeWidth: { value: 0.2 }
+		},
+
+		update: {
+			text: { signal: "datum.y1-datum.y0 > 13 ? datum.data : ''" },
+			
+			x: { signal: `scale('x', datum.stack) + (datum.stack == 0 ? ${STACK_WIDTH} + 4 : -4)` },
+			yc: { signal: "scale('y', (datum.y0 + datum.y1) / 2)" },
+		}
+	},
+
+	interactive: false,
+	zindex: 10
+}
 
 
 const linkMarks: Mark = {
