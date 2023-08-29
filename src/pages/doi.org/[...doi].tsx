@@ -536,7 +536,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       showFacets={true}
                       showAnalytics={true}
                       showSankey
-                      sankeyTitle='Person → Work Type'
+                      sankeyTitle='Contributions to References'
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
@@ -555,7 +555,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       showFacets={true}
                       showAnalytics={true}
                       showSankey
-                      sankeyTitle='People → Work Type'
+                      sankeyTitle='Contributions to Citations'
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
