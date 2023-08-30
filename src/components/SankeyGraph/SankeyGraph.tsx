@@ -12,7 +12,6 @@ import styles from './SankeyGraph.module.scss'
 type Props = {
   titleText: string
   data: SankeyGraphData[]
-  labels?: string[]
   tooltipText?: string
 }
 
@@ -20,6 +19,7 @@ type Props = {
 export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[] {
   let data: SankeyGraphData[] = []
   facets = facets.filter(f => f.title)
+  
   facets.forEach(facet => {
     const arr: SankeyGraphData[] = facet.inner.map(i => ({ data: [facet.title, i.title], count: i.count }))
     data = data.concat(arr)
