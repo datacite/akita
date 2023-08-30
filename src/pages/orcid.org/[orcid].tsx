@@ -14,6 +14,7 @@ import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import { orcidFromUrl, pluralize } from '../../utils/helpers'
 import {
+  MultilevelFacet,
   PageInfo,
   connectionFragment,
   contentFragment
@@ -115,6 +116,7 @@ export interface PersonType {
   pageInfo: PageInfo
   totalWorks: Works
   works: Works
+
 }
 
 interface Links {
@@ -149,6 +151,7 @@ interface Works {
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
   nodes: WorkType[]
+  personToWorkTypesMultilevel: MultilevelFacet[]
 }
 
 interface ContentFacet {
