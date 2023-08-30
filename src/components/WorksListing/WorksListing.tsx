@@ -77,7 +77,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
         {showAnalytics && <WorksDashboard works={works} />}
         {showSankey && <Row>
           <Col xs={12}>
-            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='Example Tooltip' />
+            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
           </Col>
         </Row>}
 
