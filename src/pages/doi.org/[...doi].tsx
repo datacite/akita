@@ -14,6 +14,7 @@ import Work from '../../components/Work/Work'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import {
+  Works,
   connectionFragment,
   contentFragment
 } from '../../components/SearchWork/SearchWork'
@@ -23,7 +24,7 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-// import SankeyGraph, { TEST_DATA } from 'src/components/SankeyGraph/SankeyGraph'
+
 
 type Props = {
   doi: string
@@ -224,38 +225,12 @@ export interface WorkType {
   contributors?: Contributor[]
   fundingReferences?: FundingReference[]
   citationCount?: number
-  citations?: {
-    published: Facet[]
-    resourceTypes: Facet[]
-    languages: Facet[]
-    licenses: Facet[]
-    fieldsOfScience: Facet[]
-    registrationAgencies: Facet[]
-    nodes: WorkType[]
-    pageInfo: PageInfo
-    totalCount: number
-  }
+  citations?: Works
   viewCount?: number
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
-  references?: {
-    published: Facet[]
-    resourceTypes: Facet[]
-    languages: Facet[]
-    licenses: Facet[]
-    fieldsOfScience: Facet[]
-    registrationAgencies: Facet[]
-    nodes: WorkType[]
-    pageInfo: PageInfo
-    totalCount: number
-  }
-}
-
-interface Facet {
-  id: string
-  title: string
-  count: number
+  references?: Works
 }
 
 export interface Creator {
@@ -326,11 +301,6 @@ interface FieldOfScience {
 
 interface Description {
   description: string
-}
-
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
 }
 
 export interface UsageMonth {
@@ -483,6 +453,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
   const work = data.work
 
+
   const content = () => {
     return (
       <>
@@ -530,7 +501,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
     const defaultActiveKey =
       work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
-
+    
     return (
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
@@ -565,17 +536,15 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+                      sankeyTitle='Contributions to References'
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorReferences}
-                      >
-                        {/* <SankeyGraph
-                          titleText='Contributors of scholarly works in the DMP'
-                          data={TEST_DATA} /> */}
-                      </WorksListing>
+                      />
                   </Tab.Pane>
                 )}
 
@@ -586,17 +555,15 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+                      sankeyTitle='Contributions to Citations'
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}
                       model={'doi'}
                       url={url}
                       endCursor={endCursorCitations}
-                    >
-                      {/* <SankeyGraph
-                        titleText='Contributors of scholarly works in the DMP'
-                        data={TEST_DATA} /> */}
-                    </WorksListing>
+                    />
                   </Tab.Pane>
                 )}
               </Tab.Content>

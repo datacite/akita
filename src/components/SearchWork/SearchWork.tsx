@@ -19,6 +19,10 @@ interface Facet {
   count: number
 }
 
+export interface MultilevelFacet extends Facet {
+  inner: Facet[]
+}
+
 export interface PageInfo {
   endCursor: string
   hasNextPage: boolean
@@ -34,6 +38,7 @@ export interface Works {
   fieldsOfScience: Facet[]
   registrationAgencies: Facet[]
   nodes: WorkType[]
+  personToWorkTypesMultilevel: MultilevelFacet[]
 }
 
 interface WorkQueryData {
@@ -105,6 +110,16 @@ export const connectionFragment = {
         id
         title
         count
+      }
+      personToWorkTypesMultilevel {
+        id
+        title
+        count
+        inner {
+          id
+          title
+          count
+        }
       }
     }
   `
