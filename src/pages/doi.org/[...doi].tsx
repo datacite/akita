@@ -453,6 +453,10 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
   const work = data.work
 
+  console.log('WORK')
+    console.log(work)
+    console.log(work.types.resourceTypeGeneral)
+
   const content = () => {
     return (
       <>
@@ -500,7 +504,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
     const defaultActiveKey =
       work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
-
+    
     return (
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
@@ -535,7 +539,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
-                      showSankey
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to References'
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
@@ -554,7 +558,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       loading={false}
                       showFacets={true}
                       showAnalytics={true}
-                      showSankey
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to Citations'
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
