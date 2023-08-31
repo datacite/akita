@@ -453,9 +453,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
   const work = data.work
 
-  console.log('WORK')
-    console.log(work)
-    console.log(work.types.resourceTypeGeneral)
 
   const content = () => {
     return (
