@@ -19,7 +19,7 @@ type Props = {
 export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[] {
   let data: SankeyGraphData[] = []
   facets = facets.filter(f => f.title)
-  
+
   facets.forEach(facet => {
     const arr: SankeyGraphData[] = facet.inner.map(i => ({ data: [facet.title, i.title], count: i.count }))
     data = data.concat(arr)
@@ -28,23 +28,30 @@ export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[]
   return data
 }
 
+
 const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipText }) => {
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef(null);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (!graphDivRef.current) return
-      setWidth(graphDivRef.current.offsetWidth - 20);
-    }
+  function handleResize () {
+    if (!graphDivRef.current) return
+    setWidth(graphDivRef.current.offsetWidth - 20);
+  }
 
+
+  useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [])
   
-  if (data.length==0){
+  useEffect(() => {
+    handleResize();
+  });
+
+  
+
+  if (data.length==0) {
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
   }
 

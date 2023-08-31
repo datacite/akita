@@ -158,7 +158,7 @@ const groupLabels: Mark = {
 		},
 
 		update: {
-			text: { signal: "scale('y', datum.y1 - datum.y0) > 13 ? datum.data : ''" },
+			text: { signal: "scale('y', datum.y0) - scale('y', datum.y1) > 13 ? datum.data : ''" },
 			
 			x: { signal: `scale('x', datum.stack) + (datum.stack == 0 ? ${STACK_WIDTH} + 4 : -4)` },
 			yc: { signal: "scale('y', (datum.y0 + datum.y1) / 2)" },
