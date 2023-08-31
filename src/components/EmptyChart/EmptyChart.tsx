@@ -11,7 +11,7 @@ const EmptyChart: React.FunctionComponent<EmptyChartProps> = ({title}) => {
         <div className={styles.title}>
           <h4>{title}</h4>
         </div>
-        <div>Not enough data to render</div>
+        <div>Not enough data to render this chart</div>
       </div>
     </div>
 )
