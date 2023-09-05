@@ -27,7 +27,7 @@ module.exports = withSourceMaps({
   images: {
     domains: ['img.shields.io']
   },
-  staticPageGenerationTimeout: 120,
+  staticPageGenerationTimeout: 220,
   webpack: (config, options) => {
     // import yaml files
     config.module.rules.push({ test: /\.ya?ml$/, use: 'js-yaml-loader' })
