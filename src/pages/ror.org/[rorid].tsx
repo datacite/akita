@@ -19,7 +19,7 @@ import {
 import { rorFromUrl, pluralize } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title } from 'src/components/Title/Title'
-import OrganizationDashboard from 'src/components/OrganizationDashboard/OrganizationDashboard'
+import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 
 type Props = {
   rorId?: string
@@ -237,12 +237,24 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   const content = () => {
     return (
       <>
-        <Col md={3} id="side-bar">
+        <Col md={3} className="panel-list" id="side-bar">
+          <DownloadReports url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} variables={{
+      id: rorId,
+      gridId: gridId,
+      crossrefFunderId: crossrefFunderId,
+      cursor: cursor,
+      filterQuery: filterQuery,
+      published: published,
+      resourceTypeId: resourceType,
+      fieldOfScience: fieldOfScience,
+      language: language,
+      license: license,
+      registrationAgency: registrationAgency
+    }} />
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9}>
           <Organization organization={organization} />
-          <OrganizationDashboard rorId={rorId} gridId={gridId} crossrefFunderId={crossrefFunderId} works={organization.works} />
         </Col>
       </>
     )
@@ -267,7 +279,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
           works={organization.works}
           loading={loading}
           showFacets={true}
-          showAnalytics={false}
+          showAnalytics={true}
           showClaimStatus={true}
           hasPagination={organization.works.totalCount > 25}
           hasNextPage={hasNextPage}

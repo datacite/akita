@@ -5,7 +5,6 @@ import { Button, Label } from 'react-bootstrap';
 import { gql } from '@apollo/client'
 import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
-import DonutChart from '../DonutChart/DonutChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,7 +18,8 @@ import {
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 import ShareLinks from '../ShareLinks/ShareLinks';
-import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes';
+import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
+import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart';
 
 export const REPOSITORY_DETAIL_FIELDS = gql`
   ${REPOSITORY_FIELDS}
@@ -208,27 +208,35 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
       return (<></>)
     }
 
+    const works = getTopFive(repo.works.resourceTypes.map(toBarRecord))
+    const licenses = getTopFive(repo.works.licenses.map(toBarRecord))
+
     return (
       <>
-      <h3>{compactNumbers(repo.works.totalCount)} Deposits</h3>
+      <h3>{compactNumbers(repo.works.totalCount)} Works</h3>
 
       <div className={styles.grid}>
         <ProductionChart
-          title="Year of Publication"
+          title="Publication Year"
           data={facetToData(repo.works.published)}
         />
-        <DonutChart
-          data={facetToData(repo.works.resourceTypes)}
-          count={repo.works.totalCount}
-          legend={false}
-          title="Deposit Type"
-          range={resourceTypeRange}
-          domain={resourceTypeDomain}
-        />
+        <HorizontalStackedBarChart
+            chartTitle={'Work Types'}
+            topCategory={{ title: works.topCategory, percent: works.topPercent}}
+            data={facetToData(repo.works.resourceTypes)}
+            domain={resourceTypeDomain}
+            range={resourceTypeRange}
+            tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
+        <HorizontalStackedBarChart 
+          chartTitle='Licenses'
+          topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
+          data={licenses.data}
+          domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
+          range={[...otherRange, ...licenseRange]}
+          tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-        <VerticalBarChart title="Deposit Languages" data={repo.works.languages} />
-        <VerticalBarChart title="Deposit Licenses" data={repo.works.licenses} />
+        <VerticalBarChart title="Work Languages" data={repo.works.languages} />
       </div>
       </>
     )
@@ -336,7 +344,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        <MetricsDisplay counts={{ deposits: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
+        <MetricsDisplay counts={{ works: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>
