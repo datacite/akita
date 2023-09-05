@@ -49,6 +49,9 @@ const apolloClient = new ApolloClient({
       },
       Facet: {
         keyFields: false
+      },
+      MultiFacet: {
+        keyFields: false
       }
     }
   })
