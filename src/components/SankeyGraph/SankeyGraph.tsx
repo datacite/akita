@@ -66,7 +66,7 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
 
         <Vega
           renderer="svg"
-          spec={{ ...sankeySpec, width: width }}
+          spec={sankeySpec(width)}
           data={{ "rawData": data }}
           actions={false}
         />
