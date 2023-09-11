@@ -3,9 +3,6 @@ import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes
 import { BaseData, Mark, Scale } from 'vega'
 
 
-const WIDTH = 500
-const HEIGHT = 300
-
 const STACK_WIDTH = 6
 const GROUP_OFFSET = 4
 
@@ -196,13 +193,6 @@ const linkMarks: Mark = {
 
 
 ///// Scales ////////////////////////////////////
-const colorScale: Scale = {
-	name: "color",
-	type: "ordinal",
-	range: resourceTypeRange,
-	domain: resourceTypeDomain
-}
-
 const horizontalScale: Scale = {
 	name: "x",
 	type: "point",
@@ -221,10 +211,10 @@ const verticalScale: Scale = {
 
 
 
-const sankeySpec: VisualizationSpec = {
+const sankeySpec = (width = 500, height = 300, domain = resourceTypeDomain, range = resourceTypeRange): VisualizationSpec => ({
 	$schema: "https://vega.github.io/schema/vega/v5.0.json",
-	width: WIDTH,
-	height: HEIGHT,
+	width: width,
+	height: height,
 	data: [
 		{ name: "rawData" },
 		{ name: "meta", source: "rawData", transform: metaTransform },
@@ -238,7 +228,11 @@ const sankeySpec: VisualizationSpec = {
 
 		{ name: "links", source: "rawData", transform: linkTransform }
 	],    
-	scales: [ colorScale, horizontalScale, verticalScale ],
+	scales: [
+		{ name: "color", type: "ordinal", domain: domain, range: range },
+		horizontalScale,
+		verticalScale
+	],
 	marks: [ groupMarks, groupLabels, linkMarks ],
 	signals: [
 		{
@@ -251,7 +245,7 @@ const sankeySpec: VisualizationSpec = {
 			]
 		}
 	]
-}
+})
 
 
 
