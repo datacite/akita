@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { VegaLite } from 'react-vega'
-import { VisualizationSpec } from 'vega-embed'
 import { Facet } from '../FacetList/FacetList'
 import EmptyChart from '../EmptyChart/EmptyChart'
 import HelpIcon from '../HelpIcon/HelpIcon'
 import styles from './HorizontalStackedBarChart.module.scss'
+import stackedBarChartSpec from './HorizontalStackedBarChartSpec'
 
 
 type Props = {
@@ -74,6 +74,27 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   domain,
   tooltipText
 }) => {
+  const [width, setWidth] = useState(500);
+  const graphDivRef = useRef(null);
+
+  function handleResize () {
+    if (!graphDivRef.current) return
+    setWidth(graphDivRef.current.offsetWidth - 20);
+  }
+
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
+  
+  useEffect(() => {
+    handleResize();
+  });
+
+
+  
   if (data.length==0) {
     return <EmptyChart title={`Percent ${Array.isArray(chartTitle) ? chartTitle.join(' ') : chartTitle}`}/>
   }
@@ -84,51 +105,11 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
     range = range.filter((_, i) => indices.includes(i))
   }
 
-  const stackedBarChartSpec: VisualizationSpec = {
-    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
-    data: { name: 'rawData' },
-    width: 300,
-    height: 50,
-    mark: {
-      type: 'bar',
-      tooltip: { signal: "datum.title + ': ' + round((datum.sum_count_end - datum.sum_count_start) * 100) + '%'" },
-      height: 50,
-      baseline: 'middle'
-    },
-    encoding: {
-      x: {
-        aggregate: 'sum',
-        field: 'count',
-        stack: 'normalize',
-        type: 'quantitative',
-        axis: { format: '.0%', domainColor: 'lightgray', tickColor: 'lightgray' },
-        title: ''
-      },
-      color: {
-        field: 'title',
-        type: 'nominal',
-        scale: { domain: domain, range: range },
-        sort: { field: 'title', order: 'ascending', op: 'count'},
-        title: ''
-      },
-      order: {
-        field: 'count',
-        aggregate: 'sum',
-        sort: 'descending'
-      },
-    },
-    config: {
-      legend: {
-        orient: 'bottom',
-        direction: 'horizontal',
-        columns: 4
-      }
-    }
-  }
+  
 
   return (
     <div className="panel panel-transparent">
-      <div className="panel-body production-chart">
+      <div className="panel-body production-chart" ref={graphDivRef}>
         <div className={styles.chartText}>
           {chartTitle}
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
@@ -139,7 +120,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         </div>
         <VegaLite
           renderer="svg"
-          spec={stackedBarChartSpec}
+          spec={stackedBarChartSpec(width, domain, range)}
           data={{ rawData: data }}
           actions={false}
           padding={0}
