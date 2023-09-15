@@ -177,6 +177,40 @@ export const DOI_GQL = gql`
           ...WorkFragment
         }
       }
+      parts(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        ...WorkConnectionFragment
+        nodes {
+          ...WorkFragment
+        }
+      }
+      partOf(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        ...WorkConnectionFragment
+        nodes {
+          ...WorkFragment
+        }
+      }
     }
   }
   ${connectionFragment.workConnection}
@@ -231,6 +265,8 @@ export interface WorkType {
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
   references?: Works
+  parts?: Works
+  partOf?: Works
 }
 
 export interface Creator {
@@ -475,32 +511,44 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   }
 
   const relatedContent = () => {
-    const referencesTabLabel = pluralize(
-      work.references.totalCount,
-      'Reference'
-    )
+    const referencesTabLabel = pluralize(work.references.totalCount, 'Reference')
     const citationsTabLabel = pluralize(work.citations.totalCount, 'Citation')
+    const partsTabLabel = pluralize(work.parts.totalCount, 'Part')
+    const partOfTabLabel = `Is Part Of ${work.partOf.totalCount}`
+    // const otherTabLabel = pluralize(work.other.totalCount, 'Other')
 
-    const hasNextPageCitations = work.citations.pageInfo
-      ? work.citations.pageInfo.hasNextPage
-      : false
-    const endCursorCitations = work.citations.pageInfo
-      ? work.citations.pageInfo.endCursor
-      : ''
+    const hasNextPage = {
+      references: work.references.pageInfo ? work.references.pageInfo.hasNextPage : false,
+      citations: work.citations.pageInfo ? work.citations.pageInfo.hasNextPage : false,
+      parts: work.parts.pageInfo ? work.parts.pageInfo.hasNextPage : false,
+      partOf: work.partOf.pageInfo ? work.partOf.pageInfo.hasNextPage : false,
+      // other: work.other.pageInfo ? work.other.pageInfo.hasNextPage : false,
+    }
 
-    const hasNextPageReferences = work.references.pageInfo
-      ? work.references.pageInfo.hasNextPage
-      : false
-    const endCursorReferences = work.references.pageInfo
-      ? work.references.pageInfo.endCursor
-      : ''
+    const endCursor = {
+      references: work.references.pageInfo ? work.references.pageInfo.endCursor : '',
+      citations: work.citations.pageInfo ? work.citations.pageInfo.endCursor : '',
+      parts: work.parts.pageInfo ? work.parts.pageInfo.endCursor : '',
+      partOf: work.partOf.pageInfo ? work.partOf.pageInfo.endCursor : '',
+      // other: work.other.pageInfo ? work.other.pageInfo.endCursor : ''
+    }
 
     const url = '/doi.org/' + work.doi + '/?'
 
-    if (work.references.totalCount + work.citations.totalCount == 0) return ''
+    if (
+      work.references.totalCount +
+      work.citations.totalCount +
+      work.parts.totalCount +
+      work.partOf.totalCount // +
+      // work.other.totalCount
+      == 0
+    ) return ''
 
     const defaultActiveKey =
-      work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
+      work.references.totalCount > 0 ? 'referencesList' :
+      work.citations.totalCount > 0 ? 'citationsList' :
+      work.parts.totalCount > 0 ? 'partsList' :
+      work.partOf.totalCount > 0 ? 'partOfList' : 'otherList'
     
     return (
       <div className="panel panel-transparent">
@@ -523,14 +571,27 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       {citationsTabLabel}
                     </NavItem>
                   )}
+                  {work.parts.totalCount > 0 && (
+                    <NavItem eventKey="partsList">
+                      {partsTabLabel}
+                    </NavItem>
+                  )}
+                  {work.partOf.totalCount > 0 && (
+                    <NavItem eventKey="partOfList">
+                      {partOfTabLabel}
+                    </NavItem>
+                  )}
+                  {/* {work.other.totalCount > 0 && (
+                    <NavItem eventKey="otherList">
+                      {otherTabLabel}
+                    </NavItem>
+                  )} */}
                 </Nav>
               </Col>
               <Tab.Content>
                 {work.references.totalCount > 0 && (
                   <Tab.Pane
-                    className="references-list"
-                    eventKey="referencesList"
-                  >
+                    className="references-list" eventKey="referencesList">
                     <WorksListing
                       works={work.references}
                       loading={false}
@@ -540,10 +601,10 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       sankeyTitle='Contributions to References'
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
-                      hasNextPage={hasNextPageReferences}
+                      hasNextPage={hasNextPage.references}
                       model={'doi'}
                       url={url}
-                      endCursor={endCursorReferences}
+                      endCursor={endCursor.references}
                       />
                   </Tab.Pane>
                 )}
@@ -559,13 +620,73 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       sankeyTitle='Contributions to Citations'
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
-                      hasNextPage={hasNextPageCitations}
+                      hasNextPage={hasNextPage.citations}
                       model={'doi'}
                       url={url}
-                      endCursor={endCursorCitations}
+                      endCursor={endCursor.citations}
                     />
                   </Tab.Pane>
                 )}
+                
+                {work.parts.totalCount > 0 && (
+                  <Tab.Pane
+                    className="parts-list" eventKey="partsList">
+                    <WorksListing
+                      works={work.parts}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+                      sankeyTitle='Contributions to Parts'
+                      showClaimStatus={true}
+                      hasPagination={work.parts.totalCount > 25}
+                      hasNextPage={hasNextPage.parts}
+                      model={'doi'}
+                      url={url}
+                      endCursor={endCursor.parts}
+                      />
+                  </Tab.Pane>
+                )}
+                
+                {work.partOf.totalCount > 0 && (
+                  <Tab.Pane
+                    className="part-of-list" eventKey="partOfList">
+                    <WorksListing
+                      works={work.partOf}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+                      sankeyTitle='Contributions to PartOf'
+                      showClaimStatus={true}
+                      hasPagination={work.partOf.totalCount > 25}
+                      hasNextPage={hasNextPage.partOf}
+                      model={'doi'}
+                      url={url}
+                      endCursor={endCursor.partOf}
+                      />
+                  </Tab.Pane>
+                )}
+                
+                {/* {work.other.totalCount > 0 && (
+                  <Tab.Pane
+                    className="other-list" eventKey="otherList">
+                    <WorksListing
+                      works={work.other}
+                      loading={false}
+                      showFacets={true}
+                      showAnalytics={true}
+                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+                      sankeyTitle='Contributions to Other'
+                      showClaimStatus={true}
+                      hasPagination={work.other.totalCount > 25}
+                      hasNextPage={hasNextPage.other}
+                      model={'doi'}
+                      url={url}
+                      endCursor={endCursor.other}
+                      />
+                  </Tab.Pane>
+                )} */}
               </Tab.Content>
             </>
           </Tab.Container>
