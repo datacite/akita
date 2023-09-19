@@ -4673,9 +4673,9 @@ csstype@^3.0.2:
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
 
 csv-stringify@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-6.4.0.tgz#6d006dca9194700e44f9fbc541bee8bbbd4f459c"
-  integrity sha512-HQsw0QXiN5fdlO+R8/JzCZnR3Fqp8E87YVnhHlaPtNGJjt6ffbV0LpOkieIb1x6V1+xt878IYq77SpXHWAqKkA==
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-6.4.2.tgz#209cb17ab5520f51bd5a7edeb06ed6d4c322fce3"
+  integrity sha512-DXIdnnCUQYjDKTu6TgCSzRDiAuLxDjhl4ErFP9FGMF3wzBGOVMg9bZTLaUcYtuvhXgNbeXPKeaRfpgyqE4xySw==
 
 cypress-dotenv-flow@^1.2.2:
   version "1.2.2"
