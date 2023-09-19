@@ -8543,10 +8543,10 @@ next-plausible@^1.7.0:
   resolved "https://registry.yarnpkg.com/next-plausible/-/next-plausible-1.9.0.tgz#7672e0fd366bcfe22648b0173bd6f207603261ad"
   integrity sha512-7YaK/Rb1wNa7lne105LF+WbMG9VTsyf3iCXXuzzMQ930mUIMLXRcf5ZCaqtj6bjq9JbczdHe46wdW0frPfzkrA==
 
-next-usequerystate@^1.3.0:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/next-usequerystate/-/next-usequerystate-1.7.2.tgz#3f83426a27d7f3710320cd0a178769812f56f9b2"
-  integrity sha512-5ChbGoG/TGYRuKtpI4fKf1wsePYrO75srXwLcuPR0Nnbm7Tspfbx0L6215PRmUb9ZJCRLoXy6J3CqJRZYCot3w==
+next-usequerystate@1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/next-usequerystate/-/next-usequerystate-1.7.3.tgz#724d9d75e488b47e0942ab9d3443dfcdcd5b65b0"
+  integrity sha512-U45N1KGL7e6Rp8kRmisbM26q/sV2JFPahuV1H0SgF0VgG6970CdtheqLicytYURzgpc4twdiQ+4QgZhuFmX3Tg==
 
 next@12:
   version "12.3.4"
