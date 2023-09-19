@@ -50,20 +50,20 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       return (
         <h3 className="work">
           <Link href={'/doi.org/' + metadata.doi}>
-            <a>No Title</a>
+            No Title
           </Link>
         </h3>
-      )
+      );
 
     const titleHtml = metadata.titles[0].title
 
     return (
       <h3 className="work">
         <Link href={'/doi.org/' + metadata.doi}>
-          <a>{ReactHtmlParser(titleHtml)}</a>
+          {ReactHtmlParser(titleHtml)}
         </Link>
       </h3>
-    )
+    );
   }
 
   const externalTitle = () => {
@@ -121,14 +121,14 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {creatorList.map((c, index) =>
           c.id !== null ? (
             <Link href={'/orcid.org' + c.id} key={index}>
-              <a>{c.displayName}</a>
+              {c.displayName}
             </Link>
           ) : (
             c.displayName
           )
         )}
       </div>
-    )
+    );
   }
 
   const claim = metadata.claims[0]

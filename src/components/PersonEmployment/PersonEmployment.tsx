@@ -18,10 +18,10 @@ const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
         <Link
           href={'/grid.ac' + gridFromUrl(employment.organizationId)}
         >
-          <a>{employment.organizationName}</a>
+          {employment.organizationName}
         </Link>
       </h4>
-    )
+    );
   }
 
   const range = () => {

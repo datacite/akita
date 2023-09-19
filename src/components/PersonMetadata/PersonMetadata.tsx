@@ -18,25 +18,25 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
       return (
         <h3 className="work">
           <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
-            <a>No Title</a>
+            No Title
           </Link>
         </h3>
-      )
+      );
 
     return (
       <h3 className="work">
-        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
-          <a id="orcid-link">
-            {metadata.name}
-            {metadata.alternateName && metadata.alternateName.length > 0 && (
-              <div className="subtitle">
-                {metadata.alternateName.join(', ')}
-              </div>
-            )}
-          </a>
+        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)} id="orcid-link">
+
+          {metadata.name}
+          {metadata.alternateName && metadata.alternateName.length > 0 && (
+            <div className="subtitle">
+              {metadata.alternateName.join(', ')}
+            </div>
+          )}
+
         </Link>
       </h3>
-    )
+    );
   }
 
   const footer = () => {

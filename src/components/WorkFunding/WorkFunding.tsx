@@ -23,30 +23,28 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
           <Link
             href={'/doi.org' + doiFromUrl(funding.funderIdentifier)}
           >
-            <a>{funding.funderName}</a>
+            {funding.funderName}
           </Link>
         </h4>
-      )
+      );
 
     return <h4 className="work">{funding.funderName}</h4>
   }
 
-  return (
-    <>
-      {funding.funderName && funder()}
-      {funding.awardTitle && (
-        <div className="award">{funding.awardTitle}</div>
-      )}
-      {showAwardLink && (
-        <div className="award">
-          <Link
-            href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}
-          ><a>{funding.awardNumber}</a>
-          </Link>
-        </div>
-      )}
-    </>
-  )
+  return <>
+    {funding.funderName && funder()}
+    {funding.awardTitle && (
+      <div className="award">{funding.awardTitle}</div>
+    )}
+    {showAwardLink && (
+      <div className="award">
+        <Link
+          href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}
+        >{funding.awardNumber}
+        </Link>
+      </div>
+    )}
+  </>;
 }
 
 export default WorkFunding

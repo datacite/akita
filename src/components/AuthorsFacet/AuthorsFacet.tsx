@@ -50,12 +50,12 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
 
         return (
-            <Link href={url + params.toString()}>
-                <a id={id}>
-                    <FontAwesomeIcon icon={icon} />{' '}
-                </a>
-            </Link>
-        )
+            (<Link href={url + params.toString()} id={id}>
+
+                <FontAwesomeIcon icon={icon} />{' '}
+
+            </Link>)
+        );
     }
 
     // Used for checking filter shouldnt show author that is already filtered

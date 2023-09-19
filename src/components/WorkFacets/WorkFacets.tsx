@@ -71,12 +71,12 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     }
 
     return (
-      <Link href={url + params.toString()}>
-        <a className={"facet-"+param}>
-          <FontAwesomeIcon icon={icon} />{' '}
-        </a>
-      </Link>
-    )
+      (<Link href={url + params.toString()} className={"facet-"+param}>
+
+        <FontAwesomeIcon icon={icon} />{' '}
+
+      </Link>)
+    );
   }
 
   // remove %2F? at the end of url
