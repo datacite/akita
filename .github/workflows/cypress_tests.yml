@@ -12,8 +12,28 @@ on:
         required: true
 
 jobs:
+
+  # Build nextjs app and upload artifact .next directory
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Upload artifact .next directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: next-build
+          path: .next/
+
   cypress:
     runs-on: ubuntu-latest
+    needs: build
     strategy:
       fail-fast: false
       matrix:
@@ -24,10 +44,15 @@ jobs:
           node-version: 18
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Grab artifact .next directory
+        uses: actions/download-artifact@v3
+        with:
+          name: next-build
+          path: .next/
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          start: yarn dev
+          start: yarn start
           wait-on: 'http://localhost:3000'
           quiet: true
           record: true
