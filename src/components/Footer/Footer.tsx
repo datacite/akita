@@ -7,7 +7,8 @@ import {
   faLinkedin,
   faGithub,
   faTwitter,
-  faYoutube
+  faYoutube,
+  faMastodon
 } from '@fortawesome/free-brands-svg-icons'
 
 // TODO import Links from yml file
@@ -15,35 +16,35 @@ import {
 
 const Links = {
   about_links: [
-    { name: 'What we do', url: '/value.html' },
-    { name: 'Governance', url: '/governance.html' },
-    { name: 'Members', url: '/members.html' },
-    { name: 'Steering groups', url: '/steering.html' },
-    { name: 'Team', url: '/team.html' },
-    { name: 'Job opportunities', url: '/jobopportunities.html' }
+    { name: 'What we do', url: '/what-we-do/' },
+    { name: 'Governance', url: '/governance/' },
+    { name: 'Steering and Working Groups', url: '/#' },
+    { name: 'Team', url: '/team/' },
+    { name: 'Job Opportunities', url: '/job-opportunities/' },
+    { name: 'Projects', url: '/projects/' }
   ],
   services_links: [
-    { name: 'Create DOIs with Fabrica', url: 'https://doi.datacite.org/' },
-    { name: 'Discover metadata with Commons', url: 'https://commons.datacite.org/' },
-    { name: 'Integrate with APIs', url: 'https://datacite.org/integratorapis.html' },
-    { name: 'Partner Services', url: 'https://datacite.org/partnerservices.html' },
+    { name: 'Create DOIs', url: '/create-dois/' },
+    { name: 'Integrate Workflows', url: '/integrate-workflows/' },
+    { name: 'Enable Discovery', url: '/enable-discovery/' },
+    { name: 'Promote Reuse', url: '/promote-reuse/' },
+    { name: 'Strategic Initiatives', url: '/#' }
   ],
   resources_links: [
-    { name: 'Metadata schema', url: 'https://schema.datacite.org' },
-    { name: 'Support', url: 'https://support.datacite.org' },
-    { name: 'Fee Model', url: '/feemodel.html' }
+    { name: 'Metadata Schema', url: 'https://schema.datacite.org' },
+    { name: 'Support', url: 'https://support.datacite.org' }
   ],
   community_links: [
-    { name: 'Members', url: '/members.html' },
-    { name: 'Partners', url: '/partners.html' },
-    { name: 'Steering groups', url: '/steering.html' },
-    { name: 'Service providers', url: '/service-providers.html' },
-    { name: 'Roadmap', url: '/roadmap.html' }
+    { name: 'Become a Member', url: '/become-a-member/' },
+    { name: 'DataCite Fee Model', url: '/fee-model/' },
+    { name: 'Membership Enquiry', url: '/membership-enquiry/' },
+    { name: 'DataCite Members', url: '/members/' }
   ],
   contact_links: [
-    { name: 'Imprint', url: '/imprint.html' },
-    { name: 'Terms and conditions', url: '/terms.html' },
-    { name: 'Privacy policy', url: '/privacy.html' }
+    { name: 'Privacy Policy', url: '/privacy-policy/' },
+    { name: 'Terms and Conditions', url: '/terms-and-conditions/' },
+    { name: 'Imprint', url: '/imprint/' }
+
   ]
 }
 
@@ -105,44 +106,47 @@ const Footer = () => {
       <Grid fluid={true}>
         <Row>
           <Col sm={3} md={3} className="footer-column">
-            <h4 data-cy="about">About DataCite</h4>
+            <h4 data-cy="about">About Us</h4>
             {footerLinks(Links.about_links)}
           </Col>
           <Col sm={3} md={3} className="footer-column">
-            <h4>Services</h4>
+            <h4>Work With Us</h4>
             {footerLinks(Links.services_links)}
           </Col>
           <Col sm={3} md={3} className="footer-column">
+            <h4>Membership</h4>
+            {footerLinks(Links.community_links)}
             <h4>Resources</h4>
             {footerLinks(Links.resources_links)}
-            <h4>Community</h4>
-            {footerLinks(Links.community_links)}
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
             <a href="mailto:support@datacite.org" className="share">
               <FontAwesomeIcon icon={faEnvelope} />
             </a>
-            <a href="https://blog.datacite.org" className="share">
+            <a href="https://datacite.org/blog/" className="share">
               <FontAwesomeIcon icon={faBlog} />
-            </a>
-            <a href="https://twitter.com/datacite" className="share">
-              <FontAwesomeIcon icon={faTwitter} />
             </a>
             <a href="https://github.com/datacite/datacite" className="share">
               <FontAwesomeIcon icon={faGithub} />
             </a>
-            <a
-              href="https://www.youtube.com/channel/UCVsSDZhIN_WbnD_v5o9eB_A"
-              className="share"
-            >
-              <FontAwesomeIcon icon={faYoutube} />
+            <a href="https://twitter.com/datacite" className="share">
+              <FontAwesomeIcon icon={faTwitter} />
+            </a>
+            <a href="https://openbiblio.social/@datacite" className="share">
+              <FontAwesomeIcon icon={faMastodon} />
             </a>
             <a
               href="https://www.linkedin.com/company/datacite"
               className="share"
             >
               <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+            <a
+              href="https://www.youtube.com/@DataCiteChannel"
+              className="share"
+            >
+              <FontAwesomeIcon icon={faYoutube} />
             </a>
             {footerLinks(Links.contact_links)}
             {StatusPage()}
