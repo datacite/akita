@@ -25,6 +25,10 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
+        env:
+          NODE_ENV: test
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
       - name: Upload artifact .next directory
         uses: actions/upload-artifact@v3
         with:
