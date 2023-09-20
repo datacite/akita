@@ -81,7 +81,7 @@ const Footer = () => {
   const baseUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://datacite.org'
-      : 'https://www.stage.datacite.org'
+      : 'https://staging2.datacite.org'
 
   const footerLinks = (links) => {
     return (
