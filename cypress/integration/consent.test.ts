@@ -18,6 +18,7 @@ describe('Consent', () => {
         'We use cookies on our website. Some are technically necessary, others help us improve your user experience.'
       )
       cy.get('#rcc-confirm-button').click()
+      cy.wait(1000)
       cy.getCookie('_consent').should('have.property', 'value', 'true')
       cy.get('.navbar-brand .commons-logo', { timeout: 30000 }).should('have.attr', 'src').should('include','commons-logo.svg')
     })
