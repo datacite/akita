@@ -550,6 +550,14 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       work.parts.totalCount > 0 ? 'partsList' :
       work.partOf.totalCount > 0 ? 'partOfList' : 'otherList'
     
+    const connectionTypes = {
+      references: work.references.totalCount,
+      citations: work.citations.totalCount,
+      parts: work.parts.totalCount,
+      partOf: work.partOf.totalCount,
+      // other: work.other.totalCount
+    }
+    
     return (
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
@@ -596,6 +604,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.references}
                       loading={false}
                       showFacets={true}
+                      connectionTypes={connectionTypes}
                       showAnalytics={true}
                       showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to References'
@@ -615,6 +624,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.citations}
                       loading={false}
                       showFacets={true}
+                      connectionTypes={connectionTypes}
                       showAnalytics={true}
                       showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to Citations'
@@ -635,6 +645,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.parts}
                       loading={false}
                       showFacets={true}
+                      connectionTypes={connectionTypes}
                       showAnalytics={true}
                       showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to Parts'
@@ -655,6 +666,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.partOf}
                       loading={false}
                       showFacets={true}
+                      connectionTypes={connectionTypes}
                       showAnalytics={true}
                       showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to PartOf'
@@ -675,6 +687,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       works={work.other}
                       loading={false}
                       showFacets={true}
+                      connectionTypes={connectionTypes}
                       showAnalytics={true}
                       showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
                       sankeyTitle='Contributions to Other'

@@ -15,6 +15,7 @@ type Props = {
   model: string
   url: string
   loading: boolean
+  connectionTypes?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
 }
 
 interface Facets {
@@ -45,7 +46,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   data,
   model,
   url,
-  loading
+  loading,
+  connectionTypes
 }) => {
   const router = useRouter()
 
@@ -82,6 +84,14 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
+  const connectionTypeList: Facet[] = [
+    { id: 'references', title: 'References', count: connectionTypes.references },
+    { id: 'citations', title: 'Citations', count: connectionTypes.citations },
+    { id: 'parts', title: 'Parts', count: connectionTypes.parts },
+    { id: 'partOf', title: 'Is Part Of', count: connectionTypes.partOf },
+    // { id: 'other', title: 'Other', count: connectionTypes.other }
+  ]
+
   return (
     <div className="panel panel-transparent">
       {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
@@ -96,6 +106,31 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
         : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
       }
+
+      {connectionTypes && connectionTypes.references +
+      connectionTypes.citations +
+      connectionTypes.parts +
+      connectionTypes.partOf // +
+      // connectionTypes.other
+       > 0 && (
+      <div className="panel facets add">
+        <div className="panel-body">
+          <h4>Connection Types</h4>
+          <ul id="connections-type-facets">
+            {connectionTypeList.filter(f => f.count > 0).map((facet) => (
+              <li key={facet.id}>
+                {facetLink('connectionType', facet.id)}
+                <div className="facet-title">{facet.title}</div>
+                <span className="number pull-right">
+                  {facet.count.toLocaleString('en-US')}
+                </span>
+                <div className="clearfix" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      )}
 
       {data.published && data.published.length > 0 && (
       <div className="panel facets add">
