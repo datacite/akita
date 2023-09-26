@@ -119,7 +119,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           <ul id="connections-type-facets">
             {connectionTypeList.filter(f => f.count > 0).map((facet) => (
               <li key={facet.id}>
-                {facetLink('connectionType', facet.id)}
+                {facetLink('connection-type', facet.id)}
                 <div className="facet-title">{facet.title}</div>
                 <span className="number pull-right">
                   {facet.count.toLocaleString('en-US')}

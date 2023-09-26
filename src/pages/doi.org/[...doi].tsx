@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import ReactHtmlParser from 'react-html-parser'
-import { Row, Col, Tab, Nav, NavItem } from 'react-bootstrap'
+import { Row, Col, Tab } from 'react-bootstrap'
 
 import apolloClient from '../../utils/apolloClient'
 import Layout from '../../components/Layout/Layout'
@@ -18,7 +18,7 @@ import {
   connectionFragment,
   contentFragment
 } from '../../components/SearchWork/SearchWork'
-import { pluralize, rorFromUrl } from '../../utils/helpers'
+import { rorFromUrl } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
@@ -447,14 +447,11 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', { history: 'push' })
   const [resourceType] = useQueryState('resource-type', { history: 'push' })
-  const [fieldOfScience] = useQueryState('field-of-science', {
-    history: 'push'
-  })
+  const [fieldOfScience] = useQueryState('field-of-science', { history: 'push' })
   const [language] = useQueryState('language', { history: 'push' })
   const [license] = useQueryState('license', { history: 'push' })
-  const [registrationAgency] = useQueryState('registration-agency', {
-    history: 'push'
-  })
+  const [registrationAgency] = useQueryState('registration-agency', { history: 'push' })
+  const [connectionType] = useQueryState('connection-type', { history: 'push' })
 
   const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
     errorPolicy: 'all',
@@ -511,11 +508,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   }
 
   const relatedContent = () => {
-    const referencesTabLabel = pluralize(work.references.totalCount, 'Reference')
-    const citationsTabLabel = pluralize(work.citations.totalCount, 'Citation')
-    const partsTabLabel = pluralize(work.parts.totalCount, 'Part')
-    const partOfTabLabel = `Is Part Of ${work.partOf.totalCount}`
-    // const otherTabLabel = pluralize(work.other.totalCount, 'Other')
 
     const hasNextPage = {
       references: work.references.pageInfo ? work.references.pageInfo.hasNextPage : false,
@@ -545,10 +537,10 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     ) return ''
 
     const defaultActiveKey =
-      work.references.totalCount > 0 ? 'referencesList' :
-      work.citations.totalCount > 0 ? 'citationsList' :
-      work.parts.totalCount > 0 ? 'partsList' :
-      work.partOf.totalCount > 0 ? 'partOfList' : 'otherList'
+      work.references.totalCount > 0 ? 'references' :
+      work.citations.totalCount > 0 ? 'citations' :
+      work.parts.totalCount > 0 ? 'parts' :
+      work.partOf.totalCount > 0 ? 'partOf' : 'other'
     
     const connectionTypes = {
       references: work.references.totalCount,
@@ -565,41 +557,42 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             className="content-tabs"
             id="related-content-tabs"
             defaultActiveKey={defaultActiveKey}
+            activeKey={connectionType ? connectionType : defaultActiveKey}
           >
             <>
-              <Col md={9} mdOffset={3}>
+              {/* <Col md={9} mdOffset={3}>
                 <Nav bsStyle="tabs">
                   {work.references.totalCount > 0 && (
-                    <NavItem eventKey="referencesList">
+                    <NavItem eventKey="references">
                       {referencesTabLabel}
                     </NavItem>
                   )}
                   {work.citations.totalCount > 0 && (
-                    <NavItem eventKey="citationsList">
+                    <NavItem eventKey="citations">
                       {citationsTabLabel}
                     </NavItem>
                   )}
                   {work.parts.totalCount > 0 && (
-                    <NavItem eventKey="partsList">
+                    <NavItem eventKey="parts">
                       {partsTabLabel}
                     </NavItem>
                   )}
                   {work.partOf.totalCount > 0 && (
-                    <NavItem eventKey="partOfList">
+                    <NavItem eventKey="partOf">
                       {partOfTabLabel}
                     </NavItem>
                   )}
-                  {/* {work.other.totalCount > 0 && (
-                    <NavItem eventKey="otherList">
+                  {work.other.totalCount > 0 && (
+                    <NavItem eventKey="other">
                       {otherTabLabel}
                     </NavItem>
-                  )} */}
+                  )}
                 </Nav>
-              </Col>
+              </Col> */}
               <Tab.Content>
                 {work.references.totalCount > 0 && (
                   <Tab.Pane
-                    className="references-list" eventKey="referencesList">
+                    className="references-list" eventKey="references">
                     <WorksListing
                       works={work.references}
                       loading={false}
@@ -619,7 +612,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                 )}
 
                 {work.citations.totalCount > 0 && (
-                  <Tab.Pane className="citations-list" eventKey="citationsList">
+                  <Tab.Pane className="citations-list" eventKey="citations">
                     <WorksListing
                       works={work.citations}
                       loading={false}
@@ -640,7 +633,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                 
                 {work.parts.totalCount > 0 && (
                   <Tab.Pane
-                    className="parts-list" eventKey="partsList">
+                    className="parts-list" eventKey="parts">
                     <WorksListing
                       works={work.parts}
                       loading={false}
@@ -661,7 +654,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                 
                 {work.partOf.totalCount > 0 && (
                   <Tab.Pane
-                    className="part-of-list" eventKey="partOfList">
+                    className="part-of-list" eventKey="partOf">
                     <WorksListing
                       works={work.partOf}
                       loading={false}
@@ -682,7 +675,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                 
                 {/* {work.other.totalCount > 0 && (
                   <Tab.Pane
-                    className="other-list" eventKey="otherList">
+                    className="other-list" eventKey="other">
                     <WorksListing
                       works={work.other}
                       loading={false}
