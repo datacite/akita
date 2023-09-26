@@ -53,8 +53,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 
   if (loading) return <div className="col-md-3"></div>
 
-  function facetLink(param: string, value: string) {
-    let icon = faSquare
+  function facetLink(param: string, value: string, checked = false) {
+    let icon = checked ? faCheckSquare : faSquare
 
     // get current query parameters from next router
     const params = new URLSearchParams(router.query as any)
@@ -92,6 +92,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     // { id: 'other', title: 'Other', count: connectionTypes.other }
   ]
 
+  const isConnectionTypeSet = new URLSearchParams(router.query as any).has('connection-type')
+
   return (
     <div className="panel panel-transparent">
       {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
@@ -117,9 +119,9 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         <div className="panel-body">
           <h4>Connection Types</h4>
           <ul id="connections-type-facets">
-            {connectionTypeList.filter(f => f.count > 0).map((facet) => (
+            {connectionTypeList.filter(f => f.count > 0).map((facet, i) => (
               <li key={facet.id}>
-                {facetLink('connection-type', facet.id)}
+                {facetLink('connection-type', facet.id, !isConnectionTypeSet && i == 0)}
                 <div className="facet-title">{facet.title}</div>
                 <span className="number pull-right">
                   {facet.count.toLocaleString('en-US')}
