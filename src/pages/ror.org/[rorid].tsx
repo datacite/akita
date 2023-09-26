@@ -280,7 +280,6 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
           loading={loading}
           showFacets={true}
           showAnalytics={true}
-          showSankey
           showClaimStatus={true}
           hasPagination={organization.works.totalCount > 25}
           hasNextPage={hasNextPage}
