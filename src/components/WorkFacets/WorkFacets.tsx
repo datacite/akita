@@ -15,7 +15,7 @@ type Props = {
   model: string
   url: string
   loading: boolean
-  connectionTypes?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
 }
 
 interface Facets {
@@ -47,7 +47,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   model,
   url,
   loading,
-  connectionTypes
+  connectionTypesCounts
 }) => {
   const router = useRouter()
 
@@ -85,10 +85,10 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   const path = url.substring(0, url.length - 2)
 
   const connectionTypeList: Facet[] = [
-    { id: 'references', title: 'References', count: connectionTypes.references },
-    { id: 'citations', title: 'Citations', count: connectionTypes.citations },
-    { id: 'parts', title: 'Parts', count: connectionTypes.parts },
-    { id: 'partOf', title: 'Is Part Of', count: connectionTypes.partOf },
+    { id: 'references', title: 'References', count: connectionTypesCounts.references },
+    { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
+    { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
+    { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
     // { id: 'other', title: 'Other', count: connectionTypes.other }
   ]
 
@@ -107,10 +107,10 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
       }
 
-      {connectionTypes && connectionTypes.references +
-      connectionTypes.citations +
-      connectionTypes.parts +
-      connectionTypes.partOf // +
+      {connectionTypesCounts && connectionTypesCounts.references +
+      connectionTypesCounts.citations +
+      connectionTypesCounts.parts +
+      connectionTypesCounts.partOf // +
       // connectionTypes.other
        > 0 && (
       <div className="panel facets add">

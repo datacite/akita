@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
 import ReactHtmlParser from 'react-html-parser'
-import { Row, Col, Tab } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 import apolloClient from '../../utils/apolloClient'
 import Layout from '../../components/Layout/Layout'
@@ -508,25 +508,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   }
 
   const relatedContent = () => {
-
-    const hasNextPage = {
-      references: work.references.pageInfo ? work.references.pageInfo.hasNextPage : false,
-      citations: work.citations.pageInfo ? work.citations.pageInfo.hasNextPage : false,
-      parts: work.parts.pageInfo ? work.parts.pageInfo.hasNextPage : false,
-      partOf: work.partOf.pageInfo ? work.partOf.pageInfo.hasNextPage : false,
-      // other: work.other.pageInfo ? work.other.pageInfo.hasNextPage : false,
-    }
-
-    const endCursor = {
-      references: work.references.pageInfo ? work.references.pageInfo.endCursor : '',
-      citations: work.citations.pageInfo ? work.citations.pageInfo.endCursor : '',
-      parts: work.parts.pageInfo ? work.parts.pageInfo.endCursor : '',
-      partOf: work.partOf.pageInfo ? work.partOf.pageInfo.endCursor : '',
-      // other: work.other.pageInfo ? work.other.pageInfo.endCursor : ''
-    }
-
-    const url = '/doi.org/' + work.doi + '/?'
-
     if (
       work.references.totalCount +
       work.citations.totalCount +
@@ -536,166 +517,50 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       == 0
     ) return ''
 
-    const defaultActiveKey =
-      work.references.totalCount > 0 ? 'references' :
-      work.citations.totalCount > 0 ? 'citations' :
-      work.parts.totalCount > 0 ? 'parts' :
-      work.partOf.totalCount > 0 ? 'partOf' : 'other'
-    
-    const connectionTypes = {
+    const url = '/doi.org/' + work.doi + '/?'
+
+    const connectionTypeCounts = {
       references: work.references.totalCount,
       citations: work.citations.totalCount,
       parts: work.parts.totalCount,
       partOf: work.partOf.totalCount,
       // other: work.other.totalCount
     }
+
+    const defaultConnectionType =
+      work.references.totalCount > 0 ? 'references' :
+      work.citations.totalCount > 0 ? 'citations' :
+      work.parts.totalCount > 0 ? 'parts' :
+      work.partOf.totalCount > 0 ? 'partOf' : 'other'
+
+    const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
+
+
+    const works: Works = displayedConnectionType in work ?
+      work[displayedConnectionType] :
+      { totalCount: 0, nodes: [] }
+
+    const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
+    const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
+
     
     return (
       <div className="panel panel-transparent">
-        <div className="panel-body nav-tabs-member">
-          <Tab.Container
-            className="content-tabs"
-            id="related-content-tabs"
-            defaultActiveKey={defaultActiveKey}
-            activeKey={connectionType ? connectionType : defaultActiveKey}
-          >
-            <>
-              {/* <Col md={9} mdOffset={3}>
-                <Nav bsStyle="tabs">
-                  {work.references.totalCount > 0 && (
-                    <NavItem eventKey="references">
-                      {referencesTabLabel}
-                    </NavItem>
-                  )}
-                  {work.citations.totalCount > 0 && (
-                    <NavItem eventKey="citations">
-                      {citationsTabLabel}
-                    </NavItem>
-                  )}
-                  {work.parts.totalCount > 0 && (
-                    <NavItem eventKey="parts">
-                      {partsTabLabel}
-                    </NavItem>
-                  )}
-                  {work.partOf.totalCount > 0 && (
-                    <NavItem eventKey="partOf">
-                      {partOfTabLabel}
-                    </NavItem>
-                  )}
-                  {work.other.totalCount > 0 && (
-                    <NavItem eventKey="other">
-                      {otherTabLabel}
-                    </NavItem>
-                  )}
-                </Nav>
-              </Col> */}
-              <Tab.Content>
-                {work.references.totalCount > 0 && (
-                  <Tab.Pane
-                    className="references-list" eventKey="references">
-                    <WorksListing
-                      works={work.references}
-                      loading={false}
-                      showFacets={true}
-                      connectionTypes={connectionTypes}
-                      showAnalytics={true}
-                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
-                      sankeyTitle='Contributions to References'
-                      showClaimStatus={true}
-                      hasPagination={work.references.totalCount > 25}
-                      hasNextPage={hasNextPage.references}
-                      model={'doi'}
-                      url={url}
-                      endCursor={endCursor.references}
-                      />
-                  </Tab.Pane>
-                )}
-
-                {work.citations.totalCount > 0 && (
-                  <Tab.Pane className="citations-list" eventKey="citations">
-                    <WorksListing
-                      works={work.citations}
-                      loading={false}
-                      showFacets={true}
-                      connectionTypes={connectionTypes}
-                      showAnalytics={true}
-                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
-                      sankeyTitle='Contributions to Citations'
-                      showClaimStatus={true}
-                      hasPagination={work.citations.totalCount > 25}
-                      hasNextPage={hasNextPage.citations}
-                      model={'doi'}
-                      url={url}
-                      endCursor={endCursor.citations}
-                    />
-                  </Tab.Pane>
-                )}
-                
-                {work.parts.totalCount > 0 && (
-                  <Tab.Pane
-                    className="parts-list" eventKey="parts">
-                    <WorksListing
-                      works={work.parts}
-                      loading={false}
-                      showFacets={true}
-                      connectionTypes={connectionTypes}
-                      showAnalytics={true}
-                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
-                      sankeyTitle='Contributions to Parts'
-                      showClaimStatus={true}
-                      hasPagination={work.parts.totalCount > 25}
-                      hasNextPage={hasNextPage.parts}
-                      model={'doi'}
-                      url={url}
-                      endCursor={endCursor.parts}
-                      />
-                  </Tab.Pane>
-                )}
-                
-                {work.partOf.totalCount > 0 && (
-                  <Tab.Pane
-                    className="part-of-list" eventKey="partOf">
-                    <WorksListing
-                      works={work.partOf}
-                      loading={false}
-                      showFacets={true}
-                      connectionTypes={connectionTypes}
-                      showAnalytics={true}
-                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
-                      sankeyTitle='Contributions to PartOf'
-                      showClaimStatus={true}
-                      hasPagination={work.partOf.totalCount > 25}
-                      hasNextPage={hasNextPage.partOf}
-                      model={'doi'}
-                      url={url}
-                      endCursor={endCursor.partOf}
-                      />
-                  </Tab.Pane>
-                )}
-                
-                {/* {work.other.totalCount > 0 && (
-                  <Tab.Pane
-                    className="other-list" eventKey="other">
-                    <WorksListing
-                      works={work.other}
-                      loading={false}
-                      showFacets={true}
-                      connectionTypes={connectionTypes}
-                      showAnalytics={true}
-                      showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
-                      sankeyTitle='Contributions to Other'
-                      showClaimStatus={true}
-                      hasPagination={work.other.totalCount > 25}
-                      hasNextPage={hasNextPage.other}
-                      model={'doi'}
-                      url={url}
-                      endCursor={endCursor.other}
-                      />
-                  </Tab.Pane>
-                )} */}
-              </Tab.Content>
-            </>
-          </Tab.Container>
+        <div className="panel-body">
+          <WorksListing
+            works={works}
+            loading={false}
+            showFacets={true}
+            connectionTypesCounts={connectionTypeCounts}
+            showAnalytics={true}
+            showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+            sankeyTitle={`Contributions to ${displayedConnectionType}`}
+            showClaimStatus={true}
+            hasPagination={works.totalCount > 25}
+            hasNextPage={hasNextPage}
+            model={'doi'}
+            url={url}
+            endCursor={endCursor} />
         </div>
       </div>
     )

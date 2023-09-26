@@ -15,7 +15,7 @@ type Props = {
   showSankey?: boolean
   sankeyTitle?: string
   showFacets: boolean
-  connectionTypes?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
   showClaimStatus: boolean
   loading: boolean
   model: string
@@ -35,7 +35,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   works,
   showAnalytics,
   showFacets,
-  connectionTypes,
+  connectionTypesCounts,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
@@ -58,7 +58,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
           url={url}
           data={works}
           loading={loading}
-          connectionTypes={connectionTypes}
+          connectionTypesCounts={connectionTypesCounts}
         ></WorkFacets>
       </div>
     )
