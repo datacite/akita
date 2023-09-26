@@ -84,13 +84,13 @@ const WorkFacets: React.FunctionComponent<Props> = ({
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
-  const connectionTypeList: Facet[] = [
+  const connectionTypeList: Facet[] = connectionTypesCounts ? [
     { id: 'references', title: 'References', count: connectionTypesCounts.references },
     { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
     { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
     { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
     // { id: 'other', title: 'Other', count: connectionTypes.other }
-  ]
+  ] : []
 
   const isConnectionTypeSet = new URLSearchParams(router.query as any).has('connection-type')
 
