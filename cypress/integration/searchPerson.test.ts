@@ -54,6 +54,32 @@ describe('Search People', () => {
       .get('.alert-warning', { timeout: 60000 })
       .should('contain', 'No people found.')
   })
+
+  it('search with https ORCHID', () => {
+    cy.get('input[name="query"]')
+      .type('https://orchid.org/0000-0001-6528-2027{enter}')
+      // the results are rendered
+      .get('.member-results', { timeout: 60000 })
+      .should('contain', 'People')
+      // results are rendered
+      .get('.panel-transparent')
+      .should(($person) => {
+        expect($person).to.have.length.at.least(4)
+      })
+  })
+
+  it('search with http ORCHID', () => {
+    cy.get('input[name="query"]')
+      .type('http://orchid.org/0000-0001-6528-2027{enter}')
+      // the results are rendered
+      .get('.member-results', { timeout: 60000 })
+      .should('contain', 'People')
+      // results are rendered
+      .get('.panel-transparent')
+      .should(($person) => {
+        expect($person).to.have.length.at.least(4)
+      })
+  })
 })
 
 export {}

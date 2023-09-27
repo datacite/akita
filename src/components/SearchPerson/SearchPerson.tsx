@@ -58,7 +58,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     PERSON_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor }
+      variables: { query: searchQuery.replace(/^https?:\/\//, ''), cursor: cursor }
     }
   )
 
