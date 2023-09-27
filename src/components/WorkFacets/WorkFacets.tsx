@@ -1,8 +1,8 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faSquare,
-  faCheckSquare
+  faSquare, faCheckSquare,
+  faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
 import { WorkType } from '../../pages/doi.org/[...doi]'
@@ -53,8 +53,10 @@ const WorkFacets: React.FunctionComponent<Props> = ({
 
   if (loading) return <div className="col-md-3"></div>
 
-  function facetLink(param: string, value: string, checked = false) {
-    let icon = checked ? faCheckSquare : faSquare
+  function facetLink(param: string, value: string, checked = false, radio = false) {
+    const checkIcon = radio ? faDotCircle : faCheckSquare
+    const uncheckIcon = radio ? faCircle : faSquare
+    let icon = checked ? checkIcon : uncheckIcon
 
     // get current query parameters from next router
     const params = new URLSearchParams(router.query as any)
@@ -66,7 +68,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     if (params.get(param) == value) {
       // if param is present, delete from query and use checked icon
       params.delete(param)
-      icon = faCheckSquare
+      icon = checkIcon
     } else {
       // otherwise replace param with new value and use unchecked icon
       params.set(param, value)
@@ -103,12 +105,6 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           </div>
         </div>
       )}
-
-      {model == "person"
-        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
-      }
-
       {connectionTypesCounts && connectionTypesCounts.references +
       connectionTypesCounts.citations +
       connectionTypesCounts.parts +
@@ -121,7 +117,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
           <ul id="connections-type-facets">
             {connectionTypeList.filter(f => f.count > 0).map((facet, i) => (
               <li key={facet.id}>
-                {facetLink('connection-type', facet.id, !isConnectionTypeSet && i == 0)}
+                {facetLink('connection-type', facet.id, !isConnectionTypeSet && i == 0, true)}
                 <div className="facet-title">{facet.title}</div>
                 <span className="number pull-right">
                   {facet.count.toLocaleString('en-US')}
@@ -133,6 +129,12 @@ const WorkFacets: React.FunctionComponent<Props> = ({
         </div>
       </div>
       )}
+
+      {model == "person"
+        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
+        : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
+      }
+
 
       {data.published && data.published.length > 0 && (
       <div className="panel facets add">
