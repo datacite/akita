@@ -55,9 +55,9 @@ describe('Search People', () => {
       .should('contain', 'No people found.')
   })
 
-  it('search with https ORCHID', () => {
+  it('search with https ORCID', () => {
     cy.get('input[name="query"]')
-      .type('https://orchid.org/0000-0001-6528-2027{enter}')
+      .type('https://orcid.org/0000-0001-6528-2027{enter}')
       // the results are rendered
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
@@ -68,9 +68,9 @@ describe('Search People', () => {
       })
   })
 
-  it('search with http ORCHID', () => {
+  it('search with http ORCID', () => {
     cy.get('input[name="query"]')
-      .type('http://orchid.org/0000-0001-6528-2027{enter}')
+      .type('http://orcid.org/0000-0001-6528-2027{enter}')
       // the results are rendered
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
