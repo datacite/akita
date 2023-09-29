@@ -6,7 +6,6 @@ import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import {
   faLinkedin,
   faGithub,
-  faTwitter,
   faYoutube,
   faMastodon
 } from '@fortawesome/free-brands-svg-icons'
