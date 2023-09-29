@@ -2,30 +2,35 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import HelpIcon from '../HelpIcon/HelpIcon'
 
+
+type DownloadType = 'doi/related-works' | 'ror/related-works' | 'ror/funders'
+
+
 type Props = {
-  url: string
-  title?: string
-  variables: {
-    id: string,
-    gridId: string,
-    crossrefFunderId: string,
-    cursor: string,
-    filterQuery: string,
-    published: string,
-    resourceTypeId: string,
-    fieldOfScience: string,
-    language: string,
-    license: string,
-    registrationAgency: string
-  }
+  links: { title: string, helpText?: string, type: DownloadType }[]
+  variables: { [prop: string]: string }
 }
 
-const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
+const API_URL_BASE = '/api/download-reports'
+
+
+const link = ({ title, helpText, type }: Props['links'][number], params: string) => {
+  return (
+    <div id={`download-${type}`} key={title}>
+      <a rel="noreferrer" href={`${API_URL_BASE}/${type}?${params}`} download>
+        {title}{' '}
+      </a>
+      { helpText && <HelpIcon text={helpText} size={20} position='inline' /> }
+    </div>
+  )
+}
+
+const DownloadReports: React.FunctionComponent<Props> = ({ links, variables}) => {
+
+  if (links.length === 0) return
 
   const filteredVariables = Object.fromEntries(Object.entries(variables).filter(([, value]) => value))
   const params = new URLSearchParams(filteredVariables).toString()
-
-  const apiurlBase = '/api/download-reports'
 
 
   const downloadReports = () => {  
@@ -34,26 +39,7 @@ const DownloadReports: React.FunctionComponent<Props> = ({ variables}) => {
         <div className="panel-body">
           <Row>
             <Col className="download-list" id="full-metadata" xs={12}>
-              <div id="download-related-works">
-                <a
-                  rel="noreferrer"
-                  href={`${apiurlBase}/related-works?${params}`}
-                  download
-                >
-                  Related Works (CSV)
-                </a>
-                <HelpIcon text='Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.' size={20} position='inline' />
-                </div>
-              <div id="download-funders" className="download">
-                <a
-                  rel="noreferrer"
-                  href={`${apiurlBase}/funders?${params}`}
-                  download
-                >
-                  Funders (CSV)
-                </a>
-                <HelpIcon text='Includes up to 200 funders associated with related works.' size={20} position='inline' />
-              </div>
+              {links.map(l => link(l, params))}
             </Col>
           </Row>
         </div>
