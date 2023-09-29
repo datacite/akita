@@ -12,7 +12,7 @@ const RepositoryIndexPage = () => {
     <Layout path={'/repositories'}>
         {!searchQuery || searchQuery === '' ? (
           <ExampleText>
-            <p>
+            <div>
             Search repositories by repository name or keyword(s).<br /><br />
 
               Examples:
@@ -22,7 +22,7 @@ const RepositoryIndexPage = () => {
               </ul>
 
               Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>
-            </p>
+            </div>
           </ExampleText>
         ) : (
           <SearchRepository searchQuery={searchQuery} />
