@@ -515,6 +515,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
     
     const showSankey = isDMP(work) || isProject(work)
+    const showForceDirected = isProject(work)
     
     return (
       <div className="panel panel-transparent">
@@ -552,6 +553,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       showAnalytics={true}
                       showSankey={showSankey}
                       sankeyTitle='Contributions to References'
+                      showForceDirected={showForceDirected}
                       showClaimStatus={true}
                       hasPagination={work.references.totalCount > 25}
                       hasNextPage={hasNextPageReferences}
@@ -571,6 +573,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
                       showAnalytics={true}
                       showSankey={showSankey}
                       sankeyTitle='Contributions to Citations'
+                      showForceDirected={showForceDirected}
                       showClaimStatus={true}
                       hasPagination={work.citations.totalCount > 25}
                       hasNextPage={hasNextPageCitations}

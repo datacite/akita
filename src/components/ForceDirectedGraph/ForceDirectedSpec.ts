@@ -3,8 +3,9 @@ import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes
 
 
 export interface ForceDirectedGraphNode {
-  name: string
-  group: string
+  title: string
+  group?: string
+	count: number
 }
 
 export interface ForceDirectedGraphLink {
@@ -22,14 +23,15 @@ const forceDirectedGraphSpec = (width = 500, domain = resourceTypeDomain, range 
 	height: 300,
 	autosize: "none",
 	signals: [
-		{ name: "nodeRadius", value: 10}, // , bind: {input: "range", min: 0, max: 50, step: 1} },
-		{ name: "nodeCharge", value: -30}, // , bind: {input: "range", min: -100, max: 30, step: 1} },
-		{ name: "linkDistance", value: 20}, // , bind: {input: "range", min: 5, max: 100, step: 1} },
-		{ name: "static", value: true}, // , bind: {input: "checkbox"} },
+		{ name: "nodeRadius", value: 10, bind: { input: "range", min: 0, max: 50, step: 1 } },
+		{ name: "nodeCharge", value: -30, bind: { input: "range", min: -100, max: 30, step: 1 } },
+		{ name: "linkDistance", value: 20, bind: { input: "range", min: 5, max: 100, step: 1 } },
+
+		{ name: "static", value: true, bind: { input: "checkbox" } },
 		{ name: "cx", update: "width / 2" },
 		{ name: "cy", update: "height / 2" },
-		{ name: "gravityX", value: 0.05}, // , bind: {input: "range", min: 0, max: 0.1} },
-		{ name: "gravityY", value: 0.12}, // , bind: {input: "range", min: 0, max: 0.2} },
+		{ name: "gravityX", value: 0.05, bind: { input: "range", min: 0, max: 0.1 } },
+		{ name: "gravityY", value: 0.12, bind: { input: "range", min: 0, max: 0.2 } },
 		{
 			description: "State variable for active node fix status.",
 			name: "fix", value: false,
@@ -110,11 +112,15 @@ const forceDirectedGraphSpec = (width = 500, domain = resourceTypeDomain, range 
 			name: "nodes",
 			type: "symbol",
 			from: { data: "nodeData" },
+			on: [
+        { trigger: "fix", modify: "node", values: "fix === true ? { fx: node.x, fy: node.y } : {fx: fix[0], fy: fix[1]}" },
+        { trigger: "!fix", modify: "node", values: "{ fx: null, fy: null }" }
+      ],
 			encode: {
 				enter: {
 					fill: { scale: "color", field: "group" },
-					xfocus: {signal: "cx"},
-					yfocus: {signal: "cy"}
+					// xfocus: {signal: "cx"},
+					// yfocus: {signal: "cy"}
 				},
 				update: {
 					size: { signal: "2 * nodeRadius * nodeRadius" },
