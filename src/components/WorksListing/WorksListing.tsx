@@ -9,8 +9,7 @@ import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
 import SankeyGraph, { multilevelToSankey } from '../SankeyGraph/SankeyGraph'
 import ForceDirectedGraph from '../ForceDirectedGraph/ForceDirectedGraph'
-import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedSpec'
-import { resourceTypeDomain, resourceTypeRange } from 'src/data/color_palettes'
+import { TEST_LINKS, TEST_NODES } from '../ForceDirectedGraph/ForceDirectedSpec'
 
 type Props = {
   works: Works
@@ -78,34 +77,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
     )
   }
 
-  const renderWorks = () => {
-    const forceDirectedWorks = loading ? [] : works.nodes
-    const nodes: ForceDirectedGraphNode[] = []
-    const links: ForceDirectedGraphLink[] = []
-    forceDirectedWorks.forEach((work, index) => {
-      const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'Unknown'
-
-      const type = work.types && work.types.resourceTypeGeneral ?
-      resourceTypeDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
-        : 'Missing'
-
-      const node = { name: title, group: type}
-      nodes.push(node)
-
-      links.concat(forceDirectedWorks.map(ref => {
-        const relatedWork = forceDirectedWorks.findIndex(w => w.id === ref.id)
-        return { source: index, target: relatedWork, value: 1 }
-      }))
-
-
-
-      // TESTING RANDOM LINKS
-      for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
-        const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
-        links.push(randomLink)
-      }
-    })
-  
+  const renderWorks = () => {  
     return (
       <Col md={9} id="content">
         {showAnalytics && <WorksDashboard works={works} />}
@@ -118,10 +90,8 @@ const WorksListing: React.FunctionComponent<Props> = ({
           <Col xs={12}>
             <ForceDirectedGraph
               titleText={forceDirectedTitle}
-              nodes={nodes}
-              links={links}
-              domain={resourceTypeDomain}
-              range={resourceTypeRange} />
+              nodes={TEST_NODES}
+              links={TEST_LINKS} />
           </Col>
         </Row>}
 

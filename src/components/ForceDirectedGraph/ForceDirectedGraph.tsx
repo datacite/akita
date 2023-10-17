@@ -10,8 +10,8 @@ type Props = {
   titleText: string | string[]
   nodes: ForceDirectedGraphNode[]
   links: ForceDirectedGraphLink[]
-  range: string[]
-  domain: string[]
+  range?: string[]
+  domain?: string[]
   tooltipText?: string
 }
 
