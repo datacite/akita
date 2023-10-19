@@ -515,7 +515,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       work.references.totalCount > 0 ? 'referencesList' : 'citationsList'
     
     const showSankey = isDMP(work) || isProject(work)
-    const showForceDirected = isProject(work)
+    const showForceDirected = true // isProject(work)
     
     return (
       <div className="panel panel-transparent">
