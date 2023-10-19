@@ -54,21 +54,13 @@ export interface ForceDirectedGraphLink {
 ///// Signals ///////////////////////////////////
 const signals: Signal[] = [
 
-	// Parameter bindings
-	{ name: "scale", value: 40, bind: { input: "range", min: 1, max: 100, step: 1 } },
-	{ name: "nodeCharge", value: -30, bind: { input: "range", min: -100, max: 30, step: 1 } },
-	{ name: "linkDistance", value: 1, bind: { input: "range", min: 1, max: 100, step: 1 } },
-
-	{ name: "static", value: false, bind: { input: "checkbox" } },
-
-
-	// Hovered item signal
+	{ name: "linkDistance", value: 200, bind: { input: "range", min: 1, max: 500, step: 1 } },
 	{
 		name: "selected",
 		value: null,
 		on: [
 			{ events: "@nodes:mouseover", update: "datum.title" },
-			{ events: "@links:mouseover", update: "datum.id" },
+			{ events: "@links:mouseover", update: "datum.source.datum && datum.target.datum ? datum.source.datum.title + ' ⇄ ' + datum.target.datum.title : null" },
 			{ events: "mouseout", update: "null" }
 		]
 	},
@@ -77,6 +69,8 @@ const signals: Signal[] = [
 	// Force specific signals
 	{ name: "cx", update: "width / 2" },
 	{ name: "cy", update: "height / 2" },
+	{ name: "gravityX", value: 0, bind: { input: "range", min: 0, max: 1 } },
+	{ name: "gravityY", value: 0.2, bind: { input: "range", min: 0, max: 1 } },
 	
 	{
 		name: "fix",
@@ -103,7 +97,7 @@ const signals: Signal[] = [
 		description: "Flag to restart Force simulation upon data changes.",
 		value: false,
 		on: [{ events: { signal: "fix" }, update: "fix && fix.length" }]
-	}
+	},
 ]
 
 
@@ -116,7 +110,8 @@ const sizeScale: Scale = {
 	domain: { fields: [
 		{ data: "nodeData", field: "count" },
 		{ data: "linkData", field: "count" }
-	]}
+	]},
+	range: [ 1000, 10000 ]
 }
 
 
@@ -128,51 +123,71 @@ const nodeMarks: Mark = {
 	type: "symbol",
 	from: { data: "nodeData" },
 
-	transform: [{
-		type: "force",
-
-		forces: [
-			{ force: "center", x: { signal: "cx" }, y: { signal: "cy" } },
-			{ force: "collide", radius: { signal: "scale" } },
-			{ force: "nbody", strength: { signal: "nodeCharge" } },
-			{ force: "link", links: "linkData", id: "datum.title", distance: { signal: "linkDistance * scale" } },
-		],
-
-		iterations: 300,
-		signal: "force",
-		restart: { signal: "restart" },
-		static: { signal: "static" },
-	}],
-
 	encode: {
 		enter: {
 			fill: { scale: "color", field: "title" },
 			stroke: { value: 'black' },
-			strokeWidth: { value: 1 }
+			strokeWidth: { value: 1 },
+
+			xfocus: { signal: "cx" },
+			yfocus: { signal: "cy" }
 		},
 
 		update: {
-			size: { signal: "2 * scale('size', datum.count) * scale('size', datum.count) * scale * scale" },
+			size: { signal: "datum.count", scale: "size"},
 			fillOpacity: { signal: "selected ? indexof(selected, datum.title) > -1 ? 1 : 0.6 : 0.6" },
 
 			tooltip: { signal: "datum.title + ': ' + format(datum.count, ',')" },
-			cursor: { value: "pointer" }
 		}
 	},
+
+	transform: [{
+		type: "force",
+		
+		forces: [
+			{ force: "center", x: { signal: "cx" }, y: { signal: "cy" } },
+			{ force: "x", x: "xfocus", strength: { signal: "gravityX" } },
+			{ force: "y", y: "yfocus", strength: { signal: "gravityY" } },
+
+			{ force: "collide", iterations: 2, radius: { expr: "sqrt(datum.size) / 2" } },
+			{ force: "nbody", strength: -100 },
+			{ force: "link", links: "linkData", id: "datum.title", distance: { signal: "linkDistance" } },
+		],
+
+		iterations: 100,
+		static: false,
+		restart: { signal: "restart" },
+		
+		signal: "force"
+	}],
 
 	on: [
 		{ trigger: "fix", modify: "node", values: "fix === true ? { fx: node.x, fy: node.y } : {fx: fix[0], fy: fix[1]}" },
 		{ trigger: "!fix", modify: "node", values: "{ fx: null, fy: null }" }
 	],
-	
-	zindex: 1
+
+	zindex: 2
 }
 
 
 const linkMarks: Mark = {
 	name: "links",
 	type: "path",
-	from: { data: "linkIds" },
+	from: { data: "linkData" },
+	
+
+	encode: {
+		enter: {
+			stroke: { value: "#ccc" },
+			strokeCap: { value: "round" },
+			tooltip: { signal: "datum.source.datum.title + ' ⇄ ' + datum.target.datum.title + ': ' + format(datum.count, ',')" }
+		},
+
+		update: {
+			strokeWidth: { signal: "scale('size', datum.count) / 500" },
+			strokeOpacity: { signal: "datum.source.datum && datum.target.datum ? indexof(datum.source.datum.title + ' ⇄ ' + datum.target.datum.title, selected) > -1 ? 1 : 0.6 : 0.6" }
+		}
+	},
 
 	transform: [
 		{
@@ -185,24 +200,59 @@ const linkMarks: Mark = {
 			sourceY: "datum.source.y",
 			targetX: "datum.target.x",
 			targetY: "datum.target.y"
-		}
+		},
 	],
+
+	zindex: 1
+}
+
+
+const nodeLabels: Mark = {
+	type: "text",
+	from: { data: "nodes" },
 
 	encode: {
 		enter: {
-			stroke: { value: "#ccc" },
-			strokeCap: { value: "round" }
+			text: { signal: "datum.size > 5000 ? datum.datum.title : ''" },
+
+			align: { value: "center" },
+			baseline: { value: "bottom" },
+			fill: { value: "black" },
+
+			font: { value: "Source Sans Pro" },
+			fontSize: { value: 16 },
 		},
 
-		update: {
-			strokeWidth: { signal: "scale('size', datum.count) * scale" },
-			strokeOpacity: { signal: "indexof(datum.id, selected) > -1 ? 1 : 0.6" },
+		update: { x: { field: "x" }, y: { field: "y" } }
+	},
 
-			tooltip: { signal: "datum.id + ': ' + format(datum.count, ',')" }
-		}
-	}
+	interactive: false,
+	zindex: 3
 }
 
+
+const nodeCounts: Mark = {
+	type: "text",
+	from: { data: "nodes" },
+
+	encode: {
+		enter: {
+			text: { signal: "datum.size > 5000 ? format(datum.datum.count, ',') : ''" },
+
+			align: { value: "center" },
+			baseline: { value: "top" },
+			fill: { value: "black" },
+
+			font: { value: "Source Sans Pro" },
+			fontSize: { value: 16 },
+		},
+
+		update: { x: { field: "x" }, y: { field: "y" } }
+	},
+
+	interactive: false,
+	zindex: 3
+}
 
 
 
@@ -213,15 +263,11 @@ const forceDirectedGraphSpec = (width = 500, domain = resourceTypeDomain.concat(
 	height: 300,
 	autosize: "none",
 	
-	data: [
-		{ name: "nodeData" },
-		{ name: "linkData" },
-		{ name: "linkIds", source: "linkData", transform: [{ type: "formula", expr: "datum.source + ' ⇄ ' + datum.target", as: "id", initonly: true }]}
-	],
+	data: [ { name: "nodeData" }, { name: "linkData" } ],
 
 	signals: signals,
 	scales: [ sizeScale, { name: "color", type: "ordinal", domain: domain, range: range } ],
-	marks: [ nodeMarks, linkMarks ]
+	marks: [ nodeMarks, linkMarks, nodeLabels, nodeCounts ]
 })
 
 
