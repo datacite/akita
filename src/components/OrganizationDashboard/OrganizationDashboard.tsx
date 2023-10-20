@@ -2,9 +2,9 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import { Works } from '../SearchWork/SearchWork'
-import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
+// import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
-import { resourceTypeDomain } from '../../data/color_palettes'
+// import { resourceTypeDomain } from '../../data/color_palettes'
 
 type Props = {
   rorId?: string
@@ -75,6 +75,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   gridId,
   crossrefFunderId
 }) => {
+  // eslint-disable-next-line no-unused-vars
   const { loading, data } = useQuery<
     ForceDirectedQueryData,
     ForceDirectedQueryVar
@@ -91,32 +92,32 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   // Authors -> dois
   // Dois -> dois
   
-  const forceDirectedWorks = loading ? [] : data.organization.works.nodes
-  const nodes: ForceDirectedGraphNode[] = []
-  const links: ForceDirectedGraphLink[] = []
-  forceDirectedWorks.forEach((work, index) => {
-    const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'Unknown'
+  // const forceDirectedWorks = loading ? [] : data.organization.works.nodes
+  // const nodes: ForceDirectedGraphNode[] = []
+  // const links: ForceDirectedGraphLink[] = []
+  // forceDirectedWorks.forEach((work, index) => {
+  //   const title = work.titles[0] && work.titles[0].title ? work.titles[0].title : 'Unknown'
 
-    const type = work.types && work.types.resourceTypeGeneral ?
-    resourceTypeDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
-      : 'Missing'
+  //   const type = work.types && work.types.resourceTypeGeneral ?
+  //   resourceTypeDomain.find(d => d === work.types.resourceTypeGeneral) ? work.types.resourceTypeGeneral : 'Other'
+  //     : 'Missing'
 
-    const node = { name: title, group: type}
-    nodes.push(node)
+  //   const node = { name: title, group: type}
+  //   nodes.push(node)
 
-    links.concat(work.references.nodes.map(ref => {
-      const relatedWork = forceDirectedWorks.findIndex(w => w.id === ref.id)
-      return { source: index, target: relatedWork, value: 1 }
-    }))
+  //   links.concat(work.references.nodes.map(ref => {
+  //     const relatedWork = forceDirectedWorks.findIndex(w => w.id === ref.id)
+  //     return { source: index, target: relatedWork, value: 1 }
+  //   }))
 
 
 
-    // TESTING RANDOM LINKS
-    for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
-      const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
-      links.push(randomLink)
-    }
-  })
+  //   // TESTING RANDOM LINKS
+  //   for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
+  //     const randomLink = { source: index, target: Math.floor(Math.random() * forceDirectedWorks.length), value: 1 }
+  //     links.push(randomLink)
+  //   }
+  // })
 
   
   return (
