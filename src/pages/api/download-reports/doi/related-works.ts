@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { gql } from '@apollo/client';
 import apolloClient from '../../../../utils/apolloClient'
 import { stringify } from 'csv-stringify/sync'
+import { WorkQueryData, WorkType } from "src/pages/doi.org/[...doi]";
 
 const QUERY = gql`
   query getDoiQuery(
@@ -17,8 +18,72 @@ const QUERY = gql`
     $repositoryId: String
   ) {
     work(id: $id) {
-      relatedWorks(
-        first: 200
+      citations(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        nodes {
+          ...WorkFragment
+        }
+      }
+      references(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        nodes {
+          ...WorkFragment
+        }
+      }
+      parts(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        nodes {
+          ...WorkFragment
+        }
+      }
+      partOf(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        nodes {
+          ...WorkFragment
+        }
+      }
+      otherRelated(
+        first: 25
         query: $filterQuery
         after: $cursor
         published: $published
@@ -55,18 +120,32 @@ const QUERY = gql`
 `
 
 
+function addConnectionType(w: WorkType, connectionType: string) {
+  return { ...w, connectionType: connectionType }
+}
+
+
+
 export default async function downloadReportsHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const variables = req.query
 
-  const { data } = await apolloClient.query({
+  const { data } = await apolloClient.query<WorkQueryData, unknown>({
     query: QUERY,
     variables: variables
   })
 
-  const sortedData = [...data.organization.works.nodes].sort((a, b) => b.publicationYear - a.publicationYear)
+
+  const references = data.work.references.nodes.map(w => addConnectionType(w, 'Reference'))
+  const citations = data.work.citations.nodes.map(w => addConnectionType(w, 'Citation'))
+  const parts = data.work.parts.nodes.map(w => addConnectionType(w, 'Part'))
+  const partOf = data.work.partOf.nodes.map(w => addConnectionType(w, 'Is Part Of'))
+  const otherRelated = data.work.otherRelated.nodes.map(w => addConnectionType(w, 'Other Relation'))
+
+  const works = references.concat(citations, parts, partOf, otherRelated)
+  const sortedData = works.sort((a, b) => b.publicationYear - a.publicationYear)
 
   const csv = stringify(sortedData, {
     header: true,
@@ -78,7 +157,7 @@ export default async function downloadReportsHandler(
       { key: 'formattedCitation', header: 'Formatted Citation' },
       { key: 'types.resourceTypeGeneral', header: 'Resource Type (General)' },
       { key: 'types.resourceType', header: 'Resource Type' },
-      // { key: '???', header: 'Connection Type(s)' }
+      { key: 'connectionType', header: 'Connection Type' }
     ]
   })
 	
