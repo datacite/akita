@@ -211,6 +211,23 @@ export const DOI_GQL = gql`
           ...WorkFragment
         }
       }
+      otherRelated(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        ...WorkConnectionFragment
+        nodes {
+          ...WorkFragment
+        }
+      }
     }
   }
   ${connectionFragment.workConnection}
@@ -267,6 +284,7 @@ export interface WorkType {
   references?: Works
   parts?: Works
   partOf?: Works
+  otherRelated?: Works
 }
 
 export interface Creator {
@@ -512,8 +530,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       work.references.totalCount +
       work.citations.totalCount +
       work.parts.totalCount +
-      work.partOf.totalCount // +
-      // work.other.totalCount
+      work.partOf.totalCount +
+      work.otherRelated.totalCount
       == 0
     ) return ''
 
@@ -524,14 +542,14 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       citations: work.citations.totalCount,
       parts: work.parts.totalCount,
       partOf: work.partOf.totalCount,
-      // other: work.other.totalCount
+      otherRelated: work.otherRelated.totalCount
     }
 
     const defaultConnectionType =
       work.references.totalCount > 0 ? 'references' :
       work.citations.totalCount > 0 ? 'citations' :
       work.parts.totalCount > 0 ? 'parts' :
-      work.partOf.totalCount > 0 ? 'partOf' : 'other'
+      work.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
 
     const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 

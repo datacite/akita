@@ -15,7 +15,7 @@ type Props = {
   model: string
   url: string
   loading: boolean
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, /* other: number */ }
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number }
 }
 
 interface Facets {
@@ -91,7 +91,7 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
     { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
     { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
-    // { id: 'other', title: 'Other', count: connectionTypes.other }
+    { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
   ] : []
 
   const isConnectionTypeSet = new URLSearchParams(router.query as any).has('connection-type')
@@ -108,8 +108,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       {connectionTypesCounts && connectionTypesCounts.references +
       connectionTypesCounts.citations +
       connectionTypesCounts.parts +
-      connectionTypesCounts.partOf // +
-      // connectionTypes.other
+      connectionTypesCounts.partOf +
+      connectionTypesCounts.otherRelated
        > 0 && (
       <div className="panel facets add">
         <div className="panel-body">
