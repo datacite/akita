@@ -246,9 +246,13 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
   const [filterQuery] = useQueryState('filterQuery', {history: 'push'})
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
-  const queryStatement = filterQuery?
+  let queryStatement = filterQuery?
     searchQuery + " AND " + filterQuery:
     searchQuery
+  
+  // Temporarily fix project facet until it is in the Schema
+  if (resourceType === 'project')
+    queryStatement += ' types.resourceTypeGeneral:(Text || Other) types.resourceType:Project'
 
   const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(
     CONTENT_GQL,
@@ -258,7 +262,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
         query: queryStatement,
         cursor: cursor,
         published: published as string,
-        resourceTypeId: resourceType as string,
+        resourceTypeId: resourceType === 'project' ? undefined : resourceType as string,
         fieldOfScience: fieldOfScience as string,
         language: language as string,
         license: license as string,
