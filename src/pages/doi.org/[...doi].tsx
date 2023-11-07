@@ -24,6 +24,7 @@ import { Title as TitleComponent } from '../../components/Title/Title'
 import CiteAs from '../../components/CiteAs/CiteAs'
 import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
+import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 
 
 type Props = {
@@ -528,6 +529,26 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             <DownloadMetadata doi={work} />
           </div>
           <CiteAs doi={work} />
+          <DownloadReports
+            links={[
+              {
+                title: 'Related Works (CSV)',
+                helpText: 'Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.',
+                type: 'doi/related-works',
+              }
+            ]}
+            variables={{
+              id: doi,
+              cursor: cursor,
+              filterQuery: filterQuery,
+              published: published,
+              resourceTypeId: resourceType,
+              fieldOfScience: fieldOfScience,
+              language: language,
+              license: license,
+              registrationAgency: registrationAgency
+            }}
+          />
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} id="content">
@@ -572,7 +593,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
     const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
     const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
-
     
     const showSankey = isDMP(work) || isProject(work)
     
