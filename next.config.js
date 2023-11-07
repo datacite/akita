@@ -22,6 +22,9 @@ const COMMIT_SHA =
   VERCEL_GITLAB_COMMIT_SHA ||
   VERCEL_BITBUCKET_COMMIT_SHA
 
+const DUMMY_SITEMAPS_URL = "https://example.com"
+const SITEMAPS_URL = process.env.SITEMAPS_URL || DUMMY_SITEMAPS_URL
+
 module.exports = withSourceMaps({
   swcMinify: true,
   images: {
@@ -86,7 +89,7 @@ module.exports = withSourceMaps({
     return [
       {
         source: '/sitemaps/:path*',
-        destination: `${process.env.SITEMAPS_URL}/sitemaps/:path*`
+        destination: `${SITEMAPS_URL}/sitemaps/:path*`
       },
     ]
   }

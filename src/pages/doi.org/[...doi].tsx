@@ -430,6 +430,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
+
+function isDMP (work: WorkType) {
+  return work.types.resourceTypeGeneral === 'OutputManagementPlan'
+}
+
+
+function isProject (work: WorkType) {
+  return work.types.resourceType === 'Project' && (work.types.resourceTypeGeneral === 'Other' || work.types.resourceTypeGeneral === 'Text')
+}
+
+
+
 const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
@@ -562,6 +574,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
 
     
+    const showSankey = isDMP(work) || isProject(work)
+    
     return (
       <div className="panel panel-transparent">
         <div className="panel-body">
@@ -571,7 +585,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             showFacets={true}
             connectionTypesCounts={connectionTypeCounts}
             showAnalytics={true}
-            showSankey={work.types.resourceTypeGeneral === 'OutputManagementPlan'}
+            showSankey={showSankey}
             sankeyTitle={`Contributions to ${displayedConnectionType}`}
             showClaimStatus={true}
             hasPagination={works.totalCount > 25}

@@ -12,7 +12,7 @@ const IndexPage = () => {
     <Layout path={'/doi.org'} >
       {!searchQuery || searchQuery === '' ? (
         <ExampleText>
-          <p>
+          <div>
             Search works by keyword(s) or DOI.<br /><br />
 
             Examples:
@@ -22,7 +22,7 @@ const IndexPage = () => {
             </ul>
 
             Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>
-          </p>
+          </div>
         </ExampleText>
       ) : (
         <SearchWork searchQuery={searchQuery} />

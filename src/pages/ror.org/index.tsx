@@ -12,7 +12,7 @@ const OrganizationIndexPage = () => {
     <Layout path={'/ror.org'}>
       {!searchQuery || searchQuery === '' ? (
         <ExampleText>
-          <p>
+          <div>
             Search organizations by organization name, keyword(s), or ROR ID.<br /><br />
 
             Examples:
@@ -22,7 +22,7 @@ const OrganizationIndexPage = () => {
             </ul>
 
             Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>
-          </p>
+          </div>
         </ExampleText>
       ) : (
         <SearchOrganization searchQuery={searchQuery} />
