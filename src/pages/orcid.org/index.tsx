@@ -12,7 +12,7 @@ const IndexPersonPage = () => {
     <Layout path={'/orcid.org'} >
       {(!searchQuery || searchQuery === '') ? (
         <ExampleText>
-          <p>
+          <div>
             Search people by name, keyword(s), or ORCID iD.<br /><br />
 
             Examples:
@@ -22,7 +22,7 @@ const IndexPersonPage = () => {
             </ul>
 
             Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>
-          </p>
+          </div>
         </ExampleText>
       ) : (
         <SearchPerson searchQuery={searchQuery} />

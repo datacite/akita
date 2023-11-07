@@ -593,8 +593,6 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
     const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
     const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
-
-  
     
     const showSankey = isDMP(work) || isProject(work)
     
