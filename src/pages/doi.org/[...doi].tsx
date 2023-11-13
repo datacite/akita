@@ -645,6 +645,13 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       <Row>{content()}</Row>
+      <Row>
+        <Col mdOffset={3} className="panel panel-transparent">
+          <div className="panel-body">
+            <h3 className="member-results" id="title">Related Works</h3>
+          </div>
+        </Col>
+      </Row>
       <Row>{relatedContent()}</Row>
     </Layout>
   )
