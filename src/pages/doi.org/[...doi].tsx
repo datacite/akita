@@ -520,7 +520,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
 
   const content = () => {
     return (
-      <>
+      <Row>
         <Col md={3} id="side-bar">
           <div className='left-menu-buttons'>
             { work.registrationAgency.id == "datacite" && ( 
@@ -554,7 +554,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
         <Col md={9} id="content">
           <Work doi={work}></Work>
         </Col>
-      </>
+      </Row>
     )
   }
 
@@ -597,24 +597,35 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
     const showSankey = isDMP(work) || isProject(work)
     
     return (
-      <div className="panel panel-transparent">
-        <div className="panel-body">
-          <WorksListing
-            works={works}
-            loading={false}
-            showFacets={true}
-            connectionTypesCounts={connectionTypeCounts}
-            showAnalytics={true}
-            showSankey={showSankey}
-            sankeyTitle={`Contributions to ${displayedConnectionType}`}
-            showClaimStatus={true}
-            hasPagination={works.totalCount > 25}
-            hasNextPage={hasNextPage}
-            model={'doi'}
-            url={url}
-            endCursor={endCursor} />
-        </div>
-      </div>
+      <>
+        <Row>
+          <Col mdOffset={3} className="panel panel-transparent">
+            <div className="panel-body">
+              <h3 className="member-results" id="title">Related Works</h3>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <div className="panel panel-transparent">
+            <div className="panel-body">
+              <WorksListing
+                works={works}
+                loading={false}
+                showFacets={true}
+                connectionTypesCounts={connectionTypeCounts}
+                showAnalytics={true}
+                showSankey={showSankey}
+                sankeyTitle={`Contributions to ${displayedConnectionType}`}
+                showClaimStatus={true}
+                hasPagination={works.totalCount > 25}
+                hasNextPage={hasNextPage}
+                model={'doi'}
+                url={url}
+                endCursor={endCursor} />
+            </div>
+          </div>
+        </Row>
+      </>
     )
   }
 
@@ -644,15 +655,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       
       <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
-      <Row>{content()}</Row>
-      <Row>
-        <Col mdOffset={3} className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member-results" id="title">Related Works</h3>
-          </div>
-        </Col>
-      </Row>
-      <Row>{relatedContent()}</Row>
+      {content()}
+      {relatedContent()}
     </Layout>
   )
 }
