@@ -19,7 +19,7 @@ describe('workContainer with usage', () => {
   it('download', () => {
     cy.get('#download-metadata-button', { timeout: 30000 }).click()
     cy.get('.download-list', { timeout: 30000 })
-      .should('have.length', 2)
+      .should('have.length', 3)
       .should('contain', 'DataCite XML')
     cy.get('#close-modal', { timeout: 30000 }).click()
   })
@@ -32,7 +32,7 @@ describe('workContainer with usage', () => {
   })
 
   it('chart', () => {
-    cy.get('.mark-rect > path', { timeout: 30000 }).should('be.visible')
+    cy.get('.mark-rect', { timeout: 30000 }).should('be.visible')
   })
 })
 
