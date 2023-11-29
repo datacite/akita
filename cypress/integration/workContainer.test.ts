@@ -32,7 +32,7 @@ describe('workContainer with usage', () => {
   })
 
   it('chart', () => {
-    cy.get('.mark-rect > path', { timeout: 30000 }).should('be.visible')
+    cy.get('.mark-rect', { timeout: 30000 }).should('be.visible')
   })
 })
 
