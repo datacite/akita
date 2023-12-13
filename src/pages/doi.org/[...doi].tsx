@@ -533,7 +533,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
             links={[
               {
                 title: 'Related Works (CSV)',
-                helpText: 'Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.',
+                helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`,
                 type: 'doi/related-works',
               }
             ]}
