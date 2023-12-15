@@ -18,6 +18,7 @@ export const resourceTypeDomain = [
   'Dissertation',
   'Event',
   'Image',
+  'Instrument',
   'Interactive Resource',
   'Journal',
   'Journal Article',
@@ -32,6 +33,7 @@ export const resourceTypeDomain = [
   'Software',
   'Sound',
   'Standard',
+  'Study Registration',
   'Text',
   'Workflow',
 	'Other'
@@ -53,6 +55,7 @@ export const resourceTypeRange = [
 	'#C49C94',
 	'#E377C2',
 	'#F7B6D2',
+  '#35424A',
 	'#7F7F7F',
 	'#C7C7C7',
 	'#BCBD22',
@@ -67,6 +70,7 @@ export const resourceTypeRange = [
 	'#E6550D',
 	'#FD8D3C',
 	'#FDAE6B',
+  '#6DBB5E',
 	'#FDD0A2',
 	'#9F4639',
 	'#C59088'
