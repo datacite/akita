@@ -2,5 +2,10 @@
   "version": 2,
   "github": {
     "enabled": false
+  },
+  "functions": {
+    "pages/doi/[doi].tsx": {
+            "memory": 512
+    }
   }
 }
