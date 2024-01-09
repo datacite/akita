@@ -166,7 +166,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         </>
       )
     } else {
-      return <> via {metadata.publisher}</>
+      return <> via {metadata.publisher.name}</>
     }
   }
 

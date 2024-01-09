@@ -157,7 +157,9 @@ export const contentFragment = {
         descriptionType
       }
       publicationYear
-      publisher
+      publisher {
+        name
+      }
       version
       container {
         identifier
