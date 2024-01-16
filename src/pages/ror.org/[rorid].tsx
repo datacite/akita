@@ -2,6 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import { GetServerSideProps } from 'next'
+import { userAgentFromString } from 'next/server'
 import Head from 'next/head'
 import { Row, Col } from 'react-bootstrap'
 import { useRouter } from 'next/router'
@@ -25,7 +26,55 @@ type Props = {
   rorId?: string
   gridId?: string
   crossrefFunderId?: string
+  isBot?: boolean
 }
+
+const BASE_ORGANIZATION_GQL = `
+  id
+  name
+  memberId
+  memberRoleId
+  alternateName
+  inceptionYear
+  url
+  wikipediaUrl
+  twitter
+  types
+  country {
+    id
+    name
+  }
+  geolocation {
+    pointLongitude
+    pointLatitude
+  }
+  identifiers {
+    identifier
+    identifierType
+  }
+  citationCount
+  viewCount
+  downloadCount
+`
+
+const LIGHTWEIGHT_ORGANIZATION_GQL = gql`
+  query getOrganizationQuery(
+    $id: ID
+    $gridId: ID
+    $crossrefFunderId: ID
+  ) {
+    organization(
+      id: $id
+      gridId: $gridId
+      crossrefFunderId: $crossrefFunderId
+    ) {
+      ${BASE_ORGANIZATION_GQL},
+      works(first: 0) {
+        totalCount
+      }
+    }
+  }
+`
 
 export const ORGANIZATION_GQL = gql`
   query getOrganizationQuery(
@@ -46,31 +95,7 @@ export const ORGANIZATION_GQL = gql`
       gridId: $gridId
       crossrefFunderId: $crossrefFunderId
     ) {
-      id
-      name
-      memberId
-      memberRoleId
-      alternateName
-      inceptionYear
-      url
-      wikipediaUrl
-      twitter
-      types
-      country {
-        id
-        name
-      }
-      geolocation {
-        pointLongitude
-        pointLatitude
-      }
-      identifiers {
-        identifier
-        identifierType
-      }
-      citationCount
-      viewCount
-      downloadCount
+      ${BASE_ORGANIZATION_GQL}
       works(
         first: 25
         after: $cursor
@@ -146,14 +171,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const rorId = context.params.rorid as string
 
   return {
-    props: { rorId }
+    props: {
+      rorId,
+      isBot: userAgentFromString(context.req.headers['user-agent']).isBot
+    }
   }
 }
 
 const OrganizationPage: React.FunctionComponent<Props> = ({
   rorId,
   gridId,
-  crossrefFunderId
+  crossrefFunderId,
+  isBot = false
 }) => {
   const router = useRouter()
   const [filterQuery] = useQueryState('filterQuery')
@@ -175,7 +204,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   const { loading, error, data } = useQuery<
     OrganizationQueryData,
     OrganizationQueryVar
-  >(ORGANIZATION_GQL, {
+  >(isBot ? LIGHTWEIGHT_ORGANIZATION_GQL : ORGANIZATION_GQL, {
     errorPolicy: 'all',
     variables: {
       id: rorId,
@@ -316,7 +345,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       </Head>
       <Title title={organization.name} titleLink={organization.id} link={organization.id} />
       <Row>{content()}</Row>
-      <Row>{relatedContent()}</Row>
+      {!isBot && <Row>{relatedContent()}</Row>}
     </Layout>
   )
 }
