@@ -1,6 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
+import { userAgentFromString } from 'next/server'
 import Head from 'next/head'
 import truncate from 'lodash/truncate'
 import { Row, Col } from 'react-bootstrap'
@@ -23,9 +24,62 @@ import ShareLinks from '../../components/ShareLinks/ShareLinks'
 
 type Props = {
   orcid?: string
+  isBot?: boolean
 }
 
-export const DOI_GQL = gql`
+const BASE_PERSON_GQL = `
+  id
+  description
+  links {
+    url
+    name
+  }
+  identifiers {
+    identifier
+    identifierType
+    identifierUrl
+  }
+  country {
+    name
+    id
+  }
+  name
+  alternateName
+  givenName
+  familyName
+  employment {
+    organizationId
+    organizationName
+    roleTitle
+    startDate
+    endDate
+  }
+  citationCount
+  viewCount
+  downloadCount
+  totalWorks: works {
+    totalCount
+    totalContentUrl
+    totalOpenLicenses
+    openLicenseResourceTypes {
+      id
+      title
+      count
+    }
+  }
+`
+
+const LIGHTWEIGHT_PERSON_GQL = gql`
+  query getContentQuery(
+    $id: ID!
+  ) {
+    person(id: $id) {
+      ${BASE_PERSON_GQL}
+    }
+  }
+`
+
+export const PERSON_GQL = gql`
   query getContentQuery(
     $id: ID!
     $filterQuery: String
@@ -38,45 +92,7 @@ export const DOI_GQL = gql`
     $registrationAgency: String
   ) {
     person(id: $id) {
-      id
-      description
-      links {
-        url
-        name
-      }
-      identifiers {
-        identifier
-        identifierType
-        identifierUrl
-      }
-      country {
-        name
-        id
-      }
-      name
-      alternateName
-      givenName
-      familyName
-      employment {
-        organizationId
-        organizationName
-        roleTitle
-        startDate
-        endDate
-      }
-      citationCount
-      viewCount
-      downloadCount
-      totalWorks: works {
-        totalCount
-        totalContentUrl
-        totalOpenLicenses
-        openLicenseResourceTypes {
-          id
-          title
-          count
-        }
-      }
+      ${BASE_PERSON_GQL}
       works(
         first: 25
         query: $filterQuery
@@ -84,7 +100,7 @@ export const DOI_GQL = gql`
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
-      language: $language
+        language: $language
         license: $license
         registrationAgency: $registrationAgency
       ) {
@@ -185,11 +201,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const orcid = context.params.orcid as String
 
   return {
-    props: { orcid }
+    props: {
+      orcid,
+      isBot: userAgentFromString(context.req.headers['user-agent']).isBot
+    }
   }
 }
 
-const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
+const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) => {
   const [filterQuery] = useQueryState('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
@@ -208,7 +227,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
   })
 
   const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
-    DOI_GQL,
+    isBot ? LIGHTWEIGHT_PERSON_GQL : PERSON_GQL,
     {
       errorPolicy: 'all',
       variables: {
@@ -329,7 +348,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
         </Col>
       </Row>
       <Row>{content()}</Row>
-      <Row>{relatedContent()}</Row>
+      {!isBot && <Row>{relatedContent()}</Row>}
     </Layout>
   )
 }
