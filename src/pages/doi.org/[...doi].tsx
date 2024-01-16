@@ -1,6 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
+import { userAgentFromString } from 'next/server'
 import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
@@ -30,6 +31,7 @@ import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 type Props = {
   doi: string
   metadata: MetadataQueryData
+  isBot?: boolean
 }
 
 export const CROSSREF_FUNDER_GQL = gql`
@@ -88,6 +90,62 @@ interface MetadataType {
   schemaOrg: string
 }
 
+const BASE_DOI_GQL = `
+  ...WorkFragment
+  contentUrl
+  contributors {
+    id
+    givenName
+    familyName
+    name
+    contributorType
+    affiliation {
+      id
+      name
+    }
+  }
+  fundingReferences {
+    funderIdentifier
+    funderIdentifierType
+    funderName
+    awardTitle
+    awardUri
+    awardNumber
+  }
+  claims {
+    id
+    sourceId
+    state
+    claimAction
+    claimed
+    errorMessages {
+      status
+      title
+    }
+  }
+  formattedCitation
+  schemaOrg
+  viewsOverTime {
+    yearMonth
+    total
+  }
+  downloadsOverTime {
+    yearMonth
+    total
+  }
+`
+
+const LIGHTWEIGHT_DOI_GQL = gql`
+  query getDoiQuery(
+    $id: ID!
+  ) {
+    work(id: $id) {
+      ${BASE_DOI_GQL}
+    }
+  }
+  ${contentFragment.work}
+`
+
 export const DOI_GQL = gql`
   query getDoiQuery(
     $id: ID!
@@ -102,48 +160,7 @@ export const DOI_GQL = gql`
     $repositoryId: String
   ) {
     work(id: $id) {
-      ...WorkFragment
-      contentUrl
-      contributors {
-        id
-        givenName
-        familyName
-        name
-        contributorType
-        affiliation {
-          id
-          name
-        }
-      }
-      fundingReferences {
-        funderIdentifier
-        funderIdentifierType
-        funderName
-        awardTitle
-        awardUri
-        awardNumber
-      }
-      claims {
-        id
-        sourceId
-        state
-        claimAction
-        claimed
-        errorMessages {
-          status
-          title
-        }
-      }
-      formattedCitation
-      schemaOrg
-      viewsOverTime {
-        yearMonth
-        total
-      }
-      downloadsOverTime {
-        yearMonth
-        total
-      }
+      ${BASE_DOI_GQL}
       citations(
         first: 25
         query: $filterQuery
@@ -426,7 +443,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       context.res.end()
       return { props: {} }
     } else {
-      return { props: { doi, metadata: data } }
+      return {
+        props: {
+          doi,
+          metadata: data,
+          isBot: userAgentFromString(context.req.headers['user-agent']).isBot
+        }
+      }
     }
   }
 }
@@ -443,7 +466,7 @@ function isProject (work: WorkType) {
 
 
 
-const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
+const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false }) => {
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/doi.org/' + metadata.work.doi
@@ -484,7 +507,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
   const [registrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [connectionType] = useQueryState('connection-type', { history: 'push' })
 
-  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(DOI_GQL, {
+  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(isBot ? LIGHTWEIGHT_DOI_GQL : DOI_GQL, {
     errorPolicy: 'all',
     variables: {
       id: doi,
@@ -656,7 +679,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata }) => {
       <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       {content()}
-      {relatedContent()}
+      {!isBot && relatedContent()}
     </Layout>
   )
 }
