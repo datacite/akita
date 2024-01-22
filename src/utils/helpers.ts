@@ -38,7 +38,7 @@ export const gridFromUrl = (gridUrl: string) => {
   return gridUrl ? gridUrl.substring(15) : null
 }
 
-const CUSTOM_BOTS = /GoogleOther/i
+const CUSTOM_BOTS = /GoogleOther|Google-Extended/i
 
 export const isBot = (request: NextRequest) => {
   const ua = request.headers.get('user-agent') || ''
