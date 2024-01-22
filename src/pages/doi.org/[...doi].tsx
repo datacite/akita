@@ -90,63 +90,59 @@ interface MetadataType {
   schemaOrg: string
 }
 
-const BASE_DOI_GQL = `
-  ...WorkFragment
-  contentUrl
-  contributors {
-    id
-    givenName
-    familyName
-    name
-    contributorType
-    affiliation {
-      id
-      name
-    }
-  }
-  fundingReferences {
-    funderIdentifier
-    funderIdentifierType
-    funderName
-    awardTitle
-    awardUri
-    awardNumber
-  }
-  claims {
-    id
-    sourceId
-    state
-    claimAction
-    claimed
-    errorMessages {
-      status
-      title
-    }
-  }
-  formattedCitation
-  schemaOrg
-  viewsOverTime {
-    yearMonth
-    total
-  }
-  downloadsOverTime {
-    yearMonth
-    total
-  }
-`
-
-const LIGHTWEIGHT_DOI_GQL = gql`
+const DOI_GQL = gql`
   query getDoiQuery(
     $id: ID!
   ) {
     work(id: $id) {
-      ${BASE_DOI_GQL}
+      ...WorkFragment
+      contentUrl
+      contributors {
+        id
+        givenName
+        familyName
+        name
+        contributorType
+        affiliation {
+          id
+          name
+        }
+      }
+      fundingReferences {
+        funderIdentifier
+        funderIdentifierType
+        funderName
+        awardTitle
+        awardUri
+        awardNumber
+      }
+      claims {
+        id
+        sourceId
+        state
+        claimAction
+        claimed
+        errorMessages {
+          status
+          title
+        }
+      }
+      formattedCitation
+      schemaOrg
+      viewsOverTime {
+        yearMonth
+        total
+      }
+      downloadsOverTime {
+        yearMonth
+        total
+      }
     }
   }
   ${contentFragment.work}
 `
 
-export const DOI_GQL = gql`
+export const RELATED_CONTENT_GQL = gql`
   query getDoiQuery(
     $id: ID!
     $filterQuery: String
@@ -160,7 +156,11 @@ export const DOI_GQL = gql`
     $repositoryId: String
   ) {
     work(id: $id) {
-      ${BASE_DOI_GQL}
+      doi,
+      types {
+        resourceTypeGeneral,
+        resourceType
+      },
       citations(
         first: 25
         query: $filterQuery
@@ -507,38 +507,42 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
   const [registrationAgency] = useQueryState('registration-agency', { history: 'push' })
   const [connectionType] = useQueryState('connection-type', { history: 'push' })
 
-  const { loading, error, data } = useQuery<WorkQueryData, QueryVar>(isBot ? LIGHTWEIGHT_DOI_GQL : DOI_GQL, {
+  const variables = {
+    id: doi,
+    cursor: cursor,
+    filterQuery: filterQuery,
+    published: published as string,
+    resourceTypeId: resourceType as string,
+    fieldOfScience: fieldOfScience as string,
+    language: language as string,
+    license: license as string,
+    registrationAgency: registrationAgency as string
+  }
+
+  const doiQuery = useQuery<WorkQueryData, QueryVar>(DOI_GQL, { errorPolicy: 'all', variables: variables })
+  const relatedContentQuery = useQuery<WorkQueryData, QueryVar>(RELATED_CONTENT_GQL, {
     errorPolicy: 'all',
-    variables: {
-      id: doi,
-      cursor: cursor,
-      filterQuery: filterQuery,
-      published: published as string,
-      resourceTypeId: resourceType as string,
-      fieldOfScience: fieldOfScience as string,
-      language: language as string,
-      license: license as string,
-      registrationAgency: registrationAgency as string
-    }
+    variables: variables,
+    skip: isBot
   })
 
-  if (loading)
+  if (doiQuery.loading)
     return (
       <Layout path={'/doi.org/' + doi}>
         <Loading />
       </Layout>
     )
 
-  if (error)
+  if (doiQuery.error)
     return (
       <Layout path={'/doi.org/' + doi}>
         <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
+          <Error title="An error occured." message={doiQuery.error.message} />
         </Col>
       </Layout>
     )
 
-  const work = data.work
+  const work = doiQuery.data.work
 
 
   const content = () => {
@@ -582,42 +586,55 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
   }
 
   const relatedContent = () => {
+    if (relatedContentQuery.loading) return <Loading />
+
+    if (relatedContentQuery.error)
+      return <Row>
+        <Col mdOffset={3} className="panel panel-transparent">
+          <Error title="An error occured loading related content." message={relatedContentQuery.error.message} />
+        </Col>
+      </Row>
+
+    if (!relatedContentQuery.data) return
+
+    const relatedWorks = relatedContentQuery.data.work
+
     if (
-      work.references.totalCount +
-      work.citations.totalCount +
-      work.parts.totalCount +
-      work.partOf.totalCount +
-      work.otherRelated.totalCount
+      relatedWorks.references.totalCount +
+      relatedWorks.citations.totalCount +
+      relatedWorks.parts.totalCount +
+      relatedWorks.partOf.totalCount +
+      relatedWorks.otherRelated.totalCount
       == 0
     ) return ''
 
-    const url = '/doi.org/' + work.doi + '/?'
+    const url = '/doi.org/' + relatedWorks.doi + '/?'
 
     const connectionTypeCounts = {
-      references: work.references.totalCount,
-      citations: work.citations.totalCount,
-      parts: work.parts.totalCount,
-      partOf: work.partOf.totalCount,
-      otherRelated: work.otherRelated.totalCount
+      references: relatedWorks.references.totalCount,
+      citations: relatedWorks.citations.totalCount,
+      parts: relatedWorks.parts.totalCount,
+      partOf: relatedWorks.partOf.totalCount,
+      otherRelated: relatedWorks.otherRelated.totalCount
     }
 
     const defaultConnectionType =
-      work.references.totalCount > 0 ? 'references' :
-      work.citations.totalCount > 0 ? 'citations' :
-      work.parts.totalCount > 0 ? 'parts' :
-      work.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
+      relatedWorks.references.totalCount > 0 ? 'references' :
+      relatedWorks.citations.totalCount > 0 ? 'citations' :
+      relatedWorks.parts.totalCount > 0 ? 'parts' :
+      relatedWorks.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
 
     const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 
 
-    const works: Works = displayedConnectionType in work ?
-      work[displayedConnectionType] :
+    const works: Works = displayedConnectionType in relatedWorks ?
+      relatedWorks[displayedConnectionType] :
       { totalCount: 0, nodes: [] }
 
     const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
     const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
     
-    const showSankey = isDMP(work) || isProject(work)
+    const showSankey = isDMP(relatedWorks) || isProject(relatedWorks)
     
     return (
       <>
@@ -679,7 +696,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
       <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
            
       {content()}
-      {!isBot && relatedContent()}
+      {relatedContent()}
     </Layout>
   )
 }
