@@ -29,35 +29,7 @@ type Props = {
   isBot?: boolean
 }
 
-const BASE_ORGANIZATION_GQL = `
-  id
-  name
-  memberId
-  memberRoleId
-  alternateName
-  inceptionYear
-  url
-  wikipediaUrl
-  twitter
-  types
-  country {
-    id
-    name
-  }
-  geolocation {
-    pointLongitude
-    pointLatitude
-  }
-  identifiers {
-    identifier
-    identifierType
-  }
-  citationCount
-  viewCount
-  downloadCount
-`
-
-const LIGHTWEIGHT_ORGANIZATION_GQL = gql`
+const ORGANIZATION_GQL = gql`
   query getOrganizationQuery(
     $id: ID
     $gridId: ID
@@ -68,7 +40,31 @@ const LIGHTWEIGHT_ORGANIZATION_GQL = gql`
       gridId: $gridId
       crossrefFunderId: $crossrefFunderId
     ) {
-      ${BASE_ORGANIZATION_GQL},
+      id
+      name
+      memberId
+      memberRoleId
+      alternateName
+      inceptionYear
+      url
+      wikipediaUrl
+      twitter
+      types
+      country {
+        id
+        name
+      }
+      geolocation {
+        pointLongitude
+        pointLatitude
+      }
+      identifiers {
+        identifier
+        identifierType
+      }
+      citationCount
+      viewCount
+      downloadCount,
       works(first: 0) {
         totalCount
       }
@@ -76,7 +72,7 @@ const LIGHTWEIGHT_ORGANIZATION_GQL = gql`
   }
 `
 
-export const ORGANIZATION_GQL = gql`
+export const RELATED_CONTENT_GQL = gql`
   query getOrganizationQuery(
     $id: ID
     $gridId: ID
@@ -95,7 +91,6 @@ export const ORGANIZATION_GQL = gql`
       gridId: $gridId
       crossrefFunderId: $crossrefFunderId
     ) {
-      ${BASE_ORGANIZATION_GQL}
       works(
         first: 25
         after: $cursor
@@ -201,43 +196,55 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
     history: 'push'
   })
   const [cursor] = useQueryState('cursor', { history: 'push' })
-  const { loading, error, data } = useQuery<
+
+  const variables = {
+    id: rorId,
+    gridId: gridId,
+    crossrefFunderId: crossrefFunderId,
+    cursor: cursor,
+    filterQuery: filterQuery,
+    published: published,
+    resourceTypeId: resourceType,
+    fieldOfScience: fieldOfScience,
+    language: language,
+    license: license,
+    registrationAgency: registrationAgency
+  }
+
+  const organizationQuery = useQuery<
     OrganizationQueryData,
     OrganizationQueryVar
-  >(isBot ? LIGHTWEIGHT_ORGANIZATION_GQL : ORGANIZATION_GQL, {
+  >(ORGANIZATION_GQL, {
     errorPolicy: 'all',
-    variables: {
-      id: rorId,
-      gridId: gridId,
-      crossrefFunderId: crossrefFunderId,
-      cursor: cursor,
-      filterQuery: filterQuery,
-      published: published,
-      resourceTypeId: resourceType,
-      fieldOfScience: fieldOfScience,
-      language: language,
-      license: license,
-      registrationAgency: registrationAgency
-    }
+    variables: variables
   })
 
-  if (loading)
+  const relatedContentQuery = useQuery<
+    OrganizationQueryData,
+    OrganizationQueryVar
+  >(RELATED_CONTENT_GQL, {
+    errorPolicy: 'all',
+    variables: variables,
+    skip: isBot
+  })
+
+  if (organizationQuery.loading)
     return (
       <Layout path={'/ror.org/' + rorId}>
         <Loading />
       </Layout>
     )
 
-  if (error)
+  if (organizationQuery.error)
     return (
       <Layout path={'/ror.org/' + rorId}>
         <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
+          <Error title="An error occured." message={organizationQuery.error.message} />
         </Col>
       </Layout>
     )
 
-  const organization = data.organization
+  const organization = organizationQuery.data.organization
 
   // if query was for gridId or crossrefFunderId and organization was found
   if (!rorId && router) {
@@ -304,12 +311,25 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   }
 
   const relatedContent = () => {
-    const hasNextPage = organization.works.totalCount > 25
-    const endCursor = organization.works.pageInfo
-      ? organization.works.pageInfo.endCursor
+    if (relatedContentQuery.loading) return <Loading />
+
+    if (relatedContentQuery.error)
+      return <Row>
+        <Col mdOffset={3} className="panel panel-transparent">
+          <Error title="An error occured loading related content." message={relatedContentQuery.error.message} />
+        </Col>
+      </Row>
+
+    if (!relatedContentQuery.data) return
+
+    const relatedContent = relatedContentQuery.data.organization.works
+
+    const hasNextPage = relatedContent.totalCount > 25
+    const endCursor = relatedContent.pageInfo
+      ? relatedContent.pageInfo.endCursor
       : ''
 
-    const totalCount = organization.works.totalCount
+    const totalCount = relatedContent.totalCount
 
     return (
       <div>
@@ -319,12 +339,12 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
           )}
         </Col>
         <WorksListing
-          works={organization.works}
-          loading={loading}
+          works={relatedContent}
+          loading={relatedContentQuery.loading}
           showFacets={true}
           showAnalytics={true}
           showClaimStatus={true}
-          hasPagination={organization.works.totalCount > 25}
+          hasPagination={relatedContent.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'organization'}
           url={'/ror.org/' + rorId + '/?'}
@@ -345,7 +365,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       </Head>
       <Title title={organization.name} titleLink={organization.id} link={organization.id} />
       <Row>{content()}</Row>
-      {!isBot && <Row>{relatedContent()}</Row>}
+      <Row>{relatedContent()}</Row>
     </Layout>
   )
 }
