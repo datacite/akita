@@ -555,7 +555,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
             <DownloadMetadata doi={work} />
           </div>
           <CiteAs doi={work} />
-          <DownloadReports
+          { !isBot && <DownloadReports
             links={[
               {
                 title: 'Related Works (CSV)',
@@ -574,7 +574,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
               license: license,
               registrationAgency: registrationAgency
             }}
-          />
+          /> }
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
         </Col>
         <Col md={9} id="content">
