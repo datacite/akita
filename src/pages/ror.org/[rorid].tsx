@@ -273,7 +273,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
     return (
       <>
         <Col md={3} className="panel-list" id="side-bar">
-          <DownloadReports
+          { !isBot && <DownloadReports
             links={[
               {
                 title: 'Related Works (CSV)',
@@ -299,7 +299,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
               license: license,
               registrationAgency: registrationAgency
             }}
-          />
+          /> }
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9}>
