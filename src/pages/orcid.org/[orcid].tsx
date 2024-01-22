@@ -1,7 +1,6 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
-import { userAgentFromString } from 'next/server'
 import Head from 'next/head'
 import truncate from 'lodash/truncate'
 import { Row, Col } from 'react-bootstrap'
@@ -198,7 +197,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       orcid,
-      isBot: userAgentFromString(context.req.headers['user-agent']).isBot
+      isBot: JSON.parse(context.query.isBot as string)
     }
   }
 }

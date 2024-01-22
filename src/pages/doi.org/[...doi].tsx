@@ -1,7 +1,6 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { GetServerSideProps } from 'next'
-import { userAgentFromString } from 'next/server'
 import Head from 'next/head'
 import { useQueryState } from 'next-usequerystate'
 import truncate from 'lodash/truncate'
@@ -447,7 +446,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
           doi,
           metadata: data,
-          isBot: userAgentFromString(context.req.headers['user-agent']).isBot
+          isBot: JSON.parse(context.query.isBot as string)
         }
       }
     }
