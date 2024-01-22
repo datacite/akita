@@ -181,7 +181,7 @@ export const STATS_GQL = gql`
   }
 `
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const { data } = await apolloClient.query({
     query: STATS_GQL
   })
