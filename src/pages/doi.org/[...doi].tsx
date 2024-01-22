@@ -597,44 +597,44 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
 
     if (!relatedContentQuery.data) return
 
-    const relatedContent = relatedContentQuery.data.work
+    const relatedWorks = relatedContentQuery.data.work
 
     if (
-      relatedContent.references.totalCount +
-      relatedContent.citations.totalCount +
-      relatedContent.parts.totalCount +
-      relatedContent.partOf.totalCount +
-      relatedContent.otherRelated.totalCount
+      relatedWorks.references.totalCount +
+      relatedWorks.citations.totalCount +
+      relatedWorks.parts.totalCount +
+      relatedWorks.partOf.totalCount +
+      relatedWorks.otherRelated.totalCount
       == 0
     ) return ''
 
-    const url = '/doi.org/' + relatedContent.doi + '/?'
+    const url = '/doi.org/' + relatedWorks.doi + '/?'
 
     const connectionTypeCounts = {
-      references: relatedContent.references.totalCount,
-      citations: relatedContent.citations.totalCount,
-      parts: relatedContent.parts.totalCount,
-      partOf: relatedContent.partOf.totalCount,
-      otherRelated: relatedContent.otherRelated.totalCount
+      references: relatedWorks.references.totalCount,
+      citations: relatedWorks.citations.totalCount,
+      parts: relatedWorks.parts.totalCount,
+      partOf: relatedWorks.partOf.totalCount,
+      otherRelated: relatedWorks.otherRelated.totalCount
     }
 
     const defaultConnectionType =
-      relatedContent.references.totalCount > 0 ? 'references' :
-      relatedContent.citations.totalCount > 0 ? 'citations' :
-      relatedContent.parts.totalCount > 0 ? 'parts' :
-      relatedContent.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
+      relatedWorks.references.totalCount > 0 ? 'references' :
+      relatedWorks.citations.totalCount > 0 ? 'citations' :
+      relatedWorks.parts.totalCount > 0 ? 'parts' :
+      relatedWorks.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
 
     const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 
 
-    const works: Works = displayedConnectionType in relatedContent ?
-      relatedContent[displayedConnectionType] :
+    const works: Works = displayedConnectionType in relatedWorks ?
+      relatedWorks[displayedConnectionType] :
       { totalCount: 0, nodes: [] }
 
     const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
     const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
     
-    const showSankey = isDMP(relatedContent) || isProject(relatedContent)
+    const showSankey = isDMP(relatedWorks) || isProject(relatedWorks)
     
     return (
       <>

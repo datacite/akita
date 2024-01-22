@@ -322,14 +322,14 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
 
     if (!relatedContentQuery.data) return
 
-    const relatedContent = relatedContentQuery.data.organization.works
+    const relatedWorks = relatedContentQuery.data.organization.works
 
-    const hasNextPage = relatedContent.totalCount > 25
-    const endCursor = relatedContent.pageInfo
-      ? relatedContent.pageInfo.endCursor
+    const hasNextPage = relatedWorks.totalCount > 25
+    const endCursor = relatedWorks.pageInfo
+      ? relatedWorks.pageInfo.endCursor
       : ''
 
-    const totalCount = relatedContent.totalCount
+    const totalCount = relatedWorks.totalCount
 
     return (
       <div>
@@ -339,12 +339,12 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
           )}
         </Col>
         <WorksListing
-          works={relatedContent}
+          works={relatedWorks}
           loading={relatedContentQuery.loading}
           showFacets={true}
           showAnalytics={true}
           showClaimStatus={true}
-          hasPagination={relatedContent.totalCount > 25}
+          hasPagination={relatedWorks.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'organization'}
           url={'/ror.org/' + rorId + '/?'}

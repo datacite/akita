@@ -305,16 +305,16 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) =>
 
     if (!relatedContentQuery.data) return
 
-    const relatedContent = relatedContentQuery.data.person.works
+    const relatedWorks = relatedContentQuery.data.person.works
 
-    const hasNextPage = relatedContent.pageInfo
-      ? relatedContent.pageInfo.hasNextPage
+    const hasNextPage = relatedWorks.pageInfo
+      ? relatedWorks.pageInfo.hasNextPage
       : false
-    const endCursor = relatedContent.pageInfo
-      ? relatedContent.pageInfo.endCursor
+    const endCursor = relatedWorks.pageInfo
+      ? relatedWorks.pageInfo.endCursor
       : ''
 
-    const totalCount = relatedContent.totalCount
+    const totalCount = relatedWorks.totalCount
 
     return (
       <>
@@ -322,12 +322,12 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) =>
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
         <WorksListing
-          works={relatedContent}
+          works={relatedWorks}
           loading={relatedContentQuery.loading}
           showFacets={true}
           showAnalytics={true}
           showClaimStatus={true}
-          hasPagination={relatedContent.totalCount > 25}
+          hasPagination={relatedWorks.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'person'}
           url={'/orcid.org/' + orcid + '/?'}
