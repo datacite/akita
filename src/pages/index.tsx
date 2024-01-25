@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQueryState } from 'next-usequerystate'
 
 import Layout from '../components/Layout/Layout'
@@ -7,6 +7,15 @@ import SearchWork from '../components/SearchWork/SearchWork'
 
 const IndexPage = () => {
   const [searchQuery] = useQueryState('query')
+
+  const [isClient, setIsClient] = useState(false)
+
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) return <Layout path={'/doi.org'} ></Layout>
 
   return (
     <Layout path={'/doi.org'} >
