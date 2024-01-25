@@ -92,7 +92,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "cypress": "10",
+    "cypress": "^13.6.3",
     "cypress-dotenv-flow": "^1.2.2",
     "dotenv-flow": "^3.2.0",
     "eslint": "^7.29.0",
