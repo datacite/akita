@@ -15,9 +15,7 @@ const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
 
     return (
       <h4 className="work">
-        <Link
-          href={'/grid.ac' + gridFromUrl(employment.organizationId)}
-        >
+        <Link legacyBehavior href={'/grid.ac' + gridFromUrl(employment.organizationId)}>
           <a>{employment.organizationName}</a>
         </Link>
       </h4>

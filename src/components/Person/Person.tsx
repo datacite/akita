@@ -160,9 +160,10 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
-                  width="74"
-                  height="74"
+                    width="74"
+                    height="74"
                     title="Superhero by tulpahn from the Noun Project"
+                    alt="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
                 <Col>
@@ -175,9 +176,10 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                 <Col xs={1}>
                   <Image
                     src={heroImage}
-                  width="74"
-                  height="74"
+                    width="74"
+                    height="74"
                     title="Superhero by tulpahn from the Noun Project"
+                    alt="Superhero by tulpahn from the Noun Project"
                   />
                 </Col>
                 <Col>
@@ -189,10 +191,11 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
               <Row >
                 <Col xs={1}>
                   <Image
-                  src={scienceImage}
-                  width="74"
-                  height="74"
-                  title="science education by Vectors Market from the Noun Project"
+                    src={scienceImage}
+                    width="74"
+                    height="74"
+                    title="science education by Vectors Market from the Noun Project"
+                    alt="science education by Vectors Market from the Noun Project"
                   />
                 </Col>
                 <Col>
@@ -208,7 +211,8 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
                   width="74"
                   height="74"
                   title="unlock by Alexandr Cherkinsky from the Noun Project"
-                  />
+                  alt="unlock by Alexandr Cherkinsky from the Noun Project"
+                />
                 </Col>
                 <Col>
                   {percentage_open_url}% of your research is free to read online.

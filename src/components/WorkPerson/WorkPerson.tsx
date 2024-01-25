@@ -32,7 +32,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link href={'/orcid.org' + orcidFromUrl(person.id)}>
+          <Link legacyBehavior href={'/orcid.org' + orcidFromUrl(person.id)}>
             <a>{name}</a>
           </Link>
         </h4>
@@ -42,7 +42,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                    <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
                         <a>{item.name}</a>
                     </Link>
                   </div>
@@ -65,7 +65,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link href={'/ror.org' + rorFromUrl(person.id)}>
+          <Link legacyBehavior href={'/ror.org' + rorFromUrl(person.id)}>
             <a>{name}</a>
           </Link>
         </h4>
@@ -75,7 +75,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                    <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
                         <a>{item.name}</a>
                     </Link>
                   </div>
@@ -103,7 +103,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             {person.affiliation.map((item) =>
               item.id ? (
                 <div className="affiliation" key={item.id}>
-                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                  <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
                       <a>{item.name}</a>
                   </Link>
                 </div>

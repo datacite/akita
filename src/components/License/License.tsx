@@ -118,6 +118,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
             src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
             width={76}
             height={20}
+            alt='License badge'
           />
         </a>
       ))}

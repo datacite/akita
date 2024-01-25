@@ -49,7 +49,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.titles[0])
       return (
         <h3 className="work">
-          <Link href={'/doi.org/' + metadata.doi}>
+          <Link legacyBehavior href={'/doi.org/' + metadata.doi}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -59,7 +59,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
 
     return (
       <h3 className="work">
-        <Link href={'/doi.org/' + metadata.doi}>
+        <Link legacyBehavior href={'/doi.org/' + metadata.doi}>
           <a>{ReactHtmlParser(titleHtml)}</a>
         </Link>
       </h3>
@@ -120,7 +120,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href={'/orcid.org' + c.id} key={index}>
+            <Link legacyBehavior href={'/orcid.org' + c.id} key={index}>
               <a>{c.displayName}</a>
             </Link>
           ) : (

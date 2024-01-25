@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Head from 'next/head'
 import { Cookies } from 'react-cookie-consent'
 
@@ -7,9 +7,9 @@ import Footer from '../Footer/Footer'
 import Consent from '../Consent/Consent'
 import { GA_TRACKING_ID } from '../../utils/gtag'
 
-type Props = {
+type Props = PropsWithChildren<{
   path: string
-}
+}>
 
 const Layout: React.FunctionComponent<Props> = ({ children, path }) => {
   // check whether user has given consent to google analytics tracking
