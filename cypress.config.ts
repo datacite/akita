@@ -11,7 +11,12 @@ export default defineConfig({
     specPattern: 'cypress/e2e/**/*.test.*',
   },
   component: {
-    setupNodeEvents(on, config) {},
+    setupNodeEvents(on, config) { },
     specPattern: 'src/components/**/*.test.*',
+    devServer: {
+      bundler: 'webpack',
+      framework: 'react',
+      webpackConfig: undefined
+    }
   },
 })
