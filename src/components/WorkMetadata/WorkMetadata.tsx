@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  OverlayTrigger,
   Alert,
   Label,
   Tooltip,
   Col,
   Row
 } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
