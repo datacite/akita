@@ -145,7 +145,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
             </Button>
         )}
       { repo.works && (repo.works.totalCount>0) && (
-          <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
+          <Link legacyBehavior href={"/doi.org?query=client.uid:" + repo.clientId}>
           <Button block bsStyle="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;

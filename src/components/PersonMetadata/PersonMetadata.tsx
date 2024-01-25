@@ -17,7 +17,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     if (!metadata.name)
       return (
         <h3 className="work">
-          <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
+          <Link legacyBehavior href={'/orcid.org' + orcidFromUrl(metadata.id)}>
             <a>No Title</a>
           </Link>
         </h3>
@@ -25,7 +25,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return (
       <h3 className="work">
-        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
+        <Link legacyBehavior href={'/orcid.org' + orcidFromUrl(metadata.id)}>
           <a id="orcid-link">
             {metadata.name}
             {metadata.alternateName && metadata.alternateName.length > 0 && (

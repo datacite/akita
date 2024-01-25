@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'
 import { Works } from '../SearchWork/SearchWork'
@@ -7,9 +7,9 @@ import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../Horizonta
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
 import styles from './WorksDashboard.module.scss'
 
-type Props = {
+type Props = PropsWithChildren<{
   works: Works
-}
+}>
 
 const tooltipText = (sourceField: string) => `The field "${sourceField}" from DOI metadata was used to generate this chart.`
 

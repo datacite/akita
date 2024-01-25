@@ -50,9 +50,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   const titleLink = () => {
     if (!linkToExternal) {
       return (
-        <Link
-          href={'/ror.org' + rorFromUrl(metadata.id)}
-        >
+        <Link legacyBehavior href={'/ror.org' + rorFromUrl(metadata.id)}>
           <a>
             {metadata.name}
             {metadata.alternateName.length > 0 && (

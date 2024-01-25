@@ -569,15 +569,15 @@ const StatisticsPage = ({ data }) => {
                 {(datacite.count + crossref.count).toLocaleString('en-US')}{' '}
                 works, with identifiers and metadata provided by DataCite and
                 Crossref. For the three major work types{' '}
-                <Link href="/publications">
+                <Link legacyBehavior href="/publications">
                   <a>publication</a>
                 </Link>
                 ,{' '}
-                <Link href="/datasets">
+                <Link legacyBehavior href="/datasets">
                   <a>dataset</a>
                 </Link>{' '}
                 and{' '}
-                <Link href="/software">
+                <Link legacyBehavior href="/software">
                   <a>software</a>
                 </Link>
                 , the respective numbers by publication year are shown below.
