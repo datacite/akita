@@ -1,13 +1,16 @@
 describe('Server error', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.server()
-    cy.route('POST', '**/graphql**', {
-      errors: [
-        {
-          message: 'Internal Server Error'
+    cy.intercept('POST', '**/graphql**', (req) => {
+      req.reply({
+        body: {
+          errors: [
+            {
+              message: 'Internal Server Error'
+            }
+          ]
         }
-      ]
+      })
     })
   })
 
