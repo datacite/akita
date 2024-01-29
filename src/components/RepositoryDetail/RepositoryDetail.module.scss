@@ -78,7 +78,19 @@
   display: flex;
   flex-direction: column;
   margin-top: 15px;
+  .contactList {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    padding-left: 15px;
+    margin: 0;
+    li {
+      margin-bottom: 5px;
+    }
+  }
 }
+
 .gotoButtons {
   display: flex;
   flex-direction: column;
@@ -89,6 +101,5 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   @include header-style();
 }
