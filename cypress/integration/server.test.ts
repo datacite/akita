@@ -2,7 +2,7 @@ describe('Server error', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
     cy.server()
-    cy.route('POST', '**/graphql', {
+    cy.route('POST', '**/graphql**', {
       errors: [
         {
           message: 'Internal Server Error'
