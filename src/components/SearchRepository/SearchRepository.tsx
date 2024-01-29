@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 
 import Pager from '../Pager/Pager'
 import FairFilter from '../FairFilter/FairFilter'

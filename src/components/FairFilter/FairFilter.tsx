@@ -7,7 +7,7 @@ import {
     faCheckSquare,
     faQuestionCircle
 } from '@fortawesome/free-regular-svg-icons'
-import { useQueryStates, queryTypes } from 'next-usequerystate'
+import { useQueryStates, queryTypes } from 'nuqs'
 
 type Props = {
     name?: string

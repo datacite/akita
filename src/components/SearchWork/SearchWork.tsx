@@ -1,6 +1,6 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { Alert, Row, Col } from 'react-bootstrap'
 
 import WorksListing from '../WorksListing/WorksListing'

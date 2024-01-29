@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import truncate from 'lodash/truncate'
 import { Row, Col } from 'react-bootstrap'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 
 import Layout from '../../components/Layout/Layout'
 import Error from '../../components/Error/Error'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { pluralize } from '../../utils/helpers'
 
 import Pager from '../Pager/Pager'
