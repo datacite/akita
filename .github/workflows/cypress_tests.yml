@@ -34,7 +34,7 @@ jobs:
           parallel: true
           group: 'Tests'
         env:
-          NODE_ENV: test
+          CYPRESS_NODE_ENV: test
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
