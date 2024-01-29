@@ -4,9 +4,7 @@ import { Cookies } from 'react-cookie-consent'
 
 // needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
 const httpLink = createHttpLink({
-  uri:
-    (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
-    '/graphql',
+  uri: (operation) => `${(process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org')}/graphql?graphqlOperationName=${encodeURIComponent(operation.operationName)}`,
   credentials: 'include'
 })
 
