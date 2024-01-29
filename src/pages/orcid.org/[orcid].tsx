@@ -27,7 +27,7 @@ type Props = {
 }
 
 const PERSON_GQL = gql`
-  query getContentQuery(
+  query getPersonQuery(
     $id: ID!
   ) {
     person(id: $id) {
@@ -75,7 +75,7 @@ const PERSON_GQL = gql`
 `
 
 export const RELATED_CONTENT_GQL = gql`
-  query getContentQuery(
+  query getRelatedContentQuery(
     $id: ID!
     $filterQuery: String
     $cursor: String

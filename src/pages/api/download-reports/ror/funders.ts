@@ -4,7 +4,7 @@ import apolloClient from '../../../../utils/apolloClient'
 import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
-  query getOrganizationQuery(
+  query getFundersRorQuery(
     $id: ID
     $gridId: ID
     $crossrefFunderId: ID

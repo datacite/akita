@@ -20,7 +20,7 @@ export interface ContentFacet {
 }
 
 const FORCE_DIRECTED_GRAPH_GQL = gql`
-  query getOrganizationQuery(
+  query forcedDirectedGraphQuery(
     $id: ID
     $gridId: ID
     $crossrefFunderId: ID
