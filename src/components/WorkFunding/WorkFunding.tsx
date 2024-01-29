@@ -20,8 +20,8 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
     )
       return (
         <h4 className="work">
-          <Link legacyBehavior href={'/doi.org' + doiFromUrl(funding.funderIdentifier)}>
-            <a>{funding.funderName}</a>
+          <Link href={'/doi.org' + doiFromUrl(funding.funderIdentifier)}>
+            {funding.funderName}
           </Link>
         </h4>
       )
@@ -37,8 +37,8 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
       )}
       {showAwardLink && (
         <div className="award">
-          <Link legacyBehavior href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}>
-            <a>{funding.awardNumber}</a>
+          <Link href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}>
+            {funding.awardNumber}
           </Link>
         </div>
       )}

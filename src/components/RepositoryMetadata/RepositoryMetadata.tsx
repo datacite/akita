@@ -110,8 +110,8 @@ export const RepositoryMetadata: React.FunctionComponent<Props> = ({
   return (
     <div key={repo.id} className="panel panel-transparent">
       <div className="panel-body">
-        <h3><Link legacyBehavior href={detailUrl()}>
-            <a>{repo.name}</a>
+        <h3><Link href={detailUrl()}>
+            {repo.name}
         </Link></h3>
         {description()}
         {tags()}

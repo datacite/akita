@@ -32,8 +32,8 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link legacyBehavior href={'/orcid.org' + orcidFromUrl(person.id)}>
-            <a>{name}</a>
+          <Link href={'/orcid.org' + orcidFromUrl(person.id)}>
+            {name}
           </Link>
         </h4>
         {person.affiliation.length > 0 && (
@@ -42,8 +42,8 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
-                        <a>{item.name}</a>
+                    <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                        {item.name}
                     </Link>
                   </div>
                 ) : (
@@ -65,8 +65,8 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link legacyBehavior href={'/ror.org' + rorFromUrl(person.id)}>
-            <a>{name}</a>
+          <Link href={'/ror.org' + rorFromUrl(person.id)}>
+            {name}
           </Link>
         </h4>
         {person.affiliation.length > 0 && (
@@ -75,8 +75,8 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
-                        <a>{item.name}</a>
+                    <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                        {item.name}
                     </Link>
                   </div>
                 ) : (
@@ -103,8 +103,8 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             {person.affiliation.map((item) =>
               item.id ? (
                 <div className="affiliation" key={item.id}>
-                  <Link legacyBehavior href={'/ror.org' + rorFromUrl(item.id)}>
-                      <a>{item.name}</a>
+                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                      {item.name}
                   </Link>
                 </div>
               ) : (
