@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { pluralize } from '../../utils/helpers'
 
 import { PersonType } from '../../pages/orcid.org/[orcid]'

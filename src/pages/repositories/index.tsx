@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 
 import ExampleText from 'src/components/ExampleText/ExampleText'
 import Layout from '../../components/Layout/Layout'
