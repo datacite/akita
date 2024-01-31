@@ -51,10 +51,8 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
 
         return (
-            <Link legacyBehavior href={url + params.toString()}>
-                <a id={id}>
-                    <FontAwesomeIcon icon={icon} />{' '}
-                </a>
+            <Link href={url + params.toString()} id={id}>
+                <FontAwesomeIcon icon={icon} />{' '}
             </Link>
         )
     }

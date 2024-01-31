@@ -14,11 +14,11 @@ const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
     const link = person.id && person.id.startsWith('https://orcid.org/0') ? 
       '/orcid.org' + orcidFromUrl(person.id) : undefined;
     const personName = person.familyName ? [person.givenName, person.familyName].join(' ') : person.name
-    const personLink = link ? <Link legacyBehavior href={link}><a>{personName}</a></Link> : personName;
+    const personLink = link ? <Link href={link}>{personName}</Link> : personName;
     const affiliations = person.affiliation.map((item) => {
       return item.id && item.id.startsWith('https://ror.org/') ? (
-        <Link legacyBehavior key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
-          <a>{item.name}</a>
+        <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
+          {item.name}
         </Link>
       ) : (
         <div key={item.name}>{item.name}</div>
