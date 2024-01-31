@@ -1,6 +1,6 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { Row, Col } from 'react-bootstrap'

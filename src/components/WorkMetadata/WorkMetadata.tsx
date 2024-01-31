@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  OverlayTrigger,
   Alert,
   Label,
   Tooltip,
   Col,
   Row
 } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
@@ -50,7 +50,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       return (
         <h3 className="work">
           <Link href={'/doi.org/' + metadata.doi}>
-            <a>No Title</a>
+            No Title
           </Link>
         </h3>
       )
@@ -60,7 +60,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     return (
       <h3 className="work">
         <Link href={'/doi.org/' + metadata.doi}>
-          <a>{ReactHtmlParser(titleHtml)}</a>
+          {ReactHtmlParser(titleHtml)}
         </Link>
       </h3>
     )
@@ -121,7 +121,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {creatorList.map((c, index) =>
           c.id !== null ? (
             <Link href={'/orcid.org' + c.id} key={index}>
-              <a>{c.displayName}</a>
+              {c.displayName}
             </Link>
           ) : (
             c.displayName

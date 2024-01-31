@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons'
 

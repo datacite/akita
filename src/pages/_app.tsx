@@ -54,6 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={apolloClient}>
         <PlausibleProvider domain="commons.datacite.org">
           {/* adds the apollo provider to provide it's children with the apollo scope. */}
+          <div id="tooltip-root"></div>
           <Component {...pageProps} />
         </PlausibleProvider>
       </ApolloProvider>

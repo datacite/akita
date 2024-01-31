@@ -33,7 +33,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       <>
         <h4 className="work">
           <Link href={'/orcid.org' + orcidFromUrl(person.id)}>
-            <a>{name}</a>
+            {name}
           </Link>
         </h4>
         {person.affiliation.length > 0 && (
@@ -43,7 +43,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
                 item.id ? (
                   <div className="affiliation" key={item.id}>
                     <Link href={'/ror.org' + rorFromUrl(item.id)}>
-                        <a>{item.name}</a>
+                        {item.name}
                     </Link>
                   </div>
                 ) : (
@@ -66,7 +66,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
       <>
         <h4 className="work">
           <Link href={'/ror.org' + rorFromUrl(person.id)}>
-            <a>{name}</a>
+            {name}
           </Link>
         </h4>
         {person.affiliation.length > 0 && (
@@ -76,7 +76,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
                 item.id ? (
                   <div className="affiliation" key={item.id}>
                     <Link href={'/ror.org' + rorFromUrl(item.id)}>
-                        <a>{item.name}</a>
+                        {item.name}
                     </Link>
                   </div>
                 ) : (
@@ -104,7 +104,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               item.id ? (
                 <div className="affiliation" key={item.id}>
                   <Link href={'/ror.org' + rorFromUrl(item.id)}>
-                      <a>{item.name}</a>
+                      {item.name}
                   </Link>
                 </div>
               ) : (

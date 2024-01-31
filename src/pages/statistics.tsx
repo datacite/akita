@@ -570,15 +570,15 @@ const StatisticsPage = ({ data }) => {
                 works, with identifiers and metadata provided by DataCite and
                 Crossref. For the three major work types{' '}
                 <Link href="/publications">
-                  <a>publication</a>
+                  publication
                 </Link>
                 ,{' '}
                 <Link href="/datasets">
-                  <a>dataset</a>
+                  dataset
                 </Link>{' '}
                 and{' '}
                 <Link href="/software">
-                  <a>software</a>
+                  software
                 </Link>
                 , the respective numbers by publication year are shown below.
               </div>
