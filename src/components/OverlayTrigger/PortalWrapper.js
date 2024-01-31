@@ -14,11 +14,11 @@ class PortalWrapper extends React.Component {
   }
 
   componentDidMount() {
-    this.tooltipRoot.appendChild(this.el);
+    this.tooltipRoot?.appendChild(this.el);
   }
 
   componentWillUnmount() {
-    this.tooltipRoot.removeChild(this.el);
+    this.tooltipRoot?.removeChild(this.el);
   }
 
   render() {

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { useQueryState } from 'nuqs'
