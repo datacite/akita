@@ -34,7 +34,7 @@ type Props = {
 }
 
 export const CROSSREF_FUNDER_GQL = gql`
-  query getOrganizationQuery($crossrefFunderId: ID) {
+  query getCrossFunderQuery($crossrefFunderId: ID) {
     organization(crossrefFunderId: $crossrefFunderId) {
       id
     }
@@ -142,7 +142,7 @@ const DOI_GQL = gql`
 `
 
 export const RELATED_CONTENT_GQL = gql`
-  query getDoiQuery(
+  query getRelatedContentDoiQuery(
     $id: ID!
     $filterQuery: String
     $cursor: String

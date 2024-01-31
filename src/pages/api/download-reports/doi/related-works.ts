@@ -5,7 +5,7 @@ import { stringify } from 'csv-stringify/sync'
 import { WorkQueryData, WorkType } from "src/pages/doi.org/[...doi]";
 
 const QUERY = gql`
-  query getDoiQuery(
+  query getRelatedWorksDoiQuery(
     $id: ID!
     $filterQuery: String
     $cursor: String

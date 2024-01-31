@@ -73,7 +73,7 @@ interface OrganizationsQueryData {
 }
 
 export const ORGANIZATIONS_GQL = gql`
-  query getOrganizationQuery(
+  query searchOrganizationsQuery(
     $query: String
     $cursor: String
     $types: String

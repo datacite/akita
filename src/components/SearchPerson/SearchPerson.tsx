@@ -34,7 +34,7 @@ interface PersonQueryVar {
 }
 
 export const PERSON_GQL = gql`
-  query getPersonQuery($query: String, $cursor: String) {
+  query getSearchPersonQuery($query: String, $cursor: String) {
     people(first: 25, query: $query, after: $cursor) {
       totalCount
       pageInfo {

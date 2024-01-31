@@ -17,7 +17,7 @@ interface FormattedCitation {
 }
 
 export const FORMATTEDCITATION_GQL = gql`
-  query getContentQuery($id: ID!, $style: String!, $locale: String!) {
+  query getCitationFormatter($id: ID!, $style: String!, $locale: String!) {
     work(id: $id) {
       id
       formattedCitation(style: $style, locale: $locale)

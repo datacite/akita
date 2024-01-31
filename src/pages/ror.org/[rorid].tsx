@@ -72,7 +72,7 @@ const ORGANIZATION_GQL = gql`
 `
 
 export const RELATED_CONTENT_GQL = gql`
-  query getOrganizationQuery(
+  query getRelatedContentQuery(
     $id: ID
     $gridId: ID
     $crossrefFunderId: ID
