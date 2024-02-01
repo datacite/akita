@@ -45,11 +45,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
         />
-        {/* <link
-          href={cdnUrl + '/stylesheets/doi.css?version=1.2.2'}
-          rel="stylesheet"
-          type="text/css"
-        /> */}
       </head>
       <body>
         <Providers default_features={data.DEFAULT_FEATURES} apolloUrl={data.apolloUrl} authToken={data.authToken} >
