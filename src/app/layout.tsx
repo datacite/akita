@@ -10,9 +10,9 @@ import '../styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
 
-import Header from "./header";
-import Consent from "./consent";
-import Footer from "./footer";
+import Header from "./Header";
+import Consent from "./Consent";
+import Footer from "./Footer";
 import session from "../utils/server/session";
 import Providers from "./Providers";
 
