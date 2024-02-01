@@ -11,32 +11,32 @@ type Props = {
 }
 
 export const MetricsCounter: React.FunctionComponent<Props> = ({ metadata }) => {
+  const citationCount = metadata.citationCount || 0
+  const viewCount = metadata.viewCount || 0
+  const downloadCount = metadata.downloadCount || 0
 
-  if (
-    metadata.citationCount + metadata.viewCount + metadata.downloadCount ==
-    0
-  ) {
+  if (citationCount + viewCount + downloadCount == 0) {
     return <div></div>
   }
 
   return (
     <div className="metrics">
-      {metadata.citationCount > 0 && (
+      {citationCount > 0 && (
         <span className="metrics-counter">
           <FontAwesomeIcon icon={faQuoteLeft} size="sm" />{' '}
-          {pluralize(metadata.citationCount, 'Citation', true)}
+          {pluralize(citationCount, 'Citation', true)}
         </span>
       )}
-      {metadata.viewCount > 0 && (
+      {viewCount > 0 && (
         <span className="metrics-counter">
           <FontAwesomeIcon icon={faEye} size="sm" />{' '}
-          {pluralize(metadata.viewCount, 'View', true)}
+          {pluralize(viewCount, 'View', true)}
         </span>
       )}
-      {metadata.downloadCount > 0 && (
+      {downloadCount > 0 && (
         <span className="metrics-counter">
           <FontAwesomeIcon icon={faDownload} size="sm" />{' '}
-          {pluralize(metadata.downloadCount, 'Download', true)}
+          {pluralize(downloadCount, 'Download', true)}
         </span>
       )}
     </div>

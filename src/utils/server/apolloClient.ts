@@ -12,7 +12,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from cookie if it exists
-  const sessionCookie = cookies().get('_datacite')
+  const sessionCookie = cookies().get('_datacite') as any
   const token =
     sessionCookie &&
     sessionCookie.authenticated &&

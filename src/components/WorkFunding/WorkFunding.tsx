@@ -37,7 +37,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
       )}
       {showAwardLink && (
         <div className="award">
-          <Link href={'/doi.org' + doiFromUrl(funding.funderIdentifier) + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}>
+          <Link href={'/doi.org' + doiFromUrl(funding.funderIdentifier || '') + '?query=fundingReferences.awardNumber:(' + funding.awardNumber + ')'}>
             {funding.awardNumber}
           </Link>
         </div>

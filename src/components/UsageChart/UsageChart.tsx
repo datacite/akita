@@ -54,21 +54,21 @@ const UsageChart: React.FunctionComponent<Props> = ({
   // Get the lowerBound
   /* istanbul ignore next */
   const threeYearsAgo = subYears(new Date(), 3)
-  const lowerBound = isAfter(publicationYear, threeYearsAgo)
-    ? publicationYear
+  const lowerBound = isAfter(publicationYear || 0, threeYearsAgo)
+    ? publicationYear || 0
     : threeYearsAgo
 
   // Filter dataset
   /* istanbul ignore next */
-  let subset: ChartRecord[] = data.filter((e) => {
+  let subset: ChartRecord[] = data?.filter((e) => {
     const chartDate = parseISO(e.yearMonth)
     return isAfter(chartDate, lowerBound)
-  })
+  }) || []
 
   /* istanbul ignore next */
   subset = subset.filter((e) => {
     const chartDate = parseISO(e.yearMonth)
-    return isAfter(chartDate, publicationYear)
+    return isAfter(chartDate, publicationYear || 0)
   })
 
   // get domain, set width according to screen size
@@ -145,7 +145,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
   const title = () => {
     return (
       <div>
-        {pluralize(counts, type)} reported since publication in{' '}
+        {pluralize(counts || 0, type)} reported since publication in{' '}
         {publicationYear}.
       </div>
     )

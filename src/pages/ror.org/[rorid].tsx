@@ -162,7 +162,7 @@ interface OrganizationQueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const rorId = context.params.rorid as string
+  const rorId = context.params?.rorid as string
 
   return {
     props: {
@@ -197,17 +197,17 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
   const [cursor] = useQueryState('cursor', { history: 'push' })
 
   const variables = {
-    id: rorId,
-    gridId: gridId,
-    crossrefFunderId: crossrefFunderId,
-    cursor: cursor,
-    filterQuery: filterQuery,
-    published: published,
-    resourceTypeId: resourceType,
-    fieldOfScience: fieldOfScience,
-    language: language,
-    license: license,
-    registrationAgency: registrationAgency
+    id: rorId as string,
+    gridId: gridId as string,
+    crossrefFunderId: crossrefFunderId as string,
+    cursor: cursor as string,
+    filterQuery: filterQuery as string,
+    published: published as string,
+    resourceTypeId: resourceType as string,
+    fieldOfScience: fieldOfScience as string,
+    language: language as string,
+    license: license as string,
+    registrationAgency: registrationAgency as string
   }
 
   const organizationQuery = useQuery<
@@ -243,7 +243,7 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
       </Layout>
     )
 
-  const organization = organizationQuery.data.organization
+  const organization = organizationQuery.data?.organization || {} as OrganizationType
 
   // if query was for gridId or crossrefFunderId and organization was found
   if (!rorId && router) {
@@ -287,17 +287,17 @@ const OrganizationPage: React.FunctionComponent<Props> = ({
               }
             ]}
             variables={{
-              id: rorId,
-              gridId: gridId,
-              crossrefFunderId: crossrefFunderId,
-              cursor: cursor,
-              filterQuery: filterQuery,
-              published: published,
-              resourceTypeId: resourceType,
-              fieldOfScience: fieldOfScience,
-              language: language,
-              license: license,
-              registrationAgency: registrationAgency
+              id: rorId as string,
+              gridId: gridId as string,
+              crossrefFunderId: crossrefFunderId as string,
+              cursor: cursor as string,
+              filterQuery: filterQuery as string,
+              published: published as string,
+              resourceTypeId: resourceType as string,
+              fieldOfScience: fieldOfScience as string,
+              language: language as string,
+              license: license as string,
+              registrationAgency: registrationAgency as string
             }}
           /> }
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />

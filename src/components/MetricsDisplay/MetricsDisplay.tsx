@@ -48,7 +48,7 @@ export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links =
 
   const metricList = metricsData.map( (metric, index) => 
   <>
-    {metric.count>0 &&(
+    {metric.count && metric.count > 0 && (
       <React.Fragment key={"metric-"+index}>
         <dd>{compactNumbers(metric.count)}</dd>
         <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>

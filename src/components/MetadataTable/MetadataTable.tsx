@@ -21,7 +21,7 @@ type MetadataType = typeof METADATA_TYPES[number]
 
 export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
   const description = (title, key) => {
-    if (!metadata.descriptions[0]) return ''
+    if (!metadata.descriptions || !metadata.descriptions[0]) return ''
 
     const descriptionHtml = truncate(metadata.descriptions[0].description, {
       length: 2500,

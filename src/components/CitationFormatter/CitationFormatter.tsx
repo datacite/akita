@@ -32,7 +32,7 @@ interface FormattedCitationQueryData {
 interface FormattedCitationQueryVar {
   id: string
   style: string
-  locale: string
+  locale?: string
 }
 
 const CitationFormatter: React.FunctionComponent<Props> = ({
@@ -41,7 +41,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
   locale
 }) => {
   const cslType = style || 'apa'
-  const [formatted, setFormattedCitation] = React.useState()
+  const [formatted, setFormattedCitation] = React.useState<string>('')
   const { loading, error, data } = useQuery<
     FormattedCitationQueryData,
     FormattedCitationQueryVar
@@ -51,11 +51,7 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
   })
 
   React.useEffect(() => {
-    let result = undefined
-    if (data) {
-      result = data.work['formattedCitation']
-    }
-
+    const result = data?.work['formattedCitation'] || ''
     setFormattedCitation(result)
   }, [id, data])
 

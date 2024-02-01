@@ -64,9 +64,9 @@ interface ForceDirectedQueryData {
 }
 
 interface ForceDirectedQueryVar {
-  id: string
-  gridId: string
-  crossrefFunderId: string
+  id?: string
+  gridId?: string
+  crossrefFunderId?: string
 }
 
 const OrganizationDashboard: React.FunctionComponent<Props> = ({
@@ -91,7 +91,7 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
   // Authors -> dois
   // Dois -> dois
   
-  const forceDirectedWorks = loading ? [] : data.organization.works.nodes
+  const forceDirectedWorks = loading ? [] : data?.organization.works.nodes || []
   const nodes: ForceDirectedGraphNode[] = []
   const links: ForceDirectedGraphLink[] = []
   forceDirectedWorks.forEach((work, index) => {
@@ -104,10 +104,10 @@ const OrganizationDashboard: React.FunctionComponent<Props> = ({
     const node = { name: title, group: type}
     nodes.push(node)
 
-    links.concat(work.references.nodes.map(ref => {
+    links.concat(work.references?.nodes.map(ref => {
       const relatedWork = forceDirectedWorks.findIndex(w => w.id === ref.id)
       return { source: index, target: relatedWork, value: 1 }
-    }))
+    }) || [])
 
 
 

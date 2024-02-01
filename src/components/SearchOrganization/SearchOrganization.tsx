@@ -137,9 +137,9 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
     errorPolicy: 'all',
     variables: {
       query: searchQuery,
-      cursor: cursor,
-      types: types,
-      country: country
+      cursor: cursor as string,
+      types: types as string,
+      country: country as string
     }
   })
 
@@ -153,7 +153,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </Col>
       )
 
-    if (data.organizations.nodes.length == 0)
+    if (data?.organizations.nodes.length == 0)
       return (
         <Col md={9} mdOffset={3}>
           <div className="alert-works">
@@ -162,22 +162,22 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         </Col>
       )
 
-    const hasNextPage = data.organizations.pageInfo
+    const hasNextPage = data?.organizations.pageInfo
       ? data.organizations.pageInfo.hasNextPage
       : false
-    const endCursor = data.organizations.pageInfo
+    const endCursor = data?.organizations.pageInfo
       ? data.organizations.pageInfo.endCursor
       : ''
 
     return (
       <Col md={9} id="content">
-        {data.organizations.nodes.length > 0 && (
+        {(data?.organizations.nodes.length || 0) > 0 && (
           <h3 className="member-results">
-            {pluralize(data.organizations.totalCount, 'Organization')}
+            {pluralize(data?.organizations.totalCount || 0, 'Organization')}
           </h3>
         )}
 
-        {data.organizations.nodes.map((item) => (
+        {data?.organizations.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <OrganizationMetadata
               metadata={item}
@@ -186,7 +186,7 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
           </React.Fragment>
         ))}
 
-        {data.organizations.totalCount > 20 && (
+        {(data?.organizations.totalCount || 0) > 20 && (
           <Pager
             url={'/ror.org?'}
             hasNextPage={hasNextPage}

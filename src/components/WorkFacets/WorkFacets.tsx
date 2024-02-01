@@ -129,8 +129,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {model == "person"
-        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
+        ? <AuthorsFacet authors={data.authors || []} title="Co-Authors" url={url} model={model} />
+        : <AuthorsFacet authors={data.creatorsAndContributors || []} title="Creators & Contributors" url={url} model={model} />
       }
 
 

@@ -192,7 +192,7 @@ interface OrcidQueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const orcid = context.params.orcid as String
+  const orcid = context.params?.orcid as String
 
   return {
     props: {
@@ -222,8 +222,8 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) =>
 
   const variables = {
     id: 'http://orcid.org/' + orcid,
-    filterQuery: filterQuery,
-    cursor: cursor,
+    filterQuery: filterQuery as string,
+    cursor: cursor as string,
     published: published as string,
     resourceTypeId: resourceType as string,
     fieldOfScience: fieldOfScience as string,
@@ -256,7 +256,7 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) =>
       </Layout>
     )
 
-  const person = personQuery.data.person
+  const person = personQuery.data?.person || {} as PersonType
 
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'

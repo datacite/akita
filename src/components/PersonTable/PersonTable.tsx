@@ -15,7 +15,7 @@ const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
       '/orcid.org' + orcidFromUrl(person.id) : undefined;
     const personName = person.familyName ? [person.givenName, person.familyName].join(' ') : person.name
     const personLink = link ? <Link href={link}>{personName}</Link> : personName;
-    const affiliations = person.affiliation.map((item) => {
+    const affiliations = person.affiliation?.map((item) => {
       return item.id && item.id.startsWith('https://ror.org/') ? (
         <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
           {item.name}

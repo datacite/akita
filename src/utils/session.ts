@@ -22,12 +22,12 @@ export const session = () => {
       { algorithms: ['RS256'] },
       function (error, payload) {
         if (payload) {
-          user = payload
+          user = payload as any
         } else if (error) {
           console.log('JWT verification error: ' + error.message)
         }
       }
     )
 
-  return user
+  return user as any
 }

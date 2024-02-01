@@ -23,7 +23,7 @@ export default function session () {
       { algorithms: ['RS256'] },
       function (error, payload) {
         if (payload) {
-          user = payload
+          user = payload as any
         } else if (error) {
           console.log('JWT verification error: ' + error.message)
         }
@@ -31,5 +31,5 @@ export default function session () {
     )
   }
 
-  return user
+  return user as any
 }
