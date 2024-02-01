@@ -27,7 +27,7 @@ const link = ({ title, helpText, type }: Props['links'][number], params: string)
 
 const DownloadReports: React.FunctionComponent<Props> = ({ links, variables}) => {
 
-  if (links.length === 0) return
+  if (links.length === 0) return <></>
 
   const filteredVariables = Object.fromEntries(Object.entries(variables).filter(([, value]) => value))
   const params = new URLSearchParams(filteredVariables).toString()

@@ -15,26 +15,29 @@ type Props = {
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
   if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
 
-  const viewsTabLabel = pluralize(doi.viewCount, 'View')
-  const downloadsTabLabel = pluralize(doi.downloadCount, 'Download')
+  const views = doi.viewCount || 0
+  const downloads = doi.downloadCount || 0
 
-  const viewsOverTime = doi.viewsOverTime.map((datum) => ({
+  const viewsTabLabel = pluralize(views, 'View')
+  const downloadsTabLabel = pluralize(downloads, 'Download')
+
+  const viewsOverTime = doi.viewsOverTime?.map((datum) => ({
     yearMonth: datum.yearMonth,
     total: datum.total
   }))
-  const downloadsOverTime = doi.downloadsOverTime.map((datum) => ({
+  const downloadsOverTime = doi.downloadsOverTime?.map((datum) => ({
     yearMonth: datum.yearMonth,
     total: datum.total
   }))
 
   const analyticsBar = () => {
-    if (doi.viewCount == 0 && doi.downloadCount == 0) return ''
+    if (views == 0 && downloads == 0) return ''
 
     return (
       <div className="panel panel-transparent">
         <div className="panel-body nav-tabs-member">
           <Tabs className="content-tabs" id="over-time-tabs">
-            {doi.viewCount > 0 && (
+            {views > 0 && (
               <Tab
                 className="views-over-time-tab"
                 eventKey="viewsOverTime"
@@ -42,13 +45,13 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
               >
                 <UsageChart
                   data={viewsOverTime}
-                  counts={doi.viewCount}
+                  counts={views}
                   publicationYear={doi.publicationYear}
                   type="view"
                 />
               </Tab>
             )}
-            {doi.downloadCount > 0 && (
+            {downloads > 0 && (
               <Tab
                 className="downloads-over-time-tab"
                 eventKey="downloadsOverTime"

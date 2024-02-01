@@ -75,7 +75,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   tooltipText
 }) => {
   const [width, setWidth] = useState(500);
-  const graphDivRef = useRef(null);
+  const graphDivRef = useRef<HTMLDivElement | null>(null);
 
   function handleResize () {
     if (!graphDivRef.current) return

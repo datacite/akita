@@ -113,7 +113,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         }
         return sum
       },
-      []
+      [] as { displayName: string; id: string | null }[]
     )
 
     return (
@@ -131,7 +131,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     )
   }
 
-  const claim = metadata.claims[0]
+  const claim = metadata.claims ? metadata.claims[0] : null
 
   const container = () => {
     if (metadata.container 
@@ -184,7 +184,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   const description = () => {
-    if (!metadata.descriptions[0]) return ''
+    if (!metadata.descriptions || !metadata.descriptions[0]) return ''
 
     const descriptionHtml = truncate(metadata.descriptions[0].description, {
       length: 2500,

@@ -36,7 +36,7 @@ const DonutChart: React.FunctionComponent<Props> = ({
   range,
   domain
 }) => {
-  if (data.length==0){
+  if (data?.length==0){
     return <EmptyChart title={title}/>
   }
   // get current screen size
@@ -102,7 +102,7 @@ const DonutChart: React.FunctionComponent<Props> = ({
           fontSize: 27
         },
         encoding: {
-          text: { value: compactNumbers(count, true) }
+          text: { value: compactNumbers(count || 0, true) }
         }
       }
     ],

@@ -487,7 +487,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
         separator: '… '
       })
 
-  let type: string = metadata.work.types.resourceTypeGeneral
+  let type = metadata.work.types.resourceTypeGeneral
     ? metadata.work.types.resourceTypeGeneral.toLowerCase()
     : null
   if (
@@ -508,8 +508,8 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
 
   const variables = {
     id: doi,
-    cursor: cursor,
-    filterQuery: filterQuery,
+    cursor: cursor as string,
+    filterQuery: filterQuery as string,
     published: published as string,
     resourceTypeId: resourceType as string,
     fieldOfScience: fieldOfScience as string,
@@ -541,7 +541,7 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
       </Layout>
     )
 
-  const work = doiQuery.data.work
+  const work = doiQuery.data?.work || {} as WorkType
 
 
   const content = () => {
@@ -565,14 +565,14 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
             ]}
             variables={{
               id: doi,
-              cursor: cursor,
-              filterQuery: filterQuery,
-              published: published,
-              resourceTypeId: resourceType,
-              fieldOfScience: fieldOfScience,
-              language: language,
-              license: license,
-              registrationAgency: registrationAgency
+              cursor: cursor as string,
+              filterQuery: filterQuery as string,
+              published: published as string,
+              resourceTypeId: resourceType as string,
+              fieldOfScience: fieldOfScience as string,
+              language: language as string,
+              license: license as string,
+              registrationAgency: registrationAgency as string
             }}
           /> }
           <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
@@ -598,30 +598,29 @@ const WorkPage: React.FunctionComponent<Props> = ({ doi, metadata, isBot = false
 
     const relatedWorks = relatedContentQuery.data.work
 
-    if (
-      relatedWorks.references.totalCount +
-      relatedWorks.citations.totalCount +
-      relatedWorks.parts.totalCount +
-      relatedWorks.partOf.totalCount +
-      relatedWorks.otherRelated.totalCount
-      == 0
-    ) return ''
+    const referenceCount = relatedWorks.references?.totalCount || 0
+    const citationCount = relatedWorks.citations?.totalCount || 0
+    const partCount = relatedWorks.parts?.totalCount || 0
+    const partOfCount = relatedWorks.partOf?.totalCount || 0
+    const otherRelatedCount = relatedWorks.otherRelated?.totalCount || 0
+
+    if (referenceCount + citationCount + partCount + partOfCount + otherRelatedCount === 0) return ''
 
     const url = '/doi.org/' + relatedWorks.doi + '/?'
 
     const connectionTypeCounts = {
-      references: relatedWorks.references.totalCount,
-      citations: relatedWorks.citations.totalCount,
-      parts: relatedWorks.parts.totalCount,
-      partOf: relatedWorks.partOf.totalCount,
-      otherRelated: relatedWorks.otherRelated.totalCount
+      references: referenceCount,
+      citations: citationCount,
+      parts: partCount,
+      partOf: partOfCount,
+      otherRelated: otherRelatedCount
     }
 
     const defaultConnectionType =
-      relatedWorks.references.totalCount > 0 ? 'references' :
-      relatedWorks.citations.totalCount > 0 ? 'citations' :
-      relatedWorks.parts.totalCount > 0 ? 'parts' :
-      relatedWorks.partOf.totalCount > 0 ? 'partOf' : 'otherRelated'
+      referenceCount > 0 ? 'references' :
+      citationCount > 0 ? 'citations' :
+      partCount > 0 ? 'parts' :
+      partOfCount > 0 ? 'partOf' : 'otherRelated'
 
     const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { PropsWithChildren } from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 

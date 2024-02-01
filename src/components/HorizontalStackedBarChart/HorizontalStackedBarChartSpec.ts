@@ -1,6 +1,6 @@
 import { VisualizationSpec } from "react-vega";
 
-const stackedBarChartSpec = (width = 300, domain = [], range = []): VisualizationSpec => ({
+const stackedBarChartSpec = (width = 300, domain: string[] = [], range: string[] = []): VisualizationSpec => ({
   $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
   data: { name: 'rawData' },
   width: width,

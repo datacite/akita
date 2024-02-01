@@ -1,20 +1,21 @@
-import { Cookies } from 'react-cookie-consent'
+import { cookies } from 'next/headers'
 import JsonWebToken from 'jsonwebtoken'
 
-export const session = () => {
+
+export default function session () {
   // RSA public key
   const cert = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY
     ? process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
     : null
-  let jwt = null
+  const jwt = null
   let user = null
 
-  const sessionCookie = Cookies.getJSON('_datacite')
-  if (sessionCookie && sessionCookie.authenticated) {
-    jwt = sessionCookie.authenticated.access_token
+  const sessionCookie = cookies().get('_datacite')?.value
+  if (sessionCookie) { // && sessionCookie.authenticated) {
+    // jwt = sessionCookie.authenticated.access_token
   }
 
-  if (jwt && cert)
+  if (jwt && cert) {
     // verify asymmetric token, using RSA with SHA-256 hash algorithm
     JsonWebToken.verify(
       jwt,
@@ -28,6 +29,7 @@ export const session = () => {
         }
       }
     )
+  }
 
   return user as any
 }

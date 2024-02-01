@@ -18,7 +18,7 @@ type Props = {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const repoId = (context.params.repoid as string[]).join('/')
+  const repoId = (context.params?.repoid as string[]).join('/')
   //const doi = (context.query.doi as string[]).join('/')
   return {
     props: { repoId }
@@ -51,7 +51,7 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
   >(REPOSITORY_DETAIL_QUERY, {
     errorPolicy: 'all',
     variables: {
-      uid : repoId,
+      uid : repoId as string,
     }
 })
 
@@ -61,13 +61,13 @@ const RepositoryDetalPage: React.FunctionComponent<Props> = ({
           <>
             {error? <Error title="An error occured." message={error.message} />:(
               <>
-                <RepositoryHeadInfo repo={data.repository}/>
+                <RepositoryHeadInfo repo={data?.repository as RepositoryDetailNode}/>
                 <Row>
                   <Col md={3}>
-                    <RepositorySidebar repo={data.repository}/>
+                    <RepositorySidebar repo={data?.repository as RepositoryDetailNode}/>
                   </Col>
                   <Col md={9}>
-                    <RepositoryDetail repo={data.repository}></RepositoryDetail>
+                    <RepositoryDetail repo={data?.repository as RepositoryDetailNode} />
                   </Col>
                 </Row>
               </>
