@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
+import PlausibleProvider from 'next-plausible'
 import * as Sentry from '@sentry/node'
 
 import '../doi.css'
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
+        <PlausibleProvider domain="commons.datacite.org" />
         <link
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600"
           rel="stylesheet"
