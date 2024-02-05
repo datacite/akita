@@ -1,7 +1,5 @@
-'use client'
-
 import React, { PropsWithChildren } from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'src/components/Layout'
 
 const ExampleText: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
