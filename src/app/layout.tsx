@@ -32,17 +32,19 @@ export const metadata: Metadata = {
   
 }
 
+const sourceSans3 = Source_Sans_3({
+  weight: ['400', '600'],
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 export default async function RootLayout({ children }: PropsWithChildren) {
   const data = GetData()
   
   return (
-    <html lang="en">
+    <html lang="en" className={sourceSans3.className}>
       <head>
         <PlausibleProvider domain="commons.datacite.org" />
-        <link
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600"
-          rel="stylesheet"
-        />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
