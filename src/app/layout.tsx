@@ -1,7 +1,8 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, Suspense } from "react";
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import PlausibleProvider from 'next-plausible'
+import { Source_Sans_3 } from 'next/font/google';
 import * as Sentry from '@sentry/node'
 
 import '../doi.css'
@@ -44,11 +45,13 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className={sourceSans3.className}>
       <head>
-        <PlausibleProvider domain="commons.datacite.org" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
-        />
+        <Suspense>
+          <PlausibleProvider domain="commons.datacite.org" />
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+          />
+        </Suspense>
       </head>
       <body>
         <Providers default_features={data.DEFAULT_FEATURES} apolloUrl={data.apolloUrl} authToken={data.authToken} >
