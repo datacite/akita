@@ -12,25 +12,25 @@ type Props = {
 const Pager: React.FunctionComponent<Props> = ({
   url,
   hasNextPage,
-  endCursor,
-  // isNested
+  endCursor
 }) => {
   let firstPageUrl = ''
   let hasFirstPage = false
   let nextPageUrl = ''
 
-  const params = useSearchParams() || {} as ReadonlyURLSearchParams
+  const searchParams = useSearchParams() || {} as ReadonlyURLSearchParams
+  const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
   if (params.get('cursor')) {
     // remove cursor query parameter for first page
-    // params.delete('cursor')
+    params.delete('cursor')
     firstPageUrl = url + params.toString()
     hasFirstPage = true
   }
 
   if (hasNextPage && endCursor) {
     // set cursor query parameter for next page
-    // params.set('cursor', endCursor)
+    params.set('cursor', endCursor)
     nextPageUrl = url + params.toString()
   }
 

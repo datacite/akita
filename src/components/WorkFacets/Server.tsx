@@ -47,7 +47,6 @@ export default function WorkFacets ({
   loading,
   connectionTypesCounts
 }: Props) {
-  // const router = useRouter()
 
   // get current query parameters from next router
   const searchParams = useSearchParams()

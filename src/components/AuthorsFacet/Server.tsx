@@ -29,8 +29,6 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
     model,
     url
 }) => {
-    // const router = useRouter()
-
     // get current query parameters from next router
     const searchParams = useSearchParams()
 
