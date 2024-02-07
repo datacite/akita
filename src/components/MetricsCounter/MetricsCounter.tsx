@@ -2,12 +2,12 @@ import { faQuoteLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { WorkType } from 'src/pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import { pluralize } from '../../utils/helpers'
 
 
 type Props = {
-  metadata: WorkType
+  metadata: Work
 }
 
 export const MetricsCounter: React.FunctionComponent<Props> = ({ metadata }) => {

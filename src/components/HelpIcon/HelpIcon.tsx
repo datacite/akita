@@ -1,3 +1,5 @@
+'use client'
+
 import React, { CSSProperties } from 'react'
 import { Tooltip } from 'react-bootstrap'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'

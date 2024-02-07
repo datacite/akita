@@ -1,7 +1,7 @@
 import React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
-import { Alert } from 'react-bootstrap'
+import { Alert } from 'src/components/Layout'
 import ReactHtmlParser from 'react-html-parser'
 
 type Props = {

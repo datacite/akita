@@ -1,9 +1,11 @@
+'use client'
+
 import React, { useState } from 'react'
 import { Row, Col, Button, Modal } from 'react-bootstrap'
-import { WorkType } from 'src/pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 
 type Props = {
-  doi: WorkType
+  doi: Work
 }
 
 const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {

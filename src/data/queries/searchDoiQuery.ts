@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 import { Works } from 'src/data/types'
+import { workConnection, workFragment } from 'src/data/queries/doiQuery'
 
 
 export const SEARCH_DOI_QUERY = gql`

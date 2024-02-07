@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { useEffect } from 'react';
 import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
@@ -6,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { session } from '../../utils/session'
-import { ClaimType } from '../../pages/doi.org/[...doi]'
+import { Claim as ClaimType } from 'src/data/types'
 import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'

@@ -5,7 +5,7 @@ import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
 import { Alert, Row, Col } from 'react-bootstrap'
 
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
 import { pluralize } from '../../utils/helpers'
@@ -51,7 +51,7 @@ interface Works {
   published: ContentFacet[]
   licenses: ContentFacet[]
   languages: ContentFacet[]
-  nodes: WorkType[]
+  nodes: Work[]
 }
 
 interface PageInfo {

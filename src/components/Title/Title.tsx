@@ -1,8 +1,8 @@
 import React from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Row, Col } from 'src/components/Layout'
 
 import styles from './Title.module.scss'
-import { Rights } from 'src/pages/doi.org/[...doi]'
+import { Rights } from 'src/data/types'
 import { License } from '../License/License'
 
 

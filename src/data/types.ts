@@ -1,17 +1,26 @@
 // DOI types
-export type Work = {
+export type Metadata = {
   id: string
   doi: string
-  url: string
-  identifiers?: Identifier[]
-  contentUrl: string
   types: {
     resourceTypeGeneral?: string
     resourceType?: string
   }
-
-  titles: Title[]
   creators: Creator[]
+  titles: Title[]
+  descriptions: Description[]
+  registrationAgency: {
+    id: string
+    name: string
+  }
+  schemaOrg: string
+}
+
+export type Work = Metadata & {
+  url: string
+  identifiers?: Identifier[]
+  contentUrl: string
+
   publicationYear: number
   publisher: string
   container?: {
@@ -19,7 +28,6 @@ export type Work = {
     identifierType: string
     title: string
   }
-  descriptions?: Description[]
   fieldsOfScience?: FieldOfScience[]
 
   rights?: Rights[]
@@ -33,13 +41,8 @@ export type Work = {
     name: string
   }
   
-  registrationAgency: {
-    id: string
-    name: string
-  }
   registered?: Date
   formattedCitation?: string
-  schemaOrg: string
   claims?: Claim[]
   contributors?: Contributor[]
   fundingReferences?: FundingReference[]
@@ -86,7 +89,7 @@ type Identifier = {
   identifierUrl: string
 }
 
-type Rights = {
+export type Rights = {
   rights: string
   rightsUri: string
   rightsIdentifier: string
@@ -115,7 +118,7 @@ type Affiliation = {
   name: string
 }
 
-type FundingReference = {
+export type FundingReference = {
   funderIdentifier?: string
   funderIdentifierType?: string
   funderName?: string
