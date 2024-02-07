@@ -5,7 +5,7 @@ import { Alert, Row, Col } from 'react-bootstrap'
 
 import WorksListing from '../WorksListing/Server'
 import { pluralize } from '../../utils/helpers'
-import { Works } from 'src/app/page'
+import { Works } from 'src/data/types'
 
 export default function SearchWork (works: Works) {
   if (works.nodes.length == 0) return (

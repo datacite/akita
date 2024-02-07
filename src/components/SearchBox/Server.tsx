@@ -4,7 +4,7 @@ import { InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 
-type Props = {
+interface Props {
   path: string
 }
 

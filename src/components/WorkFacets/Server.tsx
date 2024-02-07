@@ -1,4 +1,3 @@
-
 'use client'
 
 import React from 'react'
@@ -8,13 +7,12 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { useSearchParams } from 'next/navigation'
-import { WorkType } from '../../pages/doi.org/[...doi]'
 import SearchBox from '../SearchBox/Server'
 import AuthorsFacet from '../AuthorsFacet/Server'
 import Link from 'next/link'
-import { Facet } from 'src/app/page'
+import { Work, Facet } from 'src/data/types'
 
-type Props = {
+interface Props {
   data: Facets
   model: string
   url: string
@@ -33,7 +31,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
-  nodes: WorkType[]
+  nodes: Work[]
 }
 
 function removeOtherAndMissing(facet: Facet) {

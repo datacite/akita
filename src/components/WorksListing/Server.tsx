@@ -3,13 +3,13 @@ import { Col, Alert, Row } from 'react-bootstrap'
 
 import WorkFacets from '../WorkFacets/Server'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import { Works } from '../SearchWork/SearchWork'
+import { Works } from 'src/data/types'
 
 import Pager from '../Pager/Server'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
 import SankeyGraph, { multilevelToSankey } from '../SankeyGraph/SankeyGraph'
 
-type Props = {
+interface Props {
   works: Works
   showAnalytics: boolean
   showSankey?: boolean
@@ -23,12 +23,6 @@ type Props = {
   hasPagination: boolean
   hasNextPage: boolean
   endCursor: string
-}
-
-export interface ContentFacet {
-  id: string
-  title: string
-  count: number
 }
 
 export default function WorksListing ({
@@ -86,7 +80,7 @@ export default function WorksListing ({
 
         {works.nodes.map((doi) => (
           <React.Fragment key={doi.doi}>
-            <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus}></WorkMetadata>
+            <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus} />
           </React.Fragment>
         ))}
 
@@ -95,7 +89,7 @@ export default function WorksListing ({
             url={url}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
-          ></Pager>
+          />
         )}
       </Col>
     )
