@@ -2,7 +2,6 @@
 // https://stackoverflow.com/questions/72306064/is-there-any-way-to-fix-errors-caused-by-bootstrap-when-upgrading-to-react-18
 
 
-import contains from 'dom-helpers/query/contains';
 import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
@@ -213,7 +212,7 @@ class OverlayTrigger extends React.Component {
     const target = e.currentTarget;
     const related = e.relatedTarget || e.nativeEvent[relatedNative];
 
-    if ((!related || related !== target) && !contains(target, related)) {
+    if ((!related || related !== target)) {
       handler(e);
     }
   }

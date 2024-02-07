@@ -2,7 +2,6 @@
  
 import React, { PropsWithChildren } from 'react'
 import { useSearchParams } from 'next/navigation'
-import PlausibleProvider from 'next-plausible'
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { FlagsProvider } from 'flagged'
@@ -81,9 +80,7 @@ export default function Providers({ default_features, apolloUrl, authToken, chil
 
   return <FlagsProvider features={features}>
     <ApolloProvider client={apolloClient}>
-      <PlausibleProvider domain="commons.datacite.org">
-        {children}
-      </PlausibleProvider>
+      {children}
     </ApolloProvider>
   </FlagsProvider>
 }
