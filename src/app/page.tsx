@@ -5,7 +5,7 @@ import { Row, Col } from 'src/components/Layout'
 import Error from 'src/components/Error/Server'
 import ExampleText from 'src/components/ExampleText/ExampleText'
 import SearchWork from 'src/components/SearchWork/Server'
-import SEARCH_DOI_QUERY, { QueryData, QueryVar } from 'src/data/queries/searchDoi'
+import SEARCH_DOI_QUERY, { QueryData, QueryVar } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
   searchParams: SearchParams
