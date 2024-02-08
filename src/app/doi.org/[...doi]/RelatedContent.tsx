@@ -17,6 +17,7 @@ interface Props {
 
 export default async function RelatedContent (props: Props) {
   const { variables, showSankey, connectionType, isBot = false } = props
+  console.log(variables)
 
   if (isBot) return null
 

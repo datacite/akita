@@ -17,8 +17,17 @@ interface Props {
     doi: string[]
   },
   searchParams: {
+    id: string
     filterQuery?: string
-    connectionType?: string
+    cursor?: string
+    published?: string
+    "resource-type-id"?: string
+    language?: string
+    license?: string
+    "field-of-science"?: string
+    "registration-agency"?: string
+    "connection-type"?: string
+
     isBot: string
   }
 }
@@ -88,10 +97,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+function mapSearchparams (searchParams: Props['searchParams']) {
+  return {
+    filterQuery: searchParams.filterQuery,
+    cursor: searchParams.cursor,
+    published: searchParams.published,
+    resourceTypeId: searchParams['resource-type-id'],
+    language: searchParams.language,
+    license: searchParams.license,
+    fieldOfScience: searchParams['field-of-science'],
+    registrationAgency: searchParams['registration-agency'],
+    connectionType: searchParams['connection-type'],
+    isBot: searchParams.isBot
+  }
+}
+
 
 export default async function Page({ params, searchParams }: Props) {
   const doi = params.doi.join('/')
-  const { filterQuery, connectionType, isBot, ...vars } = searchParams
+  const { connectionType, isBot, ...vars } = mapSearchparams(searchParams)
   const variables = { id: doi, ...vars }
 
 
@@ -104,7 +128,7 @@ export default async function Page({ params, searchParams }: Props) {
     })
     
     if (!data) return notFound()
-    return redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${filterQuery}`)
+    return redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
   }
 
 
