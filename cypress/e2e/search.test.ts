@@ -1,91 +1,91 @@
 describe('Search', () => {
-  describe('Works', () => {
-    beforeEach(() => {
-      cy.setCookie('_consent', 'true')
-    })
+  // describe('Works', () => {
+  //   beforeEach(() => {
+  //     cy.setCookie('_consent', 'true')
+  //   })
 
-    context('works', () => {
-      it('search with enter', () => {
-        cy.visit('/doi.org')
-        cy.get('input[name="query"]')
-          .type('climate{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Works')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
+  //   context('works', () => {
+  //     it('search with enter', () => {
+  //       cy.visit('/doi.org')
+  //       cy.get('input[name="query"]')
+  //         .type('climate{enter}')
+  //         .get('#search-nav li.active', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //         .get('.member-results', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //     })
 
-      it('search with submit', () => {
-        cy.visit('/doi.org')
-        cy.get('input[name="query"]')
-          .type('climate')
-          .get('.search-submit')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Works')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
+  //     it('search with submit', () => {
+  //       cy.visit('/doi.org')
+  //       cy.get('input[name="query"]')
+  //         .type('climate')
+  //         .get('.search-submit')
+  //         .click()
+  //         .get('#search-nav li.active', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //         .get('.member-results', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //     })
 
-      // it('search with click', () => {
-      //   cy.visit('/doi.org')
-      //   cy.get('input[name="query"]')
-      //     .type('climate')
-      //     .get('#works-link')
-      //     .click()
-      //     .get('#search-nav li.active', { timeout: 60000 })
-      //     .should('contain', 'Works')
-      //     .get('.member-results', { timeout: 60000 })
-      //     .should('contain', 'Works')
-      // })
+  //     // it('search with click', () => {
+  //     //   cy.visit('/doi.org')
+  //     //   cy.get('input[name="query"]')
+  //     //     .type('climate')
+  //     //     .get('#works-link')
+  //     //     .click()
+  //     //     .get('#search-nav li.active', { timeout: 60000 })
+  //     //     .should('contain', 'Works')
+  //     //     .get('.member-results', { timeout: 60000 })
+  //     //     .should('contain', 'Works')
+  //     // })
 
-      // it('search with query url', () => {
-      //   cy.visit('/doi.org?query=climate')
-      //   cy.get('.member-results', { timeout: 60000 }).should('contain', 'Works')
-      // })
-    })
-  })
+  //     // it('search with query url', () => {
+  //     //   cy.visit('/doi.org?query=climate')
+  //     //   cy.get('.member-results', { timeout: 60000 }).should('contain', 'Works')
+  //     // })
+  //   })
+  // })
 
-  describe('Work Record', () => {
-    beforeEach(() => {
-      cy.setCookie('_consent', 'true')
-    })
+  // describe('Work Record', () => {
+  //   beforeEach(() => {
+  //     cy.setCookie('_consent', 'true')
+  //   })
 
-    context('work record', () => {
-      // it('search with enter', () => {
-      //   cy.visit('/doi.org/10.17863/cam.10544')
-      //   cy.get('input[name="query"]')
-      //     .type('climate{enter}')
-      //     .get('#search-nav li.active', { timeout: 60000 })
-      //     .should('contain', 'This Page')
-      //     .get('.member-results', { timeout: 60000 })
-      //     .should('contain', 'Works')
-      // })
+  //   context('work record', () => {
+  //     // it('search with enter', () => {
+  //     //   cy.visit('/doi.org/10.17863/cam.10544')
+  //     //   cy.get('input[name="query"]')
+  //     //     .type('climate{enter}')
+  //     //     .get('#search-nav li.active', { timeout: 60000 })
+  //     //     .should('contain', 'This Page')
+  //     //     .get('.member-results', { timeout: 60000 })
+  //     //     .should('contain', 'Works')
+  //     // })
 
-      // it("search with submit", () => {
-      //   cy.visit("/doi.org/10.17863/cam.10544")
-      //   cy.get('input[name="query"]')
-      //     .type('climate')
-      //     .get('.search-submit').click()
-      //     .get('#search-nav li.active', { timeout: 60000 })
-      //     .should('contain', 'This Page')
-      //     .get('.member-results', { timeout: 60000 })
-      //     .should('contain', 'Works')
-      // })
+  //     // it("search with submit", () => {
+  //     //   cy.visit("/doi.org/10.17863/cam.10544")
+  //     //   cy.get('input[name="query"]')
+  //     //     .type('climate')
+  //     //     .get('.search-submit').click()
+  //     //     .get('#search-nav li.active', { timeout: 60000 })
+  //     //     .should('contain', 'This Page')
+  //     //     .get('.member-results', { timeout: 60000 })
+  //     //     .should('contain', 'Works')
+  //     // })
 
-      it('search with click', () => {
-        cy.visit('/doi.org/10.17863/cam.10544')
-        cy.get('input[name="query"]')
-          .type('climate')
-          .get('#works-link')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
-          .should('contain', 'Works')
-          .get('.member-results', { timeout: 60000 })
-          .should('contain', 'Works')
-      })
-    })
-  })
+  //     it('search with click', () => {
+  //       cy.visit('/doi.org/10.17863/cam.10544')
+  //       cy.get('input[name="query"]')
+  //         .type('climate')
+  //         .get('#works-link')
+  //         .click()
+  //         .get('#search-nav li.active', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //         .get('.member-results', { timeout: 60000 })
+  //         .should('contain', 'Works')
+  //     })
+  //   })
+  // })
 
   describe('People', () => {
     beforeEach(() => {

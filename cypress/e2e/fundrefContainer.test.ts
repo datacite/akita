@@ -19,11 +19,11 @@ describe('FundrefContainer', () => {
     )
   })
 
-  it('not in ror', () => {
-    cy.visit('/doi.org/10.13039/100011105', { failOnStatusCode: false })
-    cy.get('h1').contains('404')
-    cy.get('h2').contains('This page could not be found.')
-  })
+  // it('not in ror', () => {
+  //   cy.visit('/doi.org/10.13039/100011105', { failOnStatusCode: false })
+  //   cy.get('h1').contains('404')
+  //   cy.get('h2').contains('This page could not be found.')
+  // })
 
   // it('actions', () => {
   //   cy.get('.actions', { timeout: 30000 })

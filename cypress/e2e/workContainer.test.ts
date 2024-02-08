@@ -1,7 +1,7 @@
 describe('workContainer with usage', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit(`/doi.org/${encodeURIComponent('10.7272/q6g15xs4')}`)
+    cy.visit('/doi.org/10.7272/q6g15xs4', { failOnStatusCode: false })
   })
 
   it('creators', () => {

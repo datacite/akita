@@ -28,29 +28,41 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = params.doi.join('/')
   
-  const { data: metadata } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
+  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: DOI_METADATA_GQL,
     variables: { id: doi },
     errorPolicy: 'all'
   })
 
+  if (!data) return {
+    title: '',
+    description: '',
+    openGraph: {
+      title: '',
+      description: '',
+      url: '',
+      // type: type,
+      images: [{ url: '' }]
+    }
+  }
+
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/doi.org/' + metadata.work.doi
-      : 'https://commons.stage.datacite.org/doi.org/' + metadata.work.doi
+      ? 'https://commons.datacite.org/doi.org/' + data.work.doi
+      : 'https://commons.stage.datacite.org/doi.org/' + data.work.doi
 
   const imageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
       ? 'https://commons.datacite.org/images/logo.png'
       : 'https://commons.stage.datacite.org/images/logo.png'
 
-  const title = metadata.work.titles[0]
-    ? 'DataCite Commons: ' + metadata.work.titles[0].title
+  const title = data.work.titles[0]
+    ? 'DataCite Commons: ' + data.work.titles[0].title
     : 'DataCite Commons: No Title'
 
-  const description = !metadata.work.descriptions[0]
+  const description = !data.work.descriptions[0]
     ? undefined
-    : truncate(metadata.work.descriptions[0].description, {
+    : truncate(data.work.descriptions[0].description, {
         length: 2500,
         separator: '… '
       })
