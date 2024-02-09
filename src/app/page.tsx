@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import apolloClient from 'src/utils/server/apolloClient'
 
 import { Row, Col } from 'src/components/Layout'
@@ -26,8 +27,8 @@ export default async function IndexPage ({ searchParams }: Props) {
 
         Examples:
         <ul>
-          <li><a href="/doi.org?query=climate+change">climate change</a></li>
-          <li><a href="/doi.org?query=10.14454%2F3w3z-sa82">10.14454/3w3z-sa82</a></li>
+          <li><Link href="/doi.org?query=climate+change">climate change</Link></li>
+          <li><Link href="/doi.org?query=10.14454%2F3w3z-sa82">10.14454/3w3z-sa82</Link></li>
         </ul>
 
         Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>

@@ -38,14 +38,14 @@ export default async function Content (props: Props) {
 
   const work = data?.work || {} as WorkType
 
-  const titleHtml = work.titles[0].title
+  const title = work.titles[0]?.title || ''
   const handleUrl =
     work.registrationAgency.id === 'datacite'
       ? work.id
       : 'https://doi.org/' + work.doi
 
   return (<>
-    <TitleComponent title={ReactHtmlParser(titleHtml)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+    <TitleComponent title={ReactHtmlParser(title)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
 
     <Row>
       <Col md={3} id="side-bar">
@@ -66,7 +66,7 @@ export default async function Content (props: Props) {
           ]}
           variables={variables as any}
         /> }
-        <ShareLinks url={'doi.org/' + work.doi} title={work.titles[0] ? work.titles[0].title : undefined} />
+        <ShareLinks url={'doi.org/' + work.doi} title={title} />
       </Col>
       <Col md={9} id="content">
         <Work doi={work} />
