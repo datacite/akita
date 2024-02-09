@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { Work } from 'src/data/types'
