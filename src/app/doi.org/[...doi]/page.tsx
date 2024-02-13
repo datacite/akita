@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
 import truncate from 'lodash/truncate'
@@ -10,6 +10,7 @@ import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_GQL, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
+import Loading from 'src/components/Loading/Loading'
 
 
 interface Props {
@@ -148,8 +149,12 @@ export default async function Page({ params, searchParams }: Props) {
 
 
   return <>
-    <Content variables={variables} isBot={JSON.parse(isBot)} />
-    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
+    <Suspense fallback={<Loading />}>
+      <Content variables={variables} isBot={JSON.parse(isBot)} />
+    </Suspense>
+    <Suspense fallback={<Loading />}>
+      <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
+    </Suspense>
   </>
 }
 

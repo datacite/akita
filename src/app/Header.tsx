@@ -1,16 +1,16 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   Navbar,
   Nav,
   NavItem,
   NavDropdown,
-  MenuItem,
-  InputGroup,
-  Button
+  MenuItem
 } from 'react-bootstrap'
+import Search from 'src/components/Header/Search'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faSignInAlt,
@@ -18,8 +18,6 @@ import {
   faUserCog,
   faUserTag,
   faAddressCard,
-  faTimes,
-  faSearch,
   faNewspaper,
   faUserGraduate,
   faUniversity,
@@ -35,105 +33,53 @@ type Props = {
 
 export default function Header (props: Props) {
   const { profilesUrl, orcidUrl, user } = props
-
-  const path = usePathname()
-  const searchParams = useSearchParams()
-  const router = useRouter()
-
-  const query = searchParams?.get('query')
-
-  const [searchInput, setSearchInput] = useState('')
-
-  useEffect(() => {
-    if (router && query && !searchInput) {
-      setSearchInput(query.toString())
-    }
-  }, [query])
-
-  const onSubmit = () => {
-    if (router) {
-      router.push(`${path}?query=${searchInput}`)
-    }
-  }
-
-  const onKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      onSubmit()
-    }
-  }
-
-  const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    setSearchInput(e.currentTarget.value)
-  }
-
-  const onSearchClear = () => {
-    setSearchInput('')
-  }
+  const path = usePathname() || ''
+  const base = path?.startsWith('/doi.org') ? '/doi.org'
+    : path?.startsWith('/orcid.org') ? '/orcid.org'
+    : path?.startsWith('/ror.org') ? '/ror.org'
+    : path?.startsWith('/repositories') ? '/repositories'
+    : '/';
 
   return (
     <Navbar fluid collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">
+          <Link href="/">
             <img src="/images/commons-logo.svg" height="50" className="commons-logo"/>
-          </a>
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
         <Navbar.Form pullLeft>
-          <InputGroup>
-            <input
-              name="query"
-              value={searchInput}
-              onChange={onSearchChange}
-              key="searchInput"
-              onKeyDown={onKeyDown}
-              placeholder="Type to search..."
-              className="form-control"
-              type="text"
-            />
-            <Button type="submit" className="search-submit" onClick={onSubmit}>
-              <FontAwesomeIcon icon={faSearch} />
-            </Button>
-            {searchInput !== '' && (
-              <span
-                id="search-clear"
-                title="Clear"
-                aria-label="Clear"
-                onClick={onSearchClear}
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </span>
-            )}
-          </InputGroup>
+          <Search base={base} />
           <div>
-            <Nav id="search-nav" activeKey={path}>
+            <Nav id="search-nav" activeKey={base}>
               <NavItem
                 id="works-link"
                 eventKey={'/doi.org'}
-                href={'/doi.org?query=' + searchInput}
+                href={'/doi.org'}
               >
                 <FontAwesomeIcon icon={faNewspaper} /> Works
               </NavItem>
               <NavItem
                 id="people-link"
                 eventKey={'/orcid.org'}
-                href={'/orcid.org?query=' + searchInput}
+                href={'/orcid.org'}
               >
                 <FontAwesomeIcon icon={faUserGraduate} /> People
               </NavItem>
               <NavItem
                 id="organizations-link"
                 eventKey={'/ror.org'}
-                href={'/ror.org?query=' + searchInput}
+                href={'/ror.org'}
               >
                 <FontAwesomeIcon icon={faUniversity} /> Organizations
               </NavItem>
                 <NavItem
                   id="repositories-link"
                   eventKey={'/repositories'}
-                  href={'/repositories?query=' + searchInput}
+                  href={'/repositories'}
                 >
                   <FontAwesomeIcon icon={faDatabase} /> Repositories
                 </NavItem>

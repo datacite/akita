@@ -1,21 +1,42 @@
-'use client'
-
 import React from 'react'
-import { Alert, Row, Col } from 'react-bootstrap'
+import apolloClient from 'src/utils/server/apolloClient'
+import { Alert, Row, Col } from 'src/components/Layout'
+import Error from 'src/components/Error/Server'
 
-import WorksListing from '../WorksListing/Server'
-import { pluralize } from '../../utils/helpers'
-import { Works } from 'src/data/types'
+import { SEARCH_DOI_QUERY, QueryData, QueryVar } from 'src/data/queries/searchDoiQuery'
 
-export default function SearchWork (works: Works) {
-  if (works.nodes.length == 0) return (
+import WorksListing from 'src/components/WorksListing/Server'
+import { pluralize } from 'src/utils/helpers'
+
+interface Props {
+  variables: QueryVar
+}
+
+export default async function SearchWork (props: Props) {
+  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
+    query: SEARCH_DOI_QUERY,
+    variables: props.variables,
+    errorPolicy: 'all'
+  })
+
+  if (error) return (
+    <Row>
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
+    </Row>
+  )
+
+  const works = data?.works
+
+
+  if (!works || works.nodes.length == 0) return (
     <Col md={9} mdOffset={3}>
       <div className="alert-works">
         <Alert bsStyle="warning">No works found.</Alert>
       </div>
     </Col>
   )
-
 
   return (
     <Row>
