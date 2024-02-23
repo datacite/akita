@@ -22,7 +22,13 @@
       "jest"
     ],
     "baseUrl": ".",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "exclude": [
     "node_modules"
@@ -31,6 +37,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/overviewtsx"
+    "src/pages/overviewtsx",
+    ".next/types/**/*.ts"
   ]
 }

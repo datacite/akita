@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { gql, useQuery } from '@apollo/client'
 import { Row, Alert } from 'react-bootstrap'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 
 import Pager from '../Pager/Pager'
 import FairFilter from '../FairFilter/FairFilter'
@@ -98,13 +98,13 @@ const SearchRepositories: React.FunctionComponent<Props> = ({
     errorPolicy: 'all',
     variables: {
       query: searchQuery,
-      cursor: cursor,
-      certificate: certificate,
-      software: software,
-      hasPid: hasPid,
-      isOpen: isOpen,
-      isCertified: isCertified,
-      subjectId: subjectId,
+      cursor: cursor as string,
+      certificate: certificate as string,
+      software: software as string,
+      hasPid: hasPid as string,
+      isOpen: isOpen as string,
+      isCertified: isCertified as string,
+      subjectId: subjectId as string,
     }
 })
 
@@ -118,12 +118,12 @@ const renderFacets = () => {
       <FacetList
         title="Certificates"
         name="certificate"
-        facets={data.repositories.certificates}
+        facets={data?.repositories.certificates || []}
       />
       <FacetList
         title="Software"
         name="software"
-        facets={data.repositories.software}
+        facets={data?.repositories.software || []}
       />
     </div>
   )
@@ -153,12 +153,12 @@ const renderNoneFound = () => {
   )
 }
 const renderPager = () => {
-  if (data.repositories.totalCount < 20) return ""
+  if ((data?.repositories.totalCount || 0) < 20) return ""
 
-  const hasNextPage = data.repositories.pageInfo
+  const hasNextPage = data?.repositories.pageInfo
     ? data.repositories.pageInfo.hasNextPage
     : false
-  const endCursor = data.repositories.pageInfo
+  const endCursor = data?.repositories.pageInfo
     ? data.repositories.pageInfo.endCursor
     : ''
 
@@ -176,7 +176,7 @@ const renderResults = () => {
       <Error title="An error occured." message={error.message} />
     )
 
-  if (data.repositories.nodes.length == 0)
+  if (data?.repositories.nodes.length == 0)
     return (
       <div className="alert-works">
         {renderNoneFound()}
@@ -185,9 +185,9 @@ const renderResults = () => {
   return (
     <>
       <h3 className="member-results">
-        {data.repositories.totalCount} Repositories
+        {data?.repositories.totalCount} Repositories
       </h3>
-      {data.repositories.nodes.map((repo) => (
+      {data?.repositories.nodes.map((repo) => (
         <React.Fragment key={repo.id}>
           <RepositoryMetadata repo={repo}></RepositoryMetadata>
         </React.Fragment>

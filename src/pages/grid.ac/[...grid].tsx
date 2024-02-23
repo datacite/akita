@@ -4,7 +4,7 @@ import { rorFromUrl } from '../../utils/helpers'
 import apolloClient from '../../utils/apolloClient'
 
 export const GRID_GQL = gql`
-  query getOrganizationQuery($gridId: ID) {
+  query getGridQuery($gridId: ID) {
     organization(gridId: $gridId) {
       id
     }
@@ -12,7 +12,7 @@ export const GRID_GQL = gql`
 `
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const gridId = 'grid.ac/' + (context.params.grid as String[]).join('/')
+  const gridId = 'grid.ac/' + (context.params?.grid as String[]).join('/')
   const { data } = await apolloClient.query({
     query: GRID_GQL,
     variables: { gridId }

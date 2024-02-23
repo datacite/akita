@@ -1,5 +1,6 @@
 import React from 'react'
-import { OverlayTrigger, Tooltip, Label } from 'react-bootstrap'
+import { Tooltip, Label } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { ClaimType } from '../../pages/doi.org/[...doi]'

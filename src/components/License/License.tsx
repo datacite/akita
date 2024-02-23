@@ -79,10 +79,10 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
       })
     }
     return sum
-  }, [])
+  }, [] as { icon: any, rightsUri: string, rightsIdentifier: string }[])
 
   const otherRights = uniqueRights.reduce((sum, r) => {
-    const ri = { rightsIdentifier: null }
+    const ri = { rightsIdentifier: '' }
     if (r.rightsIdentifier && !r.rightsIdentifier.startsWith('cc')) {
       if (r.rightsIdentifier.startsWith('apache')) {
         ri.rightsIdentifier = 'Apache%202.0'
@@ -96,7 +96,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
       sum.push(ri)
     }
     return sum
-  }, [])
+  }, [] as { rightsIdentifier: string }[])
 
   if (!ccRights[0] && !otherRights[0]) return null
 
@@ -109,7 +109,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
       ))}
       {otherRights.map((r) => (
         <a
-          href={r.rightsUri}
+          // href={r.rightsUri}
           key={r.rightsIdentifier}
           target="_blank"
           rel="noreferrer"
@@ -118,6 +118,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
             src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
             width={76}
             height={20}
+            alt='License badge'
           />
         </a>
       ))}

@@ -1,9 +1,0 @@
-{
-  "baseUrl": "http://localhost:3000",
-  "experimentalFetchPolyfill": true,
-  "componentFolder": "src/components",
-  "testFiles": "**/*.test.*",
-  "video": false,
-  "projectId": "yur1cf",
-  "retries": 2
-}

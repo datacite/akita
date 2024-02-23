@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Tooltip } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
@@ -15,7 +16,7 @@ type Props = {
 const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=24, color='gray', position='top-right', padding=0 }) => {
 	if (text === null && link === null) return <></>;
 
-	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding	 } : null
+	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding	 } : {}
 
 	const icon = () => {
 		if (link !== null) return (

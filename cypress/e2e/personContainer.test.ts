@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('PersonContainer', () => {
-  before(() => {
+  beforeEach(() => {
     cy.setCookie('_consent', 'true')
     cy.visit(`/orcid.org/${encodeURIComponent('0000-0001-6528-2027')}`)
   })

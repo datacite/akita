@@ -38,7 +38,7 @@ module.exports = withSourceMaps({
     // workaround for package not defined as module
     config.module.rules.push({
       test: /\.js/,
-      include: /node_modules\/next-usequerystate/,
+      include: /node_modules\/nuqs/,
       type: 'javascript/auto'
     })
     // In `pages/_app.js`, Sentry is imported from @sentry/browser. While

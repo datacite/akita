@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { Alert, Row, Col } from 'react-bootstrap'
 
 import WorksListing from '../WorksListing/WorksListing'
@@ -258,7 +260,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
       errorPolicy: 'all',
       variables: {
         query: queryStatement,
-        cursor: cursor,
+        cursor: cursor as string,
         published: published as string,
         resourceTypeId: resourceType as string,
         fieldOfScience: fieldOfScience as string,
@@ -279,7 +281,7 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </Col>
       )
 
-    if (data.works.nodes.length == 0)
+    if (data?.works.nodes.length == 0)
       return (
         <Col md={9} mdOffset={3}>
           <div className="alert-works">
@@ -288,30 +290,30 @@ const SearchWork: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </Col>
       )
 
-    const hasNextPage = data.works.pageInfo
+    const hasNextPage = data?.works.pageInfo
       ? data.works.pageInfo.hasNextPage
       : false
-    const endCursor = data.works.pageInfo ? data.works.pageInfo.endCursor : ''
+    const endCursor = data?.works.pageInfo ? data.works.pageInfo.endCursor : ''
 
-    const totalCount = data.works.totalCount
+    const totalCount = data?.works.totalCount
 
     return (
       <div>
         <Col md={9} mdOffset={3} id="content">
-          {totalCount > 0 && (
-            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
+          {(totalCount || 0) > 0 && (
+            <h3 className="member-results">{pluralize(totalCount || 0, 'Work')}</h3>
           )}
         </Col>
 
         <WorksListing
-          works={data.works}
+          works={data?.works as Works}
           loading={loading}
           showFacets={true}
           showAnalytics={false}
           showClaimStatus={true}
           model={'doi'}
           url={'/doi.org?'}
-          hasPagination={data.works.totalCount > 25}
+          hasPagination={(data?.works.totalCount || 0) > 25}
           hasNextPage={hasNextPage}
           endCursor={endCursor}
         />

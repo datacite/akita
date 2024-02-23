@@ -5,7 +5,7 @@ import { stringify } from 'csv-stringify/sync'
 import { WorkQueryData, WorkType } from "src/pages/doi.org/[...doi]";
 
 const QUERY = gql`
-  query getDoiQuery(
+  query getRelatedWorksDoiQuery(
     $id: ID!
     $filterQuery: String
     $cursor: String
@@ -132,17 +132,17 @@ export default async function downloadReportsHandler(
 ) {
   const variables = req.query
 
-  const { data } = await apolloClient.query<WorkQueryData, unknown>({
+  const { data } = await apolloClient.query<WorkQueryData, typeof variables>({
     query: QUERY,
     variables: variables
   })
 
 
-  const references = data.work.references.nodes.map(w => addConnectionType(w, 'Reference'))
-  const citations = data.work.citations.nodes.map(w => addConnectionType(w, 'Citation'))
-  const parts = data.work.parts.nodes.map(w => addConnectionType(w, 'Part'))
-  const partOf = data.work.partOf.nodes.map(w => addConnectionType(w, 'Is Part Of'))
-  const otherRelated = data.work.otherRelated.nodes.map(w => addConnectionType(w, 'Other Relation'))
+  const references = data.work.references?.nodes.map(w => addConnectionType(w, 'Reference')) || []
+  const citations = data.work.citations?.nodes.map(w => addConnectionType(w, 'Citation')) || []
+  const parts = data.work.parts?.nodes.map(w => addConnectionType(w, 'Part')) || []
+  const partOf = data.work.partOf?.nodes.map(w => addConnectionType(w, 'Is Part Of')) || []
+  const otherRelated = data.work.otherRelated?.nodes.map(w => addConnectionType(w, 'Other Relation')) || []
 
   const works = references.concat(citations, parts, partOf, otherRelated)
   const sortedData = works.sort((a, b) => b.publicationYear - a.publicationYear)

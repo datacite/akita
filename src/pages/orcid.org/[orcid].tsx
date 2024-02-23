@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import truncate from 'lodash/truncate'
 import { Row, Col } from 'react-bootstrap'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 
 import Layout from '../../components/Layout/Layout'
 import Error from '../../components/Error/Error'
@@ -23,19 +23,12 @@ import ShareLinks from '../../components/ShareLinks/ShareLinks'
 
 type Props = {
   orcid?: string
+  isBot?: boolean
 }
 
-export const DOI_GQL = gql`
-  query getContentQuery(
+const PERSON_GQL = gql`
+  query getPersonQuery(
     $id: ID!
-    $filterQuery: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
   ) {
     person(id: $id) {
       id
@@ -77,6 +70,23 @@ export const DOI_GQL = gql`
           count
         }
       }
+    }
+  }
+`
+
+export const RELATED_CONTENT_GQL = gql`
+  query getRelatedContentQuery(
+    $id: ID!
+    $filterQuery: String
+    $cursor: String
+    $published: String
+    $resourceTypeId: String
+    $fieldOfScience: String
+    $language: String
+    $license: String
+    $registrationAgency: String
+  ) {
+    person(id: $id) {
       works(
         first: 25
         query: $filterQuery
@@ -84,7 +94,7 @@ export const DOI_GQL = gql`
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
-      language: $language
+        language: $language
         license: $license
         registrationAgency: $registrationAgency
       ) {
@@ -182,14 +192,17 @@ interface OrcidQueryVar {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const orcid = context.params.orcid as String
+  const orcid = context.params?.orcid as String
 
   return {
-    props: { orcid }
+    props: {
+      orcid,
+      isBot: JSON.parse(context.query.isBot as string)
+    }
   }
 }
 
-const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
+const PersonPage: React.FunctionComponent<Props> = ({ orcid, isBot = false }) => {
   const [filterQuery] = useQueryState('filterQuery')
   const [cursor] = useQueryState('cursor', { history: 'push' })
   const [published] = useQueryState('published', {
@@ -207,41 +220,43 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
     history: 'push'
   })
 
-  const { loading, error, data } = useQuery<OrcidDataQuery, OrcidQueryVar>(
-    DOI_GQL,
-    {
+  const variables = {
+    id: 'http://orcid.org/' + orcid,
+    filterQuery: filterQuery as string,
+    cursor: cursor as string,
+    published: published as string,
+    resourceTypeId: resourceType as string,
+    fieldOfScience: fieldOfScience as string,
+    language: language as string,
+    license: license as string,
+    registrationAgency: registrationAgency as string
+  }
+
+  const personQuery = useQuery<OrcidDataQuery, OrcidQueryVar>(PERSON_GQL, { errorPolicy: 'all', variables: variables })
+  const relatedContentQuery = useQuery<OrcidDataQuery, OrcidQueryVar>(RELATED_CONTENT_GQL, {
       errorPolicy: 'all',
-      variables: {
-        id: 'http://orcid.org/' + orcid,
-        filterQuery: filterQuery,
-        cursor: cursor,
-        published: published as string,
-        resourceTypeId: resourceType as string,
-        fieldOfScience: fieldOfScience as string,
-        language: language as string,
-        license: license as string,
-        registrationAgency: registrationAgency as string
-      }
+      variables: variables,
+      skip: isBot
     }
   )
 
-  if (loading)
+  if (personQuery.loading)
     return (
       <Layout path={'/orcid.org/' + orcid}>
         <Loading />
       </Layout>
     )
 
-  if (error)
+  if (personQuery.error)
     return (
       <Layout path={'/orcid.org/' + orcid}>
         <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
+          <Error title="An error occured." message={personQuery.error.message} />
         </Col>
       </Layout>
     )
 
-  const person = data.person
+  const person = personQuery.data?.person || {} as PersonType
 
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
@@ -278,14 +293,27 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
   }
 
   const relatedContent = () => {
-    const hasNextPage = person.works.pageInfo
-      ? person.works.pageInfo.hasNextPage
+    if (relatedContentQuery.loading) return <Loading />
+
+    if (relatedContentQuery.error)
+      return <Row>
+        <Col mdOffset={3} className="panel panel-transparent">
+          <Error title="An error occured loading related content." message={relatedContentQuery.error.message} />
+        </Col>
+      </Row>
+
+    if (!relatedContentQuery.data) return
+
+    const relatedWorks = relatedContentQuery.data.person.works
+
+    const hasNextPage = relatedWorks.pageInfo
+      ? relatedWorks.pageInfo.hasNextPage
       : false
-    const endCursor = person.works.pageInfo
-      ? person.works.pageInfo.endCursor
+    const endCursor = relatedWorks.pageInfo
+      ? relatedWorks.pageInfo.endCursor
       : ''
 
-    const totalCount = person.works.totalCount
+    const totalCount = relatedWorks.totalCount
 
     return (
       <>
@@ -293,12 +321,12 @@ const PersonPage: React.FunctionComponent<Props> = ({ orcid }) => {
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
         <WorksListing
-          works={person.works}
-          loading={loading}
+          works={relatedWorks}
+          loading={relatedContentQuery.loading}
           showFacets={true}
           showAnalytics={true}
           showClaimStatus={true}
-          hasPagination={person.works.totalCount > 25}
+          hasPagination={relatedWorks.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'person'}
           url={'/orcid.org/' + orcid + '/?'}

@@ -47,7 +47,7 @@ const Organization: React.FunctionComponent<Props> = ({
       <div className="panel panel-transparent aggregations">
         <Col className="panel-body" sm={9}>
           <MetricsDisplay
-            counts={{ works: organization.works.totalCount, citations: organization.citationCount, views: organization.viewCount, downloads: organization.downloadCount }}
+            counts={{ works: organization.works?.totalCount, citations: organization.citationCount, views: organization.viewCount, downloads: organization.downloadCount }}
             links={{
               citations: 'https://support.datacite.org/docs/citations-and-references',
               views: 'https://support.datacite.org/docs/views-and-downloads',

@@ -1,5 +1,6 @@
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Tooltip } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSquare,
@@ -50,10 +51,8 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
 
         return (
-            <Link href={url + params.toString()}>
-                <a id={id}>
-                    <FontAwesomeIcon icon={icon} />{' '}
-                </a>
+            <Link href={url + params.toString()} id={id}>
+                <FontAwesomeIcon icon={icon} />{' '}
             </Link>
         )
     }

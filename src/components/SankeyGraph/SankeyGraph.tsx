@@ -31,7 +31,7 @@ export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[]
 
 const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipText }) => {
   const [width, setWidth] = useState(500);
-  const graphDivRef = useRef(null);
+  const graphDivRef = useRef<HTMLDivElement>(null);
 
   function handleResize () {
     if (!graphDivRef.current) return

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'next-usequerystate'
+import { useQueryState } from 'nuqs'
 import { pluralize } from '../../utils/helpers'
 
 import { PersonType } from '../../pages/orcid.org/[orcid]'
@@ -34,7 +34,7 @@ interface PersonQueryVar {
 }
 
 export const PERSON_GQL = gql`
-  query getPersonQuery($query: String, $cursor: String) {
+  query getSearchPersonQuery($query: String, $cursor: String) {
     people(first: 25, query: $query, after: $cursor) {
       totalCount
       pageInfo {
@@ -58,7 +58,7 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
     PERSON_GQL,
     {
       errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor }
+      variables: { query: searchQuery, cursor: cursor as string }
     }
   )
 
@@ -72,12 +72,12 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
         </Col>
       )
 
-    const hasNextPage = data.people.pageInfo
+    const hasNextPage = data?.people.pageInfo
       ? data.people.pageInfo.hasNextPage
       : false
-    const endCursor = data.people.pageInfo ? data.people.pageInfo.endCursor : ''
+    const endCursor = data?.people.pageInfo ? data.people.pageInfo.endCursor : ''
 
-    if (data.people.nodes.length == 0)
+    if (data?.people.nodes.length == 0)
       return (
         <Col md={9} mdOffset={3}>
           <Alert bsStyle="warning">No people found.</Alert>
@@ -86,19 +86,19 @@ const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
 
     return (
       <Col md={9} mdOffset={3} id="content">
-        {data.people.nodes.length > 0 && (
+        {(data?.people.nodes.length || 0) > 0 && (
           <h3 className="member-results">
-            {pluralize(data.people.totalCount, 'Person', false, 'People')}
+            {pluralize(data?.people.totalCount || 0, 'Person', false, 'People')}
           </h3>
         )}
 
-        {data.people.nodes.map((item) => (
+        {data?.people.nodes.map((item) => (
           <React.Fragment key={item.id}>
             <PersonMetadata metadata={item} />
           </React.Fragment>
         ))}
 
-        {data.people.totalCount > 25 && (
+        {(data?.people.totalCount || 0) > 25 && (
           <Pager
             url={'/orcid.org?'}
             hasNextPage={hasNextPage}

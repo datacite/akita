@@ -113,7 +113,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     const existingClaims = cache.readQuery<QueryData, QueryVar>({ query: GET_CLAIM_GQL, variables: { id: doi_id } });
 
     // Add or update the claim in the cache
-    let newClaims = [];
+    let newClaims: ClaimType[] = [];
     if (existingClaims && existingClaims.work && existingClaims.work.claims.length > 0) {
       // Update existing claims with new claim
       const existingClaimsUpdated = existingClaims.work.claims.map(claim => {
@@ -126,10 +126,10 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
       newClaims = existingClaimsUpdated;
 
     } else {
-      newClaims = [...existingClaims.work.claims, updatedClaim];
+        newClaims = existingClaims ? [ ...existingClaims.work.claims, updatedClaim] : [updatedClaim];
     }
 
-    cache.writeQuery({ query: GET_CLAIM_GQL, variables: { id: doi_id }, data: { work: { ...existingClaims.work, claims: newClaims } } });
+    cache.writeQuery({ query: GET_CLAIM_GQL, variables: { id: doi_id }, data: { work: { ...existingClaims?.work, claims: newClaims } } });
   }
 
   const [createClaim] = useMutation(CREATE_CLAIM_GQL, {
@@ -167,7 +167,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   // don't show claim option if registration agency is not datacite
   const user = session()
   if (
-    (data.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
+    (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
   )
     return null
 
@@ -177,14 +177,14 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     </Button>
   }
 
-  const claim: ClaimType = data.work.claims[0] || {
+  const claim: ClaimType = data?.work.claims[0] || {
     id: null,
     sourceId: null,
     state: 'ready',
     claimAction: null,
     claimed: null,
     errorMessages: null
-  }
+  } as any
 
   const isClaimed = claim.state === 'done' && claim.claimed != null
   const isActionPossible = claim.state !== 'waiting'

@@ -75,10 +75,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
     }
 
     return (
-      <Link href={url + params.toString()}>
-        <a className={"facet-"+param}>
-          <FontAwesomeIcon icon={icon} />{' '}
-        </a>
+      <Link href={url + params.toString()} className={"facet-"+param}>
+        <FontAwesomeIcon icon={icon} />{' '}
       </Link>
     )
   }
@@ -131,8 +129,8 @@ const WorkFacets: React.FunctionComponent<Props> = ({
       )}
 
       {model == "person"
-        ? <AuthorsFacet authors={data.authors} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.creatorsAndContributors} title="Creators & Contributors" url={url} model={model} />
+        ? <AuthorsFacet authors={data.authors || []} title="Co-Authors" url={url} model={model} />
+        : <AuthorsFacet authors={data.creatorsAndContributors || []} title="Creators & Contributors" url={url} model={model} />
       }
 
 

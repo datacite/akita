@@ -1,12 +1,13 @@
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Tooltip } from 'react-bootstrap'
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSquare,
     faCheckSquare,
     faQuestionCircle
 } from '@fortawesome/free-regular-svg-icons'
-import { useQueryStates, queryTypes } from 'next-usequerystate'
+import { useQueryStates, queryTypes } from 'nuqs'
 
 type Props = {
     name?: string

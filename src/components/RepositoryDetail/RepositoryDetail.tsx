@@ -146,7 +146,7 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         )}
       { repo.works && (repo.works.totalCount>0) && (
           <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
-          <Button block bsStyle="primary" id="find-related">
+            <Button block bsStyle="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
               Find Related Works
@@ -170,13 +170,12 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
         { (repo.contact?.length > 0) && (
         <>
         <h3 className="member-results">Contacts</h3>
-        <div className="panel panel-transparent share">
-          <div className="panel-body">
-            { contactsData.map((contact, index) => (
-              <a id={"contact-link-"+ index} key={"contact-"+ index} href={contact.link}>{contact.text}</a>
-            ))}
-          </div>
-        </div>
+
+	<ul className={styles.contactList}>
+	{ contactsData.map((contact, index) => (
+	<li key={"contact-"+ index}><a id={"contact-link-"+ index} href={contact.link}>{contact.text}</a></li>
+				))}
+	</ul>
       </>
       )}
     </>
@@ -227,7 +226,7 @@ export const RepositoryDetail: React.FunctionComponent<Props> = ({
             domain={resourceTypeDomain}
             range={resourceTypeRange}
             tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
-        <HorizontalStackedBarChart 
+        <HorizontalStackedBarChart
           chartTitle='Licenses'
           topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
           data={licenses.data}

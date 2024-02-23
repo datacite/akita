@@ -1,7 +1,7 @@
-import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import React, { PropsWithChildren } from 'react'
+import { Row, Col, Alert } from 'src/components/Layout'
 
-const ExampleText: React.FunctionComponent = ({ children }) => {
+const ExampleText: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <Row>
       <Col xs={12} md={9} mdOffset={3}>
