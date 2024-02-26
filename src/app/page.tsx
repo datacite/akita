@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link'
-import apolloClient from 'src/utils/server/apolloClient'
 
-import { Row, Col } from 'src/components/Layout'
-import Error from 'src/components/Error/Server'
 import ExampleText from 'src/components/ExampleText/ExampleText'
+import Loading from 'src/components/Loading/Loading'
 import SearchWork from 'src/components/SearchWork/Server'
-import { SEARCH_DOI_QUERY, QueryData, QueryVar } from 'src/data/queries/searchDoiQuery'
+import { QueryVar } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
   searchParams: SearchParams
@@ -37,22 +35,9 @@ export default async function IndexPage ({ searchParams }: Props) {
   )
 
 
-  // Fetch data
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
-    query: SEARCH_DOI_QUERY,
-    variables: { query: queryStatement, ...vars },
-    errorPolicy: 'all'
-  })
-
-  if (error) return (
-    <Row>
-      <Col md={9} mdOffset={3}>
-        <Error title="An error occured." message={error.message} />
-      </Col>
-    </Row>
-  )
-
-  return <SearchWork {...data.works} />
+  return <Suspense fallback={<Loading />}>
+    <SearchWork variables={{ query: queryStatement, ...vars }} />
+  </Suspense>
 }
