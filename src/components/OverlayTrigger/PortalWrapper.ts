@@ -1,37 +1,27 @@
+'use client'
+
 // Referenced from
 // https://stackoverflow.com/questions/72306064/is-there-any-way-to-fix-errors-caused-by-bootstrap-when-upgrading-to-react-18
+// and
+// https://stackoverflow.com/questions/76268977/how-to-create-a-portal-modal-in-next-13-4
 
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import { useState, useEffect, PropsWithChildren } from 'react';
+import { createPortal } from 'react-dom';
 
-class PortalWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement('div');
-    this.tooltipRoot = document.getElementById('tooltip-root');
-  }
+export default function PortalWrapper ({ children }: PropsWithChildren) {
+  const [el, setEl] = useState<HTMLElement | undefined>(undefined);
 
-  componentDidMount() {
-    this.tooltipRoot?.appendChild(this.el);
-  }
+  useEffect(() => {
+    const el = document?.createElement('div')
+    setEl(el);
+    const tooltipRoot = document?.getElementById('tooltip-root');
+    tooltipRoot?.appendChild(el)
 
-  componentWillUnmount() {
-    this.tooltipRoot?.removeChild(this.el);
-  }
+    return () => {
+      tooltipRoot?.removeChild(el)
+    }
+  }, []);
 
-  render() {
-    // eslint-disable-next-line react/destructuring-assignment
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
+  return el ? createPortal(children, el) : null;
 }
-
-PortalWrapper.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
-
-export default PortalWrapper;
