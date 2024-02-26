@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { InputGroup, Button } from 'src/components/Layout/Header'
+import { InputGroup, Button } from 'react-bootstrap'
 
 interface Props {
   base: string
