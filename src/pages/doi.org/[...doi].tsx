@@ -264,7 +264,7 @@ export interface WorkType {
   creators: Creator[]
   titles: Title[]
   publicationYear: number
-  publisher: string
+  publisher: Publisher
   container?: {
     identifier: string
     identifierType: string
@@ -334,6 +334,14 @@ interface Affiliation {
 
 interface Title {
   title: string
+}
+
+interface Publisher {
+  name: string
+  publisherIdentifier: string
+  publisherIdentifierScheme: string
+  schemeUri: string
+  lang: string
 }
 
 export interface Rights {
