@@ -82,6 +82,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // const type = metadata.work.registrationAgency.id !== 'datacite' && metadata.work.types.resourceType
   //   ? metadata.work.types.resourceType.toLowerCase()
   //   : metadata.work.types.resourceTypeGeneral?.toLowerCase() || undefined
+
+
+  // <script type="application/ld+json">{work.schemaOrg}</script>
  
 
   return {
@@ -128,8 +131,8 @@ export default async function Page({ params, searchParams }: Props) {
       errorPolicy: 'all'
     })
     
-    if (!data) return notFound()
-    return redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
+    if (!data) notFound()
+    redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
   }
 
 
@@ -140,10 +143,7 @@ export default async function Page({ params, searchParams }: Props) {
     errorPolicy: 'all'
   })
 
-  if (!data) return notFound()
-
-
-  // return <script type="application/ld+json">{work.schemaOrg}</script>
+  if (!data) notFound()
 
   const showSankey = isDMP(data.work) || isProject(data.work)
 
