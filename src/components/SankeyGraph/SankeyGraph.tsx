@@ -19,12 +19,34 @@ type Props = {
 
 
 export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[] {
-  let data: SankeyGraphData[] = []
+  const outerMap = new Map<SankeyGraphData['data'][0], Map<SankeyGraphData['data'][1], SankeyGraphData['count']>>();
   facets = facets.filter(f => f.title)
 
   facets.forEach(facet => {
-    const arr: SankeyGraphData[] = facet.inner.map(i => ({ data: [facet.title, i.title], count: i.count }))
-    data = data.concat(arr)
+    facet.inner.forEach(i => {
+      const outerKey = facet.title
+      const innerKey = i.title
+      const count = i.count
+
+      let innerMap = outerMap.get(outerKey)
+      
+      if (!innerMap) {
+        innerMap = new Map<SankeyGraphData['data'][1], SankeyGraphData['count']>()
+        outerMap.set(outerKey, innerMap)
+      }
+
+      const previousCount = innerMap.get(innerKey) || 0
+      const totalCount = count + previousCount
+      innerMap.set(innerKey, totalCount)
+    })
+  })
+
+  const data: SankeyGraphData[] = []
+
+  outerMap.forEach((innerMap, outerKey) => {
+    innerMap.forEach((count, innerKey) => {
+      data.push({ data: [outerKey, innerKey], count })
+    })
   })
 
   return data
