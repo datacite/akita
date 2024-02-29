@@ -22,7 +22,7 @@ export type Work = Metadata & {
   contentUrl: string
 
   publicationYear: number
-  publisher: string
+  publisher: Publisher
   container?: {
     identifier: string
     identifierType: string
@@ -87,6 +87,14 @@ type Identifier = {
   identifier: string
   identifierType: string
   identifierUrl: string
+}
+
+type Publisher = {
+  name: string
+  publisherIdentifier: string
+  publisherIdentifierScheme: string
+  schemeUri: string
+  lang: string
 }
 
 export type Rights = {

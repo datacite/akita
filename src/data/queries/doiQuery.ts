@@ -99,7 +99,9 @@ export const workFragment = gql`
       descriptionType
     }
     publicationYear
-    publisher
+    publisher {
+      name
+    }
     version
     container {
       identifier
