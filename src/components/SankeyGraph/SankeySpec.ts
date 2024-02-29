@@ -1,3 +1,5 @@
+'use client'
+
 import { VisualizationSpec } from 'vega-embed'
 import { resourceTypeDomain, resourceTypeRange } from '../../data/color_palettes'
 import { BaseData, Mark, Scale } from 'vega'
@@ -147,7 +149,7 @@ const groupLabels: Mark = {
 			
 			fill: { value: "black" },
 
-			font: { value: "Source Sans Pro" },
+			// font: { value: sourceSans3.className },
 			fontSize: { value: 16 },
 
 			stroke: { value: "white" },

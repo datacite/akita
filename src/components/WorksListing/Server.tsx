@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Row, Col, Alert } from 'src/components/Layout'
 
@@ -7,7 +9,7 @@ import { Works } from 'src/data/types'
 
 import Pager from '../Pager/Server'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
-import SankeyGraph, { multilevelToSankey } from '../SankeyGraph/SankeyGraph'
+import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
 
 interface Props {
   works: Works
