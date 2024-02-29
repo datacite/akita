@@ -1,3 +1,4 @@
+'use client'
 // Referenced from
 // https://stackoverflow.com/questions/72306064/is-there-any-way-to-fix-errors-caused-by-bootstrap-when-upgrading-to-react-18
 

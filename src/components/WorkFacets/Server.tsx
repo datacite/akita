@@ -93,7 +93,7 @@ export default function WorkFacets ({
 
   return (
     <div className="panel panel-transparent">
-      {!['/doi.org?', '/orcid.org?', '/ror.org?'].includes(url) && (
+      {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
         <div className="panel facets add">
           <div className="panel-body">
             <SearchBox path={path} />

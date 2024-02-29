@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Alert, Row } from 'react-bootstrap'
+import { Row, Col, Alert } from 'src/components/Layout'
 
 import WorkFacets from '../WorkFacets/Server'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'

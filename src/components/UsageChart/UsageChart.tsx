@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { pluralize } from '../../utils/helpers'

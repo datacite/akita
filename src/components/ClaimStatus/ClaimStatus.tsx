@@ -3,10 +3,10 @@ import { Tooltip, Label } from 'react-bootstrap'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
-import { ClaimType } from '../../pages/doi.org/[...doi]'
+import { Claim } from 'src/data/types'
 
 type Props = {
-    claim: ClaimType
+    claim: Claim
 }
 
 const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {

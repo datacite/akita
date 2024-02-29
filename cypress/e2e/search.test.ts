@@ -75,10 +75,10 @@ describe('Search', () => {
 
       it('search with click', () => {
         cy.visit('/doi.org/10.17863/cam.10544')
-        cy.get('input[name="query"]')
-          .type('climate')
-          .get('#works-link')
+        cy.get('#works-link')
           .click()
+          .get('input[name="query"]')
+          .type('climate')
           .get('#search-nav li.active', { timeout: 60000 })
           .should('contain', 'Works')
           .get('.member-results', { timeout: 60000 })

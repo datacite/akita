@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { FundingReference } from '../../pages/doi.org/[...doi]'
+import { FundingReference } from 'src/data/types'
 import { doiFromUrl } from '../../utils/helpers'
 
 type Props = {

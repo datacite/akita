@@ -6,7 +6,7 @@ import { useQueryState } from 'nuqs'
 import { Alert, Row, Col } from 'react-bootstrap'
 
 import WorksListing from '../WorksListing/WorksListing'
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import Error from '../Error/Error'
 import Loading from '../Loading/Loading'
 import { pluralize } from '../../utils/helpers'
@@ -39,7 +39,7 @@ export interface Works {
   licenses: Facet[]
   fieldsOfScience: Facet[]
   registrationAgencies: Facet[]
-  nodes: WorkType[]
+  nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]
 }
 

@@ -9,7 +9,7 @@ import { useQueryState } from 'nuqs'
 import Layout from '../../components/Layout/Layout'
 import Error from '../../components/Error/Error'
 import Person from '../../components/Person/Person'
-import { WorkType } from '../doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import { orcidFromUrl, pluralize } from '../../utils/helpers'
@@ -160,7 +160,7 @@ interface Works {
   languages: ContentFacet[]
   fieldsOfScience: ContentFacet[]
   registrationAgencies: ContentFacet[]
-  nodes: WorkType[]
+  nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]
 }
 

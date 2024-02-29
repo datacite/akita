@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Pagination } from 'react-bootstrap'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'

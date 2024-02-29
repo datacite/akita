@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { gql } from '@apollo/client';
 import apolloClient from '../../../../utils/apolloClient'
 import { stringify } from 'csv-stringify/sync'
-import { WorkQueryData, WorkType } from "src/pages/doi.org/[...doi]";
+import { Work } from 'src/data/types';
+import { QueryData } from 'src/data/queries/doiQuery'
 
 const QUERY = gql`
   query getRelatedWorksDoiQuery(
@@ -120,7 +121,7 @@ const QUERY = gql`
 `
 
 
-function addConnectionType(w: WorkType, connectionType: string) {
+function addConnectionType(w: Work, connectionType: string) {
   return { ...w, connectionType: connectionType }
 }
 
@@ -132,7 +133,7 @@ export default async function downloadReportsHandler(
 ) {
   const variables = req.query
 
-  const { data } = await apolloClient.query<WorkQueryData, typeof variables>({
+  const { data } = await apolloClient.query<QueryData, typeof variables>({
     query: QUERY,
     variables: variables
   })

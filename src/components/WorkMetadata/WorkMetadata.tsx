@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
   Alert,
@@ -13,14 +15,14 @@ import { orcidFromUrl } from '../../utils/helpers'
 import ReactHtmlParser from 'react-html-parser'
 import Link from 'next/link'
 
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { License } from '../License/License'
 import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
 
 type Props = {
-  metadata: WorkType
+  metadata: Work
   linkToExternal?: boolean
   showClaimStatus?: boolean
   hideTitle?: boolean

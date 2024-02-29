@@ -1,10 +1,12 @@
+'use client'
+
 import React from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Row, Col } from 'src/components/Layout'
+import { Work } from 'src/data/types'
 import CitationFormatter from '../CitationFormatter/CitationFormatter'
 
 type Props = {
-  doi: WorkType
+  doi: Work
 }
 
 const CiteAs: React.FunctionComponent<Props> = ({ doi }) => {

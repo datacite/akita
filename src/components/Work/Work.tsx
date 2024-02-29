@@ -1,15 +1,17 @@
+'use client'
+
 import React from 'react'
 import { Tabs, Tab, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
 import { MetadataTable } from '../MetadataTable/MetadataTable'
 import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
 
 type Props = {
-  doi: WorkType
+  doi: Work
 }
 
 const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {

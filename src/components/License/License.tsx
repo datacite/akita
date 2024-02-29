@@ -12,7 +12,7 @@ import {
 import uniqBy from 'lodash/uniqBy'
 
 import styles from './License.module.scss'
-import { Rights } from 'src/pages/doi.org/[...doi]'
+import { Rights } from 'src/data/types'
 
 
 type Props = {

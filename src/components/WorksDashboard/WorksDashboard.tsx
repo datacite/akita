@@ -1,3 +1,5 @@
+'use client'
+
 import React, { PropsWithChildren } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'

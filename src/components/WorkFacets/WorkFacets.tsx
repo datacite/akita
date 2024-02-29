@@ -5,7 +5,7 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { useRouter } from 'next/router'
-import { WorkType } from '../../pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import Link from 'next/link'
@@ -29,7 +29,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
-  nodes: WorkType[]
+  nodes: Work[]
 }
 
 interface Facet {

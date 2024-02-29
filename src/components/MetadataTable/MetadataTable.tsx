@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { WorkType } from 'src/pages/doi.org/[...doi]'
+import { Work } from 'src/data/types'
 import truncate from 'lodash/truncate'
 import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
@@ -13,7 +15,7 @@ import PersonTable from '../PersonTable/PersonTable'
 
 
 type Props = {
-  metadata: WorkType
+  metadata: Work
 }
 
 const METADATA_TYPES = ['description', 'other identifiers', 'creators', 'contributors', 'funders', 'registration'] as const
