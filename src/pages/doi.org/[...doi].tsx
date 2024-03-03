@@ -26,7 +26,7 @@ import Claim from '../../components/Claim/Claim'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 
-import { Work as WorkType } from 'src/data/types'
+import { Work as WorkType, Metadata as MetadataType } from 'src/data/types'
 
 type Props = {
   doi: string
@@ -73,22 +73,6 @@ export interface MetadataQueryData {
   work: MetadataType
 }
 
-interface MetadataType {
-  id: string
-  doi: string
-  types: {
-    resourceTypeGeneral?: string
-    resourceType?: string
-  }
-  creators: Creator[]
-  titles: Title[]
-  descriptions: Description[]
-  registrationAgency: {
-    id: string
-    name: string
-  }
-  schemaOrg: string
-}
 
 const DOI_GQL = gql`
   query getDoiQuery(
@@ -251,153 +235,6 @@ export const RELATED_CONTENT_GQL = gql`
   ${connectionFragment.workConnection}
   ${contentFragment.work}
 `
-
-// export interface WorkType {
-//   id: string
-//   doi: string
-//   url: string
-//   identifiers?: Identifier[]
-//   contentUrl: string
-//   types: {
-//     resourceTypeGeneral?: string
-//     resourceType?: string
-//   }
-//   creators: Creator[]
-//   titles: Title[]
-//   publicationYear: number
-//   publisher: Publisher
-//   container?: {
-//     identifier: string
-//     identifierType: string
-//     title: string
-//   }
-//   descriptions?: Description[]
-//   fieldsOfScience?: FieldOfScience[]
-//   rights?: Rights[]
-//   version?: string
-//   language?: {
-//     id: string
-//     name: string
-//   }
-//   repository?: {
-//     id: string
-//     name: string
-//   }
-//   registrationAgency: {
-//     id: string
-//     name: string
-//   }
-//   registered?: Date
-//   formattedCitation?: string
-//   schemaOrg: string
-//   claims?: ClaimType[]
-//   contributors?: Contributor[]
-//   fundingReferences?: FundingReference[]
-//   citationCount?: number
-//   citations?: Works
-//   viewCount?: number
-//   viewsOverTime?: UsageMonth[]
-//   downloadCount?: number
-//   downloadsOverTime?: UsageMonth[]
-//   references?: Works
-//   parts?: Works
-//   partOf?: Works
-//   otherRelated?: Works
-// }
-
-export interface Creator {
-  id: string
-  name: string
-  givenName: string
-  familyName: string
-  affiliation: Affiliation[]
-}
-
-// interface Identifier {
-//   identifier: string
-//   identifierType: string
-//   identifierUrl: string
-// }
-
-// interface Contributor {
-//   id: string
-//   name: string
-//   givenName: string
-//   familyName: string
-//   contributorType: string
-//   affiliation: Affiliation[]
-// }
-
-interface Affiliation {
-  id: string
-  name: string
-}
-
-interface Title {
-  title: string
-}
-
-// interface Publisher {
-//   name: string
-//   publisherIdentifier: string
-//   publisherIdentifierScheme: string
-//   schemeUri: string
-//   lang: string
-// }
-
-export interface Rights {
-  rights: string
-  rightsUri: string
-  rightsIdentifier: string
-}
-
-export interface ClaimType {
-  id: string
-  sourceId: string
-  state: string
-  claimAction: string
-  claimed: Date
-  errorMessages: ClaimError[]
-}
-
-interface ClaimError {
-  status?: number
-  title: string
-}
-
-export interface FundingReference {
-  funderIdentifier?: string
-  funderIdentifierType?: string
-  funderName?: string
-  awardUri?: string
-  awardTitle?: string
-  awardNumber?: string
-}
-
-// interface FieldOfScience {
-//   id: string
-//   name: string
-// }
-
-interface Description {
-  description: string
-}
-
-export interface UsageMonth {
-  yearMonth: string
-  total: number
-}
-
-export interface RelatedContentList {
-  nodes: {
-    id: string
-    formattedCitation: string
-    registrationAgency: {
-      name: string
-      id: string
-    }
-  }
-}
 
 export interface WorkQueryData {
   work: WorkType
