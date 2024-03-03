@@ -1,7 +1,7 @@
 describe('WorkContainer missing DOI', () => {
   before(() => {
     cy.setCookie('_consent', 'true')
-    cy.visit('/doi.org/10.4224/xxxxx')
+    cy.visit(`/doi.org/10.4224/xxxxx`, { failOnStatusCode: false })
   })
 
   it('visit 10.4224/xxxxx', () => {
