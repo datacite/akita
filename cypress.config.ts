@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  experimentalFetchPolyfill: true,
+  experimentalFetchPolyfill: false,
   video: false,
   projectId: 'yur1cf',
   retries: 2,

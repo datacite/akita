@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react'
-import apolloClient from 'src/utils/server/apolloClient'
+import { useQuery } from '@apollo/client'
+import Loading from '../Loading/Loading'
 import { Alert, Row, Col } from 'src/components/Layout'
 import Error from 'src/components/Error/Server'
 
@@ -12,12 +15,16 @@ interface Props {
   variables: QueryVar
 }
 
-export default async function SearchWork (props: Props) {
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
-    query: SEARCH_DOI_QUERY,
-    variables: props.variables,
-    errorPolicy: 'all'
-  })
+export default function SearchWork (props: Props) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_DOI_QUERY,
+    {
+      variables: props.variables,
+      errorPolicy: 'all'
+    }
+  )
+
+  if (loading) return <Row><Loading /></Row>
 
   if (error) return (
     <Row>
