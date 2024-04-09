@@ -3,7 +3,7 @@
 import React, { PropsWithChildren } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'
-import { Works } from '../SearchWork/SearchWork'
+import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'

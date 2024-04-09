@@ -11,11 +11,8 @@ import Error from '../../components/Error/Error'
 import Organization from '../../components/Organization/Organization'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
-import {
-  Works,
-  connectionFragment,
-  contentFragment
-} from '../../components/SearchWork/SearchWork'
+import { Works } from 'src/data/types'
+import { workConnection, workFragment } from 'src/data/queries/doiQuery'
 import { rorFromUrl, pluralize } from '../../utils/helpers'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 import { Title } from 'src/components/Title/Title'
@@ -108,8 +105,8 @@ export const RELATED_CONTENT_GQL = gql`
       }
     }
   }
-  ${connectionFragment.workConnection}
-  ${contentFragment.work}
+  ${workConnection}
+  ${workFragment}
 `
 
 interface OrganizationType {

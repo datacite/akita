@@ -1,7 +1,7 @@
 import React from 'react'
 
 import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
-import { Works } from '../SearchWork/SearchWork'
+import { Works } from 'src/data/types'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { Col } from 'react-bootstrap'
 

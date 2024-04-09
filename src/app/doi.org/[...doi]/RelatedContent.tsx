@@ -6,7 +6,7 @@ import { Col, Row } from "src/components/Layout";
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/doiQuery'
-import { Works } from 'src/data/types';
+import { Works } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/Server'

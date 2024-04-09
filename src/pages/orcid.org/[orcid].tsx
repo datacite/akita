@@ -13,12 +13,8 @@ import { Work } from 'src/data/types'
 import WorksListing from '../../components/WorksListing/WorksListing'
 import Loading from '../../components/Loading/Loading'
 import { orcidFromUrl, pluralize } from '../../utils/helpers'
-import {
-  MultilevelFacet,
-  PageInfo,
-  connectionFragment,
-  contentFragment
-} from '../../components/SearchWork/SearchWork'
+import { MultilevelFacet, PageInfo } from 'src/data/types'
+import { workConnection, workFragment } from 'src/data/queries/doiQuery'
 import ShareLinks from '../../components/ShareLinks/ShareLinks'
 
 type Props = {
@@ -105,8 +101,8 @@ export const RELATED_CONTENT_GQL = gql`
       }
     }
   }
-  ${connectionFragment.workConnection}
-  ${contentFragment.work}
+  ${workConnection}
+  ${workFragment}
 `
 
 export interface PersonType {

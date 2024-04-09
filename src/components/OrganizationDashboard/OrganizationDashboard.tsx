@@ -1,7 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
-import { Works } from '../SearchWork/SearchWork'
+import { Works } from 'src/data/types'
 import { ForceDirectedGraphLink, ForceDirectedGraphNode } from '../ForceDirectedGraph/ForceDirectedGraph'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
 import { resourceTypeDomain } from '../../data/color_palettes'
