@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import ExampleText from 'src/components/ExampleText/ExampleText'
-import SearchWork from 'src/components/SearchWork/Server'
+import SearchWork from 'src/components/SearchWork/SearchWork'
 import { QueryVar } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
