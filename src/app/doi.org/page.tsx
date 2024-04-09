@@ -16,6 +16,13 @@ interface SearchParams extends Partial<QueryVar> {
 export default async function SearchDoiPage ({ searchParams }: Props) {
   const { query, filterQuery, ...vars } = searchParams
 
+  const variables = {
+    ...vars,
+    resourceTypeId: vars['resource-type'],
+    fieldOfScience: vars['field-of-science'],
+    registrationAgency: vars['registration-agency']
+  }
+
   // Show examply text if there is no query
   if (!query || query === '') return (
     <ExampleText>
@@ -36,5 +43,5 @@ export default async function SearchDoiPage ({ searchParams }: Props) {
 
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  return <SearchWork variables={{ query: queryStatement, ...vars }} />
+  return <SearchWork variables={{ query: queryStatement, ...variables }} />
 }

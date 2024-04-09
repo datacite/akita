@@ -19,7 +19,14 @@ interface Props {
 }
 
 export default function RelatedContent (props: Props) {
-  const { variables, showSankey, connectionType, isBot = false } = props
+  const { variables: vars, showSankey, connectionType, isBot = false } = props
+
+  const variables = {
+    ...vars,
+    resourceTypeId: vars['resource-type'],
+    fieldOfScience: vars['field-of-science'],
+    registrationAgency: vars['registration-agency']
+  }
 
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
