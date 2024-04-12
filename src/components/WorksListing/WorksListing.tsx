@@ -3,7 +3,7 @@ import { Col, Alert, Row } from 'react-bootstrap'
 
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import { Works } from '../SearchWork/SearchWork'
+import { Works } from 'src/data/types'
 
 import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'

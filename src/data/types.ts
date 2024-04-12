@@ -167,11 +167,11 @@ export type Facet = {
   count: number
 }
 
-type MultilevelFacet = Facet & {
+export type MultilevelFacet = Facet & {
   inner: Facet[]
 }
 
-type PageInfo = {
+export type PageInfo = {
   endCursor: string
   hasNextPage: boolean
 }

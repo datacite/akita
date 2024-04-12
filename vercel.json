@@ -4,8 +4,13 @@
     "enabled": false
   },
   "functions": {
-    "src/pages/doi.org/[...doi].tsx": {
-            "memory": 512
+    "src/pages/**/*": {
+      "memory": 512,
+      "maxDuration": 3
+    },
+    "src/app/**/*": {
+      "memory": 512,
+      "maxDuration": 3
     }
   }
 }

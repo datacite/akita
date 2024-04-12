@@ -5,7 +5,7 @@ import { Vega } from 'react-vega'
 
 import HelpIcon from '../HelpIcon/HelpIcon'
 import EmptyChart from '../EmptyChart/EmptyChart'
-import { MultilevelFacet } from '../SearchWork/SearchWork'
+import { MultilevelFacet } from 'src/data/types';
 import sankeySpec, { SankeyGraphData } from './SankeySpec'
 
 import styles from './SankeyGraph.module.scss'
