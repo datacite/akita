@@ -1,5 +1,5 @@
 // DOI types
-export type Metadata = {
+export type WorkMetadata = {
   id: string
   doi: string
   types: {
@@ -16,7 +16,7 @@ export type Metadata = {
   schemaOrg: string
 }
 
-export type Work = Metadata & {
+export type Work = WorkMetadata & {
   url: string
   identifiers?: Identifier[]
   contentUrl: string
