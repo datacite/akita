@@ -6,11 +6,11 @@
   "functions": {
     "src/pages/**/*": {
       "memory": 512,
-      "maxDuration": 3
+      "maxDuration": 8
     },
     "src/app/**/*": {
       "memory": 512,
-      "maxDuration": 3
+      "maxDuration": 8
     }
   }
 }
