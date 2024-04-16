@@ -4,13 +4,13 @@
     "enabled": false
   },
   "functions": {
+     "src/pages/api/download-reports/**/*": {
+      "memory": 512,
+      "maxDuration": 30
+    },
     "src/pages/**/*": {
       "memory": 512,
       "maxDuration": 8
-    },
-    "src/pages/api/download-reports/**/*": {
-      "memory": 512,
-      "maxDuration": 30
     },
     "src/app/**/*": {
       "memory": 512,
