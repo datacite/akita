@@ -18,7 +18,7 @@ export type WorkMetadata = {
 
 export type Work = WorkMetadata & {
   url: string
-  identifiers?: Identifier[]
+  identifiers?: DoiIdentifier[]
   contentUrl: string
 
   publicationYear: number
@@ -83,7 +83,7 @@ type Description = {
   description: string
 }
 
-type Identifier = {
+type DoiIdentifier = {
   identifier: string
   identifierType: string
   identifierUrl: string
@@ -161,6 +161,56 @@ type UsageMonth = {
 
 
 
+// Organization types
+export type Organization = {
+  id: string
+  name: string
+  memberId: string
+  memberRoleId: string
+  alternateName: string[]
+  inceptionYear: number
+  types: string[]
+  url: string
+  wikipediaUrl: string
+  twitter: string
+  citationCount: number
+  viewCount: number
+  downloadCount: number
+  geolocation: Geolocation
+  country: Country
+  identifiers: OrganizationIdentifier[]
+}
+
+
+export type Organizations = {
+  totalCount: number
+  pageInfo: PageInfo
+  types: Facet[]
+  countries: Facet[]
+  nodes: Organization[]
+}
+
+
+
+type Geolocation = {
+  pointLongitude: number
+  pointLatitude: number
+}
+
+type Country = {
+  id: string
+  name: string
+}
+
+type OrganizationIdentifier = {
+  identifier: string
+  identifierType: string
+}
+
+
+
+
+// Shared types
 export type Facet = {
   id: string
   title: string
