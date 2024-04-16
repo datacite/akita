@@ -12,7 +12,7 @@
       "memory": 512,
       "maxDuration": 8
     },
-    "src/pages/api/download-reports/*": {
+    "src/pages/api/download-reports/**/*": {
       "memory": 512,
       "maxDuration": 30
     }
