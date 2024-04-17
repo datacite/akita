@@ -24,21 +24,23 @@ import {
   faDatabase,
 } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
+import { session } from 'src/utils/session'
 
 type Props = {
   profilesUrl: string
   orcidUrl: string
-  user: any
 }
 
 export default function Header (props: Props) {
-  const { profilesUrl, orcidUrl, user } = props
+  const { profilesUrl, orcidUrl } = props
   const path = usePathname() || ''
   const base = path?.startsWith('/doi.org') ? '/doi.org'
     : path?.startsWith('/orcid.org') ? '/orcid.org'
     : path?.startsWith('/ror.org') ? '/ror.org'
     : path?.startsWith('/repositories') ? '/repositories'
     : '/';
+
+  const user = session()
 
   return (
     <Navbar fluid collapseOnSelect>

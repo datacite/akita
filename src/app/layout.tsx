@@ -14,7 +14,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
 import Header from "./Header";
 import Consent from "./Consent";
 import Footer from "./Footer";
-import session from "../utils/server/session";
 import Providers from "./Providers";
 
 
@@ -54,7 +53,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       </head>
       <body>
         <Providers default_features={data.DEFAULT_FEATURES} apolloUrl={data.apolloUrl} authToken={data.authToken} >
-          <Header profilesUrl={data.profilesUrl} orcidUrl={data.orcidUrl} user={data.user} />
+          <Header profilesUrl={data.profilesUrl} orcidUrl={data.orcidUrl} />
           <div className="container-fluid">{children}</div>
           <Consent domain={data.domain} />
           <Footer  />
@@ -108,7 +107,5 @@ function GetData () {
   }
 
 
-  const user = session()
-
-  return { DEFAULT_FEATURES, apolloUrl, authToken, profilesUrl, orcidUrl, domain, user }
+  return { DEFAULT_FEATURES, apolloUrl, authToken, profilesUrl, orcidUrl, domain  }
 }
