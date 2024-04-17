@@ -7,12 +7,12 @@ export default function session () {
   const cert = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY
     ? process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
     : null
-  const jwt = null
+  let jwt = null
   let user = null
 
-  const sessionCookie = cookies().get('_datacite')?.value
-  if (sessionCookie) { // && sessionCookie.authenticated) {
-    // jwt = sessionCookie.authenticated.access_token
+  const sessionCookie = cookies().get('_datacite')?.value as any
+  if (sessionCookie && sessionCookie.authenticated) {
+    jwt = sessionCookie.authenticated.access_token
   }
 
   if (jwt && cert) {
