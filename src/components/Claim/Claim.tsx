@@ -152,32 +152,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     }
   })
 
-  if (loading) return <Loading />
-  if (error)
-    return (
-      <>
-        <h3 className="member-results">Claim</h3>
-        <div className="panel panel-transparent claim">
-          <div className="panel-body">
-            <Error title="An error occured." message={error.message} />
-          </div>
-        </div>
-      </>
-    )
-
-  // don't show claim option if user is not logged in
-  // don't show claim option if registration agency is not datacite
   const user = session()
-  if (
-    (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
-  )
-    return null
-
-  if (!user){
-    return <Button bsStyle='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
-      <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
-    </Button>
-  }
 
   const claim: ClaimType = data?.work.claims[0] || {
     id: null,
@@ -212,6 +187,34 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     deleteClaim({
       variables: { id: claim.id }
     })
+  }
+  
+
+
+  // don't show claim option if registration agency is not datacite
+  if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
+    return null
+
+
+  if (loading) return <Loading />
+  if (error)
+    return (
+      <>
+        <h3 className="member-results">Claim</h3>
+        <div className="panel panel-transparent claim">
+          <div className="panel-body">
+            <Error title="An error occured." message={error.message} />
+          </div>
+        </div>
+      </>
+    )
+
+
+  // don't show claim option if user is not logged in
+  if (!user){
+    return <Button bsStyle='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
+      <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
+    </Button>
   }
 
   return (
