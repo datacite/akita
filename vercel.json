@@ -12,7 +12,7 @@
       "memory": 512,
       "maxDuration": 8
     },
-    "src/app/ror.org/[rorid]": {
+    "src/app/ror.org/[rorid]/page.tsx": {
       "memory": 512,
       "maxDuration": 15
     },
