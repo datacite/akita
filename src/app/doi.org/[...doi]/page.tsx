@@ -22,7 +22,7 @@ interface Props {
     filterQuery?: string
     cursor?: string
     published?: string
-    "resource-type-id"?: string
+    "resource-type"?: string
     language?: string
     license?: string
     "field-of-science"?: string
@@ -106,7 +106,7 @@ function mapSearchparams (searchParams: Props['searchParams']) {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,
     published: searchParams.published,
-    resourceTypeId: searchParams['resource-type-id'],
+    resourceTypeId: searchParams['resource-type'],
     language: searchParams.language,
     license: searchParams.license,
     fieldOfScience: searchParams['field-of-science'],
