@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import apolloClient from 'src/utils/server/apolloClient'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
@@ -98,9 +99,18 @@ function mapSearchparams (searchParams: Props['searchParams']) {
 
 
 export default async function Page({ params, searchParams }: Props) {
+  const { rorid } = params
   const { isBot, ...vars } = mapSearchparams(searchParams)
-  const variables = { id: params.rorid, ...vars }
+  const variables = { id: rorid, ...vars }
 
+  // Fetch Organization metadata
+  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
+    query: ORGANIZATION_METADATA_QUERY,
+    variables: { id: rorid },
+    errorPolicy: 'all'
+  })
+
+  if (!data) notFound()
 
   return <>
     <Suspense fallback={<Loading />}>

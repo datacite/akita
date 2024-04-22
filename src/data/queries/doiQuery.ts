@@ -139,7 +139,7 @@ export const workFragment = gql`
   }
 `
 
-export const DOI_METADATA_GQL = gql`
+export const DOI_METADATA_QUERY = gql`
   query getMetadataQuery($id: ID!) {
     work(id: $id) {
       id

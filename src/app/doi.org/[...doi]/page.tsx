@@ -8,7 +8,7 @@ import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 import apolloClient from 'src/utils/server/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
-import { DOI_METADATA_GQL, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
+import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = params.doi.join('/')
   
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_GQL,
+    query: DOI_METADATA_QUERY,
     variables: { id: doi },
     errorPolicy: 'all'
   })
@@ -138,7 +138,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   // Fetch DOI metadata
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_GQL,
+    query: DOI_METADATA_QUERY,
     variables: { id: doi },
     errorPolicy: 'all'
   })
