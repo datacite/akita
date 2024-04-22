@@ -162,9 +162,12 @@ type UsageMonth = {
 
 
 // Organization types
-export type Organization = {
-  id: string
+export type OrganizationMetadata = {
   name: string
+}
+
+export type Organization = OrganizationMetadata & {
+  id: string
   memberId: string
   memberRoleId: string
   alternateName: string[]
@@ -179,6 +182,7 @@ export type Organization = {
   geolocation: Geolocation
   country: Country
   identifiers: OrganizationIdentifier[]
+  works: Works
 }
 
 
