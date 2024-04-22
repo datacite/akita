@@ -16,7 +16,9 @@ interface FacetListProps {
   param: string
   url: string
 
+  // eslint-disable-next-line no-unused-vars
   value?: (fid: string) => string
+  // eslint-disable-next-line no-unused-vars
   checked?: (index: number) => boolean
   radio?: boolean
   tooltipText?: string
