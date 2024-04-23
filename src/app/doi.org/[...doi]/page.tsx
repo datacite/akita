@@ -8,7 +8,7 @@ import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 import apolloClient from 'src/utils/server/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
-import { DOI_METADATA_GQL, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
+import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 
@@ -22,7 +22,7 @@ interface Props {
     filterQuery?: string
     cursor?: string
     published?: string
-    "resource-type-id"?: string
+    "resource-type"?: string
     language?: string
     license?: string
     "field-of-science"?: string
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = params.doi.join('/')
   
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_GQL,
+    query: DOI_METADATA_QUERY,
     variables: { id: doi },
     errorPolicy: 'all'
   })
@@ -106,7 +106,7 @@ function mapSearchparams (searchParams: Props['searchParams']) {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,
     published: searchParams.published,
-    resourceTypeId: searchParams['resource-type-id'],
+    resourceTypeId: searchParams['resource-type'],
     language: searchParams.language,
     license: searchParams.license,
     fieldOfScience: searchParams['field-of-science'],
@@ -138,7 +138,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   // Fetch DOI metadata
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_GQL,
+    query: DOI_METADATA_QUERY,
     variables: { id: doi },
     errorPolicy: 'all'
   })

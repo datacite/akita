@@ -1,6 +1,6 @@
 import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/en'
-import { Metadata } from 'src/data/types'
+import { WorkMetadata } from 'src/data/types'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
   let options = {}
@@ -39,10 +39,10 @@ export const gridFromUrl = (gridUrl: string) => {
 }
 
 
-export function isDMP (work: Metadata) {
+export function isDMP (work: WorkMetadata) {
   return work.types.resourceTypeGeneral === 'OutputManagementPlan'
 }
 
-export function isProject (work: Metadata) {
+export function isProject (work: WorkMetadata) {
   return work.types.resourceType === 'Project' && (work.types.resourceTypeGeneral === 'Other' || work.types.resourceTypeGeneral === 'Text')
 }

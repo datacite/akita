@@ -1,16 +1,11 @@
 'use client'
 
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faSquare, faCheckSquare,
-  faCircle, faDotCircle,
-} from '@fortawesome/free-regular-svg-icons'
 import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/Server'
 import AuthorsFacet from '../AuthorsFacet/Server'
-import Link from 'next/link'
 import { Work, Facet } from 'src/data/types'
+import FacetList from '../FacetList/Server'
 
 interface Props {
   data: Facets
@@ -51,33 +46,6 @@ export default function WorkFacets ({
 
   if (loading) return <div className="col-md-3"></div>
 
-  function facetLink(param: string, value: string, checked = false, radio = false) {
-    const checkIcon = radio ? faDotCircle : faCheckSquare
-    const uncheckIcon = radio ? faCircle : faSquare
-    let icon = checked ? checkIcon : uncheckIcon
-
-    const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
-
-    // delete model and cursor parameters
-    params.delete(model)
-    params.delete('cursor')
-
-    if (params.get(param) == value) {
-      // if param is present, delete from query and use checked icon
-      params.delete(param)
-      icon = checkIcon
-    } else {
-      // otherwise replace param with new value and use unchecked icon
-      params.set(param, value)
-    }
-
-    return (
-      <Link href={url + params.toString()} className={"facet-"+param}>
-        <FontAwesomeIcon icon={icon} />{' '}
-      </Link>
-    )
-  }
-
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
@@ -90,6 +58,7 @@ export default function WorkFacets ({
   ] : []
 
   const isConnectionTypeSet = searchParams?.has('connection-type')
+  const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
   return (
     <div className="panel panel-transparent">
@@ -100,29 +69,17 @@ export default function WorkFacets ({
           </div>
         </div>
       )}
-      {connectionTypesCounts && connectionTypesCounts.references +
-      connectionTypesCounts.citations +
-      connectionTypesCounts.parts +
-      connectionTypesCounts.partOf +
-      connectionTypesCounts.otherRelated
-       > 0 && (
-      <div className="panel facets add">
-        <div className="panel-body">
-          <h4>Connection Types</h4>
-          <ul id="connections-type-facets">
-            {connectionTypeList.filter(f => f.count > 0).map((facet, i) => (
-              <li key={facet.id}>
-                {facetLink('connection-type', facet.id, !isConnectionTypeSet && i == 0, true)}
-                <div className="facet-title">{facet.title}</div>
-                <span className="number pull-right">
-                  {facet.count.toLocaleString('en-US')}
-                </span>
-                <div className="clearfix" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+
+      {totalConnectionTypeCount > 0 && (
+        <FacetList
+          data={connectionTypeList.filter(f => f.count > 0)}
+          title="Connection Types"
+          id="connections-type-facets"
+          param="connection-type"
+          url={url}
+          checked={(i) => !isConnectionTypeSet && i == 0}
+          radio
+        />
       )}
 
       {model == "person"
@@ -131,125 +88,53 @@ export default function WorkFacets ({
       }
 
 
-      {data.published && data.published.length > 0 && (
-      <div className="panel facets add">
-        <div className="panel-body">
-          <h4>Publication Year</h4>
-          <ul id="published-facets">
-            {data.published.map((facet) => (
-              <li key={facet.id}>
-                {facetLink('published', facet.id)}
-                <div className="facet-title">{facet.title}</div>
-                <span className="number pull-right">
-                  {facet.count.toLocaleString('en-US')}
-                </span>
-                <div className="clearfix" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      )}
+      <FacetList
+        data={data.published}
+        title="Publication Year"
+        id="published-facets"
+        param="published"
+        url={url}
+      />
 
-      {data.resourceTypes && data.resourceTypes.length > 0 && (
-      <div className="panel facets add">
-        <div className="panel-body">
-          <h4>Work Type</h4>
-          <ul id="work-type-facets">
-            {data.resourceTypes.filter(removeOtherAndMissing).map((facet) => (
-              <li key={facet.id}>
-                {facetLink('resource-type', facet.id)}
-                <div className="facet-title">{facet.title}</div>
-                <span className="number pull-right">
-                  {facet.count.toLocaleString('en-US')}
-                </span>
-                <div className="clearfix" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      )}
+      <FacetList
+        data={data.resourceTypes?.filter(removeOtherAndMissing)}
+        title="Work Type"
+        id="work-type-facets"
+        param="resource-type"
+        url={url}
+      />
 
-      {data.licenses && data.licenses.length > 0 && (
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>License</h4>
-            <ul id="license-facets">
-              {data.licenses.filter(removeOtherAndMissing).map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('license', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      <FacetList
+        data={data.licenses?.filter(removeOtherAndMissing)}
+        title="License"
+        id="license-facets"
+        param="license"
+        url={url}
+      />
 
-      {data.languages && data.languages.length > 0 && (
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Language</h4>
-            <ul id="language-facets">
-              {data.languages.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('language', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      <FacetList
+        data={data.languages}
+        title="Language"
+        id="language-facets"
+        param="language"
+        url={url}
+      />
 
-      {data.fieldsOfScience && data.fieldsOfScience.length > 0 && (
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Field of Science</h4>
-            <ul>
-              {data.fieldsOfScience.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('field-of-science', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      <FacetList
+        data={data.fieldsOfScience}
+        title="Field of Science"
+        id="field-of-science-facets"
+        param="field-of-science"
+        url={url}
+      />
 
-      {data.registrationAgencies && data.registrationAgencies.length > 0 && (
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Registration Agency</h4>
-            <ul id="registration-agency-facets">
-              {data.registrationAgencies.map((facet) => (
-                <li key={facet.id}>
-                  {facetLink('registration-agency', facet.id)}
-                  <div className="facet-title">{facet.title}</div>
-                  <span className="number pull-right">
-                    {facet.count.toLocaleString('en-US')}
-                  </span>
-                  <div className="clearfix" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      <FacetList
+        data={data.registrationAgencies}
+        title="Registration Agency"
+        id="registration-agency-facets"
+        param="registration-agency"
+        url={url}
+      />
 
     </div>
   )

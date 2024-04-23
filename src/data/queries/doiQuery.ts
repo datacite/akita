@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { Metadata, Work } from 'src/data/types'
+import { WorkMetadata, Work } from 'src/data/types'
 
 export const workConnection = gql`
   fragment WorkConnectionFragment on WorkConnectionWithTotal {
@@ -139,7 +139,7 @@ export const workFragment = gql`
   }
 `
 
-export const DOI_METADATA_GQL = gql`
+export const DOI_METADATA_QUERY = gql`
   query getMetadataQuery($id: ID!) {
     work(id: $id) {
       id
@@ -330,7 +330,7 @@ export interface MetadataQueryVar {
 }
 
 export interface MetadataQueryData {
-  work: Metadata
+  work: WorkMetadata
 }
 
 

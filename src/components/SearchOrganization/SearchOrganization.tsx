@@ -1,166 +1,53 @@
+'use client'
+
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
-import { useQueryState } from 'nuqs'
 import { pluralize } from '../../utils/helpers'
 
-import Pager from '../Pager/Pager'
-import FilterItem from '../FilterItem/FilterItem'
+import Pager from '../Pager/Server'
 import Error from '../Error/Error'
 import { OrganizationMetadata } from '../OrganizationMetadata/OrganizationMetadata'
 import Loading from '../Loading/Loading'
 
+import { SEARCH_ORGANIZATIONS_GQL, QueryData, QueryVar } from 'src/data/queries/searchOrganizationQuery'
+import FacetList from '../FacetList/Server'
+
 type Props = {
-  searchQuery: string
+  variables: QueryVar
 }
 
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
-}
-
-interface OrganizationsNode {
-  id: string
-  name: string
-  memberId: string
-  memberRoleId: string
-  alternateName: string[]
-  inceptionYear: number
-  types: string[]
-  url: string
-  wikipediaUrl: string
-  twitter: string
-  citationCount: number
-  viewCount: number
-  downloadCount: number
-  geolocation: {
-    pointLongitude: number
-    pointLatitude: number
-  }
-  country: {
-    id: string
-    name: string
-  }
-  identifiers: [
+export default function SearchOrganizations (props: Props) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_ORGANIZATIONS_GQL,
     {
-      identifier: string
-      identifierType: string
+      variables: props.variables,
+      errorPolicy: 'all'
     }
-  ]
-}
+  )
 
-interface OrganizationFacet {
-  id: string
-  title: string
-  count: number
-}
+  if (loading) return <Row><Loading /></Row>
 
-interface OrganizationsQueryVar {
-  query: string
-  cursor: string
-  types: string
-  country: string
-}
+  if (error) return (
+    <Row>
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
+    </Row>
+  )
 
-interface OrganizationsQueryData {
-  organizations: {
-    totalCount: number
-    pageInfo: PageInfo
-    types: OrganizationFacet[]
-    countries: OrganizationFacet[]
-    nodes: OrganizationsNode[]
-  }
-}
+  const organizations = data?.organizations
 
-export const ORGANIZATIONS_GQL = gql`
-  query searchOrganizationsQuery(
-    $query: String
-    $cursor: String
-    $types: String
-    $country: String
-  ) {
-    organizations(
-      query: $query
-      after: $cursor
-      types: $types
-      country: $country
-    ) {
-      totalCount
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      types {
-        id
-        count
-        title
-      }
-      countries {
-        id
-        count
-        title
-      }
-      nodes {
-        id
-        name
-        memberId
-        memberRoleId
-        alternateName
-        inceptionYear
-        types
-        url
-        wikipediaUrl
-        country {
-          id
-          name
-        }
-        identifiers {
-          identifier
-          identifierType
-        }
-      }
-    }
-  }
-`
 
-const SearchOrganizations: React.FunctionComponent<Props> = ({
-  searchQuery
-}) => {
-  const [cursor] = useQueryState('cursor', { history: 'push' })
-  const [types] = useQueryState('types')
-  const [country] = useQueryState('country')
-
-  const { loading, error, data } = useQuery<
-    OrganizationsQueryData,
-    OrganizationsQueryVar
-  >(ORGANIZATIONS_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      query: searchQuery,
-      cursor: cursor as string,
-      types: types as string,
-      country: country as string
-    }
-  })
+  if (!organizations || organizations.nodes.length == 0) return (
+    <Col md={9} mdOffset={3}>
+      <div className="alert-works">
+        <Alert bsStyle="warning">No organizations found.</Alert>
+      </div>
+    </Col>
+  )
 
   const renderResults = () => {
-    if (loading) return <Loading />
-
-    if (error)
-      return (
-        <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
-        </Col>
-      )
-
-    if (data?.organizations.nodes.length == 0)
-      return (
-        <Col md={9} mdOffset={3}>
-          <div className="alert-works">
-            <Alert bsStyle="warning">No organizations found.</Alert>
-          </div>
-        </Col>
-      )
 
     const hasNextPage = data?.organizations.pageInfo
       ? data.organizations.pageInfo.hasNextPage
@@ -178,12 +65,11 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
         )}
 
         {data?.organizations.nodes.map((item) => (
-          <React.Fragment key={item.id}>
-            <OrganizationMetadata
-              metadata={item}
-              linkToExternal={false}
-          ></OrganizationMetadata>
-          </React.Fragment>
+          <OrganizationMetadata
+            metadata={item}
+            linkToExternal={false}
+            key={item.id}
+          />
         ))}
 
         {(data?.organizations.totalCount || 0) > 20 && (
@@ -191,57 +77,31 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
             url={'/ror.org?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
-          ></Pager>
+          />
         )}
       </Col>
     )
   }
 
   const renderFacets = () => {
-    if (loading) return <div className="col-md-3"></div>
-
-    if (!loading && data && data.organizations.totalCount == 0)
-      return <div className="col-md-3"></div>
 
     return (
       <div className="col-md-3 hidden-xs hidden-sm">
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Country</h4>
-            <ul>
-              {data &&
-                data.organizations.countries.map((facet) => (
-                  <li key={facet.id}>
-                    <FilterItem
-                      name="country"
-                      id={facet.id}
-                      title={facet.title}
-                      count={facet.count}
-                    />
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="panel facets add">
-          <div className="panel-body">
-            <h4>Organization Type</h4>
-            <ul>
-              {data &&
-                data.organizations.types.map((facet) => (
-                  <li key={facet.id}>
-                    <FilterItem
-                      name="types"
-                      id={facet.id}
-                      title={facet.title}
-                      count={facet.count}
-                    />
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
+        <FacetList
+          data={data.organizations.countries}
+          title="Country"
+          id="country-facets"
+          param="country"
+          url="ror.org/?"
+        />
+        
+        <FacetList
+          data={data.organizations.types}
+          title="Organization Type"
+          id="organization-type-facets"
+          param="types"
+          url="ror.org/?"
+        />
       </div>
     )
   }
@@ -253,5 +113,3 @@ const SearchOrganizations: React.FunctionComponent<Props> = ({
     </Row>
   )
 }
-
-export default SearchOrganizations
