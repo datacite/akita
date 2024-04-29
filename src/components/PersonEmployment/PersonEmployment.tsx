@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import { gridFromUrl } from '../../utils/helpers'
-import { EmploymentRecord } from '../Person/Person'
+import { EmploymentRecord } from 'src/data/types'
 
 type Props = {
   employment: EmploymentRecord

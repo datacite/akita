@@ -1,86 +1,22 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import heroImage from '../../../public/images/hero.svg'
 import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
-import { Alert, Row, Col } from 'react-bootstrap'
+import { Alert, Row, Col } from 'src/components/Layout'
 
-import { Work } from 'src/data/types'
+import { Person as PersonType } from 'src/data/types'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
 import PersonEmployment from '../PersonEmployment/PersonEmployment'
 import { pluralize } from '../../utils/helpers'
 
-export interface PersonRecord {
-  id: string
-  description: string
-  links: Link[]
-  identifiers: Identifier[]
-  alternateName?: string[]
-  country: Attribute
-  employment: EmploymentRecord[]
-  name: string
-  givenName: string
-  familyName: string
-  citationCount: number
-  viewCount: number
-  downloadCount: number
-  totalWorks: Works
-  works: Works
-}
-
-export interface Attribute {
-  name: string
-  id: string
-}
-
-export interface EmploymentRecord {
-  organizationId: string
-  organizationName: string
-  roleTitle: string
-  startDate: Date
-  endDate: Date
-}
-
-interface Works {
-  totalCount: number
-  totalContentUrl: number
-  totalOpenLicenses: number
-  openLicenseResourceTypes: ContentFacet[]
-  resourceTypes: ContentFacet[]
-  pageInfo: PageInfo
-  published: ContentFacet[]
-  licenses: ContentFacet[]
-  languages: ContentFacet[]
-  nodes: Work[]
-}
-
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
-}
-
-interface Identifier {
-  identifier: string
-  identifierType: string
-  identifierUrl: string
-}
-
-interface Link {
-  url: string
-  name: string
-}
-
-interface ContentFacet {
-  id: string
-  title: string
-  count: number
-}
-
 type Props = {
-  person: PersonRecord
+  person: PersonType
 }
 
-const Person: React.FunctionComponent<Props> = ({ person }) => {
+export default function Person ({ person }: Props) {
   if (!person) return <Alert bsStyle="warning">No person found.</Alert>
 
   let has_open_access_software = false;
@@ -243,5 +179,3 @@ const Person: React.FunctionComponent<Props> = ({ person }) => {
     </>
   )
 }
-
-export default Person

@@ -203,23 +203,26 @@ type OrganizationIdentifier = {
 
 
 // People types
-export interface Person {
+export type PersonMetadata = {
   id: string
+  name: string
   description: string
+}
+
+export interface Person extends PersonMetadata {
   links: Link[]
   identifiers: Identifier[]
   country: Country
-  name: string
   givenName: string
   familyName: string
   alternateName: string[]
   citationCount: number
   viewCount: number
   downloadCount: number
-  employment: Organization[]
+  employment: EmploymentRecord[]
   pageInfo: PageInfo
-  totalWorks: Works
-  works: Works
+  totalWorks: PersonWorks
+  works: PersonWorks
 }
 
 
@@ -234,6 +237,20 @@ export interface People {
 interface Link {
   name: string
   url: string
+}
+
+export interface EmploymentRecord {
+  organizationId: string
+  organizationName: string
+  roleTitle: string
+  startDate: Date
+  endDate: Date
+}
+
+interface PersonWorks extends Works {
+  totalContentUrl: number
+  totalOpenLicenses: number
+  openLicenseResourceTypes: Facet[]
 }
 
 
