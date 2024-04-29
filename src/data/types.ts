@@ -18,7 +18,7 @@ export type WorkMetadata = {
 
 export type Work = WorkMetadata & {
   url: string
-  identifiers?: DoiIdentifier[]
+  identifiers?: Identifier[]
   contentUrl: string
 
   publicationYear: number
@@ -81,12 +81,6 @@ type Title = {
 
 type Description = {
   description: string
-}
-
-type DoiIdentifier = {
-  identifier: string
-  identifierType: string
-  identifierUrl: string
 }
 
 type Publisher = {
@@ -201,11 +195,6 @@ type Geolocation = {
   pointLatitude: number
 }
 
-type Country = {
-  id: string
-  name: string
-}
-
 type OrganizationIdentifier = {
   identifier: string
   identifierType: string
@@ -213,8 +202,50 @@ type OrganizationIdentifier = {
 
 
 
+// People types
+export interface Person {
+  id: string
+  description: string
+  links: Link[]
+  identifiers: Identifier[]
+  country: Country
+  name: string
+  givenName: string
+  familyName: string
+  alternateName: string[]
+  citationCount: number
+  viewCount: number
+  downloadCount: number
+  employment: Organization[]
+  pageInfo: PageInfo
+  totalWorks: Works
+  works: Works
+}
+
+
+export interface People {
+  __typename: String
+  totalCount: number
+  pageInfo: PageInfo
+  nodes: Person[]
+}
+
+
+interface Link {
+  name: string
+  url: string
+}
+
+
+
 
 // Shared types
+type Identifier = {
+  identifier: string
+  identifierType: string
+  identifierUrl: string
+}
+
 export type Facet = {
   id: string
   title: string
@@ -223,6 +254,11 @@ export type Facet = {
 
 export type MultilevelFacet = Facet & {
   inner: Facet[]
+}
+
+type Country = {
+  id: string
+  name: string
 }
 
 export type PageInfo = {

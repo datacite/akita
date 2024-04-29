@@ -1,115 +1,74 @@
+'use client'
+
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
-import { gql, useQuery } from '@apollo/client'
-import { useQueryState } from 'nuqs'
-import { pluralize } from '../../utils/helpers'
-
-import { PersonType } from '../../pages/orcid.org/[orcid]'
-import Pager from '../Pager/Pager'
-import Error from '../Error/Error'
-import PersonMetadata from '../PersonMetadata/PersonMetadata'
+import { useQuery } from '@apollo/client'
 import Loading from '../Loading/Loading'
+import { Alert, Row, Col } from 'src/components/Layout'
+import Error from 'src/components/Error/Server'
+import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
+import Pager from 'src/components/Pager/Server'
 
-type Props = {
-  searchQuery: string
+import { SEARCH_PERSON_QUERY, QueryData, QueryVar } from 'src/data/queries/searchPersonQuery'
+
+import { pluralize } from 'src/utils/helpers'
+
+interface Props {
+  variables: QueryVar
 }
 
-interface PersonQueryData {
-  people: {
-    __typename: String
-    nodes: PersonType[]
-    totalCount: number
-    pageInfo: PageInfo
-  }
-}
-
-interface PageInfo {
-  endCursor: string
-  hasNextPage: boolean
-}
-
-interface PersonQueryVar {
-  query: string
-  cursor: string
-}
-
-export const PERSON_GQL = gql`
-  query getSearchPersonQuery($query: String, $cursor: String) {
-    people(first: 25, query: $query, after: $cursor) {
-      totalCount
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      nodes {
-        id
-        name
-        givenName
-        familyName
-        alternateName
-      }
-    }
-  }
-`
-
-const SearchPerson: React.FunctionComponent<Props> = ({ searchQuery }) => {
-  const [cursor] = useQueryState('cursor', { history: 'push' })
-  const { loading, error, data } = useQuery<PersonQueryData, PersonQueryVar>(
-    PERSON_GQL,
+export default function SearchPerson (props: Props) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_PERSON_QUERY,
     {
-      errorPolicy: 'all',
-      variables: { query: searchQuery, cursor: cursor as string }
+      variables: props.variables,
+      errorPolicy: 'all'
     }
   )
 
-  const renderResults = () => {
-    if (loading) return <Loading />
+  if (loading) return <Row><Loading /></Row>
 
-    if (error)
-      return (
-        <Col md={9} mdOffset={3}>
-          <Error title="An error occured." message={error.message} />
-        </Col>
-      )
+  if (error) return (
+    <Row>
+      <Col md={9} mdOffset={3}>
+        <Error title="An error occured." message={error.message} />
+      </Col>
+    </Row>
+  )
 
-    const hasNextPage = data?.people.pageInfo
-      ? data.people.pageInfo.hasNextPage
-      : false
-    const endCursor = data?.people.pageInfo ? data.people.pageInfo.endCursor : ''
+  const people = data?.people
 
-    if (data?.people.nodes.length == 0)
-      return (
-        <Col md={9} mdOffset={3}>
-          <Alert bsStyle="warning">No people found.</Alert>
-        </Col>
-      )
+  if (!people || people.nodes.length == 0) return (
+    <Col md={9} mdOffset={3}>
+      <div className="alert-works">
+        <Alert bsStyle="warning">No works found.</Alert>
+      </div>
+    </Col>
+  )
 
-    return (
-      <Col md={9} mdOffset={3} id="content">
-        {(data?.people.nodes.length || 0) > 0 && (
+
+  return (
+    <Row>
+      <div>
+        <Col md={9} mdOffset={3} id="content">
+        {people.nodes.length > 0 && (
           <h3 className="member-results">
-            {pluralize(data?.people.totalCount || 0, 'Person', false, 'People')}
+            {pluralize(people.totalCount, 'Person', false, 'People')}
           </h3>
         )}
 
-        {data?.people.nodes.map((item) => (
-          <React.Fragment key={item.id}>
-            <PersonMetadata metadata={item} />
-          </React.Fragment>
+        {people.nodes.map((item) => (
+          <PersonMetadata metadata={item} key={item.id} />
         ))}
 
-        {(data?.people.totalCount || 0) > 25 && (
+        {(people.totalCount || 0) > 25 && (
           <Pager
             url={'/orcid.org?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          ></Pager>
+            hasNextPage={people.pageInfo.hasNextPage}
+            endCursor={data.people.pageInfo.endCursor || ''}
+          />
         )}
-      </Col>
-    )
-  }
-
-  return <Row>{renderResults()}</Row>
+        </Col>
+      </div>
+    </Row>
+  )
 }
-
-export default SearchPerson
