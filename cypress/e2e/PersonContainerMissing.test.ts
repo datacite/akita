@@ -5,7 +5,8 @@ describe('PersonContainer missing ORCID ID', () => {
   })
 
   it('visit orcid.org/xxxxx', () => {
-    cy.get('.alert p', { timeout: 10000 }).contains('Record not found')
+    cy.get('h1').contains('404')
+    cy.get('h2').contains('This page could not be found.')
   })
 })
 

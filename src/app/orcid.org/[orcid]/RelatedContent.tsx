@@ -12,12 +12,13 @@ import WorksListing from 'src/components/WorksListing/Server'
 import { pluralize } from 'src/utils/helpers';
 
 interface Props {
+  orcid: string
   variables: QueryVar
   isBot?: boolean
 }
 
 export default function RelatedContent (props: Props) {
-  const { variables, isBot = false } = props
+  const { orcid, variables, isBot = false } = props
 
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
@@ -71,7 +72,7 @@ export default function RelatedContent (props: Props) {
               hasPagination={relatedWorks.totalCount > 25}
               hasNextPage={hasNextPage}
               model={'person'}
-              url={'/orcid.org/' + variables.id + '/?'}
+              url={'/orcid.org/' + orcid + '/?'}
               endCursor={endCursor}
             />
           </div>

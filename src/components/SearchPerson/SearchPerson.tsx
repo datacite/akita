@@ -40,7 +40,7 @@ export default function SearchPerson (props: Props) {
   if (!people || people.nodes.length == 0) return (
     <Col md={9} mdOffset={3}>
       <div className="alert-works">
-        <Alert bsStyle="warning">No works found.</Alert>
+        <Alert bsStyle="warning">No people found.</Alert>
       </div>
     </Col>
   )
