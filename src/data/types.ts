@@ -255,6 +255,40 @@ interface PersonWorks extends Works {
 
 
 
+// Repository types
+export interface Repository {
+  id: string
+  re3dataDoi: string
+  clientId: string
+  name: string
+  language: string[]
+  description: string
+  type: string
+  repositoryType: string[]
+  url: string
+  keyword: string[]
+  subject: DefinedTerm[]
+}
+
+export interface Repositories {
+  totalCount: number
+  pageInfo: PageInfo
+  certificates: [RepositoryFacet]
+  software: [RepositoryFacet]
+  nodes: Repository[]
+}
+
+
+interface RepositoryFacet extends Facet {
+  name: string
+}
+
+type DefinedTerm = {
+  name: string
+}
+
+
+
 
 // Shared types
 type Identifier = {
