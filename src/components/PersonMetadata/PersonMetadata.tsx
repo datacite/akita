@@ -1,13 +1,13 @@
 import React from 'react'
 import { Alert, Row, Col, Label } from 'react-bootstrap' // eslint-disable-next-line no-unused-vars
-import { PersonRecord } from '../Person/Person'
+import { Person } from 'src/data/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import { orcidFromUrl } from '../../utils/helpers'
 
 type Props = {
-  metadata: PersonRecord
+  metadata: Person
 }
 
 const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {

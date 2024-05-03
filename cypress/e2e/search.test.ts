@@ -121,10 +121,10 @@ describe('Search', () => {
         cy.get('input[name="query"]')
           .type('Josiah Carberry')
           .get('#people-link')
-          .click()
-          .get('#search-nav li.active', { timeout: 60000 })
+        cy.get('.search-submit').click()
+        cy.get('#search-nav li.active', { timeout: 60000 })
           .should('contain', 'People')
-          .get('.member-results', { timeout: 60000 })
+        cy.get('.member-results', { timeout: 60000 })
           .should('contain', 'People')
       })
 
