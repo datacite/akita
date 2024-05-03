@@ -10,7 +10,7 @@ import FairFilter from 'src/components/FairFilter/FairFilter'
 import FacetList from 'src/components/FacetList/Server'
 import Error from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
-import { RepositoryMetadata } from 'src/components/RepositoryMetadata/RepositoryMetadata'
+import RepositoryMetadata from 'src/components/RepositoryMetadata/RepositoryMetadata'
 
 import { SEARCH_REPOSITORIES_GQL, QueryData, QueryVar } from 'src/data/queries/searchRepositoryQuery'
 import { pluralize } from 'src/utils/helpers'
