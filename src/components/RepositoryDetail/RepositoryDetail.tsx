@@ -1,9 +1,8 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import { Button, Label } from 'react-bootstrap';
-import { gql } from '@apollo/client'
-import {FACET_FIELDS, Facet} from '../FacetList/FacetList'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
@@ -11,79 +10,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { compactNumbers } from '../../utils/helpers'
-import {
-  RepositoriesNode,
-  REPOSITORY_FIELDS,
-}from '../RepositoryMetadata/RepositoryMetadata'
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
 import ShareLinks from '../ShareLinks/ShareLinks';
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
 import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart';
-
-export const REPOSITORY_DETAIL_FIELDS = gql`
-  ${REPOSITORY_FIELDS}
-  ${FACET_FIELDS}
-  fragment repositoryDetailFields on Repository{
-    ...repoFields
-    citationCount
-    downloadCount
-    viewCount
-    contact
-    keyword
-    pidSystem
-    providerType
-    dataUpload{
-      type
-    }
-    dataAccess {
-      type
-    }
-    certificate
-    subject {
-      name
-    }
-    works {
-      totalCount
-      languages{...facetFields}
-      resourceTypes{...facetFields}
-      fieldsOfScience{...facetFields}
-      authors{...facetFields}
-      licenses{...facetFields}
-      published{...facetFields}
-    }
-  }
-`
-
-export interface TextRestriction {
-  type: string
-}
-
-export interface RepositoryWorks {
-  totalCount: number
-  languages: Facet[]
-  resourceTypes: Facet[]
-  fieldsOfScience: Facet[]
-  authors: Facet[]
-  licenses: Facet[]
-  published: Facet[]
-}
-
-export interface RepositoryDetailNode extends RepositoriesNode{
-  citationCount: number
-  downloadCount: number
-  viewCount: number
-  works: RepositoryWorks
-  contact: string[]
-  pidSystem: string[]
-  providerType: string[]
-  dataUpload: TextRestriction[]
-  dataAccess: TextRestriction[]
-  certificate: string[]
-}
+import { Repository } from 'src/data/types';
 
 type Props = {
-  repo: RepositoryDetailNode
+  repo: Repository
 }
 
 function facetToData(facetList){
@@ -94,46 +29,7 @@ function facetToData(facetList){
 }
 
 
-const pageInfo = (repo) => {
-  const title = repo.name
-    ? 'DataCite Commons: ' + repo.name
-    : 'DataCite Commons: No Name'
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-    ? 'https://commons.datacite.org/'
-    : 'https://commons.stage.datacite.org/'
-
-  const pageUrl = repo.re3dataDoi
-    ? baseUrl + "repositories/" + repo.re3dataDoi
-    : baseUrl + "repositories/" + repo.id
-
-  const imageUrl = baseUrl + "images/logo.png"
-  return {
-    'title': title,
-    'pageUrl': pageUrl,
-    'imageUrl': imageUrl
-  }
-}
-
-export const RepositoryHeadInfo: React.FunctionComponent<Props> = ({
-  repo
-}) => {
-    const info = pageInfo(repo);
-    return (
-      <Head>
-          <title>{info.title}</title>
-          <meta name="og:title" content={info.title} />
-          <meta name="og:url" content={info.pageUrl} />
-          <meta name="og:image" content={info.imageUrl} />
-          <meta name="og:type" content="repository" />
-      </Head>
-    )
-
-  }
-
-export const RepositorySidebar: React.FunctionComponent<Props> = ({
-  repo
-}) => {
+export function RepositorySidebar ({ repo }: Props) {
   const gotoButtons = () => {
     return (
       <>
@@ -197,9 +93,9 @@ export const RepositorySidebar: React.FunctionComponent<Props> = ({
     )
 
 }
-export const RepositoryDetail: React.FunctionComponent<Props> = ({
-  repo
-}) => {
+
+
+export function RepositoryDetail ({ repo }: Props) {
 
 
   const dashboard = () => {
