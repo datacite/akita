@@ -1,3 +1,5 @@
+'use client'
+
 import * as Sentry from '@sentry/node'
 import { NextPageContext } from 'next'
 import Error, { ErrorProps as NextErrorProps } from 'next/error'
