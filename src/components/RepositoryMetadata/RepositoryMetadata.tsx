@@ -1,52 +1,15 @@
 import React from 'react'
 import { Label} from 'react-bootstrap'
-import { gql } from '@apollo/client'
 import truncate from 'lodash/truncate'
 import Link from 'next/link'
+import { Repository } from 'src/data/types'
 
-
-export const REPOSITORY_FIELDS = gql`
-  fragment repoFields on Repository{
-        id:uid
-        re3dataDoi
-        clientId
-        name
-        language
-        keyword
-        subject {
-          name
-        }
-        description
-        type
-        repositoryType
-        url
-  }
-`
-export interface DefinedTerm {
-  name: string
-}
-
-export interface RepositoriesNode {
-  id: string
-  re3dataDoi: string
-  clientId: string
-  name: string
-  language: string[]
-  description: string
-  type: string
-  repositoryType: string[]
-  url: string
-  keyword: string[]
-  subject: DefinedTerm[]
-}
 
 type Props = {
-  repo: RepositoriesNode
+  repo: Repository
 }
 
-export const RepositoryMetadata: React.FunctionComponent<Props> = ({
-  repo
-}) => {
+function RepositoryMetadata ({ repo }: Props) {
 
   const detailUrl = () => {
     return `/repositories/${repo.id}`

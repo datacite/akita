@@ -46,15 +46,11 @@ export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links =
     }
   ];
 
-  const metricList = metricsData.map( (metric, index) => 
-  <>
-    {metric.count && metric.count > 0 && (
+  const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map( (metric, index) => 
       <React.Fragment key={"metric-"+index}>
-        <dd>{compactNumbers(metric.count)}</dd>
+        <dd>{compactNumbers(metric.count || 0)}</dd>
         <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>
-      </React.Fragment >
-    )}
-    </>
+      </React.Fragment>
   )
   return (
       <div className={styles.metrics}>

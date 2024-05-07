@@ -255,6 +255,72 @@ interface PersonWorks extends Works {
 
 
 
+// Repository types
+export type RepositoryMetadata = {
+  id: string
+  name: string
+  re3dataDoi: string
+}
+
+export type Repository = RepositoryMetadata & {
+  clientId: string
+  name: string
+  language: string[]
+  description: string
+  type: string
+  repositoryType: string[]
+  url: string
+  keyword: string[]
+  subject: DefinedTerm[]
+
+  citationCount: number
+  downloadCount: number
+  viewCount: number
+  works: RepositoryWorks
+  contact: string[]
+  pidSystem: string[]
+  providerType: string[]
+  dataUpload: TextRestriction[]
+  dataAccess: TextRestriction[]
+  certificate: string[]
+}
+
+export interface Repositories {
+  totalCount: number
+  pageInfo: PageInfo
+  certificates: [RepositoryFacet]
+  software: [RepositoryFacet]
+  nodes: Repository[]
+}
+
+
+
+interface RepositoryWorks {
+  totalCount: number
+  languages: Facet[]
+  resourceTypes: Facet[]
+  fieldsOfScience: Facet[]
+  authors: Facet[]
+  licenses: Facet[]
+  published: Facet[]
+}
+
+
+
+interface RepositoryFacet extends Facet {
+  name: string
+}
+
+interface TextRestriction {
+  type: string
+}
+
+type DefinedTerm = {
+  name: string
+}
+
+
+
 
 // Shared types
 type Identifier = {
