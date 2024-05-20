@@ -1,199 +1,45 @@
+'use client'
+
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
-import Link from 'next/link'
-import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { Alert, Col, Row } from "src/components/Layout";
+import Loading from 'src/components/Loading/Loading'
 
-import ProductionChart from '../components/ProductionChart/ProductionChart'
-import DataSources from '../components/DataSources/DataSources'
-import { ContentFacet } from '../components/WorksListing/WorksListing'
-import Layout from '../components/Layout/Layout'
-import apolloClient from '../utils/apolloClient'
+import { STATISTICS_QUERY, QueryData } from 'src/data/queries/statisticsQuery'
 
-export interface Source {
-  totalCount: number
-  years: ContentFacet[]
+import Error from 'src/components/Error/Error'
+import ProductionChart from 'src/components/ProductionChart/ProductionChart';
+import DataSources from 'src/components/DataSources/DataSources';
+import Link from 'next/link';
+
+interface Props {
+  isBot?: boolean
 }
 
-export interface Crossref {
-  totalCount: number
-  totalCountFromCrossref: number
-}
+export default function RelatedContent (props: Props) {
+  const { isBot = false } = props
 
-export interface Works {
-  totalCount: number
-  totalCountFromCrossref?: number
-  published: ContentFacet[]
-  registrationAgencies?: ContentFacet[]
-}
+  const { loading, data, error } = useQuery<QueryData>(
+    STATISTICS_QUERY,
+    {
+      errorPolicy: 'all',
+      skip: isBot
+    }
+  )
 
-export const STATS_GQL = gql`
-  query getStatsQuery {
-    total: works {
-      totalCount
-      totalCountFromCrossref
-      registrationAgencies {
-        title
-        count
-      }
-    }
-    cited: works(hasCitations: 1) {
-      totalCount
-      registrationAgencies {
-        title
-        count
-      }
-    }
-    claimed: works(hasPerson: true) {
-      totalCount
-      registrationAgencies {
-        title
-        count
-      }
-    }
-    connected: works(
-      hasOrganization: true
-      hasAffiliation: true
-      hasFunder: true
-      hasMember: true
-    ) {
-      totalCount
-      registrationAgencies {
-        title
-        count
-      }
-    }
-    people {
-      totalCount
-      years {
-        title
-        count
-      }
-    }
-    organizations {
-      totalCount
-      years {
-        title
-        count
-      }
-    }
-    publications: works(resourceTypeId: "Text") {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    citedPublications: works(resourceTypeId: "Text", hasCitations: 1) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    claimedPublications: works(resourceTypeId: "Text", hasPerson: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    connectedPublications: works(
-      resourceTypeId: "Text"
-      hasOrganization: true
-      hasAffiliation: true
-      hasFunder: true
-      hasMember: true
-    ) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    datasets: works(resourceTypeId: "Dataset") {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    citedDatasets: works(resourceTypeId: "Dataset", hasCitations: 1) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    claimedDatasets: works(resourceTypeId: "Dataset", hasPerson: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    connectedDatasets: works(
-      resourceTypeId: "Dataset"
-      hasOrganization: true
-      hasAffiliation: true
-      hasFunder: true
-      hasMember: true
-    ) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    softwares: works(resourceTypeId: "Software") {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    citedSoftwares: works(resourceTypeId: "Software", hasCitations: 1) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    claimedSoftwares: works(resourceTypeId: "Software", hasPerson: true) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-    connectedSoftwares: works(
-      resourceTypeId: "Software"
-      hasOrganization: true
-      hasAffiliation: true
-      hasFunder: true
-      hasMember: true
-    ) {
-      totalCount
-      published {
-        title
-        count
-      }
-    }
-  }
-`
+  console.log(loading, isBot)
+  if (isBot) return null
+  if (loading) return <Row><Loading /></Row>
 
-export const getServerSideProps = async () => {
-  const { data } = await apolloClient.query({
-    query: STATS_GQL
-  })
+  if (error)
+    return <Row>
+      <Col mdOffset={3} className="panel panel-transparent">
+        <Error title="An error occured loading statistics." message={error.message} />
+      </Col>
+    </Row>
 
-  return {
-    props: {
-      data: data
-    }
-  }
-}
+  if (!data) return
 
-const StatisticsPage = ({ data }) => {
   const datacite = data.total.registrationAgencies.find(
     (element) => element.title === 'DataCite'
   )
@@ -526,7 +372,7 @@ const StatisticsPage = ({ data }) => {
   }
 
   return (
-    <Layout path={'/statistics'}>
+    <>
       <Row>
         <Col md={9} mdOffset={3} id="intro">
           <div className="panel panel-transparent">
@@ -788,8 +634,6 @@ const StatisticsPage = ({ data }) => {
           </div>
         </Col>
       </Row>
-    </Layout>
+    </>
   )
 }
-
-export default StatisticsPage

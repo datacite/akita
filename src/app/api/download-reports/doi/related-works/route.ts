@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { type NextRequest } from 'next/server'
 import { gql } from '@apollo/client';
-import apolloClient from '../../../../utils/apolloClient'
+import apolloClient from 'src/utils/server/apolloClient'
 import { stringify } from 'csv-stringify/sync'
 import { Work } from 'src/data/types';
 import { QueryData } from 'src/data/queries/doiQuery'
@@ -127,11 +127,9 @@ function addConnectionType(w: Work, connectionType: string) {
 
 
 
-export default async function downloadReportsHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const variables = req.query
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const variables = Object.fromEntries(searchParams)
 
   const { data } = await apolloClient.query<QueryData, typeof variables>({
     query: QUERY,
@@ -163,12 +161,14 @@ export default async function downloadReportsHandler(
   })
 	
   try {
-    res.status(200)
-    res.setHeader('Content-Type', 'text/csv')
-    res.setHeader('Content-Disposition', `attachment; filename="related-works_${variables.id}.csv"`)
-    res.send(csv)
+    return new Response(csv, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="related-works_${variables.id}.csv"`
+      }
+    })
   } catch (error) {
-    res.status(400).json({ error })
+    return new Response(JSON.stringify({ error }), { status: 400 })
   }
-
 }
