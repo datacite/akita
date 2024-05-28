@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { Pagination } from 'react-bootstrap'
-import { useRouter } from 'next/router'
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 
 type Props = {
   url: string
@@ -12,20 +14,14 @@ type Props = {
 const Pager: React.FunctionComponent<Props> = ({
   url,
   hasNextPage,
-  endCursor,
-  isNested
+  endCursor
 }) => {
-  const router = useRouter()
-  if (!router) return null
-
   let firstPageUrl = ''
   let hasFirstPage = false
   let nextPageUrl = ''
 
-  // let params = new URLSearchParams(router.query as any)
-  const params = isNested
-    ? new URLSearchParams('')
-    : new URLSearchParams(router.query as any)
+  const searchParams = useSearchParams() || {} as ReadonlyURLSearchParams
+  const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
   if (params.get('cursor')) {
     // remove cursor query parameter for first page

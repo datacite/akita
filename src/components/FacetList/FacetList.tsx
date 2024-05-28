@@ -1,55 +1,64 @@
+'use client'
+
 import React from 'react'
-import { gql } from '@apollo/client'
-import FilterItem from "../FilterItem/FilterItem"
+import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
+import { Tooltip } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import FacetListItem from './FacetListItem'
+import { Facet } from 'src/data/types'
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
-export const FACET_FIELDS = gql`
-  fragment facetFields on Facet{
-    id
-    title
-    count
+
+interface FacetListProps {
+  data: Facet[] | undefined
+  title: string
+  id: string
+  param: string
+  url: string
+
+  // eslint-disable-next-line no-unused-vars
+  value?: (fid: string) => string
+  // eslint-disable-next-line no-unused-vars
+  checked?: (index: number) => boolean
+  radio?: boolean
+  tooltipText?: string
+}
+
+export default function FacetList (props: FacetListProps) {
+  const { data, title, id, param, url, value, checked, radio } = props
+  if (!data || data.length === 0) return null
+
+  function Title () {
+    if (!props.tooltipText) return <h4>{title}</h4>
+
+    return (
+      <OverlayTrigger
+        placement="top"
+        overlay={<Tooltip id="tooltipAuthors">{props.tooltipText}</Tooltip>}
+      >
+        <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
+      </OverlayTrigger>
+    )
   }
-`
-export interface Facet {
-	name: string
-	id: string
-	title: string
-	count: number
-}
 
-type Props = {
-	title: string
-	name: string
-	facets: Facet[]
+  return (
+    <div className="panel facets add">
+      <div className="panel-body">
+        <Title />
+        <ul id={id}>
+          {data.map((facet, i) => (
+            <FacetListItem
+              key={facet.id}
+              facet={facet}
+              param={param}
+              url={url}
+              value={value && value(facet.id)}
+              checked={checked && checked(i)}
+              radio={radio}
+            />
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
 }
-
-
-export const FacetList: React.FunctionComponent<Props> = ({
-	title,
-	name,
-	facets
-}) => {
-	return (
-    <>
-      {facets.length>0 && (
-        <div className="panel facets">
-          <div className="panel-body">
-            <h4>{title}</h4>
-            <ul>
-              {facets.map((facet, index) => (
-                  <li key={`facet-${name}-${facet.id}-${index}`}>
-                    <FilterItem
-                      name={name}
-                      id={facet.id}
-                      title={facet.title}
-                      count={facet.count}
-                    />
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
-      )}
-    </>
-	)
-}
-export default FacetList

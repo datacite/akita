@@ -2,8 +2,8 @@ import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/server/apolloClient'
-import { Work as  WorkType } from 'src/data/types'
+import apolloClient from 'src/utils/apolloClient'
+import { Work as WorkType } from 'src/data/types'
 import { DOI_QUERY, QueryVar, QueryData } from 'src/data/queries/doiQuery'
 
 import Error from 'src/components/Error/Error'
@@ -21,7 +21,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default async function Content (props: Props) {
+export default async function Content(props: Props) {
   const { variables, isBot = false } = props
 
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
@@ -50,13 +50,13 @@ export default async function Content (props: Props) {
     <Row>
       <Col md={3} id="side-bar">
         <div className='left-menu-buttons'>
-          { work.registrationAgency.id == "datacite" && ( 
+          {work.registrationAgency.id == "datacite" && (
             <Claim doi_id={work.doi} />
           )}
           <DownloadMetadata doi={work} />
         </div>
         <CiteAs doi={work} />
-        { !isBot && <DownloadReports
+        {!isBot && <DownloadReports
           links={[
             {
               title: 'Related Works (CSV)',
@@ -65,7 +65,7 @@ export default async function Content (props: Props) {
             }
           ]}
           variables={variables as any}
-        /> }
+        />}
         <ShareLinks url={'doi.org/' + work.doi} title={title} />
       </Col>
       <Col md={9} id="content">

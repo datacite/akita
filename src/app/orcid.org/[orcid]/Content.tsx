@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import { PERSON_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
@@ -14,7 +14,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default async function Content (props: Props) {
+export default async function Content(props: Props) {
   const { variables } = props
 
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({

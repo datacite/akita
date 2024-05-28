@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { Col, Alert, Row } from 'react-bootstrap'
+import { Row, Col, Alert } from 'src/components/Layout'
 
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
@@ -7,9 +9,9 @@ import { Works } from 'src/data/types'
 
 import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
-import SankeyGraph, { multilevelToSankey } from '../SankeyGraph/SankeyGraph'
+import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
 
-type Props = {
+interface Props {
   works: Works
   showAnalytics: boolean
   showSankey?: boolean
@@ -25,13 +27,7 @@ type Props = {
   endCursor: string
 }
 
-export interface ContentFacet {
-  id: string
-  title: string
-  count: number
-}
-
-const WorksListing: React.FunctionComponent<Props> = ({
+export default function WorksListing({
   works,
   showAnalytics,
   showFacets,
@@ -45,7 +41,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
   hasPagination,
   hasNextPage,
   endCursor
-}) => {
+}: Props) {
 
   const hasNoWorks = works.totalCount == 0
   const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
@@ -86,7 +82,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
 
         {works.nodes.map((doi) => (
           <React.Fragment key={doi.doi}>
-            <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus}></WorkMetadata>
+            <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus} />
           </React.Fragment>
         ))}
 
@@ -95,7 +91,7 @@ const WorksListing: React.FunctionComponent<Props> = ({
             url={url}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
-          ></Pager>
+          />
         )}
       </Col>
     )
@@ -109,5 +105,3 @@ const WorksListing: React.FunctionComponent<Props> = ({
     </>
   )
 }
-
-export default WorksListing

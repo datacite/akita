@@ -1,16 +1,18 @@
+import { cookies } from 'next/headers'
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import { Cookies } from 'react-cookie-consent'
 
 // needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
 const httpLink = createHttpLink({
-  uri: (operation) => `${(process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org')}/graphql?graphqlOperationName=${encodeURIComponent(operation.operationName)}`,
+  uri:
+    (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
+    '/graphql',
   credentials: 'include'
 })
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from cookie if it exists
-  const sessionCookie = Cookies.getJSON('_datacite')
+  const sessionCookie = cookies().get('_datacite') as any
   const token =
     sessionCookie &&
     sessionCookie.authenticated &&

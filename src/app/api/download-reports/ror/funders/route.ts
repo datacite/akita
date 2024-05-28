@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { gql } from '@apollo/client';
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
@@ -53,11 +53,11 @@ export async function GET(request: NextRequest) {
     query: QUERY,
     variables: variables
   })
-  
-	
+
+
   const csv = stringify(data.organization.works.funders, {
     header: true,
-    columns: [ { key: 'id', header: 'Funder ID' }, { key: 'title', header: 'Title' }, { key: 'count', header: 'Work Count' } ]
+    columns: [{ key: 'id', header: 'Funder ID' }, { key: 'title', header: 'Title' }, { key: 'count', header: 'Work Count' }]
   })
 
 

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
 import { MetadataQueryData, MetadataQueryVar, REPOSITORY_METADATA_QUERY } from 'src/data/queries/repositoryQuery'
@@ -17,7 +17,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const repoid = params.repoid.join('/')
-  
+
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: REPOSITORY_METADATA_QUERY,
     variables: { id: repoid },
@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const baseUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-    ? 'https://commons.datacite.org/'
-    : 'https://commons.stage.datacite.org/'
+      ? 'https://commons.datacite.org/'
+      : 'https://commons.stage.datacite.org/'
 
   const pageUrl = repo.re3dataDoi
     ? baseUrl + "repositories/" + repo.re3dataDoi

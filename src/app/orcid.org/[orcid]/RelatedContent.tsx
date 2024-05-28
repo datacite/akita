@@ -8,7 +8,7 @@ import Loading from 'src/components/Loading/Loading'
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
-import WorksListing from 'src/components/WorksListing/Server'
+import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default function RelatedContent (props: Props) {
+export default function RelatedContent(props: Props) {
   const { orcid, variables, isBot = false } = props
 
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
