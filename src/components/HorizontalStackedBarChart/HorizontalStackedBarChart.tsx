@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { VegaLite } from 'react-vega'
-import { Facet } from '../FacetList/FacetList'
-import EmptyChart from '../EmptyChart/EmptyChart'
-import HelpIcon from '../HelpIcon/HelpIcon'
+import EmptyChart from 'src/components/EmptyChart/EmptyChart'
+import HelpIcon from 'src/components/HelpIcon/HelpIcon'
 import styles from './HorizontalStackedBarChart.module.scss'
 import stackedBarChartSpec from './HorizontalStackedBarChartSpec'
+import { Facet } from 'src/data/types'
 
 
 type Props = {
@@ -54,10 +54,10 @@ export function getTopFive(data: HorizontalBarRecord[]) {
 
   if (missingCount > 0)
     topFive.push({ title: 'Missing', count: missingCount })
-  
+
 
   topFive.sort((a, b) => b.count - a.count)[0]
-  
+
   return {
     data: topFive,
     topCategory: topFive[0].title,
@@ -77,7 +77,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef<HTMLDivElement | null>(null);
 
-  function handleResize () {
+  function handleResize() {
     if (!graphDivRef.current) return
     setWidth(graphDivRef.current.offsetWidth - 20);
   }
@@ -88,15 +88,15 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [])
-  
+
   useEffect(() => {
     handleResize();
   });
 
 
-  
-  if (data.length==0) {
-    return <EmptyChart title={`Percent ${Array.isArray(chartTitle) ? chartTitle.join(' ') : chartTitle}`}/>
+
+  if (data.length == 0) {
+    return <EmptyChart title={`Percent ${Array.isArray(chartTitle) ? chartTitle.join(' ') : chartTitle}`} />
   }
 
   if (domain) {
@@ -105,7 +105,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
     range = range.filter((_, i) => indices.includes(i))
   }
 
-  
+
 
   return (
     <div className="panel panel-transparent">
