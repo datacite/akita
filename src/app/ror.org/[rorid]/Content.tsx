@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import { Organization as OrganizationType } from 'src/data/types'
 import { ORGANIZATION_QUERY, QueryData, QueryVar } from 'src/data/queries/organizationQuery';
 
@@ -17,7 +17,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default async function Content (props: Props) {
+export default async function Content(props: Props) {
   const { variables, isBot = false } = props
 
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
@@ -40,7 +40,7 @@ export default async function Content (props: Props) {
 
     <Row>
       <Col md={3} className="panel-list" id="side-bar">
-        { !isBot && <DownloadReports
+        {!isBot && <DownloadReports
           links={[
             {
               title: 'Related Works (CSV)',
@@ -54,7 +54,7 @@ export default async function Content (props: Props) {
             }
           ]}
           variables={variables as any}
-        /> }
+        />}
         <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
       </Col>
       <Col md={9}>

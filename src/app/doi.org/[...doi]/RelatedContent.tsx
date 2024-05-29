@@ -9,7 +9,7 @@ import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/doi
 import { Works } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
-import WorksListing from 'src/components/WorksListing/Server'
+import WorksListing from 'src/components/WorksListing/WorksListing'
 
 interface Props {
   variables: QueryVar
@@ -18,7 +18,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default function RelatedContent (props: Props) {
+export default function RelatedContent(props: Props) {
   const { variables, showSankey, connectionType, isBot = false } = props
 
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
@@ -65,9 +65,9 @@ export default function RelatedContent (props: Props) {
 
   const defaultConnectionType =
     referenceCount > 0 ? 'references' :
-    citationCount > 0 ? 'citations' :
-    partCount > 0 ? 'parts' :
-    partOfCount > 0 ? 'partOf' : 'otherRelated'
+      citationCount > 0 ? 'citations' :
+        partCount > 0 ? 'parts' :
+          partOfCount > 0 ? 'partOf' : 'otherRelated'
 
   const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 
@@ -78,7 +78,7 @@ export default function RelatedContent (props: Props) {
 
   const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
   const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
-  
+
   return (
     <>
       <Row>

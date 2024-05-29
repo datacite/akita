@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import truncate from 'lodash/truncate'
 
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import Content from './Content'
 import { PERSON_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
@@ -32,7 +32,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const orcid = 'http://orcid.org/' + params.orcid
-  
+
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: PERSON_METADATA_QUERY,
     variables: { id: orcid },
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
   // <script type="application/ld+json">{work.schemaOrg}</script>
- 
+
 
   return {
     title: title,
@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function mapSearchparams (searchParams: Props['searchParams']) {
+function mapSearchparams(searchParams: Props['searchParams']) {
   return {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,

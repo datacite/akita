@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { gql } from '@apollo/client';
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
       // { key: '???', header: 'Connection Type(s)' }
     ]
   })
-	
+
   try {
     return new Response(csv, {
       status: 200,

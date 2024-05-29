@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { InputGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 
-type Props = {
+interface Props {
   path: string
 }
 
-const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
+export default function SearchBox ({ path }: Props) {
   const router = useRouter()
+  const params = useSearchParams()
 
-  const [searchInput, setSearchInput] = useState('' || router.query.filterQuery)
+  const [searchInput, setSearchInput] = useState(params?.get('filterQuery') || '')
 
   const onSubmit = () => {
-    if (router) {
-      router.push({
-        pathname: path,
-        query: { filterQuery: searchInput }
-      })
-    }
+    if (router)
+      router.push(`${path}?filterQuery=${searchInput}`)
   }
 
   const onKeyDown = (event) => {
@@ -34,7 +31,7 @@ const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
 
   const onSearchClear = () => {
     setSearchInput('')
-    router.replace(path, undefined, { shallow: true });
+    router.replace(path);
   }
 
   return (
@@ -73,5 +70,3 @@ const SearchBox: React.FunctionComponent<Props> = ({ path }) => {
     </>
   )
 }
-
-export default SearchBox

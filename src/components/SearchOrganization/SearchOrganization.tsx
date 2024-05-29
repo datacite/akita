@@ -5,19 +5,19 @@ import { useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 
-import Pager from '../Pager/Server'
+import Pager from '../Pager/Pager'
 import Error from '../Error/Error'
 import { OrganizationMetadata } from '../OrganizationMetadata/OrganizationMetadata'
 import Loading from '../Loading/Loading'
 
 import { SEARCH_ORGANIZATIONS_GQL, QueryData, QueryVar } from 'src/data/queries/searchOrganizationQuery'
-import FacetList from '../FacetList/Server'
+import FacetList from '../FacetList/FacetList'
 
 type Props = {
   variables: QueryVar
 }
 
-export default function SearchOrganizations (props: Props) {
+export default function SearchOrganizations(props: Props) {
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_ORGANIZATIONS_GQL,
     {
@@ -94,7 +94,7 @@ export default function SearchOrganizations (props: Props) {
           param="country"
           url="ror.org/?"
         />
-        
+
         <FacetList
           data={data.organizations.types}
           title="Organization Type"

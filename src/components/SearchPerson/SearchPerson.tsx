@@ -4,9 +4,9 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 import Loading from '../Loading/Loading'
 import { Alert, Row, Col } from 'src/components/Layout'
-import Error from 'src/components/Error/Server'
+import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
-import Pager from 'src/components/Pager/Server'
+import Pager from 'src/components/Pager/Pager'
 
 import { SEARCH_PERSON_QUERY, QueryData, QueryVar } from 'src/data/queries/searchPersonQuery'
 
@@ -16,7 +16,7 @@ interface Props {
   variables: QueryVar
 }
 
-export default function SearchPerson (props: Props) {
+export default function SearchPerson(props: Props) {
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_PERSON_QUERY,
     {
@@ -50,23 +50,23 @@ export default function SearchPerson (props: Props) {
     <Row>
       <div>
         <Col md={9} mdOffset={3} id="content">
-        {people.nodes.length > 0 && (
-          <h3 className="member-results">
-            {pluralize(people.totalCount, 'Person', false, 'People')}
-          </h3>
-        )}
+          {people.nodes.length > 0 && (
+            <h3 className="member-results">
+              {pluralize(people.totalCount, 'Person', false, 'People')}
+            </h3>
+          )}
 
-        {people.nodes.map((item) => (
-          <PersonMetadata metadata={item} key={item.id} />
-        ))}
+          {people.nodes.map((item) => (
+            <PersonMetadata metadata={item} key={item.id} />
+          ))}
 
-        {(people.totalCount || 0) > 25 && (
-          <Pager
-            url={'/orcid.org?'}
-            hasNextPage={people.pageInfo.hasNextPage}
-            endCursor={data.people.pageInfo.endCursor || ''}
-          />
-        )}
+          {(people.totalCount || 0) > 25 && (
+            <Pager
+              url={'/orcid.org?'}
+              hasNextPage={people.pageInfo.hasNextPage}
+              endCursor={data.people.pageInfo.endCursor || ''}
+            />
+          )}
         </Col>
       </div>
     </Row>

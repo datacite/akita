@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
@@ -31,7 +31,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { rorid } = params
-  
+
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: ORGANIZATION_METADATA_QUERY,
     variables: { id: rorid },
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-function mapSearchparams (searchParams: Props['searchParams']) {
+function mapSearchparams(searchParams: Props['searchParams']) {
   return {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,

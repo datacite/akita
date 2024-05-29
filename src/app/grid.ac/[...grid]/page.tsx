@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 import { GRID_GQL, QueryData, QueryVar } from "src/data/queries/gridQuery"
-import apolloClient from "src/utils/server/apolloClient"
+import apolloClient from "src/utils/apolloClient"
 import { rorFromUrl } from "src/utils/helpers"
 
 interface Props {
@@ -16,7 +16,7 @@ export default async function GridPage({ params }: Props) {
     variables: { gridId },
     errorPolicy: 'all'
   })
-  
+
   if (!data) notFound()
   redirect(`/ror.org${rorFromUrl(data.organization.id)}`)
 }

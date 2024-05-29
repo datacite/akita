@@ -5,7 +5,7 @@ import truncate from 'lodash/truncate'
 
 import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
-import apolloClient from 'src/utils/server/apolloClient'
+import apolloClient from 'src/utils/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
@@ -37,7 +37,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = params.doi.join('/')
-  
+
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: DOI_METADATA_QUERY,
     variables: { id: doi },
@@ -73,9 +73,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = !data.work.descriptions[0]
     ? undefined
     : truncate(data.work.descriptions[0].description, {
-        length: 2500,
-        separator: '… '
-      })
+      length: 2500,
+      separator: '… '
+    })
 
   // TODO: Refer here for type https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function:~:text=image.png%22%20/%3E-,Good%20to%20know,-%3A
   // https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function:~:text=image.png%22%20/%3E-,Good%20to%20know,-%3A
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
   // <script type="application/ld+json">{work.schemaOrg}</script>
- 
+
 
   return {
     title: title,
@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function mapSearchparams (searchParams: Props['searchParams']) {
+function mapSearchparams(searchParams: Props['searchParams']) {
   return {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,
@@ -130,7 +130,7 @@ export default async function Page({ params, searchParams }: Props) {
       variables: { crossrefFunderId: doi },
       errorPolicy: 'all'
     })
-    
+
     if (!data) notFound()
     redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
   }
