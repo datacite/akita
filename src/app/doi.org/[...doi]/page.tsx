@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
+import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
 import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
@@ -84,9 +85,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //   : metadata.work.types.resourceTypeGeneral?.toLowerCase() || undefined
 
 
-  // <script type="application/ld+json">{work.schemaOrg}</script>
-
-
   return {
     title: title,
     description: description,
@@ -153,6 +151,7 @@ export default async function Page({ params, searchParams }: Props) {
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
+    <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }
 
