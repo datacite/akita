@@ -78,8 +78,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //   : metadata.work.types.resourceTypeGeneral?.toLowerCase() || undefined
 
 
-  // <script type="application/ld+json">{work.schemaOrg}</script>
-
 
   return {
     title: title,
