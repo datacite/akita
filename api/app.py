@@ -7,10 +7,6 @@ import os
 DOI_API = os.getenv("DATACITE_API_URL", "https://api.stage.datacite.org/dois/")
 app = Flask(__name__)
 
-@app.route("/api", methods=["GET"])
-def home():
-    return jsonify({"message": "Hello from the Python API!"})
-
 @app.route("/api/doi/related-graph/<path:doi>", methods=["GET"])
 def related_works(doi):
     doi = extract_doi(doi)
