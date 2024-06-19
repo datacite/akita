@@ -30,7 +30,7 @@
       "maxDuration": 8
     },
     "api/**/*.py": {
-	"excludeFiles": "{.git,*.cache,node_modules,public,app}/**"
+	"excludeFiles": "{cypress,src,.next,.vercel,.github,.git,*.cache,node_modules,public,app}/**"
     }
   }
 }
