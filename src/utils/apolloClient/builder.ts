@@ -1,29 +1,35 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
-// needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
-const httpLink = createHttpLink({
-  uri:
-    (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
-    '/graphql',
-  credentials: 'include'
-})
+/*
+ * getToken is a function as opposed to just a string because otherwise, in server components,
+ * this throws an error unless the token is returned from a function that is called
+ * in the authLink setContext. I'm not sure why
+ */
+export default function apolloClientBuilder(getToken: () => string) {
+  // needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
+  const httpLink = createHttpLink({
+    uri:
+      (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
+      '/graphql',
+    credentials: 'include'
+  })
 
-const authLink = (token: string) => setContext((_, { headers }) => {
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : ''
+  const authLink = setContext((_, { headers }) => {
+    // return the headers to the context so httpLink can read them
+    const token = getToken()
+
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ''
+      }
     }
-  }
-})
+  })
 
-
-export function apolloClientBuilder(token: string) {
   return new ApolloClient({
     ssrMode: true,
-    link: authLink(token).concat(httpLink),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache({
       typePolicies: {
         Creator: {

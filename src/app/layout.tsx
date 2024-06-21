@@ -14,7 +14,7 @@ import Header from "./Header";
 import Consent from "./Consent";
 import Footer from "./Footer";
 import Providers from "./Providers";
-import { token } from "src/utils/apolloClient/apolloClient";
+import { getAuthToken } from "src/utils/apolloClient/apolloClient";
 
 
 config.autoAddCss = false
@@ -74,7 +74,7 @@ function GetData() {
 
   const apolloUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
 
-  const authToken = token
+  const authToken = getAuthToken()
 
 
   const profilesUrl =
