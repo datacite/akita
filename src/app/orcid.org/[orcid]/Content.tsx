@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { PERSON_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
