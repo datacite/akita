@@ -1,0 +1,29 @@
+.navbar {
+  max-width: 1420px !important;
+  padding: 0 1em !important;
+  font-size: 18px !important;
+  align-items: flex-start !important;
+}
+
+.navcenter {
+  align-items: flex-start !important;
+}
+
+.navmain {
+  gap: 20px;
+}
+
+.navright {
+  align-items: center;
+  gap: 10px;
+}
+
+.navdropdown .show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.signin {
+  width: max-content;
+  padding: 6px 15px 10px !important;
+}

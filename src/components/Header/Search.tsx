@@ -5,19 +5,19 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { InputGroup, Button } from 'react-bootstrap'
+import { InputGroup, Button } from 'react-bootstrap-4'
 
 interface Props {
   base: string
 }
 
-export default function Search ({ base }: Props) {
+export default function Search({ base }: Props) {
   const searchParams = useSearchParams()
   const router = useRouter()
-  
+
   const [searchInput, setSearchInput] = useState(searchParams?.get('query')?.toString() || '')
 
-  function search (query: string) {
+  function search(query: string) {
     const params = new URLSearchParams(searchParams || {});
 
     if (searchInput) params.set('query', query);
