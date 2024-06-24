@@ -2,7 +2,9 @@
 
 import React from 'react'
 import useSWR from 'swr'
-import { Grid, Row, Col } from 'react-bootstrap'
+import Container from 'react-bootstrap-4/Container'
+import Row from 'react-bootstrap-4/Row'
+import Col from 'react-bootstrap-4/Col'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -50,9 +52,9 @@ const Links = {
 }
 
 
-export default function Footer () {
+export default function Footer() {
 
-  
+
   function StatusPage() {
     const fetcher = (url: string) => fetch(url).then((res) => res.json())
     const { data, error } = useSWR(
@@ -84,7 +86,7 @@ export default function Footer () {
 
   const baseUrl = 'https://datacite.org'
 
-  const footerLinks = (links) => {
+  const footerLinks = (links: { name: string, url: string }[]) => {
     return (
       <ul>
         {links.map((link) => (
@@ -103,8 +105,8 @@ export default function Footer () {
   }
 
   return (
-    <footer className="row footer hidden-xs">
-      <Grid>
+    <footer className="footer d-none d-sm-block">
+      <Container>
         <Row>
           <Col sm={3} md={3} className="footer-column">
             <h4 data-cy="about">About Us</h4>
@@ -169,7 +171,7 @@ export default function Footer () {
             </ul>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     </footer>
   )
 }
