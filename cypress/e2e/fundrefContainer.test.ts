@@ -6,16 +6,16 @@ describe('FundrefContainer', () => {
   })
 
   it('id', () => {
-    cy.visit('/doi.org/10.13039/100010367')
+    cy.visit('/doi.org/10.13039/100011199')
     cy.get('#title-link', { timeout: 30000 }).contains(
-      'https://ror.org/052gg0110'
+      'https://ror.org/0472cxd90'
     )
   })
 
   it('name', () => {
-    cy.visit('/doi.org/10.13039/100010367')
+    cy.visit('/doi.org/10.13039/100011199')
     cy.get('#title', { timeout: 30000 }).contains(
-      'University of Oxford'
+      'European Research Council'
     )
   })
 
@@ -33,4 +33,4 @@ describe('FundrefContainer', () => {
   // })
 })
 
-export {}
+export { }
