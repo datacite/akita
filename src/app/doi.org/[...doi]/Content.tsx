@@ -2,7 +2,7 @@ import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Work as WorkType } from 'src/data/types'
 import { DOI_QUERY, QueryVar, QueryData } from 'src/data/queries/doiQuery'
 

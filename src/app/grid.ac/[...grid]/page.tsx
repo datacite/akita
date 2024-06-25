@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 import { GRID_GQL, QueryData, QueryVar } from "src/data/queries/gridQuery"
-import apolloClient from "src/utils/apolloClient"
+import apolloClient from "src/utils/apolloClient/apolloClient"
 import { rorFromUrl } from "src/utils/helpers"
 
 interface Props {

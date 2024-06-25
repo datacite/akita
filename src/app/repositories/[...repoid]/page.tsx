@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
 import { MetadataQueryData, MetadataQueryVar, REPOSITORY_METADATA_QUERY } from 'src/data/queries/repositoryQuery'

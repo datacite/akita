@@ -6,7 +6,7 @@ import truncate from 'lodash/truncate'
 
 import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'

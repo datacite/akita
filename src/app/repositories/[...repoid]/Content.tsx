@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from "src/components/Layout";
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Repository as RepositoryType } from 'src/data/types'
 import { REPOSITORY_QUERY, QueryData, QueryVar } from 'src/data/queries/repositoryQuery';
 
