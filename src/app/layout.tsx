@@ -51,7 +51,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           />
         </Suspense>
       </head>
-      <body>
+      <body className={sourceSans3.className}>
         <Providers default_features={data.DEFAULT_FEATURES} apolloUrl={data.apolloUrl} authToken={data.authToken} >
           <Header profilesUrl={data.profilesUrl} orcidUrl={data.orcidUrl} />
           <div className="container-fluid">{children}</div>
