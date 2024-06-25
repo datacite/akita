@@ -1,4 +1,4 @@
-@import url('doi.css');
+@import 'maltipoo/dist/stylesheets/doi.min.css';
 
 .panel-body h3.member>i {
   color: #1abc9c;
