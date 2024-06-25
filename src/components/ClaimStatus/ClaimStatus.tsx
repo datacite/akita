@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tooltip, Button } from 'react-bootstrap'
+import { Tooltip, Label } from 'react-bootstrap'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -37,9 +37,9 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
     return (
         <>
             <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
-                <Button disabled block bsStyle={stateColors[claim.state]}>
+                <Label bsStyle={stateColors[claim.state]}>
                     <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
-                </Button>
+                </Label>
             </OverlayTrigger>
         </>
     )
