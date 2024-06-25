@@ -1,15 +1,16 @@
 import React from 'react'
-import { Tooltip, Button } from 'react-bootstrap'
+import { Tooltip, Button, Label } from 'react-bootstrap'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Claim } from 'src/data/types'
 
 type Props = {
-    claim: Claim
+    claim: Claim,
+    type: string
 }
 
-const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
+const ClaimStatus: React.FunctionComponent<Props> = ({ claim, type }) => {
 
     const stateColors = {
         done: 'success',
@@ -35,13 +36,19 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
     )
 
     return (
-        <>
-            <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
-                <Button disabled block bsStyle={stateColors[claim.state]}>
-                    <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
-                </Button>
-            </OverlayTrigger>
-        </>
+      <>
+        <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
+          {type === 'button' ? (
+            <Button disabled block bsStyle={stateColors[claim.state]}>
+              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
+            </Button>
+          ) : (
+            <Label bsStyle={stateColors[claim.state]}>
+              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
+            </Label>
+          )}
+        </OverlayTrigger>
+      </>
     )
 }
 
