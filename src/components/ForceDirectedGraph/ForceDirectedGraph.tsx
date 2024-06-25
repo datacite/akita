@@ -19,7 +19,7 @@ type Props = {
 const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links, domain, range, tooltipText }) => {
   const [width, setWidth] = useState(500);
   // const width = 500;
-  const graphDivRef = useRef(null);
+  const graphDivRef = useRef<HTMLDivElement>(null);
 
   function handleResize () {
     if (!graphDivRef.current) return
