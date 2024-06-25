@@ -264,7 +264,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (
-          <ClaimStatus claim={claim} />
+          <ClaimStatus claim={claim} type={'label'} />
         )}
       </div>
     )
