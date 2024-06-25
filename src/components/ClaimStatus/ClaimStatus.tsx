@@ -5,10 +5,11 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Claim } from 'src/data/types'
 
 type Props = {
-    claim: Claim
+    claim: Claim,
+    type: string
 }
 
-const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
+const ClaimStatus: React.FunctionComponent<Props> = ({ claim, type }) => {
 
     const stateColors = {
         done: 'success',
@@ -34,13 +35,19 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim }) => {
     )
 
     return (
-        <>
-            <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
-                <Badge variant={stateColors[claim.state]}>
-                    <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
-                </Badge>
-            </OverlayTrigger>
-        </>
+      <>
+        <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
+          {type === 'button' ? (
+            <Button disabled block variant={stateColors[claim.state]}>
+              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
+            </Button>
+          ) : (
+            <Badge variant={stateColors[claim.state]}>
+              <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
+            </Badge>
+          )}
+        </OverlayTrigger>
+      </>
     )
 }
 
