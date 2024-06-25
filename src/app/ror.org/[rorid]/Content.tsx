@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from "src/components/Layout-4";
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Organization as OrganizationType } from 'src/data/types'
 import { ORGANIZATION_QUERY, QueryData, QueryVar } from 'src/data/queries/organizationQuery';
 

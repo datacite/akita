@@ -20,7 +20,7 @@ export const session = () => {
       jwt,
       cert,
       { algorithms: ['RS256'] },
-      function (error, payload) {
+      function(error, payload) {
         if (payload) {
           user = payload as any
         } else if (error) {
