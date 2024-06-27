@@ -5,34 +5,61 @@ import {
 } from '../../data/color_palettes'
 import { Mark, Scale, Signal } from 'vega'
 
+// export const TEST_NODES: ForceDirectedGraphNode[] = [
+//   { title: 'Preprint', count: 22357 },
+//   { title: 'Software', count: 136204 },
+//   { title: 'Dataset', count: 7524645 },
+//   { title: 'Organization', count: 97795 },
+//   { title: 'Journal Article', count: 14043135 },
+//   { title: 'People', count: 8718993 }
+// ]
 export const TEST_NODES: ForceDirectedGraphNode[] = [
-  { title: 'Preprint', count: 22357 },
-  { title: 'Software', count: 136204 },
-  { title: 'Dataset', count: 7524645 },
-  { title: 'Organization', count: 97795 },
-  { title: 'Journal Article', count: 14043135 },
-  { title: 'Person', count: 8718993 }
+  { title: 'Preprint', count: 22 },
+  { title: 'Software', count: 13 },
+  { title: 'Dataset', count: 75 },
+  { title: 'Organization', count: 9 },
+  { title: 'Journal Article', count: 140 },
+  { title: 'People', count: 871 }
 ]
 
 export const TEST_LINKS: ForceDirectedGraphLink[] = [
-  { source: 'Preprint', target: 'Software', count: 7992 },
-  { source: 'Preprint', target: 'Dataset', count: 68292 },
-  { source: 'Preprint', target: 'Journal Article', count: 25263 },
+  { source: 'Preprint', target: 'Software', count: 79 },
+  { source: 'Preprint', target: 'Dataset', count: 682 },
+  { source: 'Preprint', target: 'Journal Article', count: 252 },
 
-  { source: 'Software', target: 'Dataset', count: 1983 },
-  { source: 'Software', target: 'Person', count: 28612 },
-  { source: 'Software', target: 'Organization', count: 24 },
+  { source: 'Software', target: 'Dataset', count: 19 },
+  { source: 'Software', target: 'People', count: 286 },
+  { source: 'Software', target: 'Organization', count: 2 },
 
-  { source: 'Dataset', target: 'Organization', count: 11657 },
-  { source: 'Dataset', target: 'Person', count: 546454 },
-  { source: 'Dataset', target: 'Journal Article', count: 387906 },
+  { source: 'Dataset', target: 'Organization', count: 117 },
+  { source: 'Dataset', target: 'People', count: 546 },
+  { source: 'Dataset', target: 'Journal Article', count: 3876 },
 
-  { source: 'Organization', target: 'Journal Article', count: 1777 },
-  { source: 'Organization', target: 'Person', count: 3009 },
+  { source: 'Organization', target: 'Journal Article', count: 17 },
+  { source: 'Organization', target: 'People', count: 39 },
 
-  { source: 'Journal Article', target: 'Person', count: 3847926 },
-  { source: 'Journal Article', target: 'Journal Article', count: 2043502 }
+  { source: 'Journal Article', target: 'People', count: 3847 },
+  { source: 'Journal Article', target: 'Journal Article', count: 20 }
 ]
+// export const TEST_LINKS: ForceDirectedGraphLink[] = [
+//   { source: 'Preprint', target: 'Software', count: 7992 },
+//   { source: 'Preprint', target: 'Dataset', count: 68292 },
+//   { source: 'Preprint', target: 'Journal Article', count: 25263 },
+//
+//   { source: 'Software', target: 'Dataset', count: 1983 },
+//   { source: 'Software', target: 'People', count: 28612 },
+//   { source: 'Software', target: 'Organization', count: 24 },
+//
+//   { source: 'Dataset', target: 'Organization', count: 11657 },
+//   { source: 'Dataset', target: 'People', count: 546454 },
+//   { source: 'Dataset', target: 'Journal Article', count: 387906 },
+//
+//   { source: 'Organization', target: 'Journal Article', count: 1777 },
+//   { source: 'Organization', target: 'People', count: 3009 },
+//
+//   { source: 'Journal Article', target: 'People', count: 3847926 },
+//   { source: 'Journal Article', target: 'Journal Article', count: 2043502 }
+// ]
 
 export interface ForceDirectedGraphNode {
   title: string
@@ -114,7 +141,7 @@ const sizeScale: Scale = {
       { data: 'linkData', field: 'count' }
     ]
   },
-  range: [1000, 10000]
+  range: [1, 10000]
 }
 
 ///// Marks /////////////////////////////////////
@@ -138,7 +165,6 @@ const nodeMarks: Mark = {
       fillOpacity: {
         signal: 'selected ? indexof(selected, datum.title) > -1 ? 1 : 0.6 : 0.6'
       },
-
       tooltip: { signal: "datum.title + ': ' + format(datum.count, ',')" }
     }
   },
@@ -146,7 +172,6 @@ const nodeMarks: Mark = {
   transform: [
     {
       type: 'force',
-
       forces: [
         { force: 'center', x: { signal: 'cx' }, y: { signal: 'cy' } },
         { force: 'x', x: 'xfocus', strength: { signal: 'gravityX' } },
@@ -154,10 +179,11 @@ const nodeMarks: Mark = {
 
         {
           force: 'collide',
-          iterations: 2,
+          iterations: 10,
+          // radius: 10
           radius: { expr: 'sqrt(datum.size) / 2' }
         },
-        { force: 'nbody', strength: -100 },
+        { force: 'nbody', strength: -200 },
         {
           force: 'link',
           links: 'linkData',
@@ -169,7 +195,6 @@ const nodeMarks: Mark = {
       iterations: 100,
       static: false,
       restart: { signal: 'restart' },
-
       signal: 'force'
     }
   ],
@@ -188,7 +213,7 @@ const nodeMarks: Mark = {
 }
 
 const linkMarks: Mark = {
-  name: 'links',
+  name: 'connections',
   type: 'path',
   from: { data: 'linkData' },
 
@@ -214,7 +239,7 @@ const linkMarks: Mark = {
   transform: [
     {
       type: 'linkpath',
-      shape: 'line',
+      shape: 'diagonal',
 
       require: { signal: 'force' },
 
@@ -234,7 +259,7 @@ const nodeLabels: Mark = {
 
   encode: {
     enter: {
-      text: { signal: "datum.size > 5000 ? datum.datum.title : ''" },
+      text: { signal: "datum.size > 1 ? datum.datum.title : ''" },
 
       align: { value: 'center' },
       baseline: { value: 'bottom' },
@@ -288,12 +313,12 @@ const forceDirectedGraphSpec = (
 
   data: [{ name: 'nodeData' }, { name: 'linkData' }],
 
-  signals: signals,
   scales: [
     sizeScale,
     { name: 'color', type: 'ordinal', domain: domain, range: range }
   ],
-  marks: [nodeMarks, linkMarks, nodeLabels, nodeCounts]
+  marks: [nodeMarks, nodeLabels, nodeCounts, linkMarks],
+  signals: signals
 })
 
 export default forceDirectedGraphSpec

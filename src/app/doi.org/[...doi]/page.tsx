@@ -151,9 +151,7 @@ export default async function Page({ params, searchParams }: Props) {
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
-    <Suspense fallback={<div>Loading the Graph</div>}>
     <RelatedAggregateGraph doi={doi} />
-    </Suspense>
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
