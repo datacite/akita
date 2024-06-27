@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Vega } from 'react-vega'
 
-import EmptyChart from '../EmptyChart/EmptyChart'
 import HelpIcon from '../HelpIcon/HelpIcon'
 import forceDirectedGraphSpec, { ForceDirectedGraphNode, ForceDirectedGraphLink } from './ForceDirectedSpec'
 import styles from './ForceDirectedGraph.module.scss'
@@ -39,9 +38,6 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
 
 
 
-  if (nodes.length==0){
-    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
-  }
 
 
   return (
