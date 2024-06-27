@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Col, Row } from "src/components/Layout";
 import { getRelatedWorksGraph } from 'src/data/queries/relatedWorks'

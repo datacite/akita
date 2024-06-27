@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 function getBaseUrl() {
   const localhost = 'http://localhost:3000'
   const baseUrl =
