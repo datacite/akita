@@ -77,8 +77,8 @@ export interface ForceDirectedGraphLink {
 const signals: Signal[] = [
   {
     name: 'linkDistance',
-    value: 200,
-    bind: { input: 'range', min: 1, max: 500, step: 1 }
+    value: 200
+    // bind: { input: 'range', min: 1, max: 500, step: 1 }
   },
   {
     name: 'selected',
@@ -97,8 +97,16 @@ const signals: Signal[] = [
   // Force specific signals
   { name: 'cx', update: 'width / 2' },
   { name: 'cy', update: 'height / 2' },
-  { name: 'gravityX', value: 0, bind: { input: 'range', min: 0, max: 1 } },
-  { name: 'gravityY', value: 0.2, bind: { input: 'range', min: 0, max: 1 } },
+  {
+    name: 'gravityX',
+    value: 0
+    // bind: { input: 'range', min: 0, max: 1 },
+  },
+  {
+    name: 'gravityY',
+    value: 0.2
+    // bind: { input: 'range', min: 0, max: 1 },
+  },
 
   {
     name: 'fix',
@@ -134,7 +142,7 @@ const signals: Signal[] = [
 ///// Scales ////////////////////////////////////
 const sizeScale: Scale = {
   name: 'size',
-  type: 'log',
+  type: 'linear',
   domain: {
     fields: [
       { data: 'nodeData', field: 'count' },
@@ -303,7 +311,7 @@ const nodeCounts: Mark = {
 
 const forceDirectedGraphSpec = (
   width = 500,
-  domain = resourceTypeDomain.concat(['People', 'Organization']),
+  domain = resourceTypeDomain.concat(['People', 'Organizations']),
   range = resourceTypeRange.concat(['#A83', '#FAD'])
 ): VisualizationSpec => ({
   $schema: 'https://vega.github.io/schema/vega/v5.json',
