@@ -45,7 +45,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
 
   /* istanbul ignore next */
   const spec: VisualizationSpec = {
-    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     data: {
       name: 'table'
     },
@@ -59,13 +59,22 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
       cursor: "pointer",
       tooltip: true
     },
-    selection: {
-      highlight: {
-        type: "single",
-        empty: "none",
-        on: "mouseover"
-      }
+    params: [
+    {
+      name: "highlight",
+      select: {type: "point", on: "pointerover"}
     },
+    {name: "select", select: "point"}
+  ],
+    // params: {
+    //   name: "highlight",
+    //
+    //   highlight: {
+    //     type: "single",
+    //     empty: "none",
+    //     on: "mouseover"
+    //   }
+    // },
     width: chartWidth,
     height: 200,
     encoding: {
@@ -94,7 +103,7 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
         scale: { range: [color] },
         type: "nominal",
         legend: null,
-        condition: [{ selection: "highlight", value: "#34495e" }]
+        condition: [{ param: "highlight", value: "#34495e" }]
       }
     },
     config: {

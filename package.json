@@ -63,13 +63,15 @@
     "react-dom": "^18.2.0",
     "react-html-parser": "^2.0.2",
     "react-share": "^4.2.1",
-    "react-vega": "^7.4.1",
+    "react-vega": "^7.6.0",
     "sass": "^1.49.0",
     "swr": "^0.3.2",
     "urijs": "^1.19.11",
     "use-debounce": "^10.0.0",
-    "vega": "^5.13.0",
-    "vega-lite": "^4.13.0",
+    "vega": "^5.30.0",
+    "vega-embed": "^6.25.0",
+    "vega-lite": "^5.19.0",
+    "vercel": "^34.2.8",
     "wait-on": "^5.0.1"
   },
   "devDependencies": {
