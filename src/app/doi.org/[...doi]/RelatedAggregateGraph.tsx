@@ -11,15 +11,16 @@ interface Props {
 export default async function RelatedAggregateGraph( {doi}: Props) {
   const data = await getRelatedWorksGraph(doi)
   const titleText = ""
+  const emptyTitleText = "No related works found"
   const innerGraph = (data.nodes.length==0) ?
-    <EmptyChart title={titleText}/> :
+    <EmptyChart title={emptyTitleText}/> :
     <ForceDirectedGraph titleText={titleText} nodes={data.nodes} links={data.links} />
 
   return (<Row>
             <Col mdOffset={3} className="panel panel-transparent">
               <div className="panel-body">
                 {innerGraph}
-                </div>
+              </div>
             </Col>
           </Row>
          )
