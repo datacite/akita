@@ -10,18 +10,17 @@ interface Props {
 
 export default async function RelatedAggregateGraph( {doi}: Props) {
   const data = await getRelatedWorksGraph(doi)
-  const titleText = "Test Related Aggregate Graph"
+  const titleText = ""
   const innerGraph = (data.nodes.length==0) ?
     <EmptyChart title={titleText}/> :
     <ForceDirectedGraph titleText={titleText} nodes={data.nodes} links={data.links} />
 
-    return (<Row>
-      <Col mdOffset={3} className="panel panel-transparent">
-          <div className="panel-body">
-            {innerGraph}
-            <code>{JSON.stringify(data)}</code>
-          </div>
-      </Col>
-    </Row>
-           )
+  return (<Row>
+            <Col mdOffset={3} className="panel panel-transparent">
+              <div className="panel-body">
+                {innerGraph}
+                </div>
+            </Col>
+          </Row>
+         )
 }
