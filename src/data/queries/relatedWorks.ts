@@ -1,4 +1,3 @@
-// 'use client'
 import {
   ForceDirectedGraphNode,
   ForceDirectedGraphLink
@@ -22,13 +21,20 @@ interface RelatedWorksGraph {
 export async function getRelatedWorksGraph(
   doi: string
 ): Promise<RelatedWorksGraph> {
-  const baseUrl = getBaseUrl()
-  const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
-  if (!response.ok) {
-    return {
-      nodes: [],
-      links: []
-    }
+  const nullGraph = {
+    nodes: [],
+    links: []
   }
-  return response.json()
+  const baseUrl = getBaseUrl()
+  try {
+    const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
+    if (!response.ok) {
+      return nullGraph
+    }
+    return response.json()
+  } catch (error) {
+    // Non-critical data fetch.  If it fails, we return the nullGraph
+    console.error(error)
+    return nullGraph
+  }
 }
