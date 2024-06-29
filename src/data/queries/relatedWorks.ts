@@ -1,5 +1,10 @@
 // 'use client'
-function getBaseUrl() {
+import {
+  ForceDirectedGraphNode,
+  ForceDirectedGraphLink
+} from 'src/components/ForceDirectedGraph/ForceDirectedSpec'
+
+function getBaseUrl(): string {
   const localhost = 'http://localhost:3000'
   const baseUrl =
     process.env.VERCEL_URL === 'localhost:3000'
@@ -9,9 +14,21 @@ function getBaseUrl() {
   return localhost
 }
 
-export async function getRelatedWorksGraph(doi: string) {
+interface RelatedWorksGraph {
+  nodes: ForceDirectedGraphNode[]
+  links: ForceDirectedGraphLink[]
+}
+
+export async function getRelatedWorksGraph(
+  doi: string
+): Promise<RelatedWorksGraph> {
   const baseUrl = getBaseUrl()
   const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
-  const data = await response.json()
-  return data
+  if (!response.ok) {
+    return {
+      nodes: [],
+      links: []
+    }
+  }
+  return response.json()
 }
