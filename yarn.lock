@@ -8249,6 +8249,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
+"maltipoo@https://github.com/datacite/maltipoo#0.0.1":
+  version "0.0.1"
+  resolved "https://github.com/datacite/maltipoo#114659f48a146126df89d3e8cab3f394ebe3f0f3"
+
 map-cache@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
