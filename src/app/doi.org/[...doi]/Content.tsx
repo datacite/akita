@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactHtmlParser from 'react-html-parser'
-import { Row, Col } from "src/components/Layout";
+import { Container, Row, Col } from "src/components/Layout-4";
 
 import apolloClient from 'src/utils/apolloClient'
 import { Work as WorkType } from 'src/data/types'
@@ -31,7 +31,7 @@ export default async function Content(props: Props) {
   })
 
   if (error) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <Error title="An error occured." message={error.message} />
     </Col>
   )
@@ -44,34 +44,48 @@ export default async function Content(props: Props) {
       ? work.id
       : 'https://doi.org/' + work.doi
 
-  return (<>
-    <TitleComponent title={ReactHtmlParser(title)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+  return (
+    <Container fluid>
+      <Row className="mb-4">
+        <Col md={{ offset: 3 }}>
+          <TitleComponent title={ReactHtmlParser(title)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+        </Col>
+      </Row>
 
-    <Row>
-      <Col md={3} id="side-bar">
-        <div className='left-menu-buttons'>
-          {work.registrationAgency.id == "datacite" && (
-            <Claim doi_id={work.doi} />
-          )}
-          <DownloadMetadata doi={work} />
-        </div>
-        <CiteAs doi={work} />
-        {!isBot && <DownloadReports
-          links={[
-            {
-              title: 'Related Works (CSV)',
-              helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`,
-              type: 'doi/related-works',
-            }
-          ]}
-          variables={variables as any}
-        />}
-        <ShareLinks url={'doi.org/' + work.doi} title={title} />
-      </Col>
-      <Col md={9} id="content">
-        <Work doi={work} />
-      </Col>
-    </Row>
-  </>
+      <Row>
+        <Col md={3}>
+          <Row className="mb-2">
+            {work.registrationAgency.id == "datacite" && (
+              <Col xs={12} className="mb-2">
+                <Claim doi_id={work.doi} />
+              </Col>
+            )}
+            <Col xs={12}>
+              <DownloadMetadata doi={work} />
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <CiteAs doi={work} />
+          </Row>
+          <Row className="mb-2">
+            {!isBot && <DownloadReports
+              links={[
+                {
+                  title: 'Related Works (CSV)',
+                  helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`,
+                  type: 'doi/related-works',
+                }
+              ]}
+              variables={variables as any}
+            />}
+            <ShareLinks url={'doi.org/' + work.doi} title={title} />
+          </Row>
+        </Col>
+
+        <Col md={9} className="px-0">
+          <Work doi={work} />
+        </Col>
+      </Row>
+    </Container>
   )
 }

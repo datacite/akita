@@ -22,7 +22,7 @@ import { Work } from 'src/data/types'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { License } from '../License/License'
-import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
+import MetricsCounter from '../MetricsCounter/MetricsCounter'
 import styles from './WorkMetadata.module.scss'
 
 type Props = {

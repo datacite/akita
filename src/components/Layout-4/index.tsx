@@ -10,6 +10,11 @@ export function Grid(props: ContainerProps) {
   return <RBContainer {...props}>{props.children}</RBContainer>
 }
 
+export function Container(props: ContainerProps) {
+  return <RBContainer {...props}>{props.children}</RBContainer>
+}
+
+
 export function Row(props: RowProps) {
   return <RBRow {...props}>{props.children}</RBRow>
 }

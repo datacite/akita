@@ -3,6 +3,7 @@ import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
 import { Alert } from 'src/components/Layout'
 import ReactHtmlParser from 'react-html-parser'
+import { Col } from '../Layout-4'
 
 type Props = {
   id: string
@@ -35,11 +36,7 @@ interface FormattedCitationQueryVar {
   locale?: string
 }
 
-const CitationFormatter: React.FunctionComponent<Props> = ({
-  id,
-  style,
-  locale
-}) => {
+export default function CitationFormatter({ id, style, locale }: Props) {
   const cslType = style || 'apa'
   const [formatted, setFormattedCitation] = React.useState<string>('')
   const { loading, error, data } = useQuery<
@@ -62,16 +59,14 @@ const CitationFormatter: React.FunctionComponent<Props> = ({
   if (!loading && !formatted)
     return <Alert bsStyle="warning">No content found.</Alert>
 
-  return (
-    <div>
+  return (<>
+    <Col xs={12}>
       <h3 className="member-results">Cite as</h3>
-      <div className="panel panel-transparent">
-        <div className="formatted-citation panel-body">
-          {ReactHtmlParser(formatted)}
-        </div>
-      </div>
-    </div>
+    </Col>
+    <Col xs={12}>
+      {ReactHtmlParser(formatted)}
+    </Col>
+  </ >
   )
 }
 
-export default CitationFormatter
