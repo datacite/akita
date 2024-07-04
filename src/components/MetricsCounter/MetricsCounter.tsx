@@ -10,7 +10,7 @@ type Props = {
   metadata: Work
 }
 
-export const MetricsCounter: React.FunctionComponent<Props> = ({ metadata }) => {
+export default function MetricsCounter({ metadata }: Props) {
   const citationCount = metadata.citationCount || 0
   const viewCount = metadata.viewCount || 0
   const downloadCount = metadata.downloadCount || 0

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Row, Col } from 'src/components/Layout'
+import { Row, Col } from 'src/components/Layout-4'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -16,7 +16,7 @@ type Props = {
   title?: string
 }
 
-const ShareLinks: React.FunctionComponent<Props> = ({ url, title }) => {
+export default function ShareLinks({ url, title }: Props) {
 
   const pageUrl =
     process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
@@ -27,38 +27,27 @@ const ShareLinks: React.FunctionComponent<Props> = ({ url, title }) => {
     ? 'DataCite Commons: ' + title
     : 'DataCite Commons: No Title'
 
-  const ShareLinks = () => <>
-    <h3 className="member-results" id="share">Share</h3>
-    <div className="panel panel-transparent share">
-      <div className="panel-body">
-        <Row>
-          <Col className="share-list" xs={12}>
-            <div>
-              <EmailShareButton url={pageUrl} title={pageTitle}>
-                <FontAwesomeIcon icon={faEnvelope} /> Email
-              </EmailShareButton>
-            </div>
-            <div>
-              <TwitterShareButton url={pageUrl} title={pageTitle}>
-                <FontAwesomeIcon icon={faTwitter} /> Twitter
-              </TwitterShareButton>
-            </div>
-            <div>
-              <FacebookShareButton url={pageUrl} title={pageTitle}>
-                <FontAwesomeIcon icon={faFacebook} /> Facebook
-              </FacebookShareButton>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    </div>
-  </>
-
   return (
     <>
-      <ShareLinks />
+      <Col xs={12}>
+        <h3 className="member-results" id="share">Share</h3>
+      </Col>
+      <Col className="share-list" xs={12}>
+        <EmailShareButton url={pageUrl} title={pageTitle}>
+          <FontAwesomeIcon icon={faEnvelope} /> Email
+        </EmailShareButton>
+      </Col>
+      <Col className="share-list" xs={12}>
+        <TwitterShareButton url={pageUrl} title={pageTitle}>
+          <FontAwesomeIcon icon={faTwitter} /> Twitter
+        </TwitterShareButton>
+      </Col>
+      <Col className="share-list" xs={12}>
+        <FacebookShareButton url={pageUrl} title={pageTitle}>
+          <FontAwesomeIcon icon={faFacebook} /> Facebook
+        </FacebookShareButton>
+      </Col>
     </>
   )
 }
 
-export default ShareLinks
