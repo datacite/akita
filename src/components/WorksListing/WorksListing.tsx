@@ -81,7 +81,7 @@ export default function WorksListing({
         </Row>}
 
         {works.nodes.map((doi) => (
-          <Row key={doi.doi}>
+          <Row key={doi.doi} className="mb-4">
             <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus} />
           </Row>
         ))}
