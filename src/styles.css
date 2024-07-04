@@ -1,5 +1,5 @@
 @import 'bootstrap-4/dist/css/bootstrap.min.css';
-@import 'maltipoo/assets/stylesheets/doi.min.css';
+@import 'maltipoo/dist/stylesheets/doi.min.css';
 
 /* Change Source Sans Pro to Source Sans 3 */
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, li, .navbar, .brand, a, .td-name, td, .user-metrics-counter, .tooltip, .popover-content, .card-body span, .chart .badge, #disqus_thread {

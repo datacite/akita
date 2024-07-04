@@ -18,7 +18,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
     if (!authors || authors.length === 0) return null
 
     // Used for checking filter shouldnt show author that is already filtered
-    function checkAuthorForPerson(author) {
+    function checkAuthorForPerson(author: Facet) {
         // Only works on person model
         if (model == 'person') {
             const orcid_id = url.substring(11, url.length - 2)
@@ -30,7 +30,7 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
         }
     }
 
-    function removeNullAuthors(author) {
+    function removeNullAuthors(author: Facet) {
         if (author.title)
             return author
     }

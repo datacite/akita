@@ -25,7 +25,7 @@ import {
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { session } from 'src/utils/session'
 import styles from './Header.module.scss'
-// <div className={styles.chartText}>
+
 
 type Props = {
   profilesUrl: string
