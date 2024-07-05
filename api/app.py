@@ -16,7 +16,7 @@ def related_works(doi):
         return jsonify({"error": "Does not match DOI format"}), 400
 
     full_doi_attributes = get_full_corpus_doi_attributes(
-        doi=doi, parser=RelatedWorkReports.parser, api_url=DOI_API
+        doi_query=doi, parser=RelatedWorkReports.parser, api_url=DOI_API
     )
     if not full_doi_attributes:
         return jsonify({"error": "DOI not found"}), 404
