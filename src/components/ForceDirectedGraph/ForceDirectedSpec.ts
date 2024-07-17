@@ -227,7 +227,7 @@ const nodeCounts: Mark = {
       baseline: { value: 'top' },
       fill: { value: 'black' },
 
-      font: { value: 'Source Sans Pro' },
+      font: { value: 'inherit' },
       fontSize: { value: 16 }
     },
 
