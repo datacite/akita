@@ -4,7 +4,7 @@
     "enabled": false
   },
   "functions": {
-     "src/pages/api/download-reports/**/*": {
+     "src/app/api/download-reports/**/*": {
       "memory": 512,
       "maxDuration": 30
     },
