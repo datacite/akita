@@ -93,8 +93,6 @@ const nodeMarks: Mark = {
   encode: {
     enter: {
       fill: { scale: 'color', field: 'title' },
-      stroke: { value: 'black' },
-      strokeWidth: { value: 1 },
 
       xfocus: { signal: 'cx' },
       yfocus: { signal: 'cy' }
@@ -204,7 +202,7 @@ const nodeLabels: Mark = {
       baseline: { value: 'bottom' },
       fill: { value: 'black' },
 
-      font: { value: 'Source Sans Pro' },
+      font: { value: 'inherit' },
       fontSize: { value: 16 }
     },
 
@@ -222,7 +220,7 @@ const nodeCounts: Mark = {
   encode: {
     enter: {
       text: {
-        signal: "datum.size > 5000 ? format(datum.datum.count, ',') : ''"
+        signal: "datum.size > 50 ? format(datum.datum.count, ',') : ''"
       },
 
       align: { value: 'center' },
