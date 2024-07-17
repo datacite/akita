@@ -146,14 +146,18 @@ export default async function Page({ params, searchParams }: Props) {
 
   const showSankey = isDMP(data.work) || isProject(data.work)
 
+  const projectGraph = showSankey
+    ? <Suspense>
+      <RelatedAggregateGraph doi={doi} />
+    </Suspense>
+    : ''
 
   return <>
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
-    <Suspense fallback={<div>Loading... AGGREGATE GRAPH</div>}>
-      <RelatedAggregateGraph doi={doi} />
-    </Suspense>
+
+    { projectGraph }
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
