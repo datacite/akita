@@ -28,7 +28,7 @@ const signals: Signal[] = [
       {
         events: '@links:mouseover',
         update:
-          "datum.source.datum && datum.target.datum ? datum.source.datum.title + ' ⇄ ' + datum.target.datum.title : null"
+          "datum.source.datum && datum.target.datum ? datum.source.datum.title + ' → ' + datum.target.datum.title : null"
       },
       { events: 'mouseout', update: 'null' }
     ]
