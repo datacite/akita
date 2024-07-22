@@ -45,6 +45,7 @@ export default function RelatedContent(props: Props) {
 
   const relatedWorks = data.work
 
+  const allRelatedCount = relatedWorks.allRelated?.totalCount || 0
   const referenceCount = relatedWorks.references?.totalCount || 0
   const citationCount = relatedWorks.citations?.totalCount || 0
   const partCount = relatedWorks.parts?.totalCount || 0
@@ -56,6 +57,7 @@ export default function RelatedContent(props: Props) {
   const url = '/doi.org/' + relatedWorks.doi + '/?'
 
   const connectionTypeCounts = {
+    allRelated: allRelatedCount,
     references: referenceCount,
     citations: citationCount,
     parts: partCount,
