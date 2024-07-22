@@ -109,7 +109,7 @@ export const workFragment = gql`
       title
     }
     repository {
-      id:uid
+      id: uid
       name
     }
     rights {
@@ -164,9 +164,7 @@ export const DOI_METADATA_QUERY = gql`
 `
 
 export const DOI_QUERY = gql`
-  query getDoiQuery(
-    $id: ID!
-  ) {
+  query getDoiQuery($id: ID!) {
     work(id: $id) {
       ...WorkFragment
       contentUrl
@@ -229,11 +227,28 @@ export const RELATED_CONTENT_QUERY = gql`
     $repositoryId: String
   ) {
     work(id: $id) {
-      doi,
+      doi
       types {
-        resourceTypeGeneral,
+        resourceTypeGeneral
         resourceType
-      },
+      }
+      allRelated(
+        first: 25
+        query: $filterQuery
+        after: $cursor
+        published: $published
+        resourceTypeId: $resourceTypeId
+        fieldOfScience: $fieldOfScience
+        language: $language
+        license: $license
+        registrationAgency: $registrationAgency
+        repositoryId: $repositoryId
+      ) {
+        ...WorkConnectionFragment
+        nodes {
+          ...WorkFragment
+        }
+      }
       citations(
         first: 25
         query: $filterQuery
@@ -332,7 +347,6 @@ export interface MetadataQueryVar {
 export interface MetadataQueryData {
   work: WorkMetadata
 }
-
 
 export interface QueryData {
   work: Work
