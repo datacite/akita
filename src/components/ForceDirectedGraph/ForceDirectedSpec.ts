@@ -160,7 +160,7 @@ const linkMarks: Mark = {
       strokeCap: { value: 'round' },
       tooltip: {
         signal:
-          "datum.source.datum.title + ' ⇄ ' + datum.target.datum.title + ': ' + format(datum.count, ',')"
+          "datum.source.datum.title + ' → ' + datum.target.datum.title + ': ' + format(datum.count, ',')"
       }
     },
 
@@ -168,7 +168,7 @@ const linkMarks: Mark = {
       strokeWidth: { signal: "scale('size', datum.count) / 500" },
       strokeOpacity: {
         signal:
-          "datum.source.datum && datum.target.datum ? indexof(datum.source.datum.title + ' ⇄ ' + datum.target.datum.title, selected) > -1 ? 1 : 0.6 : 0.6"
+          "datum.source.datum && datum.target.datum ? indexof(datum.source.datum.title + ' → ' + datum.target.datum.title, selected) > -1 ? 1 : 0.6 : 0.6"
       }
     }
   },
