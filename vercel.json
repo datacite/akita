@@ -13,7 +13,7 @@
     }
   ],
   "functions": {
-     "src/app/api/download-reports/**/*": {
+     "src/app/download-reports/**/*": {
       "memory": 512,
       "maxDuration": 30
     },
