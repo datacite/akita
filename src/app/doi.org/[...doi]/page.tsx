@@ -11,6 +11,7 @@ import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
+import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
 
 
@@ -145,11 +146,18 @@ export default async function Page({ params, searchParams }: Props) {
 
   const showSankey = isDMP(data.work) || isProject(data.work)
 
+  const projectGraph = showSankey
+    ? <Suspense>
+      <RelatedAggregateGraph doi={doi} />
+    </Suspense>
+    : ''
 
   return <>
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
+
+    { projectGraph }
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>

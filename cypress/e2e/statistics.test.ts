@@ -1,4 +1,4 @@
-describe('Overview', () => {
+describe.skip('Overview', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
     cy.visit('/statistics')

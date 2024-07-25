@@ -22,11 +22,20 @@ const COMMIT_SHA =
   VERCEL_GITLAB_COMMIT_SHA ||
   VERCEL_BITBUCKET_COMMIT_SHA
 
-const DUMMY_SITEMAPS_URL = "https://example.com"
+const DUMMY_SITEMAPS_URL = 'https://example.com'
 const SITEMAPS_URL = process.env.SITEMAPS_URL || DUMMY_SITEMAPS_URL
 
 module.exports = withSourceMaps({
   swcMinify: true,
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild/linux-x64'
+      ]
+    }
+  },
   images: {
     domains: ['img.shields.io']
   },
@@ -90,7 +99,7 @@ module.exports = withSourceMaps({
       {
         source: '/sitemaps/:path*',
         destination: `${SITEMAPS_URL}/sitemaps/:path*`
-      },
+      }
     ]
   }
 })

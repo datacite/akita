@@ -108,3 +108,4 @@ cypress/screenshots/
 .vercel
 .node-version
 
+.env*.local
