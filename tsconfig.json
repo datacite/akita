@@ -19,7 +19,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "types": [
-      "jest"
     ],
     "baseUrl": ".",
     "incremental": true,
