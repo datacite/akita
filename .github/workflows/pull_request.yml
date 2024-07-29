@@ -7,3 +7,19 @@ jobs:
   test:
     uses: ./.github/workflows/cypress_tests.yml
     secrets: inherit
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Vercel deploy
+        uses: amondnet/vercel-action@v25.2.0
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID}}
+          vercel-project-id: ${{ secrets.PROJECT_ID}}
+          scope: ${{ secrets.TEAM_ID}}
+          vercel-project-name: 'akita'
+          alias-domains: |
+             commons-pr-{{PR_NUMBER}}.datacite.vercel.app
