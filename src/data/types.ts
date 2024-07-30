@@ -40,7 +40,7 @@ export type Work = WorkMetadata & {
     id: string
     name: string
   }
-  
+
   registered?: Date
   formattedCitation?: string
   claims?: Claim[]
@@ -57,8 +57,8 @@ export type Work = WorkMetadata & {
   parts?: Works
   partOf?: Works
   otherRelated?: Works
+  allRelated?: Works
 }
-
 
 export type Works = {
   totalCount: number
@@ -72,8 +72,6 @@ export type Works = {
   nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]
 }
-
-
 
 type Title = {
   title: string
@@ -96,7 +94,6 @@ export type Rights = {
   rightsUri: string
   rightsIdentifier: string
 }
-
 
 type Creator = {
   id: string
@@ -153,8 +150,6 @@ type UsageMonth = {
   total: number
 }
 
-
-
 // Organization types
 export type OrganizationMetadata = {
   name: string
@@ -179,7 +174,6 @@ export type Organization = OrganizationMetadata & {
   works: Works
 }
 
-
 export type Organizations = {
   totalCount: number
   pageInfo: PageInfo
@@ -187,8 +181,6 @@ export type Organizations = {
   countries: Facet[]
   nodes: Organization[]
 }
-
-
 
 type Geolocation = {
   pointLongitude: number
@@ -199,8 +191,6 @@ type OrganizationIdentifier = {
   identifier: string
   identifierType: string
 }
-
-
 
 // People types
 export type PersonMetadata = {
@@ -225,14 +215,12 @@ export interface Person extends PersonMetadata {
   works: PersonWorks
 }
 
-
 export interface People {
   __typename: String
   totalCount: number
   pageInfo: PageInfo
   nodes: Person[]
 }
-
 
 interface Link {
   name: string
@@ -252,8 +240,6 @@ interface PersonWorks extends Works {
   totalOpenLicenses: number
   openLicenseResourceTypes: Facet[]
 }
-
-
 
 // Repository types
 export type RepositoryMetadata = {
@@ -293,8 +279,6 @@ export interface Repositories {
   nodes: Repository[]
 }
 
-
-
 interface RepositoryWorks {
   totalCount: number
   languages: Facet[]
@@ -304,8 +288,6 @@ interface RepositoryWorks {
   licenses: Facet[]
   published: Facet[]
 }
-
-
 
 interface RepositoryFacet extends Facet {
   name: string
@@ -318,9 +300,6 @@ interface TextRestriction {
 type DefinedTerm = {
   name: string
 }
-
-
-
 
 // Shared types
 type Identifier = {

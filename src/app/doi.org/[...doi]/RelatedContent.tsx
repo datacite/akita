@@ -45,6 +45,7 @@ export default function RelatedContent(props: Props) {
 
   const relatedWorks = data.work
 
+  const allRelatedCount = relatedWorks.allRelated?.totalCount || 0
   const referenceCount = relatedWorks.references?.totalCount || 0
   const citationCount = relatedWorks.citations?.totalCount || 0
   const partCount = relatedWorks.parts?.totalCount || 0
@@ -56,6 +57,7 @@ export default function RelatedContent(props: Props) {
   const url = '/doi.org/' + relatedWorks.doi + '/?'
 
   const connectionTypeCounts = {
+    allRelated: allRelatedCount,
     references: referenceCount,
     citations: citationCount,
     parts: partCount,
@@ -64,12 +66,21 @@ export default function RelatedContent(props: Props) {
   }
 
   const defaultConnectionType =
+    allRelatedCount > 0 ? 'allRelated' :
     referenceCount > 0 ? 'references' :
-      citationCount > 0 ? 'citations' :
-        partCount > 0 ? 'parts' :
-          partOfCount > 0 ? 'partOf' : 'otherRelated'
+    citationCount > 0 ? 'citations' :
+    partCount > 0 ? 'parts' :
+    partOfCount > 0 ? 'partOf' : 'otherRelated'
 
   const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
+  //convert camel case to title and make first letter uppercase
+  //convert connectionType to title, allRelated becomes All Related Wokrs, references becomes References, citations becomes Citations, parts becomes Parts, partOf becomes Part Of, and otherRelated becomes Other Works
+  const displayedConnectionTitle =
+    displayedConnectionType === 'allRelated' ? 'All Related Works' :
+    displayedConnectionType === 'otherRelated' ? 'Other Works' :
+    displayedConnectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
+
+
 
 
   const works: Works = displayedConnectionType in relatedWorks ?
@@ -98,7 +109,7 @@ export default function RelatedContent(props: Props) {
               connectionTypesCounts={connectionTypeCounts}
               showAnalytics={true}
               showSankey={showSankey}
-              sankeyTitle={`Contributions to ${displayedConnectionType}`}
+              sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
               showClaimStatus={true}
               hasPagination={works.totalCount > 25}
               hasNextPage={hasNextPage}
