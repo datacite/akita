@@ -66,10 +66,11 @@ export default function RelatedContent(props: Props) {
   }
 
   const defaultConnectionType =
+    allRelatedCount > 0 ? 'allRelated' :
     referenceCount > 0 ? 'references' :
-      citationCount > 0 ? 'citations' :
-        partCount > 0 ? 'parts' :
-          partOfCount > 0 ? 'partOf' : 'otherRelated'
+    citationCount > 0 ? 'citations' :
+    partCount > 0 ? 'parts' :
+    partOfCount > 0 ? 'partOf' : 'otherRelated'
 
   const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
 
