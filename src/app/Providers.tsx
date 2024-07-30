@@ -2,9 +2,8 @@
 
 import React, { PropsWithChildren } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { ApolloProvider } from '@apollo/client'
 import { FlagsProvider } from 'flagged'
-import apolloClientBuilder from 'src/utils/apolloClient/builder'
+import ApolloProvider from 'src/utils/apolloClient/provider'
 
 
 interface Props extends PropsWithChildren {
@@ -19,10 +18,9 @@ export default function Providers({ default_features, authToken, children }: Pro
 
   const features = default_features.concat(paramFeatures)
 
-  const apolloClient = apolloClientBuilder(() => authToken)
 
   return <FlagsProvider features={features}>
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider token={authToken}>
       {children}
     </ApolloProvider>
   </FlagsProvider>
