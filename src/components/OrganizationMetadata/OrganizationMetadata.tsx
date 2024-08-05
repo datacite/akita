@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
-import { Label, Col, Row } from 'react-bootstrap'
+import { Col, Row, Badge } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faExternalLinkAlt
@@ -9,6 +11,7 @@ import { decimalToSexagesimal } from 'geolib'
 
 import { OrganizationRecord } from '../Organization/Organization'
 import { rorFromUrl } from '../../utils/helpers'
+import styles from './OrganizationMetadata.module.css'
 
 type Props = {
   metadata: OrganizationRecord
@@ -75,15 +78,15 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
     const latitude =
       metadata.geolocation.pointLatitude > 0
         ? decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
-          ' N, '
+        ' N, '
         : decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
-          ' S'
+        ' S'
     const longitude =
       metadata.geolocation.pointLongitude > 0
         ? decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
-          ' W'
+        ' W'
         : decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
-          ' E'
+        ' E'
 
     return (
       <a
@@ -100,7 +103,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   const footer = () => {
     return (
       <div className="panel-footer">
-        <a id="ror-link" target="_blank" rel="noreferrer" href={metadata.id}>
+        <a id="ror-link" target="_blank" rel="noreferrer" href={metadata.id} className={styles.link}>
           <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
         </a>
       </div>
@@ -108,7 +111,7 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div key={metadata.id} className="panel panel-transparent">
+    <Col className="card-body">
       <div className="panel-body">
         {showTitle && <h3 className="work">{titleLink()}</h3>}
         <Row>
@@ -218,21 +221,21 @@ export const OrganizationMetadata: React.FunctionComponent<Props> = ({
           </div>
         )}
         <div className="tags">
-          <Label bsStyle="info">{metadata.country.name}</Label>
+          <Badge variant="info">{metadata.country.name}</Badge>
           <span>
             {metadata.types.map((type) => (
-              <Label key="type" bsStyle="info">
+              <Badge key="type" variant="info">
                 {type}
-              </Label>
+              </Badge>
             ))}
           </span>
           {metadata.memberId && (
-            <Label bsStyle="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Label>
+            <Badge variant="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
           )}
         </div>
       </div>
       {footer()}
-    </div>
+    </Col>
   )
 }
 

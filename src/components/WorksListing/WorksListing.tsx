@@ -87,11 +87,13 @@ export default function WorksListing({
         ))}
 
         {hasPagination && (
-          <Pager
-            url={url}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          />
+          <Row>
+            <Pager
+              url={url}
+              hasNextPage={hasNextPage}
+              endCursor={endCursor}
+            />
+          </Row>
         )}
       </Col>
     )
