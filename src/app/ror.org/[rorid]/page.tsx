@@ -6,6 +6,7 @@ import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 import { MetadataQueryData, MetadataQueryVar, ORGANIZATION_METADATA_QUERY } from 'src/data/queries/organizationQuery'
+import { Container } from 'src/components/Layout-4'
 
 
 interface Props {
@@ -112,12 +113,12 @@ export default async function Page({ params, searchParams }: Props) {
 
   if (!data) notFound()
 
-  return <>
+  return <Container fluid>
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
     <RelatedContent variables={variables} isBot={JSON.parse(isBot)} />
-  </>
+  </Container>
 }
 
 

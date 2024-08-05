@@ -6,7 +6,7 @@ import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
-import { Row } from 'src/components/Layout-4'
+import { Col, Row } from 'src/components/Layout-4'
 
 interface Props {
   data: Facets
@@ -64,11 +64,11 @@ export default function WorkFacets({
   return (
     <>
       {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <div className="panel facets add">
-          <div className="panel-body">
+        <Row className="panel facets add mb-3">
+          <Col className="panel-body">
             <SearchBox path={path} />
-          </div>
-        </div>
+          </Col>
+        </Row>
       )}
 
       {totalConnectionTypeCount > 0 && (

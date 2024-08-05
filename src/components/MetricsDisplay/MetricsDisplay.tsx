@@ -21,7 +21,7 @@ type Props = {
   }
 }
 
-export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links = {} }) => {
+export function MetricsDisplay({ counts, links = {} }: Props) {
 
   const metricsData = [
     {
@@ -46,18 +46,18 @@ export const MetricsDisplay: React.FunctionComponent<Props> = ({ counts, links =
     }
   ];
 
-  const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map( (metric, index) => 
-      <React.Fragment key={"metric-"+index}>
-        <dd>{compactNumbers(metric.count || 0)}</dd>
-        <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>
-      </React.Fragment>
+  const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map((metric, index) =>
+    <React.Fragment key={"metric-" + index}>
+      <dd>{compactNumbers(metric.count || 0)}</dd>
+      <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>
+    </React.Fragment>
   )
   return (
-      <div className={styles.metrics}>
-        <dl>
-          {metricList}
-        </dl>
-      </div>
+    <div className={styles.metrics}>
+      <dl>
+        {metricList}
+      </dl>
+    </div>
   )
 }
 
