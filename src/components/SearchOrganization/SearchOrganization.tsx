@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'src/components/Layout-4'
 import { pluralize } from '../../utils/helpers'
 
 import Pager from '../Pager/Pager'
@@ -30,7 +30,7 @@ export default function SearchOrganizations(props: Props) {
 
   if (error) return (
     <Row>
-      <Col md={9} mdOffset={3}>
+      <Col md={{ span: 9, offset: 3 }}>
         <Error title="An error occured." message={error.message} />
       </Col>
     </Row>
@@ -38,57 +38,61 @@ export default function SearchOrganizations(props: Props) {
 
   const organizations = data?.organizations
 
+  if (!organizations || organizations.nodes.length == 0) return (
+    <Col md={{ span: 9, offset: 3 }}>
+      <div className="alert-works">
+        <Alert variant="warning">No organizations found.</Alert>
+      </div>
+    </Col>
+  )
+
+
 
   if (!organizations || organizations.nodes.length == 0) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
-        <Alert bsStyle="warning">No organizations found.</Alert>
+        <Alert variant="warning">No organizations found.</Alert>
       </div>
     </Col>
   )
 
   const renderResults = () => {
-
-    const hasNextPage = data?.organizations.pageInfo
-      ? data.organizations.pageInfo.hasNextPage
+    const hasNextPage = organizations.pageInfo
+      ? organizations.pageInfo.hasNextPage
       : false
-    const endCursor = data?.organizations.pageInfo
-      ? data.organizations.pageInfo.endCursor
+    const endCursor = organizations.pageInfo
+      ? organizations.pageInfo.endCursor
       : ''
 
     return (
-      <Col md={9} id="content">
-        {(data?.organizations.nodes.length || 0) > 0 && (
-          <h3 className="member-results">
-            {pluralize(data?.organizations.totalCount || 0, 'Organization')}
-          </h3>
-        )}
-
-        {data?.organizations.nodes.map((item) => (
-          <OrganizationMetadata
-            metadata={item}
-            linkToExternal={false}
-            key={item.id}
-          />
+      <Col md={9}>
+        {organizations.nodes.map((item) => (
+          <Row key={item.id} className="mb-4">
+            <OrganizationMetadata
+              metadata={item}
+              linkToExternal={false}
+            />
+          </Row>
         ))}
 
-        {(data?.organizations.totalCount || 0) > 20 && (
-          <Pager
-            url={'/ror.org?'}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          />
+        {(organizations.totalCount || 0) > 20 && (
+          <Row>
+            <Pager
+              url={'/ror.org?'}
+              hasNextPage={hasNextPage}
+              endCursor={endCursor}
+            />
+          </Row>
         )}
       </Col>
     )
   }
 
   const renderFacets = () => {
-
     return (
-      <div className="col-md-3 hidden-xs hidden-sm">
+      <Col md={3} className="d-none d-md-block">
         <FacetList
-          data={data.organizations.countries}
+          data={organizations.countries}
           title="Country"
           id="country-facets"
           param="country"
@@ -96,20 +100,27 @@ export default function SearchOrganizations(props: Props) {
         />
 
         <FacetList
-          data={data.organizations.types}
+          data={organizations.types}
           title="Organization Type"
           id="organization-type-facets"
           param="types"
           url="ror.org/?"
         />
-      </div>
+      </Col>
     )
   }
 
-  return (
+  return (<>
+    <Row>
+      <Col md={{ span: 9, offset: 3 }}>
+        {organizations.totalCount > 0 && (
+          <h3 className="member-results">{pluralize(organizations.totalCount || 0, 'Organization')}</h3>
+        )}
+      </Col>
+    </Row>
     <Row>
       {renderFacets()}
       {renderResults()}
     </Row>
-  )
+  </>)
 }

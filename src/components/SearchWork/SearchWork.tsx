@@ -52,7 +52,6 @@ export default function SearchWork(props: Props) {
           <h3 className="member-results">{pluralize(works.totalCount, 'Work')}</h3>
         )}
       </Col>
-
     </Row>
     <WorksListing
       works={works}
