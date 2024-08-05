@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { InputGroup, Button } from 'react-bootstrap'
+import { Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,7 +8,7 @@ interface Props {
   path: string
 }
 
-export default function SearchBox ({ path }: Props) {
+export default function SearchBox({ path }: Props) {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -25,8 +25,8 @@ export default function SearchBox ({ path }: Props) {
     }
   }
 
-  const onSearchChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    setSearchInput(e.currentTarget.value)
+  const onSearchChange = (text: string): void => {
+    setSearchInput(text)
   }
 
   const onSearchClear = () => {
@@ -34,39 +34,41 @@ export default function SearchBox ({ path }: Props) {
     router.replace(path);
   }
 
-  return (
-    <>
-      <h4>Filter Works</h4>
+  return (<>
+    <Row><Col><h4>Filter Works</h4></Col></Row>
+    <Row><Col>
       <InputGroup>
-        <input
+        <FormControl
           name="query-facets"
           value={searchInput}
-          onChange={onSearchChange}
+          onChange={e => onSearchChange(e.currentTarget.value)}
           key="searchInput"
           onKeyDown={onKeyDown}
           placeholder="Type to search..."
           className="form-control"
           type="text"
         />
-        <Button
-          id="filter-works"
-          type="submit"
-          className="search-submit-facets"
-          onClick={onSubmit}
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </Button>
-        {searchInput !== '' && (
-          <span
-            id="search-clear-facets"
-            title="Clear"
-            aria-label="Clear"
-            onClick={onSearchClear}
+        <InputGroup.Append>
+          <Button
+            id="filter-works"
+            type="submit"
+            className="search-submit-facets"
+            onClick={onSubmit}
           >
-            <FontAwesomeIcon icon={faTimes} />
-          </span>
-        )}
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+          {searchInput !== '' && (
+            <span
+              id="search-clear-facets"
+              title="Clear"
+              aria-label="Clear"
+              onClick={onSearchClear}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </span>
+          )}
+        </InputGroup.Append>
       </InputGroup>
-    </>
-  )
+    </Col></Row>
+  </>)
 }

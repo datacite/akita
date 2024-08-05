@@ -7,7 +7,7 @@ import { pluralize } from '../../utils/helpers'
 
 import Pager from '../Pager/Pager'
 import Error from '../Error/Error'
-import { OrganizationMetadata } from '../OrganizationMetadata/OrganizationMetadata'
+import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
 import Loading from '../Loading/Loading'
 
 import { SEARCH_ORGANIZATIONS_GQL, QueryData, QueryVar } from 'src/data/queries/searchOrganizationQuery'
@@ -67,12 +67,12 @@ export default function SearchOrganizations(props: Props) {
     return (
       <Col md={9}>
         {organizations.nodes.map((item) => (
-          <Row key={item.id} className="mb-4">
+          <Row key={item.id} className="mb-4"><Col>
             <OrganizationMetadata
               metadata={item}
               linkToExternal={false}
             />
-          </Row>
+          </Col></Row>
         ))}
 
         {(organizations.totalCount || 0) > 20 && (

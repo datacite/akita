@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Col, Row } from "src/components/Layout";
+import { Col, Row } from "src/components/Layout-4";
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/organizationQuery'
@@ -34,7 +34,7 @@ export default function RelatedContent(props: Props) {
 
   if (error)
     return <Row>
-      <Col mdOffset={3} className="panel panel-transparent">
+      <Col md={{ offset: 3 }} className="panel panel-transparent">
         <Error title="An error occured loading related content." message={error.message} />
       </Col>
     </Row>
@@ -52,31 +52,23 @@ export default function RelatedContent(props: Props) {
 
   return (
     <>
-      <Row>
-        <Col mdOffset={3} className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
-          </div>
+      <Row className="mt-5">
+        <Col md={{ offset: 3 }} className="px-0">
+          <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
       </Row>
-      <Row>
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <WorksListing
-              works={relatedWorks}
-              loading={loading}
-              showFacets={true}
-              showAnalytics={true}
-              showClaimStatus={true}
-              hasPagination={relatedWorks.totalCount > 25}
-              hasNextPage={hasNextPage}
-              model={'organization'}
-              url={'/ror.org/' + variables.id + '/?'}
-              endCursor={endCursor}
-            />
-          </div>
-        </div>
-      </Row>
+      <WorksListing
+        works={relatedWorks}
+        loading={loading}
+        showFacets={true}
+        showAnalytics={true}
+        showClaimStatus={true}
+        hasPagination={relatedWorks.totalCount > 25}
+        hasNextPage={hasNextPage}
+        model={'organization'}
+        url={'/ror.org/' + variables.id + '/?'}
+        endCursor={endCursor}
+      />
     </>
   )
 }
