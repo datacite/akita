@@ -38,11 +38,23 @@ export const gridFromUrl = (gridUrl: string) => {
   return gridUrl ? gridUrl.substring(15) : null
 }
 
-
-export function isDMP (work: WorkMetadata) {
+export function isDMP(work: WorkMetadata) {
   return work.types.resourceTypeGeneral === 'OutputManagementPlan'
 }
 
-export function isProject (work: WorkMetadata) {
-  return work.types.resourceType === 'Project' && (work.types.resourceTypeGeneral === 'Other' || work.types.resourceTypeGeneral === 'Text')
+export function isProject(work: WorkMetadata) {
+  return (
+    work.types.resourceType === 'Project' &&
+    (work.types.resourceTypeGeneral === 'Other' ||
+      work.types.resourceTypeGeneral === 'Text')
+  )
+}
+
+export function isAwardGrant(work: WorkMetadata) {
+  return (
+    (work.types.resourceType === 'Award' ||
+      work.types.resourceType === 'Grant') &&
+    (work.types.resourceTypeGeneral === 'Other' ||
+      work.types.resourceTypeGeneral === 'Text')
+  )
 }
