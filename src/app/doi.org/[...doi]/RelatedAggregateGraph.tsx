@@ -15,7 +15,7 @@ export default async function RelatedAggregateGraph( {doi}: Props) {
   const emptyTitleText = "No related works found"
   const helpText = 'The “relatedIdentifier” and “resourceTypeGeneral” fields in the metadata of the project DOI and related work DOIs were used to generate this graph.'
   const explanitoryText="The network graph visualizes the relationships between different work types in the project. It shows the number of instances of each work type, and hovering over a connection reveals the number of links between any two types."
-  const graphExists = data.nodes.length >1;
+  const graphExists = data.nodes.length >0;
   const innerGraph = (graphExists) ?
     <ForceDirectedGraph
         titleText={titleText}
