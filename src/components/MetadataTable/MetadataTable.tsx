@@ -6,8 +6,7 @@ import { Work } from 'src/data/types'
 import truncate from 'lodash/truncate'
 import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
-import ReactHtmlParser from 'react-html-parser'
-
+import ReactHtmlParser from 'html-react-parser'
 import WorkFunding from '../WorkFunding/WorkFunding'
 
 import styles from './MetadataTable.module.scss'
@@ -24,16 +23,18 @@ type MetadataType = typeof METADATA_TYPES[number]
 export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
   const description = (title, key) => {
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
+    const rawDescription = metadata.descriptions[0].description
 
-    const descriptionHtml = truncate(metadata.descriptions[0].description, {
+    const truncatedDescription = truncate(rawDescription, {
       length: 2500,
       separator: '… '
     })
+    const parsedDescription = ReactHtmlParser(truncatedDescription)
 
     return <Tab key={key} eventKey={key} title={startCase(title)}>
       <div className="panel panel-transparent">
         <div className="panel-body">
-          <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
+          <div className="description">{parsedDescription}</div>
         </div>
       </div>
     </Tab>
@@ -57,7 +58,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
       </div>
     </Tab>
   }
-  
+
   const creators = (title, key) => {
     if (!metadata.creators || metadata.creators.length === 0) return
 
@@ -82,7 +83,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
       </div>
     </Tab>
   }
-  
+
   const funders = (title, key) => {
     if (!metadata.fundingReferences || metadata.fundingReferences.length === 0) return
 
@@ -137,7 +138,7 @@ export const MetadataTable: React.FunctionComponent<Props> = ({ metadata }) => {
       default: alert('default')
     }
   }
-  
+
   return (
     <div className="panel panel-transparent">
       <div className="panel-body">

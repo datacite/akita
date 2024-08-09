@@ -12,7 +12,7 @@ import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from 'html-react-parser'
 import Link from 'next/link'
 
 import { Work } from 'src/data/types'
@@ -136,7 +136,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const claim = metadata.claims ? metadata.claims[0] : null
 
   const container = () => {
-    if (metadata.container 
+    if (metadata.container
       && metadata.container.identifier
       && metadata.container.title) {
       return (
@@ -307,7 +307,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
         {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
       </Col>
-      
+
       {footer()}
     </div>
   )
