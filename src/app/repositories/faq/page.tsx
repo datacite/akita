@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from 'html-react-parser'
 import FAQ from '../../../data/faq'
 
 type FaqItemProps = {

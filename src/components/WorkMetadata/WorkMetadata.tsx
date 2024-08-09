@@ -12,7 +12,7 @@ import {
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
-import ReactHtmlParser from 'react-html-parser'
+import ReactHtmlParser from 'html-react-parser'
 import Link from 'next/link'
 
 import { Work } from 'src/data/types'
