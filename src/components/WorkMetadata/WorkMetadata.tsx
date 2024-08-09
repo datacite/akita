@@ -13,6 +13,7 @@ import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
 import ReactHtmlParser from 'html-react-parser'
+import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
 
 import { Work } from 'src/data/types'
@@ -58,11 +59,12 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       )
 
     const titleHtml = metadata.titles[0].title
+    const sanitizedTitle = sanitizeHtml(titleHtml)
 
     return (
       <h3 className="work">
         <Link href={'/doi.org/' + metadata.doi}>
-          {ReactHtmlParser(titleHtml)}
+          {ReactHtmlParser(sanitizedTitle)}
         </Link>
       </h3>
     )
@@ -72,11 +74,12 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     if (!metadata.titles[0]) return <h3 className="member">No Title</h3>
 
     const titleHtml = metadata.titles[0].title
+    const sanitizedTitle = sanitizeHtml(titleHtml)
 
     return (
       <h3 className="work">
         <a target="_blank" rel="noreferrer" href={handleUrl}>
-          {ReactHtmlParser(titleHtml)}
+          {ReactHtmlParser(sanitizedTitle)}
         </a>
       </h3>
     )
@@ -193,7 +196,10 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       separator: '… '
     })
 
-    return <div className="description">{ReactHtmlParser(descriptionHtml)}</div>
+    const sanitizedDescription = sanitizeHtml(descriptionHtml)
+    const parsedDescription = ReactHtmlParser(sanitizedDescription)
+
+    return <div className="description">{parsedDescription}</div>
   }
 
   const registered = () => {
