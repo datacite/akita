@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactHtmlParser from 'react-html-parser'
 import { Row, Col } from "src/components/Layout";
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
@@ -45,7 +44,7 @@ export default async function Content(props: Props) {
       : 'https://doi.org/' + work.doi
 
   return (<>
-    <TitleComponent title={ReactHtmlParser(title)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+    <TitleComponent title={title} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
 
     <Row>
       <Col md={3} id="side-bar">

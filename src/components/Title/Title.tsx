@@ -4,10 +4,10 @@ import { Row, Col } from 'src/components/Layout'
 import styles from './Title.module.scss'
 import { Rights } from 'src/data/types'
 import { License } from '../License/License'
-
+import ReactHtmlParser from 'html-react-parser'
 
 type Props = {
-  title: React.ReactElement<any, string | React.JSXElementConstructor<any>>[] | string
+  title: string
   titleLink: string
   link: string
   rights?: Rights[]
@@ -15,6 +15,7 @@ type Props = {
 
 export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, rights = [] }) => {
 
+  const parsedTitle = ReactHtmlParser(title)
 
   return (
     <Row className={styles.row}>
@@ -23,7 +24,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
           <div className={styles.container}>
             <h3 className={styles.title} id='title'>
               <a target="_blank" rel="noreferrer" href={titleLink}>
-                {title}
+                {parsedTitle}
               </a>
             </h3>
             <div className={styles.details}>
@@ -38,7 +39,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
         </div>
       </Col>
     </Row>
-    
+
   )
 }
 
