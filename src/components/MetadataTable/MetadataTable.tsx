@@ -7,6 +7,7 @@ import truncate from 'lodash/truncate'
 import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
 import ReactHtmlParser from 'html-react-parser'
+import sanitizeHtml from 'sanitize-html'
 import WorkFunding from '../WorkFunding/WorkFunding'
 
 import styles from './MetadataTable.module.scss'
@@ -29,7 +30,8 @@ export default function MetadataTable({ metadata }: Props) {
       length: 2500,
       separator: '… '
     })
-    const parsedDescription = ReactHtmlParser(truncatedDescription)
+    const sanitizedDescription = sanitizeHtml(truncatedDescription)
+    const parsedDescription = ReactHtmlParser(sanitizedDescription)
 
     return <Tab key={key} eventKey={key} title={startCase(title)} className={styles.container}>
       <div className="description">{parsedDescription}</div>
