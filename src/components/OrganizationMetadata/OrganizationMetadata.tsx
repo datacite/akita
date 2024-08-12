@@ -11,7 +11,7 @@ import { decimalToSexagesimal } from 'geolib'
 
 import { OrganizationRecord } from '../Organization/Organization'
 import { rorFromUrl } from '../../utils/helpers'
-import styles from './OrganizationMetadata.module.css'
+import styles from './OrganizationMetadata.module.scss'
 
 type Props = {
   metadata: OrganizationRecord

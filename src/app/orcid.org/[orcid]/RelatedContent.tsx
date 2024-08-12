@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Col, Row } from "src/components/Layout";
+import { Col, Row } from "src/components/Layout-4";
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
@@ -35,7 +35,7 @@ export default function RelatedContent(props: Props) {
 
   if (error)
     return <Row>
-      <Col mdOffset={3} className="panel panel-transparent">
+      <Col md={{ offset: 3 }} className="panel panel-transparent">
         <Error title="An error occured loading related content." message={error.message} />
       </Col>
     </Row>
@@ -51,33 +51,23 @@ export default function RelatedContent(props: Props) {
     ? relatedWorks.pageInfo.endCursor
     : ''
 
-  return (
-    <>
-      <Row>
-        <Col mdOffset={3} className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <div className="panel panel-transparent">
-          <div className="panel-body">
-            <WorksListing
-              works={relatedWorks}
-              loading={loading}
-              showFacets={true}
-              showAnalytics={true}
-              showClaimStatus={true}
-              hasPagination={relatedWorks.totalCount > 25}
-              hasNextPage={hasNextPage}
-              model={'person'}
-              url={'/orcid.org/' + orcid + '/?'}
-              endCursor={endCursor}
-            />
-          </div>
-        </div>
-      </Row>
-    </>
-  )
+  return (<>
+    <Row>
+      <Col md={{ offset: 3 }}>
+        <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
+      </Col>
+    </Row>
+    <WorksListing
+      works={relatedWorks}
+      loading={loading}
+      showFacets={true}
+      showAnalytics={true}
+      showClaimStatus={true}
+      hasPagination={relatedWorks.totalCount > 25}
+      hasNextPage={hasNextPage}
+      model={'person'}
+      url={'/orcid.org/' + orcid + '/?'}
+      endCursor={endCursor}
+    />
+  </>)
 }
