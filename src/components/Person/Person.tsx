@@ -5,7 +5,7 @@ import Image from 'next/image'
 import heroImage from '../../../public/images/hero.svg'
 import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
-import { Alert, Row, Col } from 'src/components/Layout'
+import { Alert, Row, Col } from 'src/components/Layout-4'
 
 import { Person as PersonType } from 'src/data/types'
 import PersonMetadata from '../PersonMetadata/PersonMetadata'
@@ -16,8 +16,8 @@ type Props = {
   person: PersonType
 }
 
-export default function Person ({ person }: Props) {
-  if (!person) return <Alert bsStyle="warning">No person found.</Alert>
+export default function Person({ person }: Props) {
+  if (!person) return <Alert variant="warning">No person found.</Alert>
 
   let has_open_access_software = false;
   let has_open_access_paper = false;
@@ -55,110 +55,63 @@ export default function Person ({ person }: Props) {
 
     return (
       <>
-        <h3 className="member-results">Aggregated Citations, Views and Downloads</h3>
-        <div className="panel panel-transparent aggregations">
-          <div className="panel-body">
-            <Row>
-              {person.citationCount > 0 && (
-                <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(person.citationCount, 'Citation')}</h4>
-                </Col>
-              )}
-              {person.viewCount > 0 && (
-                <Col xs={4} className="text-center">
-                  <h4 className="work">{pluralize(person.viewCount, 'View')}</h4>
-                </Col>
-              )}
-              {person.downloadCount > 0 && (
-                <Col xs={4} className="text-center">
-                <h4 className="work">{pluralize(person.downloadCount, 'Download')}</h4>
-                </Col>
-              )}
-            </Row>
-          </div>
-        </div>
+        <Row><Col>
+          <h3 className="member-results">Aggregated Citations, Views and Downloads</h3>
+        </Col></Row>
+
+        <Row>
+          {person.citationCount > 0 && (
+            <Col xs={4} className="text-center">
+              <h4 className="work">{pluralize(person.citationCount, 'Citation')}</h4>
+            </Col>
+          )}
+          {person.viewCount > 0 && (
+            <Col xs={4} className="text-center">
+              <h4 className="work">{pluralize(person.viewCount, 'View')}</h4>
+            </Col>
+          )}
+          {person.downloadCount > 0 && (
+            <Col xs={4} className="text-center">
+              <h4 className="work">{pluralize(person.downloadCount, 'Download')}</h4>
+            </Col>
+          )}
+        </Row>
       </>
     )
   }
 
   const accessAchievements = () => {
-    if (!is_open_hero && !is_open_license && !is_open_access && !is_os_triathlete) {
-      return <div></div>
-    }
+    if (!is_open_hero && !is_open_license && !is_open_access && !is_os_triathlete) return
 
-    return (
-      <>
+    return (<>
+      <Row><Col>
         <h3 className="member-results">Accessibility Achievements</h3>
-        <div className="panel panel-transparent achievements">
-          <div className="panel-body">
-            {is_open_hero &&
-              <Row className="align-items-center">
-                <Col xs={1}>
-                  <Image
-                    src={heroImage}
-                    width="74"
-                    height="74"
-                    title="Superhero by tulpahn from the Noun Project"
-                    alt="Superhero by tulpahn from the Noun Project"
-                  />
-                </Col>
-                <Col>
-                  Every single one of your publications is free to access online. Open access helps real people, and that&apos;s pretty heroic.
-                </Col>
-              </Row>
-            }
-            {is_open_license &&
-              <Row>
-                <Col xs={1}>
-                  <Image
-                    src={heroImage}
-                    width="74"
-                    height="74"
-                    title="Superhero by tulpahn from the Noun Project"
-                    alt="Superhero by tulpahn from the Noun Project"
-                  />
-                </Col>
-                <Col>
-                  {percentage_open_license}% of the researcher&apos;s associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.
-                </Col>
-              </Row>
-            }
-            {is_os_triathlete &&
-              <Row >
-                <Col xs={1}>
-                  <Image
-                    src={scienceImage}
-                    width="74"
-                    height="74"
-                    title="science education by Vectors Market from the Noun Project"
-                    alt="science education by Vectors Market from the Noun Project"
-                  />
-                </Col>
-                <Col>
-                  Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software.
-                </Col>
-              </Row>
-            }
-            {is_open_access &&
-              <Row className="mb-1">
-                <Col xs={1}>
-                <Image
-                  src={unlockImage}
-                  width="74"
-                  height="74"
-                  title="unlock by Alexandr Cherkinsky from the Noun Project"
-                  alt="unlock by Alexandr Cherkinsky from the Noun Project"
-                />
-                </Col>
-                <Col>
-                  {percentage_open_url}% of your research is free to read online.
-                </Col>
-              </Row>
-            }
-          </div>
-        </div>
-      </>
-    )
+      </Col></Row>
+
+      {is_open_hero && <Achievement
+        image={heroImage}
+        text="Every single one of your publications is free to access online. Open access helps real people, and that's pretty heroic."
+        alt="Superhero by tulpahn from the Noun Project"
+      />}
+
+      {is_open_license && <Achievement
+        image={heroImage}
+        text={`${percentage_open_license}% of the researcher's associated DOIs have metadata with rights as CC-BY, CC0 or public domain license.`}
+        alt="Superhero by tulpahn from the Noun Project"
+      />}
+
+      {is_os_triathlete && <Achievement
+        image={scienceImage}
+        text="Congratulations, you hit the trifecta. You have an open access paper, open dataset, and open source software."
+        alt="science education by Vectors Market from the Noun Project"
+      />}
+
+      {is_open_access && <Achievement
+        image={unlockImage}
+        text={`${percentage_open_url}% of your research is free to read online.`}
+        alt="unlock by Alexandr Cherkinsky from the Noun Project"
+      />}
+    </>)
   }
 
   return (
@@ -178,4 +131,26 @@ export default function Person ({ person }: Props) {
       {accessAchievements()}
     </>
   )
+}
+
+
+interface AchievementProps {
+  image: any
+  text: string
+  alt: string
+}
+
+function Achievement(props: AchievementProps) {
+  return <Row className='align-items-center mt-2'>
+    <Col xs={1}>
+      <Image
+        src={props.image}
+        width="74"
+        height="74"
+        title={props.alt}
+        alt={props.alt}
+      />
+    </Col>
+    <Col>{props.text}</Col>
+  </Row>
 }

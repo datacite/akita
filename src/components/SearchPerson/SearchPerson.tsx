@@ -3,7 +3,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import Loading from '../Loading/Loading'
-import { Alert, Row, Col } from 'src/components/Layout'
+import { Alert, Row, Col } from 'src/components/Layout-4'
 import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'
@@ -29,7 +29,7 @@ export default function SearchPerson(props: Props) {
 
   if (error) return (
     <Row>
-      <Col md={9} mdOffset={3}>
+      <Col md={{ span: 9, offset: 3 }}>
         <Error title="An error occured." message={error.message} />
       </Col>
     </Row>
@@ -38,37 +38,38 @@ export default function SearchPerson(props: Props) {
   const people = data?.people
 
   if (!people || people.nodes.length == 0) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
-        <Alert bsStyle="warning">No people found.</Alert>
+        <Alert variant="warning">No people found.</Alert>
       </div>
     </Col>
   )
 
 
-  return (
-    <Row>
-      <div>
-        <Col md={9} mdOffset={3} id="content">
-          {people.nodes.length > 0 && (
-            <h3 className="member-results">
-              {pluralize(people.totalCount, 'Person', false, 'People')}
-            </h3>
-          )}
+  return (<>
+    <Row><Col md={{ span: 9, offset: 3 }}>
+      {people.nodes.length > 0 && (
+        <h3 className="member-results">
+          {pluralize(people.totalCount, 'Person', false, 'People')}
+        </h3>
+      )}
+    </Col></Row>
 
-          {people.nodes.map((item) => (
-            <PersonMetadata metadata={item} key={item.id} />
-          ))}
+    <Row><Col md={{ span: 9, offset: 3 }}>
+      {people.nodes.map((item) => (
+        <PersonMetadata metadata={item} key={item.id} />
+      ))}
+    </Col></Row>
 
-          {(people.totalCount || 0) > 25 && (
-            <Pager
-              url={'/orcid.org?'}
-              hasNextPage={people.pageInfo.hasNextPage}
-              endCursor={data.people.pageInfo.endCursor || ''}
-            />
-          )}
-        </Col>
-      </div>
-    </Row>
-  )
+
+    <Row><Col md={{ span: 9, offset: 3 }}>
+      {(people.totalCount || 0) > 25 && (
+        <Pager
+          url={'/orcid.org?'}
+          hasNextPage={people.pageInfo.hasNextPage}
+          endCursor={data.people.pageInfo.endCursor || ''}
+        />
+      )}
+    </Col></Row>
+  </>)
 }
