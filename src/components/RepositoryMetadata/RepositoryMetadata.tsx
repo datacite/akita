@@ -1,15 +1,16 @@
 import React from 'react'
-import { Label} from 'react-bootstrap'
+import { Label } from 'react-bootstrap'
 import truncate from 'lodash/truncate'
 import Link from 'next/link'
 import { Repository } from 'src/data/types'
+import { Row, Col } from '../Layout-4'
 
 
 type Props = {
   repo: Repository
 }
 
-function RepositoryMetadata ({ repo }: Props) {
+function RepositoryMetadata({ repo }: Props) {
 
   const detailUrl = () => {
     return `/repositories/${repo.id}`
@@ -39,10 +40,10 @@ function RepositoryMetadata ({ repo }: Props) {
     ))
     return (
       <div className="tags">
-        { subjectList.map((keyword, index) => (
+        {subjectList.map((keyword, index) => (
           <Label key={"subject-" + index} bsStyle="info">{keyword}</Label>
         ))}
-        { keywordList.map((keyword, index) => (
+        {keywordList.map((keyword, index) => (
           <Label key={"keyword-" + index} bsStyle="info">{keyword}</Label>
         ))}
       </div>
@@ -51,9 +52,9 @@ function RepositoryMetadata ({ repo }: Props) {
   const links = () => {
     return (
       <>
-        { (repo.url || repo.re3dataDoi) && (
+        {(repo.url || repo.re3dataDoi) && (
           <>
-            { repo.re3dataDoi && (
+            {repo.re3dataDoi && (
               <div>
                 <a className="re3data-link" href={re3DataURL()}>
                   More info about {repo.name} Repository</a>
@@ -71,16 +72,16 @@ function RepositoryMetadata ({ repo }: Props) {
   }
 
   return (
-    <div key={repo.id} className="panel panel-transparent">
-      <div className="panel-body">
-        <h3><Link href={detailUrl()}>
-            {repo.name}
+    <Row key={repo.id} className="panel panel-transparent">
+      <Col className="panel-body">
+        <h3 className="font-weight-bold"><Link href={detailUrl()}>
+          {repo.name}
         </Link></h3>
         {description()}
         {tags()}
         {links()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   )
 }
 

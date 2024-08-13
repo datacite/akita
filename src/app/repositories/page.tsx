@@ -10,7 +10,7 @@ interface Props {
 }
 
 
-export default async function SearchRepositoryPage ({ searchParams }: Props) {
+export default async function SearchRepositoryPage({ searchParams }: Props) {
 
   // Show example text if there is no query
   if (!searchParams.query || searchParams.query === '') return (
@@ -31,5 +31,4 @@ export default async function SearchRepositoryPage ({ searchParams }: Props) {
 
 
   return <SearchRepository variables={searchParams} />
-  // return <SearchOrganization variables={{ query: queryStatement, ...variables }} />
 }

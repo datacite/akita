@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col, Alert, Container } from 'react-bootstrap-4'
 
 import Pager from 'src/components/Pager/Pager'
 import FairFilter from 'src/components/FairFilter/FairFilter'
@@ -34,7 +34,7 @@ export default function SearchRepositories({ variables }: Props) {
 
   if (error) return (
     <Row>
-      <Col md={9} mdOffset={3}>
+      <Col md={{ span: 9, offset: 3 }}>
         <Error title="An error occured." message={error.message} />
       </Col>
     </Row>
@@ -44,9 +44,9 @@ export default function SearchRepositories({ variables }: Props) {
   const repositories = data?.repositories
 
   if (!repositories || repositories.nodes.length == 0) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
-        <Alert bsStyle="warning">
+        <Alert variant="warning">
           <p>No repositories found. If a domain repository is not available for your
             kind of data, you may be able to use a general repository such as:</p>
 
@@ -72,28 +72,24 @@ export default function SearchRepositories({ variables }: Props) {
   const renderFacets = () => {
     if (repositories.totalCount == 0) return ""
 
-    return (
-      <div className="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div className="panel-group">
-          <FairFilter url="repositories/?" />
+    return (<>
+      <FairFilter url="repositories/?" />
 
-          <FacetList
-            data={repositories.certificates || []}
-            title="Certificates"
-            id="certificate"
-            param="certificate"
-            url="repositories/?"
-          />
-          <FacetList
-            data={repositories.software || []}
-            title="Software"
-            id="software"
-            param="software"
-            url="repositories/?"
-          />
-        </div>
-      </div>
-    )
+      <FacetList
+        data={repositories.certificates || []}
+        title="Certificates"
+        id="certificate"
+        param="certificate"
+        url="repositories/?"
+      />
+      <FacetList
+        data={repositories.software || []}
+        title="Software"
+        id="software"
+        param="software"
+        url="repositories/?"
+      />
+    </>)
   }
 
 
@@ -108,33 +104,34 @@ export default function SearchRepositories({ variables }: Props) {
       : ''
 
 
-    return (
-      <Col md={9} id="content">
+    return (<>
+      <Row><Col>
         {(repositories.nodes.length || 0) > 0 && (
           <h3 className="member-results">
             {pluralize(repositories.totalCount || 0, 'Repository', false, 'Repositories')}
           </h3>
         )}
+      </Col></Row>
+      {repositories.nodes.map((repo) => (
+        <RepositoryMetadata repo={repo} key={repo.id} />
+      ))}
 
-        {repositories.nodes.map((repo) => (
-          <RepositoryMetadata repo={repo} key={repo.id} />
-        ))}
-
-        {(repositories.totalCount || 0) > 20 && (
+      {(repositories.totalCount || 0) > 20 && (
+        <Row><Col>
           <Pager
             url={'/repositories?'}
             hasNextPage={hasNextPage}
             endCursor={endCursor}
           />
-        )}
-      </Col>
-    )
+        </Col></Row>
+      )}
+    </>)
   }
 
-  return (
+  return (<Container fluid>
     <Row>
-      {renderFacets()}
-      {renderResults()}
+      <Col md={3}>{renderFacets()}</Col>
+      <Col md={9}>{renderResults()}</Col>
     </Row>
-  )
+  </Container>)
 }
