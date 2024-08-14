@@ -13,12 +13,8 @@ DOI_API = os.getenv("DATACITE_API_URL", "https://api.stage.datacite.org/dois/")
 app = Flask(__name__)
 
 
-@app.route("/api/doi/related-graph/<path:doi>", methods=["GET"])
-def related_works(doi):
+def get_graph_data(doi):
     doi = extract_doi(doi)
-    if not doi:
-        return jsonify({"error": "Does not match DOI format"}), 400
-
     full_doi_attributes = get_full_corpus_doi_attributes(
         doi_query=doi, parser=RelatedWorkReports.parser, api_url=DOI_API
     )
@@ -29,11 +25,25 @@ def related_works(doi):
     non_zero_nodes = [agg for agg in report.aggregate_counts if agg["count"] > 0]
     graph = {"nodes": non_zero_nodes, "links": report.type_connection_report}
 
+    return graph
+
+
+@app.route("/api/doi/related-graph/<path:doi>", methods=["GET"])
+def related_works(doi):
+    doi = extract_doi(doi)
+    if not doi:
+        return jsonify({"error": "Does not match DOI format"}), 400
+
+    graph = get_graph_data(doi)
+
     return jsonify(graph)
 
 
 @app.route("/api/doi/network-view/<path:doi>", methods=["GET"])
 def network_view(doi):
+    doi = extract_doi(doi)
+    if not doi:
+        return jsonify({"error": "Does not match DOI format"}), 400
     network = get_network(doi)
     return network.generate_html()
 
@@ -43,7 +53,6 @@ def network_graph(doi):
     network = get_network(doi)
 
     nodes, edges, heading, height, width, options = network.get_network_data()
-    # return jsonify(net.to_json())
     return jsonify(
         {
             "nodes": nodes,
@@ -54,65 +63,7 @@ def network_graph(doi):
 
 
 def get_network(doi):
-    doi = extract_doi(doi)
-    if not doi:
-        return jsonify({"error": "Does not match DOI format"}), 400
-
-    graph_data = {
-        "links": [
-            {"count": 2, "source": "Other", "target": "Study Registration"},
-            {"count": 5, "source": "Other", "target": "Project"},
-            {"count": 3, "source": "Other", "target": "Output Management Plan"},
-            {"count": 2, "source": "Other", "target": "Dataset"},
-            {"count": 2, "source": "Other", "target": "Other"},
-            {"count": 1, "source": "Other", "target": "Text"},
-            {"count": 2, "source": "Software", "target": "Study Registration"},
-            {"count": 4, "source": "Software", "target": "Project"},
-            {"count": 2, "source": "Software", "target": "Output Management Plan"},
-            {"count": 2, "source": "Software", "target": "Dataset"},
-            {"count": 2, "source": "Software", "target": "Software"},
-            {"count": 4, "source": "Report", "target": "Project"},
-            {"count": 5, "source": "Report", "target": "Text"},
-            {"count": 7, "source": "Report", "target": "Report"},
-            {"count": 2, "source": "Report", "target": "Journal Article"},
-            {"count": 1, "source": "Report", "target": "Output Management Plan"},
-            {"count": 3, "source": "Text", "target": "Project"},
-            {"count": 3, "source": "Text", "target": "Report"},
-            {"count": 4, "source": "Text", "target": "Text"},
-            {"count": 1, "source": "Text", "target": "Output Management Plan"},
-            {"count": 1, "source": "Project", "target": "Output Management Plan"},
-            {"count": 8, "source": "Project", "target": "Study Registration"},
-            {"count": 7, "source": "Project", "target": "Text"},
-            {"count": 3, "source": "Project", "target": "Report"},
-            {"count": 1, "source": "Project", "target": "Journal Article"},
-            {"count": 1, "source": "Project", "target": "Project"},
-            {"count": 1, "source": "Dataset", "target": "Study Registration"},
-            {"count": 2, "source": "Dataset", "target": "Project"},
-            {"count": 1, "source": "Dataset", "target": "Output Management Plan"},
-            {"count": 1, "source": "Dataset", "target": "Software"},
-            {"count": 1, "source": "Dataset", "target": "Other"},
-            {"count": 4, "source": "Study Registration", "target": "Project"},
-            {
-                "count": 1,
-                "source": "Study Registration",
-                "target": "Output Management Plan",
-            },
-            {"count": 1, "source": "Study Registration", "target": "Dataset"},
-            {"count": 1, "source": "Study Registration", "target": "Software"},
-            {"count": 1, "source": "Study Registration", "target": "Other"},
-        ],
-        "nodes": [
-            {"count": 3, "title": "Other"},
-            {"count": 2, "title": "Software"},
-            {"count": 7, "title": "Report"},
-            {"count": 10, "title": "Text"},
-            {"count": 2, "title": "Project"},
-            {"count": 1, "title": "Dataset"},
-            {"count": 1, "title": "Journal Article"},
-            {"count": 4, "title": "Study Registration"},
-            {"count": 1, "title": "Output Management Plan"},
-        ],
-    }
+    graph_data = get_graph_data(doi)
 
     # Define the color mapping
     domain = [
@@ -223,7 +174,6 @@ def get_network(doi):
     net.set_options(
         """
         var options = {
-            "clickToUse": true,
             "nodes": {
                 "labelHighlightBold": true,
                 "font": {
