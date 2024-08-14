@@ -69,6 +69,7 @@
     "vega": "^5.30.0",
     "vega-embed": "^6.25.0",
     "vega-lite": "^5.19.0",
+    "vis-network": "^9.1.9",
     "wait-on": "^5.0.1"
   },
   "devDependencies": {
