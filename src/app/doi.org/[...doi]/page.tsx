@@ -4,14 +4,14 @@ import { redirect, notFound } from 'next/navigation'
 import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
-import { rorFromUrl, isProject, isDMP, isAwardGrant } from 'src/utils/helpers'
+import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
-import RelatedAggregateGraph from './RelatedAggregateGraph'
+import NetworkGraph from './NetworkGraph'
 import Loading from 'src/components/Loading/Loading'
 
 
@@ -145,11 +145,11 @@ export default async function Page({ params, searchParams }: Props) {
   if (!data) notFound()
 
   const showSankey = isDMP(data.work) || isProject(data.work)
-  const showGraph = isDMP(data.work) || isProject(data.work) || isAwardGrant(data.work)
+  const showGraph = true
 
   const projectGraph = showGraph
     ? <Suspense>
-      <RelatedAggregateGraph doi={doi} />
+      <NetworkGraph doi={doi} />
     </Suspense>
     : ''
 
