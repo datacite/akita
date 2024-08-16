@@ -4,7 +4,7 @@ import { redirect, notFound } from 'next/navigation'
 import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
-import { rorFromUrl, isProject, isDMP, isAwardGrant } from 'src/utils/helpers'
+import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
@@ -145,20 +145,17 @@ export default async function Page({ params, searchParams }: Props) {
   if (!data) notFound()
 
   const showSankey = isDMP(data.work) || isProject(data.work)
-  const showGraph = isDMP(data.work) || isProject(data.work) || isAwardGrant(data.work)
 
-  const projectGraph = showGraph
-    ? <Suspense>
-      <RelatedAggregateGraph doi={doi} />
-    </Suspense>
-    : ''
 
   return <>
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
 
-    { projectGraph }
+    <Suspense>
+        <RelatedAggregateGraph doi={doi} />
+    </Suspense>
+
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
