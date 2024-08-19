@@ -1,7 +1,7 @@
 import React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
-import { Alert } from 'src/components/Layout'
+import { Alert } from 'src/components/Layout-4'
 import ReactHtmlParser from 'react-html-parser'
 import { Col } from '../Layout-4'
 
@@ -57,7 +57,7 @@ export default function CitationFormatter({ id, style, locale }: Props) {
   }
 
   if (!loading && !formatted)
-    return <Alert bsStyle="warning">No content found.</Alert>
+    return <Alert variant="warning">No content found.</Alert>
 
   return (<>
     <Col xs={12}>

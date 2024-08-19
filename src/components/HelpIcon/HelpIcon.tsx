@@ -1,13 +1,13 @@
 'use client'
 
 import React, { CSSProperties } from 'react'
-import { Tooltip } from 'react-bootstrap'
+import { Tooltip } from 'react-bootstrap-4'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
 type Props = {
-  text?: string
+	text?: string
 	link?: string
 	size?: number
 	color?: string
@@ -15,20 +15,20 @@ type Props = {
 	padding?: number
 }
 
-const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=24, color='gray', position='top-right', padding=0 }) => {
+const HelpIcon: React.FunctionComponent<Props> = ({ text = null, link = null, size = 24, color = 'gray', position = 'top-right', padding = 0 }) => {
 	if (text === null && link === null) return <></>;
 
-	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding	 } : {}
+	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding } : {}
 
 	const icon = () => {
 		if (link !== null) return (
 			<a
-        href={link}
-        target="_blank"
-        rel="noreferrer"
-        className='help-icon'
+				href={link}
+				target="_blank"
+				rel="noreferrer"
+				className='help-icon'
 				style={positionStyle}
-      >
+			>
 				<FontAwesomeIcon
 					icon={faQuestionCircle}
 					fontSize={size}
@@ -46,14 +46,14 @@ const HelpIcon: React.FunctionComponent<Props> = ({ text=null, link=null, size=2
 		)
 	}
 
-  return (<>
+	return (<>
 		{text !== null && (
 			<OverlayTrigger
 				placement="top"
 				overlay={
-						<Tooltip id="helpTootltip">{text}</Tooltip>
+					<Tooltip id="helpTootltip">{text}</Tooltip>
 				}>
-					{icon()}
+				{icon()}
 			</OverlayTrigger>
 		)}
 		{text === null && icon()}

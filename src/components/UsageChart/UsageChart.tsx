@@ -3,7 +3,7 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { pluralize } from '../../utils/helpers'
-import { Grid, Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap-4'
 import { VisualizationSpec } from 'vega-embed'
 import {
   subYears,
@@ -156,7 +156,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
   return (
     <div className="panel panel-transparent">
       <div className="usage-chart panel-body">
-        <Grid>
+        <Container>
           <Row>{title()}</Row>
           <Row>
             <VegaLite
@@ -166,7 +166,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
               actions={actions}
             />
           </Row>
-        </Grid>
+        </Container>
       </div>
     </div>
   )

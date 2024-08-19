@@ -610,3 +610,8 @@ h4.work {
   opacity: 1;
   visibility: visible;
 }
+
+
+.page-link {
+  border-radius: 20px !important;
+}

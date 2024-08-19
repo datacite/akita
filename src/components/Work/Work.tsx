@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Tabs, Tab } from 'react-bootstrap'
-import { Alert } from 'react-bootstrap-4'
+import { Alert, Tabs, Tab } from 'react-bootstrap-4'
 import { pluralize } from '../../utils/helpers'
 
 import { Work } from 'src/data/types'
