@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Tooltip } from 'react-bootstrap-4'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSquare,

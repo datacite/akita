@@ -6,9 +6,9 @@ import {
   Col,
   Alert,
   Badge,
+  OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap-4'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
