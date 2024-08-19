@@ -2,14 +2,11 @@
 
 import React from 'react'
 import {
-  Tooltip,
-} from 'react-bootstrap'
-import {
   Row,
   Col,
   Alert,
   Badge,
-  // Tooltip,
+  Tooltip,
 } from 'react-bootstrap-4'
 import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
 import startCase from 'lodash/startCase'

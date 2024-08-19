@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'src/components/Layout'
+import { Row, Col } from 'src/components/Layout-4'
 
 type Props = {
   title: string
@@ -8,7 +8,7 @@ type Props = {
 const About: React.FunctionComponent<Props> = ({ title }) => {
   return (
     <Row>
-      <Col md={9} mdOffset={3}>
+      <Col md={{ span: 9, offset: 3 }}>
         <div className="panel panel-transparent">
           <div className="panel-body">
             <h3 className="member">{title}</h3>

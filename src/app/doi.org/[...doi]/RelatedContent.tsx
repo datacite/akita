@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Col, Row } from "src/components/Layout";
+import { Col, Row } from "src/components/Layout-4";
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/doiQuery'
@@ -36,7 +36,7 @@ export default function RelatedContent(props: Props) {
 
   if (error)
     return <Row>
-      <Col mdOffset={3} className="panel panel-transparent">
+      <Col md={{ offset: 3 }} className="panel panel-transparent">
         <Error title="An error occured loading related content." message={error.message} />
       </Col>
     </Row>
@@ -82,10 +82,8 @@ export default function RelatedContent(props: Props) {
   return (
     <>
       <Row>
-        <Col mdOffset={3} className="panel panel-transparent">
-          <div className="panel-body">
-            <h3 className="member-results" id="title">Related Works</h3>
-          </div>
+        <Col md={{ offset: 3 }}>
+          <h3 className="member-results" id="title">Related Works</h3>
         </Col>
       </Row>
       <Row>

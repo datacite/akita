@@ -7,7 +7,7 @@ import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
 
-import { Overlay } from 'react-bootstrap';
+import { Overlay } from 'react-bootstrap-4';
 import PortalWrapper from './PortalWrapper';
 
 /**
@@ -291,9 +291,9 @@ class OverlayTrigger extends React.Component {
       warning(
         !(trigger === 'hover'),
         '[react-bootstrap] Specifying only the `"hover"` trigger limits the ' +
-          'visibility of the overlay to just mouse users. Consider also ' +
-          'including the `"focus"` trigger so that touch and keyboard only ' +
-          'users can see the overlay as well.'
+        'visibility of the overlay to just mouse users. Consider also ' +
+        'including the `"focus"` trigger so that touch and keyboard only ' +
+        'users can see the overlay as well.'
       );
 
       triggerProps.onMouseOver = createChainedFunction(

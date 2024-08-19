@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap-4'
 import startCase from 'lodash/startCase'
 import { Person } from '../WorkPerson/WorkPerson'
 import Link from 'next/link'
@@ -10,8 +10,8 @@ type Props = {
 }
 
 const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
-  const personList = people.map( (person) => {
-    const link = person.id && person.id.startsWith('https://orcid.org/0') ? 
+  const personList = people.map((person) => {
+    const link = person.id && person.id.startsWith('https://orcid.org/0') ?
       '/orcid.org' + orcidFromUrl(person.id) : undefined;
     const personName = person.familyName ? [person.givenName, person.familyName].join(' ') : person.name
     const personLink = link ? <Link href={link}>{personName}</Link> : personName;
@@ -24,29 +24,29 @@ const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
         <div key={item.name}>{item.name}</div>
       )
     });
-     return {
-        name: personName,
-        id: person.id,
-        nameLink: personLink,
-        contributorType: person.contributorType,
-        affiliation: affiliations
-      }
-    });
-   
+    return {
+      name: personName,
+      id: person.id,
+      nameLink: personLink,
+      contributorType: person.contributorType,
+      affiliation: affiliations
+    }
+  });
+
   return (
-    <Table striped condensed>
+    <Table striped>
       <tbody className="person-table">
         {personList.map((person, i) => {
-          
+
           return <tr key={'person-' + i}>
-              <td>{person.nameLink}</td>
-              <td>{person.affiliation}</td>
-              {person.contributorType && (
-                <td>
-                  {startCase(person.contributorType)}
-                </td>
-              )}
-            </tr>
+            <td>{person.nameLink}</td>
+            <td>{person.affiliation}</td>
+            {person.contributorType && (
+              <td>
+                {startCase(person.contributorType)}
+              </td>
+            )}
+          </tr>
 
         })}
       </tbody>

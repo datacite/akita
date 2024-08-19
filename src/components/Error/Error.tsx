@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert } from 'src/components/Layout'
+import { Alert } from 'src/components/Layout-4'
 
 type Props = {
   title: string
@@ -8,7 +8,7 @@ type Props = {
 
 const Error: React.FunctionComponent<Props> = ({ title, message }) => {
   return (
-    <Alert bsStyle="danger">
+    <Alert variant="danger">
       <h4>{title}</h4>
       <p>{message}</p>
     </Alert>

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Row, Col, Button, Modal } from 'react-bootstrap'
+import { Row, Col, Button, Modal } from 'react-bootstrap-4'
 import { Work } from 'src/data/types'
 
 type Props = {
@@ -11,11 +11,11 @@ type Props = {
 const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {
   const [showDownloadMetadataModal, setShowDownloadMetadataModal] = useState(false)
 
-  const exportMetadata = () => {    
+  const exportMetadata = () => {
     const showCrossrefMetadata = doi.registrationAgency.id === 'crossref'
     const apiUrl =
       process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
-  
+
     return (
       <>
         <h3 className="member-results" id="download">
@@ -153,7 +153,7 @@ const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (<>
     <Button
-      bsStyle={'btn-default'}
+      variant="btn-default"
       title="Download Metadata"
       onClick={() => setShowDownloadMetadataModal(true)}
       id="download-metadata-button"
@@ -167,7 +167,7 @@ const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {
         <Modal.Title>Download Metadata</Modal.Title>
       </Modal.Header> */}
       <Modal.Body>{exportMetadata()}</Modal.Body>
-      <Modal.Footer style={{padding: 10}}>
+      <Modal.Footer style={{ padding: 10 }}>
         <Button id='close-modal' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
       </Modal.Footer>
     </Modal>

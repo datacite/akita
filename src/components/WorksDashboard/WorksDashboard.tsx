@@ -1,7 +1,7 @@
 'use client'
 
 import React, { PropsWithChildren } from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap-4'
 import clone from 'lodash/clone'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
@@ -29,11 +29,11 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
 
   return (
     <div className={styles.graphsContainer}>
-        {children && 
-          <Row>
-            {children}
-          </Row>
-        }
+      {children &&
+        <Row>
+          {children}
+        </Row>
+      }
       <Row>
         <Col xs={12} sm={4}>
           <ProductionChart
@@ -43,16 +43,16 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             chartTitle={'Work Types'}
-            topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent}}
+            topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent }}
             data={resourceTypes.data}
             domain={resourceTypeDomain}
             range={resourceTypeRange}
             tooltipText={tooltipText('resourceType')} />
         </Col>
         <Col xs={12} sm={4}>
-          <HorizontalStackedBarChart 
+          <HorizontalStackedBarChart
             chartTitle='Licenses'
-            topCategory={{ title: licenses.topCategory, percent: licenses.topPercent}}
+            topCategory={{ title: licenses.topCategory, percent: licenses.topPercent }}
             data={licenses.data}
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
