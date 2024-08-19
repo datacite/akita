@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
-import { Tooltip } from 'react-bootstrap-4'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacetListItem from './FacetListItem'
 import { Facet } from 'src/data/types'

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Tooltip, Badge } from 'react-bootstrap-4'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
+import { OverlayTrigger, Tooltip, Badge } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Claim } from 'src/data/types'
