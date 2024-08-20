@@ -25,7 +25,7 @@ interface FacetListProps {
 }
 
 export default function FacetList(props: FacetListProps) {
-  const { data, title, id, param, url, value, checked, radio } = props
+  const { data, title, param, url, value, checked, radio } = props
   if (!data || data.length === 0) return null
 
   function Title() {

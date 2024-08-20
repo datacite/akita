@@ -42,7 +42,7 @@ export function RepositorySidebar({ repo }: Props) {
         )}
         {repo.works && (repo.works.totalCount > 0) && (
           <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
-            <Button block bsStyle="primary" id="find-related">
+            <Button block variant="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
               Find Related Works
@@ -148,10 +148,10 @@ export function RepositoryDetail({ repo }: Props) {
     return (
       <>
         {subjectList.map((keyword, index) => (
-          <Badge key={"subject-" + index} bsStyle="info">{keyword}</Badge>
+          <Badge key={"subject-" + index} variant="info">{keyword}</Badge>
         ))}
         {keywordList.map((keyword, index) => (
-          <Badge key={"keyword-" + index} bsStyle="info">{keyword}</Badge>
+          <Badge key={"keyword-" + index} variant="info">{keyword}</Badge>
         ))}
       </>
 
