@@ -75,7 +75,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   )
 
   return (<>
-    <Row><Col>{name()}</Col></Row>
+    <Row className="person"><Col>{name()}</Col></Row>
     {metadata.description && <Row><Col className="description biography">{metadata.description}</Col></Row>}
     {metadata.links && metadata.identifiers && (
       <>

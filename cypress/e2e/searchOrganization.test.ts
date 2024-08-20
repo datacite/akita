@@ -15,13 +15,13 @@ describe('Search Organizations', () => {
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Organizations')
       // results are rendered
-      .get('.panel-transparent')
+      .get('.organization')
       .should(($organization) => {
         expect($organization).to.have.length.at.least(4)
       })
 
       // all facets are rendered
-      .get('.panel.facets')
+      .get('.facets')
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -36,13 +36,13 @@ describe('Search Organizations', () => {
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Organization')
       // results are rendered
-      .get('.panel-transparent')
+      .get('.organization')
       .should(($organization) => {
         expect($organization).to.have.length.at.least(1)
       })
 
       // all facets are rendered
-      .get('.panel.facets')
+      .get('.facets')
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -73,4 +73,4 @@ describe('Search Organizations', () => {
   })
 })
 
-export {}
+export { }

@@ -67,7 +67,7 @@ export default function SearchOrganizations(props: Props) {
     return (
       <Col md={9}>
         {organizations.nodes.map((item) => (
-          <Row key={item.id} className="mb-4"><Col>
+          <Row key={item.id} className="mb-4 organization"><Col>
             <OrganizationMetadata
               metadata={item}
               linkToExternal={false}
@@ -90,7 +90,7 @@ export default function SearchOrganizations(props: Props) {
 
   const renderFacets = () => {
     return (
-      <Col md={3} className="d-none d-md-block">
+      <Col md={3} className="d-none d-md-block facets">
         <FacetList
           data={organizations.countries}
           title="Country"

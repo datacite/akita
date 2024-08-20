@@ -11,8 +11,8 @@ describe('workContainer with usage', () => {
   })
 
   it('share', () => {
-    cy.get('.share .share-list', { timeout: 30000 })
-      .should('have.length', 1)
+    cy.get('.share-list', { timeout: 30000 })
+      .should('have.length', 3)
       .should('contain', 'Email')
   })
 
@@ -65,4 +65,4 @@ describe('workContainer with usage', () => {
 // })
 // })
 
-export {}
+export { }

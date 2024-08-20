@@ -25,7 +25,7 @@ interface FacetListProps {
 }
 
 export default function FacetList(props: FacetListProps) {
-  const { data, title, param, url, value, checked, radio } = props
+  const { data, title, id, param, url, value, checked, radio } = props
   if (!data || data.length === 0) return null
 
   function Title() {
@@ -44,7 +44,7 @@ export default function FacetList(props: FacetListProps) {
   }
 
   return (
-    <Row className="panel facets add">
+    <Row className={`panel facets add ${id}`}>
       <Title />
       <Col xs={12} as="ul">
         {data.map((facet, i) => (

@@ -63,7 +63,7 @@ export default function CitationFormatter({ id, style, locale }: Props) {
     <Col xs={12}>
       <h3 className="member-results">Cite as</h3>
     </Col>
-    <Col xs={12}>
+    <Col xs={12} className="formatted-citation">
       {ReactHtmlParser(formatted)}
     </Col>
   </ >
