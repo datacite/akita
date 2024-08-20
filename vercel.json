@@ -1,10 +1,19 @@
 {
-  "version": 2,
   "github": {
     "enabled": false
   },
+  "rewrites": [
+    {
+      "source": "/api/download-reports/:path*",
+      "destination": "/download-reports/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/app"
+    }
+  ],
   "functions": {
-     "src/pages/api/download-reports/**/*": {
+     "src/app/download-reports/**/*": {
       "memory": 512,
       "maxDuration": 30
     },
@@ -19,6 +28,9 @@
     "src/app/**/*": {
       "memory": 512,
       "maxDuration": 8
+    },
+    "api/**/*.py": {
+	"excludeFiles": "{cypress,src,.next,.vercel,.github,.git,*.cache,node_modules,public,app}/**"
     }
   }
 }

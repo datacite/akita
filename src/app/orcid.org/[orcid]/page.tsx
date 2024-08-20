@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import truncate from 'lodash/truncate'
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import Content from './Content'
 import { PERSON_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
@@ -77,8 +77,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //   ? metadata.work.types.resourceType.toLowerCase()
   //   : metadata.work.types.resourceTypeGeneral?.toLowerCase() || undefined
 
-
-  // <script type="application/ld+json">{work.schemaOrg}</script>
 
 
   return {

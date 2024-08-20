@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { gql } from '@apollo/client';
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { stringify } from 'csv-stringify/sync'
 
 const QUERY = gql`

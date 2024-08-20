@@ -1,15 +1,17 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
+import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
 import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
-import apolloClient from 'src/utils/apolloClient'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
+import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
 
 
@@ -84,9 +86,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //   : metadata.work.types.resourceTypeGeneral?.toLowerCase() || undefined
 
 
-  // <script type="application/ld+json">{work.schemaOrg}</script>
-
-
   return {
     title: title,
     description: description,
@@ -152,7 +151,13 @@ export default async function Page({ params, searchParams }: Props) {
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
+
+    <Suspense>
+        <RelatedAggregateGraph doi={doi} />
+    </Suspense>
+
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
+    <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }
 

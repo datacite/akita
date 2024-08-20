@@ -13,7 +13,7 @@ interface Props {
   model: string
   url: string
   loading: boolean
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number }
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
 }
 
 interface Facets {
@@ -51,6 +51,7 @@ export default function WorkFacets({
   const path = url.substring(0, url.length - 2)
 
   const connectionTypeList: Facet[] = connectionTypesCounts ? [
+    { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
     { id: 'references', title: 'References', count: connectionTypesCounts.references },
     { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
     { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
