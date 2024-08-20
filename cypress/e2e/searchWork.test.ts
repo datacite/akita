@@ -15,14 +15,14 @@ describe('Search Works', () => {
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'Works')
       // results are rendered
-      .get('.panel-transparent')
+      .get('.work')
       .should(($contentItem) => {
         expect($contentItem).to.have.length.at.least(14)
       })
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
       // all facets are rendered
-      .get('.panel.facets.add')
+      .get('.facets')
       .should(($facet) => {
         expect($facet).to.have.length.at.least(4)
         expect($facet.eq(0)).to.contain('Creators')
@@ -93,7 +93,7 @@ describe('Search Works', () => {
       .get('.member-results')
       .should('not.exist')
       // no facet for zero results
-      .get('.panel.facets')
+      .get('.facets')
       .should('not.exist')
   })
 
@@ -158,4 +158,4 @@ describe('Search Works', () => {
   // })
 })
 
-export {}
+export { }

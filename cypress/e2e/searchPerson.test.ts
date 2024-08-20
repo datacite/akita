@@ -15,7 +15,7 @@ describe('Search People', () => {
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
       // results are rendered
-      .get('.panel-transparent')
+      .get('.person')
       .should(($person) => {
         expect($person).to.have.length.at.least(4)
       })
@@ -41,7 +41,7 @@ describe('Search People', () => {
       .get('.member-results', { timeout: 60000 })
       .should('contain', 'People')
       // results are rendered
-      .get('.panel-transparent')
+      .get('.person')
       .should(($person) => {
         expect($person).to.have.length.at.least(4)
       })
@@ -56,4 +56,4 @@ describe('Search People', () => {
   })
 })
 
-export {}
+export { }

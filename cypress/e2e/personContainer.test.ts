@@ -13,7 +13,7 @@ describe('PersonContainer', () => {
   })
 
   it('name', () => {
-    cy.get('.panel-body h3.work', { timeout: 30000 }).contains('Martin Fenner')
+    cy.get('h3.work', { timeout: 30000 }).contains('Martin Fenner')
   })
 
   // it('employment', () => {
@@ -66,16 +66,16 @@ describe('PersonContainer', () => {
   })
 
   it('facets', () => {
-    cy.get('#published-facets').should('be.visible')
-    cy.get('#published-facets > li').should(($facets) => {
+    cy.get('.published-facets').should('be.visible')
+    cy.get('.published-facets li').should(($facets) => {
       expect($facets).to.have.length.at.least(1)
     })
-    cy.get('#work-type-facets').should('be.visible')
-    cy.get('#work-type-facets > li').should(($facets) => {
+    cy.get('.work-type-facets').should('be.visible')
+    cy.get('.work-type-facets li').should(($facets) => {
       expect($facets).to.have.length.at.least(1)
     })
-    cy.get('#registration-agency-facets').should('be.visible')
-    cy.get('#registration-agency-facets > li').should(($facets) => {
+    cy.get('.registration-agency-facets').should('be.visible')
+    cy.get('.registration-agency-facets li').should(($facets) => {
       expect($facets).to.have.length.at.least(1)
     })
   })
@@ -85,4 +85,4 @@ describe('PersonContainer', () => {
   })
 })
 
-export {}
+export { }

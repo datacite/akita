@@ -17,7 +17,7 @@ interface Props {
   showSankey?: boolean
   sankeyTitle?: string
   showFacets: boolean
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number , allRelated: number}
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
   showClaimStatus: boolean
   loading: boolean
   model: string
@@ -81,7 +81,7 @@ export default function WorksListing({
         </Row>}
 
         {works.nodes.map((doi) => (
-          <Row key={doi.doi} className="mb-4">
+          <Row key={doi.doi} className="mb-4 work">
             <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus} />
           </Row>
         ))}
