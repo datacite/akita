@@ -19,7 +19,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef<HTMLDivElement>(null);
 
-  function handleResize () {
+  function handleResize() {
     if (!graphDivRef.current) return
     setWidth(graphDivRef.current.offsetWidth - 20);
   }
@@ -48,7 +48,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
           spec={forceDirectedGraphSpec(width, domain, range)}
           data={{ "nodeData": nodes, "linkData": links }}
           actions={false}
-          onNewView={view => console.log(view._runtime)}
+        // onNewView={view => console.log(view._runtime)}
         />
       </div>
     </div>
