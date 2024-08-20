@@ -220,7 +220,7 @@ describe('Search', () => {
 
       it('search with query url', () => {
         cy.visit('/ror.org?query=cambridge')
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Organizations')
         cy.get('.member-results', { timeout: 60000 }).should(
           'contain',
@@ -265,7 +265,7 @@ describe('Search', () => {
           .get('input[name="query"]')
           .type('Cambridge')
         cy.get('.search-submit').click()
-        cy.get('#search-nav li.active', { timeout: 60000 })
+        cy.get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Organizations')
         cy.get('.member-results', { timeout: 60000 })
           .should('contain', 'Organizations')
