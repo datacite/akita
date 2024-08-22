@@ -307,6 +307,11 @@ input[type=text] {
   margin-bottom: 3px;
 }
 
+.license img {
+  height: 20px;
+  margin-right: 3px;
+}
+
 .badge {
   margin-top: 8px;
   margin-right: 3px;
