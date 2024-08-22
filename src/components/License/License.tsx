@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import Image from 'next/image'
 import {
   faCreativeCommons,
   faCreativeCommonsBy,
@@ -114,10 +113,8 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
           target="_blank"
           rel="noreferrer"
         >
-          <Image
+          <img 
             src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
-            width={76}
-            height={20}
             alt='License badge'
           />
         </a>
