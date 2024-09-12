@@ -15,6 +15,7 @@ import Consent from "./Consent";
 import Footer from "./Footer";
 import Providers from "./Providers";
 import { getAuthToken } from "src/utils/apolloClient/apolloClient";
+import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
 
 
 config.autoAddCss = false
@@ -59,6 +60,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <Footer />
         </Providers>
       </body>
+      <ConsentedGoogleTagManager gtmId={data.GTM_ID}/>
     </html>
   )
 }
@@ -106,6 +108,8 @@ function GetData() {
     domain = '.vercel.app'
   }
 
+  const GTM_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || ""
 
-  return { DEFAULT_FEATURES, apolloUrl, authToken, profilesUrl, orcidUrl, domain }
+
+  return { DEFAULT_FEATURES, apolloUrl, authToken, profilesUrl, orcidUrl, domain, GTM_ID }
 }

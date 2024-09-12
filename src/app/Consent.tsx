@@ -39,7 +39,7 @@ export default function Consent ({ domain }: Props) {
       us improve your user experience. You can decline non-essential cookies by
       selecting “Reject”. Please see our{' '}
       <a
-        href="https://datacite.org/privacy.html"
+        href="https://datacite.org/privacy-policy/"
         style={linkStyle}
         target="_blank"
         rel="noreferrer"
