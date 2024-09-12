@@ -301,7 +301,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
                 {metadata.identifiers.map((id) => (
                   <div key={id.identifier} className="work-identifiers">
                     {id.identifierType}:{' '}
-                    <a href={id.identifierUrl} target="_blank" rel="noreferrer">
+                    <a href={id.identifierUrl} target="_blank" rel="noreferrer" className={styles.id}>
                       {id.identifier}
                     </a>
                   </div>

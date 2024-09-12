@@ -9,7 +9,6 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { session } from '../../utils/session'
 import { Claim as ClaimType } from 'src/data/types'
-import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import styles from './Claim.module.scss'
@@ -195,8 +194,12 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
   if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
     return null
 
+  if (loading) {
+    return <Button variant='warning' className={styles.claimWarning} disabled title="Checking claim status..." block>
+      Checking claim status...
+    </Button>
+  }
 
-  if (loading) return <Loading />
   if (error)
     return (
       <>
