@@ -46,7 +46,7 @@ export default function Header(props: Props) {
 
   return (
     <Container fluid>
-      <Navbar collapseOnSelect className={styles.navbar}>
+      <Navbar expand="lg" className={styles.navbar}>
         <Navbar.Brand>
           <Link href="/">
             <img src="/images/commons-logo.svg" height="50" className="commons-logo" />
@@ -54,7 +54,7 @@ export default function Header(props: Props) {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className={styles.navcenter}>
-          <Form inline>
+          <Form inline className={styles.navsearchlinks}>
             <Search base={base} />
             <Nav id="search-nav" activeKey={base} className={styles.navmain}>
               <Nav.Item>

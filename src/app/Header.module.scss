@@ -10,12 +10,16 @@
 }
 
 .navmain {
+  width: 100%;
+  margin-left: 0 !important;
+  flex-direction: row !important;
   gap: 20px;
 }
 
 .navright {
   align-items: center;
   gap: 10px;
+  flex-direction: row !important;
 }
 
 .navdropdown .show {
@@ -25,5 +29,10 @@
 
 .signin {
   width: max-content;
+  margin: 0 !important;
   padding: 6px 15px 10px !important;
+}
+
+.navsearchlinks {
+  flex-wrap: nowrap;
 }

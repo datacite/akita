@@ -6,6 +6,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { InputGroup, Button } from 'react-bootstrap-4'
+import styles from './Search.module.css'
 
 interface Props {
   base: string
@@ -29,7 +30,7 @@ export default function Search({ base }: Props) {
   const debounceSearch = useDebouncedCallback(search, 300)
 
   return (
-    <InputGroup>
+    <InputGroup className="flex-nowrap">
       <input
         name="query"
         placeholder="Type to search..."
@@ -39,7 +40,7 @@ export default function Search({ base }: Props) {
           debounceSearch(e.target.value)
         }}
         key="searchInput"
-        className="form-control"
+        className={`form-control ${styles.input}`}
         type="text"
       />
       <Button type="submit" className="search-submit" onClick={() => search(searchInput)}>

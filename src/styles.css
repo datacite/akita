@@ -6,6 +6,15 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, li, .navbar, .brand, a,
   font-family: unset;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h3 {
+  margin-bottom: .35em;
+}
 
 .card-body h3.member>i {
   color: #1abc9c;
