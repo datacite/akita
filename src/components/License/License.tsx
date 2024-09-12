@@ -11,7 +11,7 @@ import {
 import lcBcNotice from './local-contexts/bc-notice.png'
 import lcCiAttribution from './local-contexts/ci-attribution-incomplete.png'
 import lcCiOpen from './local-contexts/ci-open-to-collaborate.png'
-import lctkNotice from './local-contexts/tk-notice.png'
+import lcTkNotice from './local-contexts/tk-notice.png'
 import uniqBy from 'lodash/uniqBy'
 import Image from 'next/image'
 
@@ -23,11 +23,21 @@ type Props = {
   rights?: Rights[]
 }
 
+const cc2Icon = {
+  'cc': { icon: faCreativeCommons, alt: 'Creative Commons' },
+  'cc0': { icon: faCreativeCommonsZero, alt: 'Creative Commons Zero (Public Domain Dedication)' },
+  'by': { icon: faCreativeCommonsBy, alt: 'Creative Commons Attribution' },
+  'nc': { icon: faCreativeCommonsNc, alt: 'Creative Commons Non-Commercial' },
+  'nd': { icon: faCreativeCommonsNd, alt: 'Creative Commons No Derivatives' },
+  'sa': { icon: faCreativeCommonsSa, alt: 'Creative Commons Share Alike' }
+}
+const ccKeys = Object.keys(cc2Icon)
+
 const localContexts2Icon= {
-  'attribution-incomplete': lcCiAttribution,
-  'open-to-collaborate': lcCiOpen,
-  'bc-notice': lcBcNotice,
-  'tk-notice': lctkNotice
+  'attribution-incomplete': { icon: lcCiAttribution, alt: 'Attribution Incomplete Notice' },
+  'open-to-collaborate': { icon: lcCiOpen, alt: 'Open To Collaborate Notice' },
+  'bc-notice': { icon: lcBcNotice, alt: 'Biocultural (BC) Notice' },
+  'tk-notice': { icon: lcTkNotice, alt: 'Traditional Knowledge Notice' }
 }
 const localContextsKeys = Object.keys(localContexts2Icon)
 
@@ -42,78 +52,46 @@ function isLocalContexts( rights: Rights ) {
 export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
 
   const uniqueRights = uniqBy([...rights], 'rightsIdentifier')
-  // const localContextRigths = uniqueRights.filter((r) => isLocalContexts(r))
 
   const localContextRigths = uniqueRights.reduce((sum, r) => {
     if (isLocalContexts(r)) {
+      const localContext = localContexts2Icon[r.rightsIdentifier]
 
       sum.push({
-        icon: localContexts2Icon[r.rightsIdentifier],
+        icon: localContext.icon,
+        altText: localContext.alt,
         rightsUri: r.rightsUri,
         rightsIdentifier: r.rightsIdentifier
       })
     }
     return sum
-  }, [] as { icon: any, rightsUri: string, rightsIdentifier: string }[])
-  // })
+  }, [] as { icon: any, rightsUri: string, altText: string, rightsIdentifier: string }[])
+
   const ccRights = uniqueRights.reduce((sum, r) => {
     if (isCreativeCommons(r)) {
       const splitIdentifier = r.rightsIdentifier
         .split('-')
-        .filter((l) => ['cc', 'cc0', 'by', 'nc', 'nd', 'sa'].includes(l))
+        .filter((l) => ccKeys.includes(l))
       splitIdentifier.forEach((l) => {
-        switch (l) {
-          case 'by':
-            sum.push({
-              icon: faCreativeCommonsBy,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            break
-          case 'nc':
-            sum.push({
-              icon: faCreativeCommonsNc,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            break
-          case 'nd':
-            sum.push({
-              icon: faCreativeCommonsNd,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            break
-          case 'sa':
-            sum.push({
-              icon: faCreativeCommonsSa,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            break
-          case 'cc0':
-            sum.push({
-              icon: faCreativeCommons,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            sum.push({
-              icon: faCreativeCommonsZero,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
-            break
-          default:
-            sum.push({
-              icon: faCreativeCommons,
-              rightsUri: r.rightsUri,
-              rightsIdentifier: r.rightsIdentifier
-            })
+        if (l == 'cc0') {
+          sum.push({
+            icon: faCreativeCommons,
+            rightsUri: r.rightsUri,
+            rightsIdentifier: r.rightsIdentifier,
+            altText: 'Creative Commons'
+          })
         }
+        const ccSelected = cc2Icon[l]
+        sum.push({
+              icon: ccSelected.icon,
+              rightsUri: r.rightsUri,
+              rightsIdentifier: r.rightsIdentifier,
+              altText: ccSelected.alt
+        })
       })
     }
     return sum
-  }, [] as { icon: any, rightsUri: string, rightsIdentifier: string }[])
+  }, [] as { icon: any, rightsUri: string, altText: string, rightsIdentifier: string }[])
 
   const otherRights = uniqueRights.reduce((sum, r) => {
     const ri = { rightsIdentifier: '' }
@@ -138,7 +116,12 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
     <div className={'license ' + styles.licenses}>
       {ccRights.map((r, index) => (
         <a href={r.rightsUri} key={index} target="_blank" rel="noreferrer">
-          <FontAwesomeIcon key={r.rightsIdentifier} icon={r.icon} className={styles.icons}/>
+        <FontAwesomeIcon
+          key={r.rightsIdentifier}
+          icon={r.icon}
+          className={styles.icons}
+          title={r.altText}
+        />
         </a>
       ))}
       {localContextRigths.map((r) => (
@@ -149,9 +132,8 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
           rel="noreferrer"
         >
           <Image
-            // src={`https://img.shields.io/badge/license-MONKEY-green.svg`}
             src={r.icon}
-            alt='License badge'
+            alt={r.altText}
             className={styles.icons}
             width={32}
           />
