@@ -93,6 +93,7 @@ export type Rights = {
   rights: string
   rightsUri: string
   rightsIdentifier: string
+  rightsIdentifierScheme?: string
 }
 
 type Creator = {
