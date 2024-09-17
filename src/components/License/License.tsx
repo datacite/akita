@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import lcBcNotice from './local-contexts/bc-notice.png'
 import lcCiAttribution from './local-contexts/ci-attribution-incomplete.png'
-import lcCiOpen from './local-contexts/ci-open-to-collaborate.png'
 import lcTkNotice from './local-contexts/tk-notice.png'
 import uniqBy from 'lodash/uniqBy'
 import Image from 'next/image'
@@ -35,7 +34,6 @@ const ccKeys = Object.keys(cc2Icon)
 
 const localContexts2Icon= {
   'attribution-incomplete': { icon: lcCiAttribution, alt: 'Attribution Incomplete Notice' },
-  'open-to-collaborate': { icon: lcCiOpen, alt: 'Open To Collaborate Notice' },
   'bc-notice': { icon: lcBcNotice, alt: 'Biocultural (BC) Notice' },
   'tk-notice': { icon: lcTkNotice, alt: 'Traditional Knowledge Notice' }
 }
@@ -110,7 +108,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
     return sum
   }, [] as { rightsIdentifier: string }[])
 
-  if (!ccRights[0] && !otherRights[0]) return null
+  if (!ccRights[0] && !otherRights[0] && !localContextRigths[0]) return null
 
   return (
     <div className={'license ' + styles.licenses}>
