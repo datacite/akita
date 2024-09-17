@@ -628,3 +628,30 @@ h4.work {
 .page-link {
   border-radius: 20px !important;
 }
+
+/* Tweaks for Bootstrap 4 */
+
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before, .tooltip.bs-tooltip-top .arrow::before {
+  margin-left: -3px;
+  content: "";
+  border-width: 5px 5px 0;
+  border-top-color: #fff;
+}
+
+.nav-tabs-member {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+.nav-tabs a.active, .nav-tabs li.active {
+  border: none;
+}
+
+.tags.col {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.work-identifiers > a {
+  color: #3498db !important;
+}
