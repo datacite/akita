@@ -51,15 +51,15 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
 
   const uniqueRights = uniqBy([...rights], 'rightsIdentifier')
 
-  const localContextRigths = uniqueRights.reduce((sum, r) => {
+  const localContextRights = uniqueRights.reduce((sum, r) => {
     if (isLocalContexts(r)) {
       const localContext = localContexts2Icon[r.rightsIdentifier]
 
       sum.push({
         icon: localContext.icon,
-        altText: localContext.alt,
         rightsUri: r.rightsUri,
-        rightsIdentifier: r.rightsIdentifier
+        rightsIdentifier: r.rightsIdentifier,
+        altText: localContext.alt
       })
     }
     return sum
@@ -108,7 +108,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
     return sum
   }, [] as { rightsIdentifier: string }[])
 
-  if (!ccRights[0] && !otherRights[0] && !localContextRigths[0]) return null
+  if (!ccRights[0] && !otherRights[0] && !localContextRights[0]) return null
 
   return (
     <div className={'license ' + styles.licenses}>
@@ -122,7 +122,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
         />
         </a>
       ))}
-      {localContextRigths.map((r) => (
+      {localContextRights.map((r) => (
         <a
           href={r.rightsUri}
           key={r.rightsIdentifier}
@@ -139,7 +139,6 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
       ))}
       {otherRights.map((r) => (
         <a
-          // href={r.rightsUri}
           key={r.rightsIdentifier}
           target="_blank"
           rel="noreferrer"
