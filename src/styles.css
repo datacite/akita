@@ -655,3 +655,8 @@ h4.work {
 .work-identifiers > a {
   color: #3498db !important;
 }
+
+.download-list > h5 {
+  font-weight: 700;
+  margin-bottom: 0;
+}

@@ -162,13 +162,13 @@ const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {
       Download Metadata
     </Button>
 
-    <Modal show={showDownloadMetadataModal} onHide={() => setShowDownloadMetadataModal(false)}>
+    <Modal size='lg' show={showDownloadMetadataModal} onHide={() => setShowDownloadMetadataModal(false)}>
       {/* <Modal.Header closeButton>
         <Modal.Title>Download Metadata</Modal.Title>
       </Modal.Header> */}
       <Modal.Body>{exportMetadata()}</Modal.Body>
       <Modal.Footer style={{ padding: 10 }}>
-        <Button id='close-modal' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
+        <Button id='close-modal' variant='default' onClick={() => setShowDownloadMetadataModal(false)}>Close</Button>
       </Modal.Footer>
     </Modal>
   </>)
