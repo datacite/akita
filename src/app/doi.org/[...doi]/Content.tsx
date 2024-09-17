@@ -52,7 +52,7 @@ export default async function Content(props: Props) {
       </Row>
 
       <Row>
-        <Col md={3}>
+        <Col md={3} className='pr-5'>
           <Row className="mb-2">
             {work.registrationAgency.id == "datacite" && (
               <Col xs={12} className="mb-2">

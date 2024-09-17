@@ -34,7 +34,7 @@ export function RepositorySidebar({ repo }: Props) {
     return (
       <>
         {repo.url && (
-          <Button id="go-to-repo" block href={repo.url}>
+          <Button id="go-to-repo" block variant="default" href={repo.url}>
             <FontAwesomeIcon icon={faSignInAlt} />
             &nbsp;
             Go to Repository

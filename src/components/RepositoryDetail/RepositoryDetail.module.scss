@@ -87,6 +87,9 @@
     margin: 0;
     li {
       margin-bottom: 5px;
+      a {
+        overflow-wrap: break-word;
+      }
     }
   }
 }
@@ -101,5 +104,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  div {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   @include header-style();
 }
