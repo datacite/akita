@@ -33,8 +33,12 @@ export default function MetadataTable({ metadata }: Props) {
     const sanitizedDescription = sanitizeHtml(truncatedDescription)
     const parsedDescription = ReactHtmlParser(sanitizedDescription)
 
-    return <Tab key={key} eventKey={key} title={startCase(title)} className={styles.container}>
-      <div className="description">{parsedDescription}</div>
+    return <Tab key={key} eventKey={key} title={startCase(title)}>
+      <div className="panel panel-transparent">
+        <div className="panel-body">
+          <div className="description">{parsedDescription}</div>
+        </div>
+      </div>
     </Tab>
   }
 
