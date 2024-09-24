@@ -37,8 +37,8 @@ export default function DoiPresentation({ doi }: Props) {
 
     return (
       <div className="panel panel-transparent">
-        <div className="panel-body nav-tabs-member">
-          <Tabs className="content-tabs" id="over-time-tabs">
+        <div className="panel-body">
+          <Tabs className="content-tabs nav-tabs-member" id="over-time-tabs">
             {views > 0 && (
               <Tab
                 className="views-over-time-tab"

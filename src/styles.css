@@ -643,8 +643,12 @@ h4.work {
   margin-bottom: 10px;
 }
 
-.nav-tabs a.active, .nav-tabs li.active {
-  border: none;
+.nav-tabs-member > .nav-link:first-child {
+  margin-left: 0px;
+}
+
+.nav-tabs-member >.nav-link:focus, .nav-tabs-member > .nav-link:hover {
+  border: 1px solid transparent;
 }
 
 .tags.col {
@@ -659,4 +663,8 @@ h4.work {
 .download-list > h5 {
   font-weight: 700;
   margin-bottom: 0;
+}
+
+.badge {
+  font-size: 18px;
 }
