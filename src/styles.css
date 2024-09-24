@@ -628,3 +628,43 @@ h4.work {
 .page-link {
   border-radius: 20px !important;
 }
+
+/* Tweaks for Bootstrap 4 */
+
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before, .tooltip.bs-tooltip-top .arrow::before {
+  margin-left: -3px;
+  content: "";
+  border-width: 5px 5px 0;
+  border-top-color: #fff;
+}
+
+.nav-tabs {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+.nav-tabs-member > .nav-link:first-child {
+  margin-left: 0px;
+}
+
+.nav-tabs-member >.nav-link:focus, .nav-tabs-member > .nav-link:hover {
+  border: 1px solid transparent;
+}
+
+.tags.col {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.work-identifiers > a {
+  color: #3498db !important;
+}
+
+.download-list > h5 {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.badge {
+  font-size: 18px;
+}
