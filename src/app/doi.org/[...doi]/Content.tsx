@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactHtmlParser from 'react-html-parser'
 import { Container, Row, Col } from "src/components/Layout-4";
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
@@ -48,7 +47,7 @@ export default async function Content(props: Props) {
     <Container fluid>
       <Row className="mb-4">
         <Col md={{ offset: 3 }}>
-          <TitleComponent title={ReactHtmlParser(title)} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
+          <TitleComponent title={title} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
         </Col>
       </Row>
 
