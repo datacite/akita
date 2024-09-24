@@ -242,7 +242,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
             </Button>
           }
         </>
-      ) : <ClaimStatus claim={claim} />
+      ) : <ClaimStatus claim={claim} type="button" />
       }
 
       {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
