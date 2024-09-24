@@ -1,11 +1,13 @@
 import React, { PropsWithChildren } from 'react'
-import { Row, Col, Alert } from 'src/components/Layout'
+import { Row, Col, Alert } from 'src/components/Layout-4'
 
-const ExampleText: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
+export default function ExampleText({ children }: PropsWithChildren) {
   return (
     <Row>
-      <Col xs={12} md={9} mdOffset={3}>
-        <Alert bsStyle="info">
+      <Col xs={12} md={{ span: 9, offset: 3 }}>
+        <Alert variant="info">
+          {/* Children technically incompatible until react-bootsrap version 3, so ignore the error for now */}
+          {/* @ts-ignore */}
           {children}
         </Alert>
       </Col>
@@ -13,4 +15,3 @@ const ExampleText: React.FunctionComponent<PropsWithChildren> = ({ children }) =
   )
 }
 
-export default ExampleText

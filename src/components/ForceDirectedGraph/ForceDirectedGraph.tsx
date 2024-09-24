@@ -19,7 +19,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef<HTMLDivElement>(null);
 
-  function handleResize () {
+  function handleResize() {
     if (!graphDivRef.current) return
     setWidth(graphDivRef.current.offsetWidth - 20);
   }

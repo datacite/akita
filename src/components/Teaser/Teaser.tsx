@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap-4'
 
 type Props = {
   title: string
@@ -8,8 +8,8 @@ type Props = {
 const Teaser: React.FunctionComponent<Props> = ({ title }) => {
   return (
     <Row>
-      <Col xs={12} md={9} mdOffset={3}>
-        <Alert bsStyle="info">
+      <Col xs={12} md={{ span: 9, offset: 3 }}>
+        <Alert variant="info">
           Search {title} by keyword(s) and/or identifier. Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a>
         </Alert>
       </Col>

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Col } from 'src/components/Layout'
+import { Col } from 'src/components/Layout-4'
 import ContentLoader from 'react-content-loader'
 
 const Loading: React.FunctionComponent = () => (
-  <Col md={9} mdOffset={3}>
+  <Col md={{ span: 9, offset: 3 }}>
     <ContentLoader
       speed={1}
       width={1000}

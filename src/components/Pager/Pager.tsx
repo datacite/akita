@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Pagination } from 'react-bootstrap'
+import { Pagination } from 'react-bootstrap-4'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 
 type Props = {

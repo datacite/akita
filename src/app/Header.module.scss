@@ -1,0 +1,38 @@
+.navbar {
+  max-width: 1420px !important;
+  padding: 0 1em !important;
+  font-size: 18px !important;
+  align-items: flex-start !important;
+}
+
+.navcenter {
+  align-items: flex-start !important;
+}
+
+.navmain {
+  width: 100%;
+  margin-left: 0 !important;
+  flex-direction: row !important;
+  gap: 20px;
+}
+
+.navright {
+  align-items: center;
+  gap: 10px;
+  flex-direction: row !important;
+}
+
+.navdropdown .show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.signin {
+  width: max-content;
+  margin: 0 !important;
+  padding: 6px 15px 10px !important;
+}
+
+.navsearchlinks {
+  flex-wrap: nowrap;
+}

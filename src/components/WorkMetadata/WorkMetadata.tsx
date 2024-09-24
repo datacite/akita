@@ -2,13 +2,13 @@
 
 import React from 'react'
 import {
-  Alert,
-  Label,
-  Tooltip,
+  Row,
   Col,
-  Row
-} from 'react-bootstrap'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
+  Alert,
+  Badge,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap-4'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from '../../utils/helpers'
@@ -20,7 +20,8 @@ import { Work } from 'src/data/types'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { License } from '../License/License'
-import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
+import MetricsCounter from '../MetricsCounter/MetricsCounter'
+import styles from './WorkMetadata.module.scss'
 
 type Props = {
   metadata: Work
@@ -40,7 +41,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   includeMetricsDisplay = false
 }) => {
   if (metadata == null)
-    return <Alert bsStyle="warning">No content found.</Alert>
+    return <Alert variant="warning">No content found.</Alert>
 
   // use production URL for non-DataCite DOIs
   const handleUrl =
@@ -247,7 +248,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="tags">
         {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Label bsStyle="info">{startCase(resourceType)}</Label>
+            <Badge variant="info">{startCase(resourceType)}</Badge>
           </OverlayTrigger>
         )}
         {metadata.fieldsOfScience && (
@@ -258,14 +259,14 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
                 placement="top"
                 overlay={tooltipFieldsOfScience}
               >
-                <Label bsStyle="info">{fos.name}</Label>
+                <Badge variant="info">{fos.name}</Badge>
               </OverlayTrigger>
             ))}
           </span>
         )}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            <Label bsStyle="info">{metadata.language.name}</Label>
+            <Badge variant="info">{metadata.language.name}</Badge>
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (
@@ -278,7 +279,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   const footer = () => {
     return (
       <Col className="panel-footer" sm={12}>
-        <a href={handleUrl}>
+        <a href={handleUrl} className={styles.doiLink}>
           <i className="ai ai-doi"></i> {handleUrl}
         </a>
       </Col>
@@ -286,36 +287,36 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <div key={metadata.id} className="panel panel-transparent work-list">
-      <Col className="panel-body">
+    <>
+      <Col className="card-body">
         {!hideTitle && title()}
         {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
         {!hideMetadataInTable && creators()}
         {metadataTag()}
         {!hideMetadataInTable && <>{description()}
-        {metadata.identifiers && metadata.identifiers.length > 0 && (
-          <Row>
-            <Col xs={6} md={6} className="other-identifiers">
-              <h5>Other Identifiers</h5>
-              {metadata.identifiers.map((id) => (
-                <div key={id.identifier} className="work-identifiers">
-                  {id.identifierType}:{' '}
-                  <a href={id.identifierUrl} target="_blank" rel="noreferrer">
-                    {id.identifier}
-                  </a>
-                </div>
-              ))}
-            </Col>
-          </Row>
-        )}
-        {registered()}</>}
+          {metadata.identifiers && metadata.identifiers.length > 0 && (
+            <Row>
+              <Col xs={6} md={6} className="other-identifiers">
+                <h5>Other Identifiers</h5>
+                {metadata.identifiers.map((id) => (
+                  <div key={id.identifier} className="work-identifiers">
+                    {id.identifierType}:{' '}
+                    <a href={id.identifierUrl} target="_blank" rel="noreferrer" className={styles.id}>
+                      {id.identifier}
+                    </a>
+                  </div>
+                ))}
+              </Col>
+            </Row>
+          )}
+          {registered()}</>}
         {!hideMetadataInTable && <License rights={metadata.rights} />}
         {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
       </Col>
 
       {footer()}
-    </div>
+    </>
   )
 }
 

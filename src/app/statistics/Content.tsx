@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Alert, Col, Row } from "src/components/Layout";
+import { Alert, Col, Container, Row } from "src/components/Layout-4";
 import Loading from 'src/components/Loading/Loading'
 
 import { STATISTICS_QUERY, QueryData } from 'src/data/queries/statisticsQuery'
@@ -16,7 +16,7 @@ interface Props {
   isBot?: boolean
 }
 
-export default function RelatedContent (props: Props) {
+export default function RelatedContent(props: Props) {
   const { isBot = false } = props
 
   const { loading, data, error } = useQuery<QueryData>(
@@ -33,7 +33,7 @@ export default function RelatedContent (props: Props) {
 
   if (error)
     return <Row>
-      <Col mdOffset={3} className="panel panel-transparent">
+      <Col md={{ offset: 3 }} className="panel panel-transparent">
         <Error title="An error occured loading statistics." message={error.message} />
       </Col>
     </Row>
@@ -372,26 +372,21 @@ export default function RelatedContent (props: Props) {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
-        <Col md={9} mdOffset={3} id="intro">
-          <div className="panel panel-transparent">
-            <div className="panel-body">
-              <h3 className="member">Statistics</h3>
-              <div>
-                <p>
-                  This page gives an overview of the information about works,
-                  people and organizations made available via DataCite Commons.
+        <Col md={{ span: 9, offset: 3 }}> <h3 className="member">Statistics</h3>
+          <div>
+            <p>
+              This page gives an overview of the information about works,
+              people and organizations made available via DataCite Commons.
 
-                  <br />
-                  The is not a live dashboard, but updated on a regular basis.
+              <br />
+              The is not a live dashboard, but updated on a regular basis.
 
-                  Please reach out to{' '}
-                  <a href="mailto:support@datacite.org">DataCite Support</a> for
-                  questions or comments.
-                </p>
-              </div>
-            </div>
+              Please reach out to{' '}
+              <a href="mailto:support@datacite.org">DataCite Support</a> for
+              questions or comments.
+            </p>
           </div>
         </Col>
       </Row>
@@ -406,7 +401,7 @@ export default function RelatedContent (props: Props) {
         />
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="works">
+        <Col md={{ span: 9, offset: 3 }}>
           <h3 className="member-results">Works</h3>
           <div className="panel panel-transparent">
             <div className="panel-body">
@@ -468,7 +463,7 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="people">
+        <Col md={{ span: 9, offset: 3 }}>
           <h3 className="member-results">People</h3>
           <div className="panel panel-transparent">
             <div className="panel-body">
@@ -489,13 +484,13 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="people-count">
+        <Col md={{ span: 9, offset: 3 }}>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <Row>
                 {data.people.totalCount == 0 && (
                   <Col md={12}>
-                    <Alert bsStyle="warning">
+                    <Alert variant="warning">
                       <p>No People found.</p>
                     </Alert>
                   </Col>
@@ -519,7 +514,7 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="people-count">
+        <Col md={{ span: 9, offset: 3 }}>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <div className="intro">
@@ -550,7 +545,7 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="intro">
+        <Col md={{ span: 9, offset: 3 }}>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <h3 className="member">Organizations</h3>
@@ -572,13 +567,13 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="organization-count">
+        <Col md={{ span: 9, offset: 3 }}>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <Row>
                 {data.organizations.totalCount == 0 && (
                   <Col md={12}>
-                    <Alert bsStyle="warning">
+                    <Alert variant="warning">
                       <p>No Organizations found.</p>
                     </Alert>
                   </Col>
@@ -602,7 +597,7 @@ export default function RelatedContent (props: Props) {
         </Col>
       </Row>
       <Row>
-        <Col md={9} mdOffset={3} id="people-count">
+        <Col md={{ span: 9, offset: 3 }}>
           <div className="panel panel-transparent">
             <div className="panel-body">
               <div className="intro">
@@ -634,6 +629,6 @@ export default function RelatedContent (props: Props) {
           </div>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }

@@ -1,21 +1,21 @@
 'use client'
 
 import React from 'react'
-import { Tabs, Tab, Alert } from 'react-bootstrap'
+import { Alert, Tabs, Tab } from 'react-bootstrap-4'
 import { pluralize } from '../../utils/helpers'
 
 import { Work } from 'src/data/types'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
 import UsageChart from '../UsageChart/UsageChart'
-import { MetadataTable } from '../MetadataTable/MetadataTable'
-import { MetricsCounter } from '../MetricsCounter/MetricsCounter'
+import MetadataTable from '../MetadataTable/MetadataTable'
+import MetricsCounter from '../MetricsCounter/MetricsCounter'
 
 type Props = {
   doi: Work
 }
 
-const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
-  if (!doi) return <Alert bsStyle="warning">No works found.</Alert>
+export default function DoiPresentation({ doi }: Props) {
+  if (!doi) return <Alert variant="warning">No works found.</Alert>
 
   const views = doi.viewCount || 0
   const downloads = doi.downloadCount || 0
@@ -75,16 +75,11 @@ const DoiPresentation: React.FunctionComponent<Props> = ({ doi }) => {
 
   return (
     <>
-      <div className="panel panel-transparent">
-        <div className="panel-body">  
-          <MetricsCounter metadata={doi} />
-        </div>
-      </div>
+      <MetricsCounter metadata={doi} />
       <MetadataTable metadata={doi} />
-      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle/>
+      <WorkMetadata metadata={doi} linkToExternal={true} showClaimStatus={false} hideMetadataInTable hideTitle />
       {analyticsBar()}
     </>
   )
 }
 
-export default DoiPresentation

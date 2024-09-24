@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from "src/components/Layout";
+import { Row, Col, Container } from "src/components/Layout-4";
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Repository as RepositoryType } from 'src/data/types'
@@ -23,7 +23,7 @@ export default async function Content(props: Props) {
   })
 
   if (error) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <Error title="An error occured." message={error.message} />
     </Col>
   )
@@ -31,7 +31,7 @@ export default async function Content(props: Props) {
   const repository = data?.repository || {} as RepositoryType
 
 
-  return (
+  return (<Container fluid>
     <Row>
       <Col md={3}>
         <RepositorySidebar repo={repository} />
@@ -40,5 +40,5 @@ export default async function Content(props: Props) {
         <RepositoryDetail repo={repository} />
       </Col>
     </Row>
-  )
+  </Container>)
 }

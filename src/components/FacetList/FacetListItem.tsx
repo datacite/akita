@@ -9,23 +9,25 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { Facet } from 'src/data/types'
+import { Col, Row } from '../Layout-4'
+import styles from './FacetListItem.module.scss'
 
 interface Props {
   facet: Facet
   param: string
   url: string
-  
+
   checked?: boolean
   radio?: boolean
   value?: string
 }
 
-export default function FacetListItem (props: Props) {
+export default function FacetListItem(props: Props) {
   const {
     facet,
     param,
     url,
-    
+
     checked = false,
     radio = false,
     value: customValue
@@ -51,13 +53,14 @@ export default function FacetListItem (props: Props) {
   }
 
   return (
-    <li key={facet.id}>
-      <Link href={url + params.toString()} className={"facet-" + param}>
-        <FontAwesomeIcon icon={icon} />{' '}
-      </Link>
-      <div className="facet-title">{facet.title}</div>
-      <span className="number pull-right">{facet.count.toLocaleString('en-US')}</span>
-      <div className="clearfix" />
-    </li>
+    <Row as="li" key={facet.id}>
+      <Col xs={1} className={styles.checkbox}>
+        <Link href={url + params.toString()} className={"facet-" + param}>
+          <FontAwesomeIcon icon={icon} />{' '}
+        </Link>
+      </Col>
+      <Col xs="auto" className="facet-title flex-grow-1">{facet.title}</Col>
+      <Col className="number text-right">{facet.count.toLocaleString('en-US')}</Col>
+    </Row>
   )
 }

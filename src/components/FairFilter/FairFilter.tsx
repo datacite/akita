@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Tooltip } from 'react-bootstrap'
-import OverlayTrigger from '../OverlayTrigger/OverlayTrigger'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSquare,
@@ -11,12 +10,13 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { Col, Row } from 'react-bootstrap-4'
 
 type Props = {
     url: string
 }
 
-export default function FairFilter ({ url }: Props) {
+export default function FairFilter({ url }: Props) {
 
     const searchParams = useSearchParams()
     const params1 = new URLSearchParams(Array.from(searchParams?.entries() || []));
@@ -57,9 +57,9 @@ export default function FairFilter ({ url }: Props) {
     const activeIcon = (isActive: boolean) => {
         let icon = faSquare
         if (isActive) {
-          icon = faCheckSquare
+            icon = faCheckSquare
         }
-    
+
         return <FontAwesomeIcon icon={icon} />
     }
 
@@ -69,7 +69,7 @@ export default function FairFilter ({ url }: Props) {
         return (
             <li key={filter.id}>
                 <div>
-                    <Link href={href} id={filter.id} className={"facet-"+filter.id}>
+                    <Link href={href} id={filter.id} className={"facet-" + filter.id}>
                         {activeIcon(filter.isActive)}
                     </Link>
                     <div className="facet-title">{filter.title}</div>
@@ -81,20 +81,16 @@ export default function FairFilter ({ url }: Props) {
 
 
     return (
-        <React.Fragment>
-            <div className="panel facets add">
-                <div className="panel-body">
-                    <OverlayTrigger placement="top" overlay={tooltipFAIRfilters}>
-                        <h4>
-                            Criterias Compliance <FontAwesomeIcon icon={faQuestionCircle} />
-                        </h4>
-                    </OverlayTrigger>
-                    <ul id="fair-filter">
-                        {criterias.map(filterLink)}
-                    </ul>
-                </div>
-            </div>
-        </React.Fragment>
+        <Row className="panel facets add"><Col>
+            <OverlayTrigger placement="top" overlay={tooltipFAIRfilters}>
+                <h4>
+                    Criterias Compliance <FontAwesomeIcon icon={faQuestionCircle} />
+                </h4>
+            </OverlayTrigger>
+            <ul id="fair-filter">
+                {criterias.map(filterLink)}
+            </ul>
+        </Col></Row>
     )
 
 }

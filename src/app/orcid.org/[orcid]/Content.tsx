@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from "src/components/Layout";
+import { Container, Row, Col } from "src/components/Layout-4";
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { PERSON_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
@@ -24,28 +24,29 @@ export default async function Content(props: Props) {
   })
 
   if (error) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <Error title="An error occured." message={error.message} />
     </Col>
   )
 
   const person = data?.person
 
-  return (<>
-    <Row>
-      <Col md={9} mdOffset={3}>
-        <h3 className="member-results">{person.id}</h3>
-      </Col>
-    </Row>
+  return (
+    <Container fluid>
+      <Row>
+        <Col md={{ span: 9, offset: 3 }}>
+          <h3 className="member-results">{person.id}</h3>
+        </Col>
+      </Row>
 
-    <Row>
-      <Col md={3} id="side-bar">
-        <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
-      </Col>
-      <Col md={9}>
-        <Person person={person} />
-      </Col>
-    </Row>
-  </>
+      <Row>
+        <Col md={3}>
+          <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
+        </Col>
+        <Col md={9}>
+          <Person person={person} />
+        </Col>
+      </Row>
+    </Container>
   )
 }

@@ -9,7 +9,7 @@ describe('Search', () => {
         cy.visit('/doi.org')
         cy.get('input[name="query"]')
           .type('climate{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Works')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'Works')
@@ -21,7 +21,7 @@ describe('Search', () => {
           .type('climate')
           .get('.search-submit')
           .click()
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Works')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'Works')
@@ -80,7 +80,7 @@ describe('Search', () => {
           .get('input[name="query"]')
           .type('climate')
         cy.get('.search-submit').click()
-        cy.get('#search-nav li.active', { timeout: 60000 })
+        cy.get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Works')
         cy.get('.member-results', { timeout: 60000 })
           .should('contain', 'Works')
@@ -98,7 +98,7 @@ describe('Search', () => {
         cy.visit('/orcid.org')
         cy.get('input[name="query"]')
           .type('Josiah Carberry{enter}')
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'People')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'People')
@@ -110,7 +110,7 @@ describe('Search', () => {
           .type('Josiah Carberry')
           .get('.search-submit')
           .click()
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'People')
           .get('.member-results', { timeout: 60000 })
           .should('contain', 'People')
@@ -122,7 +122,7 @@ describe('Search', () => {
           .type('Josiah Carberry')
           .get('#people-link')
         cy.get('.search-submit').click()
-        cy.get('#search-nav li.active', { timeout: 60000 })
+        cy.get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'People')
         cy.get('.member-results', { timeout: 60000 })
           .should('contain', 'People')
@@ -130,7 +130,7 @@ describe('Search', () => {
 
       it('search with query url', () => {
         cy.visit('/orcid.org?query=josiah%20carberry')
-        cy.get('#search-nav li.active', { timeout: 60000 }).should(
+        cy.get('#search-nav .active', { timeout: 60000 }).should(
           'contain',
           'People'
         )
@@ -220,7 +220,7 @@ describe('Search', () => {
 
       it('search with query url', () => {
         cy.visit('/ror.org?query=cambridge')
-          .get('#search-nav li.active', { timeout: 60000 })
+          .get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Organizations')
         cy.get('.member-results', { timeout: 60000 }).should(
           'contain',
@@ -265,7 +265,7 @@ describe('Search', () => {
           .get('input[name="query"]')
           .type('Cambridge')
         cy.get('.search-submit').click()
-        cy.get('#search-nav li.active', { timeout: 60000 })
+        cy.get('#search-nav .active', { timeout: 60000 })
           .should('contain', 'Organizations')
         cy.get('.member-results', { timeout: 60000 })
           .should('contain', 'Organizations')
@@ -274,4 +274,4 @@ describe('Search', () => {
   })
 })
 
-export {}
+export { }

@@ -5,19 +5,20 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { InputGroup, Button } from 'react-bootstrap'
+import { InputGroup, Button } from 'react-bootstrap-4'
+import styles from './Search.module.css'
 
 interface Props {
   base: string
 }
 
-export default function Search ({ base }: Props) {
+export default function Search({ base }: Props) {
   const searchParams = useSearchParams()
   const router = useRouter()
-  
+
   const [searchInput, setSearchInput] = useState(searchParams?.get('query')?.toString() || '')
 
-  function search (query: string) {
+  function search(query: string) {
     const params = new URLSearchParams(searchParams || {});
 
     if (searchInput) params.set('query', query);
@@ -29,7 +30,7 @@ export default function Search ({ base }: Props) {
   const debounceSearch = useDebouncedCallback(search, 300)
 
   return (
-    <InputGroup>
+    <InputGroup className="flex-nowrap">
       <input
         name="query"
         placeholder="Type to search..."
@@ -39,7 +40,7 @@ export default function Search ({ base }: Props) {
           debounceSearch(e.target.value)
         }}
         key="searchInput"
-        className="form-control"
+        className={`form-control ${styles.input}`}
         type="text"
       />
       <Button type="submit" className="search-submit" onClick={() => search(searchInput)}>

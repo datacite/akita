@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Row, Col, Alert } from 'src/components/Layout'
+import { Row, Col, Alert } from 'src/components/Layout-4'
 
 import WorkFacets from '../WorkFacets/WorkFacets'
 import WorkMetadata from '../WorkMetadata/WorkMetadata'
@@ -48,15 +48,15 @@ export default function WorksListing({
 
   const renderFacets = () => {
     return (
-      <div className="col-md-3 hidden-xs hidden-sm">
+      <Col md={3} className="d-none d-md-block">
         <WorkFacets
           model={model}
           url={url}
           data={works}
           loading={loading}
           connectionTypesCounts={connectionTypesCounts}
-        ></WorkFacets>
-      </div>
+        />
+      </Col>
     )
   }
 
@@ -64,7 +64,7 @@ export default function WorksListing({
     return (
       <Col md={9}>
         <div className="alert-works">
-          <Alert bsStyle="warning">No works found.</Alert>
+          <Alert variant="warning">No works found.</Alert>
         </div>
       </Col>
     )
@@ -72,7 +72,7 @@ export default function WorksListing({
 
   const renderWorks = () => {
     return (
-      <Col md={9} id="content">
+      <Col md={9}>
         {showAnalytics && <WorksDashboard works={works} />}
         {showSankey && <Row>
           <Col xs={12}>
@@ -81,27 +81,28 @@ export default function WorksListing({
         </Row>}
 
         {works.nodes.map((doi) => (
-          <React.Fragment key={doi.doi}>
+          <Row key={doi.doi} className="mb-4 work">
             <WorkMetadata metadata={doi} linkToExternal={false} showClaimStatus={showClaimStatus} />
-          </React.Fragment>
+          </Row>
         ))}
 
         {hasPagination && (
-          <Pager
-            url={url}
-            hasNextPage={hasNextPage}
-            endCursor={endCursor}
-          />
+          <Row>
+            <Pager
+              url={url}
+              hasNextPage={hasNextPage}
+              endCursor={endCursor}
+            />
+          </Row>
         )}
       </Col>
     )
   }
 
   return (
-    <>
+    <Row>
       {showFacets && renderFacets()}
-
       {hasNoWorks ? renderNoWorks() : renderWorks()}
-    </>
+    </Row>
   )
 }

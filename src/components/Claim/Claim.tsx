@@ -3,13 +3,12 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
-import { Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap-4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { session } from '../../utils/session'
 import { Claim as ClaimType } from 'src/data/types'
-import Loading from '../Loading/Loading'
 import Error from '../Error/Error'
 import ClaimStatus from '../ClaimStatus/ClaimStatus'
 import styles from './Claim.module.scss'
@@ -128,7 +127,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
       newClaims = existingClaimsUpdated;
 
     } else {
-        newClaims = existingClaims ? [ ...existingClaims.work.claims, updatedClaim] : [updatedClaim];
+      newClaims = existingClaims ? [...existingClaims.work.claims, updatedClaim] : [updatedClaim];
     }
 
     cache.writeQuery({ query: GET_CLAIM_GQL, variables: { id: doi_id }, data: { work: { ...existingClaims?.work, claims: newClaims } } });
@@ -188,15 +187,19 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
       variables: { id: claim.id }
     })
   }
-  
+
 
 
   // don't show claim option if registration agency is not datacite
   if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
     return null
 
+  if (loading) {
+    return <Button variant='warning' className={styles.claimWarning} disabled title="Checking claim status..." block>
+      Checking claim status...
+    </Button>
+  }
 
-  if (loading) return <Loading />
   if (error)
     return (
       <>
@@ -211,42 +214,42 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
 
   // don't show claim option if user is not logged in
-  if (!user){
-    return <Button bsStyle='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
+  if (!user) {
+    return <Button variant='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
       <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
     </Button>
   }
 
   return (
     <>
-            {isActionPossible ? (
-              <>
-                {isClaimed ?
-                  <Button
-                    bsStyle={'warning'}
-                    onClick={onDelete}
-                    block
-                  >
-                    <FontAwesomeIcon icon={faOrcid} /> Remove Claim
-                  </Button>
-                  :
-                  <Button
-                    bsStyle='primary'
-                    onClick={onCreate}
-                    block
-                  >
-                    <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
-                  </Button>
-                }
-              </>
-            ) : <ClaimStatus claim={claim} type={'button'} />
-            }
+      {isActionPossible ? (
+        <>
+          {isClaimed ?
+            <Button
+              variant={'warning'}
+              onClick={onDelete}
+              block
+            >
+              <FontAwesomeIcon icon={faOrcid} /> Remove Claim
+            </Button>
+            :
+            <Button
+              variant='primary'
+              onClick={onCreate}
+              block
+            >
+              <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
+            </Button>
+          }
+        </>
+      ) : <ClaimStatus claim={claim} type="button" />
+      }
 
-            {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
-              <>
-                <p>Error: {claim.errorMessages[0].title}</p>
-              </>
-            )}
+      {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
+        <>
+          <p>Error: {claim.errorMessages[0].title}</p>
+        </>
+      )}
     </>
   )
 }

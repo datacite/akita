@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from "src/components/Layout";
+import { Row, Col } from "src/components/Layout-4";
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Organization as OrganizationType } from 'src/data/types'
@@ -27,7 +27,7 @@ export default async function Content(props: Props) {
   })
 
   if (error) return (
-    <Col md={9} mdOffset={3}>
+    <Col md={{ span: 9, offset: 3 }}>
       <Error title="An error occured." message={error.message} />
     </Col>
   )
@@ -36,10 +36,14 @@ export default async function Content(props: Props) {
 
 
   return (<>
-    <Title title={organization.name} titleLink={organization.id} link={organization.id} />
+    <Row className="mb-4">
+      <Col md={{ offset: 3 }}>
+        <Title title={organization.name} titleLink={organization.id} link={organization.id} />
+      </Col>
+    </Row>
 
     <Row>
-      <Col md={3} className="panel-list" id="side-bar">
+      <Col md={3}>
         {!isBot && <DownloadReports
           links={[
             {
@@ -57,10 +61,9 @@ export default async function Content(props: Props) {
         />}
         <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
       </Col>
-      <Col md={9}>
+      <Col md={9} className="px-0">
         <Organization organization={organization} />
       </Col>
     </Row>
-  </>
-  )
+  </>)
 }

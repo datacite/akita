@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap-4'
 
 type Props = {
   dataciteCount: number
@@ -80,7 +80,7 @@ const DataSources: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Col md={9} mdOffset={3} id="data-sources">
+    <Col md={{ span: 9, offset: 3 }}>
       <h3 className="member-results">Data Sources</h3>
       <div className="panel panel-transparent">
         <div className="panel-body">
