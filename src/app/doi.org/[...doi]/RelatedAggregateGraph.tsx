@@ -7,9 +7,14 @@ import styles from "./RelatedAggregateGraph.module.scss"
 
 interface Props {
   doi: string
+  isBot?: boolean
 }
 
-export default async function RelatedAggregateGraph({ doi }: Props) {
+export default async function RelatedAggregateGraph(props: Props) {
+  const { doi, isBot = false } = props
+  if (isBot) return null
+
+
   const data = await getRelatedWorksGraph(doi)
   const titleText = "Connections"
   const emptyTitleText = "No connections"

@@ -135,6 +135,7 @@ export default async function Page({ params, searchParams }: Props) {
   }
 
 
+
   // Fetch DOI metadata
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: DOI_METADATA_QUERY,
@@ -151,11 +152,9 @@ export default async function Page({ params, searchParams }: Props) {
     <Suspense fallback={<Loading />}>
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
-
     <Suspense>
-        <RelatedAggregateGraph doi={doi} />
+        <RelatedAggregateGraph doi={doi} isBot={JSON.parse(isBot)} />
     </Suspense>
-
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
