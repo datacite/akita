@@ -31,7 +31,7 @@
     "@next/eslint-plugin-next": "^11.0.1",
     "@next/react-dev-overlay": "^12.0",
     "@next/third-parties": "^14.2.9",
-    "@sentry/browser": "^5.21.4",
+    "@sentry/browser": "^8.33.0",
     "@sentry/node": "^5.21.4",
     "@sentry/webpack-plugin": "^1.12.1",
     "@testing-library/user-event": "^11.2.1",
