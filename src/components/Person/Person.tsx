@@ -5,12 +5,12 @@ import Image from 'next/image'
 import heroImage from '../../../public/images/hero.svg'
 import unlockImage from '../../../public/images/unlock.svg'
 import scienceImage from '../../../public/images/science.svg'
-import { Alert, Row, Col } from 'src/components/Layout-4'
+import { Alert, Row, Col } from 'react-bootstrap'
 
 import { Person as PersonType } from 'src/data/types'
-import PersonMetadata from '../PersonMetadata/PersonMetadata'
-import PersonEmployment from '../PersonEmployment/PersonEmployment'
-import { pluralize } from '../../utils/helpers'
+import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
+import PersonEmployment from 'src/components/PersonEmployment/PersonEmployment'
+import { pluralize } from 'src/utils/helpers'
 
 type Props = {
   person: PersonType

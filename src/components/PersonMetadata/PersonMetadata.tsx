@@ -1,10 +1,10 @@
 import React from 'react'
-import { Alert, Row, Col, Badge } from 'react-bootstrap-4'
+import { Alert, Row, Col, Badge } from 'react-bootstrap'
 import { Person } from 'src/data/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
-import { orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from 'src/utils/helpers'
 import styles from './PersonMetadata.module.scss'
 
 type Props = {
@@ -126,7 +126,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     )}
     {metadata.country && (
       <Row><Col className="tags">
-        <Badge variant="info">{metadata.country.name}</Badge>
+        <Badge bg="info">{metadata.country.name}</Badge>
       </Col></Row>
     )}
     {footer()}
