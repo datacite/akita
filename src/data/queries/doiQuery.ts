@@ -116,6 +116,7 @@ export const workFragment = gql`
       rights
       rightsUri
       rightsIdentifier
+      rightsIdentifierScheme
     }
     claims {
       state
