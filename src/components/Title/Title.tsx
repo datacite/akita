@@ -18,7 +18,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
   const parsedTitle = ReactHtmlParser(title)
 
   return (
-    <Row className="align-items-baseline p-0">
+    <Row className="align-items-baseline p-0 gap-4">
       <Col xs="auto" className="p-0 pr-4">
         <h3 className="font-weight-bold" id="title">
           <a target="_blank" rel="noreferrer" href={titleLink}>

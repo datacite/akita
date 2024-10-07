@@ -2,9 +2,9 @@
 
 import React from 'react'
 import useSWR from 'swr'
-import Container from 'react-bootstrap-4/Container'
-import Row from 'react-bootstrap-4/Row'
-import Col from 'react-bootstrap-4/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faBlog } from '@fortawesome/free-solid-svg-icons'
 import {
