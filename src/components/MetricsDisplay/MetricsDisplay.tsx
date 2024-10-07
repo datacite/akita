@@ -1,6 +1,6 @@
 import React from 'react'
 import { compactNumbers } from '../../utils/helpers'
-import HelpIcon from '../HelpIcon/HelpIcon'
+import HelpIcon from 'src/components/HelpIcon/HelpIcon'
 
 import styles from './MetricsDisplay.module.scss'
 

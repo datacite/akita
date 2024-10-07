@@ -9,7 +9,7 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { Facet } from 'src/data/types'
-import { Col, Row } from '../Layout-4'
+import { Col, Row } from 'react-bootstrap'
 import styles from './FacetListItem.module.scss'
 
 interface Props {

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Row, Col } from 'src/components/Layout-4'
+import { Row, Col } from 'react-bootstrap'
 
 import styles from './Title.module.scss'
 import { Rights } from 'src/data/types'
-import { License } from '../License/License'
+import { License } from 'src/components/License/License'
 import ReactHtmlParser from 'html-react-parser'
 
 type Props = {

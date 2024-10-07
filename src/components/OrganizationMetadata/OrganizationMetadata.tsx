@@ -2,14 +2,14 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Col, Row, Badge } from 'react-bootstrap-4'
+import { Col, Row, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons'
 import { decimalToSexagesimal } from 'geolib'
 
-import { OrganizationRecord } from '../Organization/Organization'
+import { OrganizationRecord } from 'src/components/Organization/Organization'
 import { rorFromUrl } from '../../utils/helpers'
 import styles from './OrganizationMetadata.module.scss'
 
@@ -225,16 +225,16 @@ export default function OrganizationMetadata({
       </Col></Row>
     )}
     <Row className="tags"><Col>
-      <Badge variant="info">{metadata.country.name}</Badge>
+      <Badge bg="info">{metadata.country.name}</Badge>
       <span>
         {metadata.types.map((type) => (
-          <Badge key="type" variant="info">
+          <Badge key="type" bg="info">
             {type}
           </Badge>
         ))}
       </span>
       {metadata.memberId && (
-        <Badge variant="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
+        <Badge bg="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
       )}
     </Col></Row>
     {footer()}

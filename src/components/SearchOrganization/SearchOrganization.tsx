@@ -2,16 +2,16 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Row, Col, Alert } from 'src/components/Layout-4'
+import { Row, Col, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 
-import Pager from '../Pager/Pager'
-import Error from '../Error/Error'
-import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
-import Loading from '../Loading/Loading'
+import Pager from 'src/components/Pager/Pager'
+import Error from 'src/components/Error/Error'
+import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
+import Loading from 'src/components/Loading/Loading'
 
 import { SEARCH_ORGANIZATIONS_GQL, QueryData, QueryVar } from 'src/data/queries/searchOrganizationQuery'
-import FacetList from '../FacetList/FacetList'
+import FacetList from 'src/components/FacetList/FacetList'
 
 type Props = {
   variables: QueryVar
