@@ -1,9 +1,9 @@
 import React from 'react'
-import { Badge } from 'react-bootstrap-4'
+import { Badge } from 'react-bootstrap'
 import truncate from 'lodash/truncate'
 import Link from 'next/link'
 import { Repository } from 'src/data/types'
-import { Row, Col } from '../Layout-4'
+import { Row, Col } from 'react-bootstrap'
 
 
 type Props = {
@@ -41,10 +41,10 @@ function RepositoryMetadata({ repo }: Props) {
     return (
       <div className="tags">
         {subjectList.map((keyword, index) => (
-          <Badge key={"subject-" + index} variant="info">{keyword}</Badge>
+          <Badge key={"subject-" + index} bg="info">{keyword}</Badge>
         ))}
         {keywordList.map((keyword, index) => (
-          <Badge key={"keyword-" + index} variant="info">{keyword}</Badge>
+          <Badge key={"keyword-" + index} bg="info">{keyword}</Badge>
         ))}
       </div>
     )

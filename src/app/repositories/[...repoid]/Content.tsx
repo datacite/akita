@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Container } from "src/components/Layout-4";
+import { Row, Col, Container } from 'react-bootstrap';
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Repository as RepositoryType } from 'src/data/types'

@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useQuery } from '@apollo/client'
-import { Row, Col, Alert, Container } from 'react-bootstrap-4'
+import { Row, Col, Alert, Container } from 'react-bootstrap'
 
 import Pager from 'src/components/Pager/Pager'
 import FairFilter from 'src/components/FairFilter/FairFilter'
