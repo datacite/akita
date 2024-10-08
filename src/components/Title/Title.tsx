@@ -20,7 +20,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
   return (
     <Row className={styles.container}>
       <Col xs="auto" className={styles.title}>
-        <h3>
+        <h3 id="title">
           <a target="_blank" rel="noreferrer" href={titleLink}>
             {parsedTitle}
           </a>
