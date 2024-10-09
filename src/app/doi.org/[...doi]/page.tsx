@@ -38,7 +38,7 @@ interface Props {
 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const doi = params.doi.join('/')
+  const doi = decodeURIComponent(params.doi.join('/'))
 
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
     query: DOI_METADATA_QUERY,
@@ -117,7 +117,7 @@ function mapSearchparams(searchParams: Props['searchParams']) {
 
 
 export default async function Page({ params, searchParams }: Props) {
-  const doi = params.doi.join('/')
+  const doi = decodeURIComponent(params.doi.join('/'))
   const { connectionType, isBot, ...vars } = mapSearchparams(searchParams)
   const variables = { id: doi, ...vars }
 
@@ -153,7 +153,7 @@ export default async function Page({ params, searchParams }: Props) {
       <Content variables={variables} isBot={JSON.parse(isBot)} />
     </Suspense>
     <Suspense>
-        <RelatedAggregateGraph doi={doi} isBot={JSON.parse(isBot)} />
+      <RelatedAggregateGraph doi={doi} isBot={JSON.parse(isBot)} />
     </Suspense>
     <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
