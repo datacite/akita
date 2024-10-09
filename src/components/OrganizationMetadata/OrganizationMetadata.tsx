@@ -53,7 +53,7 @@ export default function OrganizationMetadata({
   const titleLink = () => {
     if (!linkToExternal) {
       return (
-        <Link href={'/ror.org' + rorFromUrl(metadata.id)} className="font-weight-bold">
+        <Link href={'/ror.org' + rorFromUrl(metadata.id)} className="fw-bold">
           {metadata.name}
           {metadata.alternateName.length > 0 && (
             <div className={styles.subtitle}>
@@ -119,7 +119,7 @@ export default function OrganizationMetadata({
         {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
           <>
             <Row><Col>
-              <h5 className="m-0 font-weight-bold">Links</h5>
+              <h5 className="m-0 fw-bold">Links</h5>
             </Col></Row>
             {metadata.url && (
               <Row><Col>
@@ -155,7 +155,7 @@ export default function OrganizationMetadata({
       </Col>
       <Col xs={6} md={6}>
         <Row><Col>
-          <h5 className="m-0 font-weight-bold">Other Identifiers</h5>
+          <h5 className="m-0 fw-bold">Other Identifiers</h5>
         </Col></Row>
         {grid.length > 0 && (
           <Row className="identifier id-type-grid"><Col>
@@ -220,7 +220,7 @@ export default function OrganizationMetadata({
     </Row>
     {showLocation && (
       <Row className="mt-3"><Col className="location">
-        <Row><Col><h5 className="m-0 font-weight-bold">Geolocation</h5></Col></Row>
+        <Row><Col><h5 className="m-0 fw-bold">Geolocation</h5></Col></Row>
         <Row><Col>{geolocation()}</Col></Row>
       </Col></Row>
     )}

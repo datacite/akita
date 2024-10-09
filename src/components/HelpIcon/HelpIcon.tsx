@@ -39,7 +39,7 @@ const HelpIcon: React.FunctionComponent<Props> = ({ text = null, link = null, si
 	return <OverlayTrigger
 		placement="top"
 		overlay={
-			<Tooltip id="helpTootltip">{text}</Tooltip>
+			<Tooltip id="helpTooltip">{text}</Tooltip>
 		}>
 		{Icon()}
 	</OverlayTrigger>

@@ -1,4 +1,9 @@
 .input {
 	max-width: 450px;
+	margin-bottom: 0 !important;
 }
 
+.submit {
+	border-bottom-right-radius: 26px !important;
+	border-top-right-radius: 26px !important;
+}

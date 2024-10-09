@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Col } from 'src/components/Layout-4'
+import { Col } from 'react-bootstrap'
 import { Work } from 'src/data/types'
-import CitationFormatter from '../CitationFormatter/CitationFormatter'
+import CitationFormatter from 'src/components/CitationFormatter/CitationFormatter'
 
 type Props = {
   doi: Work

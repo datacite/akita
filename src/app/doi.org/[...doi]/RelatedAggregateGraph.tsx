@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row } from "src/components/Layout-4";
+import { Col, Row } from 'react-bootstrap'
 import { getRelatedWorksGraph } from 'src/data/queries/relatedWorks'
 import ForceDirectedGraph from 'src/components/ForceDirectedGraph/ForceDirectedGraph'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'

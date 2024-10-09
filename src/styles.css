@@ -1,4 +1,4 @@
-@import 'bootstrap-4/dist/css/bootstrap.min.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'maltipoo/dist/stylesheets/doi.min.css';
 
 /* Change Source Sans Pro to Source Sans 3 */
@@ -232,8 +232,8 @@ a.navbar-brand {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-top-right-radius: 26px;
-  border-bottom-right-radius: 26px;
+  border-top-right-radius: 26px !important;
+  border-bottom-right-radius: 26px !important;
   color: #34495e !important;
 }
 

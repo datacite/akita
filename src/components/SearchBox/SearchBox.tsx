@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap-4'
+import { Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -48,26 +48,24 @@ export default function SearchBox({ path }: Props) {
           className="form-control"
           type="text"
         />
-        <InputGroup.Append>
-          <Button
-            id="filter-works"
-            type="submit"
-            className="search-submit-facets"
-            onClick={onSubmit}
+        <Button
+          id="filter-works"
+          type="submit"
+          className="search-submit-facets"
+          onClick={onSubmit}
+        >
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
+        {searchInput !== '' && (
+          <span
+            id="search-clear-facets"
+            title="Clear"
+            aria-label="Clear"
+            onClick={onSearchClear}
           >
-            <FontAwesomeIcon icon={faSearch} />
-          </Button>
-          {searchInput !== '' && (
-            <span
-              id="search-clear-facets"
-              title="Clear"
-              aria-label="Clear"
-              onClick={onSearchClear}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </span>
-          )}
-        </InputGroup.Append>
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        )}
       </InputGroup>
     </Col></Row>
   </>)

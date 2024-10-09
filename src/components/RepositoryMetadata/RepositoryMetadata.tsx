@@ -74,7 +74,7 @@ function RepositoryMetadata({ repo }: Props) {
   return (
     <Row key={repo.id} className="panel panel-transparent">
       <Col className="panel-body">
-        <h3 className="font-weight-bold"><Link href={detailUrl()}>
+        <h3 className="fw-bold"><Link href={detailUrl()}>
           {repo.name}
         </Link></h3>
         {description()}

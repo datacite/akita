@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col } from "src/components/Layout-4";
+import { Container, Row, Col } from 'react-bootstrap'
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Work as WorkType } from 'src/data/types'
