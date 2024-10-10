@@ -60,7 +60,7 @@ export default function FacetListItem(props: Props) {
         </Link>
       </Col>
       <Col xs="auto" className="facet-title flex-grow-1">{facet.title}</Col>
-      <Col className="number text-right">{facet.count.toLocaleString('en-US')}</Col>
+      <Col className="number text-end">{facet.count.toLocaleString('en-US')}</Col>
     </Row>
   )
 }
