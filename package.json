@@ -96,7 +96,7 @@
     "ts-loader": "^7.0.5",
     "tsify": "^4.0.2",
     "typescript": "^5.3.3",
-    "vercel": "^35.1.0"
+    "vercel": "^37.4.2"
   },
   "resolutions": {
     "**/@fortawesome/fontawesome-common-types": "^0.3.0"

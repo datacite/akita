@@ -26,7 +26,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
           </a>
         </h3>
       </Col>
-      <Col xs="auto" className="p-0">
+      <Col xs="auto" className={styles.details}>
         <License rights={rights} />
         <a href={link} target="_blank" rel="noreferrer" id="title-link" className={styles.link}>
           {link}

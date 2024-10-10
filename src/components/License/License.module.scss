@@ -28,3 +28,27 @@
     }
   }
 }
+
+@mixin licenseSizing {
+  vertical-align: inherit;
+  &.icons {
+    width: 1.5rem;
+    height: auto;
+    vertical-align: inherit;
+    margin: 0;
+  }
+}
+
+.licenses {
+  display: flex;
+  align-items: center;
+  align-self: last baseline;
+  gap: 0.25rem;
+
+  img {
+    @include licenseSizing
+  }
+  svg {    
+    @include licenseSizing
+  }
+}
