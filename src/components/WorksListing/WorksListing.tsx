@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Row, Col, Alert } from 'src/components/Layout-4'
+import { Row, Col, Alert } from 'react-bootstrap'
 
-import WorkFacets from '../WorkFacets/WorkFacets'
-import WorkMetadata from '../WorkMetadata/WorkMetadata'
+import WorkFacets from 'src/components/WorkFacets/WorkFacets'
+import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
 import { Works } from 'src/data/types'
 
 import Pager from '../Pager/Pager'
@@ -17,7 +17,7 @@ interface Props {
   showSankey?: boolean
   sankeyTitle?: string
   showFacets: boolean
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number , allRelated: number}
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
   showClaimStatus: boolean
   loading: boolean
   model: string

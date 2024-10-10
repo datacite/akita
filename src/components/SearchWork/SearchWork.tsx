@@ -3,7 +3,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import Loading from '../Loading/Loading'
-import { Row, Col, Alert } from 'src/components/Layout-4'
+import { Row, Col, Alert } from 'react-bootstrap'
 import Error from 'src/components/Error/Error'
 
 import { SEARCH_DOI_QUERY, QueryData, QueryVar } from 'src/data/queries/searchDoiQuery'

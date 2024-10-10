@@ -1,9 +1,8 @@
 import React from 'react'
 import Error from '../Error/Error'
 import { gql, useQuery } from '@apollo/client'
-import { Alert } from 'src/components/Layout-4'
+import { Col, Alert } from 'react-bootstrap'
 import ReactHtmlParser from 'html-react-parser'
-import { Col } from '../Layout-4'
 
 type Props = {
   id: string

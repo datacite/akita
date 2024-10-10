@@ -9,7 +9,7 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { Facet } from 'src/data/types'
-import { Col, Row } from '../Layout-4'
+import { Col, Row } from 'react-bootstrap'
 import styles from './FacetListItem.module.scss'
 
 interface Props {
@@ -60,7 +60,7 @@ export default function FacetListItem(props: Props) {
         </Link>
       </Col>
       <Col xs="auto" className="facet-title flex-grow-1">{facet.title}</Col>
-      <Col className="number text-right">{facet.count.toLocaleString('en-US')}</Col>
+      <Col className="number text-end">{facet.count.toLocaleString('en-US')}</Col>
     </Row>
   )
 }

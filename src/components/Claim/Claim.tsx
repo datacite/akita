@@ -3,14 +3,14 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
-import { Button } from 'react-bootstrap-4'
+import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
-import { session } from '../../utils/session'
+import { session } from 'src/utils/session'
 import { Claim as ClaimType } from 'src/data/types'
-import Error from '../Error/Error'
-import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import Error from 'src/components/Error/Error'
+import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
 import styles from './Claim.module.scss'
 
 type Props = {
@@ -195,7 +195,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     return null
 
   if (loading) {
-    return <Button variant='warning' className={styles.claimWarning} disabled title="Checking claim status..." block>
+    return <Button variant='warning' className={styles.claimWarning} disabled title="Checking claim status...">
       Checking claim status...
     </Button>
   }
@@ -215,7 +215,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
 
   // don't show claim option if user is not logged in
   if (!user) {
-    return <Button variant='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record" block>
+    return <Button variant='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record">
       <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
     </Button>
   }
@@ -228,7 +228,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
             <Button
               variant={'warning'}
               onClick={onDelete}
-              block
+              className='w-100'
             >
               <FontAwesomeIcon icon={faOrcid} /> Remove Claim
             </Button>
@@ -236,7 +236,7 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
             <Button
               variant='primary'
               onClick={onCreate}
-              block
+              className='w-100'
             >
               <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
             </Button>

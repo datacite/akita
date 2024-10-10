@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Col } from 'src/components/Layout-4'
+import { Col } from 'react-bootstrap'
 import {
   EmailShareButton,
   FacebookShareButton,

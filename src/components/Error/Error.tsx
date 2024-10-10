@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert } from 'src/components/Layout-4'
+import { Alert } from 'react-bootstrap'
 
 type Props = {
   title: string

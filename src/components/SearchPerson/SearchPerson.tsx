@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import Loading from '../Loading/Loading'
-import { Alert, Row, Col } from 'src/components/Layout-4'
+import Loading from 'src/components/Loading/Loading'
+import { Alert, Row, Col } from 'react-bootstrap'
 import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'

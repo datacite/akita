@@ -1,10 +1,10 @@
 import React from 'react'
-import { Alert, Row, Col, Badge } from 'react-bootstrap-4'
+import { Alert, Row, Col, Badge } from 'react-bootstrap'
 import { Person } from 'src/data/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
-import { orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from 'src/utils/helpers'
 import styles from './PersonMetadata.module.scss'
 
 type Props = {
@@ -25,7 +25,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
       )
 
     return (
-      <h3 className="work font-weight-bold">
+      <h3 className="work fw-bold">
         <Link href={'/orcid.org' + orcidFromUrl(metadata.id)} id="orcid-link">
           {metadata.name}
           {metadata.alternateName && metadata.alternateName.length > 0 && (
@@ -97,7 +97,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
           <Col xs={6} md={6}>
             {metadata.identifiers && metadata.identifiers.length > 0 && (
               <>
-                <h5 className="font-weight-bold">Other Identifiers</h5>
+                <h5 className="fw-bold">Other Identifiers</h5>
                 {metadata.identifiers.map((id) => (
                   <div key={id.identifier} className="people-identifiers">
                     {id.identifierType}:{' '}
@@ -116,7 +116,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
         </Row>
         <Row>
           <Col xs={6} md={6} id="other-profiles">
-            <Row><Col><h5 className="font-weight-bold mb-0">Other Profiles</h5></Col></Row>
+            <Row><Col><h5 className="fw-bold mb-0">Other Profiles</h5></Col></Row>
             <Row><Col id="profile-orcid" className="people-profiles">{orcidLink}</Col></Row>
             <Row><Col id="profile-impactstory" className="people-profiles">{impactLink}</Col></Row>
             <Row><Col id="profile-europepmc" className="people-profiles">{europePMCLink}</Col></Row>
@@ -126,7 +126,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     )}
     {metadata.country && (
       <Row><Col className="tags">
-        <Badge variant="info">{metadata.country.name}</Badge>
+        <Badge bg="info">{metadata.country.name}</Badge>
       </Col></Row>
     )}
     {footer()}

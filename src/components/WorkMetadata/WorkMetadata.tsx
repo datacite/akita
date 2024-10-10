@@ -8,16 +8,16 @@ import {
   Badge,
   OverlayTrigger,
   Tooltip,
-} from 'react-bootstrap-4'
+} from 'react-bootstrap'
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
-import { orcidFromUrl } from '../../utils/helpers'
+import { orcidFromUrl } from 'src/utils/helpers'
 import ReactHtmlParser from 'html-react-parser'
 import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
 
 import { Work } from 'src/data/types'
-import ClaimStatus from '../ClaimStatus/ClaimStatus'
+import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
 import { License } from '../License/License'
 import MetricsCounter from '../MetricsCounter/MetricsCounter'
@@ -248,7 +248,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       <div className="tags">
         {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Badge variant="info">{startCase(resourceType)}</Badge>
+            <Badge bg="info">{startCase(resourceType)}</Badge>
           </OverlayTrigger>
         )}
         {metadata.fieldsOfScience && (
@@ -259,14 +259,14 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
                 placement="top"
                 overlay={tooltipFieldsOfScience}
               >
-                <Badge variant="info">{fos.name}</Badge>
+                <Badge bg="info">{fos.name}</Badge>
               </OverlayTrigger>
             ))}
           </span>
         )}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            <Badge variant="info">{metadata.language.name}</Badge>
+            <Badge bg="info">{metadata.language.name}</Badge>
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (
@@ -287,7 +287,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <>
+    <Row>
       <Col className="card-body">
         {!hideTitle && title()}
         {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
@@ -316,7 +316,7 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
       </Col>
 
       {footer()}
-    </>
+    </Row>
   )
 }
 
