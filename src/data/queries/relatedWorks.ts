@@ -34,7 +34,6 @@ export async function getRelatedWorksGraph(
     return response.json()
   } catch (error) {
     // Non-critical data fetch.  If it fails, we return the nullGraph
-    console.error(error)
     return nullGraph
   }
 }
