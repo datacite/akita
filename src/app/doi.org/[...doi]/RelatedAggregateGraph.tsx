@@ -32,7 +32,6 @@ async function fetchRelatedWorksGraphWithTimeout(doi: string, timeoutDuration: n
     ]);
     return { data, timedOut: false };
   } catch (error) {
-    console.error("Request timed out");
     // Return timedOut as true in case of timeout or any error
     return { data: { nodes: [], links: [] }, timedOut: true };
   }
