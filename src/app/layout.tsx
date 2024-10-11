@@ -16,6 +16,7 @@ import Footer from "./Footer";
 import Providers from "./Providers";
 import { getAuthToken } from "src/utils/apolloClient/apolloClient";
 import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
+import Script from "next/script";
 
 
 config.autoAddCss = false
@@ -60,7 +61,10 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <Footer />
         </Providers>
       </body>
-      <ConsentedGoogleTagManager gtmId={data.GTM_ID}/>
+      <ConsentedGoogleTagManager gtmId={data.GTM_ID} />
+      <Script id="feedback-button">
+        {`(function(){window.onUsersnapCXLoad=function(e){e.init()};var e=document.createElement("script");e.defer=1,e.src="https://widget.usersnap.com/global/load/b4393e90-ec13-4338-b299-7b6f122b7de3?onload=onUsersnapCXLoad",document.getElementsByTagName("head")[0].appendChild(e)})();`}
+      </Script>
     </html>
   )
 }
