@@ -4,14 +4,6 @@
 
 # See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
 
-# Disallow every other robot
+# Disallow every robot
 User-agent: *
 Disallow: /
-
-# Google can only index individual works pages
-# Allow syntax is only really listened to by google and a few others
-User-agent: Googlebot
-Allow: /doi.org/
-
-# Sitemap specific location
-Sitemap: https://commons.datacite.org/sitemaps/sitemap.xml.gz
