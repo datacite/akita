@@ -4,6 +4,7 @@
 
 # See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
 
-# Disallow every robot
+# Disallow every robot except for the landing page
 User-agent: *
+Allow: /$
 Disallow: /
