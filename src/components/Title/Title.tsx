@@ -19,7 +19,7 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
 
   return (
     <Row className="align-items-baseline p-0 gap-4">
-      <Col xs="auto" className="p-0 pr-4">
+      <Col xs="auto" className="p-0 pe-4">
         <h3 className="fw-bold" id="title">
           <a target="_blank" rel="noreferrer" href={titleLink}>
             {parsedTitle}
