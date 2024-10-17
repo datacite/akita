@@ -13,14 +13,12 @@ function getBaseUrl(): string {
   return localhost
 }
 
-interface RelatedWorksGraph {
+export interface GraphData {
   nodes: ForceDirectedGraphNode[]
   links: ForceDirectedGraphLink[]
 }
 
-export async function getRelatedWorksGraph(
-  doi: string
-): Promise<RelatedWorksGraph> {
+export async function getRelatedWorksGraph(doi: string): Promise<GraphData> {
   const nullGraph = {
     nodes: [],
     links: []
@@ -34,7 +32,6 @@ export async function getRelatedWorksGraph(
     return response.json()
   } catch (error) {
     // Non-critical data fetch.  If it fails, we return the nullGraph
-    console.error(error)
     return nullGraph
   }
 }

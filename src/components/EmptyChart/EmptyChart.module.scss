@@ -10,4 +10,8 @@
   .title {
     align-self: flex-start;
   }
+  .message {
+    align-self: flex-end;
+    text-wrap: balance;
+  }
 }
