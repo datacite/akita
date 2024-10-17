@@ -1,14 +1,14 @@
 'use client'
 
 import React from 'react'
-import { Alert, Tabs, Tab } from 'react-bootstrap-4'
-import { pluralize } from '../../utils/helpers'
+import { Alert, Tabs, Tab } from 'react-bootstrap'
+import { pluralize } from 'src/utils/helpers'
 
 import { Work } from 'src/data/types'
-import WorkMetadata from '../WorkMetadata/WorkMetadata'
-import UsageChart from '../UsageChart/UsageChart'
-import MetadataTable from '../MetadataTable/MetadataTable'
-import MetricsCounter from '../MetricsCounter/MetricsCounter'
+import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
+import UsageChart from 'src/components/UsageChart/UsageChart'
+import MetadataTable from 'src/components/MetadataTable/MetadataTable'
+import MetricsCounter from 'src/components/MetricsCounter/MetricsCounter'
 
 type Props = {
   doi: Work

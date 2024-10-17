@@ -1,4 +1,4 @@
-@import 'bootstrap-4/dist/css/bootstrap.min.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'maltipoo/dist/stylesheets/doi.min.css';
 
 /* Change Source Sans Pro to Source Sans 3 */
@@ -232,8 +232,8 @@ a.navbar-brand {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-top-right-radius: 26px;
-  border-bottom-right-radius: 26px;
+  border-top-right-radius: 26px !important;
+  border-bottom-right-radius: 26px !important;
   color: #34495e !important;
 }
 
@@ -319,36 +319,36 @@ input[type=text] {
   padding: 6px 8px;
 }
 
-.badge-info {
-  background: #ffffff;
+.badge-info, .badge.bg-info {
+  background: #ffffff !important;
   color: #2b84d2;
   border: 2px solid #2b84d2;
   cursor: pointer;
 }
 
-.badge-success {
-  background: #ffffff;
+.badge-success, .badge.bg-success {
+  background: #ffffff !important;
   color: #2DC55E;
   border: 2px solid #2DC55E;
   cursor: pointer;
 }
 
-.badge-warning {
-  background: #ffffff;
+.badge-warning, .badge.bg-warning {
+  background: #ffffff !important;
   color: #EB9E3E;
   border: 2px solid #EB9E3E;
   cursor: pointer;
 }
 
-.badge-default {
-  background: #ffffff;
+.badge-default, .badge.bg-default {
+  background: #ffffff !important;
   color: #66615B;
   border: 2px solid #66615B;
   cursor: pointer;
 }
 
-.badge-danger {
-  background: #ffffff;
+.badge-danger, .badge.bg-danger {
+  background: #ffffff !important;
   color: #EB5E28;
   border: 2px solid #EB5E28;
   cursor: pointer;
@@ -456,7 +456,6 @@ ul.nav.nav-tabs {
 }
 
 ul.nav.nav-tabs li {
-  margin-left: -15px;
   margin-right: 30px;
 }
 

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Col, Row, Tab, Tabs } from 'react-bootstrap-4'
+import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { Work } from 'src/data/types'
 import truncate from 'lodash/truncate'
 import chunk from 'lodash/chunk'

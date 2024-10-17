@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { VegaLite } from 'react-vega'
-import { pluralize } from '../../utils/helpers'
-import { Container, Row } from 'react-bootstrap-4'
+import { pluralize } from 'src/utils/helpers'
+import { Container, Row } from 'react-bootstrap'
 import { VisualizationSpec } from 'vega-embed'
 import {
   subYears,
@@ -13,7 +13,7 @@ import {
   getYear
 } from 'date-fns'
 
-import useWindowDimensions from '../../utils/useWindowDimensions'
+import useWindowDimensions from 'src/utils/useWindowDimensions'
 
 interface ChartRecord {
   yearMonth: string

@@ -1,11 +1,11 @@
 import React from 'react'
 import About from 'src/components/About/About'
-import { Grid } from 'src/components/Layout-4'
+import { Container } from 'react-bootstrap'
 
 export default function AboutPage() {
   return (
-    <Grid fluid>
+    <Container fluid>
       <About title={'About'} />
-    </Grid>
+    </Container>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { CSSProperties } from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap-4'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 
@@ -39,9 +39,9 @@ const HelpIcon: React.FunctionComponent<Props> = ({ text = null, link = null, si
 	return <OverlayTrigger
 		placement="top"
 		overlay={
-			<Tooltip id="helpTootltip">{text}</Tooltip>
+			<Tooltip id="helpTooltip">{text}</Tooltip>
 		}>
-		{Icon()}
+		<span>{Icon()}</span>
 	</OverlayTrigger>
 }
 

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Row, Col, Button, Modal } from 'react-bootstrap-4'
+import { Row, Col, Button, Modal } from 'react-bootstrap'
 import { Work } from 'src/data/types'
 
 type Props = {
@@ -157,7 +157,7 @@ const DownloadMetadata: React.FunctionComponent<Props> = ({ doi }) => {
       title="Download Metadata"
       onClick={() => setShowDownloadMetadataModal(true)}
       id="download-metadata-button"
-      block
+      className="w-100"
     >
       Download Metadata
     </Button>

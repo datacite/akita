@@ -3,12 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-  Navbar,
-  Nav,
-  Form
-} from 'react-bootstrap-4'
-import NavDropdown from 'react-bootstrap-4/NavDropdown'
 import Search from 'src/components/Header/Search'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -25,7 +19,12 @@ import {
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { session } from 'src/utils/session'
 import styles from './Header.module.scss'
-import { Container } from 'src/components/Layout-4'
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown'
+import Form from 'react-bootstrap/Form';
 
 
 type Props = {
@@ -54,7 +53,7 @@ export default function Header(props: Props) {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className={styles.navcenter}>
-          <Form inline className={styles.navsearchlinks}>
+          <Form className={`${styles.navsearchlinks} form-inline`}>
             <Search base={base} />
             <Nav id="search-nav" activeKey={base} className={styles.navmain}>
               <Nav.Item>
@@ -132,7 +131,7 @@ export default function Header(props: Props) {
                     <NavDropdown.Item eventKey={3.1} data-cy="beta" href="/beta">
                       <FontAwesomeIcon icon={faUserTag} /> Beta Tester
                     </NavDropdown.Item>
-                    <NavDropdown.Item divider />
+                    <NavDropdown.Divider />
                   </>
                 )}
                 <NavDropdown.Item

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Col, Row } from "src/components/Layout-4";
+import { Col, Row } from 'react-bootstrap'
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/doiQuery'
@@ -67,18 +67,18 @@ export default function RelatedContent(props: Props) {
 
   const defaultConnectionType =
     allRelatedCount > 0 ? 'allRelated' :
-    referenceCount > 0 ? 'references' :
-    citationCount > 0 ? 'citations' :
-    partCount > 0 ? 'parts' :
-    partOfCount > 0 ? 'partOf' : 'otherRelated'
+      referenceCount > 0 ? 'references' :
+        citationCount > 0 ? 'citations' :
+          partCount > 0 ? 'parts' :
+            partOfCount > 0 ? 'partOf' : 'otherRelated'
 
   const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
   //convert camel case to title and make first letter uppercase
   //convert connectionType to title, allRelated becomes All Related Wokrs, references becomes References, citations becomes Citations, parts becomes Parts, partOf becomes Part Of, and otherRelated becomes Other Works
   const displayedConnectionTitle =
     displayedConnectionType === 'allRelated' ? 'All Related Works' :
-    displayedConnectionType === 'otherRelated' ? 'Other Works' :
-    displayedConnectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
+      displayedConnectionType === 'otherRelated' ? 'Other Works' :
+        displayedConnectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
 
 
 
