@@ -29,7 +29,6 @@ export default function apolloClientBuilder(getToken: () => string) {
   })
 
   return new ApolloClient({
-    ssrMode: true,
     link: authLink.concat(httpLink),
     cache: new InMemoryCache({
       typePolicies: {
