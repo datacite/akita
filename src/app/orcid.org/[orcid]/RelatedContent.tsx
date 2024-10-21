@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import Loading from 'src/components/Loading/Loading'
 
 import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
@@ -51,7 +51,7 @@ export default function RelatedContent(props: Props) {
     ? relatedWorks.pageInfo.endCursor
     : ''
 
-  return (<>
+  return (<Container fluid>
     <Row>
       <Col md={{ offset: 3 }}>
         <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
@@ -69,5 +69,5 @@ export default function RelatedContent(props: Props) {
       url={'/orcid.org/' + orcid + '/?'}
       endCursor={endCursor}
     />
-  </>)
+  </Container>)
 }
