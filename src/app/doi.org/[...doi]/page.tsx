@@ -38,7 +38,6 @@ interface Props {
 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  console.log('here 3')
   const doi = decodeURIComponent(params.doi.join('/'))
 
   const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
@@ -102,7 +101,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function mapSearchparams(searchParams: Props['searchParams']) {
-  console.log('here 1')
   return {
     filterQuery: searchParams.filterQuery,
     cursor: searchParams.cursor,
@@ -113,13 +111,12 @@ function mapSearchparams(searchParams: Props['searchParams']) {
     fieldOfScience: searchParams['field-of-science'],
     registrationAgency: searchParams['registration-agency'],
     connectionType: searchParams['connection-type'],
-    isBot: searchParams.isBot
+    isBot: false
   }
 }
 
 
 export default async function Page({ params, searchParams }: Props) {
-  console.log('here 2')
   const doi = decodeURIComponent(params.doi.join('/'))
   const { connectionType, isBot, ...vars } = mapSearchparams(searchParams)
   const variables = { id: doi, ...vars }
@@ -158,7 +155,7 @@ export default async function Page({ params, searchParams }: Props) {
     <Suspense>
       <RelatedAggregateGraph doi={doi} isBot={false} />
     </Suspense>
-    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={false} />
+    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={isBot} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }

@@ -94,7 +94,7 @@ function mapSearchparams(searchParams: Props['searchParams']) {
     license: searchParams.license,
     registrationAgency: searchParams['registration-agency'],
 
-    isBot: searchParams.isBot
+    isBot: false
   }
 }
 
@@ -115,9 +115,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <Container fluid>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={false} />
+      <Content variables={variables} isBot={isBot} />
     </Suspense>
-    <RelatedContent variables={variables} isBot={false} />
+    <RelatedContent variables={variables} isBot={isBot} />
   </Container>
 }
 

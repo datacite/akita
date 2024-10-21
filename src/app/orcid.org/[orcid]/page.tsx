@@ -103,7 +103,7 @@ function mapSearchparams(searchParams: Props['searchParams']) {
     license: searchParams.license,
     fieldOfScience: searchParams['field-of-science'],
     registrationAgency: searchParams['registration-agency'],
-    isBot: searchParams.isBot
+    isBot: false
   }
 }
 
@@ -126,9 +126,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={false} />
+      <Content variables={variables} isBot={isBot} />
     </Suspense>
-    <RelatedContent orcid={params.orcid} variables={variables} isBot={false} />
+    <RelatedContent orcid={params.orcid} variables={variables} isBot={isBot} />
   </>
 }
 
