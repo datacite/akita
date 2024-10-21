@@ -115,9 +115,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <Container fluid>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={JSON.parse(isBot)} />
+      <Content variables={variables} isBot={false} />
     </Suspense>
-    <RelatedContent variables={variables} isBot={JSON.parse(isBot)} />
+    <RelatedContent variables={variables} isBot={false} />
   </Container>
 }
 

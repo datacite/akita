@@ -126,9 +126,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={JSON.parse(isBot)} />
+      <Content variables={variables} isBot={false} />
     </Suspense>
-    <RelatedContent orcid={params.orcid} variables={variables} isBot={JSON.parse(isBot)} />
+    <RelatedContent orcid={params.orcid} variables={variables} isBot={false} />
   </>
 }
 

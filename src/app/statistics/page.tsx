@@ -8,6 +8,6 @@ interface Props {
 export default async function StatisticsPage({ searchParams }: Props) {
 
   return (
-    <Content isBot={JSON.parse(searchParams.isBot)} />
+    <Content isBot={false} />
   )
 }
