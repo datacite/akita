@@ -27,7 +27,6 @@ export default function RelatedContent(props: Props) {
     }
   )
 
-  console.log(loading, isBot)
   if (isBot) return null
   if (loading) return <Row><Loading /></Row>
 

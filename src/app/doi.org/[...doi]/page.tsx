@@ -111,7 +111,7 @@ function mapSearchparams(searchParams: Props['searchParams']) {
     fieldOfScience: searchParams['field-of-science'],
     registrationAgency: searchParams['registration-agency'],
     connectionType: searchParams['connection-type'],
-    isBot: searchParams.isBot
+    isBot: false
   }
 }
 
@@ -150,12 +150,12 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={JSON.parse(isBot)} />
+      <Content variables={variables} isBot={false} />
     </Suspense>
     <Suspense>
-      <RelatedAggregateGraph doi={doi} isBot={JSON.parse(isBot)} />
+      <RelatedAggregateGraph doi={doi} isBot={false} />
     </Suspense>
-    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={JSON.parse(isBot)} />
+    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={isBot} />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }
