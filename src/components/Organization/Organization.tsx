@@ -2,10 +2,10 @@
 
 import React from 'react'
 
-import OrganizationMetadata from '../OrganizationMetadata/OrganizationMetadata'
+import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import { Works } from 'src/data/types'
-import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
-import { Col, Row } from 'react-bootstrap-4'
+import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
+import { Col, Row } from 'react-bootstrap'
 
 export interface OrganizationRecord {
   id: string

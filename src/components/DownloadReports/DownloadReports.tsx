@@ -1,6 +1,6 @@
 import React from 'react'
-import { Col } from 'src/components/Layout-4'
-import HelpIcon from '../HelpIcon/HelpIcon'
+import { Col } from 'react-bootstrap'
+import HelpIcon from 'src/components/HelpIcon/HelpIcon'
 
 
 type DownloadType = 'doi/related-works' | 'ror/related-works' | 'ror/funders'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col } from "src/components/Layout-4";
+import { Container, Row, Col } from 'react-bootstrap'
 
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Work as WorkType } from 'src/data/types'
@@ -52,8 +52,8 @@ export default async function Content(props: Props) {
       </Row>
 
       <Row>
-        <Col md={3} className='pr-5'>
-          <Row className="mb-2">
+        <Col md={3} className='pe-5'>
+          <Row className="mb-2 pb-4">
             {work.registrationAgency.id == "datacite" && (
               <Col xs={12} className="mb-2">
                 <Claim doi_id={work.doi} />
@@ -63,10 +63,10 @@ export default async function Content(props: Props) {
               <DownloadMetadata doi={work} />
             </Col>
           </Row>
-          <Row className="mb-2">
+          <Row className="mb-2 pb-4">
             <CiteAs doi={work} />
           </Row>
-          <Row className="mb-2">
+          <Row className="mb-2 pb-4">
             {!isBot && <DownloadReports
               links={[
                 {
@@ -77,6 +77,8 @@ export default async function Content(props: Props) {
               ]}
               variables={variables as any}
             />}
+          </Row>
+          <Row className="mb-2 pb-4">
             <ShareLinks url={'doi.org/' + work.doi} title={title} />
           </Row>
         </Col>

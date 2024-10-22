@@ -1,9 +1,9 @@
 import React from 'react'
-import { Row, Col } from 'src/components/Layout-4'
+import { Row, Col } from 'react-bootstrap'
 
 import styles from './Title.module.scss'
 import { Rights } from 'src/data/types'
-import { License } from '../License/License'
+import { License } from 'src/components/License/License'
 import ReactHtmlParser from 'html-react-parser'
 
 type Props = {
@@ -18,9 +18,9 @@ export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, 
   const parsedTitle = ReactHtmlParser(title)
 
   return (
-    <Row className={styles.container}>
-      <Col xs="auto" className={styles.title}>
-        <h3 id="title">
+    <Row className="align-items-baseline p-0 gap-4">
+      <Col xs="auto" className="p-0 pe-4">
+        <h3 className="fw-bold" id="title">
           <a target="_blank" rel="noreferrer" href={titleLink}>
             {parsedTitle}
           </a>

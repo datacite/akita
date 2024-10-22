@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table } from 'react-bootstrap-4'
+import { Table } from 'react-bootstrap'
 import startCase from 'lodash/startCase'
-import { Person } from '../WorkPerson/WorkPerson'
+import { Person } from 'src/components/WorkPerson/WorkPerson'
 import Link from 'next/link'
 import { rorFromUrl, orcidFromUrl } from 'src/utils/helpers'
 

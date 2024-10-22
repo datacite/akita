@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap-4'
+import { Row, Col } from 'react-bootstrap'
 
 type Props = {
   dataciteCount: number

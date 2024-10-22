@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row } from "src/components/Layout-4";
+import { Col, Container, Row } from 'react-bootstrap'
 import { GraphData, getRelatedWorksGraph } from 'src/data/queries/relatedWorks'
 import ForceDirectedGraph from 'src/components/ForceDirectedGraph/ForceDirectedGraph'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'
@@ -50,19 +50,19 @@ export default async function RelatedAggregateGraph(props: Props) {
   let innerGraph = <EmptyChart title={emptyTitleText} />
   if (graphExists) {
     innerGraph = <ForceDirectedGraph
-                  titleText={titleText}
-                  nodes={data.nodes}
-                  links={data.links}
-                  tooltipText={helpText}
-                  />;
+      titleText={titleText}
+      nodes={data.nodes}
+      links={data.links}
+      tooltipText={helpText}
+    />;
   } else if (timedOut) {
     innerGraph = <EmptyChart title={timedOutTitle}>
-                   <p className={styles.explanitoryText}>{timedOutHelpText}</p>
-                 </EmptyChart>
+      <p className={styles.explanitoryText}>{timedOutHelpText}</p>
+    </EmptyChart>
   }
 
 
-  return (<Row>
+  return (<Container fluid><Row>
     <Col md={{ offset: 3 }} className="panel panel-transparent">
       <div className="panel-body">
         {innerGraph}
@@ -72,5 +72,5 @@ export default async function RelatedAggregateGraph(props: Props) {
       </div>
     </Col>
   </Row>
-  )
+  </Container>)
 }

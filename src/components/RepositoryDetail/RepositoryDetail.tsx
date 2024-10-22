@@ -2,19 +2,19 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Button, Badge } from 'react-bootstrap-4';
-import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
-import ProductionChart from '../ProductionChart/ProductionChart'
+import { Button, Badge } from 'react-bootstrap';
+import VerticalBarChart from 'src/components/VerticalBarChart/VerticalBarChart'
+import ProductionChart from 'src/components/ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { compactNumbers } from '../../utils/helpers'
+import { compactNumbers } from 'src/utils/helpers'
 import styles from './RepositoryDetail.module.scss'
-import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay';
-import ShareLinks from '../ShareLinks/ShareLinks';
+import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
+import ShareLinks from 'src/components/ShareLinks/ShareLinks';
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
-import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart';
+import HorizontalStackedBarChart, { getTopFive, toBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart';
 import { Repository } from 'src/data/types';
 
 type Props = {
@@ -34,7 +34,7 @@ export function RepositorySidebar({ repo }: Props) {
     return (
       <>
         {repo.url && (
-          <Button id="go-to-repo" block variant="default" href={repo.url}>
+          <Button id="go-to-repo" variant="default" href={repo.url} className="w-100">
             <FontAwesomeIcon icon={faSignInAlt} />
             &nbsp;
             Go to Repository
@@ -42,7 +42,7 @@ export function RepositorySidebar({ repo }: Props) {
         )}
         {repo.works && (repo.works.totalCount > 0) && (
           <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
-            <Button block variant="primary" id="find-related">
+            <Button variant="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
               Find Related Works
@@ -148,10 +148,10 @@ export function RepositoryDetail({ repo }: Props) {
     return (
       <>
         {subjectList.map((keyword, index) => (
-          <Badge key={"subject-" + index} variant="info">{keyword}</Badge>
+          <Badge key={"subject-" + index} bg="info">{keyword}</Badge>
         ))}
         {keywordList.map((keyword, index) => (
-          <Badge key={"keyword-" + index} variant="info">{keyword}</Badge>
+          <Badge key={"keyword-" + index} bg="info">{keyword}</Badge>
         ))}
       </>
 

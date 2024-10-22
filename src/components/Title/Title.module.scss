@@ -1,29 +1,23 @@
 .link {
   color: gray
 }
-.container {
+
+.title {
+  margin: 0;
+   padding: 0;
+   a { 
+     font-weight: 700;
+   }
+}
+
+.details {
   display: flex;
-  align-items: baseline;
   flex-wrap: wrap;
+  align-items: center;
   column-gap: 1.3rem;
+  padding: 0 !important;
 
-  .title {
-    margin: 0;
-    padding: 0;
-    a { 
-      font-weight: 700;
-    }
-  }
-
-  .details {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    column-gap: 1.3rem;
-    padding: 0;
-
-    .link a {
-      color: gray
-    }
+  .link a {
+    color: gray;
   }
 }

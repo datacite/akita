@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Alert, Col, Container, Row } from "src/components/Layout-4";
+import { Alert, Col, Container, Row } from 'react-bootstrap'
 import Loading from 'src/components/Loading/Loading'
 
 import { STATISTICS_QUERY, QueryData } from 'src/data/queries/statisticsQuery'

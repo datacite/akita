@@ -6,7 +6,7 @@ import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
-import { Col, Row } from 'src/components/Layout-4'
+import { Col, Row } from 'react-bootstrap'
 
 interface Props {
   data: Facets
