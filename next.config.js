@@ -92,14 +92,5 @@ module.exports = withSourceMaps({
     }
 
     return config
-  },
-  // Rewrites for sitemap urls to sitemaps s3 bucket url
-  async rewrites() {
-    return [
-      {
-        source: '/sitemaps/:path*',
-        destination: `${SITEMAPS_URL}/sitemaps/:path*`
-      }
-    ]
   }
 })
