@@ -22,8 +22,6 @@ const COMMIT_SHA =
   VERCEL_GITLAB_COMMIT_SHA ||
   VERCEL_BITBUCKET_COMMIT_SHA
 
-const DUMMY_SITEMAPS_URL = 'https://example.com'
-const SITEMAPS_URL = process.env.SITEMAPS_URL || DUMMY_SITEMAPS_URL
 
 module.exports = withSourceMaps({
   swcMinify: true,
