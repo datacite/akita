@@ -22,8 +22,6 @@ const COMMIT_SHA =
   VERCEL_GITLAB_COMMIT_SHA ||
   VERCEL_BITBUCKET_COMMIT_SHA
 
-const DUMMY_SITEMAPS_URL = 'https://example.com'
-const SITEMAPS_URL = process.env.SITEMAPS_URL || DUMMY_SITEMAPS_URL
 
 module.exports = withSourceMaps({
   swcMinify: true,
@@ -92,14 +90,5 @@ module.exports = withSourceMaps({
     }
 
     return config
-  },
-  // Rewrites for sitemap urls to sitemaps s3 bucket url
-  async rewrites() {
-    return [
-      {
-        source: '/sitemaps/:path*',
-        destination: `${SITEMAPS_URL}/sitemaps/:path*`
-      }
-    ]
   }
 })
