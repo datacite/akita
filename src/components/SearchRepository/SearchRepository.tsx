@@ -11,7 +11,7 @@ import Error from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
 import RepositoryMetadata from 'src/components/RepositoryMetadata/RepositoryMetadata'
 
-import useSearchRepositoryQuery, { QueryVar } from 'src/data/queries/searchRepositoryQuery'
+import { QueryVar, useSearchRepositoryQuery } from 'src/data/queries/searchRepositoryQuery'
 import { pluralize } from 'src/utils/helpers'
 
 

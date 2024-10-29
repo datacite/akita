@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { People } from 'src/data/types'
 
-export default function useSearchPersonQuery(variables: QueryVar) {
+export function useSearchPersonQuery(variables: QueryVar) {
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_PERSON_QUERY,
     {

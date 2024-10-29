@@ -5,7 +5,7 @@ import Loading from '../Loading/Loading'
 import { Row, Col, Alert } from 'react-bootstrap'
 import Error from 'src/components/Error/Error'
 
-import useSearchDoiQuery, { QueryVar } from 'src/data/queries/searchDoiQuery'
+import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers'

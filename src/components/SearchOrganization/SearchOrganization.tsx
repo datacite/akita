@@ -9,7 +9,7 @@ import Error from 'src/components/Error/Error'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import Loading from 'src/components/Loading/Loading'
 
-import useSearchOrganizationQuery, { QueryVar } from 'src/data/queries/searchOrganizationQuery'
+import { QueryVar, useSearchOrganizationQuery } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
 
 type Props = {

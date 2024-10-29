@@ -7,7 +7,7 @@ import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'
 
-import useSearchPersonQuery, { QueryVar } from 'src/data/queries/searchPersonQuery'
+import { QueryVar, useSearchPersonQuery } from 'src/data/queries/searchPersonQuery'
 
 import { pluralize } from 'src/utils/helpers'
 

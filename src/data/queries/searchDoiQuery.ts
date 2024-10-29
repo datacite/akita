@@ -3,7 +3,7 @@ import { Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 
 
-export default function useSearchDoiQuery(variables: QueryVar) {
+export function useSearchDoiQuery(variables: QueryVar) {
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     SEARCH_DOI_QUERY,
     {
