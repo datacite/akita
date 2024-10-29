@@ -1,8 +1,8 @@
 import React from 'react'
 import Error from '../Error/Error'
-import { gql, useQuery } from '@apollo/client'
 import { Col, Alert } from 'react-bootstrap'
 import ReactHtmlParser from 'html-react-parser'
+import { useFormattedCitationQuery } from 'src/data/queries/formattedCitationQuery'
 
 type Props = {
   id: string
@@ -11,40 +11,12 @@ type Props = {
   input?: string
 }
 
-interface FormattedCitation {
-  id: string
-  formattedCitation: string
-}
-
-export const FORMATTEDCITATION_GQL = gql`
-  query getCitationFormatter($id: ID!, $style: String!, $locale: String!) {
-    work(id: $id) {
-      id
-      formattedCitation(style: $style, locale: $locale)
-    }
-  }
-`
-
-interface FormattedCitationQueryData {
-  work: FormattedCitation
-}
-
-interface FormattedCitationQueryVar {
-  id: string
-  style: string
-  locale?: string
-}
-
 export default function CitationFormatter({ id, style, locale }: Props) {
   const cslType = style || 'apa'
   const [formatted, setFormattedCitation] = React.useState<string>('')
-  const { loading, error, data } = useQuery<
-    FormattedCitationQueryData,
-    FormattedCitationQueryVar
-  >(FORMATTEDCITATION_GQL, {
-    errorPolicy: 'all',
-    variables: { id: id, style: cslType, locale: locale }
-  })
+
+  const variables = { id: id, style: cslType, locale: locale }
+  const { loading, error, data } = useFormattedCitationQuery(variables)
 
   React.useEffect(() => {
     const result = data?.work['formattedCitation'] || ''

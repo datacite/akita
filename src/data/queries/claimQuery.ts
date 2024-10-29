@@ -1,7 +1,21 @@
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { Claim } from 'src/data/types'
 
-export const CLAIM_GQL = gql`
+
+export function useGetClaimQuery(variables: QueryVar) {
+  const { loading, data, error, refetch } = useQuery<QueryData, QueryVar>(
+    GET_CLAIM_GQL,
+    {
+      variables,
+      errorPolicy: 'all'
+    }
+  )
+
+  return { loading, data, error, refetch }
+}
+
+
+export const GET_CLAIM_GQL = gql`
   query getDoiClaimQuery(
     $id: ID!
   ) {

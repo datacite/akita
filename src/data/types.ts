@@ -328,3 +328,8 @@ export type PageInfo = {
   endCursor: string
   hasNextPage: boolean
 }
+
+export type FormattedCitation {
+  id: string
+  formattedCitation: string
+}
