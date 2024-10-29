@@ -1,11 +1,10 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import apolloClient from 'src/utils/apolloClient/apolloClient'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
-import { MetadataQueryData, MetadataQueryVar, ORGANIZATION_METADATA_QUERY } from 'src/data/queries/organizationQuery'
+import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
 import { Container } from 'react-bootstrap'
 
 
@@ -33,11 +32,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { rorid } = params
 
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: ORGANIZATION_METADATA_QUERY,
-    variables: { id: rorid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchOrganizationMetadata(rorid)
 
   if (!data) return {
     title: '',
@@ -105,11 +100,7 @@ export default async function Page({ params, searchParams }: Props) {
   const variables = { id: rorid, ...vars }
 
   // Fetch Organization metadata
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: ORGANIZATION_METADATA_QUERY,
-    variables: { id: rorid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchOrganizationMetadata(rorid)
 
   if (!data) notFound()
 

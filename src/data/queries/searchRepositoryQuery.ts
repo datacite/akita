@@ -1,5 +1,17 @@
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { Repositories } from 'src/data/types'
+
+export default function useSearchRepositoryQuery(variables: QueryVar) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_REPOSITORIES_GQL,
+    {
+      variables,
+      errorPolicy: 'all'
+    }
+  )
+
+  return { loading, data, error }
+}
 
 
 export const SEARCH_REPOSITORIES_GQL = gql`

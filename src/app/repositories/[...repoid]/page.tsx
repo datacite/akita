@@ -1,10 +1,9 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import apolloClient from 'src/utils/apolloClient/apolloClient'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
-import { MetadataQueryData, MetadataQueryVar, REPOSITORY_METADATA_QUERY } from 'src/data/queries/repositoryQuery'
+import { fetchRepositoryMetadata } from 'src/data/queries/repositoryQuery'
 
 
 interface Props {
@@ -18,11 +17,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const repoid = params.repoid.join('/')
 
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: REPOSITORY_METADATA_QUERY,
-    variables: { id: repoid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchRepositoryMetadata(repoid)
 
   if (!data) return {
     title: '',
@@ -71,11 +66,7 @@ export default async function Page({ params }: Props) {
   const repoid = params.repoid.join('/')
 
   // Fetch Repository metadata
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: REPOSITORY_METADATA_QUERY,
-    variables: { id: repoid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchRepositoryMetadata(repoid)
 
   if (!data) notFound()
 

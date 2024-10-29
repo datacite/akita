@@ -1,6 +1,5 @@
 import { notFound, redirect } from "next/navigation"
-import { GRID_GQL, QueryData, QueryVar } from "src/data/queries/gridQuery"
-import apolloClient from "src/utils/apolloClient/apolloClient"
+import { fetchGrid } from "src/data/queries/gridQuery"
 import { rorFromUrl } from "src/utils/helpers"
 
 interface Props {
@@ -11,11 +10,7 @@ export default async function GridPage({ params }: Props) {
   const gridId = 'grid.ac/' + params.grid.join('/')
 
   // Redirect to organization page
-  const { data } = await apolloClient.query<QueryData, QueryVar>({
-    query: GRID_GQL,
-    variables: { gridId },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchGrid({ gridId })
 
   if (!data) notFound()
   redirect(`/ror.org${rorFromUrl(data.organization.id)}`)

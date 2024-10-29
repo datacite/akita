@@ -3,9 +3,8 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import truncate from 'lodash/truncate'
 
-import apolloClient from 'src/utils/apolloClient/apolloClient'
 import Content from './Content'
-import { PERSON_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/personQuery'
+import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 
@@ -33,11 +32,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const orcid = 'http://orcid.org/' + params.orcid
 
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: PERSON_METADATA_QUERY,
-    variables: { id: orcid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchPersonMetadata(orcid)
 
   if (!data) return {
     title: '',
@@ -115,11 +110,7 @@ export default async function Page({ params, searchParams }: Props) {
 
 
   // Fetch Person metadata
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: PERSON_METADATA_QUERY,
-    variables: { id: orcid },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchPersonMetadata(orcid)
 
   if (!data) notFound()
 
