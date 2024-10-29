@@ -1,8 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 
-import apolloClient from 'src/utils/apolloClient/apolloClient'
-import { PERSON_QUERY, QueryVar, QueryData } from 'src/data/queries/personQuery'
+import { QueryVar, fetchPerson } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
 import ShareLinks from 'src/components/ShareLinks/ShareLinks'
@@ -17,11 +16,7 @@ interface Props {
 export default async function Content(props: Props) {
   const { variables } = props
 
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
-    query: PERSON_QUERY,
-    variables: variables,
-    errorPolicy: 'all'
-  })
+  const { data, error } = await fetchPerson(variables)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>

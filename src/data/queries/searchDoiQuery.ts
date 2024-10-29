@@ -1,6 +1,19 @@
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { Works } from 'src/data/types'
-import { workConnection, workFragment } from 'src/data/queries/doiQuery'
+import { workFragment, workConnection } from 'src/data/queries/queryFragments'
+
+
+export function useSearchDoiQuery(variables: QueryVar) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_DOI_QUERY,
+    {
+      variables,
+      errorPolicy: 'all'
+    }
+  )
+
+  return { loading, data, error }
+}
 
 
 export const SEARCH_DOI_QUERY = gql`
@@ -50,3 +63,5 @@ export interface QueryVar {
   license?: string
   registrationAgency?: string
 }
+
+

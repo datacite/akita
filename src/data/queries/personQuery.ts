@@ -1,7 +1,27 @@
 import { gql } from '@apollo/client'
 import { Person, PersonMetadata } from 'src/data/types'
-import { workConnection, workFragment } from './doiQuery'
+import apolloClient from 'src/utils/apolloClient/apolloClient'
 
+
+export async function fetchPersonMetadata(id: string) {
+  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
+    query: PERSON_METADATA_QUERY,
+    variables: { id },
+    errorPolicy: 'all'
+  })
+
+  return { data, error }
+}
+
+export async function fetchPerson(variables: QueryVar) {
+  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
+    query: PERSON_QUERY,
+    variables,
+    errorPolicy: 'all'
+  })
+
+  return { data, error }
+}
 
 
 export const PERSON_METADATA_QUERY = gql`
@@ -62,41 +82,6 @@ export const PERSON_QUERY = gql`
       }
     }
   }
-`
-
-export const RELATED_CONTENT_QUERY = gql`
-  query getRelatedContentQuery(
-    $id: ID!
-    $filterQuery: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
-  ) {
-    person(id: $id) {
-      works(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-    }
-  }
-  ${workConnection}
-  ${workFragment}
 `
 
 export interface MetadataQueryVar {

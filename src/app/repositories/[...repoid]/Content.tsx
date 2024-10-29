@@ -1,9 +1,8 @@
 import React from 'react'
 import { Row, Col, Container } from 'react-bootstrap';
 
-import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Repository as RepositoryType } from 'src/data/types'
-import { REPOSITORY_QUERY, QueryData, QueryVar } from 'src/data/queries/repositoryQuery';
+import { fetchRepository, QueryVar } from 'src/data/queries/repositoryQuery';
 
 import Error from 'src/components/Error/Error'
 import { RepositoryDetail, RepositorySidebar } from 'src/components/RepositoryDetail/RepositoryDetail';
@@ -16,11 +15,7 @@ interface Props {
 export default async function Content(props: Props) {
   const { variables } = props
 
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
-    query: REPOSITORY_QUERY,
-    variables: variables,
-    errorPolicy: 'all'
-  })
+  const { data, error } = await fetchRepository(variables)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>

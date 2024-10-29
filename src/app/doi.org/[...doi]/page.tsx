@@ -6,10 +6,9 @@ import truncate from 'lodash/truncate'
 
 import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
 
-import apolloClient from 'src/utils/apolloClient/apolloClient'
-import { CROSSREF_FUNDER_GQL } from 'src/data/queries/crossrefFunderQuery'
+import { fetchCrossrefFunder } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
-import { DOI_METADATA_QUERY, MetadataQueryData, MetadataQueryVar } from 'src/data/queries/doiQuery'
+import { fetchDoiMetadata } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
@@ -40,11 +39,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = decodeURIComponent(params.doi.join('/'))
 
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_QUERY,
-    variables: { id: doi },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchDoiMetadata(doi)
 
   if (!data) return {
     title: '',
@@ -124,11 +119,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   // Redirect to organization page if DOI is a Crossref Funder ID
   if (doi.startsWith('10.13039')) {
-    const { data } = await apolloClient.query({
-      query: CROSSREF_FUNDER_GQL,
-      variables: { crossrefFunderId: doi },
-      errorPolicy: 'all'
-    })
+    const { data } = await fetchCrossrefFunder(doi)
 
     if (!data) notFound()
     redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
@@ -137,11 +128,7 @@ export default async function Page({ params, searchParams }: Props) {
 
 
   // Fetch DOI metadata
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
-    query: DOI_METADATA_QUERY,
-    variables: { id: doi },
-    errorPolicy: 'all'
-  })
+  const { data } = await fetchDoiMetadata(doi)
 
   if (!data) notFound()
 

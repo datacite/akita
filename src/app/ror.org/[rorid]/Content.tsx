@@ -1,9 +1,8 @@
 import React from 'react'
 import { Row, Col } from "react-bootstrap";
 
-import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { Organization as OrganizationType } from 'src/data/types'
-import { ORGANIZATION_QUERY, QueryData, QueryVar } from 'src/data/queries/organizationQuery';
+import { fetchOrganization, QueryVar } from 'src/data/queries/organizationQuery';
 
 import Error from 'src/components/Error/Error'
 import { Title } from 'src/components/Title/Title'
@@ -20,11 +19,7 @@ interface Props {
 export default async function Content(props: Props) {
   const { variables, isBot = false } = props
 
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
-    query: ORGANIZATION_QUERY,
-    variables: variables,
-    errorPolicy: 'all'
-  })
+  const { data, error } = await fetchOrganization(variables)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useEffect } from 'react';
-import { gql, useMutation, useQuery, ApolloCache } from '@apollo/client'
+import { useMutation, ApolloCache } from '@apollo/client'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
@@ -12,103 +12,16 @@ import { Claim as ClaimType } from 'src/data/types'
 import Error from 'src/components/Error/Error'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
 import styles from './Claim.module.scss'
+import { useGetClaimQuery, GET_CLAIM_GQL, CREATE_CLAIM_GQL, DELETE_CLAIM_GQL, QueryData, QueryVar } from 'src/data/queries/claimQuery';
 
 type Props = {
   doi_id: string
 }
 
-interface QueryData {
-  work: {
-    id
-    registrationAgency: {
-      id: string
-    }
-    claims: ClaimType[]
-  }
-}
 
-interface QueryVar {
-  id: string
-}
+export default function Claim({ doi_id }: Props) {
 
-const GET_CLAIM_GQL = gql`
-query getDoiClaimQuery(
-  $id: ID!
-) {
-  work(id: $id) {
-    id
-    registrationAgency {
-      id
-    }
-    claims {
-      id
-      sourceId
-      state
-      claimAction
-      claimed
-      errorMessages {
-        status
-        title
-      }
-    }
-  }
-}
-`
-
-const CREATE_CLAIM_GQL = gql`
-  mutation createClaim($doi: ID!, $sourceId: String!) {
-    createClaim(doi: $doi, sourceId: $sourceId) {
-      claim {
-        id
-        sourceId
-        state
-        claimAction
-        claimed
-        errorMessages {
-          status
-          title
-        }
-      }
-      errors {
-        status
-        source
-        title
-      }
-    }
-  }
-`
-
-const DELETE_CLAIM_GQL = gql`
-  mutation deleteClaim($id: ID!) {
-    deleteClaim(id: $id) {
-      claim {
-        id
-        sourceId
-        state
-        claimAction
-        claimed
-        errorMessages {
-          status
-          title
-        }
-      }
-      errors {
-        status
-        source
-        title
-      }
-    }
-  }
-`
-
-const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
-
-  const { loading, error, data, refetch } = useQuery<QueryData, QueryVar>(GET_CLAIM_GQL, {
-    errorPolicy: 'all',
-    variables: {
-      id: doi_id,
-    }
-  })
+  const { loading, error, data, refetch } = useGetClaimQuery({ id: doi_id })
 
   const addOrUpdateExistingClaim = (cache: ApolloCache<any>, updatedClaim: ClaimType) => {
     const existingClaims = cache.readQuery<QueryData, QueryVar>({ query: GET_CLAIM_GQL, variables: { id: doi_id } });
@@ -253,5 +166,3 @@ const Claim: React.FunctionComponent<Props> = ({ doi_id }) => {
     </>
   )
 }
-
-export default Claim

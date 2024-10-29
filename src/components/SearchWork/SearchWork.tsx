@@ -1,12 +1,11 @@
 'use client'
 
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import Loading from '../Loading/Loading'
 import { Row, Col, Alert } from 'react-bootstrap'
 import Error from 'src/components/Error/Error'
 
-import { SEARCH_DOI_QUERY, QueryData, QueryVar } from 'src/data/queries/searchDoiQuery'
+import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers'
@@ -16,13 +15,7 @@ interface Props {
 }
 
 export default function SearchWork(props: Props) {
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    SEARCH_DOI_QUERY,
-    {
-      variables: props.variables,
-      errorPolicy: 'all'
-    }
-  )
+  const { loading, data, error } = useSearchDoiQuery(props.variables)
 
   if (loading) return <Row><Loading /></Row>
 

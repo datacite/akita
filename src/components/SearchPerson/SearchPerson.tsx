@@ -1,14 +1,13 @@
 'use client'
 
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import Loading from 'src/components/Loading/Loading'
 import { Alert, Row, Col } from 'react-bootstrap'
 import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'
 
-import { SEARCH_PERSON_QUERY, QueryData, QueryVar } from 'src/data/queries/searchPersonQuery'
+import { QueryVar, useSearchPersonQuery } from 'src/data/queries/searchPersonQuery'
 
 import { pluralize } from 'src/utils/helpers'
 
@@ -17,13 +16,7 @@ interface Props {
 }
 
 export default function SearchPerson(props: Props) {
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    SEARCH_PERSON_QUERY,
-    {
-      variables: props.variables,
-      errorPolicy: 'all'
-    }
-  )
+  const { loading, data, error } = useSearchPersonQuery(props.variables)
 
   if (loading) return <Row><Loading /></Row>
 

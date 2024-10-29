@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { useQuery } from '@apollo/client'
 import { Row, Col, Alert, Container } from 'react-bootstrap'
 
 import Pager from 'src/components/Pager/Pager'
@@ -12,7 +11,7 @@ import Error from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
 import RepositoryMetadata from 'src/components/RepositoryMetadata/RepositoryMetadata'
 
-import { SEARCH_REPOSITORIES_GQL, QueryData, QueryVar } from 'src/data/queries/searchRepositoryQuery'
+import { QueryVar, useSearchRepositoryQuery } from 'src/data/queries/searchRepositoryQuery'
 import { pluralize } from 'src/utils/helpers'
 
 
@@ -22,13 +21,7 @@ type Props = {
 
 
 export default function SearchRepositories({ variables }: Props) {
-  const { loading, error, data } = useQuery<QueryData, QueryVar>(
-    SEARCH_REPOSITORIES_GQL,
-    {
-      errorPolicy: 'all',
-      variables: variables
-    }
-  )
+  const { loading, error, data } = useSearchRepositoryQuery(variables)
 
   if (loading) return <Row><Loading /></Row>
 

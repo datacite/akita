@@ -1,4 +1,16 @@
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
+
+
+export function useStatisticsQuery() {
+  const { loading, data, error } = useQuery<QueryData>(
+    STATISTICS_QUERY,
+    {
+      errorPolicy: 'all'
+    }
+  )
+
+  return { loading, data, error }
+}
 
 
 export const STATISTICS_QUERY = gql`

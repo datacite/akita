@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { pluralize } from '../../utils/helpers'
 
@@ -10,7 +9,7 @@ import Error from 'src/components/Error/Error'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import Loading from 'src/components/Loading/Loading'
 
-import { SEARCH_ORGANIZATIONS_GQL, QueryData, QueryVar } from 'src/data/queries/searchOrganizationQuery'
+import { QueryVar, useSearchOrganizationQuery } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
 
 type Props = {
@@ -18,13 +17,7 @@ type Props = {
 }
 
 export default function SearchOrganizations(props: Props) {
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    SEARCH_ORGANIZATIONS_GQL,
-    {
-      variables: props.variables,
-      errorPolicy: 'all'
-    }
-  )
+  const { loading, data, error } = useSearchOrganizationQuery(props.variables)
 
   if (loading) return <Row><Loading /></Row>
 

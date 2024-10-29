@@ -1,5 +1,18 @@
-import { gql } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import { Organizations } from 'src/data/types'
+
+
+export function useSearchOrganizationQuery(variables: QueryVar) {
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
+    SEARCH_ORGANIZATIONS_GQL,
+    {
+      variables,
+      errorPolicy: 'all'
+    }
+  )
+
+  return { loading, data, error }
+}
 
 
 export const SEARCH_ORGANIZATIONS_GQL = gql`

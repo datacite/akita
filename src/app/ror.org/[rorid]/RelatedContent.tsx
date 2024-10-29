@@ -1,11 +1,10 @@
 'use client'
 
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import { Col, Row } from 'react-bootstrap';
 import Loading from 'src/components/Loading/Loading'
 
-import { RELATED_CONTENT_QUERY, QueryVar, QueryData } from 'src/data/queries/organizationQuery'
+import { useOrganizationRelatedContentQuery, QueryVar } from 'src/data/queries/organizationRelatedContentQuery';
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
@@ -19,14 +18,7 @@ interface Props {
 export default function RelatedContent(props: Props) {
   const { variables, isBot = false } = props
 
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    RELATED_CONTENT_QUERY,
-    {
-      variables: variables,
-      errorPolicy: 'all',
-      skip: isBot
-    }
-  )
+  const { loading, data, error } = useOrganizationRelatedContentQuery(variables)
 
   if (isBot) return null
 

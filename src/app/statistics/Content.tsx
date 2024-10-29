@@ -1,11 +1,10 @@
 'use client'
 
 import React from 'react'
-import { useQuery } from '@apollo/client'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
 import Loading from 'src/components/Loading/Loading'
 
-import { STATISTICS_QUERY, QueryData } from 'src/data/queries/statisticsQuery'
+import { useStatisticsQuery } from 'src/data/queries/statisticsQuery'
 
 import Error from 'src/components/Error/Error'
 import ProductionChart from 'src/components/ProductionChart/ProductionChart';
@@ -19,13 +18,7 @@ interface Props {
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
 
-  const { loading, data, error } = useQuery<QueryData>(
-    STATISTICS_QUERY,
-    {
-      errorPolicy: 'all',
-      skip: isBot
-    }
-  )
+  const { loading, data, error } = useStatisticsQuery()
 
   if (isBot) return null
   if (loading) return <Row><Loading /></Row>
