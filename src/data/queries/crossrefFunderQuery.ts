@@ -4,7 +4,7 @@ import apolloClient from 'src/utils/apolloClient/apolloClient'
 export async function fetchCrossrefFunder(crossrefFunderId: string) {
   const { data } = await apolloClient.query({
     query: CROSSREF_FUNDER_GQL,
-    variables: { id: crossrefFunderId },
+    variables: { crossrefFunderId },
     errorPolicy: 'all'
   })
 
