@@ -1,7 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
 import { QueryData, QueryVar } from "src/data/queries/personQuery";
-import { type } from "cypress/types/jquery";
 
 
 export function usePersonRelatedContentQuery(variables: QueryVar) {

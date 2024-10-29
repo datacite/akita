@@ -329,7 +329,7 @@ export type PageInfo = {
   hasNextPage: boolean
 }
 
-export type FormattedCitation {
+export type FormattedCitation = {
   id: string
   formattedCitation: string
 }
