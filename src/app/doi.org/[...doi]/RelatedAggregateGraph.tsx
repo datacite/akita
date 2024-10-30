@@ -44,7 +44,7 @@ export default async function RelatedAggregateGraph(props: Props) {
   const emptyTitleText = "No connections"
   const timedOutHelpText = "The Connections graph timed out, possibly due to a large number of related works."
   const helpText = 'The “relatedIdentifier” and “resourceTypeGeneral” fields in the metadata of the primary DOI and related work DOIs were used to generate this graph.'
-  const explanitoryText = "The network graph visualizes the connections between different work types. It shows the number of instances of each work type, and hovering over a connection reveals the number of links between any two types."
+  const explanitoryText = "The network graph visualizes the connections among the primary DOI and its related works, grouped by work type. It shows the number of instances of each work type, and hovering over a connection reveals the number of links between any two types."
   const graphExists = data.nodes.length > 0;
 
   let innerGraph = <EmptyChart title={emptyTitleText} />
