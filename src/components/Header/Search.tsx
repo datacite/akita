@@ -1,18 +1,21 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { InputGroup, Button } from 'react-bootstrap'
 import styles from './Search.module.css'
 
-interface Props {
-  base: string
-}
+export default function Search() {
+  const path = usePathname() || ''
+  const base = path?.startsWith('/doi.org') ? '/doi.org'
+    : path?.startsWith('/orcid.org') ? '/orcid.org'
+      : path?.startsWith('/ror.org') ? '/ror.org'
+        : path?.startsWith('/repositories') ? '/repositories'
+          : '/';
 
-export default function Search({ base }: Props) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
