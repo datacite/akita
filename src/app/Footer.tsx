@@ -1,7 +1,4 @@
-'use client'
-
 import React from 'react'
-import useSWR from 'swr'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -14,113 +11,30 @@ import {
   faMastodon
 } from '@fortawesome/free-brands-svg-icons'
 
-// TODO import Links from yml file
-// import Links from '../../../config/links.yml'
+import StatusPage from 'src/components/Footer/Status'
+import Links from 'src/components/Footer/Links'
 
-const Links = {
-  about_links: [
-    { name: 'What we do', url: '/what-we-do/' },
-    { name: 'Governance', url: '/governance/' },
-    { name: 'Steering and Working Groups', url: '/#' },
-    { name: 'Team', url: '/team/' },
-    { name: 'Job Opportunities', url: '/job-opportunities/' },
-    { name: 'Projects', url: '/projects/' }
-  ],
-  services_links: [
-    { name: 'Create DOIs', url: '/create-dois/' },
-    { name: 'Integrate Workflows', url: '/integrate-workflows/' },
-    { name: 'Enable Discovery', url: '/enable-discovery/' },
-    { name: 'Promote Reuse', url: '/promote-reuse/' },
-    { name: 'Strategic Initiatives', url: '/#' }
-  ],
-  resources_links: [
-    { name: 'Metadata Schema', url: 'https://schema.datacite.org' },
-    { name: 'Support', url: 'https://support.datacite.org' }
-  ],
-  community_links: [
-    { name: 'Become a Member', url: '/become-a-member/' },
-    { name: 'DataCite Fee Model', url: '/fee-model/' },
-    { name: 'Membership Enquiry', url: '/membership-enquiry/' },
-    { name: 'DataCite Members', url: '/members/' }
-  ],
-  contact_links: [
-    { name: 'Privacy Policy', url: '/privacy-policy/' },
-    { name: 'Terms and Conditions', url: '/terms-and-conditions/' },
-    { name: 'Imprint', url: '/imprint/' }
-
-  ]
-}
+import LINKS from 'src/data/footer_links'
 
 
 export default function Footer() {
-
-
-  function StatusPage() {
-    const fetcher = (url: string) => fetch(url).then((res) => res.json())
-    const { data, error } = useSWR(
-      'https://nmtzsv0smzk5.statuspage.io/api/v2/status.json',
-      fetcher
-    )
-    if (error)
-      return (
-        <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
-          <span className="color-dot critical"></span>
-          <span className="color-description">Failed to load status</span>
-        </a>
-      )
-    if (!data)
-      return (
-        <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
-          <span className="color-dot loading"></span>
-          <span className="color-description">Loading...</span>
-        </a>
-      )
-
-    return (
-      <a href="http://status.datacite.org" target="_blank" rel="noreferrer">
-        <span className={'color-dot ' + data.status.indicator}></span>
-        <span className="color-description">{data.status.description}</span>
-      </a>
-    )
-  }
-
-  const baseUrl = 'https://datacite.org'
-
-  const footerLinks = (links: { name: string, url: string }[]) => {
-    return (
-      <ul>
-        {links.map((link) => (
-          <li key={link.name}>
-            <a
-              href={link.url.startsWith('/') ? baseUrl + link.url : link.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {link.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
   return (
     <footer className="footer d-none d-sm-block">
       <Container>
         <Row>
           <Col sm={3} md={3} className="footer-column">
             <h4 data-cy="about">About Us</h4>
-            {footerLinks(Links.about_links)}
+            <Links links={LINKS.about_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4>Work With Us</h4>
-            {footerLinks(Links.services_links)}
+            <Links links={LINKS.services_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4>Membership</h4>
-            {footerLinks(Links.community_links)}
+            <Links links={LINKS.community_links} />
             <h4>Resources</h4>
-            {footerLinks(Links.resources_links)}
+            <Links links={LINKS.resources_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
@@ -151,8 +65,8 @@ export default function Footer() {
             >
               <FontAwesomeIcon icon={faYoutube} />
             </a>
-            {footerLinks(Links.contact_links)}
-            {StatusPage()}
+            <Links links={LINKS.contact_links} />
+            <StatusPage />
             <h4>Funding</h4>
             <ul>
               <li className="funding">
