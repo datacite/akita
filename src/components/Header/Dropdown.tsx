@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { session } from 'src/utils/session'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 

@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react';
 import { session } from 'src/utils/session';
 
 interface Props {
