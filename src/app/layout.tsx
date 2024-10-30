@@ -12,7 +12,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css' // Import the CSS
 
 import Header from "./Header";
 import Consent from "./Consent";
-import Footer from "./Footer";
+import Footer from "src/components/Footer/Footer";
 import Providers from "./Providers";
 import { getAuthToken } from "src/utils/apolloClient/apolloClient";
 import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
