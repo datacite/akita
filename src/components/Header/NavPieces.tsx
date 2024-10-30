@@ -2,7 +2,6 @@
 // This is required to fix a bug with react-bootstrap in server components
 // https://github.com/react-bootstrap/react-bootstrap/issues/6475#issuecomment-1676154096
 
-import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
