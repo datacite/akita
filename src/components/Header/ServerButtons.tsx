@@ -10,7 +10,7 @@ import {
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
-import styles from 'src/app/Header.module.scss'
+import styles from './Header.module.scss'
 
 
 
