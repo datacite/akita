@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react';
 import useSWR from 'swr'
 
 export default function StatusPage() {
