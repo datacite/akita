@@ -3,7 +3,7 @@
 import React, { PropsWithChildren } from 'react';
 import { usePathname } from 'next/navigation';
 import Nav from 'react-bootstrap/Nav';
-import styles from 'src/app/Header.module.scss'
+import styles from './Header.module.scss'
 
 export default function NavLinks({ children }: PropsWithChildren) {
   const path = usePathname() || ''
