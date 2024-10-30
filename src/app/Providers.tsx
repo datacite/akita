@@ -4,6 +4,7 @@ import React, { PropsWithChildren } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { FlagsProvider } from 'flagged'
 import ApolloProvider from 'src/utils/apolloClient/provider'
+import SSRProvider from 'react-bootstrap/SSRProvider'
 
 
 interface Props extends PropsWithChildren {
@@ -21,7 +22,9 @@ export default function Providers({ default_features, authToken, children }: Pro
 
   return <FlagsProvider features={features}>
     <ApolloProvider token={authToken}>
-      {children}
+      <SSRProvider>
+        {children}
+      </SSRProvider>
     </ApolloProvider>
   </FlagsProvider>
 }
