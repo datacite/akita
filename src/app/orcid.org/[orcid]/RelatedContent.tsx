@@ -1,25 +1,33 @@
 'use client'
 
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Loading from 'src/components/Loading/Loading'
 
-import { QueryVar, usePersonRelatedContentQuery } from 'src/data/queries/personRelatedContentQuery'
+import { usePersonRelatedContentQuery } from 'src/data/queries/personRelatedContentQuery'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers';
+import { useParams, useSearchParams } from 'next/navigation'
+import mapSearchparams from './mapSearchParams'
 
 interface Props {
-  orcid: string
-  variables: QueryVar
   isBot?: boolean
 }
 
 export default function RelatedContent(props: Props) {
-  const { orcid, variables, isBot = false } = props
+  const { isBot = false } = props
+  const orcid = 'http://orcid.org/' + useParams().orcid as string
 
-  const { loading, data, error } = usePersonRelatedContentQuery(variables)
+  const searchParams = useSearchParams()
+  const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
+
+  const vars = { id: orcid, ...variables }
+
+  const { loading, data, error } = usePersonRelatedContentQuery(vars)
 
   if (isBot) return null
 
