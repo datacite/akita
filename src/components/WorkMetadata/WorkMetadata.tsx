@@ -29,14 +29,14 @@ type Props = {
   includeMetricsDisplay?: boolean
 }
 
-const WorkMetadata: React.FunctionComponent<Props> = ({
+export default function WorkMetadata({
   metadata,
   linkToExternal,
   showClaimStatus,
   hideTitle = false,
   hideMetadataInTable = false,
   includeMetricsDisplay = false
-}) => {
+}: Props) {
   if (metadata == null)
     return <Alert variant="warning">No content found.</Alert>
 
@@ -316,5 +316,3 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     </Row>
   )
 }
-
-export default WorkMetadata

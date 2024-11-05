@@ -1,3 +1,4 @@
+import React from 'react'
 import { Tabs, Tab } from 'src/components/ReactBootstrap'
 import UsageChart from 'src/components/UsageChart/UsageChart'
 
