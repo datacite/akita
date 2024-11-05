@@ -1,5 +1,7 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 import { Work as WorkType } from 'src/data/types'
 import { fetchDoi, QueryVar } from 'src/data/queries/doiQuery'
@@ -13,6 +15,7 @@ import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import ShareLinks from 'src/components/ShareLinks/ShareLinks'
 import Work from 'src/components/Work/Work'
 import { isProject } from 'src/utils/helpers';
+import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
 
 interface Props {
   variables: QueryVar
@@ -55,7 +58,7 @@ export default async function Content(props: Props) {
               </Col>
             )}
             <Col xs={12}>
-              <DownloadMetadata doi={work} />
+              <DownloadMetadata modalContent={<ExportMetadata doi={work} />} />
             </Col>
           </Row>
           <Row className="mb-2 pb-4">

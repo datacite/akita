@@ -4,7 +4,7 @@ import { redirect, notFound } from 'next/navigation'
 import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
-import { rorFromUrl, isProject, isDMP } from 'src/utils/helpers'
+import { rorFromUrl } from 'src/utils/helpers'
 
 import { fetchCrossrefFunder } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
@@ -12,26 +12,14 @@ import { fetchDoiMetadata } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
+import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     doi: string[]
   },
-  searchParams: {
-    id: string
-    filterQuery?: string
-    cursor?: string
-    published?: string
-    "resource-type"?: string
-    language?: string
-    license?: string
-    "field-of-science"?: string
-    "registration-agency"?: string
-    "connection-type"?: string
-
-    isBot: string
-  }
+  searchParams: SearchParams
 }
 
 
@@ -95,26 +83,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function mapSearchparams(searchParams: Props['searchParams']) {
-  return {
-    filterQuery: searchParams.filterQuery,
-    cursor: searchParams.cursor,
-    published: searchParams.published,
-    resourceTypeId: searchParams['resource-type'],
-    language: searchParams.language,
-    license: searchParams.license,
-    fieldOfScience: searchParams['field-of-science'],
-    registrationAgency: searchParams['registration-agency'],
-    connectionType: searchParams['connection-type'],
-    isBot: false
-  }
-}
-
-
 export default async function Page({ params, searchParams }: Props) {
   const doi = decodeURIComponent(params.doi.join('/'))
-  const { connectionType, isBot, ...vars } = mapSearchparams(searchParams)
-  const variables = { id: doi, ...vars }
+  const { variables } = mapSearchparams(searchParams)
+  const vars = { id: doi, ...variables }
 
 
   // Redirect to organization page if DOI is a Crossref Funder ID
@@ -132,19 +104,14 @@ export default async function Page({ params, searchParams }: Props) {
 
   if (!data) notFound()
 
-  const showSankey = isDMP(data.work) || isProject(data.work)
-
-
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={false} />
+      <Content variables={vars} isBot={false} />
     </Suspense>
     <Suspense>
       <RelatedAggregateGraph doi={doi} isBot={false} />
     </Suspense>
-    <RelatedContent variables={variables} showSankey={showSankey} connectionType={connectionType} isBot={isBot} />
+    <RelatedContent />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }
-
-

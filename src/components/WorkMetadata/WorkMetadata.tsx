@@ -1,14 +1,11 @@
-'use client'
-
 import React from 'react'
-import {
-  Row,
-  Col,
-  Alert,
-  Badge,
-  OverlayTrigger,
-  Tooltip,
-} from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
+import Badge from 'react-bootstrap/Badge'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
+
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
 import { orcidFromUrl } from 'src/utils/helpers'
@@ -18,9 +15,9 @@ import Link from 'next/link'
 
 import { Work } from 'src/data/types'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
-import { MetricsDisplay } from '../MetricsDisplay/MetricsDisplay'
-import { License } from '../License/License'
-import MetricsCounter from '../MetricsCounter/MetricsCounter'
+import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
+import { License } from 'src/components/License/License'
+import MetricsCounter from 'src/components/MetricsCounter/MetricsCounter'
 import styles from './WorkMetadata.module.scss'
 
 type Props = {
@@ -32,14 +29,14 @@ type Props = {
   includeMetricsDisplay?: boolean
 }
 
-const WorkMetadata: React.FunctionComponent<Props> = ({
+export default function WorkMetadata({
   metadata,
   linkToExternal,
   showClaimStatus,
   hideTitle = false,
   hideMetadataInTable = false,
   includeMetricsDisplay = false
-}) => {
+}: Props) {
   if (metadata == null)
     return <Alert variant="warning">No content found.</Alert>
 
@@ -319,5 +316,3 @@ const WorkMetadata: React.FunctionComponent<Props> = ({
     </Row>
   )
 }
-
-export default WorkMetadata
