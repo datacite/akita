@@ -1,24 +1,32 @@
 'use client'
 
 import React from 'react'
-import { Col, Row } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
 
-import { useOrganizationRelatedContentQuery, QueryVar } from 'src/data/queries/organizationRelatedContentQuery';
+import { useOrganizationRelatedContentQuery } from 'src/data/queries/organizationRelatedContentQuery';
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers';
+import { useParams, useSearchParams } from 'next/navigation';
+import mapSearchparams from './mapSearchParams';
 
 interface Props {
-  variables: QueryVar
   isBot?: boolean
 }
 
 export default function RelatedContent(props: Props) {
-  const { variables, isBot = false } = props
+  const { isBot = false } = props
+  const rorid = useParams().rorid as string
 
-  const { loading, data, error } = useOrganizationRelatedContentQuery(variables)
+  const searchParams = useSearchParams()
+  const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
+
+  const vars = { id: rorid, ...variables }
+  const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
 
   if (isBot) return null
 
@@ -43,7 +51,7 @@ export default function RelatedContent(props: Props) {
   const totalCount = relatedWorks.totalCount
 
   return (
-    <>
+    <Container fluid>
       <Row className="mt-5">
         <Col md={{ offset: 3 }} className="px-0">
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
@@ -58,9 +66,9 @@ export default function RelatedContent(props: Props) {
         hasPagination={relatedWorks.totalCount > 25}
         hasNextPage={hasNextPage}
         model={'organization'}
-        url={'/ror.org/' + variables.id + '/?'}
+        url={'/ror.org/' + vars.id + '/?'}
         endCursor={endCursor}
       />
-    </>
+    </Container>
   )
 }

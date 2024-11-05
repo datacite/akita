@@ -14,7 +14,7 @@ type Props = {
   rights?: Rights[]
 }
 
-export const Title: React.FunctionComponent<Props> = ({ title, titleLink, link, rights = [] }) => {
+export default function Title({ title, titleLink, link, rights = [] }: Props) {
 
   const parsedTitle = ReactHtmlParser(title)
 

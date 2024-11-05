@@ -1,20 +1,18 @@
-'use client'
-
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Link from 'next/link'
-import { Col, Row, Badge } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Badge from 'react-bootstrap/Badge'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faExternalLinkAlt
-} from '@fortawesome/free-solid-svg-icons'
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { decimalToSexagesimal } from 'geolib'
 
-import { OrganizationRecord } from 'src/components/Organization/Organization'
-import { rorFromUrl } from '../../utils/helpers'
+import type { Organization } from 'src/data/types'
+import { rorFromUrl } from 'src/utils/helpers'
 import styles from './OrganizationMetadata.module.scss'
 
 type Props = {
-  metadata: OrganizationRecord
+  metadata: Organization
   linkToExternal?: boolean
   showTitle?: boolean
 }
@@ -50,70 +48,11 @@ export default function OrganizationMetadata({
     return i.identifierType === 'wikidata'
   })
 
-  const titleLink = () => {
-    if (!linkToExternal) {
-      return (
-        <Link href={'/ror.org' + rorFromUrl(metadata.id)} className="fw-bold">
-          {metadata.name}
-          {metadata.alternateName.length > 0 && (
-            <div className={styles.subtitle}>
-              {metadata.alternateName.join(', ')}
-            </div>
-          )}
-        </Link>
-      )
-    } else {
-      return (
-        <a target="_blank" rel="noreferrer" href={metadata.id}>
-          {metadata.name}
-          {metadata.alternateName.length > 0 && (
-            <div className="subtitle">{metadata.alternateName.join(', ')}</div>
-          )}
-        </a>
-      )
-    }
-  }
 
-  const geolocation = () => {
-    const latitude =
-      metadata.geolocation.pointLatitude > 0
-        ? decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
-        ' N, '
-        : decimalToSexagesimal(metadata.geolocation.pointLatitude).toString() +
-        ' S'
-    const longitude =
-      metadata.geolocation.pointLongitude > 0
-        ? decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
-        ' W'
-        : decimalToSexagesimal(metadata.geolocation.pointLongitude).toString() +
-        ' E'
 
-    return (
-      <a
-        href={`https://geohack.toolforge.org/geohack.php?params=${metadata.geolocation.pointLatitude};${metadata.geolocation.pointLongitude}_&language=en`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {latitude}
-        {longitude}
-      </a>
-    )
-  }
+  return <>
+    <TitleLink id={metadata.id} name={metadata.name} alternateName={metadata.alternateName} linkToExternal={linkToExternal} show={showTitle} />
 
-  const footer = () => {
-    return (
-      <Row className="panel-footer"><Col>
-        <a id="ror-link" target="_blank" rel="noreferrer" href={metadata.id} className={styles.link}>
-          <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {metadata.id}
-        </a>
-      </Col></Row>
-    )
-  }
-
-  return (<>
-    <Row><Col>
-      {showTitle && <h3 className="work">{titleLink()}</h3>}
-    </Col></Row>
     <Row>
       <Col xs={6} md={6}>
         {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
@@ -162,82 +101,148 @@ export default function OrganizationMetadata({
             GRID{' '}{grid[0].identifier}
           </Col></Row>
         )}
-        {fundref.length > 0 && (
-          <>
-            {fundref
-              .filter((_, idx) => idx < 5)
-              .map((id) => (
-                <Row key={id.identifier} className="identifier id-type-crossref-funder"><Col>
-                  Crossref Funder ID{' '}
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={'https://doi.org/' + id.identifier}
-                  >
-                    {id.identifier}
-                  </a>
-                </Col></Row>
-              ))}
-          </>
-        )}
-        {isni.length > 0 && (
-          <>
-            {isni
-              .filter((_, idx) => idx < 5)
-              .map((id) => (
-                <Row key={id.identifier} className="identifier id-type-isni"><Col>
-                  ISNI{' '}
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={'http://isni.org/isni/' + id.identifier}
-                  >
-                    {id.identifier}
-                  </a>
-                </Col></Row>
-              ))}
-          </>
-        )}
-        {wikidata.length > 0 && (
-          <>
-            {wikidata
-              .filter((_, idx) => idx < 5)
-              .map((id) => (
-                <Row key={id.identifier} className="identifier id-type-wikidata"><Col>
-                  Wikidata{' '}
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={'https://www.wikidata.org/wiki/' + id.identifier}
-                  >
-                    {id.identifier}
-                  </a>
-                </Col></Row>
-              ))}
-          </>
-        )}
+        {fundref.length > 0 && <>
+          {fundref
+            .filter((_, idx) => idx < 5)
+            .map((id) => (
+              <Row key={id.identifier} className="identifier id-type-crossref-funder"><Col>
+                Crossref Funder ID{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={'https://doi.org/' + id.identifier}
+                >
+                  {id.identifier}
+                </a>
+              </Col></Row>
+            ))}
+        </>}
+        {isni.length > 0 && <>
+          {isni
+            .filter((_, idx) => idx < 5)
+            .map((id) => (
+              <Row key={id.identifier} className="identifier id-type-isni"><Col>
+                ISNI{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={'http://isni.org/isni/' + id.identifier}
+                >
+                  {id.identifier}
+                </a>
+              </Col></Row>
+            ))}
+        </>}
+        {wikidata.length > 0 && <>
+          {wikidata
+            .filter((_, idx) => idx < 5)
+            .map((id) => (
+              <Row key={id.identifier} className="identifier id-type-wikidata"><Col>
+                Wikidata{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={'https://www.wikidata.org/wiki/' + id.identifier}
+                >
+                  {id.identifier}
+                </a>
+              </Col></Row>
+            ))}
+        </>}
       </Col>
     </Row>
-    {showLocation && (
-      <Row className="mt-3"><Col className="location">
-        <Row><Col><h5 className="m-0 fw-bold">Geolocation</h5></Col></Row>
-        <Row><Col>{geolocation()}</Col></Row>
-      </Col></Row>
-    )}
+
+    {showLocation && <Geolocation geolocation={metadata.geolocation} />}
+
     <Row className="tags"><Col>
       <Badge bg="info">{metadata.country.name}</Badge>
       <span>
         {metadata.types.map((type) => (
-          <Badge key="type" bg="info">
-            {type}
-          </Badge>
+          <Badge key="type" bg="info">{type}</Badge>
         ))}
       </span>
       {metadata.memberId && (
         <Badge bg="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
       )}
     </Col></Row>
-    {footer()}
-  </>)
+
+    <Footer id={metadata.id} />
+  </>
 }
 
+
+function Footer({ id }: { id: string }) {
+  return (
+    <Row className="panel-footer"><Col>
+      <a id="ror-link" target="_blank" rel="noreferrer" href={id} className={styles.link}>
+        <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {id}
+      </a>
+    </Col></Row>
+  )
+}
+
+
+function Geolocation({ geolocation }: { geolocation: Organization['geolocation'] }) {
+  const latitude =
+    geolocation.pointLatitude > 0
+      ? decimalToSexagesimal(geolocation.pointLatitude).toString() +
+      ' N, '
+      : decimalToSexagesimal(geolocation.pointLatitude).toString() +
+      ' S'
+  const longitude =
+    geolocation.pointLongitude > 0
+      ? decimalToSexagesimal(geolocation.pointLongitude).toString() +
+      ' W'
+      : decimalToSexagesimal(geolocation.pointLongitude).toString() +
+      ' E'
+
+  return (
+    <Row className="mt-3"><Col className="location">
+      <Row><Col><h5 className="m-0 fw-bold">Geolocation</h5></Col></Row>
+      <Row><Col>
+        <a
+          href={`https://geohack.toolforge.org/geohack.php?params=${geolocation.pointLatitude};${geolocation.pointLongitude}_&language=en`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {latitude}
+          {longitude}
+        </a>
+      </Col></Row>
+    </Col ></Row >
+  )
+}
+
+
+
+interface TitleProps {
+  linkToExternal?: boolean
+  id: string
+  name: string
+  alternateName: string[]
+  show: boolean
+}
+
+function TitleLink({ linkToExternal, id, name, alternateName, show }: TitleProps) {
+  if (!show) return null
+
+  function LinkWrapper({ children }: PropsWithChildren) {
+    if (!linkToExternal)
+      return <Link href={'/ror.org' + rorFromUrl(id)} className="fw-bold">{children}</Link>
+
+    return <a target="_blank" rel="noreferrer" href={id}>{children}</a>
+  }
+
+  return <Row><Col>
+    <h3 className="work">
+      <LinkWrapper>
+        {name}
+        {alternateName.length > 0 && (
+          <div className={styles.subtitle}>
+            {alternateName.join(', ')}
+          </div>
+        )}
+      </LinkWrapper>
+    </h3>
+  </Col></Row>
+}

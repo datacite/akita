@@ -7,7 +7,7 @@ import { Work as WorkType } from 'src/data/types'
 import { fetchDoi, QueryVar } from 'src/data/queries/doiQuery'
 
 import Error from 'src/components/Error/Error'
-import { Title as TitleComponent } from 'src/components/Title/Title'
+import TitleComponent from 'src/components/Title/Title'
 import Claim from 'src/components/Claim/Claim'
 import CiteAs from 'src/components/CiteAs/CiteAs'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
