@@ -17,120 +17,34 @@ export function useOrganizationRelatedContentQuery(variables: QueryVar) {
 
 
 export const RELATED_CONTENT_QUERY = gql`
-  query getRelatedContentDoiQuery(
-    $id: ID!
-    $filterQuery: String
+query getRelatedContentQuery(
+    $id: ID
+    $gridId: ID
+    $crossrefFunderId: ID
     $cursor: String
+    $filterQuery: String
     $published: String
     $resourceTypeId: String
     $fieldOfScience: String
     $language: String
     $license: String
     $registrationAgency: String
-    $repositoryId: String
   ) {
-    work(id: $id) {
-      doi
-      types {
-        resourceTypeGeneral
-        resourceType
-      }
-      allRelated(
+    organization(
+      id: $id
+      gridId: $gridId
+      crossrefFunderId: $crossrefFunderId
+    ) {
+      works(
         first: 25
-        query: $filterQuery
         after: $cursor
+        query: $filterQuery
         published: $published
         resourceTypeId: $resourceTypeId
         fieldOfScience: $fieldOfScience
         language: $language
         license: $license
         registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-      citations(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-      references(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-      parts(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-      partOf(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-      otherRelated(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-        repositoryId: $repositoryId
       ) {
         ...WorkConnectionFragment
         nodes {
