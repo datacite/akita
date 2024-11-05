@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Form from 'react-bootstrap/Form';
-import { Brand, Collapse, Toggle } from 'src/components/Header/NavPieces';
+import { Brand, Collapse, Toggle } from 'src/components/ReactBootstrap';
 
 import NavLinks from 'src/components/Header/NavLinks'
 import NavRight from 'src/components/Header/NavRight'

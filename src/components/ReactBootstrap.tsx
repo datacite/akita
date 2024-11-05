@@ -5,6 +5,10 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+
+export { Tabs, Tab }
 
 export const NavItem = Nav.Item
 export const NavLink = Nav.Link

@@ -1,26 +1,32 @@
 'use client'
 
 import React from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import { Col, Container, Row } from 'react-bootstrap'
 import Loading from 'src/components/Loading/Loading'
 
-import { QueryVar, useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
+import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { Works } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
+import mapSearchparams from './mapSearchParams'
+import { isDMP, isProject } from 'src/utils/helpers'
 
 interface Props {
-  variables: QueryVar
-  showSankey: boolean
-  connectionType?: string
   isBot?: boolean
 }
 
 export default function RelatedContent(props: Props) {
-  const { variables, showSankey, connectionType, isBot = false } = props
+  const { isBot = false } = props
+  const doiParams = useParams().doi as string[]
+  const doi = decodeURIComponent(doiParams.join('/'))
 
-  const { loading, data, error } = useDoiRelatedContentQuery(variables)
+  const searchParams = useSearchParams()
+  const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
+
+  const vars = { id: doi, ...variables }
+  const { loading, data, error } = useDoiRelatedContentQuery(vars)
 
   if (isBot) return null
 
@@ -35,6 +41,7 @@ export default function RelatedContent(props: Props) {
 
   if (!data) return
 
+  const showSankey = isDMP(data.work) || isProject(data.work)
   const relatedWorks = data.work
 
   const allRelatedCount = relatedWorks.allRelated?.totalCount || 0

@@ -1,17 +1,18 @@
-'use client'
-
 import React from 'react'
-import { Col, Row, Tab, Tabs } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import { Tab, Tabs } from 'src/components/ReactBootstrap'
+
 import { Work } from 'src/data/types'
 import truncate from 'lodash/truncate'
 import chunk from 'lodash/chunk'
 import startCase from 'lodash/startCase'
 import ReactHtmlParser from 'html-react-parser'
 import sanitizeHtml from 'sanitize-html'
-import WorkFunding from '../WorkFunding/WorkFunding'
+import WorkFunding from 'src/components/WorkFunding/WorkFunding'
 
 import styles from './MetadataTable.module.scss'
-import PersonTable from '../PersonTable/PersonTable'
+import PersonTable from 'src/components/PersonTable/PersonTable'
 
 
 type Props = {

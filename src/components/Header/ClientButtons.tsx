@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { DropdownItem } from 'src/components/Header/NavPieces';
+import { DropdownItem } from 'src/components/ReactBootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropdownItem, NavItem, NavLink } from 'src/components/Header/NavPieces'
+import { DropdownItem, NavItem, NavLink } from 'src/components/ReactBootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faNewspaper,

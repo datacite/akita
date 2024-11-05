@@ -1,12 +1,10 @@
-'use client'
-
 import React from 'react'
-import { Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
 import {
   EmailShareButton,
   FacebookShareButton,
   TwitterShareButton
-} from 'react-share'
+} from './ShareButtons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -18,10 +16,10 @@ type Props = {
 
 export default function ShareLinks({ url, title }: Props) {
 
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/' + url
-      : 'https://commons.stage.datacite.org/' + url
+  const pageUrl = 'https://commons.stage.datacite.org/' + url
+  process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
+    ? 'https://commons.datacite.org/' + url
+    : 'https://commons.stage.datacite.org/' + url
 
   const pageTitle = title
     ? 'DataCite Commons: ' + title
