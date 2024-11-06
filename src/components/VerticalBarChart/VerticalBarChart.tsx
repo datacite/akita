@@ -1,9 +1,11 @@
+'use client'
+
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
-import useWindowDimensions from '../../utils/useWindowDimensions'
-import EmptyChart from '../EmptyChart/EmptyChart'
+import useWindowDimensions from 'src/utils/useWindowDimensions'
+import EmptyChart from 'src/components/EmptyChart/EmptyChart'
 
 interface ChartRecord {
   title: string
@@ -24,13 +26,9 @@ const actions = {
   editor: false
 }
 
-const VerticalBarChart: React.FunctionComponent<Props> = ({
-  title,
-  data,
-  color
-}) => {
-  if (data.length==0){
-    return <EmptyChart title={title}/>
+export default function VerticalBarChart({ title, data, color }: Props) {
+  if (data.length == 0) {
+    return <EmptyChart title={title} />
   }
   // get current screen size
   const windowDimensions: any = useWindowDimensions()
@@ -60,12 +58,12 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
       tooltip: true
     },
     params: [
-    {
-      name: "highlight",
-      select: {type: "point", on: "pointerover"}
-    },
-    {name: "select", select: "point"}
-  ],
+      {
+        name: "highlight",
+        select: { type: "point", on: "pointerover" }
+      },
+      { name: "select", select: "point" }
+    ],
     // params: {
     //   name: "highlight",
     //
@@ -120,10 +118,10 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
 
 
   const mydata = data.map(item => {
-    if(item.title === "missing") {
-      return {...item, color: "#e74c3c"}
-    }else{
-      return {...item, color: "#1abc9c"}
+    if (item.title === "missing") {
+      return { ...item, color: "#e74c3c" }
+    } else {
+      return { ...item, color: "#1abc9c" }
     }
   })
 
@@ -143,5 +141,3 @@ const VerticalBarChart: React.FunctionComponent<Props> = ({
     </div>
   )
 }
-
-export default VerticalBarChart

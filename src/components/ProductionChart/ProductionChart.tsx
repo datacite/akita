@@ -1,9 +1,11 @@
+'use client'
+
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { VisualizationSpec } from 'vega-embed'
 
-import useWindowDimensions from '../../utils/useWindowDimensions'
-import EmptyChart from '../EmptyChart/EmptyChart'
+import useWindowDimensions from 'src/utils/useWindowDimensions'
+import EmptyChart from 'src/components/EmptyChart/EmptyChart'
 
 interface ChartRecord {
   title: string
@@ -24,14 +26,9 @@ const actions = {
   editor: false
 }
 
-const ProductionChart: React.FunctionComponent<Props> = ({
-  title,
-  data,
-  lowerBoundYear,
-  color
-}) => {
-  if (data.length==0){
-    return <EmptyChart title={title}/>
+export default function ProductionChart({ title, data, lowerBoundYear, color }: Props) {
+  if (data.length == 0) {
+    return <EmptyChart title={title} />
   }
   // get current screen size
   const windowDimensions: any = useWindowDimensions()
@@ -160,5 +157,3 @@ const ProductionChart: React.FunctionComponent<Props> = ({
     </div>
   )
 }
-
-export default ProductionChart

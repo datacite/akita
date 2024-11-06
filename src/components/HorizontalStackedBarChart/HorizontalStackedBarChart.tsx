@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef, useState } from 'react'
 import { VegaLite } from 'react-vega'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'

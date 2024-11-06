@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 export default async function Page({ params }: Props) {
-  const repoid = params.repoid.join('/')
+  const repoid = decodeURIComponent(params.repoid.join('/'))
 
   // Fetch Repository metadata
   const { data } = await fetchRepositoryMetadata(repoid)
