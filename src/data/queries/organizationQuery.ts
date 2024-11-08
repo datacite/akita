@@ -4,7 +4,7 @@ import apolloClient from 'src/utils/apolloClient/apolloClient'
 
 
 export async function fetchOrganizationMetadata(id: string) {
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
+  const { data } = await apolloClient.query<MetadataQueryData, QueryVar>({
     query: ORGANIZATION_METADATA_QUERY,
     variables: { id },
     errorPolicy: 'all'
@@ -13,10 +13,10 @@ export async function fetchOrganizationMetadata(id: string) {
   return { data }
 }
 
-export async function fetchOrganization(variables: QueryVar) {
+export async function fetchOrganization(id: string) {
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
     query: ORGANIZATION_QUERY,
-    variables,
+    variables: { id },
     errorPolicy: 'all'
   })
 
@@ -83,10 +83,6 @@ export const ORGANIZATION_QUERY = gql`
   }
 `
 
-export interface MetadataQueryVar {
-  id: string
-}
-
 export interface MetadataQueryData {
   organization: OrganizationMetadata
 }
@@ -98,14 +94,4 @@ export interface QueryData {
 
 export interface QueryVar {
   id: string
-  gridId?: string
-  crossrefFunderId?: string
-  filterQuery?: string
-  cursor?: string
-  published?: string
-  resourceTypeId?: string
-  language?: string
-  fieldOfScience?: string
-  license?: string
-  registrationAgency?: string
 }
