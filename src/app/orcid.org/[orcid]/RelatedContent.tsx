@@ -20,12 +20,12 @@ interface Props {
 
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
-  const orcid = 'http://orcid.org/' + useParams().orcid as string
+  const orcid = useParams().orcid as string
 
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { id: orcid, ...variables }
+  const vars = { id: 'http://orcid.org/' + orcid, ...variables }
 
   const { loading, data, error } = usePersonRelatedContentQuery(vars)
 
