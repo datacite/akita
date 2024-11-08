@@ -7,12 +7,12 @@ import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { compactNumbers } from 'src/utils/helpers'
+import { compactNumbers, getTopFive, toBarRecord } from 'src/utils/helpers'
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import ShareLinks from 'src/components/ShareLinks/ShareLinks';
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
-import HorizontalStackedBarChart, { getTopFive, toBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart';
+import HorizontalStackedBarChart from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart';
 import { Repository } from 'src/data/types';
 
 type Props = {
