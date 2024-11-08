@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import { Organization as OrganizationType } from 'src/data/types'
-import { fetchOrganization, QueryVar } from 'src/data/queries/organizationQuery';
+import { fetchOrganization } from 'src/data/queries/organizationQuery';
 
 import Error from 'src/components/Error/Error'
 import Title from 'src/components/Title/Title'
