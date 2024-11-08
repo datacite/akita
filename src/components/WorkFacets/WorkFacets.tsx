@@ -1,12 +1,13 @@
 'use client'
 
 import React from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
-import { Col, Row } from 'react-bootstrap'
 
 interface Props {
   data: Facets

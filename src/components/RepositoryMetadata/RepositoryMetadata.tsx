@@ -1,9 +1,10 @@
 import React from 'react'
-import { Badge } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Badge from 'react-bootstrap/Badge'
 import truncate from 'lodash/truncate'
 import Link from 'next/link'
 import { Repository } from 'src/data/types'
-import { Row, Col } from 'react-bootstrap'
 
 
 type Props = {

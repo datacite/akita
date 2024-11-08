@@ -5,7 +5,8 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { InputGroup, Button } from 'react-bootstrap'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Button from 'react-bootstrap/Button'
 import styles from './Search.module.css'
 
 export default function Search() {

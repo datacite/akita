@@ -2,7 +2,9 @@
 
 import React from 'react'
 import Loading from '../Loading/Loading'
-import { Row, Col, Alert } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 import Error from 'src/components/Error/Error'
 
 import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
 import ContentLoader from 'react-content-loader'
 
 const Loading: React.FunctionComponent = () => (

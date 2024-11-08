@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'

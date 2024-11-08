@@ -3,7 +3,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useMutation, ApolloCache } from '@apollo/client'
-import { Button } from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
