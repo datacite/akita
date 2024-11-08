@@ -1,7 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Alert, Col, Container, Row } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 import Loading from 'src/components/Loading/Loading'
 
 import { useStatisticsQuery } from 'src/data/queries/statisticsQuery'
