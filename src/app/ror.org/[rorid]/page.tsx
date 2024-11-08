@@ -5,28 +5,15 @@ import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
-import { Container } from 'react-bootstrap'
+import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     rorid: string
   },
-  searchParams: {
-    id: string
-    filterQuery?: string
-    published?: string
-    "resource-type"?: string
-    "field-of-science"?: string
-    license?: string
-    language?: string
-    "registration-agency"?: string
-    cursor?: string
-
-    isBot: string
-  }
+  searchParams: SearchParams
 }
-
 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -78,38 +65,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-function mapSearchparams(searchParams: Props['searchParams']) {
-  return {
-    filterQuery: searchParams.filterQuery,
-    cursor: searchParams.cursor,
-    published: searchParams.published,
-    resourceTypeId: searchParams['resource-type'],
-    language: searchParams.language,
-    fieldOfScience: searchParams['field-of-science'],
-    license: searchParams.license,
-    registrationAgency: searchParams['registration-agency'],
-
-    isBot: false
-  }
-}
-
-
 export default async function Page({ params, searchParams }: Props) {
   const { rorid } = params
-  const { isBot, ...vars } = mapSearchparams(searchParams)
-  const variables = { id: rorid, ...vars }
+  const { variables } = mapSearchparams(searchParams)
+  const vars = { id: rorid, ...variables }
 
   // Fetch Organization metadata
   const { data } = await fetchOrganizationMetadata(rorid)
 
   if (!data) notFound()
 
-  return <Container fluid>
+  return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={isBot} />
+      <Content variables={vars} isBot={false} />
     </Suspense>
-    <RelatedContent variables={variables} isBot={isBot} />
-  </Container>
+    <RelatedContent />
+  </>
 }
 
 
