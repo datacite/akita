@@ -7,24 +7,14 @@ import Content from './Content'
 import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
+import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     orcid: string
   },
-  searchParams: {
-    filterQuery?: string
-    cursor?: string
-    published?: string
-    "resource-type"?: string
-    language?: string
-    license?: string
-    "field-of-science"?: string
-    "registration-agency"?: string
-
-    isBot: string
-  }
+  searchParams: SearchParams
 }
 
 
@@ -88,25 +78,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-function mapSearchparams(searchParams: Props['searchParams']) {
-  return {
-    filterQuery: searchParams.filterQuery,
-    cursor: searchParams.cursor,
-    published: searchParams.published,
-    resourceTypeId: searchParams['resource-type'],
-    language: searchParams.language,
-    license: searchParams.license,
-    fieldOfScience: searchParams['field-of-science'],
-    registrationAgency: searchParams['registration-agency'],
-    isBot: false
-  }
-}
-
-
 export default async function Page({ params, searchParams }: Props) {
   const orcid = 'http://orcid.org/' + params.orcid
-  const { isBot, ...vars } = mapSearchparams(searchParams)
-  const variables = { id: orcid, ...vars }
+  const { variables } = mapSearchparams(searchParams)
+  const vars = { id: orcid, ...variables }
 
 
   // Fetch Person metadata
@@ -117,9 +92,9 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={variables} isBot={isBot} />
+      <Content variables={vars} />
     </Suspense>
-    <RelatedContent orcid={params.orcid} variables={variables} isBot={isBot} />
+    <RelatedContent />
   </>
 }
 
