@@ -5,9 +5,10 @@ import { Row, Col } from 'react-bootstrap'
 import clone from 'lodash/clone'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
-import HorizontalStackedBarChart, { getTopFive, toBarRecord } from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
+import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
 import styles from './WorksDashboard.module.scss'
+import { getTopFive, toBarRecord } from 'src/utils/helpers'
 
 type Props = PropsWithChildren<{
   works: Works
