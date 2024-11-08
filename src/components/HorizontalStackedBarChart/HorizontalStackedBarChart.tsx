@@ -1,10 +1,11 @@
+'use client'
+
 import React, { useEffect, useRef, useState } from 'react'
 import { VegaLite } from 'react-vega'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'
 import HelpIcon from 'src/components/HelpIcon/HelpIcon'
 import styles from './HorizontalStackedBarChart.module.scss'
 import stackedBarChartSpec from './HorizontalStackedBarChartSpec'
-import { Facet } from 'src/data/types'
 
 
 type Props = {
@@ -20,51 +21,6 @@ export interface HorizontalBarRecord {
   title: string
   count: number
 }
-
-export function toBarRecord(data: Facet) {
-  return { title: data.title, count: data.count }
-}
-
-function getTotalCount(sum: number, data: HorizontalBarRecord) { return sum + data.count }
-
-export function getTopFive(data: HorizontalBarRecord[]) {
-  if (data.length === 0) {
-    return {
-      data: [],
-      topCategory: "",
-      topPercent: -1
-    }
-  }
-
-  const otherData = data.filter(d => d.title === "Other")
-  let otherCount = otherData.reduce(getTotalCount, 0)
-
-  const missingData = data.filter(d => d.title === "Missing")
-  const missingCount = missingData.reduce(getTotalCount, 0)
-
-  data = data.filter(d => d.title !== "Other" && d.title !== "Missing")
-  const sorted = data.sort((a, b) => b.count - a.count)
-
-  const topFive = sorted.slice(0, 5)
-  const others = sorted.slice(5)
-  otherCount += others.reduce(getTotalCount, 0)
-
-  if (otherCount > 0)
-    topFive.push({ title: 'Other', count: otherCount })
-
-  if (missingCount > 0)
-    topFive.push({ title: 'Missing', count: missingCount })
-
-
-  topFive.sort((a, b) => b.count - a.count)[0]
-
-  return {
-    data: topFive,
-    topCategory: topFive[0].title,
-    topPercent: Math.round(topFive[0].count / topFive.reduce(getTotalCount, 0) * 100)
-  }
-}
-
 
 const HorizontalBarChart: React.FunctionComponent<Props> = ({
   chartTitle,

@@ -1,5 +1,7 @@
 import React from 'react'
-import { Row, Col, Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 import { Repository as RepositoryType } from 'src/data/types'
 import { fetchRepository, QueryVar } from 'src/data/queries/repositoryQuery';
