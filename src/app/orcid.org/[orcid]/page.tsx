@@ -7,14 +7,12 @@ import Content from './Content'
 import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
-import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     orcid: string
-  },
-  searchParams: SearchParams
+  }
 }
 
 
@@ -78,10 +76,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const orcid = 'http://orcid.org/' + params.orcid
-  const { variables } = mapSearchparams(searchParams)
-  const vars = { id: orcid, ...variables }
 
 
   // Fetch Person metadata
@@ -92,7 +88,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={vars} />
+      <Content orcid={orcid} />
     </Suspense>
     <RelatedContent />
   </>

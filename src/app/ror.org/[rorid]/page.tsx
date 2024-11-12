@@ -5,14 +5,12 @@ import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
-import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     rorid: string
-  },
-  searchParams: SearchParams
+  }
 }
 
 
@@ -65,10 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const { rorid } = params
-  const { variables } = mapSearchparams(searchParams)
-  const vars = { id: rorid, ...variables }
 
   // Fetch Organization metadata
   const { data } = await fetchOrganizationMetadata(rorid)
@@ -77,7 +73,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={vars} isBot={false} />
+      <Content rorid={rorid} />
     </Suspense>
     <RelatedContent />
   </>

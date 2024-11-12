@@ -4,7 +4,7 @@ import apolloClient from 'src/utils/apolloClient/apolloClient'
 
 
 export async function fetchPersonMetadata(id: string) {
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
+  const { data, error } = await apolloClient.query<MetadataQueryData, QueryVar>({
     query: PERSON_METADATA_QUERY,
     variables: { id },
     errorPolicy: 'all'
@@ -13,10 +13,10 @@ export async function fetchPersonMetadata(id: string) {
   return { data, error }
 }
 
-export async function fetchPerson(variables: QueryVar) {
+export async function fetchPerson(id: string) {
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
     query: PERSON_QUERY,
-    variables,
+    variables: { id },
     errorPolicy: 'all'
   })
 
@@ -84,10 +84,6 @@ export const PERSON_QUERY = gql`
   }
 `
 
-export interface MetadataQueryVar {
-  id: string
-}
-
 export interface MetadataQueryData {
   person: PersonMetadata
 }
@@ -99,12 +95,4 @@ export interface QueryData {
 
 export interface QueryVar {
   id: string
-  filterQuery?: string
-  cursor?: string
-  published?: string
-  resourceTypeId?: string
-  language?: string
-  license?: string
-  fieldOfScience?: string
-  registrationAgency?: string
 }
