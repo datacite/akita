@@ -12,14 +12,12 @@ import { fetchDoiMetadata } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
-import type { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     doi: string[]
-  },
-  searchParams: SearchParams
+  }
 }
 
 

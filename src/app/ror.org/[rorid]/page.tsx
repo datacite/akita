@@ -5,14 +5,12 @@ import Content from './Content'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
 import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
-import type { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     rorid: string
-  },
-  searchParams: SearchParams
+  }
 }
 
 

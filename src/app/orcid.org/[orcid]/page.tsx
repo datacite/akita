@@ -7,14 +7,12 @@ import Content from './Content'
 import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
-import type { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     orcid: string
-  },
-  searchParams: SearchParams
+  }
 }
 
 
