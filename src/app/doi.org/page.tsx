@@ -6,14 +6,15 @@ import SearchWork from 'src/components/SearchWork/SearchWork'
 import { QueryVar } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }
 
 interface SearchParams extends Partial<QueryVar> {
   filterQuery?: string
 }
 
-export default async function SearchDoiPage ({ searchParams }: Props) {
+export default async function SearchDoiPage(props: Props) {
+  const searchParams = await props.searchParams;
   const { query, filterQuery, ...vars } = searchParams
 
   const variables = {

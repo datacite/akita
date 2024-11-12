@@ -15,14 +15,15 @@ import Loading from 'src/components/Loading/Loading'
 
 
 interface Props {
-  params: {
+  params: Promise<{
     doi: string[]
-  }
+  }>
 }
 
 
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const doi = decodeURIComponent(params.doi.join('/'))
 
   const { data } = await fetchDoiMetadata(doi)
@@ -81,7 +82,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const doi = decodeURIComponent(params.doi.join('/'))
 
 

@@ -8,13 +8,14 @@ import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
 
 
 interface Props {
-  params: {
+  params: Promise<{
     rorid: string
-  }
+  }>
 }
 
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { rorid } = params
 
   const { data } = await fetchOrganizationMetadata(rorid)
@@ -63,7 +64,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const { rorid } = params
 
   // Fetch Organization metadata

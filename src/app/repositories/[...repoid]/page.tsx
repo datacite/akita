@@ -7,14 +7,15 @@ import { fetchRepositoryMetadata } from 'src/data/queries/repositoryQuery'
 
 
 interface Props {
-  params: {
+  params: Promise<{
     repoid: string[]
-  }
+  }>
 }
 
 
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const repoid = params.repoid.join('/')
 
   const { data } = await fetchRepositoryMetadata(repoid)
@@ -62,7 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const repoid = decodeURIComponent(params.repoid.join('/'))
 
   // Fetch Repository metadata

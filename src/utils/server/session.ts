@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import JsonWebToken from 'jsonwebtoken'
 
 
@@ -10,7 +10,7 @@ export default function session () {
   let jwt = null
   let user = null
 
-  const sessionCookie = cookies().get('_datacite')?.value as any
+  const sessionCookie = (cookies() as unknown as UnsafeUnwrappedCookies).get('_datacite')?.value as any
   if (sessionCookie && sessionCookie.authenticated) {
     jwt = sessionCookie.authenticated.access_token
   }
