@@ -1,7 +1,10 @@
 'use client'
 
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faSquare,
@@ -10,7 +13,6 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Col, Row } from 'react-bootstrap'
 
 type Props = {
     url: string

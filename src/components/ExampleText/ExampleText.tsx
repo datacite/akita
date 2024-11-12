@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 
 export default function ExampleText({ children }: PropsWithChildren) {
   return (

@@ -12,14 +12,12 @@ import { fetchDoiMetadata } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
-import mapSearchparams, { SearchParams } from './mapSearchParams'
 
 
 interface Props {
   params: {
     doi: string[]
-  },
-  searchParams: SearchParams
+  }
 }
 
 
@@ -83,10 +81,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const doi = decodeURIComponent(params.doi.join('/'))
-  const { variables } = mapSearchparams(searchParams)
-  const vars = { id: doi, ...variables }
 
 
   // Redirect to organization page if DOI is a Crossref Funder ID
@@ -94,7 +90,7 @@ export default async function Page({ params, searchParams }: Props) {
     const { data } = await fetchCrossrefFunder(doi)
 
     if (!data) notFound()
-    redirect(`/ror.org${rorFromUrl(data.organization.id)}?filterQuery=${vars.filterQuery}`)
+    redirect(`/ror.org${rorFromUrl(data.organization.id)}`)
   }
 
 
@@ -106,10 +102,10 @@ export default async function Page({ params, searchParams }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content variables={vars} isBot={false} />
+      <Content doi={doi} />
     </Suspense>
     <Suspense>
-      <RelatedAggregateGraph doi={doi} isBot={false} />
+      <RelatedAggregateGraph doi={doi} />
     </Suspense>
     <RelatedContent />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import Table from 'react-bootstrap/Table'
 import startCase from 'lodash/startCase'
 import { Person } from 'src/components/WorkPerson/WorkPerson'
 import Link from 'next/link'

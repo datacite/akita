@@ -1,7 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 import { pluralize } from '../../utils/helpers'
 
 import Pager from 'src/components/Pager/Pager'

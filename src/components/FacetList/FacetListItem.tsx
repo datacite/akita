@@ -2,6 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import { useSearchParams } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -9,7 +11,6 @@ import {
   faCircle, faDotCircle,
 } from '@fortawesome/free-regular-svg-icons'
 import { Facet } from 'src/data/types'
-import { Col, Row } from 'react-bootstrap'
 import styles from './FacetListItem.module.scss'
 
 interface Props {

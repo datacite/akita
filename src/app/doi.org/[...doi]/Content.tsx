@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import { Work as WorkType } from 'src/data/types'
-import { fetchDoi, QueryVar } from 'src/data/queries/doiQuery'
+import { fetchDoi } from 'src/data/queries/doiQuery'
 
 import Error from 'src/components/Error/Error'
 import TitleComponent from 'src/components/Title/Title'
@@ -18,14 +18,14 @@ import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
 
 interface Props {
-  variables: QueryVar
+  doi: string
   isBot?: boolean
 }
 
 export default async function Content(props: Props) {
-  const { variables, isBot = false } = props
+  const { doi, isBot = false } = props
 
-  const { data, error } = await fetchDoi(variables)
+  const { data, error } = await fetchDoi(doi)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -73,7 +73,7 @@ export default async function Content(props: Props) {
                   type: 'doi/related-works',
                 }
               ]}
-              variables={variables as any}
+              variables={{ id: doi }}
             />}
           </Row>
           <Row className="mb-2 pb-4">

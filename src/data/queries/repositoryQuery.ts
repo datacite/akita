@@ -4,7 +4,7 @@ import apolloClient from 'src/utils/apolloClient/apolloClient'
 
 
 export async function fetchRepositoryMetadata(id: string) {
-  const { data, error } = await apolloClient.query<QueryData, QueryVar>({
+  const { data, error } = await apolloClient.query<MetadataQueryData, QueryVar>({
     query: REPOSITORY_METADATA_QUERY,
     variables: { id },
     errorPolicy: 'all'
@@ -96,10 +96,6 @@ export const REPOSITORY_QUERY = gql`
     count
   }
 `
-
-export interface MetadataQueryVar {
-  id: string
-}
 
 export interface MetadataQueryData {
   repository: RepositoryMetadata

@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import { Organization as OrganizationType } from 'src/data/types'
-import { fetchOrganization, QueryVar } from 'src/data/queries/organizationQuery';
+import { fetchOrganization } from 'src/data/queries/organizationQuery';
 
 import Error from 'src/components/Error/Error'
 import Title from 'src/components/Title/Title'
@@ -14,14 +14,14 @@ import Organization from 'src/components/Organization/Organization'
 import { rorFromUrl } from 'src/utils/helpers'
 
 interface Props {
-  variables: QueryVar
+  rorid: string
   isBot?: boolean
 }
 
 export default async function Content(props: Props) {
-  const { variables, isBot = false } = props
+  const { rorid, isBot = false } = props
 
-  const { data, error } = await fetchOrganization(variables)
+  const { data, error } = await fetchOrganization(rorid)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -55,7 +55,7 @@ export default async function Content(props: Props) {
                 type: 'ror/funders',
               }
             ]}
-            variables={variables as any}
+            variables={{ id: rorid }}
           />}
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>

@@ -5,7 +5,7 @@ import { workFragment } from 'src/data/queries/queryFragments'
 
 
 export async function fetchDoiMetadata(id: string) {
-  const { data } = await apolloClient.query<MetadataQueryData, MetadataQueryVar>({
+  const { data } = await apolloClient.query<MetadataQueryData, QueryVar>({
     query: DOI_METADATA_QUERY,
     variables: { id },
     errorPolicy: 'all'
@@ -14,10 +14,10 @@ export async function fetchDoiMetadata(id: string) {
   return { data }
 }
 
-export async function fetchDoi(variables: QueryVar) {
+export async function fetchDoi(id: string) {
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
     query: DOI_QUERY,
-    variables,
+    variables: { id },
     errorPolicy: 'all'
   })
 
@@ -98,10 +98,6 @@ export const DOI_QUERY = gql`
   ${workFragment}
 `
 
-export interface MetadataQueryVar {
-  id: string
-}
-
 export interface MetadataQueryData {
   work: WorkMetadata
 }
@@ -112,12 +108,4 @@ export interface QueryData {
 
 export interface QueryVar {
   id: string
-  filterQuery?: string
-  cursor?: string
-  published?: string
-  resourceTypeId?: string
-  language?: string
-  license?: string
-  fieldOfScience?: string
-  registrationAgency?: string
 }

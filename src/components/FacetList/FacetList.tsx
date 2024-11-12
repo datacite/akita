@@ -1,12 +1,14 @@
 'use client'
 
 import React from 'react'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacetListItem from './FacetListItem'
 import { Facet } from 'src/data/types'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import { Col, Row } from 'react-bootstrap'
 
 
 interface FacetListProps {

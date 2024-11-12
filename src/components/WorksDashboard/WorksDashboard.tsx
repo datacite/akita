@@ -1,7 +1,8 @@
 'use client'
 
 import React, { PropsWithChildren } from 'react'
-import { Row, Col } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import clone from 'lodash/clone'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'

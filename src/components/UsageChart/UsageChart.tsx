@@ -3,7 +3,8 @@
 import React from 'react'
 import { VegaLite } from 'react-vega'
 import { pluralize } from 'src/utils/helpers'
-import { Container, Row } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 import { VisualizationSpec } from 'vega-embed'
 import {
   subYears,

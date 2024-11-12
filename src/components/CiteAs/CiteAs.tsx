@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
 import { Work } from 'src/data/types'
 import CitationFormatter from 'src/components/CitationFormatter/CitationFormatter'
 

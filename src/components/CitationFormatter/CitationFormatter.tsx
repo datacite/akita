@@ -1,6 +1,7 @@
 import React from 'react'
 import Error from '../Error/Error'
-import { Col, Alert } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Alert from 'react-bootstrap/Alert'
 import ReactHtmlParser from 'html-react-parser'
 import { useFormattedCitationQuery } from 'src/data/queries/formattedCitationQuery'
 
