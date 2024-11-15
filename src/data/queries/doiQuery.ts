@@ -152,7 +152,7 @@ export interface QueryVar {
 function extractFOS(subjects: any) {
   const fos = subjects
     .filter(s => s.subject.startsWith('FOS: '))
-    .map(({ subject: s }) => ({ id: s.slice(5).toLowerCase(), name: s.slice(5) }))
+    .map(({ subject: s }) => ({ id: kebabify(s.slice(5)), name: s.slice(5) }))
 
   const uniqueFOS = Array.from(new Set(fos.map(f => f.id))).map(id => fos.find(f => f.id === id))
   return uniqueFOS
@@ -168,4 +168,14 @@ function mapPeople(people: any[]) {
       id: p.nameIdentifiers[0].nameIdentifier,
     }
   })
+}
+
+
+
+
+
+function kebabify(input: string): string {
+  return input
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert a dash between lowercase and uppercase letters
+    .toLowerCase();
 }
