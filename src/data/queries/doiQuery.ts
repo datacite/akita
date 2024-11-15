@@ -8,25 +8,33 @@ import ISO6391 from 'iso-639-1'
 export async function fetchDoi(id: string) {
   try {
     const options = { method: 'GET', headers: { accept: 'application/vnd.api+json' } };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dois/${id}?affiliation=false&publisher=true`, options)
-    const json = await res.json()
-    const attrs = json.data.attributes
+    const searchParams = new URLSearchParams({
+      query: 'uid:' + id,
+      include: 'client',
+      affiliation: 'false',
+      publisher: 'true',
+      'disable-facets': 'true',
+      include_other_registration_agencies: 'true'
+    })
 
-    const repRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clients/${json.data.relationships.client.data.id}`, options)
-    const repJson = await repRes.json()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`, options)
+    const json = await res.json()
+    const work = json.data[0]
+    const attrs = work.attributes
+    const repo = json.included[0]
 
     const data: QueryData = {
       work: {
         ...attrs,
-        id: 'https://doi.org/' + json.data.id,
+        id: 'https://doi.org/' + work.id,
         language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
         rights: attrs.rightsList,
         creators: mapPeople(attrs.creators),
         contributors: mapPeople(attrs.contributors),
         fieldsOfScience: extractFOS(attrs.subjects),
         registrationAgency: { id: 'datacite', name: 'DataCite' },
-        repository: { id: repJson.data.id, name: repJson.data.attributes.name },
-        schemaOrg: ''
+        repository: { id: repo.id, name: repo.attributes.name },
+        schemaOrg: '',
       }
     }
 
