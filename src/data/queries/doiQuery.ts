@@ -30,7 +30,7 @@ export async function fetchDoi(id: string) {
     const data: QueryData = {
       work: {
         ...attrs,
-        id: normalizeDoi(work.id),
+        id: ID_BASE + work.id,
         language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
         rights: attrs.rightsList,
         creators: mapPeople(attrs.creators),
@@ -163,24 +163,6 @@ const REGISTRATION_AGENCIES = {
   "op": "OP"
 }
 
-
-function normalizeDoi(doi: string) {
-  if (!doi) return null;
-
-  const match = doi.match(
-    /^(?:(http|https):\/\/?(dx\.)?(doi.org|handle.test.datacite.org)\/)?(doi:)?(10\.\d{4,5}\/.+)$/i
-  );
-
-  const normalizedDoi = match ? match[match.length - 1] : null;
-
-  if (normalizedDoi) {
-    // Remove non-printing whitespace and downcase
-    const cleanedDoi = normalizedDoi.replace(/\u200B/g, '').toLowerCase();
-    return `${ID_BASE}${cleanedDoi}`;
-  }
-
-  return null;
-}
 
 
 function extractFOS(subjects: any) {
