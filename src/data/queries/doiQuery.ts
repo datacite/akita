@@ -32,7 +32,7 @@ export async function fetchDoi(id: string) {
         creators: mapPeople(attrs.creators),
         contributors: mapPeople(attrs.contributors),
         fieldsOfScience: extractFOS(attrs.subjects),
-        registrationAgency: { id: 'datacite', name: 'DataCite' },
+        registrationAgency: { id: attrs.agency, name: REGISTRATION_AGENCIES[attrs.agency] },
         repository: { id: repo.id, name: repo.attributes.name },
         schemaOrg: '',
       }
@@ -145,8 +145,17 @@ export interface QueryVar {
 
 
 
-
-
+const REGISTRATION_AGENCIES = {
+  "airiti": "Airiti",
+  "cnki": "CNKI",
+  "crossref": "Crossref",
+  "datacite": "DataCite",
+  "istic": "ISTIC",
+  "jalc": "JaLC",
+  "kisti": "KISTI",
+  "medra": "mEDRA",
+  "op": "OP"
+}
 
 
 function extractFOS(subjects: any) {
@@ -159,7 +168,6 @@ function extractFOS(subjects: any) {
 }
 
 
-
 function mapPeople(people: any[]) {
   return people.map(p => {
     return {
@@ -169,9 +177,6 @@ function mapPeople(people: any[]) {
     }
   })
 }
-
-
-
 
 
 function kebabify(input: string): string {
