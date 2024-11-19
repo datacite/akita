@@ -19,9 +19,13 @@ export async function fetchDoi(id: string) {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`, options)
     const json = await res.json()
+
+    if (json.meta.total === 0) throw new Error('No work found')
+    if (json.meta.total > 1) throw new Error('Multiple works found')
+
     const work = json.data[0]
     const attrs = work.attributes
-    const repo = json.included[0]
+    const repo = json.included.find(r => r.id === work.relationships.client.data.id)
 
     const data: QueryData = {
       work: {
