@@ -180,7 +180,7 @@ function mapPeople(people: any[]) {
     return {
       ...p,
       affiliation: p.affiliation.map(a => ({ ...a, id: a.affiliationIdentifier })),
-      id: p.nameIdentifiers[0].nameIdentifier,
+      id: p.nameIdentifiers[0]?.nameIdentifier || '',
     }
   })
 }
