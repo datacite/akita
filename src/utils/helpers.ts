@@ -45,9 +45,10 @@ export function isDMP(work: WorkMetadata) {
 
 export function isProject(work: WorkMetadata) {
   return (
-    work.types.resourceType === 'Project' &&
-    (work.types.resourceTypeGeneral === 'Other' ||
-      work.types.resourceTypeGeneral === 'Text')
+    (work.types.resourceType === 'Project' &&
+      (work.types.resourceTypeGeneral === 'Other' ||
+        work.types.resourceTypeGeneral === 'Text')) ||
+    work.types.resourceTypeGeneral === 'Project'
   )
 }
 
