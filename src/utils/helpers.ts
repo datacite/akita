@@ -51,16 +51,6 @@ export function isProject(work: WorkMetadata) {
   )
 }
 
-export function isAwardGrant(work: WorkMetadata) {
-  return (
-    (work.types.resourceType === 'Award' ||
-      work.types.resourceType === 'Grant') &&
-    (work.types.resourceTypeGeneral === 'Other' ||
-      work.types.resourceTypeGeneral === 'Text')
-  )
-}
-
-
 function getTotalCount(sum: number, data: HorizontalBarRecord) { return sum + data.count }
 
 export function getTopFive(data: HorizontalBarRecord[]) {
