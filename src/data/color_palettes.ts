@@ -7,6 +7,7 @@ export const otherRange = [ 'gray', 'black' ]
 export const resourceTypeDomain = [
 	...otherDomain,
   'Audiovisual',
+  'Award',
   'Book',
   'Book Chapter',
   'Collection',
@@ -44,6 +45,7 @@ export const resourceTypeDomain = [
 export const resourceTypeRange = [
 	...otherRange,
 	'#AEC7E8',
+  '#D4AF37',
 	'#FF7F0E',
 	'#FFBB78',
 	'#D62728',
