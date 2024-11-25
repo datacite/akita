@@ -4,12 +4,20 @@ import { WorkMetadata, Work } from 'src/data/types'
 import { workFragment } from 'src/data/queries/queryFragments'
 import ISO6391 from 'iso-639-1'
 
+interface Repository {
+  id: string
+  attributes: {
+    name: string
+  }
+}
+
 export async function fetchDoi(id: string) {
   try {
     const options = {
       method: 'GET',
       headers: { accept: 'application/vnd.api+json' }
     }
+    // create search parameters
     const searchParams = new URLSearchParams({
       query: 'uid:' + id,
       include: 'client',
@@ -25,14 +33,19 @@ export async function fetchDoi(id: string) {
     )
     const json = await res.json()
 
+    //Check for errors
     if (json.meta.total === 0) throw new Error('No work found')
     if (json.meta.total > 1) throw new Error('Multiple works found')
 
+    // Convert to QueryData
     const work = json.data[0]
     const attrs = work.attributes
-    const repo = json.included.find(
-      (r) => r.id === work.relationships.client.data.id
-    )
+    const repo =
+      work.relationships.client.data && json.included
+        ? json.included.find(
+            (r: Repository) => r.id === work.relationships.client.data.id
+          ) || null
+        : null
 
     const data: QueryData = {
       work: {
@@ -47,7 +60,9 @@ export async function fetchDoi(id: string) {
           id: attrs.agency,
           name: REGISTRATION_AGENCIES[attrs.agency]
         },
-        repository: { id: repo.id, name: repo.attributes.name },
+        repository: repo
+          ? { id: repo.id, name: repo.attributes.name }
+          : { id: '', name: '' },
         schemaOrg: ''
       }
     }
