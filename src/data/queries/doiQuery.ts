@@ -11,21 +11,54 @@ interface Repository {
   }
 }
 
+function buildDoiSearchParams(id: string): URLSearchParams {
+  return new URLSearchParams({
+    query: 'uid:' + id,
+    include: 'client',
+    affiliation: 'false',
+    publisher: 'true',
+    'disable-facets': 'true',
+    include_other_registration_agencies: 'true'
+  })
+}
+
+function convertToQueryData(work: any, included: any[]): QueryData {
+  const attrs = work.attributes
+  const repo =
+    work.relationships.client.data && included
+      ? included.find(
+          (r: Repository) => r.id === work.relationships.client.data.id
+        ) || null
+      : null
+
+  return {
+    work: {
+      ...attrs,
+      id: ID_BASE + work.id,
+      language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
+      rights: attrs.rightsList,
+      creators: mapPeople(attrs.creators),
+      contributors: mapPeople(attrs.contributors),
+      fieldsOfScience: extractFOS(attrs.subjects),
+      registrationAgency: {
+        id: attrs.agency,
+        name: REGISTRATION_AGENCIES[attrs.agency]
+      },
+      repository: repo
+        ? { id: repo.id, name: repo.attributes.name }
+        : { id: '', name: '' },
+      schemaOrg: ''
+    }
+  }
+}
+
 export async function fetchDoi(id: string) {
   try {
     const options = {
       method: 'GET',
       headers: { accept: 'application/vnd.api+json' }
     }
-    // create search parameters
-    const searchParams = new URLSearchParams({
-      query: 'uid:' + id,
-      include: 'client',
-      affiliation: 'false',
-      publisher: 'true',
-      'disable-facets': 'true',
-      include_other_registration_agencies: 'true'
-    })
+    const searchParams = buildDoiSearchParams(id)
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
@@ -33,40 +66,10 @@ export async function fetchDoi(id: string) {
     )
     const json = await res.json()
 
-    //Check for errors
     if (json.meta.total === 0) throw new Error('No work found')
     if (json.meta.total > 1) throw new Error('Multiple works found')
 
-    // Convert to QueryData
-    const work = json.data[0]
-    const attrs = work.attributes
-    const repo =
-      work.relationships.client.data && json.included
-        ? json.included.find(
-            (r: Repository) => r.id === work.relationships.client.data.id
-          ) || null
-        : null
-
-    const data: QueryData = {
-      work: {
-        ...attrs,
-        id: ID_BASE + work.id,
-        language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
-        rights: attrs.rightsList,
-        creators: mapPeople(attrs.creators),
-        contributors: mapPeople(attrs.contributors),
-        fieldsOfScience: extractFOS(attrs.subjects),
-        registrationAgency: {
-          id: attrs.agency,
-          name: REGISTRATION_AGENCIES[attrs.agency]
-        },
-        repository: repo
-          ? { id: repo.id, name: repo.attributes.name }
-          : { id: '', name: '' },
-        schemaOrg: ''
-      }
-    }
-
+    const data = convertToQueryData(json.data[0], json.included)
     return { data }
   } catch (error) {
     return { error }
