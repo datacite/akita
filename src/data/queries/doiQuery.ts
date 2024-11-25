@@ -4,10 +4,12 @@ import { WorkMetadata, Work } from 'src/data/types'
 import { workFragment } from 'src/data/queries/queryFragments'
 import ISO6391 from 'iso-639-1'
 
-
 export async function fetchDoi(id: string) {
   try {
-    const options = { method: 'GET', headers: { accept: 'application/vnd.api+json' } };
+    const options = {
+      method: 'GET',
+      headers: { accept: 'application/vnd.api+json' }
+    }
     const searchParams = new URLSearchParams({
       query: 'uid:' + id,
       include: 'client',
@@ -17,7 +19,10 @@ export async function fetchDoi(id: string) {
       include_other_registration_agencies: 'true'
     })
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`, options)
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+      options
+    )
     const json = await res.json()
 
     if (json.meta.total === 0) throw new Error('No work found')
@@ -25,7 +30,9 @@ export async function fetchDoi(id: string) {
 
     const work = json.data[0]
     const attrs = work.attributes
-    const repo = json.included.find(r => r.id === work.relationships.client.data.id)
+    const repo = json.included.find(
+      (r) => r.id === work.relationships.client.data.id
+    )
 
     const data: QueryData = {
       work: {
@@ -36,20 +43,20 @@ export async function fetchDoi(id: string) {
         creators: mapPeople(attrs.creators),
         contributors: mapPeople(attrs.contributors),
         fieldsOfScience: extractFOS(attrs.subjects),
-        registrationAgency: { id: attrs.agency, name: REGISTRATION_AGENCIES[attrs.agency] },
+        registrationAgency: {
+          id: attrs.agency,
+          name: REGISTRATION_AGENCIES[attrs.agency]
+        },
         repository: { id: repo.id, name: repo.attributes.name },
-        schemaOrg: '',
+        schemaOrg: ''
       }
     }
 
     return { data }
-
   } catch (error) {
     return { error }
   }
 }
-
-
 
 export async function fetchDoiGQL(id: string) {
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
@@ -147,47 +154,49 @@ export interface QueryVar {
   id: string
 }
 
-
-
-const ID_BASE = process.env.ENV === 'PROD' ? 'https://doi.org/' : 'https://handle.stage.datacite.org/'
+const ID_BASE =
+  process.env.ENV === 'PROD'
+    ? 'https://doi.org/'
+    : 'https://handle.stage.datacite.org/'
 
 const REGISTRATION_AGENCIES = {
-  "airiti": "Airiti",
-  "cnki": "CNKI",
-  "crossref": "Crossref",
-  "datacite": "DataCite",
-  "istic": "ISTIC",
-  "jalc": "JaLC",
-  "kisti": "KISTI",
-  "medra": "mEDRA",
-  "op": "OP"
+  airiti: 'Airiti',
+  cnki: 'CNKI',
+  crossref: 'Crossref',
+  datacite: 'DataCite',
+  istic: 'ISTIC',
+  jalc: 'JaLC',
+  kisti: 'KISTI',
+  medra: 'mEDRA',
+  op: 'OP'
 }
-
-
 
 function extractFOS(subjects: any) {
   const fos = subjects
-    .filter(s => s.subject.startsWith('FOS: '))
+    .filter((s) => s.subject.startsWith('FOS: '))
     .map(({ subject: s }) => ({ id: kebabify(s.slice(5)), name: s.slice(5) }))
 
-  const uniqueFOS = Array.from(new Set(fos.map(f => f.id))).map(id => fos.find(f => f.id === id))
+  const uniqueFOS = Array.from(new Set(fos.map((f) => f.id))).map((id) =>
+    fos.find((f) => f.id === id)
+  )
   return uniqueFOS
 }
 
-
 function mapPeople(people: any[]) {
-  return people.map(p => {
+  return people.map((p) => {
     return {
       ...p,
-      affiliation: p.affiliation.map(a => ({ ...a, id: a.affiliationIdentifier })),
-      id: p.nameIdentifiers[0]?.nameIdentifier || '',
+      affiliation: p.affiliation.map((a) => ({
+        ...a,
+        id: a.affiliationIdentifier
+      })),
+      id: p.nameIdentifiers[0]?.nameIdentifier || ''
     }
   })
 }
 
-
 function kebabify(input: string): string {
   return input
     .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert a dash between lowercase and uppercase letters
-    .toLowerCase();
+    .toLowerCase()
 }
