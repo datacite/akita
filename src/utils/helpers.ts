@@ -45,21 +45,12 @@ export function isDMP(work: WorkMetadata) {
 
 export function isProject(work: WorkMetadata) {
   return (
-    work.types.resourceType === 'Project' &&
-    (work.types.resourceTypeGeneral === 'Other' ||
-      work.types.resourceTypeGeneral === 'Text')
+    (work.types.resourceType === 'Project' &&
+      (work.types.resourceTypeGeneral === 'Other' ||
+        work.types.resourceTypeGeneral === 'Text')) ||
+    work.types.resourceTypeGeneral === 'Project'
   )
 }
-
-export function isAwardGrant(work: WorkMetadata) {
-  return (
-    (work.types.resourceType === 'Award' ||
-      work.types.resourceType === 'Grant') &&
-    (work.types.resourceTypeGeneral === 'Other' ||
-      work.types.resourceTypeGeneral === 'Text')
-  )
-}
-
 
 function getTotalCount(sum: number, data: HorizontalBarRecord) { return sum + data.count }
 
