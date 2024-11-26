@@ -8,7 +8,7 @@ import { rorFromUrl } from 'src/utils/helpers'
 
 import { fetchCrossrefFunder } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
-import { fetchDoiMetadata } from 'src/data/queries/doiQuery'
+import { fetchDoi } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
@@ -25,7 +25,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doi = decodeURIComponent(params.doi.join('/'))
 
-  const { data } = await fetchDoiMetadata(doi)
+  const { data } = await fetchDoi(doi)
 
   if (!data) return {
     title: '',
@@ -96,7 +96,7 @@ export default async function Page({ params }: Props) {
 
 
   // Fetch DOI metadata
-  const { data } = await fetchDoiMetadata(doi)
+  const { data } = await fetchDoi(doi)
 
   if (!data) notFound()
 
