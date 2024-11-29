@@ -2,14 +2,7 @@ import { gql } from '@apollo/client'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { WorkMetadata, Work } from 'src/data/types'
 import { workFragment } from 'src/data/queries/queryFragments'
-import ISO6391 from 'iso-639-1'
-
-interface Repository {
-  id: string
-  attributes: {
-    name: string
-  }
-}
+import { mapJsonToWork } from 'src/utils/helpers'
 
 function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
@@ -23,32 +16,8 @@ function buildDoiSearchParams(id: string): URLSearchParams {
 }
 
 function convertToQueryData(work: any, included: any[]): QueryData {
-  const attrs = work.attributes
-  const repo =
-    work.relationships.client.data && included
-      ? included.find(
-          (r: Repository) => r.id === work.relationships.client.data.id
-        ) || null
-      : null
-
   return {
-    work: {
-      ...attrs,
-      id: ID_BASE + work.id,
-      language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
-      rights: attrs.rightsList,
-      creators: mapPeople(attrs.creators),
-      contributors: mapPeople(attrs.contributors),
-      fieldsOfScience: extractFOS(attrs.subjects),
-      registrationAgency: {
-        id: attrs.agency,
-        name: REGISTRATION_AGENCIES[attrs.agency]
-      },
-      repository: repo
-        ? { id: repo.id, name: repo.attributes.name }
-        : { id: '', name: '' },
-      schemaOrg: ''
-    }
+    work: mapJsonToWork(work, included)
   }
 }
 
@@ -170,51 +139,4 @@ export interface QueryData {
 
 export interface QueryVar {
   id: string
-}
-
-const ID_BASE =
-  process.env.ENV === 'PROD'
-    ? 'https://doi.org/'
-    : 'https://handle.stage.datacite.org/'
-
-const REGISTRATION_AGENCIES = {
-  airiti: 'Airiti',
-  cnki: 'CNKI',
-  crossref: 'Crossref',
-  datacite: 'DataCite',
-  istic: 'ISTIC',
-  jalc: 'JaLC',
-  kisti: 'KISTI',
-  medra: 'mEDRA',
-  op: 'OP'
-}
-
-function extractFOS(subjects: any) {
-  const fos = subjects
-    .filter((s) => s.subject.startsWith('FOS: '))
-    .map(({ subject: s }) => ({ id: kebabify(s.slice(5)), name: s.slice(5) }))
-
-  const uniqueFOS = Array.from(new Set(fos.map((f) => f.id))).map((id) =>
-    fos.find((f) => f.id === id)
-  )
-  return uniqueFOS
-}
-
-function mapPeople(people: any[]) {
-  return people.map((p) => {
-    return {
-      ...p,
-      affiliation: p.affiliation.map((a) => ({
-        ...a,
-        id: a.affiliationIdentifier
-      })),
-      id: p.nameIdentifiers[0]?.nameIdentifier || ''
-    }
-  })
-}
-
-function kebabify(input: string): string {
-  return input
-    .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert a dash between lowercase and uppercase letters
-    .toLowerCase()
 }
