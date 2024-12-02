@@ -27,8 +27,8 @@ function convertToQueryData(work: any, included: any[]): QueryData {
   const repo =
     work.relationships.client.data && included
       ? included.find(
-          (r: Repository) => r.id === work.relationships.client.data.id
-        ) || null
+        (r: Repository) => r.id === work.relationships.client.data.id
+      ) || null
       : null
 
   return {
@@ -66,8 +66,9 @@ export async function fetchDoi(id: string) {
     )
     const json = await res.json()
 
-    if (json.meta.total === 0) throw new Error('No work found')
-    if (json.meta.total > 1) throw new Error('Multiple works found')
+    if (json.meta.total === 0) throw new Error('No works found')
+    // Don't throw this error until https://github.com/datacite/datacite/issues/1836 gets resolved
+    // if (json.meta.total > 1) throw new Error('Multiple works found')
 
     const data = convertToQueryData(json.data[0], json.included)
     return { data }
