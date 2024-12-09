@@ -667,3 +667,14 @@ h4.work {
 .badge {
   font-size: 18px;
 }
+
+
+.page-link, .page-link:hover {
+  color: rgb(52, 73, 94) !important;
+  background-color: white;
+}
+
+.pagination a:hover {
+    color: rgb(52, 73, 94) !important;
+    border-color: #e67e22 !important;
+}
