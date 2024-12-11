@@ -74,15 +74,15 @@ export async function fetchDois(variables: QueryVar) {
   }
 }
 
-// Temporary name until all the related works also use the REST API
-export function useSearchDoiQueryREST(variables: QueryVar) {
+
+export function useSearchDoiQuery(variables: QueryVar) {
   const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables], queryFn: async () => fetchDois(variables) })
 
   return { loading: isPending, data: data?.data, error }
 }
 
 
-export function useSearchDoiQuery(variables: QueryVar) {
+export function useSearchDoiQueryGQL(variables: QueryVar) {
   const { loading, data, error } = useGQLQuery<QueryData, QueryVar>(
     SEARCH_DOI_QUERY,
     {
