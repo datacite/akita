@@ -10,7 +10,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
     include: 'client',
     affiliation: 'false',
     publisher: 'false',
-    // 'disable-facets': 'false',
+    'disable-facets': 'true',
     include_other_registration_agencies: 'true'
   })
 
@@ -31,24 +31,11 @@ function convertToQueryData(json: any): QueryData {
   const nodes = json.data as any[]
   const { included, meta, links } = json
 
-  // Missing authors, creators & contributors, language, registration agency, repositories, and multilevel
   return {
     works: {
       totalCount: meta.total,
       pageInfo: getPageInfo(links),
-      published: meta.published,
-      resourceTypes: meta.resourceTypes.slice(0, 10),
-      languages: [].slice(0, 10),
-      licenses: meta.licenses.slice(0, 10),
-      fieldsOfScience: meta.fieldsOfScience.slice(0, 10),
-      affiliations: meta.affiliations,
-      repositories: [],
-      registrationAgencies: [],
-      authors: [].slice(0, 10),
-      creatorsAndContributors: [].slice(0, 10),
-
       nodes: nodes.map(w => mapJsonToWork(w, included)),
-      personToWorkTypesMultilevel: []
     }
   }
 }
@@ -130,7 +117,7 @@ export const SEARCH_DOI_QUERY = gql`
 
 
 export interface QueryData {
-  works: Works
+  works: Pick<Works, 'nodes' | 'totalCount' | 'pageInfo'>
 }
 
 export interface QueryVar {
