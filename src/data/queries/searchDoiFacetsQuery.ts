@@ -3,12 +3,28 @@ import type { Works } from 'src/data/types'
 import type { QueryVar } from './searchDoiQuery'
 
 
+const FACETS = [
+  'published',
+  'resourceTypes',
+  'languages',
+  'licenses',
+  'fieldsOfScience',
+  'affiliations',
+  'repositories',
+  'registrationAgencies',
+  'authors',
+  'creatorsAndContributors',
+  // personToWorkTypesMultilevel: []
+]
+
+
 function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
     query: variables.query,
+    facets: FACETS.join(','),
     affiliation: 'false',
     publisher: 'false',
-    // 'disable-facets': 'false',
+    'disable-facets': 'false',
     include_other_registration_agencies: 'true',
     'page[size]': '0'
   })
@@ -28,19 +44,19 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
 function convertToQueryData(json: any): QueryData {
   const { meta } = json
 
-  // Missing authors, creators & contributors, language, registration agency, repositories, and multilevel
+  // Missing authors, repositories, and multilevel
   return {
     works: {
       published: meta.published,
       resourceTypes: meta.resourceTypes.slice(0, 10),
-      languages: [].slice(0, 10),
+      languages: meta.languages.slice(0, 10),
       licenses: meta.licenses.slice(0, 10),
       fieldsOfScience: meta.fieldsOfScience.slice(0, 10),
       affiliations: meta.affiliations,
       repositories: [],
-      registrationAgencies: [],
+      registrationAgencies: meta.registrationAgencies,
       authors: [].slice(0, 10),
-      creatorsAndContributors: [].slice(0, 10),
+      creatorsAndContributors: meta.creatorsAndContributors.slice(0, 10),
 
       personToWorkTypesMultilevel: []
     }
