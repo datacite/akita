@@ -88,6 +88,7 @@ export async function fetchDoisFacets(variables: QueryVar) {
 }
 
 export function useSearchDoiFacetsQuery(variables: QueryVar) {
+  // eslint-disable-next-line no-unused-vars
   const { cursor, ...vars } = variables
   const { isPending, data, error } = useQuery({ queryKey: ['doiFacetsSearch', vars], queryFn: async () => fetchDoisFacets(variables) })
 
