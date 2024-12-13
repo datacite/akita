@@ -35,7 +35,7 @@ export default function SearchWork(props: Props) {
   const works = { ...data?.works, ...facets.data?.works } as Works
 
 
-  if (!works || works.nodes.length == 0) return (
+  if (!works?.nodes || works.nodes.length == 0) return (
     <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
         <Alert variant="warning">No works found.</Alert>

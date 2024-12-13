@@ -19,8 +19,12 @@ const FACETS = [
 
 
 function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
+  const query = variables.query +
+    (variables.language ? ' AND language:' + variables.language : '') +
+    (variables.registrationAgency ? ' AND agency:' + variables.registrationAgency : '')
+
   const searchParams = new URLSearchParams({
-    query: variables.query,
+    query,
     facets: FACETS.join(','),
     affiliation: 'false',
     publisher: 'false',
@@ -34,8 +38,6 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   if (variables.published) searchParams.append('published', variables.published)
   if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  // if (variables.registrationAgency) searchParams.append('registration-agency', variables.registrationAgency)
-  // if (variables.language) searchParams.append('language', variables.language)
 
   return searchParams
 }
