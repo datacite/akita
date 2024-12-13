@@ -69,6 +69,11 @@ export type Works = {
   licenses: Facet[]
   fieldsOfScience: Facet[]
   registrationAgencies: Facet[]
+  repositories?: Facet[]
+  affiliations?: Facet[]
+  authors?: Facet[]
+  creatorsAndContributors?: Facet[]
+
   nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]
 }
