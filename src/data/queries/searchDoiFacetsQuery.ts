@@ -78,7 +78,6 @@ export async function fetchDoisFacets(variables: QueryVar) {
       options
     )
     const json = await res.json()
-    console.log(json)
 
     const data = convertToQueryData(json)
     return { data }

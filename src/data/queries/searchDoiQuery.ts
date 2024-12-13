@@ -9,7 +9,6 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
     (variables.language ? ' AND language:' + variables.language : '') +
     (variables.registrationAgency ? ' AND agency:' + variables.registrationAgency : '')
 
-  console.log(query)
   const searchParams = new URLSearchParams({
     query,
     include: 'client',
@@ -81,7 +80,6 @@ export function useSearchDoiQueryGQL(variables: QueryVar) {
     }
   )
 
-  console.log(data)
   return { loading, data, error }
 }
 
