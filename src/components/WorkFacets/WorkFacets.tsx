@@ -66,7 +66,7 @@ export default function WorkFacets({
     '--bs-accordion-btn-color': '#1abc9c',
     '--bs-accordion-active-color': '#1abc9c',
     '--bs-accordion-active-bg': 'transparent',
-  };
+  } as React.CSSProperties;
 
   const defaultActiveKeys = [ "authors-facets", "connection-type-facets", "published-facets", "work-type-facets", "license-facets", "language-facets", "field-of-science-facets", "registration-agency-facets" ]
 
