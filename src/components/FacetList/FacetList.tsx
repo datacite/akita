@@ -1,14 +1,15 @@
 'use client'
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacetListItem from './FacetListItem'
 import { Facet } from 'src/data/types'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import ListGroup from 'react-bootstrap/ListGroup';
+import Accordion from 'react-bootstrap/Accordion';
+import styles from './FacetList.module.scss'
 
 
 interface FacetListProps {
@@ -26,32 +27,36 @@ interface FacetListProps {
   tooltipText?: string
 }
 
+// Custom InfoTooltip component
+const InfoTooltip = ({ text }) => (
+  <OverlayTrigger
+    placement="top"
+    overlay={<Tooltip>{text}</Tooltip>}
+  >
+    <span
+      onClick={(e) => e.stopPropagation()}
+      className="ms-2"
+      style={{ cursor: 'help' }}
+    > <FontAwesomeIcon icon={faQuestionCircle} />
+    </span>
+  </OverlayTrigger>
+);
+
 export default function FacetList(props: FacetListProps) {
   const { data, title, id, param, url, value, checked, radio } = props
   if (!data || data.length === 0) return null
 
-  function Title() {
-    if (!props.tooltipText) return <Col xs={12}><h4>{title}</h4></Col>
-
-    return (
-      <Col xs={12}>
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip id="tooltipAuthors">{props.tooltipText}</Tooltip>}
-        >
-          <h4>{title} <FontAwesomeIcon icon={faQuestionCircle} /></h4>
-        </OverlayTrigger>
-      </Col>
-    )
-  }
-
   return (
-    <Row className={`panel facets add ${id}`}>
-      <Title />
-      <Col xs={12} as="ul">
+    <Accordion.Item key={'facet-list-' + id} eventKey={id}>
+      <Accordion.Header className={styles.facetheader} as="h4">
+        {title}
+        {props.tooltipText && <InfoTooltip text={props.tooltipText} /> }
+      </Accordion.Header>
+      <Accordion.Body>
+      <ListGroup as="ul" variant="flush">
         {data.map((facet, i) => (
           <FacetListItem
-            key={facet.id}
+            key={'facet-item- ' +id + '-' + i}
             facet={facet}
             param={param}
             url={url}
@@ -60,7 +65,8 @@ export default function FacetList(props: FacetListProps) {
             radio={radio}
           />
         ))}
-      </Col>
-    </Row>
+      </ListGroup>
+      </Accordion.Body>
+    </Accordion.Item>
   )
 }
