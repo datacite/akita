@@ -1,3 +1,19 @@
 .checkbox {
 	margin-left: 15px;
 }
+
+.facetlink, .facetlink:hover, .facetlink:visited, .facetlink:active, .facetlink:link {
+  display: flex;
+  align-items: center;
+      color: #88939a;
+
+  .facetTitle {
+    flex-grow:1;
+    padding-left: 1rem;
+    text-wrap: balance;
+  }
+}
+
+.facetlink:hover {
+  background-color: #f7f7f7;
+}

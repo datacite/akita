@@ -8,6 +8,7 @@ import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
+import Accordion from 'react-bootstrap/Accordion';
 
 interface Props {
   data: Facets
@@ -63,6 +64,15 @@ export default function WorkFacets({
   const isConnectionTypeSet = searchParams?.has('connection-type')
   const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
+  const accordionStyle = {
+    '--bs-accordion-border-width': '0',
+    '--bs-accordion-btn-color': '#1abc9c',
+    '--bs-accordion-active-color': '#1abc9c',
+    '--bs-accordion-active-bg': 'transparent',
+  };
+
+  const defaultActiveKeys = [ "authors-facets", "connection-type-facets", "published-facets", "work-type-facets", "license-facets", "language-facets", "field-of-science-facets", "registration-agency-facets" ]
+
   return (
     <>
       {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
@@ -73,6 +83,12 @@ export default function WorkFacets({
         </Row>
       )}
 
+      <Accordion
+        className={`facetlist-group`}
+        alwaysOpen
+        defaultActiveKey={defaultActiveKeys}
+        style={accordionStyle}
+      >
       {totalConnectionTypeCount > 0 && (
         <FacetList
           data={connectionTypeList.filter(f => f.count > 0)}
@@ -97,6 +113,8 @@ export default function WorkFacets({
         id="published-facets"
         param="published"
         url={url}
+        radio
+        tooltipText="Filter by Publication Year"
       />
 
       <FacetList
@@ -138,7 +156,7 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
-
+      </Accordion>
     </>
   )
 }
