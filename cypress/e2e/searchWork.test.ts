@@ -22,7 +22,7 @@ describe('Search Works', () => {
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
       // all facets are rendered
-      .get('.facet-group-list')
+      .get('.facetlist-group')
       .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(4)
