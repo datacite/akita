@@ -47,7 +47,8 @@ export default function FacetList(props: FacetListProps) {
   if (!data || data.length === 0) return null
 
   return (
-    <Accordion.Item key={'facet-list-' + id} eventKey={id}>
+    <Accordion.Item key={'facet-list-' + id} eventKey={id}
+    className={id}>
       <Accordion.Header className={styles.facetheader} as="h4">
         {title}
         {props.tooltipText && <InfoTooltip text={props.tooltipText} /> }
