@@ -143,7 +143,7 @@ export default function WorkFacets({
       <FacetList
         data={data.clientTypes}
         title="Repository Type"
-        id="client-type-facets"
+        id="repository-type-facets"
         param="repository-type"
         tooltipText='The type of DataCite Repository where a DOI is stored.'
         url={url}
