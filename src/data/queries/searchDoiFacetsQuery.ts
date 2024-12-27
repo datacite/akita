@@ -14,6 +14,7 @@ const FACETS = [
   'registrationAgencies',
   'authors',
   'creatorsAndContributors',
+  'clientTypes',
   // personToWorkTypesMultilevel: []
 ]
 
@@ -38,6 +39,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   if (variables.published) searchParams.append('published', variables.published)
   if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
+  if (variables.clientType) searchParams.append('client-type', variables.clientType)
 
   return searchParams
 }
@@ -59,7 +61,7 @@ function convertToQueryData(json: any): QueryData {
       registrationAgencies: meta.registrationAgencies,
       authors: [].slice(0, 10),
       creatorsAndContributors: meta.creatorsAndContributors.slice(0, 10),
-
+      clientTypes: meta.clientTypes.slice(0, 10),
       personToWorkTypesMultilevel: []
     }
   }

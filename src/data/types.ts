@@ -73,6 +73,7 @@ export type Works = {
   affiliations?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clientTypes?: Facet[]
 
   nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]
