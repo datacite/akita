@@ -172,10 +172,7 @@ export function mapJsonToWork(json: any, included: any[]) {
 
 
 
-const ID_BASE =
-  process.env.ENV === 'PROD'
-    ? 'https://doi.org/'
-    : 'https://handle.stage.datacite.org/'
+const ID_BASE = process.env.NEXT_PUBLIC_ID_BASE || 'https://handle.stage.datacite.org/'
 
 const REGISTRATION_AGENCIES = {
   airiti: 'Airiti',
@@ -188,5 +185,3 @@ const REGISTRATION_AGENCIES = {
   medra: 'mEDRA',
   op: 'OP'
 }
-
-
