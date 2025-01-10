@@ -26,6 +26,15 @@ export function buildQuery(variables: QueryVar): string {
   return query
 }
 
+
+export function appendFacets(variables: QueryVar, searchParams: URLSearchParams) {
+  if (variables.license) searchParams.append('license', variables.license)
+  if (variables.published) searchParams.append('published', variables.published)
+  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
+  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
+  if (variables.clientType) searchParams.append('client-type', variables.clientType)
+}
+
 function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
     query: buildQuery(variables),
@@ -38,12 +47,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
 
 
   searchParams.append('page[cursor]', variables.cursor || '1')
-  if (variables.license) searchParams.append('license', variables.license)
-  if (variables.published) searchParams.append('published', variables.published)
-  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
-  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  if (variables.clientType) searchParams.append('client-type', variables.clientType)
-
+  appendFacets(variables, searchParams)
   return searchParams
 }
 

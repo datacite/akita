@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Works } from 'src/data/types'
-import { buildQuery, type QueryVar } from './searchDoiQuery'
+import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
 
 
 const FACETS = [
@@ -30,12 +30,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
     'page[size]': '0'
   })
 
-
-  if (variables.license) searchParams.append('license', variables.license)
-  if (variables.published) searchParams.append('published', variables.published)
-  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
-  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  if (variables.clientType) searchParams.append('client-type', variables.clientType)
+  appendFacets(variables, searchParams)
 
   return searchParams
 }
