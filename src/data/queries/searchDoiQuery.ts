@@ -5,8 +5,8 @@ import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
 
 
-function buildOrgQuery(rorId: string | undefined): string | undefined {
-  if (!rorId) return undefined
+function buildOrgQuery(rorId: string | undefined): string {
+  if (!rorId) return ''
 
   const id = 'ror.org/' + rorId
   const urlId = `"https://${id}"`
@@ -14,7 +14,13 @@ function buildOrgQuery(rorId: string | undefined): string | undefined {
 }
 
 export function buildQuery(variables: QueryVar): string {
-  const queryParts = [variables.query, buildOrgQuery(variables.rorId), variables.language, variables.registrationAgency, variables.filterQuery].filter(p => p)
+  const queryParts = [
+    variables.query,
+    buildOrgQuery(variables.rorId),
+    variables.language ? `language:${variables.language}` : '',
+    variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
+    variables.filterQuery
+  ].filter(Boolean);
   const query = queryParts.join(' AND ')
 
   return query
