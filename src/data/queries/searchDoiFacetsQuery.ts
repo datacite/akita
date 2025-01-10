@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Works } from 'src/data/types'
-import type { QueryVar } from './searchDoiQuery'
+import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
 
 
 const FACETS = [
@@ -20,12 +20,8 @@ const FACETS = [
 
 
 function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
-  const query = variables.query +
-    (variables.language ? ' AND language:' + variables.language : '') +
-    (variables.registrationAgency ? ' AND agency:' + variables.registrationAgency : '')
-
   const searchParams = new URLSearchParams({
-    query,
+    query: buildQuery(variables),
     facets: FACETS.join(','),
     affiliation: 'false',
     publisher: 'false',
@@ -34,12 +30,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
     'page[size]': '0'
   })
 
-
-  if (variables.license) searchParams.append('license', variables.license)
-  if (variables.published) searchParams.append('published', variables.published)
-  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
-  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  if (variables.clientType) searchParams.append('client-type', variables.clientType)
+  appendFacets(variables, searchParams)
 
   return searchParams
 }
@@ -91,7 +82,7 @@ export async function fetchDoisFacets(variables: QueryVar) {
 export function useSearchDoiFacetsQuery(variables: QueryVar) {
   // eslint-disable-next-line no-unused-vars
   const { cursor, ...vars } = variables
-  const { isPending, data, error } = useQuery({ queryKey: ['doiFacetsSearch', vars], queryFn: async () => fetchDoisFacets(variables) })
+  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', vars, 'facets'], queryFn: async () => fetchDoisFacets(variables) })
 
   return { loading: isPending, data: data?.data, error }
 }

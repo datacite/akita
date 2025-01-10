@@ -4,13 +4,40 @@ import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
 
-function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
-  const query = variables.query +
-    (variables.language ? ' AND language:' + variables.language : '') +
-    (variables.registrationAgency ? ' AND agency:' + variables.registrationAgency : '')
 
+function buildOrgQuery(rorId: string | undefined): string {
+  if (!rorId) return ''
+
+  const id = 'ror.org/' + rorId
+  const urlId = `"https://${id}"`
+  return `(organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId})`
+}
+
+export function buildQuery(variables: QueryVar): string {
+  const queryParts = [
+    variables.query,
+    buildOrgQuery(variables.rorId),
+    variables.language ? `language:${variables.language}` : '',
+    variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
+    variables.filterQuery
+  ].filter(Boolean);
+  const query = queryParts.join(' AND ')
+
+  return query
+}
+
+
+export function appendFacets(variables: QueryVar, searchParams: URLSearchParams) {
+  if (variables.license) searchParams.append('license', variables.license)
+  if (variables.published) searchParams.append('published', variables.published)
+  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
+  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
+  if (variables.clientType) searchParams.append('client-type', variables.clientType)
+}
+
+function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
-    query,
+    query: buildQuery(variables),
     include: 'client',
     affiliation: 'false',
     publisher: 'false',
@@ -20,12 +47,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
 
 
   searchParams.append('page[cursor]', variables.cursor || '1')
-  if (variables.license) searchParams.append('license', variables.license)
-  if (variables.published) searchParams.append('published', variables.published)
-  if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
-  if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  if (variables.clientType) searchParams.append('client-type', variables.clientType)
-
+  appendFacets(variables, searchParams)
   return searchParams
 }
 
@@ -123,7 +145,9 @@ export interface QueryData {
 }
 
 export interface QueryVar {
-  query: string
+  query?: string
+  filterQuery?: string
+  rorId?: string
   cursor?: string
   published?: string
   resourceTypeId?: string
