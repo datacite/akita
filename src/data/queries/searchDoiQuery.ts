@@ -4,13 +4,25 @@ import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
 
-function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
-  const query = variables.query +
-    (variables.language ? ' AND language:' + variables.language : '') +
-    (variables.registrationAgency ? ' AND agency:' + variables.registrationAgency : '')
 
+function buildOrgQuery(rorId: string | undefined): string | undefined {
+  if (!rorId) return undefined
+
+  const id = 'ror.org/' + rorId
+  const urlId = `"https://${id}"`
+  return `(organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId})`
+}
+
+export function buildQuery(variables: QueryVar): string {
+  const queryParts = [variables.query, buildOrgQuery(variables.rorId), variables.language, variables.registrationAgency, variables.filterQuery].filter(p => p)
+  const query = queryParts.join(' AND ')
+
+  return query
+}
+
+function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
-    query,
+    query: buildQuery(variables),
     include: 'client',
     affiliation: 'false',
     publisher: 'false',
@@ -123,7 +135,9 @@ export interface QueryData {
 }
 
 export interface QueryVar {
-  query: string
+  query?: string
+  filterQuery?: string
+  rorId?: string
   cursor?: string
   published?: string
   resourceTypeId?: string

@@ -20,12 +20,12 @@ interface Props {
 
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
-  const rorid = useParams().rorid as string
+  const rorId = useParams().rorid as string
 
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { id: rorid, ...variables }
+  const vars = { rorId, ...variables }
   const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
 
   if (isBot) return null
@@ -66,7 +66,7 @@ export default function RelatedContent(props: Props) {
         hasPagination={relatedWorks.totalCount > 25}
         hasNextPage={hasNextPage}
         model={'organization'}
-        url={'/ror.org/' + vars.id + '/?'}
+        url={'/ror.org/' + vars.rorId + '/?'}
         endCursor={endCursor}
       />
     </Container>
