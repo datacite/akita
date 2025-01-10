@@ -8,7 +8,7 @@ import { useSearchDoiFacetsQuery } from "./searchDoiFacetsQuery";
 export function useOrganizationRelatedContentQuery(variables: QueryVar) {
   const id = 'ror.org/' + variables.id
   const rorId = `"https://${id}"`
-  const query = `organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${rorId}` + (variables.filterQuery ? ' AND ' + variables.filterQuery : '')
+  const query = `(organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${rorId})` + (variables.filterQuery ? ' AND ' + variables.filterQuery : '')
 
   const vars = { ...variables, query }
   const results = useSearchDoiQuery(vars)
