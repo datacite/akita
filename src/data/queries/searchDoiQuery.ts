@@ -24,6 +24,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   if (variables.published) searchParams.append('published', variables.published)
   if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
+  if (variables.clientType) searchParams.append('client-type', variables.clientType)
 
   return searchParams
 }
@@ -130,6 +131,7 @@ export interface QueryVar {
   fieldOfScience?: string
   license?: string
   registrationAgency?: string
+  clientType?: string
 }
 
 

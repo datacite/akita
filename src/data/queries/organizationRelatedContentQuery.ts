@@ -100,6 +100,7 @@ export interface QueryVar {
   fieldOfScience?: string
   license?: string
   registrationAgency?: string
+  clientType?: string
 }
 
 export interface QueryData {

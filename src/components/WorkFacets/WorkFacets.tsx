@@ -28,6 +28,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clientTypes?: Facet[]
   nodes: Work[]
 }
 
@@ -139,6 +140,14 @@ export default function WorkFacets({
         url={url}
       />
 
+      <FacetList
+        data={data.clientTypes}
+        title="Repository Type"
+        id="repository-type-facets"
+        param="repository-type"
+        tooltipText='The type of DataCite Repository where a DOI is stored.'
+        url={url}
+      />
     </>
   )
 }

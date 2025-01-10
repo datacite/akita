@@ -20,7 +20,8 @@ export default async function SearchDoiPage ({ searchParams }: Props) {
     ...vars,
     resourceTypeId: vars['resource-type'],
     fieldOfScience: vars['field-of-science'],
-    registrationAgency: vars['registration-agency']
+    registrationAgency: vars['registration-agency'],
+    clientType: vars['repository-type']
   }
 
   // Show examply text if there is no query
