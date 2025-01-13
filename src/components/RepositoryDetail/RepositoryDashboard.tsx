@@ -69,7 +69,7 @@ export function RepositoryDashboard({ repoId }: Props) {
           domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
           range={[...otherRange, ...licenseRange]}
           tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
-        <VerticalBarChart title="Top Depositors" data={repo.works.creatorsAndContributors || []} />
+        <VerticalBarChart title="Top Creators and Contributors" data={repo.works.creatorsAndContributors || []} />
         <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
         <VerticalBarChart title="Work Languages" data={repo.works.languages} />
       </div>
