@@ -70,11 +70,11 @@ export default async function Page({ params }: Props) {
 
   if (!data) notFound()
 
-  return (
+  return <>
     <Suspense fallback={<Loading />}>
       <Content variables={{ id: repoid }} />
     </Suspense>
-  )
+  </>
 }
 
 

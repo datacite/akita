@@ -42,6 +42,7 @@ function convertToQueryData(json: any): QueryData {
   // Missing authors, repositories, and multilevel
   return {
     works: {
+      totalCount: meta.total,
       published: meta.published,
       resourceTypes: meta.resourceTypes.slice(0, 10),
       languages: meta.languages.slice(0, 10),
@@ -89,5 +90,5 @@ export function useSearchDoiFacetsQuery(variables: QueryVar) {
 
 
 export interface QueryData {
-  works: Omit<Works, 'nodes' | 'totalCount' | 'pageInfo'>
+  works: Omit<Works, 'nodes' | 'pageInfo'>
 }

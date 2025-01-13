@@ -2,31 +2,19 @@ import React from 'react'
 import Link from 'next/link'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
-import VerticalBarChart from 'src/components/VerticalBarChart/VerticalBarChart'
-import ProductionChart from 'src/components/ProductionChart/ProductionChart'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { compactNumbers, getTopFive, toBarRecord } from 'src/utils/helpers'
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import ShareLinks from 'src/components/ShareLinks/ShareLinks';
-import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from 'src/data/color_palettes';
-import HorizontalStackedBarChart from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart';
 import { Repository } from 'src/data/types';
+import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
 
 type Props = {
   repo: Repository
 }
-
-function facetToData(facetList) {
-  return facetList.map((x) => ({
-    title: x.title,
-    count: x.count
-  }))
-}
-
 
 export function RepositorySidebar({ repo }: Props) {
   const gotoButtons = () => {
@@ -97,44 +85,6 @@ export function RepositorySidebar({ repo }: Props) {
 export function RepositoryDetail({ repo }: Props) {
 
 
-  const dashboard = () => {
-    if (repo.works.totalCount < 1) {
-      return (<></>)
-    }
-
-    const works = getTopFive(repo.works.resourceTypes.map(toBarRecord))
-    const licenses = getTopFive(repo.works.licenses.map(toBarRecord))
-
-    return (
-      <>
-        <h3>{compactNumbers(repo.works.totalCount)} Works</h3>
-
-        <div className={styles.grid}>
-          <ProductionChart
-            title="Publication Year"
-            data={facetToData(repo.works.published)}
-          />
-          <HorizontalStackedBarChart
-            chartTitle={'Work Types'}
-            topCategory={{ title: works.topCategory, percent: works.topPercent }}
-            data={facetToData(repo.works.resourceTypes)}
-            domain={resourceTypeDomain}
-            range={resourceTypeRange}
-            tooltipText={'The field resourceType from DOI metadata was used to generate this chart.'} />
-          <HorizontalStackedBarChart
-            chartTitle='Licenses'
-            topCategory={{ title: licenses.topCategory, percent: licenses.topPercent }}
-            data={licenses.data}
-            domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
-            range={[...otherRange, ...licenseRange]}
-            tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
-          <VerticalBarChart title="Top Depositors" data={repo.works.authors} />
-          <VerticalBarChart title="Fields of Science" data={repo.works.fieldsOfScience} />
-          <VerticalBarChart title="Work Languages" data={repo.works.languages} />
-        </div>
-      </>
-    )
-  }
 
   const tags = () => {
     if (repo.re3dataDoi == null) return "";
@@ -250,7 +200,7 @@ export function RepositoryDetail({ repo }: Props) {
         {tags()}
       </div>
       <div className={styles.dashboard}>
-        {dashboard()}
+        <RepositoryDashboard repoId={repo.clientId} />
       </div>
       <div className={styles.advise}>
         {advise()}
