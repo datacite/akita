@@ -11,7 +11,8 @@ function buildDoiSearchParams(id: string): URLSearchParams {
     affiliation: 'false',
     publisher: 'true',
     'disable-facets': 'true',
-    include_other_registration_agencies: 'true'
+    include_other_registration_agencies: 'true',
+    detail: 'true'
   })
 }
 
