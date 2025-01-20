@@ -123,7 +123,7 @@ export default function WorkMetadata({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href={'/orcid.org' + c.id} key={index}>
+            <Link prefetch={false} href={'/orcid.org' + c.id} key={index}>
               {c.displayName}
             </Link>
           ) : (
