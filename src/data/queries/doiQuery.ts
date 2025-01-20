@@ -3,6 +3,7 @@ import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { WorkMetadata, Work } from 'src/data/types'
 import { workFragment } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
+import fetchConditionalCache from 'src/utils/fetchConditionalCache'
 
 function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
@@ -30,7 +31,7 @@ export async function fetchDoi(id: string) {
     }
     const searchParams = buildDoiSearchParams(id)
 
-    const res = await fetch(
+    const res = await fetchConditionalCache(
       `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
       options
     )
