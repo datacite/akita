@@ -56,7 +56,7 @@ export default function FacetListItem(props: Props) {
   return (
     <Row as="li" key={facet.id}>
       <Col xs={1} className={styles.checkbox}>
-        <Link href={url + params.toString()} className={"facet-" + param}>
+        <Link prefetch={false} href={url + params.toString()} className={"facet-" + param}>
           <FontAwesomeIcon icon={icon} />{' '}
         </Link>
       </Col>
