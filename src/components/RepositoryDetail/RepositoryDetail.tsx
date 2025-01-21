@@ -28,7 +28,7 @@ export function RepositorySidebar({ repo }: Props) {
           </Button>
         )}
         {repo.works && (repo.works.totalCount > 0) && (
-          <Link href={"/doi.org?query=client.uid:" + repo.clientId}>
+          <Link prefetch={false} href={"/doi.org?query=client.uid:" + repo.clientId}>
             <Button variant="primary" id="find-related">
               <FontAwesomeIcon icon={faNewspaper} />
               &nbsp;
@@ -208,5 +208,3 @@ export function RepositoryDetail({ repo }: Props) {
     </>
   )
 }
-
-

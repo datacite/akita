@@ -50,7 +50,7 @@ export default function WorkMetadata({
     if (!metadata.titles[0])
       return (
         <h3 className="work">
-          <Link href={'/doi.org/' + metadata.doi}>
+          <Link prefetch={false} href={'/doi.org/' + metadata.doi}>
             No Title
           </Link>
         </h3>
@@ -61,7 +61,7 @@ export default function WorkMetadata({
 
     return (
       <h3 className="work">
-        <Link href={'/doi.org/' + metadata.doi}>
+        <Link prefetch={false} href={'/doi.org/' + metadata.doi}>
           {ReactHtmlParser(sanitizedTitle)}
         </Link>
       </h3>
@@ -123,7 +123,7 @@ export default function WorkMetadata({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link href={'/orcid.org' + c.id} key={index}>
+            <Link prefetch={false} href={'/orcid.org' + c.id} key={index}>
               {c.displayName}
             </Link>
           ) : (

@@ -228,7 +228,7 @@ function TitleLink({ linkToExternal, id, name, alternateName, show }: TitleProps
 
   function LinkWrapper({ children }: PropsWithChildren) {
     if (!linkToExternal)
-      return <Link href={'/ror.org' + rorFromUrl(id)} className="fw-bold">{children}</Link>
+      return <Link prefetch={false} href={'/ror.org' + rorFromUrl(id)} className="fw-bold">{children}</Link>
 
     return <a target="_blank" rel="noreferrer" href={id}>{children}</a>
   }
