@@ -32,6 +32,7 @@ export function appendFacets(variables: QueryVar, searchParams: URLSearchParams)
   if (variables.published) searchParams.append('published', variables.published)
   if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
+  if (variables.userId) searchParams.append('user-id', variables.userId)
   if (variables.clientId) searchParams.append('client-id', variables.clientId)
   if (variables.clientType) searchParams.append('client-type', variables.clientType)
 }
@@ -149,6 +150,7 @@ export interface QueryVar {
   query?: string
   filterQuery?: string
   rorId?: string
+  userId?: string
   clientId?: string
   cursor?: string
   published?: string
