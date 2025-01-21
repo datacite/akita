@@ -53,7 +53,8 @@ export default function SearchWork(props: Props) {
     </Row>
     <WorksListing
       works={works}
-      loading={false}
+      loading={true}
+      loadingFacets={facets.loading}
       showFacets={true}
       showAnalytics={false}
       sankeyTitle='test'

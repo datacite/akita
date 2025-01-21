@@ -8,6 +8,7 @@ import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
+import LoadingFacetList from '../Loading/LoadingFacetList'
 
 interface Props {
   data: Facets
@@ -47,7 +48,7 @@ export default function WorkFacets({
   // get current query parameters from next router
   const searchParams = useSearchParams()
 
-  if (loading) return <div className="col-md-3"></div>
+  if (loading) return <Row><LoadingFacetList count={5}/></Row>
 
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)

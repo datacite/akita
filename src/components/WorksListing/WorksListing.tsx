@@ -22,6 +22,7 @@ interface Props {
   connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
   showClaimStatus: boolean
   loading: boolean
+  loadingFacets?: boolean
   model: string
   url: string
   hasPagination: boolean
@@ -38,6 +39,7 @@ export default function WorksListing({
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
   loading,
+  loadingFacets,
   model,
   url,
   hasPagination,
@@ -55,7 +57,7 @@ export default function WorksListing({
           model={model}
           url={url}
           data={works}
-          loading={loading}
+          loading={loadingFacets}
           connectionTypesCounts={connectionTypesCounts}
         />
       </Col>
