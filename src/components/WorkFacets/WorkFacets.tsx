@@ -48,7 +48,7 @@ export default function WorkFacets({
   // get current query parameters from next router
   const searchParams = useSearchParams()
 
-  if (loading) return <Row><LoadingFacetList count={5}/></Row>
+  if (loading) return <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>
 
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
