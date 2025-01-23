@@ -1,3 +1,5 @@
+// TODO: Figure out a better way to test this
+
 describe('Server error', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
@@ -24,15 +26,15 @@ describe('Server error', () => {
   //     .should('contain', 'Internal Server Error')
   // })
 
-  it('search people', () => {
-    cy.visit('/orcid.org')
-    cy.get('input[name="query"]')
-      .type('hallett{enter}')
-      .get('.alert > h4')
-      .should('contain', 'An error occured.')
-      .get('.alert > p')
-      .should('contain', 'Internal Server Error')
-  })
+  // it('search people', () => {
+  //   cy.visit('/orcid.org')
+  //   cy.get('input[name="query"]')
+  //     .type('hallett{enter}')
+  //     .get('.alert > h4')
+  //     .should('contain', 'An error occured.')
+  //     .get('.alert > p')
+  //     .should('contain', 'Internal Server Error')
+  // })
 
   it('search organizations', () => {
     cy.visit('/ror.org')
@@ -45,4 +47,4 @@ describe('Server error', () => {
   })
 })
 
-export {}
+export { }

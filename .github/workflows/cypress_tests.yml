@@ -4,6 +4,8 @@ on:
     secrets:
       NEXT_PUBLIC_API_URL:
         required: true
+      NEXT_PUBLIC_ORCID_API_URL:
+        required: true
       SITEMAPS_URL:
         required: true
       CYPRESS_RECORD_KEY:
@@ -37,6 +39,7 @@ jobs:
         env:
           CYPRESS_NODE_ENV: test
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_ORCID_API_URL: ${{ secrets.NEXT_PUBLIC_ORCID_API_URL }}
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
