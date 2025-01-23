@@ -8,6 +8,7 @@ import Alert from 'react-bootstrap/Alert'
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
 import { Works } from 'src/data/types'
+import Loading from 'src/components/Loading/Loading'
 
 import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
@@ -50,7 +51,6 @@ export default function WorksListing({
 
   const renderFacets = () => {
     return (
-      <Col md={3} className="d-none d-md-block">
         <WorkFacets
           model={model}
           url={url}
@@ -58,23 +58,21 @@ export default function WorksListing({
           loading={loadingFacets}
           connectionTypesCounts={connectionTypesCounts}
         />
-      </Col>
     )
   }
 
   const renderNoWorks = () => {
     return (
-      <Col md={9}>
         <div className="alert-works">
           <Alert variant="warning">No works found.</Alert>
         </div>
-      </Col>
     )
   }
 
   const renderWorks = () => {
+    if (hasNoWorks) return renderNoWorks()
     return (
-      <Col md={9}>
+      <>
         {showAnalytics && <WorksDashboard works={works} />}
         {showSankey && <Row>
           <Col xs={12}>
@@ -97,14 +95,18 @@ export default function WorksListing({
             />
           </Row>
         )}
-      </Col>
+      </>
     )
   }
 
   return (
     <Row>
-      {renderFacets()}
-      {hasNoWorks ? renderNoWorks() : renderWorks()}
+      <Col md={3} className="d-none d-md-block">
+        {renderFacets()}
+      </Col>
+      <Col md={9}>
+        { loading ? <Loading /> : renderWorks() }
+      </Col>
     </Row>
   )
 }
