@@ -103,7 +103,6 @@ export default function RelatedContent(props: Props) {
         <WorksListing
           works={works}
           loading={loading}
-          showFacets={true}
           connectionTypesCounts={connectionTypeCounts}
           showAnalytics={true}
           showSankey={showSankey}

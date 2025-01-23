@@ -18,7 +18,6 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  showFacets: boolean
   connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
   showClaimStatus: boolean
   loading: boolean
@@ -33,7 +32,6 @@ interface Props {
 export default function WorksListing({
   works,
   showAnalytics,
-  showFacets,
   connectionTypesCounts,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
@@ -105,7 +103,7 @@ export default function WorksListing({
 
   return (
     <Row>
-      {showFacets && renderFacets()}
+      {renderFacets()}
       {hasNoWorks ? renderNoWorks() : renderWorks()}
     </Row>
   )

@@ -55,7 +55,6 @@ export default function SearchWork(props: Props) {
       works={works}
       loading={true}
       loadingFacets={facets.loading}
-      showFacets={true}
       showAnalytics={false}
       sankeyTitle='test'
       showClaimStatus={true}

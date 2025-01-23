@@ -60,7 +60,6 @@ export default function RelatedContent(props: Props) {
     <WorksListing
       works={relatedWorks}
       loading={loading}
-      showFacets={true}
       showAnalytics={true}
       showClaimStatus={true}
       hasPagination={relatedWorks.totalCount > 25}
