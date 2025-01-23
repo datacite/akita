@@ -9,6 +9,7 @@ import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
 import { Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
+import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 
 import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
@@ -38,7 +39,7 @@ export default function WorksListing({
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
   loading,
-  loadingFacets,
+  loadingFacets = false,
   model,
   url,
   hasPagination,
@@ -55,7 +56,6 @@ export default function WorksListing({
           model={model}
           url={url}
           data={works}
-          loading={loadingFacets}
           connectionTypesCounts={connectionTypesCounts}
         />
     )
@@ -102,7 +102,7 @@ export default function WorksListing({
   return (
     <Row>
       <Col md={3} className="d-none d-md-block">
-        {renderFacets()}
+        { loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>: renderFacets() }
       </Col>
       <Col md={9}>
         { loading ? <Loading /> : renderWorks() }
