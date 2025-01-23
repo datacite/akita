@@ -1,7 +1,7 @@
 import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/en'
 import ISO6391 from 'iso-639-1'
-import type { Facet, WorkMetadata } from 'src/data/types'
+import type { Facet, WorkMetadata, Person } from 'src/data/types'
 import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
@@ -168,6 +168,23 @@ export function mapJsonToWork(json: any, included: any[]) {
       : { id: '', name: '' },
     schemaOrg: ''
   }
+}
+
+export function mapJsonToPerson(json: any): Person {
+  const id = json['orcid-id'], givenName = json['given-names'], familyName = json['family-names'], creditName = json['credit-name']
+
+  const name =
+    creditName ? creditName :
+      (givenName || familyName) ? [givenName, familyName].join(' ') :
+        id
+
+  return {
+    id: 'https://orcid.org/' + id,
+    name,
+    givenName,
+    familyName,
+    alternateName: json['other-name']
+  } as Person
 }
 
 
