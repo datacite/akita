@@ -13,7 +13,6 @@ interface Props {
   data: Facets
   model: string
   url: string
-  loading: boolean
   connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
 }
 
@@ -40,14 +39,11 @@ export default function WorkFacets({
   data,
   model,
   url,
-  loading,
   connectionTypesCounts
 }: Props) {
 
   // get current query parameters from next router
   const searchParams = useSearchParams()
-
-  if (loading) return <div className="col-md-3"></div>
 
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)

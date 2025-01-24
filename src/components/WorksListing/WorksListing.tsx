@@ -8,6 +8,8 @@ import Alert from 'react-bootstrap/Alert'
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
 import { Works } from 'src/data/types'
+import Loading from 'src/components/Loading/Loading'
+import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 
 import Pager from '../Pager/Pager'
 import WorksDashboard from '../WorksDashboard/WorksDashboard'
@@ -18,10 +20,10 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  showFacets: boolean
   connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
   showClaimStatus: boolean
   loading: boolean
+  loadingFacets?: boolean
   model: string
   url: string
   hasPagination: boolean
@@ -32,12 +34,12 @@ interface Props {
 export default function WorksListing({
   works,
   showAnalytics,
-  showFacets,
   connectionTypesCounts,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
   loading,
+  loadingFacets = false,
   model,
   url,
   hasPagination,
@@ -50,31 +52,27 @@ export default function WorksListing({
 
   const renderFacets = () => {
     return (
-      <Col md={3} className="d-none d-md-block">
         <WorkFacets
           model={model}
           url={url}
           data={works}
-          loading={loading}
           connectionTypesCounts={connectionTypesCounts}
         />
-      </Col>
     )
   }
 
   const renderNoWorks = () => {
     return (
-      <Col md={9}>
         <div className="alert-works">
           <Alert variant="warning">No works found.</Alert>
         </div>
-      </Col>
     )
   }
 
   const renderWorks = () => {
+    if (hasNoWorks) return renderNoWorks()
     return (
-      <Col md={9}>
+      <>
         {showAnalytics && <WorksDashboard works={works} />}
         {showSankey && <Row>
           <Col xs={12}>
@@ -97,14 +95,18 @@ export default function WorksListing({
             />
           </Row>
         )}
-      </Col>
+      </>
     )
   }
 
   return (
     <Row>
-      {showFacets && renderFacets()}
-      {hasNoWorks ? renderNoWorks() : renderWorks()}
+      <Col md={3} className="d-none d-md-block">
+        { loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>: renderFacets() }
+      </Col>
+      <Col md={9}>
+        { loading ? <Loading /> : renderWorks() }
+      </Col>
     </Row>
   )
 }

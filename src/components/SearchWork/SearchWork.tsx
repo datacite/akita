@@ -4,7 +4,6 @@ import React from 'react'
 import Loading from '../Loading/Loading'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
 import Error from 'src/components/Error/Error'
 
 import type { Works } from 'src/data/types'
@@ -34,15 +33,6 @@ export default function SearchWork(props: Props) {
 
   const works = { ...data?.works, ...facets.data?.works } as Works
 
-
-  if (!works?.nodes || works.nodes.length == 0) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <div className="alert-works">
-        <Alert variant="warning">No works found.</Alert>
-      </div>
-    </Col>
-  )
-
   return (<>
     <Row>
       <Col md={{ span: 9, offset: 3 }}>
@@ -54,7 +44,7 @@ export default function SearchWork(props: Props) {
     <WorksListing
       works={works}
       loading={false}
-      showFacets={true}
+      loadingFacets={facets.loading}
       showAnalytics={false}
       sankeyTitle='test'
       showClaimStatus={true}
