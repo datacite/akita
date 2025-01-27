@@ -158,7 +158,7 @@ export default function OrganizationMetadata({
       <Badge bg="info">{metadata.country.name}</Badge>
       <span>
         {metadata.types.map((type) => (
-          <Badge key="type" bg="info">{type}</Badge>
+          <Badge className={styles.badge} key={`type-${type}`} bg="info">{type}</Badge>
         ))}
       </span>
       {metadata.memberId && (
