@@ -2,7 +2,6 @@ import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/en'
 import ISO6391 from 'iso-639-1'
 import ISO31661 from 'iso-3166-1'
-import { countries } from 'countries-list'
 import type { Facet, WorkMetadata, Person } from 'src/data/types'
 import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart'
 

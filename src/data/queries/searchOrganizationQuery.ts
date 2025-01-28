@@ -1,4 +1,3 @@
-// import { gql, useQuery } from '@apollo/client'
 import { Organizations, Facet } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
 import { titleCase , getCountryName} from 'src/utils/helpers'
