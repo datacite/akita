@@ -170,19 +170,34 @@ export function mapJsonToWork(json: any, included: any[]) {
   }
 }
 
+export function getDateFromParts(year: string | number | null, month?: string | number | null, day?: string | number | null): Date | null {
+  if (!year) {
+    return null;
+  }
+
+  const iso8601Time = [
+    year.toString().padStart(4, "0"),
+    month?.toString().padStart(2, "0") || null,
+    day?.toString().padStart(2, "0") || null,
+  ].filter(part => part !== null).join("-");
+
+  return new Date(iso8601Time);
+}
+
+export function buildPersonName(names: { 'orcid-id': string, 'given-names': string, 'family-names': string, 'credit-name': string }) {
+  const id = names['orcid-id'], givenName = names['given-names'], familyName = names['family-names'], creditName = names['credit-name']
+
+  return creditName ? creditName :
+    (givenName || familyName) ? [givenName, familyName].join(' ') :
+      id
+}
+
 export function mapJsonToPerson(json: any): Person {
-  const id = json['orcid-id'], givenName = json['given-names'], familyName = json['family-names'], creditName = json['credit-name']
-
-  const name =
-    creditName ? creditName :
-      (givenName || familyName) ? [givenName, familyName].join(' ') :
-        id
-
   return {
-    id: 'https://orcid.org/' + id,
-    name,
-    givenName,
-    familyName,
+    id: 'https://orcid.org/' + json['orcid-id'],
+    name: buildPersonName(json),
+    givenName: json['given-names'],
+    familyName: json['family-names'],
     alternateName: json['other-name']
   } as Person
 }
