@@ -1,7 +1,7 @@
 // import { gql, useQuery } from '@apollo/client'
 import { Organizations, Facet } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
-import { titleCase } from 'src/utils/helpers'
+import { titleCase , getCountryName} from 'src/utils/helpers'
 import { useQuery } from '@tanstack/react-query'
 
 
@@ -36,8 +36,12 @@ export function useRORSearch(params: QueryVar = {}) {
 function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
   const country = org.locations?.[0]?.geonames_details ? {
     id: org.locations?.[0]?.geonames_details.country_code,
-    name: org.locations?.[0]?.geonames_details.country_name,
+    name: getCountryName(
+      org.locations?.[0]?.geonames_details.country_code,
+    ) || org.locations?.[0]?.geonames_details.country_name,
   } : {id: "", name:""}
+
+
 
   const primary_name = org.names.find((name) => name.types.includes('ror_display'))
   const alternate_names = org.names
@@ -75,7 +79,7 @@ function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
 function convertRORCountriesFacet(counties: RORFacet[]): Facet[] {
   return counties.map(country => ({
     id: country.id,
-    title: country.title,
+    title: getCountryName(country.id) || country.title,
     count: country.count
   }))
 }
