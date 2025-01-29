@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 
 const rorClient = new RORV2Client()
+const ROR_PER_PAGE = 20
 
 // Query keys for cache management
 export const rorKeys = {
@@ -13,22 +14,34 @@ export const rorKeys = {
   search: (params: RORV2SearchParams) => [...rorKeys.all, 'search', params] as const,
 };
 
+function cursorToPage(cursor :string) {
+  if (!cursor) return 1
+  const potentialPage = cursor ? parseInt(cursor) : 1
+  return potentialPage <= 1 ? 1 : potentialPage
+}
+
+function pageToCursor(page: number) {
+  return page.toString()
+}
+
 /**
  * Hook for searching organizations
  */
 export function useRORSearch(params: QueryVar = {}) {
+  const pageParam = params.cursor ? cursorToPage(params.cursor) : 1
   const { isPending, data, error} = useQuery<RORV2SearchResponse, Error>({
     queryKey: rorKeys.search(params),
     queryFn: () => rorClient.searchOrganizations({
       query: params.query,
       types: params.types,
-      countries: params.country // map 'country' to 'countries'
+      countries: params.country, // map 'country' to 'countries'
+      page: pageParam
     }),
     enabled: Boolean(params.query || params.types || params.country), // Only run if there are search parameters
     staleTime: 1 * 60 * 1000, // Consider search results stale after 1 minute
   });
 
-  const transformedData = data ? convertRORToQueryData(data) : undefined;
+  const transformedData = data ? convertRORToQueryData(data, pageParam) : undefined;
   return { loading: isPending, data: transformedData, error }
 }
 
@@ -57,14 +70,13 @@ function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
   )
 
 
-  // url is org  link with type = website
   const url = org.links?.find((link) => link.type === 'website')
   const wikipediaUrl = org.links?.find((link) => link.type === 'wikipedia')
   return {
     id: org.id,
     name: primary_name?.value || "MISSING",
     memberId: "",
-    memberRoleId: "", // Not available in ROR V2 API
+    memberRoleId: "",
     alternateName: alternate_names,
     inceptionYear: org.established,
     types: org.types,
@@ -91,15 +103,18 @@ function convertRORTypeFacet(types: RORFacet[]): Facet[] {
   }))
 }
 
-function convertRORToQueryData(rorResponse: RORV2SearchResponse) {
+function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 1) {
   const countries = convertRORCountriesFacet(rorResponse?.meta?.countries || [])
   const types = convertRORTypeFacet(rorResponse?.meta?.types || [])
+  const total = rorResponse.number_of_results
+  const currentPageTotal = rorResponse.items.length
+  const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
   return {
     organizations: {
-      totalCount: rorResponse.number_of_results,
+      totalCount: total,
       pageInfo: {
-        endCursor: "", // Not available in ROR V2 API
-        hasNextPage: false // Not directly available in ROR V2 API
+        endCursor: pageToCursor(page+1),
+        hasNextPage: runningTotal < total
       },
       types: types,
       countries: countries,
