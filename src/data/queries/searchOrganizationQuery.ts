@@ -56,9 +56,15 @@ function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
 
 
   const primary_name = org.names.find((name) => name.types.includes('ror_display'))
-  const alternate_names = org.names
-    .filter(name => !name.types.includes('ror_display'))
+  const aliases = org.names
+    .filter(name => name.types.includes('alias'))
     .map(name => name.value)
+
+  const acronyms = org.names
+    .filter(name => name.types.includes('acronym'))
+    .map(name => name.value)
+
+  const alternate_names = [...aliases, ...acronyms]
 
   const identifiers = org.external_ids.flatMap(external_id =>
     external_id.all.map(id => ({
@@ -107,7 +113,7 @@ function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 
   const countries = convertRORCountriesFacet(rorResponse?.meta?.countries || [])
   const types = convertRORTypeFacet(rorResponse?.meta?.types || [])
   const total = rorResponse.number_of_results
-  const currentPageTotal = rorResponse.items.length
+  const currentPageTotal = rorResponse.items?.length || 0
   const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
   return {
     organizations: {
@@ -118,7 +124,7 @@ function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 
       },
       types: types,
       countries: countries,
-      nodes: rorResponse?.items.map(org => (
+      nodes: rorResponse?.items?.map(org => (
         convertROROrganizationToOrganizatinoNode(org)
       )) || []
     }
