@@ -47,7 +47,10 @@ export function useRORSearch(params: QueryVar = {}) {
   return { loading: isPending, data, error }
 }
 
-async function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
+async function convertROROrganizationToOrganizatinoNode(
+  org: RORV2Organization,
+  relatedProvider: RelatedProviderResponse
+) {
   const country = org.locations?.[0]?.geonames_details ? {
     id: org.locations?.[0]?.geonames_details.country_code,
     name: getCountryName(
@@ -77,7 +80,7 @@ async function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) 
 
   const url = org.links?.find((link) => link.type === 'website')
   const wikipediaUrl = org.links?.find((link) => link.type === 'wikipedia')
-  const relatedProvider = await fetchRelatedProviderInfo(org.id)
+  // const relatedProvider = await fetchRelatedProviderInfo(org.id)
 
   return {
     id: org.id,
@@ -117,10 +120,14 @@ async function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: num
   const currentPageTotal = rorResponse.items?.length || 0
   const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
 
+  // Fetch the Providers map
+  const providersMap = await fetchRelatedProvidersMap()
+  console.log(providersMap)
   const nodes = await Promise.all(
-    (rorResponse?.items || []).map(org =>
-      convertROROrganizationToOrganizatinoNode(org)
-    )
+    (rorResponse?.items || []).map(org => {
+      const relatedProvider = providersMap[org.id] || { data: { symbol: '', memberType: '' } }
+      return convertROROrganizationToOrganizatinoNode(org, relatedProvider)
+    })
   )
 
   return {
@@ -178,6 +185,39 @@ async function fetchRelatedProviderInfo(ror_id: string) : Promise<RelatedProvide
     return { data: extractProviderData(json.data[0]) }
   } catch (error) {
     return { error, data: { symbol: '', memberType: '' } }
+  }
+}
+
+async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProviderResponse>> {
+  try {
+    const options = {
+      method: 'GET',
+      headers: { accept: 'application/vnd.api+json' }
+    }
+
+    const searchParams = new URLSearchParams({
+      'page[size]': '1000',
+      query: "ror_id:*"
+    })
+
+    const res = await fetchConditionalCache(
+      `${process.env.NEXT_PUBLIC_API_URL}/providers?${searchParams.toString()}`,
+      options
+    )
+    const json = await res.json()
+
+    // Create a map of ROR ID to provider info
+    const providersMap: Record<string, RelatedProviderResponse> = {}
+    json.data.forEach((provider: any) => {
+      const rorId = provider.attributes.rorId
+      providersMap[rorId] = {
+        data: extractProviderData(provider)
+      }
+    })
+    return providersMap
+  } catch (error) {
+    // Return empty data for all requested IDs in case of error
+    return {}
   }
 }
 
