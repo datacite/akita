@@ -1,6 +1,7 @@
 import { Organizations, Facet } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
 import { titleCase , getCountryName} from 'src/utils/helpers'
+import fetchConditionalCache from 'src/utils/fetchConditionalCache'
 import { useQuery } from '@tanstack/react-query'
 
 
@@ -29,32 +30,30 @@ function pageToCursor(page: number) {
  */
 export function useRORSearch(params: QueryVar = {}) {
   const pageParam = params.cursor ? cursorToPage(params.cursor) : 1
-  const { isPending, data, error} = useQuery<RORV2SearchResponse, Error>({
+  const { isPending, error, data } =useQuery({
     queryKey: rorKeys.search(params),
-    queryFn: () => rorClient.searchOrganizations({
-      query: params.query,
-      types: params.types,
-      countries: params.country, // map 'country' to 'countries'
-      page: pageParam
-    }),
-    enabled: Boolean(params.query || params.types || params.country), // Only run if there are search parameters
-    staleTime: 1 * 60 * 1000, // Consider search results stale after 1 minute
+    queryFn: async () => {
+      const rorResponse = await rorClient.searchOrganizations({
+        query: params.query,
+        types: params.types,
+        countries: params.country,
+        page: pageParam
+      })
+      return convertRORToQueryData(rorResponse, pageParam)
+    },
+    enabled: Boolean(params.query || params.types || params.country),
+    staleTime: 1 * 60 * 1000,
   });
-
-  const transformedData = data ? convertRORToQueryData(data, pageParam) : undefined;
-  return { loading: isPending, data: transformedData, error }
+  return { loading: isPending, data, error }
 }
 
-function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
+async function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
   const country = org.locations?.[0]?.geonames_details ? {
     id: org.locations?.[0]?.geonames_details.country_code,
     name: getCountryName(
       org.locations?.[0]?.geonames_details.country_code,
     ) || org.locations?.[0]?.geonames_details.country_name,
   } : {id: "", name:""}
-
-
-
   const primary_name = org.names.find((name) => name.types.includes('ror_display'))
   const aliases = org.names
     .filter(name => name.types.includes('alias'))
@@ -66,7 +65,7 @@ function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
 
   const alternate_names = [...aliases, ...acronyms]
 
-  const identifiers = org.external_ids.flatMap(external_id =>
+  const identifiers = org.external_ids?.flatMap(external_id =>
     external_id.all.map(id => ({
       identifierType: external_id.type,
       identifier: external_id.type === 'fundref'
@@ -78,18 +77,20 @@ function convertROROrganizationToOrganizatinoNode(org: RORV2Organization) {
 
   const url = org.links?.find((link) => link.type === 'website')
   const wikipediaUrl = org.links?.find((link) => link.type === 'wikipedia')
+  const relatedProvider = await fetchRelatedProviderInfo(org.id)
+
   return {
     id: org.id,
     name: primary_name?.value || "MISSING",
-    memberId: "",
-    memberRoleId: "",
+    memberId: relatedProvider.data?.symbol?.toLowerCase() || "",
+    memberRoleId: relatedProvider.data?.memberType?.toLowerCase() || "",
     alternateName: alternate_names,
     inceptionYear: org.established,
     types: org.types,
     url: url?.value || '',
     wikipediaUrl: wikipediaUrl?.value || '',
     country: country,
-    identifiers: identifiers
+    identifiers: identifiers || []
   }
 }
 
@@ -109,12 +110,19 @@ function convertRORTypeFacet(types: RORFacet[]): Facet[] {
   }))
 }
 
-function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 1) {
+async function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 1) {
   const countries = convertRORCountriesFacet(rorResponse?.meta?.countries || [])
   const types = convertRORTypeFacet(rorResponse?.meta?.types || [])
   const total = rorResponse.number_of_results
   const currentPageTotal = rorResponse.items?.length || 0
   const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
+
+  const nodes = await Promise.all(
+    (rorResponse?.items || []).map(org =>
+      convertROROrganizationToOrganizatinoNode(org)
+    )
+  )
+
   return {
     organizations: {
       totalCount: total,
@@ -124,10 +132,52 @@ function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 
       },
       types: types,
       countries: countries,
-      nodes: rorResponse?.items?.map(org => (
-        convertROROrganizationToOrganizatinoNode(org)
-      )) || []
+      nodes
     }
+  }
+}
+
+function extractProviderData(provider: any) : RelatedProviderInfo {
+ return provider?.attributes ?
+   {
+   symbol: provider.attributes.symbol,
+   memberType: provider.attributes.memberType,
+ }: {
+   symbol: "",
+   memberType: ""
+ }
+}
+
+function buildProviderSearchParams(ror_id: string): URLSearchParams {
+  return new URLSearchParams({
+    query: `ror_id:"${ror_id}"`,
+  })
+}
+interface RelatedProviderInfo {
+  symbol: string
+  memberType: string
+}
+interface RelatedProviderResponse {
+  data: RelatedProviderInfo
+  error?: any
+}
+
+async function fetchRelatedProviderInfo(ror_id: string) : Promise<RelatedProviderResponse> {
+  try {
+    const options = {
+      method: 'GET',
+      headers: { accept: 'application/vnd.api+json' }
+    }
+    const searchParams = buildProviderSearchParams(ror_id)
+    const res = await fetchConditionalCache(
+      `${process.env.NEXT_PUBLIC_API_URL}/providers?${searchParams.toString()}`,
+      options
+    )
+    const json = await res.json()
+    if (json.meta.total === 0) return { data: { symbol: '', memberType: '' } }
+    return { data: extractProviderData(json.data[0]) }
+  } catch (error) {
+    return { error, data: { symbol: '', memberType: '' } }
   }
 }
 
