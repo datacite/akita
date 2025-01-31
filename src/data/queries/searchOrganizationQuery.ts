@@ -13,6 +13,7 @@ export const rorKeys = {
   all: ['ror'] as const,
   organization: (id: string) => [...rorKeys.all, 'organization', id] as const,
   search: (params: RORV2SearchParams) => [...rorKeys.all, 'search', params] as const,
+  providers: () => [...rorKeys.all, 'providers'] as const,
 };
 
 function cursorToPage(cursor :string) {
@@ -25,12 +26,22 @@ function pageToCursor(page: number) {
   return page.toString()
 }
 
+export function useProvidersMap() {
+  const KEEP_TIME = 1 * 60 * 60 * 1000
+  return useQuery<Record<string, RelatedProviderResponse>, Error>({
+    queryKey: rorKeys.providers(),
+    queryFn: async () => fetchRelatedProvidersMap(),
+    staleTime: KEEP_TIME,
+    gcTime: KEEP_TIME,
+  });
+}
 /**
  * Hook for searching organizations
  */
 export function useRORSearch(params: QueryVar = {}) {
   const pageParam = params.cursor ? cursorToPage(params.cursor) : 1
-  const { isPending, error, data } =useQuery({
+  const providersQuery = useProvidersMap();
+  const searchQuery = useQuery({
     queryKey: rorKeys.search(params),
     queryFn: async () => {
       const rorResponse = await rorClient.searchOrganizations({
@@ -39,12 +50,20 @@ export function useRORSearch(params: QueryVar = {}) {
         countries: params.country,
         page: pageParam
       })
-      return convertRORToQueryData(rorResponse, pageParam)
+      return convertRORToQueryData(rorResponse, pageParam, providersQuery.data || {})
     },
-    enabled: Boolean(params.query || params.types || params.country),
+    enabled: Boolean(
+      (params.query || params.types || params.country) &&
+      !providersQuery.isLoading
+    ),
     staleTime: 1 * 60 * 1000,
+    gcTime: 1 * 60 * 1000,
   });
-  return { loading: isPending, data, error }
+  return {
+    loading: providersQuery.isLoading || searchQuery.isPending,
+    data: searchQuery.data,
+    error: providersQuery.error || searchQuery.error
+  }
 }
 
 async function convertROROrganizationToOrganizatinoNode(
@@ -80,7 +99,6 @@ async function convertROROrganizationToOrganizatinoNode(
 
   const url = org.links?.find((link) => link.type === 'website')
   const wikipediaUrl = org.links?.find((link) => link.type === 'wikipedia')
-  // const relatedProvider = await fetchRelatedProviderInfo(org.id)
 
   return {
     id: org.id,
@@ -113,7 +131,11 @@ function convertRORTypeFacet(types: RORFacet[]): Facet[] {
   }))
 }
 
-async function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: number = 1) {
+async function convertRORToQueryData(
+  rorResponse: RORV2SearchResponse,
+  page: number = 1,
+  providersMap: Record<string, RelatedProviderResponse>
+) {
   const countries = convertRORCountriesFacet(rorResponse?.meta?.countries || [])
   const types = convertRORTypeFacet(rorResponse?.meta?.types || [])
   const total = rorResponse.number_of_results
@@ -121,7 +143,6 @@ async function convertRORToQueryData(rorResponse: RORV2SearchResponse, page: num
   const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
 
   // Fetch the Providers map
-  const providersMap = await fetchRelatedProvidersMap()
   console.log(providersMap)
   const nodes = await Promise.all(
     (rorResponse?.items || []).map(org => {
@@ -197,7 +218,8 @@ async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProvide
 
     const searchParams = new URLSearchParams({
       'page[size]': '1000',
-      query: "ror_id:*"
+      query: "ror_id:*",
+      'fields[provider]': 'symbol,memberType'
     })
 
     const res = await fetchConditionalCache(
@@ -216,7 +238,6 @@ async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProvide
     })
     return providersMap
   } catch (error) {
-    // Return empty data for all requested IDs in case of error
     return {}
   }
 }
