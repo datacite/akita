@@ -1,7 +1,6 @@
 import { Organizations, Facet } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
 import { titleCase , getCountryName} from 'src/utils/helpers'
-import fetchConditionalCache from 'src/utils/fetchConditionalCache'
 import { useQuery } from '@tanstack/react-query'
 
 
@@ -176,11 +175,6 @@ function extractProviderData(provider: any) : RelatedProviderInfo {
  }
 }
 
-function buildProviderSearchParams(ror_id: string): URLSearchParams {
-  return new URLSearchParams({
-    query: `ror_id:"${ror_id}"`,
-  })
-}
 interface RelatedProviderInfo {
   symbol: string
   memberType: string
