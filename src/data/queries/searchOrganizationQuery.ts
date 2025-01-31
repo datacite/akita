@@ -65,10 +65,33 @@ export function useRORSearch(params: QueryVar = {}) {
   }
 }
 
+export type MinimalOrganization = {
+  id: string
+  name: string
+  alternateName: string[]
+  country: {
+    name: string
+  }
+  types: string[]
+  memberRoleId: string
+  memberId: string
+  inceptionYear: number
+  geolocation?: {
+    pointLatitude: number
+    pointLongitude: number
+  }
+  url?: string
+  wikipediaUrl?: string
+  twitter?: string
+  identifiers: Array<{
+    identifierType: string
+    identifier: string
+  }>
+}
 async function convertROROrganizationToOrganizatinoNode(
   org: RORV2Organization,
   relatedProvider: RelatedProviderResponse
-) {
+): Promise<MinimalOrganization> {
   const country = org.locations?.[0]?.geonames_details ? {
     id: org.locations?.[0]?.geonames_details.country_code,
     name: getCountryName(
@@ -98,6 +121,10 @@ async function convertROROrganizationToOrganizatinoNode(
 
   const url = org.links?.find((link) => link.type === 'website')
   const wikipediaUrl = org.links?.find((link) => link.type === 'wikipedia')
+  const NULL_GEO_LOCATION = {
+    pointLatitude: 0,
+    pointLongitude: 0
+  }
 
   return {
     id: org.id,
@@ -106,6 +133,7 @@ async function convertROROrganizationToOrganizatinoNode(
     memberRoleId: relatedProvider.data?.memberType?.toLowerCase() || "",
     alternateName: alternate_names,
     inceptionYear: org.established,
+    geolocation: NULL_GEO_LOCATION,
     types: org.types,
     url: url?.value || '',
     wikipediaUrl: wikipediaUrl?.value || '',
