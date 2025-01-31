@@ -190,25 +190,6 @@ interface RelatedProviderResponse {
   error?: any
 }
 
-async function fetchRelatedProviderInfo(ror_id: string) : Promise<RelatedProviderResponse> {
-  try {
-    const options = {
-      method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
-    }
-    const searchParams = buildProviderSearchParams(ror_id)
-    const res = await fetchConditionalCache(
-      `${process.env.NEXT_PUBLIC_API_URL}/providers?${searchParams.toString()}`,
-      options
-    )
-    const json = await res.json()
-    if (json.meta.total === 0) return { data: { symbol: '', memberType: '' } }
-    return { data: extractProviderData(json.data[0]) }
-  } catch (error) {
-    return { error, data: { symbol: '', memberType: '' } }
-  }
-}
-
 async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProviderResponse>> {
   try {
     const options = {
