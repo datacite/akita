@@ -222,7 +222,7 @@ async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProvide
       'fields[provider]': 'symbol,memberType'
     })
 
-    const res = await fetchConditionalCache(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/providers?${searchParams.toString()}`,
       options
     )
