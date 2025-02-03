@@ -11,7 +11,7 @@ import Error from 'src/components/Error/Error'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import Loading from 'src/components/Loading/Loading'
 
-import { QueryVar, useSearchOrganizationQuery } from 'src/data/queries/searchOrganizationQuery'
+import { QueryVar, useRORSearch } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 }
 
 export default function SearchOrganizations(props: Props) {
-  const { loading, data, error } = useSearchOrganizationQuery(props.variables)
+  const { loading, data, error } = useRORSearch(props.variables)
 
   if (loading) return <Row><Loading /></Row>
 

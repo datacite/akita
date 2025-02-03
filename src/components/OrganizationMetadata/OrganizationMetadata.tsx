@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { decimalToSexagesimal } from 'geolib'
 
-import type { Organization } from 'src/data/types'
+import type { MinimalOrganization as Organization }  from 'src/data/queries/searchOrganizationQuery'
 import { rorFromUrl } from 'src/utils/helpers'
 import styles from './OrganizationMetadata.module.scss'
 
@@ -22,10 +22,6 @@ export default function OrganizationMetadata({
   linkToExternal,
   showTitle = true
 }: Props) {
-  const showLocation =
-    metadata.geolocation &&
-    metadata.geolocation.pointLongitude &&
-    metadata.geolocation.pointLatitude
 
   const memberRoles = {
     "direct_member": "DataCite Member",
@@ -152,13 +148,13 @@ export default function OrganizationMetadata({
       </Col>
     </Row>
 
-    {showLocation && <Geolocation geolocation={metadata.geolocation} />}
+    <Geolocation geolocation={metadata.geolocation} />
 
     <Row className="tags"><Col>
       <Badge bg="info">{metadata.country.name}</Badge>
       <span>
         {metadata.types.map((type) => (
-          <Badge key="type" bg="info">{type}</Badge>
+          <Badge className={styles.badge} key={`type-${type}`} bg="info">{type}</Badge>
         ))}
       </span>
       {metadata.memberId && (
@@ -183,6 +179,11 @@ function Footer({ id }: { id: string }) {
 
 
 function Geolocation({ geolocation }: { geolocation: Organization['geolocation'] }) {
+  const showLocation =
+    geolocation &&
+    geolocation.pointLongitude &&
+    geolocation.pointLatitude
+  if (!showLocation) return null
   const latitude =
     geolocation.pointLatitude > 0
       ? decimalToSexagesimal(geolocation.pointLatitude).toString() +
