@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacetListItem from './FacetListItem'
 import { Facet } from 'src/data/types'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-import ListGroup from 'react-bootstrap/ListGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import styles from './FacetList.module.scss'
 
@@ -54,7 +53,6 @@ export default function FacetList(props: FacetListProps) {
         {props.tooltipText && <InfoTooltip text={props.tooltipText} /> }
       </Accordion.Header>
       <Accordion.Body>
-      <ListGroup as="ul" variant="flush">
         {data.map((facet, i) => (
           <FacetListItem
             key={'facet-item- ' +id + '-' + i}
@@ -66,7 +64,6 @@ export default function FacetList(props: FacetListProps) {
             radio={radio}
           />
         ))}
-      </ListGroup>
       </Accordion.Body>
     </Accordion.Item>
   )

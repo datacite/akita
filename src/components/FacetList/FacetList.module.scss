@@ -1,12 +1,12 @@
 .facetheader {
   margin:0;
+  border-bottom: 1px solid #cdd2d5;
 
   button {
     font-size: 22.5px;
     font-weight: 700;
     margin:0;
-    &:global(.collapsed) {
-      border-bottom: 1px solid #cdd2d5;
-    }
+    padding-top: 1rem;
+    padding-bottom: 0.35rem;
   }
 }
