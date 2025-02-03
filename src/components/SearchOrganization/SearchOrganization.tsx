@@ -42,16 +42,6 @@ export default function SearchOrganizations(props: Props) {
     </Col>
   )
 
-
-
-  if (!organizations || organizations.nodes.length == 0) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <div className="alert-works">
-        <Alert variant="warning">No organizations found.</Alert>
-      </div>
-    </Col>
-  )
-
   const renderResults = () => {
     const hasNextPage = organizations.pageInfo
       ? organizations.pageInfo.hasNextPage
