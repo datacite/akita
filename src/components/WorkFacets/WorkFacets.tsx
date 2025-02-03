@@ -7,7 +7,6 @@ import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
-import Card from 'react-bootstrap/Card';
 
 interface Props {
   data: Facets
@@ -60,16 +59,23 @@ export default function WorkFacets({
   const isConnectionTypeSet = searchParams?.has('connection-type')
   const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
-  const defaultActiveKeys = [ "authors-facets", "connection-type-facets", "published-facets", "work-type-facets", "license-facets", "language-facets", "field-of-science-facets", "registration-agency-facets" ]
+  const defaultActiveKeys = [
+    "authors-facets",
+    "connection-type-facets",
+    "published-facets",
+    "work-type-facets",
+    "license-facets",
+    "language-facets",
+    "field-of-science-facets",
+    "registration-agency-facets",
+    "conection-type-facets",
+    "repository-type-facets"
+  ]
 
   return (
     <>
-      {!['doi.org?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <Card className="panel facets add mb-3">
-          <Card.Body>
-            <SearchBox path={path} />
-          </Card.Body>
-        </Card>
+      {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
+        <SearchBox path={path} />
       )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
@@ -77,7 +83,7 @@ export default function WorkFacets({
         <FacetList
           data={connectionTypeList.filter(f => f.count > 0)}
           title="Connection Types"
-          id="connections-type-facets"
+          id="connection-type-facets"
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
@@ -97,7 +103,6 @@ export default function WorkFacets({
         id="published-facets"
         param="published"
         url={url}
-        radio
         tooltipText="Filter by Publication Year"
       />
 
