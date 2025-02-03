@@ -1,8 +1,12 @@
 'use client'
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
+import Offcanvas from 'react-bootstrap/Offcanvas'
+import Row from 'react-bootstrap/Row'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
@@ -96,13 +100,29 @@ export default function WorksListing({
       </>
     )
   }
+  const [show, setShow] = React.useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <Row>
-      <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        { loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>: renderFacets() }
-      </Col>
+    <Col md={3} className="d-none d-md-block">
+    <Offcanvas show={show} onHide={handleClose} responsive="md" >
+    <Offcanvas.Header closeButton>
+    <Offcanvas.Title>Filter Works</Offcanvas.Title>
+    </Offcanvas.Header>
+    <Offcanvas.Body>
+    { loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>: renderFacets() }
+    </Offcanvas.Body>
+    </Offcanvas>
+    </Col>
       <Col md={9}>
+        <div className="d-md-none position-sticky top-0 pt-1" style= {{ float: 'right', zIndex: 1020, backgroundColor: 'white' }}>
+        <Button variant="primary" className="d-md-none" onClick={handleShow}>
+        Filter <FontAwesomeIcon icon={faFilter} />
+        </Button>
+        </div>
         { loading ? <Loading /> : renderWorks() }
       </Col>
     </Row>
