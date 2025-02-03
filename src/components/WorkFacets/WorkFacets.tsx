@@ -103,7 +103,6 @@ export default function WorkFacets({
         id="published-facets"
         param="published"
         url={url}
-        tooltipText="Filter by Publication Year"
       />
 
       <FacetList
