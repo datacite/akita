@@ -10,7 +10,7 @@ export default function FacetListGroup(props: FacetListGroupProps) {
 
   return (
       <Accordion
-        className={styles.facetListGroup}
+        className={`${styles.facetListGroup} facetlist-group`}
         alwaysOpen
         defaultActiveKey={props.defaultActiveKey}
       >
