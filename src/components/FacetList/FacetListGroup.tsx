@@ -17,6 +17,8 @@ export default function FacetListGroup(props: FacetListGroupProps) {
     '--bs-accordion-btn-padding-y': '1.0rem',
     '--bs-accordion-inner-border-radius': '0rem',
     '--bs-accordion-inner-border': '1px solid #cdd2d5',
+    '--bs-accordion-btn-icon': "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23cdd2d5' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 16 16'%3E%3Cpath d='m2 5 6 6 6-6'/%3E%3C/svg%3E\")",
+    '--bs-accordion-btn-active-icon': "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23cdd2d5' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 16 16'%3E%3Cpath d='m2 5 6 6 6-6'/%3E%3C/svg%3E\")",
   } as React.CSSProperties;
 
   return (
