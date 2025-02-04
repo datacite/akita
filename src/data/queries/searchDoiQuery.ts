@@ -68,24 +68,22 @@ function convertToQueryData(json: any): QueryData {
 }
 
 export async function fetchDois(variables: QueryVar) {
-  try {
-    const options = {
-      method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
-    }
-    const searchParams = buildDoiSearchParams(variables)
+  const options = {
+    method: 'GET',
+    headers: { accept: 'application/vnd.api+json' }
+  }
+  const searchParams = buildDoiSearchParams(variables)
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
-      options
-    )
-    const json = await res.json()
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+    options
+  )
+  const json = await res.json()
+
+  if(!res.ok) throw new Error(json.errors.title)
 
     const data = convertToQueryData(json)
     return { data }
-  } catch (error) {
-    return { error }
-  }
 }
 
 
