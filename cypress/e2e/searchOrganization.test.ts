@@ -69,7 +69,7 @@ describe('Search Organizations', () => {
       // timeout for the query results to return
       // return introduction text
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No organizations found.')
+      .should('contain', 'No results found.')
   })
 })
 

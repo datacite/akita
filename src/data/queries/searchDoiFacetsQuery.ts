@@ -60,30 +60,33 @@ function convertToQueryData(json: any): QueryData {
 }
 
 export async function fetchDoisFacets(variables: QueryVar) {
-  try {
-    const options = {
-      method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
-    }
-    const searchParams = buildDoiSearchParams(variables)
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
-      options
-    )
-    const json = await res.json()
-
-    const data = convertToQueryData(json)
-    return { data }
-  } catch (error) {
-    return { error }
+  const options = {
+    method: 'GET',
+    headers: { accept: 'application/vnd.api+json' }
   }
+  const searchParams = buildDoiSearchParams(variables)
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+    options
+  )
+  const json = await res.json()
+  if(!res.ok) {
+    const errorMessage = json?.errors?.title || `Request for facets failed with status: ${res.status}`;
+    throw new Error(errorMessage);
+  }
+
+  const data = convertToQueryData(json)
+  return { data }
 }
 
 export function useSearchDoiFacetsQuery(variables: QueryVar) {
   // eslint-disable-next-line no-unused-vars
   const { cursor, ...vars } = variables
-  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', vars, 'facets'], queryFn: async () => fetchDoisFacets(variables) })
+  const { isPending, data, error } = useQuery({
+    queryKey: ['doiSearch', vars, 'facets'],
+    queryFn: async () => fetchDoisFacets(variables),
+  })
 
   return { loading: isPending, data: data?.data, error }
 }
