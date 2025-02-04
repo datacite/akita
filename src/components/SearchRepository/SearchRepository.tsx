@@ -130,7 +130,7 @@ export default function SearchRepositories({ variables }: Props) {
 
   return (<Container fluid>
     <Row>
-      <Col md={3}>{renderFacets()}</Col>
+      <Col md={3} className='pe-4'>{renderFacets()}</Col>
       <Col md={9}>{renderResults()}</Col>
     </Row>
   </Container>)

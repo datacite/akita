@@ -106,7 +106,7 @@ export default function SearchOrganizations(props: Props) {
       </Col>
     </Row>
     <Row>
-      <Col md={3}>
+      <Col md={3} className='px-4'>
         {renderFacets()}
       </Col>
       <Col md={9}>
