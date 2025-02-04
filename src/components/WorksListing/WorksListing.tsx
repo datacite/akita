@@ -3,16 +3,16 @@
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
 import { Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
+import NoResults from 'src/components/NoResults/NoResults'
 
-import Pager from '../Pager/Pager'
-import WorksDashboard from '../WorksDashboard/WorksDashboard'
+import Pager from 'src/components/Pager/Pager'
+import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
 import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
 
 interface Props {
@@ -63,9 +63,7 @@ export default function WorksListing({
 
   const renderNoWorks = () => {
     return (
-        <div className="alert-works">
-          <Alert variant="warning">No works found.</Alert>
-        </div>
+      <NoResults />
     )
   }
 
