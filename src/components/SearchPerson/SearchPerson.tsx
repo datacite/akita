@@ -4,10 +4,9 @@ import React from 'react'
 import Loading from 'src/components/Loading/Loading'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
-import Error from 'src/components/Error/Error'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'
+import NoResults from 'src/components/NoResults/NoResults'
 
 import { QueryVar, useSearchPersonQuery } from 'src/data/queries/searchPersonQuery'
 
@@ -22,22 +21,13 @@ export default function SearchPerson(props: Props) {
 
   if (loading) return <Row><Loading /></Row>
 
-  if (error) return (
+  const people = data?.people
+  if (error || !people || people.nodes.length == 0) return (
     <Row>
       <Col md={{ span: 9, offset: 3 }}>
-        <Error title="An error occured." message={error.message} />
+        <NoResults />
       </Col>
     </Row>
-  )
-
-  const people = data?.people
-
-  if (!people || people.nodes.length == 0) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <div className="alert-works">
-        <Alert variant="warning">No people found.</Alert>
-      </div>
-    </Col>
   )
 
 
