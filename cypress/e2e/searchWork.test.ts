@@ -89,7 +89,7 @@ describe('Search Works', () => {
       .type('xxxxxxxxxxxx{enter}')
       // timeout for the query results to return
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No works found.')
+      .should('contain', 'No results found.')
       // no results count for zero results
       .get('.member-results')
       .should('not.exist')

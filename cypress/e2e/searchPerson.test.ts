@@ -52,7 +52,7 @@ describe('Search People', () => {
       .type('xxxxxyyyyy{enter}')
       // timeout for the query results to return
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No people found.')
+      .should('contain', 'No results found.')
   })
 })
 
