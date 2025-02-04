@@ -80,10 +80,13 @@ export async function fetchDois(variables: QueryVar) {
   )
   const json = await res.json()
 
-  if(!res.ok) throw new Error(json.errors.title)
+  if(!res.ok) {
+    const errorMessage = json?.errors?.title || `Request for dois failed with status: ${res.status}`;
+    throw new Error(errorMessage);
+  }
 
-    const data = convertToQueryData(json)
-    return { data }
+  const data = convertToQueryData(json)
+  return { data }
 }
 
 

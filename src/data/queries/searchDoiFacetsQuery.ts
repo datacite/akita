@@ -71,10 +71,13 @@ export async function fetchDoisFacets(variables: QueryVar) {
     options
   )
   const json = await res.json()
-  if(!res.ok) throw new Error(json.errors.title)
+  if(!res.ok) {
+    const errorMessage = json?.errors?.title || `Request for facets failed with status: ${res.status}`;
+    throw new Error(errorMessage);
+  }
 
-    const data = convertToQueryData(json)
-    return { data }
+  const data = convertToQueryData(json)
+  return { data }
 }
 
 export function useSearchDoiFacetsQuery(variables: QueryVar) {
