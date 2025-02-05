@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
