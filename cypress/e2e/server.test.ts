@@ -36,15 +36,15 @@ describe('Server error', () => {
   //     .should('contain', 'Internal Server Error')
   // })
 
-  it('search organizations', () => {
-    cy.visit('/ror.org')
-    cy.get('input[name="query"]')
-      .type('cambridge{enter}')
-      .get('.alert > h4')
-      .should('contain', 'An error occured.')
-      .get('.alert > p')
-      .should('contain', 'Internal Server Error')
-  })
+  // it('search organizations', () => {
+  //   cy.visit('/ror.org')
+  //   cy.get('input[name="query"]')
+  //     .type('cambridge{enter}')
+  //     .get('.alert > h4')
+  //     .should('contain', 'An error occured.')
+  //     .get('.alert > p')
+  //     .should('contain', 'Internal Server Error')
+  // })
 })
 
 export { }

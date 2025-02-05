@@ -3,15 +3,14 @@
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Alert from 'react-bootstrap/Alert'
 import { pluralize } from '../../utils/helpers'
 
 import Pager from 'src/components/Pager/Pager'
-import Error from 'src/components/Error/Error'
+import NoResults from 'src/components/NoResults/NoResults'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import Loading from 'src/components/Loading/Loading'
 
-import { QueryVar, useSearchOrganizationQuery } from 'src/data/queries/searchOrganizationQuery'
+import { QueryVar, useRORSearch } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
 import FacetListGroup from 'src/components/FacetList/FacetListGroup'
 
@@ -20,26 +19,17 @@ type Props = {
 }
 
 export default function SearchOrganizations(props: Props) {
-  const { loading, data, error } = useSearchOrganizationQuery(props.variables)
+  const { loading, data, error } = useRORSearch(props.variables)
 
   if (loading) return <Row><Loading /></Row>
 
-  if (error) return (
+  const organizations = data?.organizations
+  if (error || !organizations || organizations.nodes.length == 0) return (
     <Row>
       <Col md={{ span: 9, offset: 3 }}>
-        <Error title="An error occured." message={error.message} />
+        <NoResults />
       </Col>
     </Row>
-  )
-
-  const organizations = data?.organizations
-
-  if (!organizations || organizations.nodes.length == 0) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <div className="alert-works">
-        <Alert variant="warning">No organizations found.</Alert>
-      </div>
-    </Col>
   )
 
   const renderResults = () => {

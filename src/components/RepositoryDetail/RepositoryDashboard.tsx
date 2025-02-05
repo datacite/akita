@@ -26,6 +26,8 @@ interface Props {
 }
 
 export function RepositoryDashboard({ repoId }: Props) {
+  if (!repoId) return <></>
+
   const { data: repo, loading, error } = useRepositoryRelatedContent(repoId)
 
   if (loading) return <Row><Loading /></Row>

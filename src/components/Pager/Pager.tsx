@@ -3,6 +3,7 @@
 import React from 'react'
 import Pagination from 'react-bootstrap/Pagination'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 type Props = {
   url: string
@@ -38,10 +39,10 @@ const Pager: React.FunctionComponent<Props> = ({
 
   return (
     <Pagination>
-      <Pagination.Item disabled={!hasFirstPage} href={firstPageUrl}>
+      <Pagination.Item as={Link} disabled={!hasFirstPage} href={firstPageUrl}>
         First Page
       </Pagination.Item>
-      <Pagination.Item disabled={!hasNextPage} href={nextPageUrl}>
+      <Pagination.Item as={Link} disabled={!hasNextPage} href={nextPageUrl}>
         Next Page
       </Pagination.Item>
     </Pagination>

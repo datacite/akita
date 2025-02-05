@@ -108,7 +108,7 @@ export default function Claim({ doi_id }: Props) {
     return null
 
   if (loading) {
-    return <Button variant='warning' className={styles.claimWarning} disabled title="Checking claim status...">
+    return <Button variant='primary' className={styles.claimDisabled} disabled title="Checking claim status...">
       Checking claim status...
     </Button>
   }
