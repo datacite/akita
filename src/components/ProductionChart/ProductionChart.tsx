@@ -113,7 +113,7 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
         field: 'count',
         type: 'quantitative',
         axis: {
-          format: ',f',
+          format: ',d',
           tickMinStep: 1
         }
       },
