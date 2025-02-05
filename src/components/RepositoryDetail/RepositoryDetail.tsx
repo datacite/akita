@@ -21,20 +21,18 @@ export function RepositorySidebar({ repo }: Props) {
     return (
       <>
         {repo.url && (
-          <Button id="go-to-repo" variant="default" href={repo.url} className="w-100">
+          <Button id="go-to-repo" variant="default" href={repo.url} className="mb-2">
             <FontAwesomeIcon icon={faSignInAlt} />
             &nbsp;
             Go to Repository
           </Button>
         )}
         {repo.works && (repo.works.totalCount > 0) && (
-          <Link prefetch={false} href={"/doi.org?query=client.uid:" + repo.clientId}>
-            <Button variant="primary" id="find-related">
-              <FontAwesomeIcon icon={faNewspaper} />
-              &nbsp;
-              Find Related Works
-            </Button>
-          </Link>
+          <Button variant="primary" href={"/doi.org?query=client.uid:" + repo.clientId} id="find-related">
+            <FontAwesomeIcon icon={faNewspaper} />
+            &nbsp;
+            Find Related Works
+          </Button>
         )}
       </>
     )
