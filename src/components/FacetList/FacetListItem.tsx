@@ -2,8 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import { useSearchParams } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -12,6 +10,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import { Facet } from 'src/data/types'
 import styles from './FacetListItem.module.scss'
+import ListGroup from 'react-bootstrap/ListGroup';
 
 interface Props {
   facet: Facet
@@ -34,12 +33,12 @@ export default function FacetListItem(props: Props) {
     value: customValue
   } = props
 
-  const searchParams = useSearchParams()
 
   const checkIcon = radio ? faDotCircle : faCheckSquare
   const uncheckIcon = radio ? faCircle : faSquare
   let icon = checked ? checkIcon : uncheckIcon
 
+  const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
   const value = customValue || facet.id
@@ -54,14 +53,12 @@ export default function FacetListItem(props: Props) {
   }
 
   return (
-    <Row as="li" key={facet.id}>
-      <Col xs={1} className={styles.checkbox}>
-        <Link prefetch={false} href={url + params.toString()} className={"facet-" + param}>
-          <FontAwesomeIcon icon={icon} />{' '}
-        </Link>
-      </Col>
-      <Col xs="auto" className="facet-title flex-grow-1">{facet.title}</Col>
-      <Col className="number text-end">{facet.count.toLocaleString('en-US')}</Col>
-    </Row>
+    <ListGroup.Item as="li" key={facet.id}>
+    <Link prefetch={false} href={url + params.toString()} className={styles.facetlink}>
+      <FontAwesomeIcon icon={icon} />
+      <span className={styles.facetTitle}>{facet.title}</span>
+      <span>{facet.count.toLocaleString('en-US')}</span>
+    </Link>
+    </ListGroup.Item>
   )
 }

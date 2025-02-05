@@ -21,7 +21,8 @@ describe('Search Organizations', () => {
       })
 
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -42,7 +43,8 @@ describe('Search Organizations', () => {
       })
 
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -73,4 +75,4 @@ describe('Search Organizations', () => {
   })
 })
 
-export { }
+export {}

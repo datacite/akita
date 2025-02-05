@@ -12,6 +12,7 @@ import Loading from 'src/components/Loading/Loading'
 
 import { QueryVar, useRORSearch } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
+import FacetListGroup from 'src/components/FacetList/FacetListGroup'
 
 type Props = {
   variables: QueryVar
@@ -40,7 +41,7 @@ export default function SearchOrganizations(props: Props) {
       : ''
 
     return (
-      <Col md={9}>
+      <>
         {organizations.nodes.map((item) => (
           <Row key={item.id} className="mb-4 organization"><Col>
             <OrganizationMetadata
@@ -59,13 +60,14 @@ export default function SearchOrganizations(props: Props) {
             />
           </Row>
         )}
-      </Col>
+      </>
     )
   }
 
   const renderFacets = () => {
+    const defaultActiveKeys = ['country-facets', 'organization-type-facets']
     return (
-      <Col md={3} className="d-none d-md-block facets">
+      <FacetListGroup defaultActiveKey={defaultActiveKeys} >
         <FacetList
           data={organizations.countries}
           title="Country"
@@ -81,7 +83,7 @@ export default function SearchOrganizations(props: Props) {
           param="types"
           url="ror.org/?"
         />
-      </Col>
+      </FacetListGroup>
     )
   }
 
@@ -94,8 +96,12 @@ export default function SearchOrganizations(props: Props) {
       </Col>
     </Row>
     <Row>
-      {renderFacets()}
-      {renderResults()}
+      <Col md={3} className='px-4'>
+        {renderFacets()}
+      </Col>
+      <Col md={9}>
+        {renderResults()}
+      </Col>
     </Row>
   </>)
 }

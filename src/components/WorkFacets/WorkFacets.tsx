@@ -1,13 +1,12 @@
 'use client'
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
+import FacetListGroup from '../FacetList/FacetListGroup'
 
 interface Props {
   data: Facets
@@ -60,21 +59,31 @@ export default function WorkFacets({
   const isConnectionTypeSet = searchParams?.has('connection-type')
   const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
+  const defaultActiveKeys = [
+    "authors-facets",
+    "connection-type-facets",
+    "published-facets",
+    "work-type-facets",
+    "license-facets",
+    "language-facets",
+    "field-of-science-facets",
+    "registration-agency-facets",
+    "conection-type-facets",
+    "repository-type-facets"
+  ]
+
   return (
     <>
       {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <Row className="panel facets add mb-3">
-          <Col className="panel-body">
-            <SearchBox path={path} />
-          </Col>
-        </Row>
+        <SearchBox path={path} />
       )}
 
+      <FacetListGroup defaultActiveKey={defaultActiveKeys} >
       {totalConnectionTypeCount > 0 && (
         <FacetList
           data={connectionTypeList.filter(f => f.count > 0)}
           title="Connection Types"
-          id="connections-type-facets"
+          id="connection-type-facets"
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
@@ -135,7 +144,6 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
-
       <FacetList
         data={data.clientTypes}
         title="Repository Type"
@@ -144,6 +152,7 @@ export default function WorkFacets({
         tooltipText='The type of DataCite Repository where a DOI is stored.'
         url={url}
       />
+      </FacetListGroup>
     </>
   )
 }

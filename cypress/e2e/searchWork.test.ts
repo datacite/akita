@@ -22,7 +22,8 @@ describe('Search Works', () => {
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(4)
         expect($facet.eq(0)).to.contain('Creators')
@@ -159,4 +160,4 @@ describe('Search Works', () => {
   // })
 })
 
-export { }
+export {}
