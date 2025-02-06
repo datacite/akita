@@ -22,6 +22,14 @@ export default function Search() {
 
   const [searchInput, setSearchInput] = useState(searchParams?.get('query')?.toString() || '')
 
+  // Update searchInput when URL changes (e.g., back button)
+  React.useEffect(() => {
+    const queryParam = searchParams?.get('query')?.toString() || ''
+    if (searchInput !== queryParam) {
+      setSearchInput(queryParam)
+    }
+  }, [searchParams])
+
   function search(query: string) {
     const params = new URLSearchParams(searchParams || {});
 
@@ -31,7 +39,7 @@ export default function Search() {
     router.push(`${base}?${params.toString()}`);
   }
 
-  const debounceSearch = useDebouncedCallback(search, 300)
+  const debounceSearch = useDebouncedCallback(search, 500)
 
   return (
     <InputGroup className="flex-nowrap align-items-center">
@@ -47,7 +55,11 @@ export default function Search() {
         className={`form-control ${styles.input}`}
         type="text"
       />
-      <Button type="submit" className={`search-submit ${styles.submit}`} onClick={() => search(searchInput)}>
+      <Button type="submit" className={`search-submit ${styles.submit}`} onClick={(e) => {
+        search(searchInput)
+        e.preventDefault();
+      }}
+      >
         <FontAwesomeIcon icon={faSearch} />
       </Button>
       {searchInput !== '' && (
