@@ -170,7 +170,6 @@ async function convertRORToQueryData(
   const runningTotal = (page - 1) * ROR_PER_PAGE + currentPageTotal
 
   // Fetch the Providers map
-  console.log(providersMap)
   const nodes = await Promise.all(
     (rorResponse?.items || []).map(org => {
       const relatedProvider = providersMap[org.id] || { data: { symbol: '', memberType: '' } }
