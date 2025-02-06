@@ -65,7 +65,7 @@ describe('PersonContainer', () => {
       .should('eq', 'https://europepmc.org/authors/0000-0001-6528-2027')
   })
 
-  it('facets', () => {
+  it('facetlist-group', () => {
     cy.get('.published-facets').should('be.visible')
     cy.get('.published-facets li').should(($facets) => {
       expect($facets).to.have.length.at.least(1)
@@ -85,4 +85,4 @@ describe('PersonContainer', () => {
   })
 })
 
-export { }
+export {}

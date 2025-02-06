@@ -13,7 +13,7 @@ interface SearchParams extends Partial<QueryVar> {
   filterQuery?: string
 }
 
-export default async function SearchDoiPage ({ searchParams }: Props) {
+export default async function SearchOrganizationPage ({ searchParams }: Props) {
   const { query, filterQuery, ...variables } = searchParams
 
   // Show examply text if there is no query

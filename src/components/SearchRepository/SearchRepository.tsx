@@ -10,7 +10,8 @@ import Link from 'next/link'
 import Pager from 'src/components/Pager/Pager'
 import FairFilter from 'src/components/FairFilter/FairFilter'
 import FacetList from 'src/components/FacetList/FacetList'
-import Error from 'src/components/Error/Error'
+import FacetListGroup from 'src/components/FacetList/FacetListGroup'
+
 import Loading from 'src/components/Loading/Loading'
 import RepositoryMetadata from 'src/components/RepositoryMetadata/RepositoryMetadata'
 
@@ -28,18 +29,10 @@ export default function SearchRepositories({ variables }: Props) {
 
   if (loading) return <Row><Loading /></Row>
 
-  if (error) return (
-    <Row>
-      <Col md={{ span: 9, offset: 3 }}>
-        <Error title="An error occured." message={error.message} />
-      </Col>
-    </Row>
-  )
-
 
   const repositories = data?.repositories
 
-  if (!repositories || repositories.nodes.length == 0) return (
+  if (error || !repositories || repositories.nodes.length == 0) return (
     <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
         <Alert variant="warning">
@@ -67,8 +60,10 @@ export default function SearchRepositories({ variables }: Props) {
 
   const renderFacets = () => {
     if (repositories.totalCount == 0) return ""
+    const defaultActiveKeys = ['certificate', 'software']
 
-    return (<>
+    return (
+    <FacetListGroup defaultActiveKey={defaultActiveKeys}>
       <FairFilter url="repositories/?" />
 
       <FacetList
@@ -85,7 +80,7 @@ export default function SearchRepositories({ variables }: Props) {
         param="software"
         url="repositories/?"
       />
-    </>)
+    </FacetListGroup>)
   }
 
 
@@ -126,7 +121,7 @@ export default function SearchRepositories({ variables }: Props) {
 
   return (<Container fluid>
     <Row>
-      <Col md={3}>{renderFacets()}</Col>
+      <Col md={3} className='pe-4'>{renderFacets()}</Col>
       <Col md={9}>{renderResults()}</Col>
     </Row>
   </Container>)

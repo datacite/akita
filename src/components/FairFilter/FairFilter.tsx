@@ -1,8 +1,6 @@
 'use client'
 
 import React from 'react'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -83,7 +81,7 @@ export default function FairFilter({ url }: Props) {
 
 
     return (
-        <Row className="panel facets add"><Col>
+      <div className="panel panel-transparent facets">
             <OverlayTrigger placement="top" overlay={tooltipFAIRfilters}>
                 <h4>
                     Criterias Compliance <FontAwesomeIcon icon={faQuestionCircle} />
@@ -92,7 +90,7 @@ export default function FairFilter({ url }: Props) {
             <ul id="fair-filter">
                 {criterias.map(filterLink)}
             </ul>
-        </Col></Row>
+        </div>
     )
 
 }

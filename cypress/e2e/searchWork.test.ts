@@ -22,7 +22,8 @@ describe('Search Works', () => {
       // .get(':nth-child(2) > .panel-body > .registered')
       // .should('contain', 'DOI registered')
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(4)
         expect($facet.eq(0)).to.contain('Creators')
@@ -89,7 +90,7 @@ describe('Search Works', () => {
       .type('xxxxxxxxxxxx{enter}')
       // timeout for the query results to return
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No works found.')
+      .should('contain', 'No results found.')
       // no results count for zero results
       .get('.member-results')
       .should('not.exist')
@@ -159,4 +160,4 @@ describe('Search Works', () => {
   // })
 })
 
-export { }
+export {}

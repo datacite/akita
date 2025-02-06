@@ -4,12 +4,12 @@ import React from 'react'
 import Loading from '../Loading/Loading'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Error from 'src/components/Error/Error'
 
 import type { Works } from 'src/data/types'
 import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 import { useSearchDoiFacetsQuery } from 'src/data/queries/searchDoiFacetsQuery'
 
+import NoResults from 'src/components/NoResults/NoResults'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers'
 
@@ -26,7 +26,7 @@ export default function SearchWork(props: Props) {
   if (error) return (
     <Row>
       <Col md={{ span: 9, offset: 3 }}>
-        <Error title="An error occured." message={error.message} />
+        <NoResults />
       </Col>
     </Row>
   )

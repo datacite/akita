@@ -21,7 +21,8 @@ describe('Search Organizations', () => {
       })
 
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -42,7 +43,8 @@ describe('Search Organizations', () => {
       })
 
       // all facets are rendered
-      .get('.facets')
+      .get('.facetlist-group')
+      .children()
       .should(($facet) => {
         expect($facet).to.have.length.at.least(2)
         // expect($facet.eq(0)).to.contain('Country')
@@ -69,8 +71,8 @@ describe('Search Organizations', () => {
       // timeout for the query results to return
       // return introduction text
       .get('.alert-warning', { timeout: 60000 })
-      .should('contain', 'No organizations found.')
+      .should('contain', 'No results found.')
   })
 })
 
-export { }
+export {}

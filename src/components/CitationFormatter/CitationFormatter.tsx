@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Alert from 'react-bootstrap/Alert'
 import ReactHtmlParser from 'html-react-parser'
 import { useFormattedCitationQuery } from 'src/data/queries/formattedCitationQuery'
+import styles from './CitationFormatter.module.scss'
 
 type Props = {
   id: string
@@ -35,7 +36,7 @@ export default function CitationFormatter({ id, style, locale }: Props) {
     <Col xs={12}>
       <h3 className="member-results">Cite as</h3>
     </Col>
-    <Col xs={12} className="formatted-citation">
+    <Col xs={12} className={styles.formattedCitation} id="formatted-citation">
       {ReactHtmlParser(formatted)}
     </Col>
   </ >

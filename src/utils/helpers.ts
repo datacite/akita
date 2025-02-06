@@ -1,6 +1,7 @@
 import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-numberformat/locale-data/en'
 import ISO6391 from 'iso-639-1'
+import ISO31661 from 'iso-3166-1'
 import type { Facet, WorkMetadata, Person } from 'src/data/types'
 import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart'
 
@@ -131,6 +132,14 @@ function kebabify(input: string): string {
     .toLowerCase()
 }
 
+export function titleCase(input: string): string {
+  return input
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 
 
 interface Repository {
@@ -202,6 +211,10 @@ export function mapJsonToPerson(json: any): Person {
   } as Person
 }
 
+export function getCountryName(countryCode: string) {
+  const isoentry = ISO31661.whereAlpha2(countryCode.toUpperCase())
+  return isoentry ? isoentry.country: ""
+}
 
 
 const ID_BASE = process.env.NEXT_PUBLIC_ID_BASE || 'https://handle.stage.datacite.org/'

@@ -66,7 +66,7 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
     transform: [
       {
         calculate: 'toNumber(datum.title)',
-        as: 'period'
+        as: 'year'
       },
       {
         calculate: 'toNumber(datum.title)+1',
@@ -91,7 +91,7 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
     },
     encoding: {
       x: {
-        field: 'period',
+        field: 'year',
         bin: {
           binned: true,
           step: 1,
@@ -106,14 +106,11 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
           domain: [lowerBoundYear, thisYear]
         }
       },
-      x2: {
-        field: 'bin_end'
-      },
       y: {
         field: 'count',
         type: 'quantitative',
         axis: {
-          format: ',f',
+          format: ',d',
           tickMinStep: 1
         }
       },
