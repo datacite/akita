@@ -1,6 +1,7 @@
 import React from 'react';
 import { DropdownItem, NavItem, NavLink } from 'src/components/ReactBootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import {
   faNewspaper,
   faUserGraduate,
@@ -21,6 +22,7 @@ export function WorksLink() {
       eventKey={'/doi.org'}
       href={'/doi.org'}
       className="text-nowrap"
+      as={Link}
     >
       <FontAwesomeIcon icon={faNewspaper} /> Works
     </NavLink>
@@ -34,6 +36,7 @@ export function PeopleLink() {
       eventKey={'/orcid.org'}
       href={'/orcid.org'}
       className="text-nowrap"
+      as={Link}
     >
       <FontAwesomeIcon icon={faUserGraduate} /> People
     </NavLink>
@@ -47,6 +50,7 @@ export function OrganizationsLink() {
       eventKey={'/ror.org'}
       href={'/ror.org'}
       className="text-nowrap"
+      as={Link}
     >
       <FontAwesomeIcon icon={faUniversity} /> Organizations
     </NavLink>
@@ -60,6 +64,7 @@ export function RepositoriesLink() {
       eventKey={'/repositories'}
       href={'/repositories'}
       className="text-nowrap"
+      as={Link}
     >
       <FontAwesomeIcon icon={faDatabase} /> Repositories
     </NavLink>
