@@ -2,7 +2,7 @@ import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { parseInt } from 'lodash'
 import { People } from 'src/data/types'
-import { mapJsonToPerson } from 'src/utils/helpers'
+import { mapSearchJsonToPerson } from 'src/utils/helpers'
 
 function buildSearchParams(variables: QueryVar): URLSearchParams {
   return new URLSearchParams({
@@ -20,7 +20,7 @@ function convertToQueryData(json: any, pageStr: string): QueryData {
       __typename: 'PersonConnectionWithTotal',
       totalCount,
       pageInfo: { endCursor: (page + 25).toString(), hasNextPage: page + 25 < totalCount },
-      nodes: json['expanded-result'].map(w => mapJsonToPerson(w)),
+      nodes: json['expanded-result'].map(w => mapSearchJsonToPerson(w)),
     }
   }
 }

@@ -74,6 +74,15 @@ export type Works = {
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
+  citations?: Facet[]
+  views?: Facet[]
+  downloads?: Facet[]
+  citationCount?: number
+  viewCount?: number
+  downloadCount?: number
+  totalContentUrl?: number
+  totalOpenLicenses?: number
+  openLicenseResourceTypes?: Facet[]
 
   nodes: Work[]
   personToWorkTypesMultilevel: MultilevelFacet[]

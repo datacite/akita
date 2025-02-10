@@ -179,18 +179,9 @@ export function mapJsonToWork(json: any, included: any[]) {
   }
 }
 
-export function getDateFromParts(year: string | number | null, month?: string | number | null, day?: string | number | null): Date | null {
-  if (!year) {
-    return null;
-  }
-
-  const iso8601Time = [
-    year.toString().padStart(4, "0"),
-    month?.toString().padStart(2, "0") || null,
-    day?.toString().padStart(2, "0") || null,
-  ].filter(part => part !== null).join("-");
-
-  return new Date(iso8601Time);
+export function getDateFromParts(year?: number, month = 1, day = 1): string | null {
+  if (!year) return null;
+  return new Date(year, month - 1, day).toISOString();
 }
 
 export function buildPersonName(names: { 'orcid-id': string, 'given-names': string, 'family-names': string, 'credit-name': string }) {
@@ -201,7 +192,7 @@ export function buildPersonName(names: { 'orcid-id': string, 'given-names': stri
       id
 }
 
-export function mapJsonToPerson(json: any): Person {
+export function mapSearchJsonToPerson(json: any): Person {
   return {
     id: 'https://orcid.org/' + json['orcid-id'],
     name: buildPersonName(json),
@@ -213,7 +204,7 @@ export function mapJsonToPerson(json: any): Person {
 
 export function getCountryName(countryCode: string) {
   const isoentry = ISO31661.whereAlpha2(countryCode.toUpperCase())
-  return isoentry ? isoentry.country: ""
+  return isoentry ? isoentry.country : ""
 }
 
 
