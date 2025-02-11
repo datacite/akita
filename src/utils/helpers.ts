@@ -179,26 +179,32 @@ export function mapJsonToWork(json: any, included: any[]) {
   }
 }
 
-export function mapJsonToPerson(json: any): Person {
-  const id = json['orcid-id'], givenName = json['given-names'], familyName = json['family-names'], creditName = json['credit-name']
+export function getDateFromParts(year?: number, month = 1, day = 1): string | null {
+  if (!year) return null;
+  return new Date(year, month - 1, day).toISOString();
+}
 
-  const name =
-    creditName ? creditName :
-      (givenName || familyName) ? [givenName, familyName].join(' ') :
-        id
+export function buildPersonName(names: { 'orcid-id': string, 'given-names': string, 'family-names': string, 'credit-name': string }) {
+  const id = names['orcid-id'], givenName = names['given-names'], familyName = names['family-names'], creditName = names['credit-name']
 
+  return creditName ? creditName :
+    (givenName || familyName) ? [givenName, familyName].join(' ') :
+      id
+}
+
+export function mapSearchJsonToPerson(json: any): Person {
   return {
-    id: 'https://orcid.org/' + id,
-    name,
-    givenName,
-    familyName,
+    id: 'https://orcid.org/' + json['orcid-id'],
+    name: buildPersonName(json),
+    givenName: json['given-names'],
+    familyName: json['family-names'],
     alternateName: json['other-name']
   } as Person
 }
 
 export function getCountryName(countryCode: string) {
   const isoentry = ISO31661.whereAlpha2(countryCode.toUpperCase())
-  return isoentry ? isoentry.country: ""
+  return isoentry ? isoentry.country : ""
 }
 
 

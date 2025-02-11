@@ -88,7 +88,7 @@ export default async function Page({ params }: Props) {
 
   return <>
     <Suspense fallback={<Loading />}>
-      <Content orcid={orcid} />
+      <Content orcid={params.orcid} />
     </Suspense>
     <RelatedContent />
   </>

@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
+import { Person as PersonType } from 'src/data/types'
 import { fetchPerson } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
@@ -26,7 +27,7 @@ export default async function Content(props: Props) {
     </Col>
   )
 
-  const person = data?.person
+  const person = data?.person || {} as PersonType
 
   return (
     <Container fluid>
