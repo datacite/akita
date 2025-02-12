@@ -685,7 +685,7 @@ html {
 }
 
 body {
-  scrollbar-width: thin;
+  scrollbar-width: auto;
 }
 
 /* Webkit scrollbar styles */
