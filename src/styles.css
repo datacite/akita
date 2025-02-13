@@ -678,3 +678,12 @@ h4.work {
     color: rgb(52, 73, 94) !important;
     border-color: #e67e22 !important;
 }
+
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+body {
+  scrollbar-width: auto;
+}
