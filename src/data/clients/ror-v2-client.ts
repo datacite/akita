@@ -44,6 +44,8 @@ interface Location {
     // continent_name: string;
     // country_subdivision_code: string;
     // country_subdivision_name: string;
+    lat: number;
+    lng: number;
   };
   geonames_id: string;
 }
