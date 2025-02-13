@@ -1,9 +1,8 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
-import Loading from 'src/components/Loading/Loading'
 import { fetchOrganizationMetadata } from 'src/data/queries/organizationQuery'
 
 
@@ -68,15 +67,10 @@ export default async function Page({ params }: Props) {
 
   // Fetch Organization metadata
   const { data } = await fetchOrganizationMetadata(rorid)
-
   if (!data) notFound()
 
   return <>
-    <Suspense fallback={<Loading />}>
-      <Content rorid={rorid} />
-    </Suspense>
+    <Content rorid={rorid} />
     <RelatedContent />
   </>
 }
-
-
