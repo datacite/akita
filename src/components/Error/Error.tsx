@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert'
 
 type Props = {
   title: string
-  message: string
+  message?: string
 }
 
 const Error: React.FunctionComponent<Props> = ({ title, message }) => {
