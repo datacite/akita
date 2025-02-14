@@ -63,6 +63,9 @@ export default function Content(props: Props) {
         <Col md={9} className="px-0">
           {/* <Organization organization={organization} /> */}
           <SummarySearchMetrics rorId={organization.id} />
+          {organization.inceptionYear && (
+            <p className="mb-3">Founded {organization.inceptionYear}</p>
+          )}
           <OrganizationMetadata metadata={organization}
               linkToExternal={false}
               showTitle={false}/>
