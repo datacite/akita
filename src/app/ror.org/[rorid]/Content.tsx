@@ -12,6 +12,7 @@ import Title from 'src/components/Title/Title'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import ShareLinks from 'src/components/ShareLinks/ShareLinks'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import Loading from 'src/components/Loading/Loading'
 import { rorFromUrl } from 'src/utils/helpers'
 
@@ -61,6 +62,7 @@ export default function Content(props: Props) {
         </Col>
         <Col md={9} className="px-0">
           {/* <Organization organization={organization} /> */}
+          <SummarySearchMetrics rorId={organization.id} />
           <OrganizationMetadata metadata={organization}
               linkToExternal={false}
               showTitle={false}/>
