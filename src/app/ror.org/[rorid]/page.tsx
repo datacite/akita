@@ -30,7 +30,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const organization = data.organization
-
     const title = organization.name
       ? 'DataCite Commons: ' + organization.name
       : 'DataCite Commons: No Name'
@@ -64,23 +63,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default async function Page({ params }: Props) {
+export default function Page({ params }: Props) {
   const { rorid } = params
-
-  // Validate ROR ID format
-  if (!isValidRORId(rorid)) {
-    notFound()
-  }
-  // Fetch Organization metadata
-  try {
-    const { data } = await fetchOrganizationMetadata(rorid)
-    if (!data) notFound()
-
-    return <>
+  return (
+    <>
       <Content rorid={rorid} />
       <RelatedContent />
     </>
-  } catch (error) {
-    notFound()
-  }
+  )
 }
