@@ -89,7 +89,6 @@ export function useROROrganization(id: string): ROROrganizationResult {
           rorResponse,
           relatedProviderData
       )
-      console.log("IN ORGQUERY", organization)
       return {
         organization: organization
       }
