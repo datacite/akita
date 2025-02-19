@@ -7,7 +7,7 @@ import fetchConditionalCache from 'src/utils/fetchConditionalCache'
 
 function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
-    query: 'uid:' + id,
+    query: `uid:"${id}"`,
     include: 'client',
     affiliation: 'false',
     publisher: 'true',
