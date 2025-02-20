@@ -56,7 +56,7 @@ export default function AboutPage() {
               </p>
               <p>
                 <a
-                  href="https://portal.productboard.com/71qotggkmbccdwzokuudjcsb/c/35-common-doi-search"
+                  href="https://datacite.org/roadmap"
                   target="_blank"
                   rel="noreferrer"
                 >
