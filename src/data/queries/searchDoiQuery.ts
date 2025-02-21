@@ -5,10 +5,13 @@ import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
 
 
+function extractRORId(rorString:string): string{
+  return rorString.replace('https://','').replace('ror.org/','')
+}
+
 function buildOrgQuery(rorId: string | undefined): string {
   if (!rorId) return ''
-
-  const id = 'ror.org/' + rorId
+  const id = 'ror.org/' + extractRORId(rorId)
   const urlId = `"https://${id}"`
   return `(organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId})`
 }

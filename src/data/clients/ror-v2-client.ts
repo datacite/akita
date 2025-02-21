@@ -40,10 +40,13 @@ interface Location {
   geonames_details: {
     country_code: string;
     country_name: string;
-    // continent_code: string;
-    // continent_name: string;
-    // country_subdivision_code: string;
-    // country_subdivision_name: string;
+    continent_code: string;
+    continent_name: string;
+    country_subdivision_code: string;
+    country_subdivision_name: string;
+    lat: number;
+    lng: number;
+    name: string;
   };
   geonames_id: string;
 }

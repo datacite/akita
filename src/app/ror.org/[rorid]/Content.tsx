@@ -1,16 +1,19 @@
+'use client'
 import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import { Organization as OrganizationType } from 'src/data/types'
-import { fetchOrganization } from 'src/data/queries/organizationQuery';
+import type { MinimalOrganization as OrganizationType } from 'src/data/queries/searchOrganizationQuery'
+import { useROROrganization } from 'src/data/queries/searchOrganizationQuery';
 
 import Error from 'src/components/Error/Error'
 import Title from 'src/components/Title/Title'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import ShareLinks from 'src/components/ShareLinks/ShareLinks'
-import Organization from 'src/components/Organization/Organization'
+import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
+import Loading from 'src/components/Loading/Loading'
 import { rorFromUrl } from 'src/utils/helpers'
 
 interface Props {
@@ -18,19 +21,17 @@ interface Props {
   isBot?: boolean
 }
 
-export default async function Content(props: Props) {
-  const { rorid, isBot = false } = props
-
-  const { data, error } = await fetchOrganization(rorid)
-
-  if (error) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <Error title="An error occured." message={error.message} />
-    </Col>
-  )
-
+export default function Content(props: Props) {
+  const { rorid } = props
+  const { data, error, loading } = useROROrganization(rorid)
+  if (loading) return <Loading />
   const organization = data?.organization || {} as OrganizationType
 
+  if (error || !organization) return (
+    <Col md={{ span: 9, offset: 3 }}>
+      <Error title="An error occured fetching the Organization." />
+    </Col>
+  )
 
   return (
     <Container fluid>
@@ -42,7 +43,7 @@ export default async function Content(props: Props) {
 
       <Row>
         <Col md={3}>
-          {!isBot && <DownloadReports
+          <DownloadReports
             links={[
               {
                 title: 'Related Works (CSV)',
@@ -56,11 +57,17 @@ export default async function Content(props: Props) {
               }
             ]}
             variables={{ id: rorid }}
-          />}
+          />
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9} className="px-0">
-          <Organization organization={organization} />
+          <SummarySearchMetrics rorId={organization.id} />
+          {organization.inceptionYear && (
+            <p className="mb-3">Founded {organization.inceptionYear}</p>
+          )}
+          <OrganizationMetadata metadata={organization}
+              linkToExternal={false}
+              showTitle={false}/>
         </Col>
       </Row>
     </Container>
