@@ -1,6 +1,6 @@
 import React from 'react'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
-import searchSummaryCounts from 'src/data/queries/searchSummaryQuery'
+import useSearchSummaryCounts from 'src/data/queries/searchSummaryQuery'
 import { type QueryVar } from 'src/data/queries/searchDoiQuery'
 import ContentLoader from "react-content-loader"
 
@@ -37,7 +37,7 @@ const links = {
 
 export default function SummarySearchMetrics(variables: QueryVar) {
 
-  const { data, error, isLoading } = searchSummaryCounts(variables)
+  const { data, error, isLoading } = useSearchSummaryCounts(variables)
 
   if (isLoading) return <SummaryStatsLoader />
   if (!data || error) return null

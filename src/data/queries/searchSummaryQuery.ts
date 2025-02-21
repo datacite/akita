@@ -19,7 +19,7 @@ function convertSummaryToCounts(summaryData: any) {
   }
 }
 
-export default function searchSummaryCounts( variables: QueryVar ) {
+export default function useSearchSummaryCounts( variables: QueryVar ) {
   return useQuery({
     queryKey: ['searchMetrics', variables ],
     queryFn: async () => {
