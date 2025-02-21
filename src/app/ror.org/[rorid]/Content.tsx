@@ -29,7 +29,7 @@ export default function Content(props: Props) {
 
   if (error || !organization) return (
     <Col md={{ span: 9, offset: 3 }}>
-      <Error title="An error fetching Organization." />
+      <Error title="An error occured fetching the Organization." />
     </Col>
   )
 
@@ -61,7 +61,6 @@ export default function Content(props: Props) {
           <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9} className="px-0">
-          {/* <Organization organization={organization} /> */}
           <SummarySearchMetrics rorId={organization.id} />
           {organization.inceptionYear && (
             <p className="mb-3">Founded {organization.inceptionYear}</p>
