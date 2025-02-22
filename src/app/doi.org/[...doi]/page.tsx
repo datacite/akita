@@ -12,6 +12,7 @@ import { fetchDoi } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -39,20 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/doi.org/' + data.work.doi
-      : 'https://commons.stage.datacite.org/doi.org/' + data.work.doi
-
-  const imageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/images/logo.png'
-      : 'https://commons.stage.datacite.org/images/logo.png'
-
-  const title = data.work.titles[0]
-    ? 'DataCite Commons: ' + data.work.titles[0].title
-    : 'DataCite Commons: No Title'
-
+  const title = `DataCite Commons: ${data.work.titles[0]?.title || 'No Title'}`
   const description = !data.work.descriptions[0]
     ? undefined
     : truncate(data.work.descriptions[0].description, {
@@ -68,15 +56,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
   return {
-    title: title,
-    description: description,
+    title,
+    description,
 
     openGraph: {
-      title: title,
-      description: description,
-      url: pageUrl,
+      title,
+      description,
+      url: `${COMMONS_URL}/doi.org/${data.work.doi}`,
       // type: type,
-      images: [{ url: imageUrl }]
+      images: [{ url: LOGO_URL }]
     }
   }
 }

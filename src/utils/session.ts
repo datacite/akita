@@ -1,33 +1,27 @@
 import { Cookies } from 'react-cookie-consent'
 import JsonWebToken from 'jsonwebtoken'
+import { JWT_KEY } from 'src/data/constants'
 
 export const session = () => {
   // RSA public key
-  const cert = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY
-    ? process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
-    : null
-  let jwt = null
-  let user = null
+  if (!JWT_KEY) return null
 
   const sessionCookie = Cookies.getJSON('_datacite')
-  if (sessionCookie && sessionCookie.authenticated) {
-    jwt = sessionCookie.authenticated.access_token
+  const token = sessionCookie?.authenticated?.access_token
+  if (!token) return null
+
+  let user: any = null
+  function setUser(error: any, payload: any) {
+    if (error) {
+      console.log('JWT verification error: ' + error.message)
+      return
+    }
+
+    user = payload
   }
 
-  if (jwt && cert)
-    // verify asymmetric token, using RSA with SHA-256 hash algorithm
-    JsonWebToken.verify(
-      jwt,
-      cert,
-      { algorithms: ['RS256'] },
-      function(error, payload) {
-        if (payload) {
-          user = payload as any
-        } else if (error) {
-          console.log('JWT verification error: ' + error.message)
-        }
-      }
-    )
+  // verify asymmetric token, using RSA with SHA-256 hash algorithm
+  JsonWebToken.verify(token, JWT_KEY, { algorithms: ['RS256'] }, setUser)
 
-  return user as any
+  return user
 }

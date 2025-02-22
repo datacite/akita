@@ -18,14 +18,7 @@ import { UserCommonsPageButton, UserOrcidButton } from 'src/components/Header/Cl
 import styles from './Header.module.scss'
 
 
-type Props = {
-  profilesUrl: string
-  orcidUrl: string
-}
-
-export default function Header(props: Props) {
-  const { profilesUrl, orcidUrl } = props
-
+export default function Header() {
   return (
     <Container fluid>
       <Navbar expand="lg" className={styles.navbar}>
@@ -65,14 +58,14 @@ export default function Header(props: Props) {
             <NavRight
               signedInContent={
                 <UserDropdown>
-                  <SettingsButton profilesUrl={profilesUrl} />
+                  <SettingsButton />
                   <UserCommonsPageButton />
-                  <UserOrcidButton orcidUrl={orcidUrl} />
-                  <SignOutButton profilesUrl={profilesUrl} />
+                  <UserOrcidButton />
+                  <SignOutButton />
                 </UserDropdown>
               }
 
-              signedOutContent={<SignInButton profilesUrl={profilesUrl} />}
+              signedOutContent={<SignInButton />}
             />
           </Nav>
         </Collapse>

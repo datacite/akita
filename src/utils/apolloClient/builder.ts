@@ -1,6 +1,7 @@
 import { createHttpLink } from '@apollo/client'
 import { ApolloClient, InMemoryCache } from '@apollo/experimental-nextjs-app-support'
 import { setContext } from '@apollo/client/link/context'
+import { DATACITE_API_URL } from 'src/data/constants'
 
 /*
  * getToken is a function as opposed to just a string because otherwise, in server components,
@@ -10,9 +11,7 @@ import { setContext } from '@apollo/client/link/context'
 export default function apolloClientBuilder(getToken: () => string) {
   // needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
   const httpLink = createHttpLink({
-    uri:
-      (process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org') +
-      '/graphql',
+    uri: DATACITE_API_URL + '/graphql',
     credentials: 'include'
   })
 

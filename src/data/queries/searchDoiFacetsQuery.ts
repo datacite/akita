@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Works } from 'src/data/types'
 import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
+import { DATACITE_API_URL } from 'src/data/constants'
 
 
 const FACETS = [
@@ -76,7 +77,7 @@ export async function fetchDoisFacets(variables: QueryVar, facets = FACETS) {
   const searchParams = buildDoiSearchParams(variables, facets)
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+    `${DATACITE_API_URL}/dois?${searchParams.toString()}`,
     options
   )
   const json = await res.json()

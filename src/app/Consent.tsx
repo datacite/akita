@@ -2,15 +2,10 @@
 
 import React from 'react'
 import CookieConsent from 'react-cookie-consent'
+import { IS_PROD, DATACITE_API_URL, URLS, VERCEL_URL } from 'src/data/constants'
 
 
-interface Props {
-  domain: string
-}
-
-
-export default function Consent ({ domain }: Props) {
-
+export default function Consent() {
   const linkStyle = { color: '#fecd23' }
   const myContentStyle = {}
 
@@ -26,7 +21,7 @@ export default function Consent ({ domain }: Props) {
       declineButtonText="Reject"
       sameSite="strict"
       cookieName="_consent"
-      extraCookieOptions={{ domain: domain }}
+      extraCookieOptions={{ domain: getDomain() }}
       overlay={false}
       enableDeclineButton
       buttonWrapperClasses="MY_BUTTON_WRAPPER_CLASS"
@@ -49,4 +44,17 @@ export default function Consent ({ domain }: Props) {
       for further information about our privacy practices and use of cookies.{' '}
     </CookieConsent>
   )
+}
+
+function getDomain() {
+  if (IS_PROD && DATACITE_API_URL === URLS.dataciteApi)
+    return '.datacite.org'
+
+  if (IS_PROD && DATACITE_API_URL === URLS.dataciteApiStage)
+    return '.stage.datacite.org'
+
+  if (!IS_PROD && VERCEL_URL)
+    return '.vercel.app'
+
+  return 'localhost'
 }

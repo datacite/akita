@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
 import { fetchRepositoryMetadata } from 'src/data/queries/repositoryQuery'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -31,31 +32,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const repo = data.repository
-
-  const title = repo.name
-    ? 'DataCite Commons: ' + repo.name
-    : 'DataCite Commons: No Name'
-
-  const baseUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/'
-      : 'https://commons.stage.datacite.org/'
-
-  const pageUrl = repo.re3dataDoi
-    ? baseUrl + "repositories/" + repo.re3dataDoi
-    : baseUrl + "repositories/" + repo.id
-
-
-  const imageUrl = baseUrl + "images/logo.png"
+  const title = `DataCite Commons: ${repo.name || 'No Name'}`
 
   return {
-    title: title,
+    title,
 
     openGraph: {
-      title: title,
+      title,
       // type: 'repository',
-      url: pageUrl,
-      images: [{ url: imageUrl }]
+      url: `${COMMONS_URL}/repositories/${repo.re3dataDoi || repo.id}`,
+      images: [{ url: LOGO_URL }]
     }
   }
 }

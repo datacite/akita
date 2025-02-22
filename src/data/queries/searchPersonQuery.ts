@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { parseInt } from 'lodash'
 import { People } from 'src/data/types'
 import { mapSearchJsonToPerson } from 'src/utils/helpers'
+import { ORCID_API_URL } from 'src/data/constants'
 
 function buildSearchParams(variables: QueryVar): URLSearchParams {
   return new URLSearchParams({
@@ -34,7 +35,7 @@ export async function fetchPeople(variables: QueryVar) {
     const searchParams = buildSearchParams(variables)
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_ORCID_API_URL}/expanded-search?${searchParams.toString()}`,
+      `${ORCID_API_URL}/expanded-search?${searchParams.toString()}`,
       options
     )
     const json = await res.json()

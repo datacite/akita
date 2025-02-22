@@ -4,6 +4,7 @@ import ISO6391 from 'iso-639-1'
 import ISO31661 from 'iso-3166-1'
 import type { Facet, WorkMetadata, Person } from 'src/data/types'
 import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarChart/HorizontalStackedBarChart'
+import { DOI_ID_BASE } from 'src/data/constants'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
   let options = {}
@@ -162,7 +163,7 @@ export function mapJsonToWork(json: any, included: any[]) {
 
   return {
     ...attrs,
-    id: ID_BASE + json.id,
+    id: DOI_ID_BASE + json.id,
     language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
     rights: attrs.rightsList,
     creators: mapPeople(attrs.creators),
@@ -207,8 +208,6 @@ export function getCountryName(countryCode: string) {
   return isoentry ? isoentry.country : ""
 }
 
-
-const ID_BASE = process.env.NEXT_PUBLIC_ID_BASE || 'https://handle.stage.datacite.org/'
 
 const REGISTRATION_AGENCIES = {
   airiti: 'Airiti',
