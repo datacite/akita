@@ -12,7 +12,7 @@ import { fetchDoi } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
 import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
-import { COMMONS_URL, IMAGE_URL } from 'src/data/constants'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `${COMMONS_URL}/doi.org/${data.work.doi}`,
       // type: type,
-      images: [{ url: IMAGE_URL }]
+      images: [{ url: LOGO_URL }]
     }
   }
 }

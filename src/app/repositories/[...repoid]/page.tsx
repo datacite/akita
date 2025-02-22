@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
 import { fetchRepositoryMetadata } from 'src/data/queries/repositoryQuery'
-import { COMMONS_URL, IMAGE_URL } from 'src/data/constants'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       // type: 'repository',
       url: `${COMMONS_URL}/repositories/${repo.re3dataDoi || repo.id}`,
-      images: [{ url: IMAGE_URL }]
+      images: [{ url: LOGO_URL }]
     }
   }
 }

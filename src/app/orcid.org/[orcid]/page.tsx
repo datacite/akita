@@ -7,7 +7,7 @@ import Content from './Content'
 import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
-import { COMMONS_URL, IMAGE_URL } from 'src/data/constants'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `${COMMONS_URL}/doi.org/${person.id}`,
       // type: type,
-      images: [{ url: IMAGE_URL }]
+      images: [{ url: LOGO_URL }]
     }
   }
 }

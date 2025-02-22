@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
 import { RORV2Client } from 'src/data/clients/ror-v2-client'
-import { COMMONS_URL, IMAGE_URL } from 'src/data/constants'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 interface Props {
   params: {
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title,
         // type: 'organization',
         url: `${COMMONS_URL}/ror.org/${rorid}`,
-        images: [{ url: IMAGE_URL }]
+        images: [{ url: LOGO_URL }]
       }
     }
   } catch (error) {

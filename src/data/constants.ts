@@ -29,7 +29,7 @@ export const URLS = {
 // URLs
 export const DATACITE_API_URL = process.env.NEXT_PUBLIC_API_URL || dataciteApiStage
 export const COMMONS_URL = DATACITE_API_URL === dataciteApi ? commons : commonsStage
-export const IMAGE_URL = `${COMMONS_URL}/images/logo.png`
+export const LOGO_URL = `${COMMONS_URL}/images/logo.png`
 export const PROFILES_URL = process.env.NEXT_PUBLIC_PROFILES_URL || profilesStage
 
 export const ORCID_URL = DATACITE_API_URL === dataciteApi ? orcid : orcidSandbox
