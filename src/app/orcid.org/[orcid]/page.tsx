@@ -7,6 +7,7 @@ import Content from './Content'
 import { fetchPersonMetadata } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
 import Loading from 'src/components/Loading/Loading'
+import { COMMONS_URL, IMAGE_URL } from 'src/data/constants'
 
 
 interface Props {
@@ -36,20 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const person = data.person
 
-  const pageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/doi.org/' + person.id
-      : 'https://commons.stage.datacite.org/doi.org/' + person.id
-
-  const imageUrl =
-    process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-      ? 'https://commons.datacite.org/images/logo.png'
-      : 'https://commons.stage.datacite.org/images/logo.png'
-
-  const title = person.name
-    ? 'DataCite Commons: ' + person.name
-    : 'DataCite Commons: ' + person.id
-
+  const title = `DataCite Commons: ${person.name || person.id}`
   const description = !data.person.description
     ? undefined
     : truncate(person.description, { length: 2500, separator: '… ' })
@@ -63,15 +51,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
   return {
-    title: title,
-    description: description,
+    title,
+    description,
 
     openGraph: {
-      title: title,
-      description: description,
-      url: pageUrl,
+      title,
+      description,
+      url: `${COMMONS_URL}/doi.org/${person.id}`,
       // type: type,
-      images: [{ url: imageUrl }]
+      images: [{ url: IMAGE_URL }]
     }
   }
 }
