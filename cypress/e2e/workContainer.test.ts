@@ -10,12 +10,6 @@ describe('workContainer with usage', () => {
       .should('contain', 'William Mower')
   })
 
-  it('share', () => {
-    cy.get('.share-list', { timeout: 30000 })
-      .should('have.length', 3)
-      .should('contain', 'Email')
-  })
-
   it('download', () => {
     cy.get('#download-metadata-button', { timeout: 30000 }).click()
     cy.get('.download-list', { timeout: 30000 })

@@ -12,7 +12,6 @@ import Claim from 'src/components/Claim/Claim'
 import CiteAs from 'src/components/CiteAs/CiteAs'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
-import ShareLinks from 'src/components/ShareLinks/ShareLinks'
 import Work from 'src/components/Work/Work'
 import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
@@ -75,9 +74,6 @@ export default async function Content(props: Props) {
               ]}
               variables={{ id: doi }}
             />}
-          </Row>
-          <Row className="mb-2 pb-4">
-            <ShareLinks url={'doi.org/' + work.doi} title={title} />
           </Row>
         </Col>
 

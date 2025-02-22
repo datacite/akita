@@ -7,9 +7,7 @@ import { Person as PersonType } from 'src/data/types'
 import { fetchPerson } from 'src/data/queries/personQuery'
 
 import Error from 'src/components/Error/Error'
-import ShareLinks from 'src/components/ShareLinks/ShareLinks'
 import Person from 'src/components/Person/Person'
-import { orcidFromUrl } from 'src/utils/helpers'
 
 interface Props {
   orcid: string
@@ -38,10 +36,7 @@ export default async function Content(props: Props) {
       </Row>
 
       <Row>
-        <Col md={3}>
-          <ShareLinks url={'orcid.org' + orcidFromUrl(person.id)} title={person.name} />
-        </Col>
-        <Col md={9}>
+        <Col md={{ span: 9, offset: 3 }}>
           <Person person={person} />
         </Col>
       </Row>
