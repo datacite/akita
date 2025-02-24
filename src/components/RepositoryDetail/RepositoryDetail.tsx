@@ -7,7 +7,6 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
-import ShareLinks from 'src/components/ShareLinks/ShareLinks';
 import { Repository } from 'src/data/types';
 import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
 
@@ -69,9 +68,6 @@ export function RepositorySidebar({ repo }: Props) {
       </div>
       <div className={styles.contacts}>
         {contacts()}
-      </div>
-      <div className={styles.share}>
-        <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi : repo.id)} title={repo.name} />
       </div>
     </>
   )
