@@ -9,6 +9,7 @@ import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import { orcidFromUrl } from 'src/utils/helpers'
 import styles from './PersonMetadata.module.scss'
+import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
 
 type Props = {
   metadata: Person
@@ -78,7 +79,17 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
   )
 
   return (<>
-    <Row className="person"><Col>{name()}</Col></Row>
+    <Row className="person mb-4"><Col>{name()}</Col></Row>
+    <Row><Col>
+      <MetricsDisplay
+        counts={{ works: metadata?.totalWorks?.totalCount, citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }}
+        links={{
+          citations: 'https://support.datacite.org/docs/citations-and-references',
+          views: 'https://support.datacite.org/docs/views-and-downloads',
+          downloads: 'https://support.datacite.org/docs/views-and-downloads'
+        }}
+      />
+    </Col></Row>
     {metadata.description && <Row><Col className="description biography">{metadata.description}</Col></Row>}
     {metadata.links && metadata.identifiers && (
       <>
