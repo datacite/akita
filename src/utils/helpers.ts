@@ -221,3 +221,13 @@ const REGISTRATION_AGENCIES = {
   medra: 'mEDRA',
   op: 'OP'
 }
+
+export function cursorToPage(cursor :string) {
+  if (!cursor) return 1
+  const potentialPage = cursor ? parseInt(cursor) : 1
+  return potentialPage <= 1 ? 1 : potentialPage
+}
+
+export function pageToCursor(page: number) {
+  return page.toString()
+}

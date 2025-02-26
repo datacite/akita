@@ -1,6 +1,6 @@
 import { Facet, PageInfo } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
-import { titleCase , getCountryName} from 'src/utils/helpers'
+import { titleCase , getCountryName, cursorToPage, pageToCursor} from 'src/utils/helpers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 
@@ -14,16 +14,6 @@ export const rorKeys = {
   search: (params: RORV2SearchParams) => [...rorKeys.all, 'search', params] as const,
   providers: () => [...rorKeys.all, 'providers'] as const,
 };
-
-function cursorToPage(cursor :string) {
-  if (!cursor) return 1
-  const potentialPage = cursor ? parseInt(cursor) : 1
-  return potentialPage <= 1 ? 1 : potentialPage
-}
-
-function pageToCursor(page: number) {
-  return page.toString()
-}
 
 export function useProvidersMap() {
   const KEEP_TIME = 1 * 60 * 60 * 1000
