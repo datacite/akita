@@ -2,7 +2,7 @@ import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
-import { mapJsonToWork, cursorToPage, pageToCursor } from 'src/utils/helpers'
+import { mapJsonToWork, cursorToPage} from 'src/utils/helpers'
 
 
 function extractRORId(rorString:string): string{
@@ -175,5 +175,5 @@ function getPageInfo(links: { self: string, next?: string }): PageInfo {
   if (!pageString) return { endCursor: '', hasNextPage: false };
   const page = cursorToPage(pageString)
 
-  return { endCursor: pageToCursor(page), hasNextPage: true }
+  return { endCursor: page.toString(), hasNextPage: true }
 }

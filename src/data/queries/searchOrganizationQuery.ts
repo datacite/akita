@@ -1,6 +1,6 @@
 import { Facet, PageInfo } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
-import { titleCase , getCountryName, cursorToPage, pageToCursor} from 'src/utils/helpers'
+import { titleCase , getCountryName, cursorToPage} from 'src/utils/helpers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 
@@ -233,7 +233,7 @@ async function convertRORToQueryData(
     organizations: {
       totalCount: total,
       pageInfo: {
-        endCursor: pageToCursor(page+1),
+        endCursor: (page+1).toString(),
         hasNextPage: runningTotal < total
       },
       types: types,

@@ -227,7 +227,3 @@ export function cursorToPage(cursor :string) {
   const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
 }
-
-export function pageToCursor(page: number) {
-  return page.toString()
-}
