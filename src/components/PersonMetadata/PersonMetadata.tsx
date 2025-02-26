@@ -13,9 +13,10 @@ import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
 
 type Props = {
   metadata: Person
+  url: string
 }
 
-const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
+const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
   if (!metadata) return <Alert variant="warning">No content found.</Alert>
 
   const name = () => {
@@ -30,7 +31,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
 
     return (
       <h3 className="work fw-bold">
-        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)} id="orcid-link">
+        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
           {metadata.name}
           {metadata.alternateName && metadata.alternateName.length > 0 && (
             <div className="subtitle">
@@ -78,26 +79,31 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
     </a>
   )
 
+  const hasMetrics = () => {
+    return (metadata?.totalWorks?.totalCount  || metadata.citationCount  || metadata.viewCount  || metadata.downloadCount) > 0
+  }
+
   return (<>
-    <Row className="person mb-4"><Col>{name()}</Col></Row>
-    <Row><Col>
-      <MetricsDisplay
-        counts={{ works: metadata?.totalWorks?.totalCount, citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }}
-        links={{
-          citations: 'https://support.datacite.org/docs/citations-and-references',
-          views: 'https://support.datacite.org/docs/views-and-downloads',
-          downloads: 'https://support.datacite.org/docs/views-and-downloads'
-        }}
-      />
-    </Col></Row>
+    <Row className={`person ${['orcid.org/?'].includes(url) ? 'mb-4' : ''}`}><Col>{name()}</Col></Row>
+    {hasMetrics() &&
+      <Row><Col>
+        <MetricsDisplay
+          counts={{ works: metadata?.totalWorks?.totalCount, citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }}
+          links={{
+            citations: 'https://support.datacite.org/docs/citations-and-references',
+            views: 'https://support.datacite.org/docs/views-and-downloads',
+            downloads: 'https://support.datacite.org/docs/views-and-downloads'
+          }}
+        />
+      </Col></Row>
+    }
     {metadata.description && <Row><Col className="description biography">{metadata.description}</Col></Row>}
     {metadata.links && metadata.identifiers && (
       <>
         <Row>
-          <Col md={6}>
             {metadata.links && metadata.links.length > 0 && (
-              <>
-                <h5>Links</h5>
+              <Col xs={12} md={4} className='my-2'>
+                <h5 className='fw-bold'>Links</h5>
                 {metadata.links.map((link) => (
                   <div key={link.name} className="people-links">
                     <a href={link.url} target="_blank" rel="noreferrer">
@@ -105,12 +111,10 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                     </a>
                   </div>
                 ))}
-              </>
+              </Col>
             )}
-          </Col>
-          <Col xs={6} md={6}>
             {metadata.identifiers && metadata.identifiers.length > 0 && (
-              <>
+              <Col xs={12} md={4} className='my-2'>
                 <h5 className="fw-bold">Other Identifiers</h5>
                 {metadata.identifiers.map((id) => (
                   <div key={id.identifier} className="people-identifiers">
@@ -124,16 +128,13 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata }) => {
                     </a>
                   </div>
                 ))}
-              </>
+              </Col>
             )}
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6} md={6} id="other-profiles">
-            <Row><Col><h5 className="fw-bold mb-0">Other Profiles</h5></Col></Row>
-            <Row><Col id="profile-orcid" className="people-profiles">{orcidLink}</Col></Row>
-            <Row><Col id="profile-impactstory" className="people-profiles">{impactLink}</Col></Row>
-            <Row><Col id="profile-europepmc" className="people-profiles">{europePMCLink}</Col></Row>
+          <Col xs={12} md={4} className='my-2' id="other-profiles">
+            <h5 className="fw-bold">Other Profiles</h5>
+            <div id="profile-orcid" className="people-profiles">{orcidLink}</div>
+            <div id="profile-impactstory" className="people-profiles">{impactLink}</div>
+            <div id="profile-europepmc" className="people-profiles">{europePMCLink}</div>
           </Col>
         </Row>
       </>

@@ -84,8 +84,7 @@ export default function Person({ person }: Props) {
 
   return (
     <>
-      {/* <h3 className="member-results">{person.id}</h3> */}
-      <PersonMetadata metadata={person} />
+      <PersonMetadata metadata={person} url={'orcid.org/?'} />
       {person.employment.length > 0 && (
         <div className="mt-5">
           <h3 className="member-results" id="person-employment">Employment</h3>
