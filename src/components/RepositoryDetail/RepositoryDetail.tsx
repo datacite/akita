@@ -100,6 +100,39 @@ export function RepositoryDetail({ repo }: Props) {
     )
   }
 
+  const advise = () => {
+    return (
+      <>
+        {repo.url && (
+          <p>
+            If you plan to deposit your research data in this repository,
+            &nbsp;go to <a href={repo.url}>{repo.url}.</a>
+          </p>
+        )}
+        <h5>More information about research data management</h5>
+
+        <ol>
+          <li>Borghi, J., Abrams, S., Lowenberg, D., Simms, S., & Chodacki, J.
+            (2018). Support Your Data: A Research Data Management Guide for
+            Researchers. Research Ideas and Outcomes, 4, e26439. <a
+              href="https://doi.org/10.3897/rio.4.e26439">https://doi.org/10.3897/rio.4.e26439</a>
+          </li>
+          <li>Goodman, A., Pepe, A., Blocker, A. W., Borgman, C. L., Cranmer,
+            K., Crosas, M., … Slavkovic, A. (2014). Ten Simple Rules for the
+            Care and Feeding of Scientific Data. PLoS Computational Biology,
+            10(4), e1003542.  <a href="https://doi.org/10.1371/journal.pcbi.1003542">https://doi.org/10.1371/journal.pcbi.1003542</a>
+          </li>
+          <li>Pampel, H., Vierkant, P., Scholze, F., Bertelmann, R., Kindling,
+            M., Klump, J., … Dierolf, U. (2013). Making Research Data
+            Repositories Visible: The re3data.org Registry. PLoS ONE, 8(11),
+            e78080. <a
+              href="https://doi.org/10.1371/journal.pone.0078080">https://doi.org/10.1371/journal.pone.0078080</a>
+          </li>
+        </ol>
+      </>
+    )
+  }
+
   const extended_metadata = () => {
     if (repo.re3dataDoi == null) return "";
     const metadata = [
@@ -161,6 +194,9 @@ export function RepositoryDetail({ repo }: Props) {
       </div>
       <div className={styles.dashboard}>
         <RepositoryDashboard repoId={repo.clientId} />
+      </div>
+      <div className={styles.advise}>
+        {advise()}
       </div>
     </>
   )

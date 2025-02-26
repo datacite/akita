@@ -65,6 +65,14 @@
 }
 }
 
+.advise {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: grid;
+  border: 1px solid green;
+}
+
 .contacts {
   @include header-style();
   display: flex;
@@ -94,4 +102,14 @@
   a {
     width: 100%;
   }
+}
+.share {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  div {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  @include header-style();
 }
