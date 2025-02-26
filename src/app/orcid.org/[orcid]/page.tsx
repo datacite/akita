@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: `${COMMONS_URL}/doi.org/${person.id}`,
+      url: `${COMMONS_URL}/orcid.org/${params.orcid}`,
       // type: type,
       images: [{ url: LOGO_URL }]
     }
