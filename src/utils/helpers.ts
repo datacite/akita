@@ -224,7 +224,7 @@ const REGISTRATION_AGENCIES = {
 
 export function cursorToPage(cursor :string) {
   if (!cursor) return 1
-  const potentialPage = cursor ? parseInt(cursor) : 1
+  const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
 }
 
