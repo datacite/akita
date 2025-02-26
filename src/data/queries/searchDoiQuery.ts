@@ -2,7 +2,7 @@ import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
-import { mapJsonToWork } from 'src/utils/helpers'
+import { mapJsonToWork , cursorToPage, pageToCursor} from 'src/utils/helpers'
 
 
 function extractRORId(rorString:string): string{
@@ -51,7 +51,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   })
 
 
-  searchParams.append('page[cursor]', variables.cursor || '1')
+  searchParams.append('page[number]', variables.cursor || '1')
   appendFacets(variables, searchParams)
   return searchParams
 }
@@ -171,8 +171,9 @@ function getPageInfo(links: { self: string, next?: string }): PageInfo {
   if (!links.next) return { endCursor: '', hasNextPage: false };
 
   const url = new URL(links.next);
-  const cursor = url.searchParams.get("page[cursor]")
-  if (!cursor) return { endCursor: '', hasNextPage: false };
+  const pageString  = url.searchParams.get("page[number]")
+  if (!pageString) return { endCursor: '', hasNextPage: false };
+  const page = cursorToPage(pageString)
 
-  return { endCursor: cursor, hasNextPage: true }
+  return { endCursor: pageToCursor(page), hasNextPage: true }
 }
