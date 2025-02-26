@@ -10,7 +10,6 @@ import scienceImage from '../../../public/images/science.svg'
 import { Person as PersonType } from 'src/data/types'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import PersonEmployment from 'src/components/PersonEmployment/PersonEmployment'
-import { pluralize } from 'src/utils/helpers'
 
 type Props = {
   person: PersonType
