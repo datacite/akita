@@ -104,10 +104,10 @@ export function RepositoryDetail({ repo }: Props) {
     return (
       <>
         {repo.url && (
-          <p>
+          <>
             If you plan to deposit your research data in this repository,
             &nbsp;go to <a href={repo.url}>{repo.url}.</a>
-          </p>
+          </>
         )}
       </>
     )
