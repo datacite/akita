@@ -2,7 +2,7 @@ import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
-import { mapJsonToWork } from 'src/utils/helpers'
+import { mapJsonToWork, cursorToPage} from 'src/utils/helpers'
 
 
 function extractRORId(rorString:string): string{
@@ -40,6 +40,24 @@ export function appendFacets(variables: QueryVar, searchParams: URLSearchParams)
   if (variables.clientType) searchParams.append('client-type', variables.clientType)
 }
 
+export const VALID_SORT_OPTIONS = [
+  'relevance',
+  'name', '-name',
+  'created', '-created',
+  'updated', '-updated',
+  'published', '-published',
+  'view-count', '-view-count',
+  'download-count', '-download-count',
+  'citation-count', '-citation-count',
+  'title', '-title'
+] as const
+
+export type SortOption = typeof VALID_SORT_OPTIONS[number]
+
+function isValidSortOption(sort: string): sort is SortOption {
+  return VALID_SORT_OPTIONS.includes(sort as SortOption)
+}
+
 function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
     query: buildQuery(variables),
@@ -51,7 +69,13 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
   })
 
 
-  searchParams.append('page[cursor]', variables.cursor || '1')
+  searchParams.append('page[number]', variables.cursor || '1')
+  // Default to 'relevance' if sort is missing or invalid
+  const sortValue = variables.sort && isValidSortOption(variables.sort)
+    ? variables.sort
+    : 'relevance'
+  searchParams.append('sort', sortValue)
+
   appendFacets(variables, searchParams)
   return searchParams
 }
@@ -164,6 +188,7 @@ export interface QueryVar {
   license?: string
   registrationAgency?: string
   clientType?: string
+  sort?: SortOption
 }
 
 
@@ -171,8 +196,9 @@ function getPageInfo(links: { self: string, next?: string }): PageInfo {
   if (!links.next) return { endCursor: '', hasNextPage: false };
 
   const url = new URL(links.next);
-  const cursor = url.searchParams.get("page[cursor]")
-  if (!cursor) return { endCursor: '', hasNextPage: false };
+  const pageString  = url.searchParams.get("page[number]")
+  if (!pageString) return { endCursor: '', hasNextPage: false };
+  const page = cursorToPage(pageString)
 
-  return { endCursor: cursor, hasNextPage: true }
+  return { endCursor: page.toString(), hasNextPage: true }
 }
