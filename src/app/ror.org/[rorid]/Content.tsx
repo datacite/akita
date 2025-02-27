@@ -10,11 +10,9 @@ import { useROROrganization } from 'src/data/queries/searchOrganizationQuery';
 import Error from 'src/components/Error/Error'
 import Title from 'src/components/Title/Title'
 import DownloadReports from 'src/components/DownloadReports/DownloadReports'
-import ShareLinks from 'src/components/ShareLinks/ShareLinks'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import Loading from 'src/components/Loading/Loading'
-import { rorFromUrl } from 'src/utils/helpers'
 
 interface Props {
   rorid: string
@@ -58,7 +56,6 @@ export default function Content(props: Props) {
             ]}
             variables={{ id: rorid }}
           />
-          <ShareLinks url={'ror.org' + rorFromUrl(organization.id)} title={organization.name} />
         </Col>
         <Col md={9} className="px-0">
           <SummarySearchMetrics rorId={organization.id} />
@@ -66,8 +63,8 @@ export default function Content(props: Props) {
             <p className="mb-3">Founded {organization.inceptionYear}</p>
           )}
           <OrganizationMetadata metadata={organization}
-              linkToExternal={false}
-              showTitle={false}/>
+            linkToExternal={false}
+            showTitle={false} />
         </Col>
       </Row>
     </Container>

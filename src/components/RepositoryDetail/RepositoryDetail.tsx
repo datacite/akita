@@ -7,7 +7,6 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
-import ShareLinks from 'src/components/ShareLinks/ShareLinks';
 import { Repository } from 'src/data/types';
 import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
 
@@ -70,9 +69,6 @@ export function RepositorySidebar({ repo }: Props) {
       <div className={styles.contacts}>
         {contacts()}
       </div>
-      <div className={styles.share}>
-        <ShareLinks url={"repositories/" + (repo.re3dataDoi ? repo.re3dataDoi : repo.id)} title={repo.name} />
-      </div>
     </>
   )
 
@@ -108,31 +104,11 @@ export function RepositoryDetail({ repo }: Props) {
     return (
       <>
         {repo.url && (
-          <p>
+          <>
             If you plan to deposit your research data in this repository,
             &nbsp;go to <a href={repo.url}>{repo.url}.</a>
-          </p>
+          </>
         )}
-        <h5>More information about research data management</h5>
-
-        <ol>
-          <li>Borghi, J., Abrams, S., Lowenberg, D., Simms, S., & Chodacki, J.
-            (2018). Support Your Data: A Research Data Management Guide for
-            Researchers. Research Ideas and Outcomes, 4, e26439. <a
-              href="https://doi.org/10.3897/rio.4.e26439">https://doi.org/10.3897/rio.4.e26439</a>
-          </li>
-          <li>Goodman, A., Pepe, A., Blocker, A. W., Borgman, C. L., Cranmer,
-            K., Crosas, M., … Slavkovic, A. (2014). Ten Simple Rules for the
-            Care and Feeding of Scientific Data. PLoS Computational Biology,
-            10(4), e1003542.  <a href="https://doi.org/10.1371/journal.pcbi.1003542">https://doi.org/10.1371/journal.pcbi.1003542</a>
-          </li>
-          <li>Pampel, H., Vierkant, P., Scholze, F., Bertelmann, R., Kindling,
-            M., Klump, J., … Dierolf, U. (2013). Making Research Data
-            Repositories Visible: The re3data.org Registry. PLoS ONE, 8(11),
-            e78080. <a
-              href="https://doi.org/10.1371/journal.pone.0078080">https://doi.org/10.1371/journal.pone.0078080</a>
-          </li>
-        </ol>
       </>
     )
   }
