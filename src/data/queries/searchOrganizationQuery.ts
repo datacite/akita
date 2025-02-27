@@ -1,7 +1,8 @@
 import { Facet, PageInfo } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
-import { titleCase , getCountryName, cursorToPage} from 'src/utils/helpers'
+import { titleCase, getCountryName, cursorToPage } from 'src/utils/helpers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { DATACITE_API_URL } from 'src/data/constants'
 
 
 const rorClient = new RORV2Client()
@@ -76,8 +77,8 @@ export function useROROrganization(id: string): ROROrganizationResult {
       const rorResponse = await rorClient.getOrganization(id);
       const relatedProviderData = providersQuery?.data?.[fullRORId]?.data ?? nullProviderData
       const organization = await convertROROrganizationToOrganizatinoNode(
-          rorResponse,
-          relatedProviderData
+        rorResponse,
+        relatedProviderData
       )
       return {
         organization: organization
@@ -143,7 +144,7 @@ async function convertROROrganizationToOrganizatinoNode(
     name: getCountryName(
       org.locations?.[0]?.geonames_details.country_code,
     ) || org.locations?.[0]?.geonames_details.country_name,
-  } : {id: "", name:""}
+  } : { id: "", name: "" }
 
 
   const primary_name = org.names.find((name) => name.types.includes('ror_display'))
@@ -243,15 +244,15 @@ async function convertRORToQueryData(
   }
 }
 
-function extractProviderData(provider: any) : RelatedProviderInfo {
- return provider?.attributes ?
-   {
-   symbol: provider.attributes.symbol,
-   memberType: provider.attributes.memberType,
- }: {
-   symbol: "",
-   memberType: ""
- }
+function extractProviderData(provider: any): RelatedProviderInfo {
+  return provider?.attributes ?
+    {
+      symbol: provider.attributes.symbol,
+      memberType: provider.attributes.memberType,
+    } : {
+      symbol: "",
+      memberType: ""
+    }
 }
 
 interface RelatedProviderInfo {
@@ -277,7 +278,7 @@ async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProvide
     })
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/providers?${searchParams.toString()}`,
+      `${DATACITE_API_URL}/providers?${searchParams.toString()}`,
       options
     )
     const json = await res.json()

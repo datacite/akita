@@ -4,6 +4,7 @@ import type { QueryData as Facets } from 'src/data/queries/searchDoiFacetsQuery'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { buildPersonName, getCountryName, getDateFromParts } from 'src/utils/helpers'
 import { fetchDoisFacets } from './searchDoiFacetsQuery'
+import { ORCID_API_URL } from 'src/data/constants'
 
 const FACETS = [
   'citation_count',
@@ -88,14 +89,8 @@ export async function fetchPerson(id: string) {
     }
 
     const [person, employments, facets] = await Promise.all([
-      fetch(
-        `${process.env.NEXT_PUBLIC_ORCID_API_URL}/${id}/person`,
-        options
-      ),
-      fetch(
-        `${process.env.NEXT_PUBLIC_ORCID_API_URL}/${id}/employments`,
-        options
-      ),
+      fetch(`${ORCID_API_URL}/${id}/person`, options),
+      fetch(`${ORCID_API_URL}/${id}/employments`, options),
       fetchDoisFacets({ userId: id }, FACETS)
     ])
 

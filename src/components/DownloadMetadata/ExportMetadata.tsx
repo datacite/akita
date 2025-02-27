@@ -2,6 +2,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Work } from 'src/data/types'
+import { DATACITE_API_URL as apiUrl } from 'src/data/constants'
 
 
 interface Props {
@@ -11,8 +12,6 @@ interface Props {
 
 export default function ExportMetadata({ doi }: Props) {
   const showCrossrefMetadata = doi.registrationAgency.id === 'crossref'
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || 'https://api.stage.datacite.org'
 
   return (
     <>
