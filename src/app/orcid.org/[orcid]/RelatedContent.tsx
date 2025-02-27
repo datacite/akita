@@ -52,7 +52,7 @@ export default function RelatedContent(props: Props) {
     : ''
 
   return (<Container fluid>
-    <Row>
+    <Row className='mt-5'>
       <Col md={{ offset: 3 }}>
         <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
       </Col>

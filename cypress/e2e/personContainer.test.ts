@@ -7,7 +7,7 @@ describe('PersonContainer', () => {
   })
 
   it('id', () => {
-    cy.get('h3.member-results', { timeout: 30000 }).contains(
+    cy.get('#orcid-link', { timeout: 30000 }).contains(
       'https://orcid.org/0000-0001-6528-2027'
     )
   })

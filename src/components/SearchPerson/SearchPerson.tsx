@@ -42,7 +42,7 @@ export default function SearchPerson(props: Props) {
 
     <Row><Col md={{ span: 9, offset: 3 }}>
       {people.nodes.map((item) => (
-        <PersonMetadata metadata={item} key={item.id} />
+        <PersonMetadata metadata={item} url={'orcid.org?'} key={item.id} />
       ))}
     </Col></Row>
 
