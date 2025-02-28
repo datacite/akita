@@ -20,10 +20,11 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
   if (!metadata) return <Alert variant="warning">No content found.</Alert>
 
   const name = () => {
+    const title_link = onPersonPage() ? 'https://orcid.org/' + orcidFromUrl(metadata.id) : '/orcid.org' + orcidFromUrl(metadata.id)
     if (!metadata.name)
       return (
         <h3 className="work">
-          <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
+          <Link href={title_link}>
             No Title
           </Link>
         </h3>
@@ -31,10 +32,10 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
 
     return (
       <h3 className="work fw-bold">
-        <Link href={'/orcid.org' + orcidFromUrl(metadata.id)}>
+        <Link href={title_link}>
           {metadata.name}
           {metadata.alternateName && metadata.alternateName.length > 0 && (
-            <div className="subtitle">
+            <div className={styles.subtitle}>
               {metadata.alternateName.join(', ')}
             </div>
           )}
@@ -83,8 +84,12 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
     return (metadata?.totalWorks?.totalCount  || metadata.citationCount  || metadata.viewCount  || metadata.downloadCount) > 0
   }
 
+  const onPersonPage = () => {
+    return ['orcid.org/?'].includes(url)
+  }
+
   return (<>
-    <Row className={`person ${['orcid.org/?'].includes(url) ? 'mb-4' : ''}`}><Col>{name()}</Col></Row>
+    <Row className={`person ${onPersonPage() ? 'mb-4' : ''}`}><Col>{name()}</Col></Row>
     {hasMetrics() &&
       <Row><Col>
         <MetricsDisplay
