@@ -4,6 +4,7 @@ import { WorkMetadata, Work } from 'src/data/types'
 import { workFragment } from 'src/data/queries/queryFragments'
 import { mapJsonToWork } from 'src/utils/helpers'
 import fetchConditionalCache from 'src/utils/fetchConditionalCache'
+import { DATACITE_API_URL } from 'src/data/constants'
 
 function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
@@ -32,7 +33,7 @@ export async function fetchDoi(id: string) {
     const searchParams = buildDoiSearchParams(id)
 
     const res = await fetchConditionalCache(
-      `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+      `${DATACITE_API_URL}/dois?${searchParams.toString()}`,
       options
     )
     const json = await res.json()

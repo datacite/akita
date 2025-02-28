@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork, cursorToPage} from 'src/utils/helpers'
+import { DATACITE_API_URL } from 'src/data/constants'
 
 
-function extractRORId(rorString:string): string{
-  return rorString.replace('https://','').replace('ror.org/','')
+function extractRORId(rorString: string): string {
+  return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
 function buildOrgQuery(rorId: string | undefined): string {
@@ -102,12 +103,12 @@ export async function fetchDois(variables: QueryVar) {
   const searchParams = buildDoiSearchParams(variables)
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/dois?${searchParams.toString()}`,
+    `${DATACITE_API_URL}/dois?${searchParams.toString()}`,
     options
   )
   const json = await res.json()
 
-  if(!res.ok) {
+  if (!res.ok) {
     const errorMessage = json?.errors?.title || `Request for dois failed with status: ${res.status}`;
     throw new Error(errorMessage);
   }
