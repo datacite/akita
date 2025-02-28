@@ -1,7 +1,6 @@
 // https://medium.com/frontend-digest/using-nextjs-with-google-analytics-and-typescript-620ba2359dea
 import { Cookies } from 'react-cookie-consent'
-
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
+import { GA_TRACKING_ID } from 'src/data/constants'
 
 declare global {
   // eslint-disable-next-line no-unused-vars

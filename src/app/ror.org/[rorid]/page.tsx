@@ -4,10 +4,7 @@ import { notFound } from 'next/navigation'
 import Content from './Content'
 import RelatedContent from './RelatedContent'
 import { RORV2Client } from 'src/data/clients/ror-v2-client'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL === 'https://api.datacite.org'
-  ? 'https://commons.datacite.org'
-  : 'https://commons.stage.datacite.org'
+import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 interface Props {
   params: {
@@ -29,32 +26,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const rorClient = new RORV2Client()
     const organization = await rorClient.getOrganization(rorid)
 
-    if (!organization) {
-      notFound()
-    }
+    if (!organization) notFound()
 
     // Get the primary name from the names array
     const primaryName = organization?.names?.find(name =>
       name.lang === 'en' && name.types?.includes('primary'))?.value || organization.names[0]?.value
 
-    const title = primaryName
-      ? 'DataCite Commons: ' + primaryName
-      : 'DataCite Commons: No Name'
-
-    const pageUrl = `${BASE_URL}/ror.org/${rorid}`
-    const imageUrl = `${BASE_URL}/images/logo.png`
-
+    const title = `DataCite Commons: ${primaryName || 'No Name'}`
 
     return {
-      title: title,
+      title,
       openGraph: {
-        title: title,
+        title,
         // type: 'organization',
-        url: pageUrl,
-        images: [{ url: imageUrl }]
+        url: `${COMMONS_URL}/ror.org/${rorid}`,
+        images: [{ url: LOGO_URL }]
       }
     }
-  } catch(error){
+  } catch (error) {
     notFound()
   }
 }

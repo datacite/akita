@@ -11,6 +11,7 @@ import {
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+import { PROFILES_URL } from 'src/data/constants';
 import styles from './Header.module.scss'
 
 
@@ -100,35 +101,33 @@ export function SupportLink() {
 }
 
 
-export function SettingsButton({ profilesUrl }: { profilesUrl: string }) {
-  return <DropdownItem
-    eventKey={3.2}
-    data-cy="settings"
-    href={profilesUrl + '/settings/me'}
-  >
+export function SettingsButton() {
+  const href = `${PROFILES_URL}/settings/me`
+
+  return <DropdownItem href={href} eventKey={3.2} data-cy="settings">
     <FontAwesomeIcon icon={faUserCog} /> Settings
   </DropdownItem>
 }
 
 
-export function SignInButton({ profilesUrl }: { profilesUrl: string }) {
+export function SignInButton() {
+  const href = `${PROFILES_URL}/sign_in`
+
   return <NavItem>
     <NavLink
       id="sign-in"
       className={`btn sign-in ${styles.signin}`}
-      href={profilesUrl + '/sign_in'}
+      href={href}
     >
       <FontAwesomeIcon icon={faSignInAlt} /> Sign In
     </NavLink>
   </NavItem>
 }
 
-export function SignOutButton({ profilesUrl }: { profilesUrl: string }) {
-  return <DropdownItem
-    eventKey={3.5}
-    data-cy="signout"
-    href={profilesUrl + '/sign_out'}
-  >
+export function SignOutButton() {
+  const href = `${PROFILES_URL}/sign_out`
+
+  return <DropdownItem href={href} eventKey={3.5} data-cy="signout">
     <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
   </DropdownItem>
 }
