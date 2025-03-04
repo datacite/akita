@@ -31,12 +31,6 @@ export default async function Content(props: Props) {
     <Container fluid>
       <Row>
         <Col md={{ span: 9, offset: 3 }}>
-          <h3 className="member-results">{person.id}</h3>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col md={{ span: 9, offset: 3 }}>
           <Person person={person} />
         </Col>
       </Row>
