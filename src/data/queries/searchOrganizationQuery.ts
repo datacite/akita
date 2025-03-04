@@ -2,7 +2,6 @@ import { Facet, PageInfo } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
 import { titleCase, getCountryName, cursorToPage } from 'src/utils/helpers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { DATACITE_API_URL } from 'src/data/constants'
 
 
 const rorClient = new RORV2Client()
@@ -244,17 +243,6 @@ async function convertRORToQueryData(
   }
 }
 
-function extractProviderData(provider: any): RelatedProviderInfo {
-  return provider?.attributes ?
-    {
-      symbol: provider.attributes.symbol,
-      memberType: provider.attributes.memberType,
-    } : {
-      symbol: "",
-      memberType: ""
-    }
-}
-
 interface RelatedProviderInfo {
   symbol: string
   memberType: string
@@ -266,33 +254,13 @@ interface RelatedProviderResponse {
 
 async function fetchRelatedProvidersMap(): Promise<Record<string, RelatedProviderResponse>> {
   try {
-    const options = {
-      method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
+    const res = await fetch('/providers')
+    if (!res.ok) {
+      throw new Error(`API returned ${res.status}`)
     }
-
-    const searchParams = new URLSearchParams({
-      'page[size]': '1000',
-      query: "ror_id:*",
-      'fields[provider]': 'symbol,memberType'
-    })
-
-    const res = await fetch(
-      `${DATACITE_API_URL}/providers?${searchParams.toString()}`,
-      options
-    )
-    const json = await res.json()
-
-    // Create a map of ROR ID to provider info
-    const providersMap: Record<string, RelatedProviderResponse> = {}
-    json.data.forEach((provider: any) => {
-      const rorId = provider.attributes.rorId
-      providersMap[rorId] = {
-        data: extractProviderData(provider)
-      }
-    })
-    return providersMap
+    return await res.json()
   } catch (error) {
+    console.error('Error fetching providers:', error)
     return {}
   }
 }
