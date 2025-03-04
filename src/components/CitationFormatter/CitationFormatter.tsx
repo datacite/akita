@@ -3,7 +3,8 @@ import Error from '../Error/Error'
 import Col from 'react-bootstrap/Col'
 import Alert from 'react-bootstrap/Alert'
 import ReactHtmlParser from 'html-react-parser'
-import { useFormattedCitationQuery } from 'src/data/queries/formattedCitationQuery'
+import { useDirectCitationQuery } from 'src/data/queries/formattedCitationQuery'
+import Linkify from 'linkify-react'
 import styles from './CitationFormatter.module.scss'
 
 type Props = {
@@ -18,7 +19,7 @@ export default function CitationFormatter({ id, style, locale }: Props) {
   const [formatted, setFormattedCitation] = React.useState<string>('')
 
   const variables = { id: id, style: cslType, locale: locale }
-  const { loading, error, data } = useFormattedCitationQuery(variables)
+  const { isLoading: loading, error, data } = useDirectCitationQuery(variables)
 
   React.useEffect(() => {
     const result = data?.work['formattedCitation'] || ''
@@ -37,9 +38,10 @@ export default function CitationFormatter({ id, style, locale }: Props) {
       <h3 className="member-results">Cite as</h3>
     </Col>
     <Col xs={12} className={styles.formattedCitation} id="formatted-citation">
-      {ReactHtmlParser(formatted)}
+      <Linkify>
+        {ReactHtmlParser(formatted)}
+      </Linkify>
     </Col>
   </ >
   )
 }
-

@@ -16,7 +16,7 @@ export default function CiteAs({ doi }: Props) {
     <CitationFormatter
       id={doi.doi}
       input={doi.formattedCitation}
-      locale="en"
+      locale="en-US"
       style={selectedOption}
     />
     <Col>
@@ -34,4 +34,3 @@ export default function CiteAs({ doi }: Props) {
     </Col>
   </>)
 }
-
