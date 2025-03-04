@@ -59,7 +59,7 @@ async function fetchFormattedCitation(variables: QueryVar): Promise<string> {
 // React Query hook
 export function useDirectCitationQuery(variables: QueryVar): UseQueryResult<QueryData, Error> {
   return useReactQuery({
-    queryKey: ['citation', variables.id, variables.style, variables.locale],
+    queryKey: ['citation', variables],
     queryFn: () => fetchFormattedCitation(variables),
     staleTime: 1000 * 60 * 60, // Consider citations fresh for 1 hour
     gcTime: 1000 * 60 * 60 * 24, // Keep in cache for 24 hours
