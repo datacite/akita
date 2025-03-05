@@ -18,7 +18,7 @@ function RepositoryMetadata({ repo }: Props) {
   }
 
   const re3DataURL = () => {
-    return `https://doi.org/${repo.re3dataDoi}`
+    return `https://doi.org/${repo.re3doi}`
   }
 
   const description = () => {
@@ -53,9 +53,9 @@ function RepositoryMetadata({ repo }: Props) {
   const links = () => {
     return (
       <>
-        {(repo.url || repo.re3dataDoi) && (
+        {(repo.url || repo.re3doi) && (
           <>
-            {repo.re3dataDoi && (
+            {repo.re3doi && (
               <div>
                 <a className="re3data-link" href={re3DataURL()}>
                   More info about {repo.name} Repository</a>

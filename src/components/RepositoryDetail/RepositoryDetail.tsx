@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
@@ -9,12 +11,15 @@ import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import { Repository } from 'src/data/types';
 import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
+import { useRepositoryRelatedContent } from 'src/data/queries/repositoryRelatedContentQuery'
 
 type Props = {
   repo: Repository
 }
 
 export function RepositorySidebar({ repo }: Props) {
+  const { data } = useRepositoryRelatedContent(repo.clientId)
+
   const gotoButtons = () => {
     return (
       <>
@@ -25,7 +30,7 @@ export function RepositorySidebar({ repo }: Props) {
             Go to Repository
           </Button>
         )}
-        {repo.works && (repo.works.totalCount > 0) && (
+        {data && (data.works.totalCount > 0) && (
           <Button variant="primary" href={"/doi.org?query=client.uid:" + repo.clientId} id="find-related">
             <FontAwesomeIcon icon={faNewspaper} />
             &nbsp;
@@ -77,15 +82,16 @@ export function RepositorySidebar({ repo }: Props) {
 
 export function RepositoryDetail({ repo }: Props) {
 
-
+  const { data } = useRepositoryRelatedContent(repo.clientId)
+  const works = data?.works
 
   const tags = () => {
-    if (repo.re3dataDoi == null) return "";
+    if (repo.re3doi == null) return "";
     const keywordList = repo.keyword.map((kw) => (
       kw.toLowerCase()
     ))
     const subjectList = repo.subject.map((subject) => (
-      subject.name.toLowerCase()
+      subject.text.toLowerCase()
     ))
     return (
       <>
@@ -114,7 +120,7 @@ export function RepositoryDetail({ repo }: Props) {
   }
 
   const extended_metadata = () => {
-    if (repo.re3dataDoi == null) return "";
+    if (repo.re3doi == null) return "";
     const metadata = [
       {
         label: "Data Access",
@@ -161,7 +167,7 @@ export function RepositoryDetail({ repo }: Props) {
     <>
       <div className={styles.header}>
         <h3>{repo.name}</h3>
-        <MetricsDisplay counts={{ works: repo.works.totalCount, citations: repo.citationCount, views: repo.viewCount, downloads: repo.downloadCount }} />
+        <MetricsDisplay counts={{ works: works?.totalCount, citations: works?.citationCount, views: works?.viewCount, downloads: works?.downloadCount }} />
       </div>
       <div className={styles.metadata}>
         <div className={styles.mdmain}>{repo.description}</div>

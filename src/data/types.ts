@@ -261,7 +261,7 @@ interface PersonWorks extends Works {
 export type RepositoryMetadata = {
   id: string
   name: string
-  re3dataDoi: string
+  re3doi: string
 }
 
 export type Repository = RepositoryMetadata & {
@@ -273,7 +273,7 @@ export type Repository = RepositoryMetadata & {
   repositoryType: string[]
   url: string
   keyword: string[]
-  subject: DefinedTerm[]
+  subject: { text: string }[]
 
   citationCount: number
   downloadCount: number
@@ -311,10 +311,6 @@ interface RepositoryFacet extends Facet {
 
 interface TextRestriction {
   type: string
-}
-
-type DefinedTerm = {
-  name: string
 }
 
 // Shared types
