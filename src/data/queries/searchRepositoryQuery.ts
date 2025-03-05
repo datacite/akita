@@ -10,9 +10,9 @@ function buildRepositorySearchParams(variables: QueryVar): URLSearchParams {
     query: variables.query,
   })
 
-  function optionalAppend(name: string, param: string | undefined) {
-    if (!param) return
-    searchParams.append(name, param)
+  function optionalAppend(param: string, value: string | undefined) {
+    if (!value) return
+    searchParams.append(param, value)
   }
 
   // optionalAppend('year', variables.year)
