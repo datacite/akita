@@ -2,7 +2,7 @@ import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { workFragment, workConnection } from 'src/data/queries/queryFragments'
-import { mapJsonToWork, cursorToPage} from 'src/utils/helpers'
+import { mapJsonToWork, cursorToPage } from 'src/utils/helpers'
 import { DATACITE_API_URL } from 'src/data/constants'
 
 
@@ -193,11 +193,11 @@ export interface QueryVar {
 }
 
 
-function getPageInfo(links: { self: string, next?: string }): PageInfo {
+export function getPageInfo(links: { self: string, next?: string }): PageInfo {
   if (!links.next) return { endCursor: '', hasNextPage: false };
 
   const url = new URL(links.next);
-  const pageString  = url.searchParams.get("page[number]")
+  const pageString = url.searchParams.get("page[number]")
   if (!pageString) return { endCursor: '', hasNextPage: false };
   const page = cursorToPage(pageString)
 

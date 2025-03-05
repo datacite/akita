@@ -19,7 +19,6 @@ export async function fetchRepository(id: string) {
     }
 
     const res = await fetch(`${DATACITE_API_URL}/reference-repositories/${id}`, options)
-    console.log(id)
 
     if (!res.ok)
       throw new Error(`API returned ${res.status}`)

@@ -37,7 +37,7 @@ function RepositoryMetadata({ repo }: Props) {
       kw.toLowerCase()
     ))
     const subjectList = repo.subject.map((subject) => (
-      subject.name.toLowerCase()
+      subject.text.toLowerCase()
     ))
     return (
       <div className="tags">
