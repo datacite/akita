@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
-import { fetchRepositoryMetadata } from 'src/data/queries/repositoryQuery'
+import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
@@ -16,9 +16,9 @@ interface Props {
 
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const repoid = params.repoid.join('/')
+  const repoid = decodeURIComponent(params.repoid.join('/'))
 
-  const { data } = await fetchRepositoryMetadata(repoid)
+  const { data } = await fetchRepository(repoid)
 
   if (!data) return {
     title: '',
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       // type: 'repository',
-      url: `${COMMONS_URL}/repositories/${repo.re3dataDoi || repo.id}`,
+      url: `${COMMONS_URL}/repositories/${repo.re3doi || repo.id}`,
       images: [{ url: LOGO_URL }]
     }
   }
@@ -52,7 +52,7 @@ export default async function Page({ params }: Props) {
   const repoid = decodeURIComponent(params.repoid.join('/'))
 
   // Fetch Repository metadata
-  const { data } = await fetchRepositoryMetadata(repoid)
+  const { data } = await fetchRepository(repoid)
 
   if (!data) notFound()
 

@@ -1,9 +1,37 @@
 import { gql } from '@apollo/client'
 import { Repository, RepositoryMetadata } from 'src/data/types'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
+import { DATACITE_API_URL } from 'src/data/constants'
+import { mapJsonToRepository } from 'src/utils/helpers'
 
+function convertToQueryData(repository: any): QueryData {
+  return {
+    repository: mapJsonToRepository(repository)
+  }
+}
 
-export async function fetchRepositoryMetadata(id: string) {
+export async function fetchRepository(id: string) {
+  try {
+    const options = {
+      method: 'GET',
+      headers: { accept: 'application/vnd.api+json' }
+    }
+
+    const res = await fetch(`${DATACITE_API_URL}/reference-repositories/${id}`, options)
+
+    if (!res.ok)
+      throw new Error(`API returned ${res.status}`)
+
+    const json = await res.json()
+
+    const data = convertToQueryData(json.data)
+    return { data }
+  } catch (error) {
+    return { error }
+  }
+}
+
+export async function fetchRepositoryMetadataGQL(id: string) {
   const { data, error } = await apolloClient.query<MetadataQueryData, QueryVar>({
     query: REPOSITORY_METADATA_QUERY,
     variables: { id },
@@ -13,7 +41,7 @@ export async function fetchRepositoryMetadata(id: string) {
   return { data, error }
 }
 
-export async function fetchRepository(variables: QueryVar) {
+export async function fetchRepositoryGQL(variables: QueryVar) {
   const { data, error } = await apolloClient.query<QueryData, QueryVar>({
     query: REPOSITORY_QUERY,
     variables,

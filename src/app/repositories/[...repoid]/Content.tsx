@@ -17,7 +17,7 @@ interface Props {
 export default async function Content(props: Props) {
   const { variables } = props
 
-  const { data, error } = await fetchRepository(variables)
+  const { data, error } = await fetchRepository(variables.id)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>

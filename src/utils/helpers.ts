@@ -180,6 +180,15 @@ export function mapJsonToWork(json: any, included: any[]) {
   }
 }
 
+export function mapJsonToRepository(json: any) {
+  const attrs = json.attributes
+
+  return {
+    id: json.id,
+    ...attrs,
+  }
+}
+
 export function getDateFromParts(year?: number, month = 1, day = 1): string | null {
   if (!year) return null;
   return new Date(year, month - 1, day).toISOString();
@@ -221,7 +230,7 @@ const REGISTRATION_AGENCIES = {
   op: 'OP'
 }
 
-export function cursorToPage(cursor :string) {
+export function cursorToPage(cursor: string) {
   if (!cursor) return 1
   const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
