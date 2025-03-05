@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Content from './Content'
 import Loading from 'src/components/Loading/Loading'
-import { fetchRepository, fetchRepositoryMetadataGQL } from 'src/data/queries/repositoryQuery'
+import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 

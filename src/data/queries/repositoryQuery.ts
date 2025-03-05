@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client'
 import { Repository, RepositoryMetadata } from 'src/data/types'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
-import fetchConditionalCache from 'src/utils/fetchConditionalCache'
 import { DATACITE_API_URL } from 'src/data/constants'
 import { mapJsonToRepository } from 'src/utils/helpers'
 
