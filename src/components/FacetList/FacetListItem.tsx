@@ -51,6 +51,7 @@ export default function FacetListItem(props: Props) {
     // otherwise replace param with new value and use unchecked icon
     params.set(param, value)
   }
+  params.delete('cursor')
 
   return (
     <ListGroup.Item as="li" key={facet.id}>
