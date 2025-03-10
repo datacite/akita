@@ -4,7 +4,7 @@ import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
 import { DATACITE_API_URL } from 'src/data/constants'
 
 
-const FACETS = [
+export const DEFAULT_FACETS = [
   'published',
   'resourceTypes',
   'languages',
@@ -69,7 +69,7 @@ function convertToQueryData(json: any): QueryData {
   }
 }
 
-export async function fetchDoisFacets(variables: QueryVar, facets = FACETS) {
+export async function fetchDoisFacets(variables: QueryVar, facets = DEFAULT_FACETS) {
   const options = {
     method: 'GET',
     headers: { accept: 'application/vnd.api+json' }
@@ -90,7 +90,7 @@ export async function fetchDoisFacets(variables: QueryVar, facets = FACETS) {
   return { data }
 }
 
-export function useSearchDoiFacetsQuery(variables: QueryVar, facets = FACETS) {
+export function useSearchDoiFacetsQuery(variables: QueryVar, facets = DEFAULT_FACETS) {
   // eslint-disable-next-line no-unused-vars
   const { cursor, ...vars } = variables
   const { isPending, data, error } = useQuery({
