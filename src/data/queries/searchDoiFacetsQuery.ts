@@ -1,23 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Works } from 'src/data/types'
 import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
-import { DATACITE_API_URL } from 'src/data/constants'
-
-
-const FACETS = [
-  'published',
-  'resourceTypes',
-  'languages',
-  'licenses_with_missing',
-  'fieldsOfScience',
-  'affiliations',
-  'repositories',
-  'registrationAgencies',
-  'authors',
-  'creatorsAndContributors',
-  'clientTypes',
-  // personToWorkTypesMultilevel: []
-]
+import { DATACITE_API_URL, FACETS } from 'src/data/constants'
 
 
 function buildDoiSearchParams(variables: QueryVar, facets: string[]): URLSearchParams {
@@ -69,7 +53,7 @@ function convertToQueryData(json: any): QueryData {
   }
 }
 
-export async function fetchDoisFacets(variables: QueryVar, facets = FACETS) {
+export async function fetchDoisFacets(variables: QueryVar, facets = FACETS.DEFAULT) {
   const options = {
     method: 'GET',
     headers: { accept: 'application/vnd.api+json' }
@@ -90,7 +74,7 @@ export async function fetchDoisFacets(variables: QueryVar, facets = FACETS) {
   return { data }
 }
 
-export function useSearchDoiFacetsQuery(variables: QueryVar, facets = FACETS) {
+export function useSearchDoiFacetsQuery(variables: QueryVar, facets = FACETS.DEFAULT) {
   // eslint-disable-next-line no-unused-vars
   const { cursor, ...vars } = variables
   const { isPending, data, error } = useQuery({

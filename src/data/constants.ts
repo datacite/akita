@@ -46,3 +46,31 @@ export const JWT_KEY = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY?.replace(/\\n/g, '
 // Misc
 export const DOI_ID_BASE = process.env.NEXT_PUBLIC_ID_BASE || `${handleStage}/`
 export const FEATURE_FLAGS = process.env.NEXT_PUBLIC_FEATURE_FLAGS?.split(",") || []
+
+
+export const FACETS = {
+  DEFAULT: [
+    'published',
+    'resourceTypes',
+    'languages',
+    'licenses_with_missing',
+    'fieldsOfScience',
+    'affiliations',
+    'repositories',
+    'registrationAgencies',
+    'authors',
+    'creatorsAndContributors',
+    'clientTypes',
+    // personToWorkTypesMultilevel: []
+  ],
+  METRICS: [
+    'citation_count',
+    'view_count',
+    'download_count',
+    'content_url_count',
+    'open_licenses',
+    'open_licenses_count'
+  ]
+}
+
+

@@ -1,7 +1,9 @@
+import { FACETS } from '../constants'
 import { useSearchDoiFacetsQuery } from './searchDoiFacetsQuery'
+
 
 export function useRepositoryRelatedContent(id: string) {
   if (!id) return { data: undefined, loading: false, error: null }
   const vars = { clientId: id }
-  return useSearchDoiFacetsQuery(vars)
-}
+  return useSearchDoiFacetsQuery(vars, [...FACETS.DEFAULT, ...FACETS.METRICS])
+}  
