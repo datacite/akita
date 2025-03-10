@@ -4,16 +4,7 @@ import type { QueryData as Facets } from 'src/data/queries/searchDoiFacetsQuery'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
 import { buildPersonName, getCountryName, getDateFromParts } from 'src/utils/helpers'
 import { fetchDoisFacets } from './searchDoiFacetsQuery'
-import { ORCID_API_URL } from 'src/data/constants'
-
-const FACETS = [
-  'citation_count',
-  'view_count',
-  'download_count',
-  'content_url_count',
-  'open_licenses',
-  'open_licenses_count'
-]
+import { FACETS, ORCID_API_URL } from 'src/data/constants'
 
 function convertToQueryData(id: string, jsonPerson: any, jsonEmployments: any, facets: Facets): QueryData {
   const givenName = jsonPerson.name['given-names']?.value || ''
@@ -91,7 +82,7 @@ export async function fetchPerson(id: string) {
     const [person, employments, facets] = await Promise.all([
       fetch(`${ORCID_API_URL}/${id}/person`, options),
       fetch(`${ORCID_API_URL}/${id}/employments`, options),
-      fetchDoisFacets({ userId: id }, FACETS)
+      fetchDoisFacets({ userId: id }, FACETS.METRICS)
     ])
 
 
