@@ -53,7 +53,7 @@ export function RepositoryDetail({ repo }: Props) {
     ]
 
     return <Col xs={12} as="dl">
-      {metadata.map(field => <Row>
+      {metadata.map((field, fieldIndex) => <Row key={fieldIndex}>
         <Col xs={3} as="dt">{field.label}</Col>
         <Col>{field.values.length == 0 ? <Row as="dd">none</Row> :
           field.values.map((value, index) => (

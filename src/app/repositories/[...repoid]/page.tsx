@@ -6,8 +6,6 @@ import Loading from 'src/components/Loading/Loading'
 import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 import Container from 'react-bootstrap/Container'
-import Col from 'react-bootstrap/Col'
-import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
 
 
 interface Props {
