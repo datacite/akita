@@ -73,36 +73,6 @@
   border: 1px solid green;
 }
 
-.contacts {
-  @include header-style();
-  display: flex;
-  flex-direction: column;
-  margin-top: 15px;
-  .contactList {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-      margin-bottom: 5px;
-      a {
-        overflow-wrap: break-word;
-      }
-    }
-  }
-}
-
-.gotoButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 3em;
-
-  a {
-    width: 100%;
-  }
-}
 .share {
   display: flex;
   flex-direction: column;

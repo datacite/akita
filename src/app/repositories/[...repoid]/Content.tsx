@@ -7,7 +7,8 @@ import { Repository as RepositoryType } from 'src/data/types'
 import { fetchRepository, QueryVar } from 'src/data/queries/repositoryQuery';
 
 import Error from 'src/components/Error/Error'
-import { RepositoryDetail, RepositorySidebar } from 'src/components/RepositoryDetail/RepositoryDetail';
+import { RepositoryDetail } from 'src/components/RepositoryDetail/RepositoryDetail';
+import { RepositorySidebar } from 'src/components/RepositoryDetail/RepositorySidebar'
 
 interface Props {
   variables: QueryVar
@@ -30,9 +31,8 @@ export default async function Content(props: Props) {
 
   return (<Container fluid>
     <Row>
-      <Col md={3}>
-        <RepositorySidebar repo={repository} />
-      </Col>
+      <RepositorySidebar repo={repository} />
+
       <Col md={9}>
         <RepositoryDetail repo={repository} />
       </Col>
