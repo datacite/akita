@@ -1,11 +1,12 @@
 import React from 'react'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { Repository } from 'src/data/types';
-import { Col, Row } from 'react-bootstrap'
 
 type Props = {
   repo: Repository
@@ -38,16 +39,6 @@ export function RepositorySidebar({ repo }: Props) {
     </>
   }
 
-  function GoToRepositoryButton() {
-    if (!repo.url) return null
-
-    return <Button id="go-to-repo" variant="default" href={repo.url}>
-      <FontAwesomeIcon icon={faSignInAlt} />
-      &nbsp;
-      Go to Repository
-    </Button>
-  }
-
   function FindRelatedWorksButton() {
     if (!repo.clientId) return null
 
@@ -59,11 +50,11 @@ export function RepositorySidebar({ repo }: Props) {
   }
 
 
-  return <Col md={3} className="mt-4">
+  return <>
     <div className="d-grid gap-2">
-      <GoToRepositoryButton />
       <FindRelatedWorksButton />
     </div>
+
     <ContactList />
-  </Col>
+  </>
 }

@@ -42,10 +42,10 @@ function RepositoryMetadata({ repo }: Props) {
     return (
       <div className="tags">
         {subjectList.map((keyword, index) => (
-          <Badge key={"subject-" + index} bg="info">{keyword}</Badge>
+          <Badge pill key={"subject-" + index} bg="info">{keyword}</Badge>
         ))}
         {keywordList.map((keyword, index) => (
-          <Badge key={"keyword-" + index} bg="info">{keyword}</Badge>
+          <Badge pill key={"keyword-" + index} bg="info">{keyword}</Badge>
         ))}
       </div>
     )
