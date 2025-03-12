@@ -22,6 +22,18 @@ export function RepositoryDetail({ repo }: Props) {
   const { data, loading: worksLoading } = useRepositoryRelatedContent(repo.clientId)
   const works = data?.works
 
+  function Metrics() {
+    if (!repo.clientId) return
+    if (worksLoading) return <SummaryStatsLoader />
+
+    return <MetricsDisplay counts={{
+      works: works?.totalCount,
+      citations: works?.citationCount,
+      views: works?.viewCount,
+      downloads: works?.downloadCount
+    }} />
+  }
+
   function ExtendedMetadata() {
     if (repo.re3doi == null) return "";
 
@@ -82,17 +94,15 @@ export function RepositoryDetail({ repo }: Props) {
   function Advise() {
     if (!repo.url) return null
 
-    return <>
+    return <Col xs={12} className={styles.advise}>
       If you plan to deposit your research data in this repository,
       &nbsp;go to <a href={repo.url}>{repo.url}.</a>
-    </>
+    </Col>
   }
 
   return <Row className="gap-4">
     <Col xs={12}>
-      {worksLoading ? <SummaryStatsLoader /> :
-        <MetricsDisplay counts={{ works: works?.totalCount, citations: works?.citationCount, views: works?.viewCount, downloads: works?.downloadCount }} />
-      }
+      <Metrics />
     </Col>
     <Col xs={12}>{repo.description}</Col>
     <ExtendedMetadata />
@@ -100,8 +110,6 @@ export function RepositoryDetail({ repo }: Props) {
     <div className={styles.dashboard}>
       <RepositoryDashboard repoId={repo.clientId} />
     </div>
-    <Col xs={12} className={styles.advise}>
-      <Advise />
-    </Col>
+    <Advise />
   </Row>
 }
