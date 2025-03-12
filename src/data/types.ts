@@ -274,6 +274,7 @@ export type Repository = RepositoryMetadata & {
   url: string
   keyword: string[]
   subject: { text: string }[]
+  re3dataUrl: string
 
   citationCount: number
   downloadCount: number

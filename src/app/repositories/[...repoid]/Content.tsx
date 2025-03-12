@@ -32,7 +32,7 @@ export default async function Content(props: Props) {
   return <>
     <Row className="mb-4">
       <Col md={{ offset: 3 }}>
-        <Title title={repository.name} titleLink={repository.url} link="" offset={false} />
+        <Title title={repository.name} titleLink={repository.url} link={repository.re3dataUrl} offset={false} />
       </Col>
     </Row>
 
