@@ -32,7 +32,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link prefetch={false} href={'/orcid.org' + orcidFromUrl(person.id)}>
+          <Link prefetch={false} href={'/orcid.org/' + orcidFromUrl(person.id)}>
             {name}
           </Link>
         </h4>
