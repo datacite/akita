@@ -104,7 +104,7 @@ export function toBarRecord(data: Facet) {
 
 export function extractFOS(subjects: any) {
   const fos = subjects
-    .filter((s) => s.subject.startsWith('FOS: '))
+    .filter((s) => s.subject?.startsWith('FOS: '))
     .map(({ subject: s }) => ({ id: kebabify(s.slice(5)), name: s.slice(5) }))
 
   const uniqueFOS = Array.from(new Set(fos.map((f) => f.id))).map((id) =>
