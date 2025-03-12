@@ -30,8 +30,18 @@ export const doiFromUrl = (doiUrl: string) => {
   return doiUrl ? doiUrl.substring(15) : null
 }
 
-export const orcidFromUrl = (orcidUrl: string) => {
-  return orcidUrl ? orcidUrl.substring(17) : null
+export const orcidFromUrl = (orcidInput: string) => {
+  if (!orcidInput) return null;
+
+  // Extract the ID portion whether it's a URL or just the ID
+  const orcidId = orcidInput.includes('orcid.org/')
+    ? orcidInput.split('orcid.org/')[1]
+    : orcidInput;
+
+  // Validate the ORCID pattern (XXXX-XXXX-XXXX-XXXX)
+  const orcidPattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
+
+  return orcidPattern.test(orcidId) ? orcidId : null;
 }
 
 export const rorFromUrl = (rorUrl: string) => {
