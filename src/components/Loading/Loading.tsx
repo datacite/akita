@@ -2,8 +2,12 @@ import React from 'react'
 import Col from 'react-bootstrap/Col'
 import ContentLoader from 'react-content-loader'
 
-const Loading: React.FunctionComponent = () => (
-  <Col md={{ span: 9, offset: 3 }}>
+interface Props {
+  offset?: boolean
+}
+
+export default function Loading({ offset = true }: Props) {
+  return <Col md={{ span: 9, offset: offset ? 3 : 0 }}>
     <ContentLoader
       speed={1}
       width={1000}
@@ -21,6 +25,5 @@ const Loading: React.FunctionComponent = () => (
       <circle cx="54" cy="61" r="45" />
     </ContentLoader>
   </Col>
-)
+}
 
-export default Loading

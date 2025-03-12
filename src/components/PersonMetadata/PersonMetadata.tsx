@@ -81,7 +81,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
   )
 
   const hasMetrics = () => {
-    return (metadata?.totalWorks?.totalCount  || metadata.citationCount  || metadata.viewCount  || metadata.downloadCount) > 0
+    return (metadata?.totalWorks?.totalCount || metadata.citationCount || metadata.viewCount || metadata.downloadCount) > 0
   }
 
   const onPersonPage = () => {
@@ -106,35 +106,35 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
     {metadata.links && metadata.identifiers && (
       <>
         <Row>
-            {metadata.links && metadata.links.length > 0 && (
-              <Col xs={12} md={4} className='my-2'>
-                <h5 className='fw-bold'>Links</h5>
-                {metadata.links.map((link) => (
-                  <div key={link.name} className="people-links">
-                    <a href={link.url} target="_blank" rel="noreferrer">
-                      {link.name}
-                    </a>
-                  </div>
-                ))}
-              </Col>
-            )}
-            {metadata.identifiers && metadata.identifiers.length > 0 && (
-              <Col xs={12} md={4} className='my-2'>
-                <h5 className="fw-bold">Other Identifiers</h5>
-                {metadata.identifiers.map((id) => (
-                  <div key={id.identifier} className="people-identifiers">
-                    {id.identifierType}:{' '}
-                    <a
-                      href={id.identifierUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {id.identifier}
-                    </a>
-                  </div>
-                ))}
-              </Col>
-            )}
+          {metadata.links && metadata.links.length > 0 && (
+            <Col xs={12} md={4} className='my-2'>
+              <h5 className='fw-bold'>Links</h5>
+              {metadata.links.map((link) => (
+                <div key={link.name} className="people-links">
+                  <a href={link.url} target="_blank" rel="noreferrer">
+                    {link.name}
+                  </a>
+                </div>
+              ))}
+            </Col>
+          )}
+          {metadata.identifiers && metadata.identifiers.length > 0 && (
+            <Col xs={12} md={4} className='my-2'>
+              <h5 className="fw-bold">Other Identifiers</h5>
+              {metadata.identifiers.map((id) => (
+                <div key={id.identifier} className="people-identifiers">
+                  {id.identifierType}:{' '}
+                  <a
+                    href={id.identifierUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {id.identifier}
+                  </a>
+                </div>
+              ))}
+            </Col>
+          )}
           <Col xs={12} md={4} className='my-2' id="other-profiles">
             <h5 className="fw-bold">Other Profiles</h5>
             <div id="profile-orcid" className="people-profiles">{orcidLink}</div>
@@ -146,7 +146,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
     )}
     {metadata.country && (
       <Row><Col className="tags">
-        <Badge bg="info">{metadata.country.name}</Badge>
+        <Badge pill bg="info">{metadata.country.name}</Badge>
       </Col></Row>
     )}
     {footer()}

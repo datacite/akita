@@ -30,7 +30,7 @@ export function RepositoryDashboard({ repoId }: Props) {
 
   const { data: repo, loading, error } = useRepositoryRelatedContent(repoId)
 
-  if (loading) return <Row><Loading /></Row>
+  if (loading) return <Row><Loading offset={false} /></Row>
 
   if (error) return (
     <Row>

@@ -13,16 +13,16 @@ const StatsLoader = () => (
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
   >
-    <rect y="0"   x="0"   rx="5" ry="5" width="18%" height="10%" />
-    <rect y="0"   x="23%" rx="5" ry="5" width="18%" height="10%" />
-    <rect y="0"   x="46%" rx="5" ry="5" width="18%" height="10%" />
-    <rect y="0"   x="69%" rx="5" ry="5" width="18%" height="10%" />
-    <rect y="15%" x="0"   rx="5" ry="5" width="89%" height="75%" />
+    <rect y="0" x="0" rx="5" ry="5" width="18%" height="10%" />
+    <rect y="0" x="23%" rx="5" ry="5" width="18%" height="10%" />
+    <rect y="0" x="46%" rx="5" ry="5" width="18%" height="10%" />
+    <rect y="0" x="69%" rx="5" ry="5" width="18%" height="10%" />
+    <rect y="15%" x="0" rx="5" ry="5" width="89%" height="75%" />
   </ContentLoader>
 )
 
-const SummaryStatsLoader = () => (
-  <div className="d-flex" style={{ width: "100%"}}>
+export const SummaryStatsLoader = () => (
+  <div className="d-flex" style={{ width: "100%" }}>
     <StatsLoader />
   </div>
 )

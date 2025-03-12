@@ -246,7 +246,7 @@ export default function WorkMetadata({
       <div className="tags">
         {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <Badge bg="info">{startCase(resourceType)}</Badge>
+            <Badge pill bg="info">{startCase(resourceType)}</Badge>
           </OverlayTrigger>
         )}
         {metadata.fieldsOfScience && (
@@ -257,14 +257,14 @@ export default function WorkMetadata({
                 placement="top"
                 overlay={tooltipFieldsOfScience}
               >
-                <Badge bg="info">{fos.name}</Badge>
+                <Badge pill bg="info">{fos.name}</Badge>
               </OverlayTrigger>
             ))}
           </span>
         )}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            <Badge bg="info">{metadata.language.name}</Badge>
+            <Badge pill bg="info">{metadata.language.name}</Badge>
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (

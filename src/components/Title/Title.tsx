@@ -12,15 +12,16 @@ type Props = {
   titleLink: string
   link: string
   rights?: Rights[]
+  offset?: boolean
 }
 
-export default function Title({ title, titleLink, link, rights = [] }: Props) {
+export default function Title({ title, titleLink, link, rights = [], offset = true }: Props) {
 
   const parsedTitle = ReactHtmlParser(title)
 
   return (
-    <Row className="align-items-baseline p-0 gap-4">
-      <Col xs="auto" className="p-0 pe-4">
+    <Row className="justify-content-start align-items-baseline p-0 gap-4">
+      <Col xs="auto" className={`${offset && "p-0"} pe-4`}>
         <h3 className="fw-bold" id="title">
           <a target="_blank" rel="noreferrer" href={titleLink}>
             {parsedTitle}

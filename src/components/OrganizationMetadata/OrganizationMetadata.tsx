@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { decimalToSexagesimal } from 'geolib'
 
-import type { MinimalOrganization as Organization }  from 'src/data/queries/searchOrganizationQuery'
+import type { MinimalOrganization as Organization } from 'src/data/queries/searchOrganizationQuery'
 import { rorFromUrl } from 'src/utils/helpers'
 import styles from './OrganizationMetadata.module.scss'
 
@@ -151,14 +151,12 @@ export default function OrganizationMetadata({
     <Geolocation geolocation={metadata.geolocation} />
 
     <Row className="tags"><Col>
-      <Badge bg="info">{metadata.country.name}</Badge>
-      <span>
-        {metadata.types.map((type) => (
-          <Badge className={styles.badge} key={`type-${type}`} bg="info">{type}</Badge>
-        ))}
-      </span>
+      <Badge pill bg="info">{metadata.country.name}</Badge>
+      {metadata.types.map((type) => (
+        <Badge pill className={styles.badge} key={`type-${type}`} bg="info">{type}</Badge>
+      ))}
       {metadata.memberId && (
-        <Badge bg="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
+        <Badge pill bg="success"><i className="ai ai-datacite"></i> {memberRoles[metadata.memberRoleId]}</Badge>
       )}
     </Col></Row>
 

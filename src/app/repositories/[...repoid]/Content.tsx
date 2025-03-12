@@ -1,5 +1,4 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -7,7 +6,9 @@ import { Repository as RepositoryType } from 'src/data/types'
 import { fetchRepository, QueryVar } from 'src/data/queries/repositoryQuery';
 
 import Error from 'src/components/Error/Error'
-import { RepositoryDetail, RepositorySidebar } from 'src/components/RepositoryDetail/RepositoryDetail';
+import Title from 'src/components/Title/Title'
+import { RepositorySidebar } from 'src/components/RepositoryDetail/RepositorySidebar'
+import { RepositoryDetail } from 'src/components/RepositoryDetail/RepositoryDetail'
 
 interface Props {
   variables: QueryVar
@@ -28,7 +29,13 @@ export default async function Content(props: Props) {
   const repository = data?.repository || {} as RepositoryType
 
 
-  return (<Container fluid>
+  return <>
+    <Row className="mb-4">
+      <Col md={{ offset: 3 }}>
+        <Title title={repository.name} titleLink={repository.url} link={repository.re3dataUrl} offset={false} />
+      </Col>
+    </Row>
+
     <Row>
       <Col md={3}>
         <RepositorySidebar repo={repository} />
@@ -37,5 +44,5 @@ export default async function Content(props: Props) {
         <RepositoryDetail repo={repository} />
       </Col>
     </Row>
-  </Container>)
+  </>
 }
