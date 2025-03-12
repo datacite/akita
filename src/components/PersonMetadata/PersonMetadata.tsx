@@ -20,7 +20,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
   if (!metadata) return <Alert variant="warning">No content found.</Alert>
 
   const name = () => {
-    const title_link = onPersonPage() ? 'https://orcid.org/' + orcidFromUrl(metadata.id) : '/orcid.org' + orcidFromUrl(metadata.id)
+    const title_link = onPersonPage() ? 'https://orcid.org/' + orcidFromUrl(metadata.id) : '/orcid.org/' + orcidFromUrl(metadata.id)
     if (!metadata.name)
       return (
         <h3 className="work">
@@ -62,7 +62,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
 
   const impactLink = (
     <a
-      href={'https://profiles.impactstory.org/u' + orcidFromUrl(metadata.id)}
+      href={'https://profiles.impactstory.org/u/' + orcidFromUrl(metadata.id)}
       target="_blank"
       rel="noreferrer"
     >
@@ -72,7 +72,7 @@ const PersonMetadata: React.FunctionComponent<Props> = ({ metadata, url }) => {
 
   const europePMCLink = (
     <a
-      href={'https://europepmc.org/authors' + orcidFromUrl(metadata.id)}
+      href={'https://europepmc.org/authors/' + orcidFromUrl(metadata.id)}
       target="_blank"
       rel="noreferrer"
     >

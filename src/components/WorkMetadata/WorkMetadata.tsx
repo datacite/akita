@@ -102,16 +102,17 @@ export default function WorkMetadata({
           ? [creator.givenName, creator.familyName].join(' ')
           : creator.name
 
+        const creatorId = orcidFromUrl(creator.id)
         // padding depending on position in creators list
         switch (true) {
           case array.length > index + 2:
-            sum.push({ displayName: c + ', ', id: orcidFromUrl(creator.id) })
+            sum.push({ displayName: c + ', ', id: creatorId  })
             break
           case array.length > index + 1:
-            sum.push({ displayName: c + ' & ', id: orcidFromUrl(creator.id) })
+            sum.push({ displayName: c + ' & ', id: creatorId })
             break
           default:
-            sum.push({ displayName: c, id: orcidFromUrl(creator.id) })
+            sum.push({ displayName: c, id: creatorId })
             break
         }
         return sum
@@ -123,7 +124,7 @@ export default function WorkMetadata({
       <div className="creators">
         {creatorList.map((c, index) =>
           c.id !== null ? (
-            <Link prefetch={false} href={'/orcid.org' + c.id} key={index}>
+            <Link prefetch={false} href={'/orcid.org/' + c.id} key={index}>
               {c.displayName}
             </Link>
           ) : (
