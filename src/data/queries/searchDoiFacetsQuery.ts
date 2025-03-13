@@ -36,6 +36,7 @@ function convertToQueryData(json: any): QueryData {
       affiliations: meta.affiliations,
       repositories: [],
       registrationAgencies: meta.registrationAgencies,
+      funders: meta.funders,
       authors: meta.authors?.slice(0, 10),
       creatorsAndContributors: meta.creatorsAndContributors?.slice(0, 10),
       clientTypes: meta.clientTypes?.slice(0, 10),
