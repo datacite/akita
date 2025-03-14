@@ -71,6 +71,7 @@ export type Works = {
   registrationAgencies: Facet[]
   repositories?: Facet[]
   affiliations?: Facet[]
+  funders: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]

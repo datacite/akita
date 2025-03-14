@@ -20,8 +20,8 @@ interface Props {
 }
 
 export default function Content(props: Props) {
-  const { rorid } = props
-  const { data, error, loading } = useROROrganization(rorid)
+  const { rorid: rorId } = props
+  const { data, error, loading } = useROROrganization(rorId)
   if (loading) return <Loading />
   const organization = data?.organization || {} as OrganizationType
 
@@ -54,7 +54,7 @@ export default function Content(props: Props) {
                 type: 'ror/funders',
               }
             ]}
-            variables={{ id: rorid }}
+            variables={{ rorId }}
           />
         </Col>
         <Col md={9} className="px-0">
