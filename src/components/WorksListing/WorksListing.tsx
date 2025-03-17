@@ -29,7 +29,7 @@ interface Props {
   hasPagination: boolean
   hasNextPage: boolean
   endCursor: string
-  show: ShowCharts
+  show?: ShowCharts
 }
 
 export default function WorksListing({
