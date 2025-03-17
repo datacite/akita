@@ -59,7 +59,7 @@ function isValidSortOption(sort: string): sort is SortOption {
   return VALID_SORT_OPTIONS.includes(sort as SortOption)
 }
 
-function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
+function buildDoiSearchParams(variables: QueryVar, count?: number): URLSearchParams {
   const searchParams = new URLSearchParams({
     query: buildQuery(variables),
     include: 'client',
@@ -69,6 +69,7 @@ function buildDoiSearchParams(variables: QueryVar): URLSearchParams {
     include_other_registration_agencies: 'true'
   })
 
+  if (count) searchParams.append('page[size]', count.toString())
 
   searchParams.append('page[number]', variables.cursor || '1')
   // Default to 'relevance' if sort is missing or invalid
@@ -95,12 +96,12 @@ function convertToQueryData(json: any): QueryData {
   }
 }
 
-export async function fetchDois(variables: QueryVar) {
+export async function fetchDois(variables: QueryVar, count?: number) {
   const options = {
     method: 'GET',
     headers: { accept: 'application/vnd.api+json' }
   }
-  const searchParams = buildDoiSearchParams(variables)
+  const searchParams = buildDoiSearchParams(variables, count)
 
   const res = await fetch(
     `${DATACITE_API_URL}/dois?${searchParams.toString()}`,
@@ -115,6 +116,31 @@ export async function fetchDois(variables: QueryVar) {
 
   const data = convertToQueryData(json)
   return { data }
+}
+
+
+export async function fetchDoisCitations(variables: QueryVar, count?: number) {
+  const options = {
+    method: 'GET',
+    headers: { accept: 'text/x-bibliography' }
+  }
+  const searchParams = buildDoiSearchParams(variables, count)
+
+
+  const res = await fetch(
+    `${DATACITE_API_URL}/dois?${searchParams.toString()}`,
+    options
+  )
+
+  if (!res.ok) {
+    const errorMessage = `Request for dois citations failed with status: ${res.status}`;
+    throw new Error(errorMessage);
+  }
+
+  const text = await res.text()
+  const citationsArray = text.trim().split(/\n\n+/);
+
+  return citationsArray
 }
 
 
