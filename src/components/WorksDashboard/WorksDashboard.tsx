@@ -10,14 +10,26 @@ import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalSt
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
 import styles from './WorksDashboard.module.scss'
 import { getTopFive, toBarRecord } from 'src/utils/helpers'
+import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
+
+export type ShowCharts = {
+  publicationYear?: boolean
+  resourceTypes?: boolean
+  licenses?: boolean
+  creatorsAndContributors?: boolean
+  fieldsOfScience?: boolean
+  languages?: boolean
+  all?: boolean
+}
 
 type Props = PropsWithChildren<{
   works: Works
+  show?: ShowCharts
 }>
 
 const tooltipText = (sourceField: string) => `The field "${sourceField}" from DOI metadata was used to generate this chart.`
 
-const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => {
+function WorksDashboard({ works, show = {}, children }: Props) {
   if (works.totalCount == 0) return null
 
   const published = works.published.map((x) => ({
@@ -37,12 +49,12 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
         </Row>
       }
       <Row>
-        <Col xs={12} sm={4}>
+        {(show.publicationYear || show.all) && <Col xs={12} sm={4}>
           <ProductionChart
             title='Publication Year'
             data={published} />
-        </Col>
-        <Col xs={12} sm={4}>
+        </Col>}
+        {(show.resourceTypes || show.all) && <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             chartTitle={'Work Types'}
             topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent }}
@@ -50,8 +62,8 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             domain={resourceTypeDomain}
             range={resourceTypeRange}
             tooltipText={tooltipText('resourceType')} />
-        </Col>
-        <Col xs={12} sm={4}>
+        </Col>}
+        {(show.licenses || show.all) && <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             chartTitle='Licenses'
             topCategory={{ title: licenses.topCategory, percent: licenses.topPercent }}
@@ -59,7 +71,16 @@ const WorksDashboard: React.FunctionComponent<Props> = ({ works, children }) => 
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
             tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
-        </Col>
+        </Col>}
+        {(show.creatorsAndContributors || show.all) && <Col xs={12} sm={4}>
+          <VerticalBarChart title="Top Creators and Contributors" data={works.creatorsAndContributors || []} />
+        </Col>}
+        {(show.fieldsOfScience || show.all) && <Col xs={12} sm={4}>
+          <VerticalBarChart title="Fields of Science" data={works.fieldsOfScience} />
+        </Col>}
+        {(show.languages || show.all) && <Col xs={12} sm={4}>
+          <VerticalBarChart title="Work Languages" data={works.languages} />
+        </Col>}
       </Row>
     </div>
   )

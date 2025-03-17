@@ -6,6 +6,7 @@ import Loading from 'src/components/Loading/Loading'
 import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 import Container from 'react-bootstrap/Container'
+import RelatedContent from './RelatedContent'
 
 
 interface Props {
@@ -61,6 +62,7 @@ export default async function Page({ params }: Props) {
     <Suspense fallback={<Loading />}>
       <Content variables={{ id: repoid }} />
     </Suspense>
+    <RelatedContent repository={data.repository} />
   </Container>
 }
 
