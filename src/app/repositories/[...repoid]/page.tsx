@@ -62,7 +62,7 @@ export default async function Page({ params }: Props) {
     <Suspense fallback={<Loading />}>
       <Content variables={{ id: repoid }} />
     </Suspense>
-    <RelatedContent repository={data.repository} />
+    {data.repository.clientId && <RelatedContent repository={data.repository} />}
   </Container>
 }
 
