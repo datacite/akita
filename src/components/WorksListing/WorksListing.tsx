@@ -12,7 +12,7 @@ import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
 
 import Pager from 'src/components/Pager/Pager'
-import WorksDashboard from 'src/components/WorksDashboard/WorksDashboard'
+import WorksDashboard, { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
 
 interface Props {
@@ -29,6 +29,7 @@ interface Props {
   hasPagination: boolean
   hasNextPage: boolean
   endCursor: string
+  show?: ShowCharts
 }
 
 export default function WorksListing({
@@ -44,7 +45,8 @@ export default function WorksListing({
   url,
   hasPagination,
   hasNextPage,
-  endCursor
+  endCursor,
+  show = { publicationYear: true, resourceTypes: true, licenses: true }
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
@@ -52,12 +54,12 @@ export default function WorksListing({
 
   const renderFacets = () => {
     return (
-        <WorkFacets
-          model={model}
-          url={url}
-          data={works}
-          connectionTypesCounts={connectionTypesCounts}
-        />
+      <WorkFacets
+        model={model}
+        url={url}
+        data={works}
+        connectionTypesCounts={connectionTypesCounts}
+      />
     )
   }
 
@@ -71,7 +73,7 @@ export default function WorksListing({
     if (hasNoWorks) return renderNoWorks()
     return (
       <>
-        {showAnalytics && <WorksDashboard works={works} />}
+        {showAnalytics && <WorksDashboard works={works} show={show} />}
         {showSankey && <Row>
           <Col xs={12}>
             <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
@@ -100,10 +102,10 @@ export default function WorksListing({
   return (
     <Row>
       <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        { loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10}/></Row>: renderFacets() }
+        {loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
-        { loading ? <Loading /> : renderWorks() }
+        {loading ? <Loading /> : renderWorks()}
       </Col>
     </Row>
   )

@@ -5,11 +5,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Badge from 'react-bootstrap/Badge'
 
-import styles from './RepositoryDetail.module.scss'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import { Repository } from 'src/data/types';
-import { RepositoryDashboard } from 'src/components/RepositoryDetail/RepositoryDashboard'
-import { useRepositoryRelatedContent } from 'src/data/queries/repositoryRelatedContentQuery'
+import { useRepositoryRelatedContentQuery } from 'src/data/queries/repositoryRelatedContentQuery'
 import { SummaryStatsLoader } from '../SummarySearchMetrics/SummarySearchMetrics'
 
 type Props = {
@@ -19,7 +17,7 @@ type Props = {
 
 
 export function RepositoryDetail({ repo }: Props) {
-  const { data, loading: worksLoading } = useRepositoryRelatedContent(repo.clientId)
+  const { data, loading: worksLoading } = useRepositoryRelatedContentQuery({ clientId: repo.clientId })
   const works = data?.works
 
   function Metrics() {
@@ -94,22 +92,16 @@ export function RepositoryDetail({ repo }: Props) {
   function Advise() {
     if (!repo.url) return null
 
-    return <Col xs={12} className={styles.advise}>
-      If you plan to deposit your research data in this repository,
-      &nbsp;go to <a href={repo.url}>{repo.url}.</a>
-    </Col>
+    return <p className="my-4 p-3 d-grid border border-success">
+      If you plan to deposit your research data in this repository, go to <a href={repo.url}>{repo.url}.</a>
+    </p>
   }
 
   return <Row className="gap-4">
-    <Col xs={12}>
-      <Metrics />
-    </Col>
+    <Col xs={12}><Metrics /></Col>
     <Col xs={12}>{repo.description}</Col>
     <ExtendedMetadata />
     <Col xs={12}><Tags /></Col>
-    <div className={styles.dashboard}>
-      <RepositoryDashboard repoId={repo.clientId} />
-    </div>
-    <Advise />
+    <Col xs={12}><Advise /></Col>
   </Row>
 }
