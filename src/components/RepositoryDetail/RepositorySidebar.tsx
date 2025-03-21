@@ -38,22 +38,7 @@ export function RepositorySidebar({ repo }: Props) {
     </>
   }
 
-  function FindRelatedWorksButton() {
-    if (!repo.clientId) return null
-
-    return <Button variant="primary" href={"/doi.org?query=client.uid:" + repo.clientId} id="find-related">
-      <FontAwesomeIcon icon={faNewspaper} />
-      &nbsp;
-      Find Related Works
-    </Button>
-  }
-
-
   return <>
-    <div className="d-grid gap-2">
-      <FindRelatedWorksButton />
-    </div>
-
     <ContactList />
   </>
 }
