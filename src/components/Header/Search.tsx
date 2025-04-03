@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { useDebouncedCallback } from 'use-debounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -39,8 +38,6 @@ export default function Search() {
     router.push(`${base}?${params.toString()}`);
   }
 
-  const debounceSearch = useDebouncedCallback(search, 500)
-
   return (
     <InputGroup className="flex-nowrap align-items-center">
       <input
@@ -49,7 +46,6 @@ export default function Search() {
         value={searchInput}
         onChange={e => {
           setSearchInput(e.target.value)
-          debounceSearch(e.target.value)
         }}
         key="searchInput"
         className={`form-control ${styles.input}`}
