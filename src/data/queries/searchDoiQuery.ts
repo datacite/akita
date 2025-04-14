@@ -24,6 +24,9 @@ export function buildQuery(variables: QueryVar): string {
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators.nameIdentifiers.nameIdentifier:*${variables.userId}*` : '',
+    // The contributors facet doesn't capture all the works like in the userId
+    // If we were to use wildcards then the facet counts mismatch the results
+    variables.contributor ? `creators.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
     variables.filterQuery
   ].filter(Boolean);
   const query = queryParts.join(' AND ')
@@ -208,6 +211,7 @@ export interface QueryVar {
   userId?: string
   clientId?: string
   cursor?: string
+  contributor?: string
   published?: string
   resourceTypeId?: string
   language?: string
