@@ -23,6 +23,7 @@ export function buildQuery(variables: QueryVar): string {
     buildOrgQuery(variables.rorId),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
+    variables.userId ? `creators.nameIdentifiers.nameIdentifier:*${variables.userId}*` : '',
     variables.filterQuery
   ].filter(Boolean);
   const query = queryParts.join(' AND ')
@@ -36,7 +37,6 @@ export function appendFacets(variables: QueryVar, searchParams: URLSearchParams)
   if (variables.published) searchParams.append('published', variables.published)
   if (variables.resourceTypeId) searchParams.append('resource-type-id', variables.resourceTypeId)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
-  if (variables.userId) searchParams.append('user-id', variables.userId)
   if (variables.clientId) searchParams.append('client-id', variables.clientId)
   if (variables.clientType) searchParams.append('client-type', variables.clientType)
 }

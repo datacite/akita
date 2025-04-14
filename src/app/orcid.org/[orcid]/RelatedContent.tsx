@@ -25,7 +25,7 @@ export default function RelatedContent(props: Props) {
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { userId: 'http://orcid.org/' + orcid, ...variables }
+  const vars = { userId: orcid, ...variables }
 
   const { loading, data, error } = usePersonRelatedContentQuery(vars)
 
