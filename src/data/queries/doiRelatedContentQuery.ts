@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
-import { Works } from "src/data/types";
+import { QueryData } from "src/data/queries/doiQuery";
 import { QueryVar } from "src/data/queries/searchDoiQuery";
 
 export function buildFilterQuery(variables: QueryVar) {
@@ -14,9 +14,9 @@ export function buildFilterQuery(variables: QueryVar) {
 }
 
 export function useDoiRelatedContentQuery(variables: QueryVar) {
-  let filterQuery = buildFilterQuery(variables)
+  const filterQuery = buildFilterQuery(variables)
 
-  const { loading, data, error } = useQuery<Works, QueryVar>(
+  const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
     {
       variables: { ...variables, filterQuery },
@@ -156,4 +156,4 @@ export const RELATED_CONTENT_QUERY = gql`
 `;
 
 
-export type { QueryVar, Works as QueryData }
+export type { QueryVar, QueryData }
