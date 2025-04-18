@@ -11,7 +11,7 @@ type Props = {
 
 const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
   const personList = people.map((person) => {
-    const link = person.id && person.id.startsWith('https://orcid.org/0') ?
+    const link = person.id ?
       '/orcid.org/' + orcidFromUrl(person.id) : undefined;
     const personName = person.familyName ? [person.givenName, person.familyName].join(' ') : person.name
     const personLink = link ? <Link href={link}>{personName}</Link> : personName;

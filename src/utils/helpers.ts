@@ -39,7 +39,7 @@ export const orcidFromUrl = (orcidInput: string) => {
     : orcidInput;
 
   // Validate the ORCID pattern (XXXX-XXXX-XXXX-XXXX)
-  const orcidPattern = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
+  const orcidPattern = /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]{1}$/;
 
   return orcidPattern.test(orcidId) ? orcidId : null;
 }
