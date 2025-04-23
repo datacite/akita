@@ -23,10 +23,10 @@ export function buildQuery(variables: QueryVar): string {
     buildOrgQuery(variables.rorId),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
-    variables.userId ? `creators.nameIdentifiers.nameIdentifier:*${variables.userId}*` : '',
+    variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:*${variables.userId}*` : '',
     // The contributors facet doesn't capture all the works like in the userId
     // If we were to use wildcards then the facet counts mismatch the results
-    variables.contributor ? `creators.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
+    variables.contributor ? `creators_and_contributors.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
     variables.filterQuery
   ].filter(Boolean);
   const query = queryParts.join(' AND ')

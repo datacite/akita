@@ -6,7 +6,7 @@ import { QueryVar } from "src/data/queries/searchDoiQuery";
 export function buildFilterQuery(variables: QueryVar) {
   const queryParts = [
     variables.filterQuery,
-    variables.contributor ? `creators.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
+    variables.contributor ? `creators_and_contributors.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
   ].filter(Boolean);
   const query = queryParts.join(' AND ')
 
