@@ -1,12 +1,25 @@
 import { gql, useQuery } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
-import { QueryData, QueryVar } from "src/data/queries/doiQuery";
+import { QueryData } from "src/data/queries/doiQuery";
+import { QueryVar } from "src/data/queries/searchDoiQuery";
+
+export function buildFilterQuery(variables: QueryVar) {
+  const queryParts = [
+    variables.filterQuery,
+    variables.contributor ? `creators_and_contributors.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
+  ].filter(Boolean);
+  const query = queryParts.join(' AND ')
+
+  return query
+}
 
 export function useDoiRelatedContentQuery(variables: QueryVar) {
+  const filterQuery = buildFilterQuery(variables)
+
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
     {
-      variables,
+      variables: { ...variables, filterQuery },
       errorPolicy: 'all'
     }
   )

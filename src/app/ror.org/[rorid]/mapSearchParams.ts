@@ -2,6 +2,7 @@ export interface SearchParams {
   id: string
   filterQuery?: string
   cursor?: string
+  contributor?: string
   published?: string
   "resource-type"?: string
   language?: string
@@ -17,6 +18,7 @@ export default function mapSearchparams(searchParams: SearchParams) {
     variables: {
       filterQuery: searchParams.filterQuery,
       cursor: searchParams.cursor,
+      contributor: searchParams['contributor'],
       published: searchParams.published,
       resourceTypeId: searchParams['resource-type'],
       language: searchParams.language,

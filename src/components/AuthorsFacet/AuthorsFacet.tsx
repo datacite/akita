@@ -9,12 +9,12 @@ type Props = {
     url: string
 }
 
-const AuthorsFacet: React.FunctionComponent<Props> = ({
+export default function AuthorsFacet({
     authors,
     title,
     model,
     url
-}) => {
+}: Props) {
     if (!authors || authors.length === 0) return null
 
     // Used for checking filter shouldnt show author that is already filtered
@@ -35,8 +35,10 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
             return author
     }
 
-    function generateValue(facetId: string) {
-        return `creators_and_contributors.nameIdentifiers.nameIdentifier:"${facetId}"`
+    function extractOrcid(input: string) {
+        const orcidRegex = /\b(\d{4}-\d{4}-\d{4}-\d{3}[0-9X])\b/;
+        const match = input.match(orcidRegex);
+        return match ? match[1] : input;
     }
 
     return (
@@ -44,12 +46,10 @@ const AuthorsFacet: React.FunctionComponent<Props> = ({
             data={authors.filter(removeNullAuthors).filter(checkAuthorForPerson)}
             title={title}
             id="authors-facets"
-            value={generateValue}
-            param="filterQuery"
+            value={id => extractOrcid(id)}
+            param="contributor"
             url={url}
             tooltipText={`This list includes only ${title} with ORCID iDs in DOI metadata.`}
         />
     )
 }
-
-export default AuthorsFacet
