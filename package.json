@@ -3,6 +3,8 @@
   "version": "1.0.4",
   "scripts": {
     "dev": "next dev",
+    "dev-all": "concurrently \"yarn dev\" \"yarn api\"",
+    "prod-all": "concurrently \"yarn dev\" \"yarn api-prod\"",
     "api": "pip3 install -r api/requirements.txt && DATACITE_API_URL='https://api.stage.datacite.org/dois/' python3 -m flask --app api/app run -p 5328",
     "api-prod": "pip3 install -r api/requirements.txt && DATACITE_API_URL='https://api.datacite.org/dois/' python3 -m flask --app api/app run -p 5328",
     "build": "next build",
@@ -90,6 +92,7 @@
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^9.1.2",
     "cypress": "^13.6.3",
     "cypress-dotenv-flow": "^1.2.2",
     "debug": "4.3.1",
