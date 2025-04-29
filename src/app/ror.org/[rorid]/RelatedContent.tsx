@@ -11,21 +11,22 @@ import { useOrganizationRelatedContentQuery } from 'src/data/queries/organizatio
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import mapSearchparams from './mapSearchParams';
 
 interface Props {
   isBot?: boolean
+  rorId: string
+  rorFundingIds: string[]
 }
 
 export default function RelatedContent(props: Props) {
-  const { isBot = false } = props
-  const rorId = useParams().rorid as string
+  const { isBot = false, rorId, rorFundingIds } = props
 
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { rorId, ...variables }
+  const vars = { rorId, rorFundingIds, ...variables }
   const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
 
   if (isBot) return null
