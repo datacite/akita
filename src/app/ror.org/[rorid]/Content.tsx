@@ -13,6 +13,7 @@ import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import Loading from 'src/components/Loading/Loading'
+import RelatedContent from 'src/app/ror.org/[rorid]/RelatedContent';
 
 interface Props {
   rorid: string
@@ -24,6 +25,7 @@ export default function Content(props: Props) {
   const { data, error, loading } = useROROrganization(rorId)
   if (loading) return <Loading />
   const organization = data?.organization || {} as OrganizationType
+  const rorFundingIds = organization.identifiers?.filter((id) => id.identifierType === 'fundref').map((id) => id.identifier) || []
 
   if (error || !organization) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -32,41 +34,44 @@ export default function Content(props: Props) {
   )
 
   return (
-    <Container fluid>
-      <Row className="mb-4">
-        <Col md={{ offset: 3 }}>
-          <Title title={organization.name} titleLink={organization.id} link={organization.id} />
-        </Col>
-      </Row>
+    <>
+        <Container fluid>
+          <Row className="mb-4">
+            <Col md={{ offset: 3 }}>
+              <Title title={organization.name} titleLink={organization.id} link={organization.id} />
+            </Col>
+          </Row>
 
-      <Row>
-        <Col md={3}>
-          <DownloadReports
-            links={[
-              {
-                title: 'Related Works (CSV)',
-                helpText: 'Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.',
-                type: 'ror/related-works',
-              },
-              {
-                title: 'Funders (CSV)',
-                helpText: 'Includes up to 200 funders associated with related works.',
-                type: 'ror/funders',
-              }
-            ]}
-            variables={{ rorId }}
-          />
-        </Col>
-        <Col md={9} className="px-0">
-          <SummarySearchMetrics rorId={organization.id} />
-          {organization.inceptionYear && (
-            <p className="mb-3">Founded {organization.inceptionYear}</p>
-          )}
-          <OrganizationMetadata metadata={organization}
-            linkToExternal={false}
-            showTitle={false} />
-        </Col>
-      </Row>
-    </Container>
+          <Row>
+            <Col md={3}>
+              <DownloadReports
+                links={[
+                  {
+                    title: 'Related Works (CSV)',
+                    helpText: 'Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this organization.',
+                    type: 'ror/related-works',
+                  },
+                  {
+                    title: 'Funders (CSV)',
+                    helpText: 'Includes up to 200 funders associated with related works.',
+                    type: 'ror/funders',
+                  }
+                ]}
+                variables={{ rorId }}
+              />
+            </Col>
+            <Col md={9} className="px-0">
+              <SummarySearchMetrics rorId={organization.id} rorFundingIds={rorFundingIds} />
+              {organization.inceptionYear && (
+                <p className="mb-3">Founded {organization.inceptionYear}</p>
+              )}
+              <OrganizationMetadata metadata={organization}
+                linkToExternal={false}
+                showTitle={false} />
+            </Col>
+          </Row>
+        </Container>
+      <RelatedContent isBot={props.isBot} rorId={rorId} rorFundingIds={rorFundingIds} />
+    </>
   )
 }
