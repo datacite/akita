@@ -14,7 +14,7 @@ function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): stri
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = `"https://${id}"`
-  const rorFundingIdsQuery = rorFundingIds.map(id => '\"https://doi.org/' + id + '\"').join(' OR ')
+  const rorFundingIdsQuery = rorFundingIds.map(id => '"https://doi.org/' + id + '"').join(' OR ')
   return `(organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funding_references.funderIdentifier:(${urlId} ${rorFundingIdsQuery && `OR ${rorFundingIdsQuery}`})`
 }
 
