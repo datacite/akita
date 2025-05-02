@@ -10,14 +10,20 @@ type Props = {
 
 const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
   const funderLink = (() => {
-    if (funding.funderIdentifier?.startsWith('https://doi.org/10.13039')) {
-      return '/doi.org' + doiFromUrl(funding.funderIdentifier);
+    if (!funding.funderIdentifier) return null
+    try {
+      const url = new URL(funding.funderIdentifier)
+      if (url.host === 'doi.org' && url.pathname.startsWith('/10.13039')) {
+        return '/doi.org' + doiFromUrl(funding.funderIdentifier)
+      }
+      if (url.host === 'ror.org') {
+        return '/ror.org' + rorFromUrl(funding.funderIdentifier)
+      }
+    } catch (e) {
+      return null
     }
-    if (funding.funderIdentifier?.startsWith('https://ror.org')) {
-      return '/ror.org' + rorFromUrl(funding.funderIdentifier);
-    }
-    return null;
-  })();
+    return null
+  })()
   const showAwardLink = (
     funding.funderIdentifier &&
     funderLink &&
