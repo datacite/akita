@@ -1,0 +1,34 @@
+.primary {
+    color: #FFF !important;
+    background-color: #037AAD !important;
+    border-width: 0 !important;
+    font-size: 1em !important;
+    padding: .5em 2em !important;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.secondary, .secondary:hover {
+    color: #037AAD !important;
+    background-color: transparent !important;
+    border: 2px solid #037AAD !important;
+    font-size: 1em !important;
+    padding: .5em 2em !important;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .primary, .secondary {
+        width: 100%;
+        flex: unset;
+    }
+}

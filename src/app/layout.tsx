@@ -18,6 +18,7 @@ import { getAuthToken } from "src/utils/apolloClient/apolloClient";
 import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
 import Script from "next/script";
 import { SENTRY_DSN, IS_PROD } from "src/data/constants";
+import DiscoverWorksAlert from "src/components/DiscoverWorksAlert/DiscoverWorksAlert";
 
 
 config.autoAddCss = false
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className={sourceSans3.className}>
         <Providers authToken={getAuthToken()} >
           <Header />
+          <DiscoverWorksAlert />
           <div className="container-fluid flex-grow-1">{children}</div>
           <Consent />
           <Footer />
