@@ -2,13 +2,15 @@ import {
   ForceDirectedGraphNode,
   ForceDirectedGraphLink
 } from 'src/components/ForceDirectedGraph/ForceDirectedSpec'
-import { VERCEL_URL, URLS } from 'src/data/constants'
 
 function getBaseUrl(): string {
-  if (VERCEL_URL && VERCEL_URL !== 'localhost:3000')
-    return `https://${VERCEL_URL}`
-
-  return URLS.localhost
+  const localhost = 'http://localhost:3000'
+    const baseUrl =
+    process.env.VERCEL_URL === 'localhost:3000'
+      ? localhost
+      : `https://${process.env.VERCEL_URL}`
+        if (process.env.VERCEL_URL) return baseUrl
+      return localhost
 }
 
 export interface GraphData {
@@ -22,6 +24,7 @@ export async function getRelatedWorksGraph(doi: string): Promise<GraphData> {
     links: []
   }
   const baseUrl = getBaseUrl()
+  console.log("getRelatedWorksGraph", baseUrl, doi)
   try {
     const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
     if (!response.ok) {
