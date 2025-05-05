@@ -5,19 +5,19 @@ import {
 
 function getBaseUrl(): string {
   const localhost = 'http://localhost:3000'
-  
+
   // Handle case when VERCEL_URL is defined
   if (process.env.VERCEL_URL) {
     if (process.env.VERCEL_URL === 'localhost:3000') {
       return localhost
     }
-    
+
     // Ensure URL has protocol
-    return process.env.VERCEL_URL.startsWith('http') 
-      ? process.env.VERCEL_URL 
+    return process.env.VERCEL_URL.startsWith('http')
+      ? process.env.VERCEL_URL
       : `https://${process.env.VERCEL_URL}`
   }
-  
+
   return localhost
 }
 
@@ -32,7 +32,6 @@ export async function getRelatedWorksGraph(doi: string): Promise<GraphData> {
     links: []
   }
   const baseUrl = getBaseUrl()
-  console.log("getRelatedWorksGraph", baseUrl, doi)
   try {
     const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
     if (!response.ok) {
