@@ -5,12 +5,20 @@ import {
 
 function getBaseUrl(): string {
   const localhost = 'http://localhost:3000'
-    const baseUrl =
-    process.env.VERCEL_URL === 'localhost:3000'
-      ? localhost
-      : `https://${process.env.VERCEL_URL}`
-        if (process.env.VERCEL_URL) return baseUrl
+  
+  // Handle case when VERCEL_URL is defined
+  if (process.env.VERCEL_URL) {
+    if (process.env.VERCEL_URL === 'localhost:3000') {
       return localhost
+    }
+    
+    // Ensure URL has protocol
+    return process.env.VERCEL_URL.startsWith('http') 
+      ? process.env.VERCEL_URL 
+      : `https://${process.env.VERCEL_URL}`
+  }
+  
+  return localhost
 }
 
 export interface GraphData {
