@@ -32,6 +32,7 @@ export async function getRelatedWorksGraph(doi: string): Promise<GraphData> {
     links: []
   }
   const baseUrl = getBaseUrl()
+  console.log('getRelatedWorksGraph', baseUrl, doi)
   try {
     const response = await fetch(`${baseUrl}/api/doi/related-graph/${doi}`)
     if (!response.ok) {
