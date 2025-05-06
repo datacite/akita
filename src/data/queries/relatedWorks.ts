@@ -2,23 +2,13 @@ import {
   ForceDirectedGraphNode,
   ForceDirectedGraphLink
 } from 'src/components/ForceDirectedGraph/ForceDirectedSpec'
+import { VERCEL_URL, URLS } from 'src/data/constants'
 
 function getBaseUrl(): string {
-  const localhost = 'http://localhost:3000'
+  if (VERCEL_URL && VERCEL_URL !== 'localhost:3000')
+    return `https://${VERCEL_URL}`
 
-  // Handle case when VERCEL_URL is defined
-  if (process.env.VERCEL_URL) {
-    if (process.env.VERCEL_URL === 'localhost:3000') {
-      return localhost
-    }
-
-    // Ensure URL has protocol
-    return process.env.VERCEL_URL.startsWith('http')
-      ? process.env.VERCEL_URL
-      : `https://${process.env.VERCEL_URL}`
-  }
-
-  return localhost
+  return URLS.localhost
 }
 
 export interface GraphData {
