@@ -19,14 +19,14 @@ export default function DiscoverWorksAlert() {
   return <Container fluid className="flex-grow-1">
     <Row>
       <Col xs={12} md={{ span: 9, offset: 3 }} className="d-flex justify-content-center">
-        <Toast show={show} onClose={() => setShow(false)} className="w-auto my-4">
-          <Toast.Header>
+        <Toast show={show} onClose={() => setShow(false)} className={`${styles["toast-container"]} w-auto my-4 border-0 rounded-0`}>
+          <Toast.Header className="border-0">
             <FontAwesomeIcon icon={faUserCircle} fontSize={20} color={ACCENT_COLOR} className="me-2" />
             <strong className="fs-5 me-auto">Add Works to your ORCID profile</strong>
           </Toast.Header>
           <Toast.Body>
             <p className="fs-6">
-              When you’re signed in, you can add Works to your ORCID profile from any Works page. Find your Works by ORCID iD, with your name, or by using a keyword search. Enable ORCID Auto-Update so DataCite DOIs with your ORCID iD are automatically added to your ORCID profile.
+              Add Works to your ORCID profile from any Works page. Find your Works by ORCID iD, with your name, or by using a keyword search. Enable ORCID Auto-Update in Account Settings so DataCite DOIs with your ORCID iD are automatically added to your ORCID profile.
             </p>
 
 
