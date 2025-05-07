@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 
 import Loading from 'src/components/Loading/Loading'
 
-import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
+import { useDoiRelatedContentQueryGQL as useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { Works } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'

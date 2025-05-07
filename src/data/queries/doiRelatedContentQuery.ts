@@ -13,9 +13,9 @@ export function buildFilterQuery(variables: QueryVar) {
   return query
 }
 
-export function useDoiRelatedContentQuery(variables: QueryVar) {
-  const filterQuery = buildFilterQuery(variables)
 
+export function useDoiRelatedContentQueryGQL(variables: QueryVar) {
+  const filterQuery = buildFilterQuery(variables)
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
     {

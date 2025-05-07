@@ -10,6 +10,39 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
+function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined): string {
+  if (!relatedDoi) return ''
+  const doi = relatedDoi;
+  const baseURI = "https://doi.org/";
+  const OR = " OR ";
+  const httpBaseURI = "http://doi.org/"; // Added HTTP base URI
+
+  const relatedIdentifiers = [
+    `"${baseURI}${doi}"`,
+    `"${doi}"`,
+    `"${httpBaseURI}${doi}"` // Added HTTP version
+  ];
+  const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
+
+  const idParts = [
+    `reference_ids:${doi}`,
+    `citation_ids:${doi}`,
+    `part_ids:${doi}`,
+    `part_of_ids:${doi}`,
+    `versions_ids:${doi}`,
+    `version_of_ids:${doi}`
+  ];
+
+  const uidPart = uidList && uidList.length > 0 ? `uid:(${uidList.join(OR)})` : '';
+
+  const allParts = [relatedIdentifierPart, ...idParts, uidPart].filter(Boolean);
+
+  const queryString = allParts.join(OR);
+
+  const encodedQueryString = encodeURIComponent(queryString);
+  return encodedQueryString;
+}
+
 function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
