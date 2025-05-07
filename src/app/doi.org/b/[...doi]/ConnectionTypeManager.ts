@@ -12,6 +12,19 @@ export type ConnectionTypeCounts = {
 export type ConnectionType = keyof ConnectionTypeCounts
 // enumerated list of connectionTypes
 export const CONNECTION_TYPES: ConnectionType[] = ['allRelated', 'references', 'citations', 'parts', 'partOf', 'otherRelated']
+export const DEFAULT_CONNECTION_TYPE = 'allRelated'
+
+export function isConnectionType(connectionType: string): boolean {
+  return CONNECTION_TYPES.includes(connectionType as ConnectionType)
+}
+
+export function getValidConnectionType(connectionType: string | undefined ): string {
+    let validConnectionType = DEFAULT_CONNECTION_TYPE
+    if (connectionType && isConnectionType(connectionType)) {
+      validConnectionType = connectionType
+    }
+    return validConnectionType
+}
 
 export class ConnectionTypeManager {
   private counts: ConnectionTypeCounts
@@ -59,7 +72,7 @@ export class ConnectionTypeManager {
   }
 
   getWorks(connectionType: string): Works {
-    connectionType = CONNECTION_TYPES.includes(connectionType as ConnectionType) ? connectionType : this.getDefaultConnectionType();
+    connectionType = getValidConnectionType(connectionType)
     const works = this.work[connectionType] as Works | undefined;
     return works ?? {
       totalCount: 0,
@@ -72,10 +85,7 @@ export class ConnectionTypeManager {
   }
 
   getWorksAndTitle(connectionType: string | undefined ): { works: Works, title: string } {
-    let validConnectionType = this.getDefaultConnectionType();
-    if (connectionType && CONNECTION_TYPES.includes(connectionType as ConnectionType)) {
-      validConnectionType = connectionType
-    }
+    const validConnectionType = getValidConnectionType(connectionType)
     const works = this.getWorks(validConnectionType)
     const title = this.formatTitle(validConnectionType)
     return { works, title }

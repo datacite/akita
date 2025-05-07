@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 import Loading from 'src/components/Loading/Loading'
-import { ConnectionTypeManager } from './ConnectionTypeManager'
+import { ConnectionTypeManager , getValidConnectionType} from './ConnectionTypeManager'
 import { PaginationManager } from './PaginationManager'
 
 import { useDoiRelatedContentQueryGQL as useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
@@ -25,24 +25,22 @@ interface Props {
 function getQueryVariables(){
   const doiParams = useParams().doi as string[]
   const doi = decodeURIComponent(doiParams.join('/'))
-
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-
   return { id: doi, ...variables }
 }
 
 function getConnectionType(){
   const searchParams = useSearchParams()
   const { connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return connectionType
+  return getValidConnectionType(connectionType)
 }
+
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
   if (isBot) return null
-
-  const connectionType = getConnectionType()
   const vars = getQueryVariables()
+  const connectionType = getConnectionType()
   const { loading, data, error } = useDoiRelatedContentQuery(vars)
 
 
@@ -66,7 +64,7 @@ export default function RelatedContent(props: Props) {
   const paginationManager = new PaginationManager(works)
   const connectionTypeCounts = connectionManager.getCounts()
 
-  const url = '/doi.org/b/' + data.work.doi + '/?'
+  const url = '/doi.org/b/' + vars.id + '/?'
   return (
     <Container fluid>
       <Row>
