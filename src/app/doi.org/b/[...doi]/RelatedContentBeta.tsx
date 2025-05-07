@@ -7,9 +7,11 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 import Loading from 'src/components/Loading/Loading'
+import { ConnectionTypeManager } from './ConnectionTypeManager'
+import { PaginationManager } from './PaginationManager'
 
 import { useDoiRelatedContentQueryGQL as useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
-import { Works, Work } from 'src/data/types'
+// import { Works, Work } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
@@ -30,39 +32,6 @@ function getQueryVariables(){
   return { id: doi, ...variables }
 }
 
-function getConnectionTypeCounts( work: Work) {
-
-  const allRelatedCount = work.allRelated?.totalCount || 0
-  const referenceCount = work.references?.totalCount || 0
-  const citationCount = work.citations?.totalCount || 0
-  const partCount = work.parts?.totalCount || 0
-  const partOfCount = work.partOf?.totalCount || 0
-  const otherRelatedCount = work.otherRelated?.totalCount || 0
-  return {
-      allRelated: allRelatedCount,
-      references: referenceCount,
-      citations: citationCount,
-      parts: partCount,
-      partOf: partOfCount,
-      otherRelated: otherRelatedCount
-    }
-
-}
-function hasAnyRelatedWorks(counts: ReturnType<typeof getConnectionTypeCounts>) {
-  const { references, citations, parts, partOf, otherRelated } = counts
-  return references + citations + parts + partOf + otherRelated > 0
-}
-
-function getDefaultConnectionType(counts: ReturnType<typeof getConnectionTypeCounts>) {
-  const { allRelated, references, citations, parts, partOf } = counts
-  if (allRelated > 0) return 'allRelated'
-  if (references > 0) return 'references'
-  if (citations > 0) return 'citations'
-  if (parts > 0) return 'parts'
-  if (partOf > 0) return 'partOf'
-  return 'otherRelated'
-}
-
 function getConnectionType(){
   const searchParams = useSearchParams()
   const { connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
@@ -73,8 +42,6 @@ export default function RelatedContent(props: Props) {
   if (isBot) return null
 
   const connectionType = getConnectionType()
-
-  // const vars = { id: doi, ...variables }
   const vars = getQueryVariables()
   const { loading, data, error } = useDoiRelatedContentQuery(vars)
 
@@ -91,31 +58,15 @@ export default function RelatedContent(props: Props) {
   if (!data) return
 
   const showSankey = isDMP(data.work) || isProject(data.work)
-
-  const connectionTypeCounts = getConnectionTypeCounts(data.work)
-  if (!hasAnyRelatedWorks(connectionTypeCounts)) return ''
-
-
-  const defaultConnectionType = getDefaultConnectionType(connectionTypeCounts)
-
-  const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
-  const displayedConnectionTitle =
-    displayedConnectionType === 'allRelated' ? 'All Related Works' :
-      displayedConnectionType === 'otherRelated' ? 'Other Works' :
-        displayedConnectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
+  const connectionManager = new ConnectionTypeManager(data.work)
+  if (!connectionManager.hasAnyRelatedWorks()) return ''
 
 
+  const {works, title: displayedConnectionTitle} = connectionManager.getWorksAndTitle(connectionType)
+  const paginationManager = new PaginationManager(works)
+  const connectionTypeCounts = connectionManager.getCounts()
 
-
-  const relatedWorks = data.work
-  const works: Works = displayedConnectionType in relatedWorks ?
-    relatedWorks[displayedConnectionType] :
-    { totalCount: 0, nodes: [] }
-
-  const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
-  const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
-
-  const url = '/doi.org/b/' + relatedWorks.doi + '/?'
+  const url = '/doi.org/b/' + data.work.doi + '/?'
   return (
     <Container fluid>
       <Row>
@@ -132,11 +83,11 @@ export default function RelatedContent(props: Props) {
           showSankey={showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
-          hasPagination={works.totalCount > 25}
-          hasNextPage={hasNextPage}
+          hasPagination={paginationManager.hasPagination}
+          hasNextPage={paginationManager.hasNextPage}
           model={'doi'}
           url={url}
-          endCursor={endCursor} />
+          endCursor={paginationManager.endCursor} />
       </Row>
     </Container>
   )

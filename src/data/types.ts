@@ -63,15 +63,15 @@ export type Work = WorkMetadata & {
 export type Works = {
   totalCount: number
   pageInfo: PageInfo
-  published: Facet[]
-  resourceTypes: Facet[]
-  languages: Facet[]
-  licenses: Facet[]
-  fieldsOfScience: Facet[]
-  registrationAgencies: Facet[]
+  published?: Facet[]
+  resourceTypes?: Facet[]
+  languages?: Facet[]
+  licenses?: Facet[]
+  fieldsOfScience?: Facet[]
+  registrationAgencies?: Facet[]
   repositories?: Facet[]
   affiliations?: Facet[]
-  funders: Facet[]
+  funders?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
@@ -86,7 +86,7 @@ export type Works = {
   openLicenseResourceTypes?: Facet[]
 
   nodes: Work[]
-  personToWorkTypesMultilevel: MultilevelFacet[]
+  personToWorkTypesMultilevel?: MultilevelFacet[]
 }
 
 type Title = {
