@@ -14,6 +14,23 @@ export type ConnectionType = keyof ConnectionTypeCounts
 export const CONNECTION_TYPES: ConnectionType[] = ['allRelated', 'references', 'citations', 'parts', 'partOf', 'otherRelated']
 export const DEFAULT_CONNECTION_TYPE = 'allRelated'
 
+export const EMPTY_CONNECTION_TYPE_COUNTS: ConnectionTypeCounts = {
+  allRelated: 0,
+  references: 0,
+  citations: 0,
+  parts: 0,
+  partOf: 0,
+  otherRelated: 0
+}
+export const EMPTY_WORKS: Works = {
+  totalCount: 0,
+  nodes: [],
+  pageInfo: {
+    hasNextPage: false,
+    endCursor: ""
+  }
+}
+
 export function isConnectionType(connectionType: string): boolean {
   return CONNECTION_TYPES.includes(connectionType as ConnectionType)
 }
@@ -74,14 +91,7 @@ export class ConnectionTypeManager {
   getWorks(connectionType: string): Works {
     connectionType = getValidConnectionType(connectionType)
     const works = this.work[connectionType] as Works | undefined;
-    return works ?? {
-      totalCount: 0,
-      nodes: [],
-      pageInfo: {
-        hasNextPage: false,
-        endCursor: ""
-      }
-    };
+    return works ?? EMPTY_WORKS
   }
 
   getWorksAndTitle(connectionType: string | undefined ): { works: Works, title: string } {

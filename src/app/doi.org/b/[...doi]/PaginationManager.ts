@@ -7,7 +7,11 @@ interface WorksWithPagination {
   totalCount: number
   pageInfo?: PageInfo
 }
-
+export const EMPTY_PAGINATION = {
+  hasPagination: false,
+  hasNextPage: false,
+  endCursor: ''
+}
 export class PaginationManager {
   private readonly works: WorksWithPagination
   private readonly itemsPerPage: number

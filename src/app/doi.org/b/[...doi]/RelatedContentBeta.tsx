@@ -7,15 +7,11 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 import Loading from 'src/components/Loading/Loading'
-import { ConnectionTypeManager , getValidConnectionType} from './ConnectionTypeManager'
-import { PaginationManager } from './PaginationManager'
-
-import { useDoiRelatedContentQueryGQL as useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
-
+import { getValidConnectionType } from './ConnectionTypeManager'
+import { useRelatedContentManager } from './RelatedContentManager'
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 import mapSearchparams from '../../[...doi]/mapSearchParams'
-import { isDMP, isProject } from 'src/utils/helpers'
 
 interface Props {
   isBot?: boolean
@@ -40,30 +36,23 @@ export default function RelatedContent(props: Props) {
   if (isBot) return null
   const vars = getQueryVariables()
   const connectionType = getConnectionType()
-  const { loading, data, error } = useDoiRelatedContentQuery(vars)
+  const manager = useRelatedContentManager(vars, connectionType)
 
+  if (manager.isLoading) return <Row><Loading /></Row>
 
-  if (loading) return <Row><Loading /></Row>
-
-  if (error)
+  if (manager.hasError)
     return <Row>
       <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="An error occured loading related content." message={error.message} />
+        <Error title="An error occured loading related content." message={manager.errorMessage} />
       </Col>
     </Row>
 
-  if (!data) return
+  if (!manager.hasData || !manager.hasAnyRelatedWorks) return ''
 
-  const showSankey = isDMP(data.work) || isProject(data.work)
-  const connectionManager = new ConnectionTypeManager(data.work)
-  if (!connectionManager.hasAnyRelatedWorks()) return ''
-
-
-  const {works, title: displayedConnectionTitle} = connectionManager.getWorksAndTitle(connectionType)
-  const paginationManager = new PaginationManager(works)
-  const connectionTypeCounts = connectionManager.getCounts()
-
-  const url = '/doi.org/b/' + vars.id + '/?'
+  const { works, title: displayedConnectionTitle } = manager.currentContent
+  const { hasPagination, hasNextPage, endCursor } = manager.pagination
+  const connectionTypeCounts = manager.connectionTypeCounts
+  const url = manager.getUrl()
   return (
     <Container fluid>
       <Row>
@@ -74,17 +63,17 @@ export default function RelatedContent(props: Props) {
       <Row>
         <WorksListing
           works={works}
-          loading={loading}
+          loading={manager.isLoading}
           connectionTypesCounts={connectionTypeCounts}
           showAnalytics={true}
-          showSankey={showSankey}
+          showSankey={manager.showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
-          hasPagination={paginationManager.hasPagination}
-          hasNextPage={paginationManager.hasNextPage}
+          hasPagination={hasPagination}
+          hasNextPage={hasNextPage}
           model={'doi'}
           url={url}
-          endCursor={paginationManager.endCursor} />
+          endCursor={endCursor} />
       </Row>
     </Container>
   )
