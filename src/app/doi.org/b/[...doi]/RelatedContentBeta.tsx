@@ -6,12 +6,12 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import Loading from 'src/components/Loading/Loading'
-import { getValidConnectionType } from './ConnectionTypeManager'
-import { useRelatedContentManager } from './RelatedContentManager'
 import Error from 'src/components/Error/Error'
+import Loading from 'src/components/Loading/Loading'
 import WorksListing from 'src/components/WorksListing/WorksListing'
+
 import mapSearchparams from '../../[...doi]/mapSearchParams'
+import { useRelatedContentManager } from './RelatedContentManager'
 
 interface Props {
   isBot?: boolean
@@ -28,7 +28,7 @@ function getQueryVariables(){
 function getConnectionType(){
   const searchParams = useSearchParams()
   const { connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return getValidConnectionType(connectionType)
+  return connectionType
 }
 
 export default function RelatedContent(props: Props) {
@@ -49,7 +49,7 @@ export default function RelatedContent(props: Props) {
 
   if (!manager.hasData || !manager.hasAnyRelatedWorks) return ''
 
-  const { works, title: displayedConnectionTitle } = manager.currentContent
+  const { works, title: displayedConnectionTitle } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
   const connectionTypeCounts = manager.connectionTypeCounts
   const url = manager.getUrl()

@@ -13,7 +13,7 @@ export class RelatedContentManager {
   private readonly connectionType: string
   private readonly vars: any
 
-  constructor(vars: any, connectionType: string, data: any, loading: boolean, error: ApolloError | undefined) {
+  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: ApolloError | undefined) {
     this.vars = vars
     this.data = data
     this.loading = loading
@@ -58,7 +58,7 @@ export class RelatedContentManager {
     return this.connectionManager?.getCounts() || EMPTY_CONNECTION_TYPE_COUNTS
   }
 
-  get currentContent() {
+  get selectedContent() {
     if (!this.connectionManager) return {works: EMPTY_WORKS, title: ''}
     return this.connectionManager.getWorksAndTitle(this.connectionType)
   }
@@ -77,7 +77,7 @@ export class RelatedContentManager {
   }
 }
 
-export function useRelatedContentManager(vars: any, connectionType: string) {
+export function useRelatedContentManager(vars: any, connectionType: string | undefined) {
   const { loading, data, error } = useDoiRelatedContentQueryGQL(vars)
   return new RelatedContentManager(vars, connectionType, data, loading, error)
 }
