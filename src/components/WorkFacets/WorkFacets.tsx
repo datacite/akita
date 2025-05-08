@@ -16,8 +16,8 @@ interface Props {
 }
 
 interface Facets {
-  published: Facet[]
-  resourceTypes: Facet[]
+  published?: Facet[]
+  resourceTypes?: Facet[]
   languages?: Facet[]
   licenses?: Facet[]
   repositories?: Facet[]

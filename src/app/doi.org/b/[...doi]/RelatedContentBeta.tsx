@@ -11,7 +11,6 @@ import { ConnectionTypeManager , getValidConnectionType} from './ConnectionTypeM
 import { PaginationManager } from './PaginationManager'
 
 import { useDoiRelatedContentQueryGQL as useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
-// import { Works, Work } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
