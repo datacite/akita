@@ -26,12 +26,12 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   //
   // Map connection types to their corresponding query parts
   const queryPartsByType = {
-    references: [`reference_ids:${doi}`],
-    citations: [`citation_ids:${doi}`],
-    parts: [`part_ids:${doi}`],
-    partOf: [`part_of_ids:${doi}`],
-    versions: [`versions_ids:${doi}`],
-    versionOf: [`version_of_ids:${doi}`],
+    references: [`citation_ids:${doi}`],
+    citations: [`reference_ids:${doi}`],
+    parts: [`part_of_ids:${doi}`],
+    partOf: [`part_ids:${doi}`],
+    versions: [`version_of_ids:${doi}`],
+    versionOf: [`versions_ids:${doi}`],
     allRelated: [
       relatedIdentifierPart,
       `reference_ids:${doi}`,
