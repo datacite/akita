@@ -22,7 +22,7 @@ function getQueryVariables(){
   const doi = decodeURIComponent(doiParams.join('/'))
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return { id: doi, ...variables }
+  return { id: doi, relatedDoi: doi, ...variables }
 }
 
 function getConnectionType(){

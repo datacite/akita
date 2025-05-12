@@ -12,6 +12,7 @@ export const EMPTY_PAGINATION = {
   hasNextPage: false,
   endCursor: ''
 }
+
 export class PaginationManager {
   private readonly works: WorksWithPagination
   private readonly itemsPerPage: number
