@@ -69,9 +69,9 @@ export class ConnectionTypeManager {
   }
 
   hasAnyRelatedWorks(): boolean {
-    const { references, citations, parts, partOf, otherRelated, allRelated } = this.counts
-    return references + citations + parts + partOf + otherRelated + allRelated > 0
+    return Object.values(this.counts).some(count => count > 0)
   }
+
 
   getDefaultConnectionType(): string {
     const { allRelated, references, citations, parts, partOf } = this.counts
