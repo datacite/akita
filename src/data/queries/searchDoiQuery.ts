@@ -23,6 +23,9 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     `"${httpBaseURI}${doi}"` // Added HTTP version
   ];
   const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
+  const uidPart = uidList && uidList.length > 0
+    ? `uid:(${uidList.join(OR)})`
+    : '';
   //
   // Map connection types to their corresponding query parts
   const queryPartsByType = {
@@ -39,19 +42,33 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
       `part_ids:${doi}`,
       `part_of_ids:${doi}`,
       `versions_ids:${doi}`,
-      `version_of_ids:${doi}`
+      `version_of_ids:${doi}`,
+      uidPart
+    ],
+    otherRelated: [
+      relatedIdentifierPart,
+      uidPart
     ]
   };
 
+  const negativeOtherRelationsParts = [
+    `reference_ids:${doi}`,
+    `citation_ids:${doi}`,
+    `part_ids:${doi}`,
+    `part_of_ids:${doi}`,
+    `versions_ids:${doi}`,
+    `version_of_ids:${doi}`,
+  ];
+
   const selectedParts = queryPartsByType[connectionType as keyof typeof queryPartsByType] || [];
+  const positivePart = selectedParts.filter(Boolean).join(OR);
+  const negativePart = negativeOtherRelationsParts.filter(Boolean).join(OR);
 
-  // Only include uidPart for allRelated
-  const uidPart = connectionType === 'allRelated' && uidList && uidList.length > 0
-    ? `uid:(${uidList.join(OR)})`
-    : '';
-
-  const allParts = [...selectedParts, uidPart].filter(Boolean);
-  return allParts.join(OR)
+  if (connectionType === "otherRelated") {
+    return `((${positivePart}) AND NOT (${negativePart}))`;
+  }
+  // By default only retrun positive part
+  return `(${positivePart})`;
 }
 
 function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
