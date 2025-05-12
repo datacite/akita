@@ -28,7 +28,7 @@ export default function Header() {
           </Link>
         </Brand>
         <Toggle />
-        <Collapse className={styles.navcenter}>
+        <Collapse className={`${styles.navcenter} gap-5`}>
 
           {/* Search and main links */}
           <Form className={`${styles.navsearchlinks} form-inline`}>
@@ -42,7 +42,7 @@ export default function Header() {
           </Form>
 
           {/* Pages dropdown, support button, and right content */}
-          <Nav className={`hidden-mobile ${styles.navright} mt-3`}>
+          <Nav className={`hidden-mobile ${styles.navright}`}>
             <NavDropdown
               title="Pages"
               id="pages-dropdown"

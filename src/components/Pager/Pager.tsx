@@ -3,7 +3,7 @@
 import React from 'react'
 import Pagination from 'react-bootstrap/Pagination'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
 
 type Props = {
   url: string
@@ -12,41 +12,26 @@ type Props = {
   endCursor: string
 }
 
-const Pager: React.FunctionComponent<Props> = ({
-  url,
-  hasNextPage,
-  endCursor
-}) => {
-  let firstPageUrl = ''
-  let hasFirstPage = false
-  let nextPageUrl = ''
-
+export default function Pager({ url, hasNextPage, endCursor }: Props) {
   const searchParams = useSearchParams() || {} as ReadonlyURLSearchParams
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  if (params.get('cursor')) {
-    // remove cursor query parameter for first page
-    params.delete('cursor')
-    firstPageUrl = url + params.toString()
-    hasFirstPage = true
-  }
+  const hasFirstPage = params.get('cursor')
+  params.delete('cursor')
+  const firstPageUrl = hasFirstPage ? url + params.toString() : undefined
 
-  if (hasNextPage && endCursor) {
-    // set cursor query parameter for next page
-    params.set('cursor', endCursor)
-    nextPageUrl = url + params.toString()
-  }
+  params.set('cursor', endCursor)
+  const nextPageUrl = hasNextPage && endCursor ? url + params.toString() : undefined
 
   return (
-    <Pagination>
-      <Pagination.Item as={Link} disabled={!hasFirstPage} href={firstPageUrl}>
+    <Pagination className="justify-content-between">
+      <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
         First Page
-      </Pagination.Item>
-      <Pagination.Item as={Link} disabled={!hasNextPage} href={nextPageUrl}>
+      </DataCiteButton>
+      <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
         Next Page
-      </Pagination.Item>
+      </DataCiteButton>
     </Pagination>
   )
 }
 
-export default Pager

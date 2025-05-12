@@ -1,0 +1,28 @@
+.button {
+    font-size: 1em !important;
+    padding: .5em 2em !important;
+    border: 2px solid #037AAD !important;
+    border-radius: 100px !important;
+}
+
+.primary {
+    color: #FFF !important;
+    background-color: #037AAD !important;
+}
+
+.outline {
+    color: #037AAD !important;
+    background-color: transparent !important;
+}
+
+.button:hover {
+    color: #FFF !important;
+    background-color: #243B54 !important;
+    border-color: #243B54 !important;
+}
+
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+    }
+}

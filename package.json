@@ -60,7 +60,7 @@
     "jsonwebtoken": "^8.5.1",
     "linkify-react": "^4.2.0",
     "linkifyjs": "^4.2.0",
-    "maltipoo": "https://github.com/datacite/maltipoo#2.0.3",
+    "maltipoo": "https://github.com/datacite/maltipoo#2.0.4",
     "next": "^14",
     "next-plausible": "^3.12.0",
     "node-fetch": "^2.6.0",
