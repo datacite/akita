@@ -2,6 +2,33 @@ import { gql, useQuery } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
 import { QueryData } from "src/data/queries/doiQuery";
 import { QueryVar } from "src/data/queries/searchDoiQuery";
+import { useSearchDoiFacetsQuery } from "./searchDoiFacetsQuery";
+import { useSearchDoiQuery } from "./searchDoiQuery";
+
+export function useDoiRelatedContentQuery(variables: QueryVar) {
+  const content = useSearchDoiQuery( variables )
+  const facets = useSearchDoiFacetsQuery(variables )
+
+  const loading = content.loading || facets.loading;
+  const error = content.error || facets.error;
+
+  if (loading || error) return { loading, data: undefined, error }
+
+  const work = {
+    types: {
+      resourceTypeGeneral: "TEXT",
+
+    },
+    allRelated: {
+      ...content.data?.works || {},
+      ...facets.data?.works
+    }
+  }
+  return {
+    ...content,
+    data: { work } as QueryData,
+  }
+}
 
 export function buildFilterQuery(variables: QueryVar) {
   const queryParts = [
@@ -12,7 +39,6 @@ export function buildFilterQuery(variables: QueryVar) {
 
   return query
 }
-
 
 export function useDoiRelatedContentQueryGQL(variables: QueryVar) {
   const filterQuery = buildFilterQuery(variables)
