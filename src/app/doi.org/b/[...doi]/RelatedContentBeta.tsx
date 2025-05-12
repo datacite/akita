@@ -21,22 +21,16 @@ function getQueryVariables(){
   const doiParams = useParams().doi as string[]
   const doi = decodeURIComponent(doiParams.join('/'))
   const searchParams = useSearchParams()
-  const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return { id: doi, relatedDoi: doi, ...variables }
+  const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
+  return { id: doi, relatedDoi: doi, ...variables, connectionType }
 }
 
-function getConnectionType(){
-  const searchParams = useSearchParams()
-  const { connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return connectionType
-}
 
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
   if (isBot) return null
   const vars = getQueryVariables()
-  const connectionType = getConnectionType()
-  const manager = useRelatedContentManager(vars, connectionType)
+  const manager = useRelatedContentManager(vars, vars.connectionType)
 
   if (manager.isLoading) return <Row><Loading /></Row>
 
