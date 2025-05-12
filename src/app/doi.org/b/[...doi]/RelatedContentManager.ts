@@ -1,19 +1,18 @@
 import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNECTION_TYPE_COUNTS } from './ConnectionTypeManager'
 import { PaginationManager, EMPTY_PAGINATION } from './PaginationManager'
-import { useDoiRelatedContentQueryGQL } from 'src/data/queries/doiRelatedContentQuery'
+import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { isDMP, isProject } from 'src/utils/helpers'
-import { ApolloError } from '@apollo/client'
 
 export class RelatedContentManager {
   private readonly data: any
   private readonly loading: boolean
-  private readonly error: ApolloError | undefined
+  private readonly error: Error | undefined | null
   private readonly connectionManager: ConnectionTypeManager | null
   private readonly paginationManager: PaginationManager | null
   private readonly connectionType: string
   private readonly vars: any
 
-  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: ApolloError | undefined) {
+  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null) {
     this.vars = vars
     this.data = data
     this.loading = loading
@@ -78,6 +77,6 @@ export class RelatedContentManager {
 }
 
 export function useRelatedContentManager(vars: any, connectionType: string | undefined) {
-  const { loading, data, error } = useDoiRelatedContentQueryGQL(vars)
+  const { loading, data, error } = useDoiRelatedContentQuery(vars)
   return new RelatedContentManager(vars, connectionType, data, loading, error)
 }
