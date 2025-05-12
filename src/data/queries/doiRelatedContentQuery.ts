@@ -19,7 +19,7 @@ export function useDoiRelatedContentQuery(variables: QueryVar) {
       resourceTypeGeneral: "TEXT",
 
     },
-    allRelated: {
+    [variables.connectionType || "allRelated"]: {
       ...content.data?.works || {},
       ...facets.data?.works
     }
