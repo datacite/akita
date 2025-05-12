@@ -10,8 +10,13 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
+const VALID_CONNECTION_TYPES = ['references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'allRelated', 'otherRelated'];
+
 function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
   if (!relatedDoi) return ''
+  // if the connection type is not in the map, return an empty string
+  if (!VALID_CONNECTION_TYPES.includes(connectionType)) return ''
+
   const doi = relatedDoi;
   const baseURI = "https://doi.org/";
   const OR = " OR ";
@@ -26,7 +31,7 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   const uidPart = uidList && uidList.length > 0
     ? `uid:(${uidList.join(OR)})`
     : '';
-  //
+
   // Map connection types to their corresponding query parts
   const queryPartsByType = {
     references: [`citation_ids:${doi}`],
