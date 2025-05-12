@@ -10,7 +10,7 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
-function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined): string {
+function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
   if (!relatedDoi) return ''
   const doi = relatedDoi;
   const baseURI = "https://doi.org/";
@@ -23,24 +23,35 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     `"${httpBaseURI}${doi}"` // Added HTTP version
   ];
   const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
+  //
+  // Map connection types to their corresponding query parts
+  const queryPartsByType = {
+    references: [`reference_ids:${doi}`],
+    citations: [`citation_ids:${doi}`],
+    parts: [`part_ids:${doi}`],
+    partOf: [`part_of_ids:${doi}`],
+    versions: [`versions_ids:${doi}`],
+    versionOf: [`version_of_ids:${doi}`],
+    allRelated: [
+      relatedIdentifierPart,
+      `reference_ids:${doi}`,
+      `citation_ids:${doi}`,
+      `part_ids:${doi}`,
+      `part_of_ids:${doi}`,
+      `versions_ids:${doi}`,
+      `version_of_ids:${doi}`
+    ]
+  };
 
-  const idParts = [
-    `reference_ids:${doi}`,
-    `citation_ids:${doi}`,
-    `part_ids:${doi}`,
-    `part_of_ids:${doi}`,
-    `versions_ids:${doi}`,
-    `version_of_ids:${doi}`
-  ];
+  const selectedParts = queryPartsByType[connectionType as keyof typeof queryPartsByType] || [];
 
-  const uidPart = uidList && uidList.length > 0 ? `uid:(${uidList.join(OR)})` : '';
+  // Only include uidPart for allRelated
+  const uidPart = connectionType === 'allRelated' && uidList && uidList.length > 0
+    ? `uid:(${uidList.join(OR)})`
+    : '';
 
-  const allParts = [relatedIdentifierPart, ...idParts, uidPart].filter(Boolean);
-
-  const queryString = allParts.join(OR);
-
-  const encodedQueryString = encodeURIComponent(queryString);
-  return encodedQueryString;
+  const allParts = [...selectedParts, uidPart].filter(Boolean);
+  return allParts.join(OR)
 }
 
 function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
@@ -55,6 +66,7 @@ export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
     buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
@@ -243,6 +255,9 @@ export interface QueryVar {
   filterQuery?: string
   rorId?: string
   rorFundingIds?: string[]
+  relatedDoi?: string
+  connectionType?: string
+  uidList?: string[]
   userId?: string
   clientId?: string
   cursor?: string
