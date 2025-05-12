@@ -22,6 +22,7 @@ export const EMPTY_CONNECTION_TYPE_COUNTS: ConnectionTypeCounts = {
   partOf: 0,
   otherRelated: 0
 }
+
 export const EMPTY_WORKS: Works = {
   totalCount: 0,
   nodes: [],
@@ -68,8 +69,8 @@ export class ConnectionTypeManager {
   }
 
   hasAnyRelatedWorks(): boolean {
-    const { references, citations, parts, partOf, otherRelated } = this.counts
-    return references + citations + parts + partOf + otherRelated > 0
+    const { references, citations, parts, partOf, otherRelated, allRelated } = this.counts
+    return references + citations + parts + partOf + otherRelated + allRelated > 0
   }
 
   getDefaultConnectionType(): string {
