@@ -57,7 +57,9 @@ export default function WorkFacets({
   ] : []
 
   const isConnectionTypeSet = searchParams?.has('connection-type')
-  const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
+  const hasAnyConnections = (counts: NonNullable<typeof connectionTypesCounts>) =>
+    Object.values(counts).some(count => count > 0)
+  const hasConnectionTypes = connectionTypesCounts ? hasAnyConnections(connectionTypesCounts) : false
 
   const defaultActiveKeys = [
     "authors-facets",
@@ -79,7 +81,7 @@ export default function WorkFacets({
       )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
-      {totalConnectionTypeCount > 0 && (
+      {hasConnectionTypes && (
         <FacetList
           data={connectionTypeList.filter(f => f.count > 0)}
           title="Connection Types"
