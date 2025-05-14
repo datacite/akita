@@ -642,3 +642,7 @@ html {
 body {
   scrollbar-width: auto;
 }
+
+.secondary {
+  color: #A3ACB2;
+}
