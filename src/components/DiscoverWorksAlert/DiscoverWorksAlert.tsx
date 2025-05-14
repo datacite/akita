@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Toast from 'react-bootstrap/Toast'
 import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-regular-svg-icons'
+import { faSearch, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { ACCENT_COLOR, PROFILES_URL } from 'src/data/constants'
 
 // import { session } from "src/utils/session";
@@ -32,7 +32,7 @@ export default function DiscoverWorksAlert() {
       <Col xs={12} md={{ span: 9, offset: 3 }} className="d-flex justify-content-center">
         <Toast show={show} onClose={() => setShow(false)} className={`${styles["toast-container"]} w-auto my-4 border-0 rounded-0`}>
           <Toast.Header className="border-0">
-            <FontAwesomeIcon icon={faUserCircle} fontSize={20} color={ACCENT_COLOR} className="me-2" />
+            <FontAwesomeIcon icon={faInfoCircle} fontSize={20} color={ACCENT_COLOR} className="me-2" />
             <strong className="fs-5 me-auto">Add Works to your ORCID profile</strong>
           </Toast.Header>
           <Toast.Body>
@@ -42,11 +42,11 @@ export default function DiscoverWorksAlert() {
 
 
             <div className={styles["button-container"]}>
-              <DataCiteButton href={hrefWorksById}>
+              <DataCiteButton href={hrefWorksById} icon={faSearch}>
                 Works with My ORCID iD
               </DataCiteButton>
 
-              <DataCiteButton href={hrefWorksByName}>
+              <DataCiteButton href={hrefWorksByName} icon={faSearch}>
                 Works with My Name
               </DataCiteButton>
 
@@ -58,6 +58,6 @@ export default function DiscoverWorksAlert() {
         </Toast>
       </Col>
     </Row>
-  </Container>
+  </Container >
 }
 
