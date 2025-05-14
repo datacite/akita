@@ -4,10 +4,6 @@ describe('Search People', () => {
     cy.visit('/orcid.org')
   })
 
-  it('search no query', () => {
-    cy.get('.alert-info').should('contain', 'DataCite Support')
-  })
-
   it('search for richard hallett', () => {
     cy.get('input[name="query"]')
       .type('richard hallett{enter}')

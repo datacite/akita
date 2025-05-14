@@ -16,7 +16,6 @@ interface Props extends ButtonProps {
 export default function DataCiteButton(props: Props) {
   const variantStyle = props.variant === 'secondary' ? styles.secondary : styles.primary
   const outlineStyle = props.outline ? styles.outline : ''
-  console.log(variantStyle, outlineStyle);
 
   return <WrapLink {...props}>
     <Button {...props} className={`${props.className ?? ''} ${styles.button} ${variantStyle} ${outlineStyle}`}>
