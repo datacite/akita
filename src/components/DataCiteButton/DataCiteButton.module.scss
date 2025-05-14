@@ -1,24 +1,41 @@
+$color: white;
+$primary-bg-color: #037AAD;
+$secondary-bg-color: #A3ACB2;
+$hover-bg-color: #243B54;
+
+
 .button {
+    color: $color !important;
     font-size: 1em !important;
     padding: .5em 2em !important;
-    border: 2px solid #037AAD !important;
+    border-width: 2px !important;
+    border-style: solid !important;
     border-radius: 100px !important;
 }
 
 .primary {
-    color: #FFF !important;
-    background-color: #037AAD !important;
+    background-color: $primary-bg-color !important;
+    border-color: $primary-bg-color !important;
+}
+
+.secondary {
+    background-color: $secondary-bg-color !important;
+    border-color: $secondary-bg-color !important;
 }
 
 .outline {
-    color: #037AAD !important;
-    background-color: transparent !important;
+  color: $primary-bg-color !important;
+  background-color: transparent !important;
+}
+
+.secondary.outline {
+  color: $secondary-bg-color !important;
 }
 
 .button:hover {
-    color: #FFF !important;
-    background-color: #243B54 !important;
-    border-color: #243B54 !important;
+    color: $color !important;
+    background-color: $hover-bg-color !important;
+    border-color: $hover-bg-color !important;
 }
 
 @media (max-width: 600px) {

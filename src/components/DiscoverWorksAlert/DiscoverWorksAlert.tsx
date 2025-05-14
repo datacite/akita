@@ -50,7 +50,7 @@ export default function DiscoverWorksAlert() {
                 Works with My Name
               </DataCiteButton>
 
-              <DataCiteButton href={hrefAccountSettings} variant='outline-primary'>
+              <DataCiteButton href={hrefAccountSettings} outline>
                 Account Settings
               </DataCiteButton>
             </div>

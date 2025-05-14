@@ -113,7 +113,7 @@ export function SignInButton() {
   const href = `${PROFILES_URL}/sign_in`
 
   return <NavItem>
-    <NavLink id="sign-in" href={href} as={DataCiteButton} className="text-nowrap">
+    <NavLink id="sign-in" href={href} as={DataCiteButton} className="text-nowrap" variant="secondary" outline>
       Sign In
     </NavLink>
   </NavItem>
