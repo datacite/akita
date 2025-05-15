@@ -29,7 +29,7 @@ export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[]
       const count = i.count
 
       let innerMap = outerMap.get(outerKey)
-      
+
       if (!innerMap) {
         innerMap = new Map<SankeyGraphData['data'][1], SankeyGraphData['count']>()
         outerMap.set(outerKey, innerMap)
@@ -57,7 +57,7 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef<HTMLDivElement>(null);
 
-  function handleResize () {
+  function handleResize() {
     if (!graphDivRef.current) return
     setWidth(graphDivRef.current.offsetWidth - 20);
   }
@@ -68,18 +68,18 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [])
-  
+
   useEffect(() => {
     handleResize();
   });
 
-  
 
-  if (data.length==0) {
-    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText}/>
+
+  if (data.length == 0) {
+    return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText} />
   }
 
-  
+
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart" ref={graphDivRef}>
@@ -88,6 +88,7 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </div>
 
+        { /* @ts-expect-error */}
         <Vega
           renderer="svg"
           spec={sankeySpec(width)}
