@@ -6,9 +6,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Toast from 'react-bootstrap/Toast'
 import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { ACCENT_COLOR, PROFILES_URL } from 'src/data/constants'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { PROFILES_URL } from 'src/data/constants'
 
 import { session } from "src/utils/session";
 import styles from './DiscoverWorksAlert.module.scss'
