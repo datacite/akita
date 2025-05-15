@@ -10,21 +10,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { ACCENT_COLOR, PROFILES_URL } from 'src/data/constants'
 
-// import { session } from "src/utils/session";
+import { session } from "src/utils/session";
 import styles from './DiscoverWorksAlert.module.scss'
 
 
 export default function DiscoverWorksAlert() {
-  // const user = session()
+  const user = session()
 
   const [show, setShow] = useState(true);
 
-  // if (!user) return
+  if (!user) return
 
-  const hrefWorksById = '/doi.org?query="ORCID iD"'
-  const hrefWorksByName = '/doi.org?query="name"'
-  // const hrefWorksById = `/doi.org?query=${user.uid}`
-  // const hrefWorksByName = `/doi.org?query=${user.name}`
+  const hrefWorksById = `/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(${user.uid} OR "https://orcid.org/${user.uid}")`
+  const hrefWorksByName = `/doi.org?query=${user.name}`
   const hrefAccountSettings = `${PROFILES_URL}/settings/me`
 
   return <Container fluid>
