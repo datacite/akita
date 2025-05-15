@@ -14,7 +14,7 @@ export default function DownloadMetadata({ modalContent }: Props) {
   return (<>
     <DataCiteButton
       onClick={() => setShowModal(true)}
-      variant='outline-primary'
+      outline
       className='w-100'
       title="Download Metadata"
       id="download-metadata-button"
