@@ -11,6 +11,7 @@ import { session } from "src/utils/session";
 
 export function UserCommonsPageButton() {
   const user = session()
+  if (!user) throw new Error("User not signed in")
   const href = '/orcid.org/' + user.uid
 
   return <DropdownItem href={href} eventKey={3.3} data-cy="commons-page">
@@ -21,6 +22,7 @@ export function UserCommonsPageButton() {
 
 export function UserOrcidButton() {
   const user = session()
+  if (!user) throw new Error("User not signed in")
   const href = `${ORCID_URL}/${user.uid}`
 
   return <DropdownItem
