@@ -29,10 +29,9 @@ export default function DiscoverWorksAlert() {
 
   return <Container fluid>
     <Row>
-      <Col xs={12} md={{ span: 9, offset: 3 }} className="d-flex justify-content-center">
-        <Toast show={show} onClose={() => setShow(false)} className={`${styles["toast-container"]} w-auto my-4 border-0 rounded-0`}>
+      <Col xs={12} md={{ span: 8, offset: 3 }} className="d-flex justify-content-center">
+        <Toast show={show} onClose={() => setShow(false)} className={`${styles["toast-container"]} w-auto my-4 p-2 rounded-0`}>
           <Toast.Header className="border-0">
-            <FontAwesomeIcon icon={faInfoCircle} fontSize={20} color={ACCENT_COLOR} className="me-2" />
             <strong className="fs-5 me-auto">Add Works to your ORCID profile</strong>
           </Toast.Header>
           <Toast.Body>
