@@ -20,8 +20,8 @@ export default function DiscoverWorksAlert() {
 
   if (!user) return
 
-  const hrefWorksById = `/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(${user.uid} OR "https://orcid.org/${user.uid}")`
-  const hrefWorksByName = `/doi.org?query=${user.name}`
+  const hrefWorksById = `/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(${user.uid} OR "https://orcid.org/${user.uid}")&registration-agency=datacite`
+  const hrefWorksByName = `/doi.org?query=${user.name}&registration-agency=datacite`
   const hrefAccountSettings = `${PROFILES_URL}/settings/me`
 
   return <Container fluid>
