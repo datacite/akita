@@ -23,5 +23,5 @@ export const session = () => {
   // verify asymmetric token, using RSA with SHA-256 hash algorithm
   JsonWebToken.verify(token, JWT_KEY, { algorithms: ['RS256'] }, setUser)
 
-  return user
+  return user as { uid: string, name: string }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { DropdownItem, NavItem, NavLink } from 'src/components/ReactBootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton';
 import {
   faNewspaper,
   faUserGraduate,
@@ -10,9 +11,7 @@ import {
   faSignOutAlt,
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons'
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { PROFILES_URL } from 'src/data/constants';
-import styles from './Header.module.scss'
 
 
 
@@ -114,12 +113,8 @@ export function SignInButton() {
   const href = `${PROFILES_URL}/sign_in`
 
   return <NavItem>
-    <NavLink
-      id="sign-in"
-      className={`btn sign-in ${styles.signin}`}
-      href={href}
-    >
-      <FontAwesomeIcon icon={faSignInAlt} /> Sign In
+    <NavLink id="sign-in" href={href} as={DataCiteButton} className="text-nowrap" variant="secondary" outline>
+      Sign In
     </NavLink>
   </NavItem>
 }

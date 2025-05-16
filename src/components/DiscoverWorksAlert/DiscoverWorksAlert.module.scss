@@ -1,0 +1,37 @@
+.toast-container {
+    box-shadow: 0px 28px 36px -10px rgba(13, 96, 212, 0.08) !important;
+    border: 1px solid rgba(36, 59, 84, 0.08) !important;
+}
+
+.primary {
+    color: #FFF !important;
+    background-color: #037AAD !important;
+    border-width: 0 !important;
+    font-size: 1em !important;
+    padding: .5em 2em !important;
+    white-space: nowrap;
+}
+
+.secondary, .secondary:hover {
+    color: #037AAD !important;
+    background-color: transparent !important;
+    border: 2px solid #037AAD !important;
+    font-size: 1em !important;
+    padding: .5em 2em !important;
+    white-space: nowrap;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .primary, .secondary {
+        width: 100%;
+        flex: unset;
+    }
+}

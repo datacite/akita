@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button'
+import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
 import Modal from 'react-bootstrap/Modal'
 
 interface Props {
@@ -12,20 +12,26 @@ export default function DownloadMetadata({ modalContent }: Props) {
   const [showModal, setShowModal] = useState(false)
 
   return (<>
-    <Button
-      variant="btn-default"
-      title="Download Metadata"
+    <DataCiteButton
       onClick={() => setShowModal(true)}
+      outline
+      className='w-100'
+      title="Download Metadata"
       id="download-metadata-button"
-      className="w-100"
     >
       Download Metadata
-    </Button>
+    </DataCiteButton>
 
     <Modal size='lg' show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Body>{modalContent}</Modal.Body>
       <Modal.Footer style={{ padding: 10 }}>
-        <Button id='close-modal' variant='default' onClick={() => setShowModal(false)}>Close</Button>
+        <DataCiteButton
+          onClick={() => setShowModal(false)}
+          variant='outline-primary'
+          id='close-modal'
+        >
+          Close
+        </DataCiteButton>
       </Modal.Footer>
     </Modal>
   </>)

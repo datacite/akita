@@ -4,10 +4,6 @@ describe('Search Works', () => {
     cy.visit('/doi.org')
   })
 
-  it('search no query', () => {
-    cy.get('.alert-info').should('contain', 'DataCite Support')
-  })
-
   it('search for climate', () => {
     cy.get('input[name="query"]')
       .type('climate{enter}')
@@ -160,4 +156,4 @@ describe('Search Works', () => {
   // })
 })
 
-export {}
+export { }
