@@ -43,6 +43,10 @@ export const SENTRY_DSN = process.env.SENTRY_DSN
 export const JWT_KEY = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY?.replace(/\\n/g, '\n')
 
 
+// Colors
+export const ACCENT_COLOR = '#00B1E2'
+
+
 // Misc
 export const DOI_ID_BASE = process.env.NEXT_PUBLIC_ID_BASE || `${handleStage}/`
 export const FEATURE_FLAGS = process.env.NEXT_PUBLIC_FEATURE_FLAGS?.split(",") || []

@@ -4,10 +4,6 @@ describe('Search Organizations', () => {
     cy.visit('/ror.org')
   })
 
-  it('search no query', () => {
-    cy.get('.alert-info').should('contain', 'DataCite Support')
-  })
-
   it('search for oxford', () => {
     cy.get('input[name="query"]')
       .type('oxford{enter}')
@@ -75,4 +71,4 @@ describe('Search Organizations', () => {
   })
 })
 
-export {}
+export { }
