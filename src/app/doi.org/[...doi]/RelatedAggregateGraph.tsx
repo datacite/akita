@@ -10,6 +10,7 @@ import styles from "./RelatedAggregateGraph.module.scss"
 interface Props {
   doi: string
   isBot?: boolean
+  isEmbed?: boolean
 }
 
 interface FetchResult {
@@ -35,7 +36,7 @@ async function fetchRelatedWorksGraphWithTimeout(doi: string, timeoutDuration: n
 }
 
 export default async function RelatedAggregateGraph(props: Props) {
-  const { doi, isBot = false } = props
+  const { doi, isBot = false, isEmbed = false } = props
   if (isBot) return null
 
   const timeoutDuration = 7000; // 7 second timeout
@@ -65,7 +66,7 @@ export default async function RelatedAggregateGraph(props: Props) {
 
 
   return (<Container fluid><Row>
-    <Col md={{ offset: 3 }} className="panel panel-transparent">
+    <Col md={{ offset: isEmbed ? 0 : 3 }} className="panel panel-transparent">
       <div className="panel-body">
         {innerGraph}
         {graphExists &&
