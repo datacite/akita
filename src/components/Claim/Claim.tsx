@@ -158,11 +158,9 @@ export default function Claim({ doi_id }: Props) {
       ) : <ClaimStatus claim={claim} type="button" />
       }
 
-      {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
-        <>
-          <p>Error: {claim.errorMessages[0].title}</p>
-        </>
-      )}
+      {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 &&
+        <p className='secondary px-2 mt-1 text-justify'>Error: {claim.errorMessages[0].title}</p>
+      }
     </>
   )
 }

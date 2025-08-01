@@ -2,7 +2,31 @@
 @import 'maltipoo/dist/stylesheets/doi.min.css';
 
 /* Change Source Sans Pro to Source Sans 3 */
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, li, .navbar, .brand, a, .td-name, td, .user-metrics-counter, .tooltip, .popover-content, .card-body span, .chart .badge, #disqus_thread {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+p,
+li,
+.navbar,
+.brand,
+a,
+.td-name,
+td,
+.user-metrics-counter,
+.tooltip,
+.popover-content,
+.card-body span,
+.chart .badge,
+#disqus_thread {
   font-family: unset;
 }
 
@@ -180,7 +204,7 @@ a.navbar-brand {
 }
 
 .form-inline .dropdown-menu {
-	margin-block-start: 3px;
+  margin-block-start: 3px;
 }
 
 .input-group input[name="query-facets"] {
@@ -226,8 +250,7 @@ a.navbar-brand {
 }
 
 @media(max-width:1200px) {
-  .input-group input[name="query-facets"] {
-  }
+  .input-group input[name="query-facets"] {}
 }
 
 #basic-nav-dropdown {
@@ -290,7 +313,8 @@ input[type=text] {
   padding: 6px 8px;
 }
 
-.badge-info, .badge.bg-info {
+.badge-info,
+.badge.bg-info {
   background: rgba(0, 177, 226, .2) !important;
   color: #243b54;
   padding-left: 1em;
@@ -298,7 +322,8 @@ input[type=text] {
   font-size: .8em;
 }
 
-.badge-success, .badge.bg-success {
+.badge-success,
+.badge.bg-success {
   background: rgba(45, 197, 94, .2) !important;
   color: #243b54;
   padding-left: 1em;
@@ -306,21 +331,24 @@ input[type=text] {
   font-size: .8em;
 }
 
-.badge-warning, .badge.bg-warning {
+.badge-warning,
+.badge.bg-warning {
   background: #ffffff !important;
   color: #EB9E3E;
   border: 2px solid #EB9E3E;
   cursor: pointer;
 }
 
-.badge-default, .badge.bg-default {
+.badge-default,
+.badge.bg-default {
   background: #ffffff !important;
   color: #66615B;
   border: 2px solid #66615B;
   cursor: pointer;
 }
 
-.badge-danger, .badge.bg-danger {
+.badge-danger,
+.badge.bg-danger {
   background: #ffffff !important;
   color: #EB5E28;
   border: 2px solid #EB5E28;
@@ -542,7 +570,7 @@ h4.work {
 
   .MY_CONTENT_CLASS {
     flex: 1 0 160px !important;
-		font-size: 12px;
+    font-size: 12px;
     position: relative;
     top: -25px;
   }
@@ -595,7 +623,8 @@ h4.work {
 
 /* Tweaks for Bootstrap 4 */
 
-.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before, .tooltip.bs-tooltip-top .arrow::before {
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before,
+.tooltip.bs-tooltip-top .arrow::before {
   margin-left: -3px;
   content: "";
   border-width: 5px 5px 0;
@@ -607,11 +636,12 @@ h4.work {
   margin-bottom: 10px;
 }
 
-.nav-tabs-member > .nav-link:first-child {
+.nav-tabs-member>.nav-link:first-child {
   margin-left: 0px;
 }
 
-.nav-tabs-member >.nav-link:focus, .nav-tabs-member > .nav-link:hover {
+.nav-tabs-member>.nav-link:focus,
+.nav-tabs-member>.nav-link:hover {
   border: 1px solid transparent;
 }
 
@@ -620,11 +650,11 @@ h4.work {
   padding-right: 15px;
 }
 
-.work-identifiers > a {
+.work-identifiers>a {
   color: #3498db !important;
 }
 
-.download-list > h5 {
+.download-list>h5 {
   font-weight: 700;
   margin-bottom: 0;
 }
@@ -645,4 +675,8 @@ body {
 
 .secondary {
   color: #A3ACB2;
+}
+
+.text-justify {
+  text-align: justify;
 }
