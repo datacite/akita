@@ -51,14 +51,14 @@ export default async function Content(props: Props) {
       <Row>
         <Col md={3} className='pe-5'>
           <Row className="mb-2 pb-4">
-            {work.registrationAgency.id == "datacite" && (
-              <Col xs={12} className="mb-2">
-                <Claim doi_id={work.doi} />
-              </Col>
-            )}
             <Col xs={12}>
               <DownloadMetadata modalContent={<ExportMetadata doi={work} />} />
             </Col>
+            {work.registrationAgency.id == "datacite" && (
+              <Col xs={12} className="mt-3 mb-3">
+                <Claim doi_id={work.doi} />
+              </Col>
+            )}
           </Row>
           <Row className="mb-2 pb-4">
             <CiteAs doi={work} />
