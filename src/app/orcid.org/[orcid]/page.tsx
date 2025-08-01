@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import truncate from 'lodash/truncate'
 
 import Content from './Content'
@@ -56,9 +56,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
+  const orcid = params.orcid.toUpperCase()
+
+  if (params.orcid != orcid)
+    redirect(`/orcid.org/${orcid}/`)
+
   return <>
     <Suspense fallback={<Loading />}>
-      <Content orcid={params.orcid} />
+      <Content orcid={orcid} />
     </Suspense>
     <RelatedContent />
   </>
