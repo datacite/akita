@@ -2,6 +2,11 @@ import { Cookies } from 'react-cookie-consent'
 import JsonWebToken from 'jsonwebtoken'
 import { JWT_KEY } from 'src/data/constants'
 
+export type User = {
+  uid: string,
+  name: string
+} | null
+
 export const session = () => {
   // RSA public key
   if (!JWT_KEY) return null
@@ -23,5 +28,5 @@ export const session = () => {
   // verify asymmetric token, using RSA with SHA-256 hash algorithm
   JsonWebToken.verify(token, JWT_KEY, { algorithms: ['RS256'] }, setUser)
 
-  return user as { uid: string, name: string }
+  return user as User
 }
