@@ -31,6 +31,8 @@ export const DATACITE_API_URL = process.env.NEXT_PUBLIC_API_URL || dataciteApiSt
 export const COMMONS_URL = DATACITE_API_URL === dataciteApi ? commons : commonsStage
 export const LOGO_URL = `${COMMONS_URL}/images/logo.png`
 export const PROFILES_URL = process.env.NEXT_PUBLIC_PROFILES_URL || profilesStage
+export const PROFILES_SETTINGS_URL = `${PROFILES_URL}/settings/me`
+export const PROFILES_SIGN_IN_URL = `${PROFILES_URL}/sign_in`
 
 export const ORCID_URL = DATACITE_API_URL === dataciteApi ? orcid : orcidSandbox
 export const ORCID_API_URL = process.env.NEXT_PUBLIC_ORCID_API_URL || orcidApiSandbox

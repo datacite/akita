@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Toast from 'react-bootstrap/Toast'
 import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { PROFILES_URL } from 'src/data/constants'
+import { PROFILES_SETTINGS_URL } from 'src/data/constants'
 
 import { session } from "src/utils/session";
 import styles from './DiscoverWorksAlert.module.scss'
@@ -22,7 +22,7 @@ export default function DiscoverWorksAlert() {
 
   const hrefWorksById = `/doi.org?query=creators_and_contributors.nameIdentifiers.nameIdentifier:(${user.uid} OR "https://orcid.org/${user.uid}")&registration-agency=datacite`
   const hrefWorksByName = `/doi.org?query=${user.name}&registration-agency=datacite`
-  const hrefAccountSettings = `${PROFILES_URL}/settings/me`
+  const hrefAccountSettings = PROFILES_SETTINGS_URL
 
   return <Container fluid>
     <Row>
