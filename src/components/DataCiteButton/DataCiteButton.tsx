@@ -11,14 +11,21 @@ import styles from './DataCiteButton.module.scss'
 interface Props extends ButtonProps {
   outline?: boolean
   icon?: IconDefinition
+  color?: string
+}
+
+const COLORS = {
+  primary: '#037AAD',
+  secondary: '#A3ACB2',
 }
 
 export default function DataCiteButton(props: Props) {
-  const variantStyle = props.variant === 'secondary' ? styles.secondary : styles.primary
+  const color = props.color || (props.variant === 'secondary' ? COLORS.secondary : COLORS.primary)
+  // const variantStyle = props.variant === 'secondary' ? styles.secondary : styles.primary
   const outlineStyle = props.outline ? styles.outline : ''
 
   return <WrapLink {...props}>
-    <Button {...props} className={`${props.className ?? ''} ${styles.button} ${variantStyle} ${outlineStyle}`}>
+    <Button {...props} className={`${props.className ?? ''} ${styles.button} ${outlineStyle}`} style={{ '--button-color': color }}>
       {props.icon && <FontAwesomeIcon icon={props.icon} className="me-2" />}
       {props.children}
     </Button>
