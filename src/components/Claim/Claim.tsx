@@ -3,8 +3,6 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useMutation, ApolloCache } from '@apollo/client'
-import Button from 'react-bootstrap/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { session, User } from 'src/utils/session'
@@ -20,17 +18,17 @@ type Props = {
 }
 
 const HELP_CONTENT = {
-  'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank'>Account Settings</a> to add this work to your ORCID record</>,
+  'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank' rel='noreferrer'>Account Settings</a> to add this work to your ORCID record</>,
   // 'Too many claims. Only 10,000 claims allowed.': <></>,
   // 'Missing data': <></>,
   // 'token has expired.': <></>,
 } as const
 
 function getHelpContent(user: User, message?: string): React.ReactNode {
-  if (!user) return <><a href={PROFILES_SIGN_IN_URL} target='_blank'>Sign in</a> to add this work to your ORCID record.</>
+  if (!user) return <><a href={PROFILES_SIGN_IN_URL} target='_blank' rel='noreferrer'>Sign in</a> to add this work to your ORCID record.</>
   if (!message) return null
 
-  return HELP_CONTENT[message] || <>We encountered an error adding this work to your ORCID profile. Contact DataCite Support for help: <a href="mailto: support@datacite.org" target="_blank">support@datacite.org</a>. (Error code: {message})</>
+  return HELP_CONTENT[message] || <>We encountered an error adding this work to your ORCID profile. Contact DataCite Support for help: <a href="mailto: support@datacite.org" target='_blank' rel='noreferrer'>support@datacite.org</a>. (Error code: {message})</>
 }
 
 export default function Claim({ doi_id }: Props) {
