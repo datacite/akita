@@ -25,7 +25,12 @@ export default function DataCiteButton(props: Props) {
   const outlineStyle = props.outline ? styles.outline : ''
 
   return <WrapLink {...props}>
-    <Button {...props} className={`${props.className ?? ''} ${styles.button} ${outlineStyle}`} style={{ '--button-color': color }}>
+    <Button
+      {...props}
+      className={`${props.className ?? ''} ${styles.button} ${outlineStyle}`}
+      // @ts-expect-error CSS variable not in type definition
+      style={{ '--button-color': color }}
+    >
       {props.icon && <FontAwesomeIcon icon={props.icon} className="me-2" />}
       {props.children}
     </Button>
