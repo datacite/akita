@@ -21,7 +21,6 @@ const COLORS = {
 
 export default function DataCiteButton(props: Props) {
   const color = props.color || (props.variant === 'secondary' ? COLORS.secondary : COLORS.primary)
-  // const variantStyle = props.variant === 'secondary' ? styles.secondary : styles.primary
   const outlineStyle = props.outline ? styles.outline : ''
 
   return <WrapLink {...props}>
