@@ -1158,12 +1158,7 @@
     "@formatjs/intl-localematcher" "0.2.25"
     tslib "^2.1.0"
 
-"@fortawesome/fontawesome-common-types@^0.2.36":
-  version "0.2.36"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.36.tgz#b44e52db3b6b20523e0c57ef8c42d315532cb903"
-  integrity sha512-a/7BiSgobHAgBWeN7N0w+lAhInrGxksn13uK7231n2m8EDPE3BMCl9NZLTGrj9ZXfCmC6LM0QLqXidIizVQ6yg==
-
-"@fortawesome/fontawesome-common-types@^0.3.0":
+"@fortawesome/fontawesome-common-types@^0.2.36", "@fortawesome/fontawesome-common-types@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.3.0.tgz#949995a05c0d8801be7e0a594f775f1dbaa0d893"
   integrity sha512-CA3MAZBTxVsF6SkfkHXDerkhcQs0QPofy43eFdbWJJkZiq3SfiaH1msOkac59rQaqto5EqWnASboY1dBuKen5w==
@@ -1196,10 +1191,10 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.36"
 
-"@fortawesome/react-fontawesome@^0.1.14":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.19.tgz#2b36917578596f31934e71f92b7cf9c425fd06e4"
-  integrity sha512-Hyb+lB8T18cvLNX0S3llz7PcSOAJMLwiVKBuuzwM/nI5uoBw+gQjnf9il0fR1C3DKOI5Kc79pkJ4/xB0Uw9aFQ==
+"@fortawesome/react-fontawesome@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.2.3.tgz#bde1bc0fd67693e140d5d21b2e4f6faea8aae657"
+  integrity sha512-HlJco8RDY8NrzFVjy23b/7mNS4g9NegcrBG3n7jinwpc2x/AmSVk53IhWniLYM4szYLxRAFTAGwGn0EIlclDeQ==
   dependencies:
     prop-types "^15.8.1"
 
