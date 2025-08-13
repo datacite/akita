@@ -5,14 +5,15 @@ import SearchOrganization from 'src/components/SearchOrganization/SearchOrganiza
 import { QueryVar } from 'src/data/queries/searchOrganizationQuery'
 
 interface Props {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }
 
 interface SearchParams extends Partial<QueryVar> {
   filterQuery?: string
 }
 
-export default async function SearchOrganizationPage({ searchParams }: Props) {
+export default async function SearchOrganizationPage(props: Props) {
+  const searchParams = await props.searchParams;
   const { query, filterQuery, ...variables } = searchParams
 
   // Show example text if there is no query

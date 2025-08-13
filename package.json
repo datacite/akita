@@ -32,9 +32,9 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.13.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@next/eslint-plugin-next": "^11.0.1",
+    "@next/eslint-plugin-next": "15.4.6",
     "@next/react-dev-overlay": "^12.0",
-    "@next/third-parties": "^14.2.9",
+    "@next/third-parties": "15.4.6",
     "@sentry/browser": "^5.21.4",
     "@sentry/node": "^5.21.4",
     "@sentry/webpack-plugin": "^1.12.1",
@@ -61,15 +61,15 @@
     "linkify-react": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "maltipoo": "https://github.com/datacite/maltipoo#2.0.3",
-    "next": "^14",
+    "next": "15.4.6",
     "next-plausible": "^3.12.0",
     "node-fetch": "^2.6.0",
     "nuqs": "^1.16.0",
-    "react": "^18.2.0",
+    "react": "19.1.1",
     "react-bootstrap": "^2.10.5",
     "react-content-loader": "^7.0.2",
     "react-cookie-consent": "^8.0.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "19.1.1",
     "react-share": "^4.2.1",
     "react-vega": "^7.6.0",
     "sanitize-html": "^2.13.0",
@@ -87,8 +87,8 @@
     "@cypress/react": "^6.1",
     "@testing-library/react": "^10.2.1",
     "@types/node": "^12.12.39",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -98,7 +98,7 @@
     "debug": "4.3.1",
     "dotenv-flow": "^3.2.0",
     "eslint": "^7.29.0",
-    "eslint-config-next": "^14.1.0",
+    "eslint-config-next": "15.4.6",
     "nyc": "^15.1.0",
     "prettier": "^2.3.1",
     "tar": "6.2.1",
@@ -107,8 +107,9 @@
     "typescript": "^5.3.3",
     "vercel": "^37.8.0"
   },
+  "license": "MIT",
   "resolutions": {
-    "**/@fortawesome/fontawesome-common-types": "^0.3.0"
-  },
-  "license": "MIT"
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7"
+  }
 }
