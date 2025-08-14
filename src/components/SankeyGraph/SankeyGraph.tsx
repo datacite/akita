@@ -88,7 +88,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </div>
 
-        { /* @ts-expect-error */}
         <Vega
           renderer="svg"
           spec={sankeySpec(width)}
