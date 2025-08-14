@@ -11,7 +11,7 @@ import {
   faSignOutAlt,
   faUserCog,
 } from '@fortawesome/free-solid-svg-icons'
-import { PROFILES_URL } from 'src/data/constants';
+import { PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, PROFILES_URL } from 'src/data/constants';
 
 
 
@@ -101,7 +101,7 @@ export function SupportLink() {
 
 
 export function SettingsButton() {
-  const href = `${PROFILES_URL}/settings/me`
+  const href = PROFILES_SETTINGS_URL
 
   return <DropdownItem href={href} eventKey={3.2} data-cy="settings">
     <FontAwesomeIcon icon={faUserCog} /> Settings
@@ -110,7 +110,7 @@ export function SettingsButton() {
 
 
 export function SignInButton() {
-  const href = `${PROFILES_URL}/sign_in`
+  const href = PROFILES_SIGN_IN_URL
 
   return <NavItem>
     <NavLink id="sign-in" href={href} as={DataCiteButton} className="text-nowrap" variant="secondary" outline>

@@ -1,11 +1,12 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Claim } from 'src/data/types'
+import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
+import { ACCENT_GREEN } from 'src/data/constants'
 
 type Props = {
   claim: Claim,
@@ -17,10 +18,10 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim, type }) => {
   const stateColors = {
     done: 'success',
     failed: 'danger',
-    working: 'info',
-    waiting: 'info',
+    working: ACCENT_GREEN,
+    waiting: ACCENT_GREEN,
     ready: 'default',
-    deleted: 'info'
+    deleted: ACCENT_GREEN
   }
   const stateText = {
     ready: 'Unclaimed',
@@ -41,9 +42,15 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim, type }) => {
     <>
       <OverlayTrigger placement="top" overlay={tooltipClaimStatus}>
         {type === 'button' ? (
-          <Button disabled variant={stateColors[claim.state]}>
-            <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}
-          </Button>
+          <DataCiteButton
+            icon={faOrcid}
+            color={stateColors[claim.state]}
+            className='w-100'
+            disabled
+            outline
+          >
+            {stateText[claim.state]}
+          </DataCiteButton>
         ) : (
           <Badge bg={stateColors[claim.state]}>
             <FontAwesomeIcon icon={faOrcid} /> {stateText[claim.state]}

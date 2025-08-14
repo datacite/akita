@@ -3,27 +3,43 @@
 import React from 'react'
 import { useEffect } from 'react';
 import { useMutation, ApolloCache } from '@apollo/client'
-import Button from 'react-bootstrap/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
-import { session } from 'src/utils/session'
+import { session, User } from 'src/utils/session'
 import { Claim as ClaimType } from 'src/data/types'
 import Error from 'src/components/Error/Error'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
-import styles from './Claim.module.scss'
 import { useGetClaimQuery, GET_CLAIM_GQL, CREATE_CLAIM_GQL, DELETE_CLAIM_GQL, QueryData, QueryVar } from 'src/data/queries/claimQuery';
+import { ACCENT_GREEN, PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, WARNING } from 'src/data/constants';
+import DataCiteButton from '../DataCiteButton/DataCiteButton';
 
 type Props = {
   doi_id: string
 }
 
+const HELP_CONTENT = {
+  'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank' rel='noreferrer'>Account Settings</a> to add this work to your ORCID record</>,
+  // 'Too many claims. Only 10,000 claims allowed.': <></>,
+  // 'Missing data': <></>,
+  // 'token has expired.': <></>,
+} as const
+
+function getHelpContent(user: User, message?: string): React.ReactNode {
+  if (!user) return <><a href={PROFILES_SIGN_IN_URL} target='_blank' rel='noreferrer'>Sign in</a> to add this work to your ORCID record.</>
+  if (!message) return null
+
+  return HELP_CONTENT[message] || <>We encountered an error adding this work to your ORCID profile. Contact DataCite Support for help: <a href="mailto: support@datacite.org" target='_blank' rel='noreferrer'>support@datacite.org</a>. (Error code: {message})</>
+}
 
 export default function Claim({ doi_id }: Props) {
 
   const { loading, error, data, refetch } = useGetClaimQuery({ id: doi_id })
 
+  const [claimError, setClaimError] = React.useState<string | null>(null);
+
   const addOrUpdateExistingClaim = (cache: ApolloCache<any>, updatedClaim: ClaimType) => {
+    setClaimError(updatedClaim.errorMessages[0]?.title || null);
+
     const existingClaims = cache.readQuery<QueryData, QueryVar>({ query: GET_CLAIM_GQL, variables: { id: doi_id } });
 
     // Add or update the claim in the cache
@@ -108,61 +124,55 @@ export default function Claim({ doi_id }: Props) {
     return null
 
   if (loading) {
-    return <Button variant='primary' className={styles.claimDisabled} disabled title="Checking claim status...">
+    return <DataCiteButton
+      icon={faOrcid}
+      color={ACCENT_GREEN}
+      className='w-100'
+      disabled
+      outline
+      title="Checking claim status..."
+    >
       Checking claim status...
-    </Button>
+    </DataCiteButton>
   }
 
   if (error)
-    return (
-      <>
-        <h3 className="member-results">Claim</h3>
-        <div className="panel panel-transparent claim">
-          <div className="panel-body">
-            <Error title="An error occured." message={error.message} />
-          </div>
-        </div>
-      </>
-    )
+    return <Error title="Error fetching claim." message={error.message} />
 
-
-  // don't show claim option if user is not logged in
-  if (!user) {
-    return <Button variant='primary' className={styles.claimDisabled} disabled title="Sign in to Add to ORCID record">
-      <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
-    </Button>
-  }
+  const errorMessage = claimError || (claim.errorMessages && claim.errorMessages.length > 0 ? claim.errorMessages[0].title : undefined)
 
   return (
     <>
       {isActionPossible ? (
-        <>
-          {isClaimed ?
-            <Button
-              variant={'warning'}
-              onClick={onDelete}
-              className='w-100'
-            >
-              <FontAwesomeIcon icon={faOrcid} /> Remove Claim
-            </Button>
-            :
-            <Button
-              variant='primary'
-              onClick={onCreate}
-              className='w-100'
-            >
-              <FontAwesomeIcon icon={faOrcid} /> Add to ORCID Record
-            </Button>
-          }
-        </>
-      ) : <ClaimStatus claim={claim} type="button" />
+        isClaimed ?
+          <DataCiteButton
+            onClick={onDelete}
+            icon={faOrcid}
+            color={WARNING}
+            className='w-100'
+            disabled={!user}
+            outline
+          >
+            Remove Claim
+          </DataCiteButton>
+          :
+          <DataCiteButton
+            onClick={onCreate}
+            icon={faOrcid}
+            color={ACCENT_GREEN}
+            className='w-100'
+            disabled={!user}
+            outline
+          >
+            Add to ORCID Record
+          </DataCiteButton>
+      ) :
+        <ClaimStatus claim={claim} type="button" />
       }
 
-      {!isClaimed && claim.errorMessages && claim.errorMessages.length > 0 && (
-        <>
-          <p>Error: {claim.errorMessages[0].title}</p>
-        </>
-      )}
+      {!isClaimed &&
+        <p className='secondary px-4 mt-2'>{getHelpContent(user, errorMessage)}</p>
+      }
     </>
   )
 }
