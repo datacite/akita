@@ -5,11 +5,12 @@ import SearchRepository from 'src/components/SearchRepository/SearchRepository'
 import { QueryVar } from 'src/data/queries/searchRepositoryQuery'
 
 interface Props {
-  searchParams: QueryVar
+  searchParams: Promise<QueryVar>
 }
 
 
-export default async function SearchRepositoryPage({ searchParams }: Props) {
+export default async function SearchRepositoryPage(props: Props) {
+  const searchParams = await props.searchParams;
 
   // Show example text if there is no query
   if (!searchParams.query || searchParams.query === '')

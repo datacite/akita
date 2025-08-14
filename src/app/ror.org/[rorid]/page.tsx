@@ -6,16 +6,17 @@ import { RORV2Client } from 'src/data/clients/ror-v2-client'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 interface Props {
-  params: {
+  params: Promise<{
     rorid: string
-  }
+  }>
 }
 function isValidRORId(rorid: string): boolean {
   const rorIdPattern = /^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$/
   return rorIdPattern.test(rorid)
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { rorid } = params
   if (!isValidRORId(rorid)) {
     notFound()
@@ -49,7 +50,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const { rorid } = params
   return (
     <>
