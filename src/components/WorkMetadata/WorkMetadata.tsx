@@ -20,6 +20,9 @@ import { License } from 'src/components/License/License'
 import MetricsCounter from 'src/components/MetricsCounter/MetricsCounter'
 import styles from './WorkMetadata.module.scss'
 
+import Claim from '../Claim/Claim'
+import { session } from 'src/utils/session';
+
 type Props = {
   metadata: Work
   linkToExternal?: boolean
@@ -135,7 +138,9 @@ export default function WorkMetadata({
     )
   }
 
+  const user = session()
   const claim = metadata.claims ? metadata.claims[0] : null
+  const shouldDisplayOrcidButton = user && !hideMetadataInTable && metadata.doi && metadata.registrationAgency.id === 'datacite'
 
   const container = () => {
     if (metadata.container
@@ -191,7 +196,7 @@ export default function WorkMetadata({
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
 
     const descriptionHtml = truncate(metadata.descriptions[0].description, {
-      length: 2500,
+      length: 350,
       separator: '… '
     })
 
@@ -287,10 +292,23 @@ export default function WorkMetadata({
   return (
     <Row>
       <Col className="card-body">
-        {!hideTitle && title()}
-        {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
-        {!hideMetadataInTable && creators()}
-        {metadataTag()}
+        {!hideTitle && (
+          <div className='row'>
+            <div
+              className={`col-${shouldDisplayOrcidButton ? '9' : '12'}`}
+            >
+              {title()}
+              {includeMetricsDisplay && <MetricsDisplay counts={{ citations: metadata.citationCount, views: metadata.viewCount, downloads: metadata.downloadCount }} />}
+              {!hideMetadataInTable && creators()}
+              {metadataTag()}
+            </div>
+            {shouldDisplayOrcidButton && (
+              <div className="col-3" style={{ fontSize: '1rem'}}>
+                <Claim doi_id={metadata.doi} />
+              </div>
+            )}
+          </div>
+        )}
         {!hideMetadataInTable && <>{description()}
           {metadata.identifiers && metadata.identifiers.length > 0 && (
             <Row>
@@ -311,9 +329,9 @@ export default function WorkMetadata({
         {!hideMetadataInTable && <License rights={metadata.rights} />}
         {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
         {tags()}
+        {footer()}
+        {!hideMetadataInTable && <div className={styles.divider}/>}
       </Col>
-
-      {footer()}
     </Row>
   )
 }
