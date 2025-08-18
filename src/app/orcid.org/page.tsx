@@ -5,10 +5,11 @@ import SearchPerson from 'src/components/SearchPerson/SearchPerson'
 import { QueryVar } from 'src/data/queries/searchPersonQuery'
 
 interface Props {
-  searchParams: QueryVar
+  searchParams: Promise<QueryVar>
 }
 
-export default async function SearchPersonPage({ searchParams }: Props) {
+export default async function SearchPersonPage(props: Props) {
+  const searchParams = await props.searchParams;
 
   // Show example text if there is no query
   if (!searchParams.query || searchParams.query === '')

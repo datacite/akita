@@ -10,14 +10,15 @@ import RelatedContent from './RelatedContent'
 
 
 interface Props {
-  params: {
+  params: Promise<{
     repoid: string[]
-  }
+  }>
 }
 
 
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const repoid = decodeURIComponent(params.repoid.join('/'))
 
   const { data } = await fetchRepository(repoid)
@@ -50,7 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params;
   const repoid = decodeURIComponent(params.repoid.join('/'))
 
   // Fetch Repository metadata

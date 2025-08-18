@@ -20,18 +20,19 @@ const COLORS = {
 }
 
 export default function DataCiteButton(props: Props) {
-  const color = props.color || (props.variant === 'secondary' ? COLORS.secondary : COLORS.primary)
-  const outlineStyle = props.outline ? styles.outline : ''
+  const { href, color, variant, outline, className, icon, children, ...rest } = props
+  const buttonColor = color || (variant === 'secondary' ? COLORS.secondary : COLORS.primary)
+  const outlineStyle = outline ? styles.outline : ''
 
-  return <WrapLink {...props}>
+  return <WrapLink href={href}>
     <Button
-      {...props}
-      className={`${props.className ?? ''} ${styles.button} ${outlineStyle}`}
+      {...rest}
+      className={`${className ?? ''} ${styles.button} ${outlineStyle}`}
       // @ts-expect-error CSS variable not in type definition
-      style={{ '--button-color': color }}
+      style={{ '--button-color': buttonColor }}
     >
-      {props.icon && <FontAwesomeIcon icon={props.icon} className="me-2" />}
-      {props.children}
+      {icon && <FontAwesomeIcon icon={icon} className="me-2" />}
+      {children}
     </Button>
   </WrapLink>
 }
@@ -39,5 +40,5 @@ export default function DataCiteButton(props: Props) {
 
 function WrapLink(props: Props) {
   if (!props.href) return props.children
-  return <Link href={props.href} passHref legacyBehavior>{props.children}</Link>
+  return <Link href={props.href}>{props.children}</Link>
 }
