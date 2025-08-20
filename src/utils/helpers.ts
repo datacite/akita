@@ -186,7 +186,8 @@ export function mapJsonToWork(json: any, included: any[]) {
     repository: repo
       ? { id: repo.id, name: repo.attributes.name }
       : { id: '', name: '' },
-    schemaOrg: ''
+    schemaOrg: '',
+    relationships: json.relationships
   }
 }
 
