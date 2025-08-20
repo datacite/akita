@@ -53,10 +53,15 @@ export type Work = WorkMetadata & {
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
+  referenceCount?: number
   references?: Works
+  partCount?: number
+  partOfCount?: number
   parts?: Works
   partOf?: Works
+  otherRelatedCount?: number
   otherRelated?: Works
+  allRelatedCount?: number
   allRelated?: Works
 }
 
