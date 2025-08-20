@@ -10,7 +10,7 @@ export interface SearchParams {
   "field-of-science"?: string
   "registration-agency"?: string
   "connection-type"?: string
-
+  sort?: string
   isBot: string
 }
 
@@ -26,11 +26,10 @@ export default function mapSearchparams(searchParams: SearchParams) {
       license: searchParams.license,
       fieldOfScience: searchParams['field-of-science'],
       registrationAgency: searchParams['registration-agency'],
+      sort: searchParams.sort
     },
 
     connectionType: searchParams['connection-type'],
     isBot: false
   }
 }
-
-
