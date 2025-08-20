@@ -20,7 +20,14 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  connectionTypesCounts?: {
+    references: number,
+    citations: number,
+    parts: number,
+    partOf: number,
+    otherRelated: number,
+    allRelated: number
+  }
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
