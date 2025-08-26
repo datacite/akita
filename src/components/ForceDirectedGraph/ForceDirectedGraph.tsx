@@ -43,7 +43,6 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </div>
 
-        { /* @ts-expect-error */}
         <Vega
           renderer="svg"
           spec={forceDirectedGraphSpec(width, domain, range)}

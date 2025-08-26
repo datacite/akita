@@ -3,7 +3,7 @@
 import * as Sentry from '@sentry/node'
 import { NextPageContext } from 'next'
 import Error, { ErrorProps as NextErrorProps } from 'next/error'
-import React from 'react'
+import React, { type JSX } from 'react';
 
 // XXX See https://github.com/zeit/next.js/blob/canary/examples/with-sentry-simple/pages/_error.js
 const AkitaError = (props: AkitaErrorProps): JSX.Element => {
@@ -88,7 +88,7 @@ export declare type AkitaErrorProps = {
   err: Error
   statusCode: number
   isSSRReadyToRender: boolean
-  children?: React.ReactElement
+  children?: React.ReactElement<any>
 }
 
 export declare type ErrorProps = {
