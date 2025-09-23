@@ -2,9 +2,10 @@ import { Facet, PageInfo } from 'src/data/types'
 import { RORV2Client, RORV2SearchParams, RORV2Organization, RORV2SearchResponse, RORFacet } from 'src/data/clients/ror-v2-client'
 import { titleCase, getCountryName, cursorToPage } from 'src/utils/helpers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { ROR_API_URL } from 'src/data/constants'
 
 
-const rorClient = new RORV2Client()
+const rorClient = new RORV2Client({ baseUrl: ROR_API_URL })
 const ROR_PER_PAGE = 20
 
 // Query keys for cache management

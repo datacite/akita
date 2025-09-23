@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Content from './Content'
 import { RORV2Client } from 'src/data/clients/ror-v2-client'
-import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
+import { COMMONS_URL, LOGO_URL, ROR_API_URL } from 'src/data/constants'
 
 interface Props {
   params: Promise<{
@@ -23,7 +23,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   try {
-    const rorClient = new RORV2Client()
+    const rorClient = new RORV2Client({ baseUrl: ROR_API_URL })
     const organization = await rorClient.getOrganization(rorid)
 
     if (!organization) notFound()

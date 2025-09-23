@@ -18,6 +18,8 @@ const orcid = 'https://orcid.org'
 const orcidSandbox = 'https://sandbox.orcid.org'
 const orcidApiSandbox = 'https://pub.sandbox.orcid.org/v3.0'
 
+const rorApi = 'https://api.ror.org'
+
 // Rarely needed to use raw URLs outside of this file
 export const URLS = {
   localhost,
@@ -36,6 +38,8 @@ export const PROFILES_SIGN_IN_URL = `${PROFILES_URL}/sign_in`
 
 export const ORCID_URL = DATACITE_API_URL === dataciteApi ? orcid : orcidSandbox
 export const ORCID_API_URL = process.env.NEXT_PUBLIC_ORCID_API_URL || orcidApiSandbox
+
+export const ROR_API_URL = process.env.NEXT_PUBLIC_ROR_API_URL || rorApi
 
 export const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL
 
