@@ -38,6 +38,8 @@ jobs:
           group: 'Tests'
         env:
           CYPRESS_NODE_ENV: test
+          ROR_API_URL: http://localhost:3000/__mocks__/ror/v2
+          NEXT_PUBLIC_ROR_API_URL: http://localhost:3000/__mocks__/ror/v2
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_ORCID_API_URL: ${{ secrets.NEXT_PUBLIC_ORCID_API_URL }}
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}

@@ -1,0 +1,45 @@
+{
+  "id": "https://ror.org/052gg0110",
+  "names": [
+    { "lang": "en", "types": ["primary", "ror_display"], "value": "University of Oxford" },
+    { "lang": "en", "types": ["alias"], "value": "Oxford University" },
+    { "lang": "en", "types": ["acronym"], "value": "UO" }
+  ],
+  "status": "active",
+  "established": 1096,
+  "locations": [
+    {
+      "geonames_details": {
+        "country_code": "GB",
+        "country_name": "United Kingdom",
+        "continent_code": "EU",
+        "continent_name": "Europe",
+        "country_subdivision_code": "ENG",
+        "country_subdivision_name": "England",
+        "lat": 51.754816,
+        "lng": -1.254367,
+        "name": "Oxford"
+      },
+      "geonames_id": "2640729"
+    }
+  ],
+  "types": ["education"],
+  "email_address": null,
+  "ip_addresses": [],
+  "aliases": ["Oxford University"],
+  "acronyms": ["UO"],
+  "links": [
+    { "type": "website", "value": "https://www.ox.ac.uk/" },
+    { "type": "wikipedia", "value": "https://en.wikipedia.org/wiki/University_of_Oxford" }
+  ],
+  "matches": null,
+  "labels": [],
+  "relationships": [],
+  "references": [],
+  "external_ids": [
+    { "type": "fundref", "all": ["228536"] },
+    { "type": "grid", "all": ["grid.4991.5"] }
+  ]
+}
+
+

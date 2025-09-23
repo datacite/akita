@@ -13,6 +13,8 @@
     "prettier-format": "prettier --config .prettierrc.json '**/*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "ci": "CYPRESS_NODE_ENV=test yarn dev & wait-on http://localhost:3000 && yarn cy:run --record --quiet",
+    "cy:open:mock": "ROR_API_URL=http://localhost:3000/__mocks__/ror/v2 NEXT_PUBLIC_ROR_API_URL=http://localhost:3000/__mocks__/ror/v2 cypress open",
+    "cy:run:mock": "CYPRESS_NODE_ENV=test ROR_API_URL=http://localhost:3000/__mocks__/ror/v2 NEXT_PUBLIC_ROR_API_URL=http://localhost:3000/__mocks__/ror/v2 yarn dev & wait-on http://localhost:3000 && cypress run",
     "cy:coverage": "npx nyc report --reporter=lcov",
     "cy:open": "cypress open",
     "cy:run": "cypress run"

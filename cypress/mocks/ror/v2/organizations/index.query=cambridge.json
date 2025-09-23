@@ -1,0 +1,42 @@
+{
+  "items": [
+    {
+      "id": "https://ror.org/01nrxwf90",
+      "names": [
+        { "lang": "en", "types": ["primary", "ror_display"], "value": "University of Cambridge" }
+      ],
+      "status": "active",
+      "established": 1209,
+      "locations": [
+        {
+          "geonames_details": {
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 52.2043,
+            "lng": 0.1149,
+            "name": "Cambridge"
+          },
+          "geonames_id": "2653941"
+        }
+      ],
+      "types": ["education"],
+      "external_ids": [],
+      "links": []
+    }
+  ],
+  "number_of_results": 10,
+  "meta": {
+    "types": [
+      { "id": "education", "title": "Education", "count": 1 }
+    ],
+    "countries": [
+      { "id": "GB", "title": "United Kingdom", "count": 1 }
+    ]
+  }
+}
+
+

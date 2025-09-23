@@ -89,6 +89,9 @@ dist
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
+# Test-only public mocks (never commit / deploy)
+public/__mocks__/
+
 # vuepress build output
 .vuepress/dist
 

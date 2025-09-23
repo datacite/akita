@@ -1,0 +1,42 @@
+{
+  "id": "https://ror.org/013meh722",
+  "names": [
+    { "lang": "en", "types": ["primary", "ror_display"], "value": "Springer Nature" },
+    { "lang": "en", "types": ["alias"], "value": "Springer" }
+  ],
+  "status": "active",
+  "established": 1842,
+  "locations": [
+    {
+      "geonames_details": {
+        "country_code": "GB",
+        "country_name": "United Kingdom",
+        "continent_code": "EU",
+        "continent_name": "Europe",
+        "country_subdivision_code": "ENG",
+        "country_subdivision_name": "England",
+        "lat": 51.5074,
+        "lng": -0.1278,
+        "name": "London"
+      },
+      "geonames_id": "2643743"
+    }
+  ],
+  "types": ["company"],
+  "email_address": null,
+  "ip_addresses": [],
+  "aliases": ["Springer"],
+  "acronyms": [],
+  "links": [
+    { "type": "website", "value": "https://www.springernature.com/" }
+  ],
+  "matches": null,
+  "labels": [],
+  "relationships": [],
+  "references": [],
+  "external_ids": [
+    { "type": "grid", "all": ["grid.435423.3"] }
+  ]
+}
+
+

@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "id": "https://ror.org/052gg0110",
+      "names": [
+        { "lang": "en", "types": ["primary", "ror_display"], "value": "University of Oxford" }
+      ],
+      "status": "active",
+      "established": 1096,
+      "locations": [
+        {
+          "geonames_details": {
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.754816,
+            "lng": -1.254367,
+            "name": "Oxford"
+          },
+          "geonames_id": "2640729"
+        }
+      ],
+      "types": ["education"],
+      "external_ids": [
+        { "type": "fundref", "all": ["228536"] }
+      ],
+      "links": []
+    }
+  ],
+  "number_of_results": 10,
+  "meta": {
+    "types": [
+      { "id": "education", "title": "Education", "count": 1 }
+    ],
+    "countries": [
+      { "id": "GB", "title": "United Kingdom", "count": 1 }
+    ]
+  }
+}
+
+
