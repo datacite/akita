@@ -30,7 +30,10 @@ export async function GET(request: Request) {
         status: 200,
         headers: { 'content-type': 'application/json' }
       })
-    } catch {}
+    } catch (e) {
+      // No matching query fixture; fall through to other strategies
+      void e
+    }
 
     // 2) If the query looks like a ROR ID (e.g., ror.org/052gg0110), wrap its detail into a search result
     if (query.startsWith('ror.org/')) {
@@ -45,7 +48,10 @@ export async function GET(request: Request) {
             meta: { types: [], countries: [] }
           }
           return NextResponse.json(response, { status: 200 })
-        } catch {}
+        } catch (e) {
+          // Missing detail fixture; fall through to empty result
+          void e
+        }
       }
     }
 
