@@ -46,15 +46,6 @@ module.exports = withSourceMaps({
             ? 'http://127.0.0.1:5328/api/:path*'
             : '/api/',
       },
-      // Only map the ROR base URL to the test-only mock routes when running Cypress tests
-      ...(process.env.CYPRESS_NODE_ENV === 'test'
-        ? [
-            {
-              source: '/__mocks__/ror/:path*',
-              destination: '/__mocks__/ror/:path*',
-            },
-          ]
-        : []),
     ]
   },
   staticPageGenerationTimeout: 220,

@@ -4,7 +4,7 @@ import path from 'path'
 
 // Only enable this mock endpoint when running tests
 function mocksEnabled(): boolean {
-  return process.env.CYPRESS_NODE_ENV === 'test'
+  return process.env.USE_MOCKS === 'true' || process.env.CYPRESS_NODE_ENV === 'test'
 }
 
 const FIXTURE_DIR = path.resolve(process.cwd(), 'cypress/mocks/ror/v2/organizations')
