@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs/promises'
+import { promises as fs } from 'fs'
 import path from 'path'
 
 function mocksEnabled(): boolean {
@@ -7,14 +7,16 @@ function mocksEnabled(): boolean {
 }
 
 const FIXTURE_DIR = path.resolve(process.cwd(), 'cypress/mocks/ror/v2/organizations')
-
-export async function GET(_request: Request, context: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   if (!mocksEnabled()) {
     return NextResponse.json({ error: 'Not Found' }, { status: 404 })
   }
 
   try {
-    const { id } = context.params
+    const { id } = await params
     const filename = `${id}.json`
     const filePath = path.join(FIXTURE_DIR, filename)
     const json = await fs.readFile(filePath, 'utf-8')
