@@ -11,7 +11,7 @@ type Props = {
   variables: { [prop: string]: string }
 }
 
-const API_URL_BASE = '/api/download-reports'
+const API_URL_BASE = '/download-reports'
 
 
 function link({ title, helpText, type }: Props['links'][number], params: string) {
