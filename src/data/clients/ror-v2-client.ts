@@ -1,6 +1,9 @@
 /**
  * Types for ROR API V2 responses and entities
  */
+
+import { VERCEL_URL } from 'src/data/constants'
+
 export interface RORV2Organization {
   id: string;
   names: Name[];
@@ -117,7 +120,7 @@ export class RORV2Client {
   private timeout: number;
 
   constructor(config: RORV2ClientConfig = {}) {
-    this.baseUrl = config.baseUrl || 'https://api.ror.org/v2';
+    this.baseUrl = config.baseUrl || '/api/ror/v2';
     this.timeout = config.timeout || 10000;
   }
 
@@ -132,7 +135,12 @@ export class RORV2Client {
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
     try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      const isServer = typeof window === 'undefined';
+      const baseOrigin = isServer
+        ? VERCEL_URL || 'http://localhost:3000'
+        : '';
+      const url = `${baseOrigin}${this.baseUrl}${endpoint}`;
+      const response = await fetch(url, {
         ...options,
         signal: controller.signal,
         headers: {
