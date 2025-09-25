@@ -1,44 +1,1968 @@
 {
+  "number_of_results": 75,
+  "time_taken": 4,
   "items": [
     {
-      "id": "https://ror.org/052gg0110",
-      "names": [
-        { "lang": "en", "types": ["primary", "ror_display"], "value": "University of Oxford" }
+      "admin": {
+        "created": {
+          "date": "2021-09-23",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1973,
+      "external_ids": [
+        {
+          "all": [
+            "grid.511213.5"
+          ],
+          "preferred": "grid.511213.5",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0001 0681 2497"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q7115237"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
       ],
-      "status": "active",
-      "established": 1096,
+      "id": "https://ror.org/045f8jj92",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://oxfordarchaeology.com/"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Oxford_Archaeology"
+        }
+      ],
       "locations": [
         {
           "geonames_details": {
-            "country_code": "GB",
-            "country_name": "United Kingdom",
             "continent_code": "EU",
             "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
             "country_subdivision_code": "ENG",
             "country_subdivision_name": "England",
-            "lat": 51.754816,
-            "lng": -1.254367,
+            "lat": 51.75222,
+            "lng": -1.25596,
             "name": "Oxford"
           },
-          "geonames_id": "2640729"
+          "geonames_id": 2640729
         }
       ],
-      "types": ["education"],
-      "external_ids": [
-        { "type": "fundref", "all": ["228536"] }
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "acronym"
+          ],
+          "value": "OA"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Archaeology"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford Archaeology Limited"
+        }
       ],
-      "links": []
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "nonprofit"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1989,
+      "external_ids": [
+        {
+          "all": [
+            "grid.425957.8"
+          ],
+          "preferred": "grid.425957.8",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 4909 9013"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q50378590"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/056x7d368",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.sei.org/centres/oxford/"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Stockholm_Environment_Institute"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "acronym"
+          ],
+          "value": "SEI"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "SEI Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Stockholm Environment Institute"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "Stockholm Environment Institute",
+          "type": "parent",
+          "id": "https://ror.org/051xgzg37"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "nonprofit"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1872,
+      "external_ids": [
+        {
+          "all": [
+            "grid.445069.a"
+          ],
+          "preferred": "grid.445069.a",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0001 0274 9144"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q4716513"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/00ke8ye77",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.au.edu.tw/"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Aletheia_University"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "AS",
+            "continent_name": "Asia",
+            "country_code": "TW",
+            "country_name": "Taiwan",
+            "country_subdivision_code": null,
+            "country_subdivision_name": "Taiwan",
+            "lat": 25.05306,
+            "lng": 121.52639,
+            "name": "Taipei"
+          },
+          "geonames_id": 1668341
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "acronym"
+          ],
+          "value": "AU"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Aletheia University"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford College"
+        },
+        {
+          "lang": "zh",
+          "types": [
+            "label"
+          ],
+          "value": "真理大學"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "education"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2021-09-23",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": null,
+      "external_ids": [
+        {
+          "all": [
+            "501100023239"
+          ],
+          "preferred": "501100023239",
+          "type": "fundref"
+        },
+        {
+          "all": [
+            "grid.512222.4"
+          ],
+          "preferred": "grid.512222.4",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 8511 5471"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/05hhpdx12",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.oxfordahsn.org/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford AHSN"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Academic Health Science Network"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "funder",
+        "healthcare"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": null,
+      "external_ids": [
+        {
+          "all": [
+            "grid.477692.9"
+          ],
+          "preferred": "grid.477692.9",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 0379 0597"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/05n2x7017",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.oxfordfertility.co.uk/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Fertility"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "healthcare"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2019-02-17",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1985,
+      "external_ids": [
+        {
+          "all": [
+            "grid.500878.2"
+          ],
+          "preferred": "grid.500878.2",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 5903 4811"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q7433586"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/04j8yhy50",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://scienceoxford.com"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Science_Oxford"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "acronym"
+          ],
+          "value": "SO"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Science Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "The Oxford Trust"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "nonprofit"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2019-02-17",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1909,
+      "external_ids": [
+        {
+          "all": [
+            "grid.501874.f"
+          ],
+          "preferred": "grid.501874.f",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0000 9612 3072"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q6413758"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/01ex19q32",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.kingswoodoxford.org/page"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Kingswood_Oxford_School"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "NA",
+            "continent_name": "North America",
+            "country_code": "US",
+            "country_name": "United States",
+            "country_subdivision_code": "CT",
+            "country_subdivision_name": "Connecticut",
+            "lat": 41.76204,
+            "lng": -72.74204,
+            "name": "West Hartford"
+          },
+          "geonames_id": 4845411
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "acronym"
+          ],
+          "value": "KO"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Kingswood Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Kingswood Oxford School"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "education"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 2000,
+      "external_ids": [
+        {
+          "all": [
+            "grid.487335.e"
+          ],
+          "preferred": "grid.487335.e",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 0398 7680"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/02q0ygf45",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.obsmedical.com/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.67109,
+            "lng": -1.28278,
+            "name": "Abingdon"
+          },
+          "geonames_id": 2657780
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "OBS Medical (United Kingdom)"
+        },
+        {
+          "lang": null,
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford BioSignals"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "company"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1991,
+      "external_ids": [
+        {
+          "all": [
+            "100009958"
+          ],
+          "preferred": null,
+          "type": "fundref"
+        },
+        {
+          "all": [
+            "grid.480957.7"
+          ],
+          "preferred": "grid.480957.7",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 0450 3449"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/02hejje45",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.oxford-optronix.com/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.67109,
+            "lng": -1.28278,
+            "name": "Abingdon"
+          },
+          "geonames_id": 2657780
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Optronix"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "funder",
+        "nonprofit"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2019-02-17",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 2015,
+      "external_ids": [
+        {
+          "all": [
+            "grid.502912.d"
+          ],
+          "preferred": "grid.502912.d",
+          "type": "grid"
+        }
+      ],
+      "id": "https://ror.org/02xhnj226",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://mobilityoxford.com"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Mobility Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Mobox Foundation"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "other"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 2010,
+      "external_ids": [
+        {
+          "all": [
+            "grid.451193.b"
+          ],
+          "preferred": "grid.451193.b",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 4666 9826"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/03nm8n513",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.oxfordpv.com/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford PV"
+        },
+        {
+          "lang": null,
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Photovoltaics (United Kingdom)"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "company"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2025-03-17",
+          "schema_version": "2.1"
+        },
+        "last_modified": {
+          "date": "2025-03-17",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [
+        "eit.org"
+      ],
+      "established": null,
+      "external_ids": [],
+      "id": "https://ror.org/05p1kkx35",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.eit.org"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "acronym"
+          ],
+          "value": "EIT"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "EIT Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label",
+            "ror_display"
+          ],
+          "value": "Ellison Institute of Technology"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Ellison Institute of Technology Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Ellison Institute of Technology, Oxford Limited"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "Ellison Institute of Technology",
+          "type": "predecessor",
+          "id": "https://ror.org/03ea0g517"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "education"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2025-04-25",
+          "schema_version": "2.1"
+        },
+        "last_modified": {
+          "date": "2025-04-28",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [
+        "oxfordimmunotec.com"
+      ],
+      "established": 2002,
+      "external_ids": [
+        {
+          "all": [
+            "0000 0004 0605 9484"
+          ],
+          "preferred": "0000 0004 0605 9484",
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q132103080"
+          ],
+          "preferred": "Q132103080",
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/0428c0g78",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.revvity.com/category/t-spot-technology"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.67208,
+            "lng": -1.28441,
+            "name": "Abingdon"
+          },
+          "geonames_id": 7292133
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "label"
+          ],
+          "value": "Oxford Immunotec"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label",
+            "ror_display"
+          ],
+          "value": "Oxford Immunotec (United Kingdom)"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label"
+          ],
+          "value": "Oxford Immunotec Ltd"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "Revvity (United States)",
+          "type": "parent",
+          "id": "https://ror.org/02sbvqb41"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "company"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2025-04-02",
+          "schema_version": "2.1"
+        },
+        "last_modified": {
+          "date": "2025-04-03",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [
+        "oxfordbiodynamics.com"
+      ],
+      "established": 2007,
+      "external_ids": [],
+      "id": "https://ror.org/01td8v330",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.oxfordbiodynamics.com"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "acronym"
+          ],
+          "value": "OBD"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label"
+          ],
+          "value": "Oxford BioDynamics"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label",
+            "ror_display"
+          ],
+          "value": "Oxford BioDynamics (United Kingdom)"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label"
+          ],
+          "value": "Oxford BioDynamics Plc"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "company"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2025-08-06",
+          "schema_version": "2.1"
+        },
+        "last_modified": {
+          "date": "2025-08-07",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [
+        "eniegoxford.org"
+      ],
+      "established": 2022,
+      "external_ids": [],
+      "id": "https://ror.org/00ya6vp57",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://eniegoxford.org"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "AF",
+            "continent_name": "Africa",
+            "country_code": "CM",
+            "country_name": "Cameroon",
+            "country_subdivision_code": "NW",
+            "country_subdivision_name": "North-West",
+            "lat": 5.9597,
+            "lng": 10.14597,
+            "name": "Bamenda"
+          },
+          "geonames_id": 2234974
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Enieg Oxford"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "label",
+            "ror_display"
+          ],
+          "value": "Enieg Oxford University Institute"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "education"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2025-05-05",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [
+        "ox.ac.uk"
+      ],
+      "established": 1096,
+      "external_ids": [
+        {
+          "all": [
+            "501100000769",
+            "100010354",
+            "100010355",
+            "100010353",
+            "100010357",
+            "100010362",
+            "100010365",
+            "100010363",
+            "100010358",
+            "100010356",
+            "100010361",
+            "100010360",
+            "100010368",
+            "100010370",
+            "100010369",
+            "100010364",
+            "100010348",
+            "100010347",
+            "100010350",
+            "100010351",
+            "100010352",
+            "100010371",
+            "100010349",
+            "100010367",
+            "501100004211",
+            "501100004789",
+            "100007718",
+            "501100000524",
+            "501100000645",
+            "501100000666",
+            "501100000696",
+            "501100000718",
+            "501100000719",
+            "501100000728",
+            "501100000744",
+            "501100000747",
+            "501100001622",
+            "501100000649",
+            "501100000734",
+            "501100006561",
+            "100007724",
+            "501100006558",
+            "501100022752",
+            "501100014748",
+            "501100013389",
+            "100010359",
+            "100010366",
+            "100013964",
+            "501100015505",
+            "501100021079",
+            "501100023929"
+          ],
+          "preferred": "501100000769",
+          "type": "fundref"
+        },
+        {
+          "all": [
+            "grid.4991.5"
+          ],
+          "preferred": "grid.4991.5",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 1936 8948"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q34433",
+            "Q5260389",
+            "Q56612600",
+            "Q7529574",
+            "Q6786826",
+            "Q1095537"
+          ],
+          "preferred": "Q34433",
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/052gg0110",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.ox.ac.uk"
+        },
+        {
+          "type": "wikipedia",
+          "value": "http://en.wikipedia.org/wiki/University_of_Oxford"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford University"
+        },
+        {
+          "lang": "cy",
+          "types": [
+            "label"
+          ],
+          "value": "Prifysgol Rhydychen"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "University of Oxford"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "CRUK/MRC Oxford Institute for Radiation Oncology",
+          "type": "child",
+          "id": "https://ror.org/011hz4254"
+        },
+        {
+          "label": "Cancer Research UK Oxford Centre",
+          "type": "child",
+          "id": "https://ror.org/05kgg0s20"
+        },
+        {
+          "label": "Centre for the Observation and Modelling of Earthquakes, Volcanoes and Tectonics",
+          "type": "child",
+          "id": "https://ror.org/047d2d387"
+        },
+        {
+          "label": "MRC Brain Network Dynamics Unit",
+          "type": "child",
+          "id": "https://ror.org/01tfjyv98"
+        },
+        {
+          "label": "MRC Human Immunology Unit",
+          "type": "child",
+          "id": "https://ror.org/02kcpr174"
+        },
+        {
+          "label": "MRC Weatherall Institute of Molecular Medicine",
+          "type": "child",
+          "id": "https://ror.org/01q496a73"
+        },
+        {
+          "label": "Mahidol Oxford Tropical Medicine Research Unit",
+          "type": "child",
+          "id": "https://ror.org/03fs9z545"
+        },
+        {
+          "label": "Medawar Building for Pathogen Research",
+          "type": "child",
+          "id": "https://ror.org/017g85521"
+        },
+        {
+          "label": "Oxford Centre for Diabetes, Endocrinology and Metabolism",
+          "type": "child",
+          "id": "https://ror.org/03myafa32"
+        },
+        {
+          "label": "Oxford University Clinical Research Unit",
+          "type": "child",
+          "id": "https://ror.org/05rehad94"
+        },
+        {
+          "label": "Oxford University Press (United Kingdom)",
+          "type": "child",
+          "id": "https://ror.org/0336mm561"
+        },
+        {
+          "label": "Wellcome Centre for Ethics and Humanities",
+          "type": "child",
+          "id": "https://ror.org/05crdvn36"
+        },
+        {
+          "label": "Centre for Human Genetics",
+          "type": "child",
+          "id": "https://ror.org/01rjnta51"
+        },
+        {
+          "label": "Wellcome Centre for Integrative Neuroimaging",
+          "type": "child",
+          "id": "https://ror.org/0172mzb45"
+        },
+        {
+          "label": "MRC Population Health Research Unit",
+          "type": "child",
+          "id": "https://ror.org/01p4s0142"
+        },
+        {
+          "label": "MRC Molecular Haematology Unit",
+          "type": "child",
+          "id": "https://ror.org/02khxwt12"
+        },
+        {
+          "label": "John Adams Institute for Accelerator Science",
+          "type": "child",
+          "id": "https://ror.org/00wgpgb78"
+        },
+        {
+          "label": "Churchill Hospital",
+          "type": "related",
+          "id": "https://ror.org/009vheq40"
+        },
+        {
+          "label": "John Radcliffe Hospital",
+          "type": "related",
+          "id": "https://ror.org/0080acb59"
+        },
+        {
+          "label": "Mahosot Hospital",
+          "type": "related",
+          "id": "https://ror.org/01qcxb695"
+        },
+        {
+          "label": "NIHR Oxford Musculoskeletal Biomedical Research Centre",
+          "type": "related",
+          "id": "https://ror.org/00aps1a34"
+        },
+        {
+          "label": "Oxford Health NHS Foundation Trust",
+          "type": "related",
+          "id": "https://ror.org/04c8bjx39"
+        },
+        {
+          "label": "Warneford Hospital",
+          "type": "related",
+          "id": "https://ror.org/03we1zb10"
+        },
+        {
+          "label": "UK Web Archive",
+          "type": "related",
+          "id": "https://ror.org/00gnxy738"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "education",
+        "funder"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1826,
+      "external_ids": [
+        {
+          "all": [
+            "grid.416938.1"
+          ],
+          "preferred": "grid.416938.1",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 0641 5119"
+          ],
+          "preferred": null,
+          "type": "isni"
+        },
+        {
+          "all": [
+            "Q14956785"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/03we1zb10",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.oxfordhealth.nhs.uk/news/sale-of-surplus-land-at-warneford-hospital-headington/"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Warneford_Hospital"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Oxford Lunatic Asylum"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Radcliffe Lunatic Asylum"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Warneford Hospital"
+        },
+        {
+          "lang": "en",
+          "types": [
+            "alias"
+          ],
+          "value": "Warneford Lunatic Asylum"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "Oxford Health NHS Foundation Trust",
+          "type": "parent",
+          "id": "https://ror.org/04c8bjx39"
+        },
+        {
+          "label": "University of Oxford",
+          "type": "related",
+          "id": "https://ror.org/052gg0110"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "healthcare"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1970,
+      "external_ids": [
+        {
+          "all": [
+            "grid.441165.3"
+          ],
+          "preferred": "grid.441165.3",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "Q30293741"
+          ],
+          "preferred": null,
+          "type": "wikidata"
+        }
+      ],
+      "id": "https://ror.org/02gm6vn88",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.ceox.edu.mx/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "NA",
+            "continent_name": "North America",
+            "country_code": "MX",
+            "country_name": "Mexico",
+            "country_subdivision_code": "NLE",
+            "country_subdivision_name": "Nuevo León",
+            "lat": 25.67507,
+            "lng": -100.31847,
+            "name": "Monterrey"
+          },
+          "geonames_id": 3995465
+        }
+      ],
+      "names": [
+        {
+          "lang": "es",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Consorcio Educativo Oxford"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "education"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1959,
+      "external_ids": [
+        {
+          "all": [
+            "grid.422661.5"
+          ],
+          "preferred": "grid.422661.5",
+          "type": "grid"
+        }
+      ],
+      "id": "https://ror.org/05j0wr821",
+      "links": [
+        {
+          "type": "website",
+          "value": "http://www.oxford-instruments.com/"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "NA",
+            "continent_name": "North America",
+            "country_code": "CA",
+            "country_name": "Canada",
+            "country_subdivision_code": "ON",
+            "country_subdivision_name": "Ontario",
+            "lat": 43.70643,
+            "lng": -79.39864,
+            "name": "Toronto"
+          },
+          "geonames_id": 6167865
+        }
+      ],
+      "names": [
+        {
+          "lang": null,
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford Instruments (Canada)"
+        }
+      ],
+      "relationships": [
+        {
+          "label": "Oxford Instruments (United Kingdom)",
+          "type": "parent",
+          "id": "https://ror.org/049zatd98"
+        }
+      ],
+      "status": "active",
+      "types": [
+        "company"
+      ]
+    },
+    {
+      "admin": {
+        "created": {
+          "date": "2018-11-14",
+          "schema_version": "1.0"
+        },
+        "last_modified": {
+          "date": "2024-12-11",
+          "schema_version": "2.1"
+        }
+      },
+      "domains": [],
+      "established": 1974,
+      "external_ids": [
+        {
+          "all": [
+            "grid.437032.1"
+          ],
+          "preferred": "grid.437032.1",
+          "type": "grid"
+        },
+        {
+          "all": [
+            "0000 0004 0630 5390"
+          ],
+          "preferred": null,
+          "type": "isni"
+        }
+      ],
+      "id": "https://ror.org/052b1ym09",
+      "links": [
+        {
+          "type": "website",
+          "value": "https://www.oxford.gov.uk/"
+        },
+        {
+          "type": "wikipedia",
+          "value": "https://en.wikipedia.org/wiki/Oxford_City_Council"
+        }
+      ],
+      "locations": [
+        {
+          "geonames_details": {
+            "continent_code": "EU",
+            "continent_name": "Europe",
+            "country_code": "GB",
+            "country_name": "United Kingdom",
+            "country_subdivision_code": "ENG",
+            "country_subdivision_name": "England",
+            "lat": 51.75222,
+            "lng": -1.25596,
+            "name": "Oxford"
+          },
+          "geonames_id": 2640729
+        }
+      ],
+      "names": [
+        {
+          "lang": "en",
+          "types": [
+            "ror_display",
+            "label"
+          ],
+          "value": "Oxford City Council"
+        }
+      ],
+      "relationships": [],
+      "status": "active",
+      "types": [
+        "government"
+      ]
     }
   ],
-  "number_of_results": 10,
   "meta": {
     "types": [
-      { "id": "education", "title": "Education", "count": 1 }
+      {
+        "id": "company",
+        "title": "company",
+        "count": 31
+      },
+      {
+        "id": "education",
+        "title": "education",
+        "count": 13
+      },
+      {
+        "id": "facility",
+        "title": "facility",
+        "count": 11
+      },
+      {
+        "id": "funder",
+        "title": "funder",
+        "count": 11
+      },
+      {
+        "id": "nonprofit",
+        "title": "nonprofit",
+        "count": 9
+      },
+      {
+        "id": "healthcare",
+        "title": "healthcare",
+        "count": 8
+      },
+      {
+        "id": "government",
+        "title": "government",
+        "count": 2
+      },
+      {
+        "id": "other",
+        "title": "other",
+        "count": 2
+      }
     ],
     "countries": [
-      { "id": "GB", "title": "United Kingdom", "count": 1 }
+      {
+        "id": "gb",
+        "title": "United Kingdom",
+        "count": 51
+      },
+      {
+        "id": "us",
+        "title": "United States",
+        "count": 7
+      },
+      {
+        "id": "ca",
+        "title": "Canada",
+        "count": 2
+      },
+      {
+        "id": "in",
+        "title": "India",
+        "count": 2
+      },
+      {
+        "id": "np",
+        "title": "Nepal",
+        "count": 2
+      },
+      {
+        "id": "cm",
+        "title": "Cameroon",
+        "count": 1
+      },
+      {
+        "id": "de",
+        "title": "Germany",
+        "count": 1
+      },
+      {
+        "id": "id",
+        "title": "Indonesia",
+        "count": 1
+      },
+      {
+        "id": "kh",
+        "title": "Cambodia",
+        "count": 1
+      },
+      {
+        "id": "la",
+        "title": "Laos",
+        "count": 1
+      }
+    ],
+    "continents": [
+      {
+        "id": "eu",
+        "title": "Europe",
+        "count": 53
+      },
+      {
+        "id": "as",
+        "title": "Asia",
+        "count": 11
+      },
+      {
+        "id": "na",
+        "title": "North America",
+        "count": 10
+      },
+      {
+        "id": "af",
+        "title": "Africa",
+        "count": 1
+      }
+    ],
+    "statuses": [
+      {
+        "id": "active",
+        "title": "active",
+        "count": 75
+      }
     ]
   }
 }
-
-
