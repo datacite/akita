@@ -2,7 +2,7 @@
  * Types for ROR API V2 responses and entities
  */
 
-import { LOCALHOST_URL } from 'src/data/constants'
+import { VERCEL_URL } from 'src/data/constants'
 
 export interface RORV2Organization {
   id: string;
@@ -136,9 +136,9 @@ export class RORV2Client {
 
     try {
       const isServer = typeof window === 'undefined';
-      const baseOrigin = isServer ? process.env.VERCEL_URL ||
-          process.env.NEXT_PUBLIC_VERCEL_URL ||
-          LOCALHOST_URL : '';
+      const baseOrigin = isServer
+        ? VERCEL_URL || 'http://localhost:3000'
+        : '';
       const url = `${baseOrigin}${this.baseUrl}${endpoint}`;
       const response = await fetch(url, {
         ...options,
