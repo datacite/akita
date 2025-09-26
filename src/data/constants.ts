@@ -39,6 +39,8 @@ export const ORCID_API_URL = process.env.NEXT_PUBLIC_ORCID_API_URL || orcidApiSa
 
 export const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL
 
+export const LOCALHOST_URL = localhost
+
 // Tracking, logging, and auth
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 export const SENTRY_DSN = process.env.SENTRY_DSN
