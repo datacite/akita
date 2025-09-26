@@ -120,7 +120,7 @@ export class RORV2Client {
   private timeout: number;
 
   constructor(config: RORV2ClientConfig = {}) {
-    this.baseUrl = config.baseUrl || '/api/ror/v2';
+    this.baseUrl = config.baseUrl || '/ror-api-proxy/v2';
     this.timeout = config.timeout || 10000;
   }
 

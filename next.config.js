@@ -40,7 +40,7 @@ module.exports = withSourceMaps({
   rewrites: async () => {
     return [
       {
-        source: '/api/ror/:path*',
+        source: '/ror-api-proxy/:path*',
         destination: 'https://api.ror.org/:path*',
       },
       {
