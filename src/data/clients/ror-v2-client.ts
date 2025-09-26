@@ -140,6 +140,9 @@ export class RORV2Client {
           process.env.NEXT_PUBLIC_VERCEL_URL ||
           LOCALHOST_URL : '';
       const url = `${baseOrigin}${this.baseUrl}${endpoint}`;
+
+      console.log('Fetching RORV2Client URL:', url);
+
       const response = await fetch(url, {
         ...options,
         signal: controller.signal,
