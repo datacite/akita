@@ -38,6 +38,7 @@ export const ORCID_URL = DATACITE_API_URL === dataciteApi ? orcid : orcidSandbox
 export const ORCID_API_URL = process.env.NEXT_PUBLIC_ORCID_API_URL || orcidApiSandbox
 
 export const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL
+export const LOCALHOST_URL = localhost
 
 // Tracking, logging, and auth
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
