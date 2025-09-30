@@ -136,10 +136,8 @@ export class RORV2Client {
 
     try {
       const isServer = typeof window === 'undefined';
-      const baseOrigin = isServer ? process.env.VERCEL_URL ||
-          process.env.NEXT_PUBLIC_VERCEL_URL ||
-          LOCALHOST_URL : '';
-      const url = `${baseOrigin}${this.baseUrl}${endpoint}`;
+      const rorUrl = isServer ? "https://api.ror.org/v2" : this.baseUrl;
+      const url = `${rorUrl}${endpoint}`;
 
       console.log('Fetching RORV2Client URL:', url);
 
