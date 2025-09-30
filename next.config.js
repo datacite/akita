@@ -40,6 +40,10 @@ module.exports = withSourceMaps({
   rewrites: async () => {
     return [
       {
+        source: '/api/ror/:path*',
+        destination: '/api/ror/:path*',
+      },
+      {
         source: '/api/:path*',
         destination:
           process.env.NODE_ENV === 'development'
