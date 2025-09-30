@@ -1,3 +1,5 @@
+import { ROR_API_URL, ROR_API_PROXY_URL } from './src/data/constants'
+
 // Use the hidden-source-map option when you don't want the source maps to be
 // publicly available on the servers, only to the error reporting
 const withSourceMaps = require('@zeit/next-source-maps')({
@@ -39,6 +41,10 @@ module.exports = withSourceMaps({
   },
   rewrites: async () => {
     return [
+      {
+        source: ROR_API_PROXY_URL + '/:path*',
+        destination: ROR_API_URL + '/:path*',
+      },
       {
         source: '/api/:path*',
         destination:
