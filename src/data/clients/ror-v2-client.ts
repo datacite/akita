@@ -137,8 +137,6 @@ export class RORV2Client {
       const rorUrl = isServer ? "https://api.ror.org/v2" : this.baseUrl;
       const url = `${rorUrl}${endpoint}`;
 
-      console.log('Fetching RORV2Client URL:', url);
-
       const response = await fetch(url, {
         ...options,
         signal: controller.signal,
