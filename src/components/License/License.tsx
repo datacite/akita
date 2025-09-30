@@ -96,8 +96,6 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
     if (r.rightsIdentifier && !isCreativeCommons(r) && !isLocalContexts(r)) {
       if (r.rightsIdentifier.startsWith('apache')) {
         ri.rightsIdentifier = 'Apache%202.0'
-      } else if (r.rightsIdentifier.startsWith('ogl')) {
-        ri.rightsIdentifier = 'OGL%20Canada'
       } else {
         ri.rightsIdentifier = r.rightsIdentifier
           .replace(/-/g, '%20')
