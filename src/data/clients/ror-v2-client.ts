@@ -2,8 +2,6 @@
  * Types for ROR API V2 responses and entities
  */
 
-import { LOCALHOST_URL } from 'src/data/constants'
-
 export interface RORV2Organization {
   id: string;
   names: Name[];
