@@ -4,6 +4,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/ror/:path*",
+      "destination": "https://api.ror.org/:path*"
+    },
+    {
       "source": "/api/download-reports/:path*",
       "destination": "/download-reports/:path*"
     },
