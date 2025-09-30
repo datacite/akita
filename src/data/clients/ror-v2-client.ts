@@ -97,6 +97,7 @@ export interface RORV2Error extends Error {
 export interface RORV2ClientConfig {
   baseUrl?: string;
   timeout?: number;
+  useProxy?: boolean;
 }
 
 /**
@@ -115,10 +116,13 @@ export interface RORV2SearchParams {
 export class RORV2Client {
   private baseUrl: string;
   private timeout: number;
+  private useProxy: boolean;
 
   constructor(config: RORV2ClientConfig = {}) {
     this.baseUrl = config.baseUrl || 'https://api.ror.org/v2';
     this.timeout = config.timeout || 10000;
+    // Use proxy for client-side requests to avoid CORS issues
+    this.useProxy = config.useProxy ?? (typeof window !== 'undefined');
   }
 
   /**
@@ -132,7 +136,18 @@ export class RORV2Client {
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
     try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      let url: string;
+      
+      if (this.useProxy) {
+        // Use the Next.js API proxy for client-side requests
+        const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+        url = `${baseUrl}/api/ror${endpoint}`;
+      } else {
+        // Use direct API for server-side requests
+        url = `${this.baseUrl}${endpoint}`;
+      }
+
+      const response = await fetch(url, {
         ...options,
         signal: controller.signal,
         headers: {
@@ -221,9 +236,11 @@ export class RORV2Client {
     }
 
     try {
-      return await this.makeRequest<RORV2SearchResponse>(
-        `/organizations${searchParams.toString() ? '?' + searchParams.toString() : ''}`
-      );
+      const endpoint = this.useProxy 
+        ? `/search${searchParams.toString() ? '?' + searchParams.toString() : ''}`
+        : `/organizations${searchParams.toString() ? '?' + searchParams.toString() : ''}`;
+        
+      return await this.makeRequest<RORV2SearchResponse>(endpoint);
     } catch (error) {
       throw this.handleError(error, 'Error searching organizations');
     }
