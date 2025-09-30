@@ -2,6 +2,8 @@
  * Types for ROR API V2 responses and entities
  */
 
+import { ROR_API_URL, ROR_API_PROXY_URL } from "../constants";
+
 export interface RORV2Organization {
   id: string;
   names: Name[];
@@ -118,7 +120,7 @@ export class RORV2Client {
   private timeout: number;
 
   constructor(config: RORV2ClientConfig = {}) {
-    this.baseUrl = config.baseUrl || '/ror-api-proxy/v2';
+    this.baseUrl = config.baseUrl || ROR_API_PROXY_URL;
     this.timeout = config.timeout || 10000;
   }
 
@@ -134,7 +136,7 @@ export class RORV2Client {
 
     try {
       const isServer = typeof window === 'undefined';
-      const rorUrl = isServer ? "https://api.ror.org/v2" : this.baseUrl;
+      const rorUrl = isServer ? ROR_API_URL : this.baseUrl;
       const url = `${rorUrl}${endpoint}`;
 
       const response = await fetch(url, {
