@@ -4,7 +4,7 @@ import PlausibleProvider from 'next-plausible'
 import { Source_Sans_3 } from 'next/font/google';
 import * as Sentry from '@sentry/node'
 
-import '../styles.css'
+import 'src/styles.css'
 
 // properly handle fontawesome icons
 import { config } from '@fortawesome/fontawesome-svg-core'
