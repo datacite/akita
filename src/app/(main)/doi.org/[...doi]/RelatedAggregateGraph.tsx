@@ -57,6 +57,7 @@ export default async function RelatedAggregateGraph(props: Props) {
       nodes={data.nodes}
       links={data.links}
       tooltipText={helpText}
+      isEmbed={isEmbed}
     />;
   } else if (timedOut) {
     innerGraph = <EmptyChart title={timedOutTitle}>

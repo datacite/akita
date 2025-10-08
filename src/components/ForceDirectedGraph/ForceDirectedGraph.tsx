@@ -13,9 +13,10 @@ type Props = {
   range?: string[]
   domain?: string[]
   tooltipText?: string
+  isEmbed?: boolean
 }
 
-const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links, domain, range, tooltipText }) => {
+const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, links, domain, range, tooltipText, isEmbed }) => {
   const [width, setWidth] = useState(500);
   const graphDivRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +41,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
       <div className="panel-body production-chart" ref={graphDivRef}>
         <h3 className={`${styles.chartTitle} member-results`}>
           {titleText}
-          {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
+          {tooltipText && !isEmbed && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </h3>
 
         <Vega
