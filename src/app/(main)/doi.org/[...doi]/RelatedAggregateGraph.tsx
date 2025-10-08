@@ -65,7 +65,7 @@ export default async function RelatedAggregateGraph(props: Props) {
   }
 
 
-  return (<Container fluid className={isEmbed ? "mt-2" : "mt-5"}>
+  return (<Container fluid className={isEmbed ? "mt-2" : "mt-2 mb-5"}>
     <Col md={{ offset: isEmbed ? 0 : 3 }} className="panel panel-transparent">
       <div className="panel-body">
         {innerGraph}
