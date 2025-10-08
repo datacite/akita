@@ -48,6 +48,7 @@ export default async function RelatedAggregateGraph(props: Props) {
   const timedOutHelpText = "The Connections graph timed out, possibly due to a large number of related works."
   const helpText = 'The “relatedIdentifier” and “resourceTypeGeneral” fields in the metadata of the primary DOI and related work DOIs were used to generate this graph.'
   const explanitoryText = "The network graph visualizes the connections among the primary DOI and its related works, grouped by work type. It shows the number of instances of each work type, and hovering over a connection reveals the number of links between any two types."
+  const learnMoreLink = "https://support.datacite.org/docs/works-in-datacite-commons#connections"
   const graphExists = data.nodes.length > 0;
 
   let innerGraph = <EmptyChart title={emptyTitleText} />
@@ -65,15 +66,19 @@ export default async function RelatedAggregateGraph(props: Props) {
   }
 
 
-  return (<Container fluid><Row>
+  return (<Container fluid className={isEmbed ? "mt-2" : "mt-5"}>
     <Col md={{ offset: isEmbed ? 0 : 3 }} className="panel panel-transparent">
       <div className="panel-body">
         {innerGraph}
         {graphExists &&
-          <p className={styles.explanitoryText}>{explanitoryText}</p>
+          <div className="secondary">
+            {explanitoryText}{' '}
+            <a href={learnMoreLink} target="_blank" rel="noopener noreferrer">
+              Learn more...
+            </a>
+          </div>
         }
       </div>
     </Col>
-  </Row>
   </Container>)
 }

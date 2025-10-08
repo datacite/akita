@@ -38,10 +38,10 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart" ref={graphDivRef}>
-        <div className={styles.chartTitle}>
+        <h3 className={styles.chartTitle + " member-results"}>
           {titleText}
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
-        </div>
+        </h3>
 
         <Vega
           renderer="svg"
