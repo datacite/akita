@@ -70,7 +70,7 @@ export default async function RelatedAggregateGraph(props: Props) {
       <div className="panel-body">
         {innerGraph}
         {graphExists &&
-          <div className="secondary">
+            <div className={`${styles.explanitoryText} secondary`}>
             {explanitoryText}{' '}
             <a href={learnMoreLink} target="_blank" rel="noopener noreferrer">
               Learn more...

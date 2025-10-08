@@ -38,7 +38,7 @@ const ForceDirectedGraph: React.FunctionComponent<Props> = ({ titleText, nodes, 
   return (
     <div className="panel panel-transparent">
       <div className="panel-body production-chart" ref={graphDivRef}>
-        <h3 className={styles.chartTitle + " member-results"}>
+        <h3 className={`${styles.chartTitle} member-results`}>
           {titleText}
           {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
         </h3>
