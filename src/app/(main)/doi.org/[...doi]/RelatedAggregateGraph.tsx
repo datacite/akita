@@ -1,6 +1,5 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { GraphData, getRelatedWorksGraph } from 'src/data/queries/relatedWorks'
 import ForceDirectedGraph from 'src/components/ForceDirectedGraph/ForceDirectedGraph'
