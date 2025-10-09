@@ -1,6 +1,5 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { GraphData, getRelatedWorksGraph } from 'src/data/queries/relatedWorks'
 import ForceDirectedGraph from 'src/components/ForceDirectedGraph/ForceDirectedGraph'
@@ -10,6 +9,7 @@ import styles from "./RelatedAggregateGraph.module.scss"
 interface Props {
   doi: string
   isBot?: boolean
+  isEmbed?: boolean
 }
 
 interface FetchResult {
@@ -35,7 +35,7 @@ async function fetchRelatedWorksGraphWithTimeout(doi: string, timeoutDuration: n
 }
 
 export default async function RelatedAggregateGraph(props: Props) {
-  const { doi, isBot = false } = props
+  const { doi, isBot = false, isEmbed = false } = props
   if (isBot) return null
 
   const timeoutDuration = 7000; // 7 second timeout
@@ -47,6 +47,7 @@ export default async function RelatedAggregateGraph(props: Props) {
   const timedOutHelpText = "The Connections graph timed out, possibly due to a large number of related works."
   const helpText = 'The “relatedIdentifier” and “resourceTypeGeneral” fields in the metadata of the primary DOI and related work DOIs were used to generate this graph.'
   const explanitoryText = "The network graph visualizes the connections among the primary DOI and its related works, grouped by work type. It shows the number of instances of each work type, and hovering over a connection reveals the number of links between any two types."
+  const learnMoreLink = "https://support.datacite.org/docs/works-in-datacite-commons#connections"
   const graphExists = data.nodes.length > 0;
 
   let innerGraph = <EmptyChart title={emptyTitleText} />
@@ -56,6 +57,7 @@ export default async function RelatedAggregateGraph(props: Props) {
       nodes={data.nodes}
       links={data.links}
       tooltipText={helpText}
+      isEmbed={isEmbed}
     />;
   } else if (timedOut) {
     innerGraph = <EmptyChart title={timedOutTitle}>
@@ -64,15 +66,19 @@ export default async function RelatedAggregateGraph(props: Props) {
   }
 
 
-  return (<Container fluid><Row>
-    <Col md={{ offset: 3 }} className="panel panel-transparent">
+  return (<Container fluid className={isEmbed ? "mt-2" : "mt-2 mb-5"}>
+    <Col md={{ offset: isEmbed ? 0 : 3 }} className="panel panel-transparent">
       <div className="panel-body">
         {innerGraph}
         {graphExists &&
-          <p className={styles.explanitoryText}>{explanitoryText}</p>
+            <div className={`${styles.explanitoryText} secondary`}>
+            {explanitoryText}{' '}
+            <a href={learnMoreLink} target="_blank" rel="noopener noreferrer">
+              Learn more...
+            </a>
+          </div>
         }
       </div>
     </Col>
-  </Row>
   </Container>)
 }

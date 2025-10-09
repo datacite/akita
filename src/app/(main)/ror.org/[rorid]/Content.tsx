@@ -13,7 +13,7 @@ import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import Loading from 'src/components/Loading/Loading'
-import RelatedContent from 'src/app/ror.org/[rorid]/RelatedContent';
+import RelatedContent from 'src/app/(main)/ror.org/[rorid]/RelatedContent';
 
 interface Props {
   rorid: string
