@@ -1,8 +1,8 @@
 // Use the hidden-source-map option when you don't want the source maps to be
 // publicly available on the servers, only to the error reporting
-const withSourceMaps = require('@zeit/next-source-maps')({
-  devtool: 'hidden-source-map'
-})
+// const withSourceMaps = require('@zeit/next-source-maps')({
+//   devtool: 'hidden-source-map'
+// })
 
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
@@ -23,8 +23,9 @@ const COMMIT_SHA =
   VERCEL_BITBUCKET_COMMIT_SHA
 
 
-module.exports = withSourceMaps({
+module.exports = {
   swcMinify: true,
+  productionBrowserSourceMaps: true,
   experimental: {
     outputFileTracingExcludes: {
       '*': [
@@ -106,4 +107,4 @@ module.exports = withSourceMaps({
 
     return config
   }
-})
+}
