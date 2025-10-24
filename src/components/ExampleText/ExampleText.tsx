@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import InfoPanel from '../InfoPanel/InfoPanel'
 
 
 export function WorksExampleText() {
@@ -48,14 +49,21 @@ export function RepositoriesExampleText() {
 
 
 function ExampleText(props: { heading: string } & PropsWithChildren) {
-  return <Row>
-    <Col xs={12} md={{ span: 9, offset: 3 }}>
-      <h1 className="mt-5">{props.heading}</h1>
-      <p>
-        {props.children}
-        <span className="secondary mt-5 mb-5 d-block">Need help? Documentation is available in <a href="https://support.datacite.org/docs/datacite-commons" target="_blank" rel="noreferrer">DataCite Support.</a></span>      </p>
-    </Col>
-  </Row>
+  return (
+    <>
+      <Row className="justify-content-center">
+        <Col xs={11}>
+          <div>
+            <h1 className="mt-5 text-center">{props.heading}</h1>
+            <p className="text-center">
+              {props.children}
+            </p>
+          </div>
+        </Col>
+      </Row>
+      <InfoPanel />
+    </>
+  )
 }
 
 
