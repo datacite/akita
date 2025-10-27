@@ -13,7 +13,7 @@ const InfoCard: React.FunctionComponent<Props> = ({ title, body, icon }) => {
   return (
     <div className={`${styles['info-panel']} panel panel-transparent`}>
       <div className="panel-body">
-        <FontAwesomeIcon className={styles['info-panel-icon']} icon={icon} />
+        <FontAwesomeIcon className={styles['info-panel-icon']} icon={icon} aria-hidden="true" />
         <h3>
           {title}
         </h3>
