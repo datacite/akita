@@ -33,7 +33,7 @@ const InfoPanel: React.FunctionComponent = () => {
               title="What can I find?"
               body={
                 <>
-                  Explore <b>all DataCite DOIs and a subset of Crossref DOIs</b>{' '}
+                  Explore all DataCite DOIs and a subset of Crossref DOIs
                   in the Works tab. Search for People (with ORCID iDs),
                   Organizations (with ROR IDs), and Repositories (of DataCite
                   Members) in their respective tabs to explore their related
