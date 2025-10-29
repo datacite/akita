@@ -24,7 +24,8 @@ const COMMIT_SHA =
 
 
 module.exports = withSourceMaps({
-  swcMinify: true,
+  reactStrictMode: true,
+  // swcMinify: true,
   experimental: {
     outputFileTracingExcludes: {
       '*': [
