@@ -20,12 +20,6 @@ import { License } from 'src/components/License/License'
 import MetricsCounter from 'src/components/MetricsCounter/MetricsCounter'
 import styles from './WorkMetadata.module.scss'
 
-const ForwardedBadge = React.forwardRef<HTMLSpanElement, React.ComponentProps<typeof Badge>>((props, ref) => (
-  <Badge {...props} ref={ref} />
-))
-
-ForwardedBadge.displayName = 'ForwardedBadge'
-
 type Props = {
   metadata: Work
   linkToExternal?: boolean
@@ -226,33 +220,33 @@ export default function WorkMetadata({
     )
   }
 
-  const tooltipResourceTypeGeneral = (
-    <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
-  )
+  // const tooltipResourceTypeGeneral = (
+  //   <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
+  // )
 
-  const tooltipFieldsOfScience = (
-    <Tooltip id="tooltipFieldsOfScience">
-      The OECD Fields of Science for the content.
-    </Tooltip>
-  )
+  // const tooltipFieldsOfScience = (
+  //   <Tooltip id="tooltipFieldsOfScience">
+  //     The OECD Fields of Science for the content.
+  //   </Tooltip>
+  // )
 
   const tooltipLanguage = (
     <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
-  let resourceType = metadata.types.resourceTypeGeneral
-  if (
-    metadata.registrationAgency.id !== 'datacite' &&
-    metadata.types.resourceType
-  )
-    resourceType = metadata.types.resourceType
+  // let resourceType = metadata.types.resourceTypeGeneral
+  // if (
+  //   metadata.registrationAgency.id !== 'datacite' &&
+  //   metadata.types.resourceType
+  // )
+  //   resourceType = metadata.types.resourceType
 
   const tags = () => {
     return (
       <div className="tags">
-        {resourceType && (
+        {/* {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-            <ForwardedBadge pill bg="info">{startCase(resourceType)}</ForwardedBadge>
+            <Badge pill bg="info">{startCase(resourceType)}</Badge>
           </OverlayTrigger>
         )}
         {metadata.fieldsOfScience && (
@@ -263,14 +257,16 @@ export default function WorkMetadata({
                 placement="top"
                 overlay={tooltipFieldsOfScience}
               >
-                <ForwardedBadge pill bg="info">{fos.name}</ForwardedBadge>
+                <Badge pill bg="info">{fos.name}</Badge>
               </OverlayTrigger>
             ))}
           </span>
-        )}
+        )} */}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            <ForwardedBadge pill bg="info">{metadata.language.name}</ForwardedBadge>
+            {({ ref, ...triggerHandler }) => (
+              <Badge ref={ref} {...triggerHandler} pill bg="info">{metadata.language?.name}</Badge>
+            )}
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (
