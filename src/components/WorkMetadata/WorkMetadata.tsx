@@ -14,7 +14,7 @@ import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
 
 import { Work } from 'src/data/types'
-// import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
+import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
 import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay'
 import { License } from 'src/components/License/License'
 import MetricsCounter from 'src/components/MetricsCounter/MetricsCounter'
@@ -32,7 +32,7 @@ type Props = {
 export default function WorkMetadata({
   metadata,
   linkToExternal,
-  // showClaimStatus,
+  showClaimStatus,
   hideTitle = false,
   hideMetadataInTable = false,
   includeMetricsDisplay = false
@@ -135,7 +135,7 @@ export default function WorkMetadata({
     )
   }
 
-  // const claim = metadata.claims ? metadata.claims[0] : null
+  const claim = metadata.claims ? metadata.claims[0] : null
 
   const container = () => {
     if (metadata.container
@@ -241,38 +241,38 @@ export default function WorkMetadata({
   // )
     // resourceType = metadata.types.resourceType
 
-  // const tags = () => {
-  //   return (
-  //     <div className="tags">
-  //       {resourceType && (
-  //         <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
-  //           <Badge pill bg="info">{startCase(resourceType)}</Badge>
-  //         </OverlayTrigger>
-  //       )}
-  //       {metadata.fieldsOfScience && (
-  //         <span>
-  //           {metadata.fieldsOfScience.map((fos) => (
-  //             <OverlayTrigger
-  //               key={fos.id}
-  //               placement="top"
-  //               overlay={tooltipFieldsOfScience}
-  //             >
-  //               <Badge pill bg="info">{fos.name}</Badge>
-  //             </OverlayTrigger>
-  //           ))}
-  //         </span>
-  //       )}
-  //       {metadata.language && (
-  //         <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-  //           <Badge pill bg="info">{metadata.language.name}</Badge>
-  //         </OverlayTrigger>
-  //       )}
-  //       {claim && showClaimStatus && (
-  //         <ClaimStatus claim={claim} type={'label'} />
-  //       )}
-  //     </div>
-  //   )
-  // }
+  const tags = () => {
+    return (
+      <div className="tags">
+        {/* {resourceType && (
+          <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
+            <Badge pill bg="info">{startCase(resourceType)}</Badge>
+          </OverlayTrigger>
+        )}
+        {metadata.fieldsOfScience && (
+          <span>
+            {metadata.fieldsOfScience.map((fos) => (
+              <OverlayTrigger
+                key={fos.id}
+                placement="top"
+                overlay={tooltipFieldsOfScience}
+              >
+                <Badge pill bg="info">{fos.name}</Badge>
+              </OverlayTrigger>
+            ))}
+          </span>
+        )}
+        {metadata.language && (
+          <OverlayTrigger placement="top" overlay={tooltipLanguage}>
+            <Badge pill bg="info">{metadata.language.name}</Badge>
+          </OverlayTrigger>
+        )} */}
+        {claim && showClaimStatus && (
+          <ClaimStatus claim={claim} type={'label'} />
+        )}
+     </div>
+    )
+  }
 
   const footer = () => {
     return (
@@ -310,7 +310,7 @@ export default function WorkMetadata({
           {registered()}</>}
         {!hideMetadataInTable && <License rights={metadata.rights} />}
         {!hideMetadataInTable && <MetricsCounter metadata={metadata} />}
-        {/* {tags()} */}
+        {tags()}
       </Col>
 
       {footer()}
