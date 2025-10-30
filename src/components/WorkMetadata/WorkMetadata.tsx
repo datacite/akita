@@ -266,9 +266,7 @@ export default function WorkMetadata({
         )} */}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
-            {({ ref, ...triggerHandler }) => (
-              <Badge ref={ref} {...triggerHandler} pill bg="info">{metadata.language?.name}</Badge>
-            )}
+              <Badge pill bg="info">{metadata.language?.name}</Badge>
           </OverlayTrigger>
         )}
         {claim && showClaimStatus && (
