@@ -2,9 +2,9 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Alert from 'react-bootstrap/Alert'
-// import Badge from 'react-bootstrap/Badge'
-// import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-// import Tooltip from 'react-bootstrap/Tooltip'
+import Badge from 'react-bootstrap/Badge'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import startCase from 'lodash/startCase'
 import truncate from 'lodash/truncate'
@@ -230,9 +230,9 @@ export default function WorkMetadata({
   //   </Tooltip>
   // )
 
-  // const tooltipLanguage = (
-  //   <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
-  // )
+  const tooltipLanguage = (
+    <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
+  )
 
   // let resourceType = metadata.types.resourceTypeGeneral
   // if (
@@ -261,12 +261,12 @@ export default function WorkMetadata({
               </OverlayTrigger>
             ))}
           </span>
-        )}
+        )} */}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
             <Badge pill bg="info">{metadata.language.name}</Badge>
           </OverlayTrigger>
-        )} */}
+        )}
         {claim && showClaimStatus && (
           <ClaimStatus claim={claim} type={'label'} />
         )}
