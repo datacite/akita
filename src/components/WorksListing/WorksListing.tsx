@@ -37,7 +37,7 @@ export default function WorksListing({
   showAnalytics,
   connectionTypesCounts,
   showSankey,
-  // sankeyTitle = 'Contributions to Related Works',
+  sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
   loading,
   loadingFacets = false,
