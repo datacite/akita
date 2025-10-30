@@ -3,13 +3,13 @@
 import React, { PropsWithChildren } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-// import clone from 'lodash/clone'
+import clone from 'lodash/clone'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
-// import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
-// import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
+import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
+import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
 import styles from './WorksDashboard.module.scss'
-// import { getTopFive, toBarRecord } from 'src/utils/helpers'
+import { getTopFive, toBarRecord } from 'src/utils/helpers'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 
 export type ShowCharts = {
@@ -27,7 +27,7 @@ type Props = PropsWithChildren<{
   show?: ShowCharts
 }>
 
-// const tooltipText = (sourceField: string) => `The field "${sourceField}" from DOI metadata was used to generate this chart.`
+const tooltipText = (sourceField: string) => `The field "${sourceField}" from DOI metadata was used to generate this chart.`
 
 function WorksDashboard({ works, show = {}, children }: Props) {
   if (works.totalCount == 0) return null
@@ -37,9 +37,9 @@ function WorksDashboard({ works, show = {}, children }: Props) {
     count: x.count
   }))
 
-  // const resourceTypes = getTopFive(works.resourceTypes.map(toBarRecord))
-  // const licensesData = clone(works.licenses)
-  // const licenses = getTopFive(licensesData.map(toBarRecord))
+  const resourceTypes = getTopFive(works.resourceTypes.map(toBarRecord))
+  const licensesData = clone(works.licenses)
+  const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
     <div className={styles.graphsContainer}>
@@ -54,7 +54,7 @@ function WorksDashboard({ works, show = {}, children }: Props) {
             title='Publication Year'
             data={published} />
         </Col>}
-        {/* {(show.resourceTypes || show.all) && <Col xs={12} sm={4}>
+        {(show.resourceTypes || show.all) && <Col xs={12} sm={4}>
           <HorizontalStackedBarChart
             chartTitle={'Work Types'}
             topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent }}
@@ -71,7 +71,7 @@ function WorksDashboard({ works, show = {}, children }: Props) {
             domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
             range={[...otherRange, ...licenseRange]}
             tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
-        </Col>} */}
+        </Col>}
         {(show.creatorsAndContributors || show.all) && <Col xs={12} sm={4}>
           <VerticalBarChart title="Top Creators and Contributors" data={works.creatorsAndContributors || []} />
         </Col>}

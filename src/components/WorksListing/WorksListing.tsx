@@ -13,7 +13,7 @@ import NoResults from 'src/components/NoResults/NoResults'
 
 import Pager from 'src/components/Pager/Pager'
 import WorksDashboard, { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
-// import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
+import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
 
 interface Props {
   works: Works
@@ -50,7 +50,7 @@ export default function WorksListing({
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
-  // const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
+  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
 
   const renderFacets = () => {
     return (
@@ -76,7 +76,7 @@ export default function WorksListing({
         {showAnalytics && <WorksDashboard works={works} show={show} />}
         {showSankey && <Row>
           <Col xs={12}>
-            {/* <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' /> */}
+            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
           </Col>
         </Row>}
 

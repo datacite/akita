@@ -222,31 +222,31 @@ export default function WorkMetadata({
     )
   }
 
-  // const tooltipResourceTypeGeneral = (
-  //   <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
-  // )
+  const tooltipResourceTypeGeneral = (
+    <Tooltip id="tooltipResourceTypeGeneral">The content type.</Tooltip>
+  )
 
-  // const tooltipFieldsOfScience = (
-  //   <Tooltip id="tooltipFieldsOfScience">
-  //     The OECD Fields of Science for the content.
-  //   </Tooltip>
-  // )
+  const tooltipFieldsOfScience = (
+    <Tooltip id="tooltipFieldsOfScience">
+      The OECD Fields of Science for the content.
+    </Tooltip>
+  )
 
   const tooltipLanguage = (
     <Tooltip id="tooltipLanguage">The primary language of the content.</Tooltip>
   )
 
-  // let resourceType = metadata.types.resourceTypeGeneral
-  // if (
-  //   metadata.registrationAgency.id !== 'datacite' &&
-  //   metadata.types.resourceType
-  // )
-  //   resourceType = metadata.types.resourceType
+  let resourceType = metadata.types.resourceTypeGeneral
+  if (
+    metadata.registrationAgency.id !== 'datacite' &&
+    metadata.types.resourceType
+  )
+    resourceType = metadata.types.resourceType
 
   const tags = () => {
     return (
       <div className="tags">
-        {/* {resourceType && (
+        {resourceType && (
           <OverlayTrigger placement="top" overlay={tooltipResourceTypeGeneral}>
             <Badge pill bg="info">{startCase(resourceType)}</Badge>
           </OverlayTrigger>
@@ -263,7 +263,7 @@ export default function WorkMetadata({
               </OverlayTrigger>
             ))}
           </span>
-        )} */}
+        )}
         {metadata.language && (
           <OverlayTrigger placement="top" overlay={tooltipLanguage}>
               <Badge pill bg="info">{metadata.language?.name}</Badge>
