@@ -128,6 +128,13 @@ function addConnectionType(w: Work, connectionType: string) {
 
 
 export async function GET(request: NextRequest) {
+  return new Response(
+    JSON.stringify({ error: 'DownloadReports temporarily disabled for related works.' }),
+      {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      }
+  );
   const searchParams = request.nextUrl.searchParams
   const variables = Object.fromEntries(searchParams)
 
