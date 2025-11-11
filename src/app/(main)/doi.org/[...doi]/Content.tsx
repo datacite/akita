@@ -63,18 +63,18 @@ export default async function Content(props: Props) {
           <Row className="mb-2 pb-4">
             <CiteAs doi={work} />
           </Row>
-          <Row className="mb-2 pb-4">
-            {!isBot && <DownloadReports
-              links={[
-                {
-                  title: 'Related Works (CSV)',
-                  helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`,
-                  type: 'doi/related-works',
-                }
-              ]}
-              variables={{ id: doi }}
-            />}
-          </Row>
+          {/* <Row className="mb-2 pb-4"> */}
+          {/*   {!isBot && <DownloadReports */}
+          {/*     links={[ */}
+          {/*       { */}
+          {/*         title: 'Related Works (CSV)', */}
+          {/*         helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`, */}
+          {/*         type: 'doi/related-works', */}
+          {/*       } */}
+          {/*     ]} */}
+          {/*     variables={{ id: doi }} */}
+          {/*   />} */}
+          {/* </Row> */}
         </Col>
 
         <Col md={9} className="px-0">
