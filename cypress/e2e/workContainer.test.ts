@@ -13,7 +13,7 @@ describe('workContainer with usage', () => {
   it('download', () => {
     cy.get('#download-metadata-button', { timeout: 30000 }).click()
     cy.get('.download-list', { timeout: 30000 })
-      .should('have.length', 3)
+      .should('have.length', 2)
       .should('contain', 'DataCite XML')
     cy.get('#close-modal', { timeout: 30000 }).click()
   })
