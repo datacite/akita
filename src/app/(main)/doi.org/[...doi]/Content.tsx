@@ -11,9 +11,9 @@ import TitleComponent from 'src/components/Title/Title'
 import Claim from 'src/components/Claim/Claim'
 import CiteAs from 'src/components/CiteAs/CiteAs'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-import DownloadReports from 'src/components/DownloadReports/DownloadReports'
+// import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import Work from 'src/components/Work/Work'
-import { isProject } from 'src/utils/helpers';
+// import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
 
 interface Props {
@@ -22,7 +22,8 @@ interface Props {
 }
 
 export default async function Content(props: Props) {
-  const { doi, isBot = false } = props
+  // const { doi, isBot = false } = props
+  const { doi } = props
 
   const { data, error } = await fetchDoi(doi)
 
@@ -63,18 +64,18 @@ export default async function Content(props: Props) {
           <Row className="mb-2 pb-4">
             <CiteAs doi={work} />
           </Row>
-          <Row className="mb-2 pb-4">
-            {!isBot && <DownloadReports
-              links={[
-                {
-                  title: 'Related Works (CSV)',
-                  helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`,
-                  type: 'doi/related-works',
-                }
-              ]}
-              variables={{ id: doi }}
-            />}
-          </Row>
+          {/* <Row className="mb-2 pb-4"> */}
+          {/*   {!isBot && <DownloadReports */}
+          {/*     links={[ */}
+          {/*       { */}
+          {/*         title: 'Related Works (CSV)', */}
+          {/*         helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`, */}
+          {/*         type: 'doi/related-works', */}
+          {/*       } */}
+          {/*     ]} */}
+          {/*     variables={{ id: doi }} */}
+          {/*   />} */}
+          {/* </Row> */}
         </Col>
 
         <Col md={9} className="px-0">
