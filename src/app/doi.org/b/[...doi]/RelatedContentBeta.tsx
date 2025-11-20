@@ -12,9 +12,11 @@ import WorksListing from 'src/components/WorksListing/WorksListing'
 
 import mapSearchparams from '../../[...doi]/mapSearchParams'
 import { useRelatedContentManager } from './RelatedContentManager'
+import { Work } from 'src/data/types'
 
 interface Props {
   isBot?: boolean
+  work?: Work
 }
 
 function getQueryVariables(){
@@ -26,11 +28,42 @@ function getQueryVariables(){
 }
 
 
+function getCounts(work: Work) {
+  return {
+    references: work.referenceCount || 0,
+    allRelated: work.allRelatedCount || 0,
+    citations: work.citationCount || 0,
+    parts: work.partCount || 0,
+    partOf: work.partOfCount || 0,
+    otherRelated: work.otherRelatedCount || 0
+  }
+}
+
+function extractRelatedDois(work: Work | undefined): string[] {
+  if (!work) return []
+  
+  // Check if relatedIdentifiers exists on the work object (even if not in the type)
+  const workWithRelatedIdentifiers = work as any
+  if (!workWithRelatedIdentifiers?.relatedIdentifiers) return []
+  
+  return workWithRelatedIdentifiers.relatedIdentifiers
+    .filter((identifier: any) => identifier.relatedIdentifierType === 'DOI')
+    .map((identifier: any) => identifier.relatedIdentifier)
+    .filter(Boolean) // Remove any undefined/null values
+}
+
 export default function RelatedContent(props: Props) {
   const { isBot = false } = props
   if (isBot) return null
+  const relatedDois = extractRelatedDois(props.work)
   const vars = getQueryVariables()
-  const manager = useRelatedContentManager(vars, vars.connectionType)
+  // Merge related DOIs with existing variables as uidList
+  const varsWithRelatedDois = {
+    ...vars,
+    uidList: relatedDois
+  }
+  
+  const manager = useRelatedContentManager(varsWithRelatedDois, varsWithRelatedDois.connectionType)
 
   if (manager.isLoading) return <Row><Loading /></Row>
 
@@ -45,7 +78,8 @@ export default function RelatedContent(props: Props) {
 
   const { works, title: displayedConnectionTitle } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
-  const connectionTypeCounts = manager.connectionTypeCounts
+  // const connectionTypeCounts = manager.connectionTypeCounts
+  const connectionTypeCounts = props.work && getCounts(props.work)
   const url = manager.getUrl()
   return (
     <Container fluid>
@@ -58,8 +92,9 @@ export default function RelatedContent(props: Props) {
         <WorksListing
           works={works}
           loading={manager.isLoading}
+          loadingFacets={manager.facetsAreLoading}
           connectionTypesCounts={connectionTypeCounts}
-          showAnalytics={true}
+          showAnalytics={!manager.facetsAreLoading}
           showSankey={manager.showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}

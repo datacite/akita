@@ -9,10 +9,10 @@ export function useDoiRelatedContentQuery(variables: QueryVar) {
   const content = useSearchDoiQuery( variables )
   const facets = useSearchDoiFacetsQuery(variables )
 
-  const loading = content.loading || facets.loading;
+  const loading = content.loading;
   const error = content.error || facets.error;
 
-  if (loading || error) return { loading, data: undefined, error }
+  if (loading || error) return { loading, data: undefined, error, facetsLoading: facets.loading }
 
   const work = {
     types: {
@@ -27,6 +27,7 @@ export function useDoiRelatedContentQuery(variables: QueryVar) {
   return {
     ...content,
     data: { work } as QueryData,
+    facetsLoading: facets.loading
   }
 }
 

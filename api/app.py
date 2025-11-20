@@ -27,6 +27,19 @@ def related_works(doi):
 
     return jsonify(graph)
 
+@app.route("/api/doi/related-list/<path:doi>", methods=["GET"])
+def related_works_list(doi):
+    doi = extract_doi(doi)
+    if not doi:
+        return jsonify({"error": "Does not match DOI format"}), 400
+
+    full_doi_attributes = get_full_corpus_doi_attributes(
+        doi_query=doi, parser=RelatedWorkReports.parser, api_url=DOI_API
+    )
+    if not full_doi_attributes:
+        return jsonify({"error": "DOI not found"}), 404
+    return jsonify(full_doi_attributes)
+
 
 if __name__ == "__main__":
     app.run(debug=False)

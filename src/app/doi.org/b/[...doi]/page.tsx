@@ -16,10 +16,9 @@ export default async function Page({ params }: Props) {
 
   // Fetch DOI metadata
   const { data } = await fetchDoi(doi)
-
   if (!data) notFound()
 
   return <>
-    <RelatedContent />
+    <RelatedContent work={data.work}/>
   </>
 }

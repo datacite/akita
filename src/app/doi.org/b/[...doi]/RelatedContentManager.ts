@@ -11,11 +11,13 @@ export class RelatedContentManager {
   private readonly paginationManager: PaginationManager | null
   private readonly connectionType: string
   private readonly vars: any
+  private readonly facetsLoading: boolean
 
-  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null) {
+  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null, facetsLoading: boolean) {
     this.vars = vars
     this.data = data
     this.loading = loading
+    this.facetsLoading = facetsLoading
     this.error = error
     this.connectionType = getValidConnectionType(connectionType)
 
@@ -31,6 +33,10 @@ export class RelatedContentManager {
 
   get isLoading() {
     return this.loading
+  }
+
+  get facetsAreLoading() {
+    return this.facetsLoading
   }
 
   get hasError() {
@@ -77,6 +83,7 @@ export class RelatedContentManager {
 }
 
 export function useRelatedContentManager(vars: any, connectionType: string | undefined) {
-  const { loading, data, error } = useDoiRelatedContentQuery(vars)
-  return new RelatedContentManager(vars, connectionType, data, loading, error)
+
+  const { loading, data, error, facetsLoading } = useDoiRelatedContentQuery(vars)
+  return new RelatedContentManager(vars, connectionType, data, loading, error, facetsLoading )
 }

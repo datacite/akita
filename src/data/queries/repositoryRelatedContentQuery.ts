@@ -8,10 +8,10 @@ export function useRepositoryRelatedContentQuery(variables: QueryVar) {
   const results = useSearchDoiQuery(variables)
   const facets = useSearchDoiFacetsQuery(variables, [...FACETS.DEFAULT, ...FACETS.METRICS])
 
-  const loading = results.loading || facets.loading;
+  const loading = results.loading;
   const error = results.error || facets.error;
 
-  if (loading || error) return { loading, data: undefined, error }
+  // if (loading || error) return { loading, data: undefined, error }
 
 
   const works = {
@@ -21,7 +21,10 @@ export function useRepositoryRelatedContentQuery(variables: QueryVar) {
 
   return {
     ...results,
+    loading,
+    error,
     data: { works } as QueryData,
+    facetsLoading: facets.loading
   }
 }
 
