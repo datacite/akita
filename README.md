@@ -92,13 +92,25 @@ Note: `yarn dev` only runs the frontend. If you need the API, use `yarn dev-all`
 
 The application is built and deployed using Vercel and GitHub Actions
 
-### Note on Patches/Pull Requests
+### Contributing
 
-* Fork the project
-* Write tests for your new feature or a test that reproduces a bug
-* Implement your feature or make a bug fix
-* Do not mess with Rakefile, version or history
-* Commit, push and make a pull request. Bonus points for topical branches.
+1.  **Fork** the project.
+2.  **Create** a feature branch (`git checkout -b feature/my-new-feature`).
+3.  **Commit** your changes (`git commit -am 'Add some feature'`).
+4.  **Push** to the branch (`git push origin feature/my-new-feature`).
+5.  **Create** a new Pull Request.
+
+Please ensure you:
+*   Write tests for new features or bug fixes.
+*   Follow the existing code style.
+*   Do not modify the `Rakefile`, version, or history files directly (if applicable).
+
+## Resources
+
+*   [DataCite Commons](https://commons.datacite.org): The live service.
+*   [DataCite API Documentation](https://support.datacite.org/docs/api-reference): Reference for the DataCite REST API.
+*   [DataCite GraphQL API Guide](https://support.datacite.org/docs/datacite-graphql-api-guide): Guide for using the DataCite GraphQL API.
+*   [DataCite Support](https://support.datacite.org/): General support documentation.
 
 ## License
 **akita** is released under the [MIT License](https://github.com/datacite/akita/blob/master/LICENSE).
