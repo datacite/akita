@@ -109,3 +109,6 @@ cypress/screenshots/
 .node-version
 
 .env*.local
+api/__pycache__/
+api/*.pyc
+devnotes/
