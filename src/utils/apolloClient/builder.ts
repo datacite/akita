@@ -8,16 +8,16 @@ import { DATACITE_API_URL } from 'src/data/constants'
  * this throws an error unless the token is returned from a function that is called
  * in the authLink setContext. I'm not sure why
  */
-export default function apolloClientBuilder(getToken: () => string) {
+export default function apolloClientBuilder(getToken: () => Promise<string | null>) {
   // needed for CORS, see https://www.apollographql.com/docs/react/networking/authentication/#cookie
   const httpLink = createHttpLink({
     uri: DATACITE_API_URL + '/graphql',
     credentials: 'include'
   })
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext(async (_, { headers }) => {
     // return the headers to the context so httpLink can read them
-    const token = getToken()
+    const token = await getToken()
 
     return {
       headers: {
