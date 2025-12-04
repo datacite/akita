@@ -9,12 +9,12 @@ import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { PROFILES_SETTINGS_URL } from 'src/data/constants'
 
-import { session } from "src/utils/session";
+import { useSession } from "src/utils/session";
 import styles from './DiscoverWorksAlert.module.scss'
 
 
 export default function DiscoverWorksAlert() {
-  const user = session()
+  const { user } = useSession()
 
   const [show, setShow] = useState(true);
 

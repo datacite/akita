@@ -7,10 +7,10 @@ import { faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { ORCID_URL } from 'src/data/constants';
-import { session } from "src/utils/session";
+import { useSession } from "src/utils/session";
 
 export function UserCommonsPageButton() {
-  const user = session()
+  const { user } = useSession()
   if (!user) throw new Error("User not signed in")
   const href = '/orcid.org/' + user.uid
 
@@ -21,7 +21,7 @@ export function UserCommonsPageButton() {
 
 
 export function UserOrcidButton() {
-  const user = session()
+  const { user } = useSession()
   if (!user) throw new Error("User not signed in")
   const href = `${ORCID_URL}/${user.uid}`
 
