@@ -16,7 +16,7 @@ describe('useSession behavior', () => {
       });
     });
 
-    cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false });
+    cy.setCookie('_datacite', Cypress.env('userCookie'));
     cy.visit('/');
     cy.get('#sign-in').should('contain.text', 'Martin Fenner'); // Adjust to expected user name from env cookie
   });
