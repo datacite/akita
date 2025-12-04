@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react'
 import { Cookies } from 'react-cookie-consent'
-import JsonWebToken from 'jsonwebtoken'
+import { jwtVerify, importSPKI } from 'jose'
 import { JWT_KEY } from 'src/data/constants'
 
 export type User = {
@@ -7,26 +8,39 @@ export type User = {
   name: string
 } | null
 
-export const session = () => {
-  // RSA public key
-  if (!JWT_KEY) return null
+export const useSession = () => {
+  const [user, setUser] = useState<User>(null)
+  const [loading, setLoading] = useState(true)
 
-  const sessionCookie = Cookies.getJSON('_datacite')
-  const token = sessionCookie?.authenticated?.access_token
-  if (!token) return null
+  useEffect(() => {
+    const fetchUser = async () => {
+      // RSA public key
+      if (!JWT_KEY) {
+        setLoading(false)
+        return
+      }
 
-  let user: any = null
-  function setUser(error: any, payload: any) {
-    if (error) {
-      console.log('JWT verification error: ' + error.message)
-      return
+      const sessionCookie = Cookies.getJSON('_datacite')
+      const token = sessionCookie?.authenticated?.access_token
+      if (!token) {
+        setLoading(false)
+        return
+      }
+
+      try {
+        const publicKey = await importSPKI(JWT_KEY, 'RS256')
+        const { payload } = await jwtVerify(token, publicKey)
+        setUser(payload as User)
+      } catch (error: any) {
+        console.log('JWT verification error: ' + error.message)
+        setUser(null)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    user = payload
-  }
+    fetchUser()
+  }, [])
 
-  // verify asymmetric token, using RSA with SHA-256 hash algorithm
-  JsonWebToken.verify(token, JWT_KEY, { algorithms: ['RS256'] }, setUser)
-
-  return user as User
+  return { user, loading }
 }
