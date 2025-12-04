@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/cypress_tests.yml
     secrets: inherit
   deploy:
+    if: github.actor != 'dependabot[bot]'
     needs: test
     runs-on: ubuntu-latest
     steps:
