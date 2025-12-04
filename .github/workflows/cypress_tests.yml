@@ -43,4 +43,5 @@ jobs:
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
+          CYPRESS_userCookie: ${{ secrets.CYPRESS_USER_COOKIE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
