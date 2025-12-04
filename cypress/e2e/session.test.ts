@@ -4,6 +4,18 @@ describe('useSession behavior', () => {
   });
 
   it('shows logged in state with valid token', () => {
+    cy.then(() => {
+      const userCookie = Cypress.env('userCookie');
+      Cypress.log({
+        name: 'diagnostics:userCookie',
+        message: [
+          `type=${typeof userCookie}`,
+          `present=${Boolean(userCookie)}`,
+          `stringLength=${typeof userCookie === 'string' ? userCookie.length : 'n/a'}`,
+        ],
+      });
+    });
+
     cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false });
     cy.visit('/');
     cy.get('#sign-in').should('contain.text', 'Martin Fenner'); // Adjust to expected user name from env cookie
