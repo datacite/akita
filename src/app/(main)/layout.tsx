@@ -42,6 +42,7 @@ const sourceSans3 = Source_Sans_3({
 })
 
 export default async function RootLayout({ children }: PropsWithChildren) {
+  const authToken = await getAuthToken()
   return (
     <html lang="en" className={sourceSans3.className}>
       <head>
@@ -54,7 +55,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         </Suspense>
       </head>
       <body className={sourceSans3.className}>
-        <Providers authToken={getAuthToken()} >
+        <Providers authToken={authToken} >
           <Header />
           <DiscoverWorksAlert />
           <div className="container-fluid flex-grow-1">{children}</div>
