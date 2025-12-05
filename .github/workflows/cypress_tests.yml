@@ -40,9 +40,8 @@ jobs:
           CYPRESS_NODE_ENV: test
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_ORCID_API_URL: ${{ secrets.NEXT_PUBLIC_ORCID_API_URL }}
-          NEXT_PUBLIC_JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY}}
+          NEXT_PUBLIC_JWT_PUBLIC_KEY: ${{ secrets.CYPRESS_JWT_PUBLIC_KEY_2025}}
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}
-          CYPRESS_userCookie: ${{ secrets.CYPRESS_USER_COOKIE }}
+          CYPRESS_userCookie: ${{ secrets.CYPRESS_USER_COOKIE_2025 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
