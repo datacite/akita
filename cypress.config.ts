@@ -6,12 +6,12 @@ export default defineConfig({
   projectId: 'yur1cf',
   retries: 2,
   e2e: {
-    setupNodeEvents(on, config) {},
+    setupNodeEvents() {},
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.test.*',
   },
   component: {
-    setupNodeEvents(on, config) { },
+    setupNodeEvents() { },
     specPattern: 'src/components/**/*.test.*',
     devServer: {
       bundler: 'webpack',
