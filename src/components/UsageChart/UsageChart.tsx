@@ -74,6 +74,11 @@ const UsageChart: React.FunctionComponent<Props> = ({
     return isAfter(chartDate, publicationYear || 0)
   })
 
+  const subsetWithTimezone = subset.map((d) => ({
+    ...d,
+    yearMonth: d.yearMonth + '-15T00:00:00Z'
+  }))
+
   // get domain, set width according to screen size
   /* istanbul ignore next */
   const domain = Math.abs(differenceInMonths(lowerBound, new Date()))
@@ -163,7 +168,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
             <VegaLite
               renderer="svg"
               spec={spec}
-              data={{ table: subset }}
+              data={{ table: subsetWithTimezone }}
               actions={actions}
             />
           </Row>
