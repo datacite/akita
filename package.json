@@ -79,7 +79,7 @@
     "vega": "^6.2.0",
     "vega-embed": "^6.25.0",
     "vega-lite": "^5.19.0",
-    "wait-on": "^5.0.1"
+    "wait-on": "^9.0.3"
   },
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.0",
