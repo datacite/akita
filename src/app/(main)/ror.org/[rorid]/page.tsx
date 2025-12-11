@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Content from './Content'
 import { RORV2Client } from 'src/data/clients/ror-v2-client'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
+import RelatedContent from './RelatedContent'
 
 interface Props {
   params: Promise<{
@@ -56,6 +57,7 @@ export default async function Page(props: Props) {
   return (
     <>
       <Content rorid={rorid} />
+      <RelatedContent rorId={rorid} />
     </>
   )
 }

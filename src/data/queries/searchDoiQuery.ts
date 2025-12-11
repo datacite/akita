@@ -10,18 +10,17 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
-function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
+function buildOrgQuery(rorId: string | undefined): string {
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = `"https://${id}"`
-  const rorFundingIdsQuery = rorFundingIds.map(id => '"https://doi.org/' + id + '"').join(' OR ')
-  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funding_references.funderIdentifier:(${urlId} ${rorFundingIdsQuery && `OR ${rorFundingIdsQuery}`}))`
+  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funder_rors:${urlId})`
 }
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
-    buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildOrgQuery(variables.rorId || undefined),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',

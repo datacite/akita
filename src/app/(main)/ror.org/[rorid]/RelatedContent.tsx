@@ -17,16 +17,15 @@ import mapSearchparams from './mapSearchParams';
 interface Props {
   isBot?: boolean
   rorId: string
-  rorFundingIds: string[]
 }
 
 export default function RelatedContent(props: Props) {
-  const { isBot = false, rorId, rorFundingIds } = props
+  const { isBot = false, rorId } = props
 
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { rorId, rorFundingIds, ...variables }
+  const vars = { rorId, ...variables }
   const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
 
   if (isBot) return null
