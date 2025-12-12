@@ -56,7 +56,17 @@ export default function WorkFacets({
     { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
   ] : []
 
+  const organizationRelationTypeList: Facet[] = [
+    { "id": "allRelated", "title": "All" },
+    { "id": "createdContributedOrPublishedBy", "title": "Created By", "tooltipText": "Works created, contributed, or published by the organization." },
+    { "id": "createdOrContributedByAffiliatedResearcher", "title": "By Affiliated Researchers", "tooltipText": "Works created or contributed by researchers affiliated with the organization." },
+    { "id": "fundedBy", "title": "Funded By", "tooltipText": "Works funded by the organization and its child organizations." },
+    // OMP relationships are included in allRelated, but we don't document or explain this functionality ATM.
+    // { "id": "connectedToOrganizationOMPs", "title": "Related to OMPs", "tooltipText": "Works related to Output Management Plans associated with the organization." },
+  ]
+
   const isConnectionTypeSet = searchParams?.has('connection-type')
+  const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
   const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
   const defaultActiveKeys = [
@@ -69,7 +79,8 @@ export default function WorkFacets({
     "field-of-science-facets",
     "registration-agency-facets",
     "conection-type-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "organization-relation-type-facets"
   ]
 
   return (
@@ -81,12 +92,24 @@ export default function WorkFacets({
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
       {totalConnectionTypeCount > 0 && (
         <FacetList
-          data={connectionTypeList.filter(f => f.count > 0)}
+          data={connectionTypeList.filter(f => f.count && f.count > 0)}
           title="Connection Types"
           id="connection-type-facets"
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
+          radio
+        />
+      )}
+
+      {url?.includes('ror.org/') && (
+        <FacetList
+          data={organizationRelationTypeList}
+          title="Connection Types"
+          id="organization-relation-type-facets"
+          param="organization-relation-type"
+          url={url}
+          checked={(i) => !isOrganizationRelationTypeSet && i == 0}
           radio
         />
       )}

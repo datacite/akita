@@ -10,17 +10,36 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
-function buildOrgQuery(rorId: string | undefined): string {
+function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = `"https://${id}"`
-  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funder_rors:${urlId})`
+
+  const fundedByQuery = `funder_rors:${urlId}`
+  const fundedByChildOrganizations = `funder_parent_rors:${urlId}`
+  const createdContributedOrPublishedBy = `(organization_id:${id} OR  provider.ror_id:${urlId})`
+  const createdOrContributedByAffiliatedResearcher = `affiliation_id:${id}`
+  const connectedToOrganizationOMPs = `related_dmp_organization_id:${id}`
+
+  switch (organizationRelationType) {
+    case 'fundedBy':
+      return `(${fundedByQuery} OR ${fundedByChildOrganizations})`
+    case 'createdContributedOrPublishedBy':
+      return `(${createdContributedOrPublishedBy})`
+    case 'createdOrContributedByAffiliatedResearcher':
+      return `(${createdOrContributedByAffiliatedResearcher})`
+    case 'connectedToOrganizationOMPs':
+      return `(${connectedToOrganizationOMPs})`
+    default:
+      return `(${createdContributedOrPublishedBy} OR ${createdOrContributedByAffiliatedResearcher} OR ${connectedToOrganizationOMPs} OR ${fundedByQuery} OR ${fundedByChildOrganizations})`
+  }
+
 }
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
-    buildOrgQuery(variables.rorId || undefined),
+    buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || undefined),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
@@ -207,8 +226,8 @@ export interface QueryData {
 export interface QueryVar {
   query?: string
   filterQuery?: string
-  rorId?: string
-  rorFundingIds?: string[]
+  rorId?: string,
+  organizationRelationType?: string,
   userId?: string
   clientId?: string
   cursor?: string
