@@ -60,7 +60,7 @@ export default function Content(props: Props) {
             />
           </Col>
           <Col md={9} className="px-0">
-            <SummarySearchMetrics rorId={organization.id} rorFundingIds={rorFundingIds} />
+            <SummarySearchMetrics rorId={organization.id}/>
             {organization.inceptionYear && (
               <p className="mb-3">Founded {organization.inceptionYear}</p>
             )}

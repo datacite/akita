@@ -19,9 +19,11 @@ type Props = {
     views?: string
     downloads?: string
   }
+
+  displayWorksTotal?: boolean
 }
 
-export function MetricsDisplay({ counts, links = {} }: Props) {
+export function MetricsDisplay({ counts, links, displayWorksTotal = true }: Props) {
 
   const metricsData = [
     {
@@ -47,6 +49,7 @@ export function MetricsDisplay({ counts, links = {} }: Props) {
   ];
 
   const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map((metric, index) =>
+    metric.label === "Works" && !displayWorksTotal ? null :
     <React.Fragment key={"metric-" + index}>
       <dd>{compactNumbers(metric.count || 0)}</dd>
       <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>

@@ -27,6 +27,8 @@ export default function RelatedContent(props: Props) {
 
   const vars = { rorId, ...variables }
   const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
+  
+  const showMetrics = Boolean(vars.organizationRelationType && vars.organizationRelationType !== 'allRelated')
 
   if (isBot) return null
 
@@ -59,7 +61,9 @@ export default function RelatedContent(props: Props) {
       </Row>
       <WorksListing
         works={relatedWorks}
+        vars={vars}
         loading={loading}
+        showMetrics={showMetrics}
         showAnalytics={true}
         showClaimStatus={true}
         hasPagination={relatedWorks.totalCount > 25}

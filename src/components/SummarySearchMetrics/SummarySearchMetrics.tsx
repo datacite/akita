@@ -42,5 +42,7 @@ export default function SummarySearchMetrics(variables: QueryVar) {
   if (isLoading) return <SummaryStatsLoader />
   if (!data || error) return null
 
-  return <MetricsDisplay counts={data} links={links} />
+  const displayWorksTotal = !variables.organizationRelationType
+
+  return <MetricsDisplay counts={data} links={links} displayWorksTotal={displayWorksTotal} />
 }
