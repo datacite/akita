@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { session } from 'src/utils/session';
+import { useSession } from 'src/utils/session';
 
 interface Props {
   signedInContent: React.ReactNode
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function NavRight({ signedInContent, signedOutContent }: Props) {
-  const user = session()
+  const { user } = useSession()
 
   if (!user) return signedOutContent
   return signedInContent
