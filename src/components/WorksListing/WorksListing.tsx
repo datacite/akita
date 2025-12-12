@@ -19,7 +19,7 @@ import { SearchParams } from 'next/dist/server/request/search-params'
 
 interface Props {
   works: Works
-  vars: SearchParams
+  vars?: SearchParams
   showMetrics?: boolean
   showAnalytics: boolean
   showSankey?: boolean
@@ -80,7 +80,7 @@ export default function WorksListing({
     return (
       <>
         {showMetrics && <Row className="mt-3">
-          <SummarySearchMetrics {...vars}/>
+          <SummarySearchMetrics {...(vars || {})}/>
         </Row>}
         {showAnalytics && <WorksDashboard works={works} show={show} />}
         {showSankey && <Row>
