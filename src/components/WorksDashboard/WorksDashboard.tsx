@@ -8,7 +8,6 @@ import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
 import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
-import styles from './WorksDashboard.module.scss'
 import { getTopFive, toBarRecord } from 'src/utils/helpers'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 
@@ -42,7 +41,7 @@ function WorksDashboard({ works, show = {}, children }: Props) {
   const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
-    <div className={styles.graphsContainer}>
+    <div className={'mt-5 mb-5'}>
       {children &&
         <Row>
           {children}
