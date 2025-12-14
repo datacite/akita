@@ -27,6 +27,7 @@ interface Facets {
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
+  connectionTypes?: Facet[]
   nodes: Work[]
 }
 
@@ -150,6 +151,13 @@ export default function WorkFacets({
         id="repository-type-facets"
         param="repository-type"
         tooltipText='The type of DataCite Repository where a DOI is stored.'
+        url={url}
+      />
+      <FacetList
+        data={data.connectionTypes}
+        title="Connection Types"
+        id="connection-types-facets"
+        param="connection-type"
         url={url}
       />
       </FacetListGroup>

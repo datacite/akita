@@ -30,6 +30,7 @@ describe('Search Works', () => {
         expect($facet.eq(5)).to.contain('Field of Science')
         expect($facet.eq(6)).to.contain('Registration Agency')
         expect($facet.eq(7)).to.contain('Repository Type')
+        expect($facet.eq(7)).to.contain('Connection Types')
       })
   })
 

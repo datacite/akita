@@ -25,7 +25,8 @@ export default function mapSearchparams(searchParams: SearchParams) {
       fieldOfScience: searchParams['field-of-science'],
       license: searchParams.license,
       registrationAgency: searchParams['registration-agency'],
-      clientType: searchParams['repository-type']
+      clientType: searchParams['repository-type'],
+      connectionTypes: searchParams['connection-types']
     },
 
     isBot: false
