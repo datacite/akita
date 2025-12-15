@@ -29,22 +29,22 @@ export function MetricsDisplay({ counts, links, displayWorksTotal = true }: Prop
     {
       "label": "Works",
       "count": counts.works,
-      "link": links.works
+      "link": links?.works
     },
     {
       "label": "Citations",
       "count": counts.citations,
-      "link": links.citations
+      "link": links?.citations
     },
     {
       "label": "Views",
       "count": counts.views,
-      "link": links.views
+      "link": links?.views
     },
     {
       "label": "Downloads",
       "count": counts.downloads,
-      "link": links.downloads
+      "link": links?.downloads
     }
   ];
 

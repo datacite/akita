@@ -325,7 +325,7 @@ type Identifier = {
 export type Facet = {
   id: string
   title: string
-  count?: number
+  count: number
   tooltipText?: string
 }
 

@@ -64,7 +64,7 @@ export default function FacetListItem(props: Props) {
         {facet.title}
         {tooltipText && <InfoTooltip text={tooltipText} />}
       </span>
-      <span>{facet.count?.toLocaleString('en-US')}</span>
+      <span>{facet.count > 0 && facet.count.toLocaleString('en-US')}</span>
     </Link>
     </ListGroup.Item>
   )
