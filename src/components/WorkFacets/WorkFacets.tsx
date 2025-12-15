@@ -92,7 +92,7 @@ export default function WorkFacets({
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
       {totalConnectionTypeCount > 0 && (
         <FacetList
-          data={connectionTypeList.filter(f => f.count && f.count > 0)}
+          data={connectionTypeList.filter(f => f.count > 0)}
           title="Connection Types"
           id="connection-type-facets"
           param="connection-type"
