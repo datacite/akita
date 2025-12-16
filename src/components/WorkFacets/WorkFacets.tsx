@@ -58,8 +58,8 @@ export default function WorkFacets({
 
   const organizationRelationTypeList: Facet[] = [
     { id: "allRelated", title: "All", count: 0 },
-    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: 0 },
     { id: "createdOrContributedByAffiliatedResearcher", title: "By Affiliated Researchers", tooltipText: "Works created or contributed by researchers affiliated with the organization.", count: 0 },
+    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: 0 },
     { id: "fundedBy", title: "Funded By", tooltipText: "Works funded by the organization and its child organizations.", count: 0 },
     // OMP relationships are included in allRelated, but we don't document or explain this functionality ATM.
     // { id: "connectedToOrganizationOMPs", title: "Related to OMPs", tooltipText: "Works related to Output Management Plans associated with the organization.", count: 0 },
@@ -105,7 +105,7 @@ export default function WorkFacets({
       {url?.includes('ror.org/') && (
         <FacetList
           data={organizationRelationTypeList}
-          title="Connection Types"
+          title="Organization Relation Types"
           id="organization-relation-type-facets"
           param="organization-relation-type"
           url={url}

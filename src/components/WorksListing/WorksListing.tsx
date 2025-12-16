@@ -79,9 +79,9 @@ export default function WorksListing({
     if (hasNoWorks) return renderNoWorks()
     return (
       <>
-        {showMetrics && <Row className="mt-3">
+        {showMetrics && <div className="mt-3">
           <SummarySearchMetrics {...(vars || {})}/>
-        </Row>}
+        </div>}
         {showAnalytics && <WorksDashboard works={works} show={show} />}
         {showSankey && <Row>
           <Col xs={12}>
