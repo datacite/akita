@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faSquare, faCheckSquare,
@@ -36,6 +35,7 @@ export default function FacetListItem(props: Props) {
     value: customValue
   } = props
 
+  const router = useRouter()
 
   const checkIcon = radio ? faDotCircle : faCheckSquare
   const uncheckIcon = radio ? faCircle : faSquare
@@ -56,16 +56,33 @@ export default function FacetListItem(props: Props) {
   }
   params.delete('cursor')
 
+  const handleClick = () => {
+    router.push(url + params.toString(), { scroll: false })
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   return (
     <ListGroup.Item as="li" key={facet.id}>
-    <Link prefetch={false} href={url + params.toString()} className={styles.facetlink}>
+    <div 
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      className={styles.facetlink}
+      role="button"
+      tabIndex={0}
+    >
       <FontAwesomeIcon icon={icon} />
       <span className={styles.facetTitle}>
         {facet.title}
         {tooltipText && <InfoTooltip text={tooltipText} />}
       </span>
       <span>{facet.count > 0 && facet.count.toLocaleString('en-US')}</span>
-    </Link>
+    </div>
     </ListGroup.Item>
   )
 }
