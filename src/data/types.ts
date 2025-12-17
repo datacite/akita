@@ -74,6 +74,7 @@ export type Works = {
   funders: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   citations?: Facet[]
   views?: Facet[]
@@ -326,6 +327,7 @@ export type Facet = {
   id: string
   title: string
   count: number
+  tooltipText?: string
 }
 
 export type MultilevelFacet = Facet & {
