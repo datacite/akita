@@ -74,6 +74,7 @@ export const FACETS = {
     'registrationAgencies',
     'authors',
     'creatorsAndContributors',
+    'clients',
     'clientTypes',
     // personToWorkTypesMultilevel: []
   ],

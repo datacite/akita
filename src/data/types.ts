@@ -74,6 +74,7 @@ export type Works = {
   funders: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   citations?: Facet[]
   views?: Facet[]

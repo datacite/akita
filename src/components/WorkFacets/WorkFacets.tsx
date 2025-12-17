@@ -26,6 +26,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   nodes: Work[]
 }
@@ -80,7 +81,8 @@ export default function WorkFacets({
     "registration-agency-facets",
     "conection-type-facets",
     "repository-type-facets",
-    "organization-relation-type-facets"
+    "organization-relation-type-facets",
+    "repository-facets"
   ]
 
   return (
@@ -166,14 +168,28 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
-      <FacetList
-        data={data.clientTypes}
-        title="Repository Type"
-        id="repository-type-facets"
-        param="repository-type"
-        tooltipText='The type of DataCite Repository where a DOI is stored.'
-        url={url}
-      />
+
+      {!url.startsWith('/repositories') && (
+        <>
+          <FacetList
+              data={data.clients}
+              title="Repository"
+              id="repository-facets"
+              param="client-id"
+              tooltipText='The DataCite Repository where a DOI is stored.'
+              url={url} 
+            />
+
+          <FacetList
+            data={data.clientTypes}
+            title="Repository Type"
+            id="repository-type-facets"
+            param="repository-type"
+            tooltipText='The type of DataCite Repository where a DOI is stored.'
+            url={url}
+          />
+        </>
+      )}
       </FacetListGroup>
     </>
   )
