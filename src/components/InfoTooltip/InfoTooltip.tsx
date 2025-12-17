@@ -11,7 +11,7 @@ interface InfoTooltipProps {
 export const InfoTooltip = ({ text }: InfoTooltipProps) => (
   <OverlayTrigger
     placement="top"
-    overlay={<Tooltip>{text}</Tooltip>}
+    overlay={<Tooltip id="infoTooltip">{text}</Tooltip>}
   >
     <span
       onClick={(e) => e.stopPropagation()}
