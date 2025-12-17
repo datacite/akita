@@ -17,8 +17,11 @@ export const InfoTooltip = ({ text }: InfoTooltipProps) => (
       onClick={(e) => e.stopPropagation()}
       className="ms-2"
       style={{ cursor: 'help' }}
+      role="button"
+      tabIndex={0}
+      aria-label={text}
     >
-      <FontAwesomeIcon icon={faQuestionCircle} />
+      <FontAwesomeIcon icon={faQuestionCircle} aria-hidden="true" />
     </span>
   </OverlayTrigger>
 )
