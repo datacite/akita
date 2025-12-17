@@ -102,7 +102,7 @@ export default function WorkFacets({
         />
       )}
 
-      {url?.includes('ror.org/') && (
+      {url.startsWith('/ror.org') && (
         <FacetList
           data={organizationRelationTypeList}
           title="Organization Relation Types"
@@ -110,7 +110,6 @@ export default function WorkFacets({
           param="organization-relation-type"
           url={url}
           checked={(i) => !isOrganizationRelationTypeSet && i == 0}
-          radio
         />
       )}
 
