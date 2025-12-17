@@ -14,12 +14,12 @@ import NoResults from 'src/components/NoResults/NoResults'
 import Pager from 'src/components/Pager/Pager'
 import WorksDashboard, { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
-import SummarySearchMetrics from '../SummarySearchMetrics/SummarySearchMetrics'
-import { SearchParams } from 'next/dist/server/request/search-params'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
+import { QueryVar } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
   works: Works
-  vars?: SearchParams
+  vars?: QueryVar
   showMetrics?: boolean
   showAnalytics: boolean
   showSankey?: boolean
