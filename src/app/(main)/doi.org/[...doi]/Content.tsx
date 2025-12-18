@@ -15,6 +15,7 @@ import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 import Work from 'src/components/Work/Work'
 // import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
+import RelatedContent from './RelatedContent'
 
 interface Props {
   doi: string
@@ -26,6 +27,16 @@ export default async function Content(props: Props) {
   const { doi } = props
 
   const { data, error } = await fetchDoi(doi)
+
+  const relatedDois: string[] = Array.from(new Set(
+    data?.work.relatedIdentifiers
+      ?.filter((identifier) => identifier.relatedIdentifierType === 'DOI')
+      ?.map((identifier) => {
+        const match = identifier.relatedIdentifier.match(/(?:https?:\/\/doi\.org\/)?(.+)/)
+        const doi = match ? match[1] : identifier.relatedIdentifier
+        return doi.toLowerCase()
+      }) || []
+  )).slice(0, 150)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -42,6 +53,7 @@ export default async function Content(props: Props) {
       : 'https://doi.org/' + work.doi
 
   return (
+    <>
     <Container fluid>
       <Row className="mb-4">
         <Col md={{ offset: 3 }}>
@@ -83,5 +95,7 @@ export default async function Content(props: Props) {
         </Col>
       </Row>
     </Container>
+    <RelatedContent work={work} relatedDois={relatedDois} />
+    </>
   )
 }

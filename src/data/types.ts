@@ -41,6 +41,8 @@ export type Work = WorkMetadata & {
     name: string
   }
 
+  relatedIdentifiers?: RelatedIdentifier[]
+
   registered?: Date
   formattedCitation?: string
   claims?: Claim[]
@@ -321,6 +323,13 @@ type Identifier = {
   identifier: string
   identifierType: string
   identifierUrl: string
+}
+
+type RelatedIdentifier = {
+  relatedIdentifier: string
+  relatedIdentifierType: string
+  relationType: string
+  resourceTypeGeneral?: string
 }
 
 export type Facet = {

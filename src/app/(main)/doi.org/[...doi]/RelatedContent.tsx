@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
 
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
-import { Works } from 'src/data/types'
+import { Work } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
@@ -17,18 +17,18 @@ import mapSearchparams from './mapSearchParams'
 import { isDMP, isProject } from 'src/utils/helpers'
 
 interface Props {
+  work: Work,
+  relatedDois: string[],
   isBot?: boolean
 }
 
 export default function RelatedContent(props: Props) {
-  const { isBot = false } = props
-  const doiParams = useParams().doi as string[]
-  const doi = decodeURIComponent(doiParams.join('/'))
+  const { isBot = false, work, relatedDois } = props
 
   const searchParams = useSearchParams()
-  const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
+  const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { id: doi, ...variables }
+  const vars = { relatedToDoi: work.doi, relatedDois, ...variables }
   const { loading, data, error } = useDoiRelatedContentQuery(vars)
 
   if (isBot) return null
@@ -42,55 +42,26 @@ export default function RelatedContent(props: Props) {
       </Col>
     </Row>
 
-  if (!data) return
+  if (!data || data.works.totalCount === 0) return
 
-  const showSankey = isDMP(data.work) || isProject(data.work)
-  const relatedWorks = data.work
+  const relatedWorks = data.works
+  const showSankey = isDMP(work) || isProject(work)
 
-  const allRelatedCount = relatedWorks.allRelated?.totalCount || 0
-  const referenceCount = relatedWorks.references?.totalCount || 0
-  const citationCount = relatedWorks.citations?.totalCount || 0
-  const partCount = relatedWorks.parts?.totalCount || 0
-  const partOfCount = relatedWorks.partOf?.totalCount || 0
-  const otherRelatedCount = relatedWorks.otherRelated?.totalCount || 0
-
-  if (referenceCount + citationCount + partCount + partOfCount + otherRelatedCount === 0) return ''
-
-  const url = '/doi.org/' + relatedWorks.doi + '/?'
-
-  const connectionTypeCounts = {
-    allRelated: allRelatedCount,
-    references: referenceCount,
-    citations: citationCount,
-    parts: partCount,
-    partOf: partOfCount,
-    otherRelated: otherRelatedCount
-  }
-
-  const defaultConnectionType =
-    allRelatedCount > 0 ? 'allRelated' :
-      referenceCount > 0 ? 'references' :
-        citationCount > 0 ? 'citations' :
-          partCount > 0 ? 'parts' :
-            partOfCount > 0 ? 'partOf' : 'otherRelated'
-
-  const displayedConnectionType = connectionType ? connectionType : defaultConnectionType
+  const defaultConnectionType = 'allRelated'
+  const connectionType = searchParams.get('connection-type') || defaultConnectionType
   //convert camel case to title and make first letter uppercase
   //convert connectionType to title, allRelated becomes All Related Wokrs, references becomes References, citations becomes Citations, parts becomes Parts, partOf becomes Part Of, and otherRelated becomes Other Works
   const displayedConnectionTitle =
-    displayedConnectionType === 'allRelated' ? 'All Related Works' :
-      displayedConnectionType === 'otherRelated' ? 'Other Works' :
-        displayedConnectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
+    connectionType === 'allRelated' ? 'All Related Works' :
+      connectionType === 'otherRelated' ? 'Other Works' :
+        connectionType.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())
 
+  const url = '/doi.org/' + work.doi + '/?'
 
-
-
-  const works: Works = displayedConnectionType in relatedWorks ?
-    relatedWorks[displayedConnectionType] :
-    { totalCount: 0, nodes: [] }
-
-  const hasNextPage = works.pageInfo ? works.pageInfo.hasNextPage : false
-  const endCursor = works.pageInfo ? works.pageInfo.endCursor : ''
+  const hasNextPage = relatedWorks.totalCount > 25
+  const endCursor = relatedWorks.pageInfo
+    ? relatedWorks.pageInfo.endCursor
+    : ''
 
   return (
     <Container fluid>
@@ -101,14 +72,15 @@ export default function RelatedContent(props: Props) {
       </Row>
       <Row>
         <WorksListing
-          works={works}
+          works={relatedWorks}
           loading={loading}
-          connectionTypesCounts={connectionTypeCounts}
+          vars={vars}
           showAnalytics={true}
           showSankey={showSankey}
+          // TO DO: Fix sankey title
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
-          hasPagination={works.totalCount > 25}
+          hasPagination={relatedWorks.totalCount > 25}
           hasNextPage={hasNextPage}
           model={'doi'}
           url={url}

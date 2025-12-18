@@ -1,7 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
-import { QueryData } from "src/data/queries/doiQuery";
 import { QueryVar } from "src/data/queries/searchDoiQuery";
+import { useSearchDoiFacetsQuery } from "src/data/queries/searchDoiFacetsQuery";
+import { useSearchDoiQuery } from "src/data/queries/searchDoiQuery";
+import { FACETS } from "src/data/constants";
+import { Works } from "src/data/types";
 
 export function buildFilterQuery(variables: QueryVar) {
   const queryParts = [
@@ -14,17 +17,28 @@ export function buildFilterQuery(variables: QueryVar) {
 }
 
 export function useDoiRelatedContentQuery(variables: QueryVar) {
-  const filterQuery = buildFilterQuery(variables)
+  const results = useSearchDoiQuery(variables)
+  const facets = useSearchDoiFacetsQuery(variables, [...FACETS.DEFAULT, ...FACETS.METRICS])
 
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    RELATED_CONTENT_QUERY,
-    {
-      variables: { ...variables, filterQuery },
-      errorPolicy: 'all'
-    }
-  )
+  const loading = results.loading || facets.loading;
+  const error = results.error || facets.error;
 
-  return { loading, data, error }
+  if (loading || error) return { loading, data: undefined, error }
+
+
+  const works = {
+    ...results.data?.works || {},
+    ...facets.data?.works
+  }
+
+  return {
+    ...results,
+    data: { works } as QueryData,
+  }
+}
+
+export interface QueryData {
+  works: Works
 }
 
 
@@ -155,5 +169,4 @@ export const RELATED_CONTENT_QUERY = gql`
   ${workFragment}
 `;
 
-
-export type { QueryVar, QueryData }
+export type { QueryVar }

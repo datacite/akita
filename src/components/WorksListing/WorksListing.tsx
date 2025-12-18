@@ -41,7 +41,6 @@ export default function WorksListing({
   vars,
   showMetrics,
   showAnalytics,
-  connectionTypesCounts,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
@@ -64,7 +63,7 @@ export default function WorksListing({
         model={model}
         url={url}
         data={works}
-        connectionTypesCounts={connectionTypesCounts}
+        vars={vars}
       />
     )
   }

@@ -7,12 +7,13 @@ import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
+import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
   data: Facets
   model: string
   url: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  vars?: QueryVar
 }
 
 interface Facets {
@@ -39,7 +40,7 @@ export default function WorkFacets({
   data,
   model,
   url,
-  connectionTypesCounts
+  vars
 }: Props) {
 
   // get current query parameters from next router
@@ -48,14 +49,25 @@ export default function WorkFacets({
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
-  const connectionTypeList: Facet[] = connectionTypesCounts ? [
-    { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
-    { id: 'references', title: 'References', count: connectionTypesCounts.references },
-    { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
-    { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
-    { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
-    { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
-  ] : []
+  const allRelatedQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'allRelated' }) : { loading: false, data: undefined, error: undefined }
+  const referencesQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'references' }) : { loading: false, data: undefined, error: undefined }
+  const citationsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'citations' }) : { loading: false, data: undefined, error: undefined }
+  const partsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'parts' }) : { loading: false, data: undefined, error: undefined }
+  const partOfQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'partOf' }) : { loading: false, data: undefined, error: undefined }
+  const versionOfQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'versionOf' }) : { loading: false, data: undefined, error: undefined }
+  const versionsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'versions' }) : { loading: false, data: undefined, error: undefined }
+  const otherRelatedQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'otherRelated' }) : { loading: false, data: undefined, error: undefined }
+
+  const connectionTypeList: Facet[] = [
+    { id: 'allRelated', title: 'All', count: allRelatedQuery.data?.works?.totalCount ?? 0 },
+    { id: 'references', title: 'References', count: referencesQuery.data?.works?.totalCount ?? 0 },
+    { id: 'citations', title: 'Citations', count: citationsQuery.data?.works?.totalCount ?? 0 },
+    { id: 'parts', title: 'Parts', count: partsQuery.data?.works?.totalCount ?? 0 },
+    { id: 'partOf', title: 'Is Part Of', count: partOfQuery.data?.works?.totalCount ?? 0 },
+    { id: 'versionOf', title: 'Version Of', count: versionOfQuery.data?.works?.totalCount ?? 0 },
+    { id: 'versions', title: 'Versions', count: versionsQuery.data?.works?.totalCount ?? 0 },
+    { id: 'otherRelated', title: 'Other', count: otherRelatedQuery.data?.works?.totalCount ?? 0 }
+  ]
 
   const organizationRelationTypeList: Facet[] = [
     { id: "allRelated", title: "All", count: 0 },
@@ -68,7 +80,6 @@ export default function WorkFacets({
 
   const isConnectionTypeSet = searchParams?.has('connection-type')
   const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
-  const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
   const defaultActiveKeys = [
     "authors-facets",
@@ -92,9 +103,9 @@ export default function WorkFacets({
       )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
-      {totalConnectionTypeCount > 0 && (
+      {url.startsWith('/doi.org/') && (
         <FacetList
-          data={connectionTypeList.filter(f => f.count > 0)}
+          data={connectionTypeList}
           title="Connection Types"
           id="connection-type-facets"
           param="connection-type"

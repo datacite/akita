@@ -36,10 +36,45 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
 }
 
+function buildRelatedToDoiQuery(relatedToDoi: string | undefined, relatedDois: string[] | undefined, connectionType: string | undefined): string {
+  if (!relatedToDoi) return ''
+  const citationsQuery = '(reference_ids:"' + relatedToDoi + '")'
+  const referencesQuery = '(citation_ids:"' + relatedToDoi + '")'
+
+  const partOfQuery = '(part_ids:"' + relatedToDoi + '")'
+  const isPartOfQuery = '(part_of_ids:"' + relatedToDoi + '")'
+  const versionOfQuery = '(version_ids:"' + relatedToDoi + '")'
+  const versionsQuery = '(version_of_ids:"' + relatedToDoi + '")'
+
+  const outwardRelatedDois = relatedDois && relatedDois.length > 0 && '(doi:(' + relatedDois?.map(doi => '"' + doi + '"').join(' OR ') + '))'
+  const inwardRelatedDois = relatedToDoi && '(relatedIdentifiers.relatedIdentifier:("https://doi.org/' + relatedToDoi?.toLowerCase() + '" OR "' + relatedToDoi?.toLowerCase() + '"))'
+
+  switch (connectionType) {
+    case 'citations':
+      return citationsQuery
+    case 'references':
+      return referencesQuery
+    case 'parts':
+      return partOfQuery
+    case 'partOf':
+      return isPartOfQuery
+    case 'versionOf':
+      return versionOfQuery
+    case 'versions':
+      return versionsQuery
+    case 'otherRelated':
+      return ('(' + [outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR ') + ') AND NOT (' + [citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery].join(' OR ') + ')')
+    default:
+      return ([citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery, outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR '))
+  }
+}
+
+
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
     buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || undefined),
+    buildRelatedToDoiQuery(variables.relatedToDoi || undefined, variables.relatedDois || undefined, variables.connectionType || undefined),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
@@ -239,6 +274,9 @@ export interface QueryVar {
   license?: string
   registrationAgency?: string
   clientType?: string
+  relatedToDoi?: string
+  relatedDois?: string[]
+  connectionType?: string
   sort?: SortOption
 }
 
