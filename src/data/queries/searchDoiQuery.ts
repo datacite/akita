@@ -65,7 +65,7 @@ function buildRelatedToDoiQuery(relatedToDoi: string | undefined, relatedDois: s
     case 'otherRelated':
       return ('(' + [outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR ') + ') AND NOT (' + [citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery].join(' OR ') + ')')
     default:
-      return ([citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery, outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR '))
+      return ('(' + [citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery, outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR ') + ')')
   }
 }
 
@@ -126,7 +126,8 @@ function buildDoiSearchParams(variables: QueryVar, count?: number): URLSearchPar
     include_other_registration_agencies: 'true'
   })
 
-  if (count) searchParams.append('page[size]', count.toString())
+  const pageSize = variables.pageSize ?? count
+  if (pageSize !== undefined) searchParams.append('page[size]', pageSize.toString())
 
   searchParams.append('page[number]', variables.cursor || '1')
   // Default to 'relevance' if sort is missing or invalid
@@ -278,6 +279,7 @@ export interface QueryVar {
   relatedDois?: string[]
   connectionType?: string
   sort?: SortOption
+  pageSize?: number
 }
 
 
