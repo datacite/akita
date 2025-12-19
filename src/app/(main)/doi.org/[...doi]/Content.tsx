@@ -28,13 +28,14 @@ export default async function Content(props: Props) {
 
   const { data, error } = await fetchDoi(doi)
 
+  const relatedIdentifiers = data?.work.relatedIdentifiers || []
   const relatedDois: string[] = Array.from(new Set(
-    data?.work.relatedIdentifiers
+    relatedIdentifiers
       ?.filter((identifier) => identifier.relatedIdentifierType === 'DOI')
       ?.map((identifier) => {
-        const match = identifier.relatedIdentifier.match(/(?:https?:\/\/doi\.org\/)?(.+)/)
+        const match = identifier.relatedIdentifier?.match(/(?:https?:\/\/doi\.org\/)?(.+)/)
         const doi = match ? match[1] : identifier.relatedIdentifier
-        return doi.toLowerCase()
+        return doi && doi.toLowerCase()
       }) || []
   )).slice(0, 150)
 
