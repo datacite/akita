@@ -93,9 +93,6 @@ export default async function Page(props: Props) {
     <Suspense fallback={<Loading />}>
       <Content doi={doi} />
     </Suspense>
-    <Suspense>
-      <RelatedAggregateGraph doi={doi} />
-    </Suspense>
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }

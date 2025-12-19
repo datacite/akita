@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -16,6 +16,7 @@ import Work from 'src/components/Work/Work'
 // import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
 import RelatedContent from './RelatedContent'
+import RelatedAggregateGraph from './RelatedAggregateGraph'
 
 interface Props {
   doi: string
@@ -94,6 +95,11 @@ export default async function Content(props: Props) {
         <Col md={9} className="px-0">
           <Work doi={work} />
         </Col>
+      </Row>
+      <Row>
+        <Suspense>
+          <RelatedAggregateGraph doi={doi} />
+        </Suspense>
       </Row>
     </Container>
     <RelatedContent work={work} relatedDois={relatedDois} />
