@@ -47,7 +47,7 @@ function buildRelatedToDoiQuery(relatedToDoi: string | undefined, relatedDois: s
   const versionsQuery = '(version_of_ids:"' + relatedToDoi + '")'
 
   const outwardRelatedDois = relatedDois && relatedDois.length > 0 && '(doi:(' + relatedDois?.map(doi => '"' + doi + '"').join(' OR ') + '))'
-  const inwardRelatedDois = relatedToDoi && '(relatedIdentifiers.relatedIdentifier:("https://doi.org/' + relatedToDoi?.toLowerCase() + '" OR "' + relatedToDoi?.toLowerCase() + '"))'
+  const inwardRelatedDois = relatedToDoi && '(relatedIdentifiers.relatedIdentifier:("https://doi.org/' + relatedToDoi?.toLowerCase() + '" OR "' + relatedToDoi?.toLowerCase() + '") AND agency:"datacite")'
 
   switch (connectionType) {
     case 'citations':
