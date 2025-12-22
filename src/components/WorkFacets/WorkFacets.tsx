@@ -105,7 +105,6 @@ export default function WorkFacets({
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "conection-type-facets",
     "repository-type-facets",
     "organization-relation-type-facets",
     "repository-facets"
