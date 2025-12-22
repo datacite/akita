@@ -17,7 +17,7 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
   const fundedByQuery = `funder_rors:${urlId}`
   const fundedByChildOrganizations = `funder_parent_rors:${urlId}`
-  const createdContributedOrPublishedBy = `(organization_id:${id} OR  provider.ror_id:${urlId})`
+  const createdContributedOrPublishedBy = `(organization_id:${id} OR provider.ror_id:${urlId})`
   const createdOrContributedByAffiliatedResearcher = `affiliation_id:${id}`
   const connectedToOrganizationOMPs = `related_dmp_organization_id:${id}`
 
