@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -15,6 +15,8 @@ import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 import Work from 'src/components/Work/Work'
 // import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
+import RelatedContent from './RelatedContent'
+import RelatedAggregateGraph from './RelatedAggregateGraph'
 
 interface Props {
   doi: string
@@ -26,6 +28,17 @@ export default async function Content(props: Props) {
   const { doi } = props
 
   const { data, error } = await fetchDoi(doi)
+
+  const relatedIdentifiers = data?.work.relatedIdentifiers || []
+  const relatedDois: string[] = Array.from(new Set(
+    relatedIdentifiers
+      ?.filter((identifier) => identifier.relatedIdentifierType === 'DOI')
+      ?.map((identifier) => {
+        const match = identifier.relatedIdentifier?.match(/(?:https?:\/\/doi\.org\/)?(.+)/)
+        const doi = match ? match[1] : identifier.relatedIdentifier
+        return doi && doi.toLowerCase()
+      }) || []
+  )).slice(0, 150)
 
   if (error) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -42,6 +55,7 @@ export default async function Content(props: Props) {
       : 'https://doi.org/' + work.doi
 
   return (
+    <>
     <Container fluid>
       <Row className="mb-4">
         <Col md={{ offset: 3 }}>
@@ -82,6 +96,13 @@ export default async function Content(props: Props) {
           <Work doi={work} />
         </Col>
       </Row>
+      <Row>
+        <Suspense>
+          <RelatedAggregateGraph doi={doi} />
+        </Suspense>
+      </Row>
     </Container>
+    <RelatedContent work={work} relatedDois={relatedDois} />
+    </>
   )
 }

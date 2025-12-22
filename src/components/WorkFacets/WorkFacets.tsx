@@ -7,12 +7,13 @@ import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
+import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 
 interface Props {
   data: Facets
   model: string
   url: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  vars?: QueryVar
 }
 
 interface Facets {
@@ -26,6 +27,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   nodes: Work[]
 }
@@ -38,7 +40,7 @@ export default function WorkFacets({
   data,
   model,
   url,
-  connectionTypesCounts
+  vars
 }: Props) {
 
   // get current query parameters from next router
@@ -47,17 +49,52 @@ export default function WorkFacets({
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
-  const connectionTypeList: Facet[] = connectionTypesCounts ? [
-    { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
-    { id: 'references', title: 'References', count: connectionTypesCounts.references },
-    { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
-    { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
-    { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
-    { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
-  ] : []
+  const useConnectionQuery = (connectionType: string) => 
+    vars?.relatedToDoi 
+      ? useSearchDoiQuery({ ...vars, connectionType, pageSize: 0 }) 
+      : { loading: false, data: undefined, error: undefined }
+
+  const allRelatedQuery = useConnectionQuery('allRelated')
+  const referencesQuery = useConnectionQuery('references')
+  const citationsQuery = useConnectionQuery('citations')
+  const partsQuery = useConnectionQuery('parts')
+  const partOfQuery = useConnectionQuery('partOf')
+  const versionOfQuery = useConnectionQuery('versionOf')
+  const versionsQuery = useConnectionQuery('versions')
+  const otherRelatedQuery = useConnectionQuery('otherRelated')
+
+  const connectionTypeList: Facet[] = [
+    { id: 'allRelated', title: 'All', count: allRelatedQuery.data?.works?.totalCount ?? 0, loading: allRelatedQuery.loading },
+    { id: 'references', title: 'References', count: referencesQuery.data?.works?.totalCount ?? 0, loading: referencesQuery.loading },
+    { id: 'citations', title: 'Citations', count: citationsQuery.data?.works?.totalCount ?? 0, loading: citationsQuery.loading },
+    { id: 'parts', title: 'Parts', count: partsQuery.data?.works?.totalCount ?? 0, loading: partsQuery.loading },
+    { id: 'partOf', title: 'Is Part Of', count: partOfQuery.data?.works?.totalCount ?? 0, loading: partOfQuery.loading },
+    { id: 'versionOf', title: 'Version Of', count: versionOfQuery.data?.works?.totalCount ?? 0, loading: versionOfQuery.loading },
+    { id: 'versions', title: 'Versions', count: versionsQuery.data?.works?.totalCount ?? 0, loading: versionsQuery.loading },
+    { id: 'otherRelated', title: 'Other', count: otherRelatedQuery.data?.works?.totalCount ?? 0, loading: otherRelatedQuery.loading }
+  ]
+
+  const useOrganizationRelationQuery = (organizationRelationType: string) => 
+    vars?.rorId 
+      ? useSearchDoiQuery({ ...vars, organizationRelationType, pageSize: 0 }) 
+      : { loading: false, data: undefined, error: undefined }
+
+  const organizationAllRelatedQuery = useOrganizationRelationQuery('allRelated')
+  const organizationCreatedOrContributedByAffiliatedResearcherQuery = useOrganizationRelationQuery('createdOrContributedByAffiliatedResearcher')
+  const organizationCreatedContributedOrPublishedByQuery = useOrganizationRelationQuery('createdContributedOrPublishedBy')
+  const organizationFundedByQuery = useOrganizationRelationQuery('fundedBy')
+
+  const organizationRelationTypeList: Facet[] = [
+    { id: "allRelated", title: "All", count: organizationAllRelatedQuery.data?.works?.totalCount ?? 0, loading: organizationAllRelatedQuery.loading },
+    { id: "createdOrContributedByAffiliatedResearcher", title: "By Affiliated Researchers", tooltipText: "Works created or contributed by researchers affiliated with the organization.", count: organizationCreatedOrContributedByAffiliatedResearcherQuery.data?.works?.totalCount ?? 0, loading: organizationCreatedOrContributedByAffiliatedResearcherQuery.loading },
+    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: organizationCreatedContributedOrPublishedByQuery.data?.works?.totalCount ?? 0, loading: organizationCreatedContributedOrPublishedByQuery.loading },
+    { id: "fundedBy", title: "Funded By", tooltipText: "Works funded by the organization and its child organizations.", count: organizationFundedByQuery.data?.works?.totalCount ?? 0, loading: organizationFundedByQuery.loading },
+    // OMP relationships are included in allRelated, but we don't document or explain this functionality ATM.
+    // { id: "connectedToOrganizationOMPs", title: "Related to OMPs", tooltipText: "Works related to Output Management Plans associated with the organization.", count: 0 },
+  ]
 
   const isConnectionTypeSet = searchParams?.has('connection-type')
-  const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
+  const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
 
   const defaultActiveKeys = [
     "authors-facets",
@@ -68,8 +105,9 @@ export default function WorkFacets({
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "conection-type-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "organization-relation-type-facets",
+    "repository-facets"
   ]
 
   return (
@@ -79,14 +117,26 @@ export default function WorkFacets({
       )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
-      {totalConnectionTypeCount > 0 && (
+      {url.startsWith('/doi.org/') && (
         <FacetList
-          data={connectionTypeList.filter(f => f.count > 0)}
+          data={connectionTypeList}
           title="Connection Types"
           id="connection-type-facets"
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
+          radio
+        />
+      )}
+
+      {url.startsWith('/ror.org') && (
+        <FacetList
+          data={organizationRelationTypeList}
+          title="Organization Relation Types"
+          id="organization-relation-type-facets"
+          param="organization-relation-type"
+          url={url}
+          checked={(i) => !isOrganizationRelationTypeSet && i == 0}
           radio
         />
       )}
@@ -144,14 +194,28 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
-      <FacetList
-        data={data.clientTypes}
-        title="Repository Type"
-        id="repository-type-facets"
-        param="repository-type"
-        tooltipText='The type of DataCite Repository where a DOI is stored.'
-        url={url}
-      />
+
+      {!url.startsWith('/repositories') && (
+        <>
+          <FacetList
+              data={data.clients}
+              title="Repository"
+              id="repository-facets"
+              param="client-id"
+              tooltipText='The DataCite Repository where a DOI is stored.'
+              url={url} 
+            />
+
+          <FacetList
+            data={data.clientTypes}
+            title="Repository Type"
+            id="repository-type-facets"
+            param="repository-type"
+            tooltipText='The type of DataCite Repository where a DOI is stored.'
+            url={url}
+          />
+        </>
+      )}
       </FacetListGroup>
     </>
   )
