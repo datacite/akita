@@ -18,7 +18,6 @@ interface Props {
   param: string
   url: string
   tooltipText?: string
-  loading?: boolean
   checked?: boolean
   radio?: boolean
   value?: string
