@@ -11,17 +11,31 @@ import { Facet } from 'src/data/types'
 import styles from './FacetListItem.module.scss'
 import ListGroup from 'react-bootstrap/ListGroup';
 import { InfoTooltip } from '../InfoTooltip/InfoTooltip';
+import ContentLoader from "react-content-loader"
 
 interface Props {
   facet: Facet
   param: string
   url: string
   tooltipText?: string
-
+  loading?: boolean
   checked?: boolean
   radio?: boolean
   value?: string
 }
+
+const LoadingCount = () => (
+  <ContentLoader
+    speed={2}
+    width={40}
+    height={16}
+    viewBox="0 0 40 16"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb"
+  >
+    <rect x="0" y="0" rx="0" ry="0" width="40" height="16" />
+  </ContentLoader>
+)
 
 export default function FacetListItem(props: Props) {
   const {
@@ -67,6 +81,10 @@ export default function FacetListItem(props: Props) {
     }
   }
 
+  if (!facet.loading && facet.count === 0) {
+    return null
+  }
+
   return (
     <ListGroup.Item as="li" key={facet.id}>
     <div 
@@ -81,7 +99,7 @@ export default function FacetListItem(props: Props) {
         {facet.title}
         {tooltipText && <InfoTooltip text={tooltipText} />}
       </span>
-      <span>{facet.count > 0 && facet.count.toLocaleString('en-US')}</span>
+      {facet.loading ? <LoadingCount /> : <span>{facet.count.toLocaleString('en-US')}</span>}
     </div>
     </ListGroup.Item>
   )

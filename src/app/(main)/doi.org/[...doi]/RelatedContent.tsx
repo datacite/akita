@@ -42,7 +42,7 @@ export default function RelatedContent(props: Props) {
       </Col>
     </Row>
 
-  if (!data || data.works.totalCount === 0) return
+  if ((!data || data.works.totalCount === 0) && !searchParams) return
 
   const relatedWorks = data.works
   const showSankey = isDMP(work) || isProject(work)

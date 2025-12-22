@@ -49,31 +49,46 @@ export default function WorkFacets({
   // remove %2F? at the end of url
   const path = url.substring(0, url.length - 2)
 
-  const allRelatedQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'allRelated' }) : { loading: false, data: undefined, error: undefined }
-  const referencesQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'references' }) : { loading: false, data: undefined, error: undefined }
-  const citationsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'citations' }) : { loading: false, data: undefined, error: undefined }
-  const partsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'parts' }) : { loading: false, data: undefined, error: undefined }
-  const partOfQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'partOf' }) : { loading: false, data: undefined, error: undefined }
-  const versionOfQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'versionOf' }) : { loading: false, data: undefined, error: undefined }
-  const versionsQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'versions' }) : { loading: false, data: undefined, error: undefined }
-  const otherRelatedQuery = vars?.relatedToDoi ? useSearchDoiQuery({ relatedToDoi: vars.relatedToDoi, relatedDois: vars.relatedDois, connectionType: 'otherRelated' }) : { loading: false, data: undefined, error: undefined }
+  const useConnectionQuery = (connectionType: string) => 
+    vars?.relatedToDoi 
+      ? useSearchDoiQuery({ ...vars, connectionType, pageSize: 0 }) 
+      : { loading: false, data: undefined, error: undefined }
+
+  const allRelatedQuery = useConnectionQuery('allRelated')
+  const referencesQuery = useConnectionQuery('references')
+  const citationsQuery = useConnectionQuery('citations')
+  const partsQuery = useConnectionQuery('parts')
+  const partOfQuery = useConnectionQuery('partOf')
+  const versionOfQuery = useConnectionQuery('versionOf')
+  const versionsQuery = useConnectionQuery('versions')
+  const otherRelatedQuery = useConnectionQuery('otherRelated')
 
   const connectionTypeList: Facet[] = [
-    { id: 'allRelated', title: 'All', count: allRelatedQuery.data?.works?.totalCount ?? 0 },
-    { id: 'references', title: 'References', count: referencesQuery.data?.works?.totalCount ?? 0 },
-    { id: 'citations', title: 'Citations', count: citationsQuery.data?.works?.totalCount ?? 0 },
-    { id: 'parts', title: 'Parts', count: partsQuery.data?.works?.totalCount ?? 0 },
-    { id: 'partOf', title: 'Is Part Of', count: partOfQuery.data?.works?.totalCount ?? 0 },
-    { id: 'versionOf', title: 'Version Of', count: versionOfQuery.data?.works?.totalCount ?? 0 },
-    { id: 'versions', title: 'Versions', count: versionsQuery.data?.works?.totalCount ?? 0 },
-    { id: 'otherRelated', title: 'Other', count: otherRelatedQuery.data?.works?.totalCount ?? 0 }
+    { id: 'allRelated', title: 'All', count: allRelatedQuery.data?.works?.totalCount ?? 0, loading: allRelatedQuery.loading },
+    { id: 'references', title: 'References', count: referencesQuery.data?.works?.totalCount ?? 0, loading: referencesQuery.loading },
+    { id: 'citations', title: 'Citations', count: citationsQuery.data?.works?.totalCount ?? 0, loading: citationsQuery.loading },
+    { id: 'parts', title: 'Parts', count: partsQuery.data?.works?.totalCount ?? 0, loading: partsQuery.loading },
+    { id: 'partOf', title: 'Is Part Of', count: partOfQuery.data?.works?.totalCount ?? 0, loading: partOfQuery.loading },
+    { id: 'versionOf', title: 'Version Of', count: versionOfQuery.data?.works?.totalCount ?? 0, loading: versionOfQuery.loading },
+    { id: 'versions', title: 'Versions', count: versionsQuery.data?.works?.totalCount ?? 0, loading: versionsQuery.loading },
+    { id: 'otherRelated', title: 'Other', count: otherRelatedQuery.data?.works?.totalCount ?? 0, loading: otherRelatedQuery.loading }
   ]
 
+  const useOrganizationRelationQuery = (organizationRelationType: string) => 
+    vars?.rorId 
+      ? useSearchDoiQuery({ ...vars, organizationRelationType, pageSize: 0 }) 
+      : { loading: false, data: undefined, error: undefined }
+
+  const organizationAllRelatedQuery = useOrganizationRelationQuery('allRelated')
+  const organizationCreatedOrContributedByAffiliatedResearcherQuery = useOrganizationRelationQuery('createdOrContributedByAffiliatedResearcher')
+  const organizationCreatedContributedOrPublishedByQuery = useOrganizationRelationQuery('createdContributedOrPublishedBy')
+  const organizationFundedByQuery = useOrganizationRelationQuery('fundedBy')
+
   const organizationRelationTypeList: Facet[] = [
-    { id: "allRelated", title: "All", count: 0 },
-    { id: "createdOrContributedByAffiliatedResearcher", title: "By Affiliated Researchers", tooltipText: "Works created or contributed by researchers affiliated with the organization.", count: 0 },
-    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: 0 },
-    { id: "fundedBy", title: "Funded By", tooltipText: "Works funded by the organization and its child organizations.", count: 0 },
+    { id: "allRelated", title: "All", count: organizationAllRelatedQuery.data?.works?.totalCount ?? 0, loading: organizationAllRelatedQuery.loading },
+    { id: "createdOrContributedByAffiliatedResearcher", title: "By Affiliated Researchers", tooltipText: "Works created or contributed by researchers affiliated with the organization.", count: organizationCreatedOrContributedByAffiliatedResearcherQuery.data?.works?.totalCount ?? 0, loading: organizationCreatedOrContributedByAffiliatedResearcherQuery.loading },
+    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: organizationCreatedContributedOrPublishedByQuery.data?.works?.totalCount ?? 0, loading: organizationCreatedContributedOrPublishedByQuery.loading },
+    { id: "fundedBy", title: "Funded By", tooltipText: "Works funded by the organization and its child organizations.", count: organizationFundedByQuery.data?.works?.totalCount ?? 0, loading: organizationFundedByQuery.loading },
     // OMP relationships are included in allRelated, but we don't document or explain this functionality ATM.
     // { id: "connectedToOrganizationOMPs", title: "Related to OMPs", tooltipText: "Works related to Output Management Plans associated with the organization.", count: 0 },
   ]
@@ -123,6 +138,7 @@ export default function WorkFacets({
           param="organization-relation-type"
           url={url}
           checked={(i) => !isOrganizationRelationTypeSet && i == 0}
+          radio
         />
       )}
 

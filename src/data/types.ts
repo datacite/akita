@@ -337,6 +337,7 @@ export type Facet = {
   title: string
   count: number
   tooltipText?: string
+  loading?: boolean
 }
 
 export type MultilevelFacet = Facet & {

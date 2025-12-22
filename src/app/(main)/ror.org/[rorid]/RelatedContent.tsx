@@ -28,7 +28,7 @@ export default function RelatedContent(props: Props) {
   const vars = { rorId, ...variables }
   const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
   
-  const showMetrics = Boolean(vars.organizationRelationType && vars.organizationRelationType !== 'allRelated')
+  const showMetrics = searchParams.size > 0
 
   if (isBot) return null
 
