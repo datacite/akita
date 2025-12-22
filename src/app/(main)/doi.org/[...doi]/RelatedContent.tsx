@@ -63,7 +63,7 @@ export default function RelatedContent(props: Props) {
 
   const url = '/doi.org/' + work.doi + '/?'
 
-  const hasNextPage = relatedWorks.totalCount > 25
+  const hasNextPage = relatedWorks.pageInfo.hasNextPage
   const endCursor = relatedWorks.pageInfo
     ? relatedWorks.pageInfo.endCursor
     : ''
