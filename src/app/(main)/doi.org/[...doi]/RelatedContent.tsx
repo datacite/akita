@@ -77,7 +77,6 @@ export default function RelatedContent(props: Props) {
           vars={vars}
           showAnalytics={true}
           showSankey={showSankey}
-          // TO DO: Fix sankey title
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
           hasPagination={relatedWorks.totalCount > 25}
