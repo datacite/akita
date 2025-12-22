@@ -330,6 +330,9 @@ type RelatedIdentifier = {
   relatedIdentifierType: string
   relationType: string
   resourceTypeGeneral?: string
+  relatedMetadataScheme?: string
+  schemeUri?: string
+  schemeType?: string
 }
 
 export type Facet = {
