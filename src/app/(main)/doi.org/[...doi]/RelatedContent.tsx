@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
 
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
-import { Work } from 'src/data/types'
+import { Work, Works } from 'src/data/types'
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
@@ -44,7 +44,12 @@ export default function RelatedContent(props: Props) {
 
   if ((!data || data.works.totalCount === 0) && !searchParams) return
 
-  const relatedWorks = data.works
+  const relatedWorks = (data?.works ?? { 
+    nodes: [], 
+    totalCount: 0, 
+    pageInfo: { endCursor: '', hasNextPage: false } 
+  }) as Works
+  
   const showSankey = isDMP(work) || isProject(work)
 
   const defaultConnectionType = 'allRelated'
