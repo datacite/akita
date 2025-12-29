@@ -112,6 +112,7 @@ export default function WorkFacets({
           param="organization-relation-type"
           url={url}
           checked={(i) => !isOrganizationRelationTypeSet && i == 0}
+          radio
         />
       )}
 
