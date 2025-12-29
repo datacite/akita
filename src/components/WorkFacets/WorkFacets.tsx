@@ -26,6 +26,7 @@ interface Facets {
   registrationAgencies?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   nodes: Work[]
 }
@@ -56,7 +57,17 @@ export default function WorkFacets({
     { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
   ] : []
 
+  const organizationRelationTypeList: Facet[] = [
+    { id: "allRelated", title: "All", count: 0 },
+    { id: "createdOrContributedByAffiliatedResearcher", title: "By Affiliated Researchers", tooltipText: "Works created or contributed by researchers affiliated with the organization.", count: 0 },
+    { id: "createdContributedOrPublishedBy", title: "Created By", tooltipText: "Works created, contributed, or published by the organization.", count: 0 },
+    { id: "fundedBy", title: "Funded By", tooltipText: "Works funded by the organization and its child organizations.", count: 0 },
+    // OMP relationships are included in allRelated, but we don't document or explain this functionality ATM.
+    // { id: "connectedToOrganizationOMPs", title: "Related to OMPs", tooltipText: "Works related to Output Management Plans associated with the organization.", count: 0 },
+  ]
+
   const isConnectionTypeSet = searchParams?.has('connection-type')
+  const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
   const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
 
   const defaultActiveKeys = [
@@ -69,7 +80,9 @@ export default function WorkFacets({
     "field-of-science-facets",
     "registration-agency-facets",
     "conection-type-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "organization-relation-type-facets",
+    "repository-facets"
   ]
 
   return (
@@ -87,6 +100,18 @@ export default function WorkFacets({
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
+          radio
+        />
+      )}
+
+      {url.startsWith('/ror.org') && (
+        <FacetList
+          data={organizationRelationTypeList}
+          title="Organization Relation Types"
+          id="organization-relation-type-facets"
+          param="organization-relation-type"
+          url={url}
+          checked={(i) => !isOrganizationRelationTypeSet && i == 0}
           radio
         />
       )}
@@ -144,14 +169,28 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
-      <FacetList
-        data={data.clientTypes}
-        title="Repository Type"
-        id="repository-type-facets"
-        param="repository-type"
-        tooltipText='The type of DataCite Repository where a DOI is stored.'
-        url={url}
-      />
+
+      {!url.startsWith('/repositories') && (
+        <>
+          <FacetList
+              data={data.clients}
+              title="Repository"
+              id="repository-facets"
+              param="client-id"
+              tooltipText='The DataCite Repository where a DOI is stored.'
+              url={url} 
+            />
+
+          <FacetList
+            data={data.clientTypes}
+            title="Repository Type"
+            id="repository-type-facets"
+            param="repository-type"
+            tooltipText='The type of DataCite Repository where a DOI is stored.'
+            url={url}
+          />
+        </>
+      )}
       </FacetListGroup>
     </>
   )
