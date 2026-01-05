@@ -1,6 +1,7 @@
 import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNECTION_TYPE_COUNTS } from './ConnectionTypeManager'
 import { PaginationManager, EMPTY_PAGINATION } from './PaginationManager'
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
+import { useConnectionCounts } from './ConnectionCountManager'
 import { isDMP, isProject } from 'src/utils/helpers'
 
 export class RelatedContentManager {
@@ -12,17 +13,19 @@ export class RelatedContentManager {
   private readonly connectionType: string
   private readonly vars: any
   private readonly facetsLoading: boolean
+  private readonly connectionCounts: any
 
-  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null, facetsLoading: boolean) {
+  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null, facetsLoading: boolean, connectionCounts?: any) {
     this.vars = vars
     this.data = data
     this.loading = loading
     this.facetsLoading = facetsLoading
     this.error = error
     this.connectionType = getValidConnectionType(connectionType)
+    this.connectionCounts = connectionCounts
 
     if (data?.work) {
-      this.connectionManager = new ConnectionTypeManager(data.work)
+      this.connectionManager = new ConnectionTypeManager(data.work, connectionCounts)
       const { works } = this.connectionManager.getWorksAndTitle(connectionType)
       this.paginationManager = new PaginationManager(works)
     } else {
@@ -60,7 +63,20 @@ export class RelatedContentManager {
   }
 
   get connectionTypeCounts() {
+    // If we have connection counts from the dedicated hook, use them
+    if (this.connectionCounts?.counts) {
+      return this.connectionCounts.counts
+    }
+    // Otherwise fall back to the connection manager's counts
     return this.connectionManager?.getCounts() || EMPTY_CONNECTION_TYPE_COUNTS
+  }
+
+  get connectionCountsLoading() {
+    return this.connectionCounts?.isLoading || false
+  }
+
+  get connectionCountsError() {
+    return this.connectionCounts?.isError || false
   }
 
   get selectedContent() {
@@ -85,5 +101,6 @@ export class RelatedContentManager {
 export function useRelatedContentManager(vars: any, connectionType: string | undefined) {
 
   const { loading, data, error, facetsLoading } = useDoiRelatedContentQuery(vars)
-  return new RelatedContentManager(vars, connectionType, data, loading, error, facetsLoading )
+  const connectionCounts = useConnectionCounts(vars)
+  return new RelatedContentManager(vars, connectionType, data, loading, error, facetsLoading, connectionCounts)
 }

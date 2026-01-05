@@ -44,16 +44,31 @@ export function getValidConnectionType(connectionType: string | undefined ): str
     return validConnectionType
 }
 
+export type ExternalConnectionCounts = {
+  counts: ConnectionTypeCounts
+  isLoading: boolean
+  isError: boolean
+  errors: unknown[]
+}
+
 export class ConnectionTypeManager {
   private counts: ConnectionTypeCounts
   private readonly work: Work
+  private readonly externalCounts?: ExternalConnectionCounts
 
-  constructor(work: Work) {
+  constructor(work: Work, externalCounts?: ExternalConnectionCounts) {
     this.work = work
+    this.externalCounts = externalCounts
     this.counts = this.calculateCounts()
   }
 
   private calculateCounts(): ConnectionTypeCounts {
+    // If external counts are provided, use them
+    if (this.externalCounts?.counts) {
+      return this.externalCounts.counts
+    }
+    
+    // Otherwise calculate from work data
     return {
       allRelated: this.work.allRelated?.totalCount || 0,
       references: this.work.references?.totalCount || 0,
