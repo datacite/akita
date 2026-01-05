@@ -215,8 +215,8 @@ export async function fetchDoisCitations(variables: QueryVar, count?: number) {
 }
 
 
-export function useSearchDoiQuery(variables: QueryVar) {
-  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables], queryFn: async () => fetchDois(variables) })
+export function useSearchDoiQuery(variables: QueryVar, count?: number) {
+  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables], queryFn: async () => fetchDois(variables, count) })
 
   return { loading: isPending, data: data?.data, error }
 }
