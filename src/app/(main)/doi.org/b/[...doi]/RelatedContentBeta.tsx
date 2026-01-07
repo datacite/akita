@@ -12,7 +12,7 @@ import Loading from 'src/components/Loading/Loading'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 
 import mapSearchparams from '../../[...doi]/mapSearchParams'
-import { useRelatedContentManager } from './RelatedContentManager'
+import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
 import { Work } from 'src/data/types'
 import { fetchDoi } from 'src/data/queries/doiQuery'
 
