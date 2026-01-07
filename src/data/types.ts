@@ -59,6 +59,10 @@ export type Work = WorkMetadata & {
   partOfCount?: number
   parts?: Works
   partOf?: Works
+  versionsCount?: number
+  versions?: Works
+  versionOfCount?: number
+  versionOf?: Works
   otherRelatedCount?: number
   otherRelated?: Works
   allRelatedCount?: number

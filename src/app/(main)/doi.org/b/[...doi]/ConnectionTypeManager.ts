@@ -6,12 +6,14 @@ export type ConnectionTypeCounts = {
   citations: number
   parts: number
   partOf: number
+  versions: number
+  versionOf: number
   otherRelated: number
 }
 
 export type ConnectionType = keyof ConnectionTypeCounts
 // enumerated list of connectionTypes
-export const CONNECTION_TYPES: ConnectionType[] = ['allRelated', 'references', 'citations', 'parts', 'partOf', 'otherRelated']
+export const CONNECTION_TYPES: ConnectionType[] = ['allRelated', 'references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'otherRelated']
 export const DEFAULT_CONNECTION_TYPE = 'allRelated'
 
 export const EMPTY_CONNECTION_TYPE_COUNTS: ConnectionTypeCounts = {
@@ -20,6 +22,8 @@ export const EMPTY_CONNECTION_TYPE_COUNTS: ConnectionTypeCounts = {
   citations: 0,
   parts: 0,
   partOf: 0,
+  versions: 0,
+  versionOf: 0,
   otherRelated: 0
 }
 
@@ -75,6 +79,8 @@ export class ConnectionTypeManager {
       citations: this.work.citations?.totalCount || 0,
       parts: this.work.parts?.totalCount || 0,
       partOf: this.work.partOf?.totalCount || 0,
+      versions: this.work.versions?.totalCount || 0,
+      versionOf: this.work.versionOf?.totalCount || 0,
       otherRelated: this.work.otherRelated?.totalCount || 0
     }
   }
@@ -89,12 +95,14 @@ export class ConnectionTypeManager {
 
 
   getDefaultConnectionType(): string {
-    const { allRelated, references, citations, parts, partOf } = this.counts
+    const { allRelated, references, citations, parts, partOf, versions, versionOf } = this.counts
     if (allRelated > 0) return 'allRelated'
     if (references > 0) return 'references'
     if (citations > 0) return 'citations'
     if (parts > 0) return 'parts'
     if (partOf > 0) return 'partOf'
+    if (versions > 0) return 'versions'
+    if (versionOf > 0) return 'versionOf'
     return 'otherRelated'
   }
 

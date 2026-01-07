@@ -71,7 +71,10 @@ export function useConnectionCountsIndividual(vars: QueryVar): {
   const citationsQuery = useSearchDoiQuery({ ...vars, connectionType: 'citations' }, 0)
   const partsQuery = useSearchDoiQuery({ ...vars, connectionType: 'parts' }, 0)
   const partOfQuery = useSearchDoiQuery({ ...vars, connectionType: 'partOf' }, 0)
+  const versionsQuery = useSearchDoiQuery({ ...vars, connectionType: 'versions' }, 0)
+  const versionOfQuery = useSearchDoiQuery({ ...vars, connectionType: 'versionOf' }, 0)
   const otherRelatedQuery = useSearchDoiQuery({ ...vars, connectionType: 'otherRelated' }, 0)
+
 
   const isLoading = [
     allRelatedQuery.loading,
@@ -79,7 +82,10 @@ export function useConnectionCountsIndividual(vars: QueryVar): {
     citationsQuery.loading,
     partsQuery.loading,
     partOfQuery.loading,
+    versionsQuery.loading,
+    versionOfQuery.loading,
     otherRelatedQuery.loading
+
   ].some(Boolean)
 
   const isError = [
@@ -88,6 +94,8 @@ export function useConnectionCountsIndividual(vars: QueryVar): {
     citationsQuery.error,
     partsQuery.error,
     partOfQuery.error,
+    versionsQuery.error,
+    versionOfQuery.error,
     otherRelatedQuery.error
   ].some(Boolean)
 
@@ -97,6 +105,8 @@ export function useConnectionCountsIndividual(vars: QueryVar): {
     citationsQuery.error,
     partsQuery.error,
     partOfQuery.error,
+    versionsQuery.error,
+    versionOfQuery.error,
     otherRelatedQuery.error
   ].filter(Boolean)
 
@@ -107,6 +117,8 @@ export function useConnectionCountsIndividual(vars: QueryVar): {
     parts: partsQuery.data?.works?.totalCount ?? 0,
     partOf: partOfQuery.data?.works?.totalCount ?? 0,
     otherRelated: otherRelatedQuery.data?.works?.totalCount ?? 0,
+    versions: versionsQuery.data?.works?.totalCount ?? 0,
+    versionOf: versionOfQuery.data?.works?.totalCount ??  0
   }
 
   return {
