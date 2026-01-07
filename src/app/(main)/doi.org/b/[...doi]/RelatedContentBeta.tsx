@@ -109,7 +109,7 @@ export default function RelatedContent() {
     <Container fluid>
       <Row>
         <Col md={{ offset: 3 }}>
-          <h3 className="member-results" id="title">BETA - Related Works</h3>
+          <h3 className="member-results" id="title">BETA - {displayedConnectionTitle}</h3>
         </Col>
       </Row>
       <Row>
