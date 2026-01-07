@@ -12,7 +12,7 @@ interface Props {
   data: Facets
   model: string
   url: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number, versions: number, versionOf: number }
 }
 
 interface Facets {
@@ -53,6 +53,8 @@ export default function WorkFacets({
     { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
     { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
     { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
+    { id: 'versions', title: 'Versions', count: connectionTypesCounts.versions },
+    { id: 'versionOf', title: 'Is Version Of', count: connectionTypesCounts.versionOf },
     { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
   ] : []
 
