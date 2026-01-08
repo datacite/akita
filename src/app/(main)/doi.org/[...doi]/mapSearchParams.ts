@@ -1,3 +1,5 @@
+import { SortOption } from "src/data/queries/searchDoiQuery"
+
 export interface SearchParams {
   id: string
   filterQuery?: string
@@ -10,7 +12,7 @@ export interface SearchParams {
   "field-of-science"?: string
   "registration-agency"?: string
   "connection-type"?: string
-  sort?: string
+  sort?: SortOption
   isBot: string
 }
 
