@@ -1,6 +1,7 @@
 import { useQueries } from '@tanstack/react-query'
-import { useSearchDoiQuery, QueryVar } from 'src/data/queries/searchDoiQuery'
-import { ConnectionTypeCounts, CONNECTION_TYPES } from './ConnectionTypeManager'
+import { useSearchDoiQuery, QueryVar, fetchDois } from 'src/data/queries/searchDoiQuery'
+import { ConnectionTypeCounts } from '../types'
+import { CONNECTION_TYPES } from './ConnectionTypeManager'
 
 /**
  * Hook to fetch counts for all connection types using count-only queries.
@@ -19,7 +20,7 @@ export function useConnectionCounts(vars: QueryVar): {
     return {
       queryKey: ['doiSearch', { ...vars, connectionType }, 'count'],
       queryFn: async () => {
-        const result = await fetchDoisCount({ ...vars, connectionType }, 0)
+        const result = await fetchDois({ ...vars, connectionType }, 0)
         return result.data?.works?.totalCount ?? 0
       },
       staleTime: 5 * 60 * 1000, // 5 minutes
@@ -44,16 +45,6 @@ export function useConnectionCounts(vars: QueryVar): {
     isError,
     errors,
   }
-}
-
-/**
- * Helper function to fetch count-only data
- * This is a wrapper around the existing fetchDois function with count parameter
- */
-async function fetchDoisCount(variables: QueryVar, count?: number) {
-  // Import fetchDois dynamically to avoid circular imports
-  const { fetchDois } = await import('src/data/queries/searchDoiQuery')
-  return fetchDois(variables, count)
 }
 
 /**
