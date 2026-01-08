@@ -26,7 +26,9 @@ interface Props {
     parts: number,
     partOf: number,
     otherRelated: number,
-    allRelated: number
+    allRelated: number,
+    versions: number,
+    versionOf: number
   }
   showClaimStatus: boolean
   loading: boolean
