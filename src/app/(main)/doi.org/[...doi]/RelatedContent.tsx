@@ -53,6 +53,8 @@ export default function RelatedContent(props: Props) {
   const partCount = relatedWorks.parts?.totalCount || 0
   const partOfCount = relatedWorks.partOf?.totalCount || 0
   const otherRelatedCount = relatedWorks.otherRelated?.totalCount || 0
+  const versionsCount = relatedWorks.versions?.totalCount || 0
+  const versionOfCount = relatedWorks.versionOf?.totalCount || 0
 
   if (referenceCount + citationCount + partCount + partOfCount + otherRelatedCount === 0) return ''
 
@@ -64,7 +66,9 @@ export default function RelatedContent(props: Props) {
     citations: citationCount,
     parts: partCount,
     partOf: partOfCount,
-    otherRelated: otherRelatedCount
+    otherRelated: otherRelatedCount,
+    versions: versionsCount,
+    versionOf: versionOfCount
   }
 
   const defaultConnectionType =
