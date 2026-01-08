@@ -1,19 +1,9 @@
-import { Work, Works } from 'src/data/types'
+import { Work, Works, ConnectionTypeCounts } from 'src/data/types'
 
-export type ConnectionTypeCounts = {
-  allRelated: number
-  references: number
-  citations: number
-  parts: number
-  partOf: number
-  versions: number
-  versionOf: number
-  otherRelated: number
-}
+
 
 export type ConnectionType = keyof ConnectionTypeCounts
-// enumerated list of connectionTypes
-export const CONNECTION_TYPES: ConnectionType[] = ['allRelated', 'references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'otherRelated']
+
 export const DEFAULT_CONNECTION_TYPE = 'allRelated'
 
 export const EMPTY_CONNECTION_TYPE_COUNTS: ConnectionTypeCounts = {
@@ -35,6 +25,9 @@ export const EMPTY_WORKS: Works = {
     endCursor: ""
   }
 }
+
+// Derive connection types from the counts object to maintain single source of truth
+export const CONNECTION_TYPES = Object.keys(EMPTY_CONNECTION_TYPE_COUNTS) as ConnectionType[]
 
 export function isConnectionType(connectionType: string): boolean {
   return CONNECTION_TYPES.includes(connectionType as ConnectionType)
