@@ -41,16 +41,15 @@ export default function RelatedContent() {
   const searchParams = useSearchParams()
 
   // Use TanStack Query to fetch DOI data on client side
-  const { data: doiData, isLoading: isDoiLoading, error: doiError } = useQuery({
+  const doiQuery = useQuery({
     queryKey: ['doi', doi],
     queryFn: () => fetchDoi(doi),
     enabled: !!doi,
   })
 
   // Use fetched data
-  const work = doiData?.data?.work
-
-  const relatedDois = extractRelatedDois(work)
+  const primaryWork = doiQuery.data?.data?.work
+  const relatedDois = extractRelatedDois(primaryWork)
   const vars = getQueryVariables(doi, searchParams)
   // Merge related DOIs with existing variables as uidList
   const varsWithRelatedDois = {
@@ -61,22 +60,7 @@ export default function RelatedContent() {
   const manager = useRelatedContentManager(varsWithRelatedDois, varsWithRelatedDois.connectionType)
 
 
-  if (isDoiLoading) return <Row><Loading /></Row>
-
-  if (doiError)
-    return <Row>
-      <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="An error occurred loading DOI data." message={doiError.message || 'Failed to fetch DOI data'} />
-      </Col>
-    </Row>
-
-  if (!work)
-    return <Row>
-      <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="DOI not found" message="The requested DOI could not be found." />
-      </Col>
-    </Row>
-
+  if (doiQuery.isLoading) return <Row><Loading /></Row>
   if (manager.isLoading) return <Row><Loading /></Row>
 
   if (manager.hasError)
@@ -103,13 +87,11 @@ export default function RelatedContent() {
 
   const { works, title: displayedConnectionTitle } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
-  const connectionTypeCounts = manager.connectionTypeCounts
-  const url = manager.getUrl()
   return (
     <Container fluid>
       <Row>
         <Col md={{ offset: 3 }}>
-          <h3 className="member-results" id="title">BETA - {displayedConnectionTitle}</h3>
+          <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
         </Col>
       </Row>
       <Row>
@@ -117,7 +99,7 @@ export default function RelatedContent() {
           works={works}
           loading={manager.isLoading}
           loadingFacets={manager.facetsAreLoading || manager.connectionCountsLoading}
-          connectionTypesCounts={connectionTypeCounts}
+          connectionTypesCounts={manager.connectionTypeCounts}
           showAnalytics={!manager.facetsAreLoading}
           showSankey={manager.showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
@@ -125,7 +107,7 @@ export default function RelatedContent() {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'doi'}
-          url={url}
+          url={manager.url}
           endCursor={endCursor} />
       </Row>
     </Container>

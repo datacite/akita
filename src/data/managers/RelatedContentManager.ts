@@ -93,8 +93,8 @@ export class RelatedContentManager {
     }
   }
 
-  getUrl() {
-    return '/doi.org/b/' + this.vars.id + '/?'
+  get url() {
+    return '/doi.org/' + this.vars.id + '/?'
   }
 }
 
