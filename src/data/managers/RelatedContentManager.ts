@@ -2,6 +2,7 @@ import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNE
 import { PaginationManager, EMPTY_PAGINATION } from './PaginationManager'
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { useConnectionCounts } from './ConnectionCountManager'
+import { ConnectionTypeCounts } from 'src/data/types'
 import { isDMP, isProject } from 'src/utils/helpers'
 
 export class RelatedContentManager {
@@ -62,7 +63,7 @@ export class RelatedContentManager {
     return this.data?.work ? (isDMP(this.data.work) || isProject(this.data.work)) : false
   }
 
-  get connectionTypeCounts() {
+  get connectionTypeCounts(): ConnectionTypeCounts {
     // If we have connection counts from the dedicated hook, use them
     if (this.connectionCounts?.counts) {
       return this.connectionCounts.counts
@@ -71,11 +72,11 @@ export class RelatedContentManager {
     return this.connectionManager?.getCounts() || EMPTY_CONNECTION_TYPE_COUNTS
   }
 
-  get connectionCountsLoading() {
+  get connectionCountsLoading() : boolean {
     return this.connectionCounts?.isLoading || false
   }
 
-  get connectionCountsError() {
+  get connectionCountsError() : boolean {
     return this.connectionCounts?.isError || false
   }
 
