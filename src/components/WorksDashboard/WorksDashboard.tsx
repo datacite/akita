@@ -32,13 +32,13 @@ const tooltipText = (sourceField: string) => `The field "${sourceField}" from DO
 function WorksDashboard({ works, show = {}, children }: Props) {
   if (works.totalCount == 0) return null
 
-  const published = works.published.map((x) => ({
+  const published = works.published?.map((x) => ({
     title: x.title,
     count: x.count
-  }))
+  })) || []
 
-  const resourceTypes = getTopFive(works.resourceTypes.map(toBarRecord))
-  const licensesData = clone(works.licenses)
+  const resourceTypes = getTopFive(works.resourceTypes?.map(toBarRecord) || [])
+  const licensesData = clone(works.licenses || [])
   const licenses = getTopFive(licensesData.map(toBarRecord))
 
   return (
@@ -76,10 +76,10 @@ function WorksDashboard({ works, show = {}, children }: Props) {
           <VerticalBarChart title="Top Creators and Contributors" data={works.creatorsAndContributors || []} />
         </Col>}
         {(show.fieldsOfScience || show.all) && <Col xs={12} sm={4}>
-          <VerticalBarChart title="Fields of Science" data={works.fieldsOfScience} />
+          <VerticalBarChart title="Fields of Science" data={works.fieldsOfScience || []} />
         </Col>}
         {(show.languages || show.all) && <Col xs={12} sm={4}>
-          <VerticalBarChart title="Work Languages" data={works.languages} />
+          <VerticalBarChart title="Work Languages" data={works.languages || []} />
         </Col>}
       </Row>
     </div>
