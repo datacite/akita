@@ -351,7 +351,22 @@ export type PageInfo = {
   hasNextPage: boolean
 }
 
+export type Pagination = PageInfo & {
+  hasPagination: boolean
+}
+
 export type FormattedCitation = {
   id: string
   formattedCitation: string
+}
+
+export type ConnectionTypeCounts = {
+  allRelated: number
+  references: number
+  citations: number
+  parts: number
+  partOf: number
+  versions: number
+  versionOf: number
+  otherRelated: number
 }
