@@ -1,13 +1,10 @@
-interface PageInfo {
-  hasNextPage?: boolean
-  endCursor?: string
-}
+import { PageInfo, Pagination } from "../types"
 
 interface WorksWithPagination {
   totalCount: number
   pageInfo?: PageInfo
 }
-export const EMPTY_PAGINATION = {
+export const EMPTY_PAGINATION : Pagination = {
   hasPagination: false,
   hasNextPage: false,
   endCursor: ''
