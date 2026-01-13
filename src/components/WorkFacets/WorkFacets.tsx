@@ -97,12 +97,12 @@ export default function WorkFacets({
 
       {model == "person"
         ? <AuthorsFacet authors={data.authors || []} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.creatorsAndContributors || []} title="Creators & Contributors" url={url} model={model} />
+        : <AuthorsFacet authors={data.creatorsAndContributors ?? []} title="Creators & Contributors" url={url} model={model} />
       }
 
 
       <FacetList
-        data={data.published}
+        data={data.published ?? []}
         title="Publication Year"
         id="published-facets"
         param="published"
@@ -110,7 +110,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.resourceTypes?.filter(removeOtherAndMissing)}
+        data={(data.resourceTypes ?? []).filter(removeOtherAndMissing)}
         title="Work Type"
         id="work-type-facets"
         param="resource-type"
@@ -118,7 +118,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.licenses?.filter(removeOtherAndMissing)}
+        data={(data.licenses ?? []).filter(removeOtherAndMissing)}
         title="License"
         id="license-facets"
         param="license"
@@ -126,7 +126,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.languages}
+        data={data.languages ?? []}
         title="Language"
         id="language-facets"
         param="language"
@@ -134,7 +134,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.fieldsOfScience}
+        data={data.fieldsOfScience ?? []}
         title="Field of Science"
         id="field-of-science-facets"
         param="field-of-science"
@@ -142,14 +142,14 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.registrationAgencies}
+        data={data.registrationAgencies ?? []}
         title="Registration Agency"
         id="registration-agency-facets"
         param="registration-agency"
         url={url}
       />
       <FacetList
-        data={data.clientTypes}
+        data={data.clientTypes ?? []}
         title="Repository Type"
         id="repository-type-facets"
         param="repository-type"

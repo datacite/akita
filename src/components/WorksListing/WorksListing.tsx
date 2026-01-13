@@ -50,7 +50,7 @@ export default function WorksListing({
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
-  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
+  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel ?? []) : []
 
   const renderFacets = () => {
     return (
