@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import Error from 'src/components/Error/Error'
+import CommonsError from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
 import WorksListing from 'src/components/WorksListing/WorksListing'
 
@@ -66,7 +66,7 @@ export default function RelatedContent() {
   if (manager.hasError)
     return <Row>
       <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="An error occured loading related content." message={manager.errorMessage} />
+        <CommonsError title="An error occurred loading related content." message={manager.errorMessage} />
       </Col>
     </Row>
 
