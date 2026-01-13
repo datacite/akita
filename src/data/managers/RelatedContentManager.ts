@@ -2,7 +2,7 @@ import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNE
 import { PaginationManager, EMPTY_PAGINATION } from './PaginationManager'
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { useConnectionCounts } from './ConnectionCountManager'
-import { ConnectionTypeCounts } from 'src/data/types'
+import { ConnectionTypeCounts, Pagination } from 'src/data/types'
 import { isDMP, isProject } from 'src/utils/helpers'
 
 export class RelatedContentManager {
@@ -35,31 +35,31 @@ export class RelatedContentManager {
     }
   }
 
-  get isLoading() {
+  get isLoading() : boolean {
     return this.loading
   }
 
-  get facetsAreLoading() {
+  get facetsAreLoading() : boolean {
     return this.facetsLoading
   }
 
-  get hasError() {
+  get hasError() : boolean {
     return !!this.error
   }
 
-  get errorMessage() {
+  get errorMessage() : string | undefined {
     return this.error?.message
   }
 
-  get hasData() {
+  get hasData() : boolean {
     return !!this.data
   }
 
-  get hasAnyRelatedWorks() {
+  get hasAnyRelatedWorks() : boolean {
     return this.connectionManager?.hasAnyRelatedWorks() || false
   }
 
-  get showSankey() {
+  get showSankey() : boolean {
     return this.data?.work ? (isDMP(this.data.work) || isProject(this.data.work)) : false
   }
 
@@ -80,12 +80,12 @@ export class RelatedContentManager {
     return this.connectionCounts?.isError || false
   }
 
-  get selectedContent() {
+  get selectedContent() : {works: any, title: string} {
     if (!this.connectionManager) return {works: EMPTY_WORKS, title: ''}
     return this.connectionManager.getWorksAndTitle(this.connectionType)
   }
 
-  get pagination() {
+  get pagination() : Pagination {
     if (!this.paginationManager) return EMPTY_PAGINATION
     return {
       hasPagination: this.paginationManager.hasPagination,
