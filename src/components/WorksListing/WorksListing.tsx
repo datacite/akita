@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
-import { Works } from 'src/data/types'
+import { ConnectionTypeCounts, Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
@@ -20,16 +20,7 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  connectionTypesCounts?: {
-    references: number,
-    citations: number,
-    parts: number,
-    partOf: number,
-    otherRelated: number,
-    allRelated: number,
-    versions: number,
-    versionOf: number
-  }
+  connectionTypesCounts?: ConnectionTypeCounts
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
