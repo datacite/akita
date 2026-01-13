@@ -72,7 +72,7 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   if (connectionType === "otherRelated") {
     return `((${positivePart}) AND NOT (${negativePart}))`;
   }
-  // By default only retrun positive part
+  // By default only return positive part
   return `(${positivePart})`;
 }
 
