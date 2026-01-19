@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -13,31 +12,10 @@ import WorksListing from 'src/components/WorksListing/WorksListing'
 
 import mapSearchparams from './mapSearchParams'
 import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
-import { Work } from 'src/data/types'
-import { fetchDoi } from 'src/data/queries/doiQuery'
-import { isDMP, isProject } from 'src/utils/helpers'
 
-function getQueryVariables(doi: string, searchParams: any){
+function getQueryVariables(doi: string, searchParams: URLSearchParams) {
   const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
   return { id: doi, relatedDoi: doi, ...variables, connectionType }
-}
-
-function extractRelatedDois(work: Work | undefined): string[] {
-  if (!work) return []
-  
-  // Check if relatedIdentifiers exists on the work object (even if not in the type)
-  const workWithRelatedIdentifiers = work as any
-  if (!workWithRelatedIdentifiers?.relatedIdentifiers) return []
-  
-  return workWithRelatedIdentifiers.relatedIdentifiers
-    .filter((identifier: any) => identifier.relatedIdentifierType === 'DOI')
-    .map((identifier: any) => identifier.relatedIdentifier)
-    .filter(Boolean) // Remove any undefined/null values
-}
-
-function shouldShowSankey(work: Work | undefined) {
-  if (!work) return false
-  return isDMP(work) || isProject(work)
 }
 
 export default function RelatedContent() {
@@ -45,37 +23,11 @@ export default function RelatedContent() {
   const doiParams = useParams().doi as string[]
   const doi = decodeURIComponent(doiParams.join('/'))
   const searchParams = useSearchParams()
-
-  // Use TanStack Query to fetch DOI data on client side
-  const doiQuery = useQuery({
-    queryKey: ['doi', doi],
-    queryFn: () => fetchDoi(doi),
-    enabled: !!doi,
-  })
-
-  // Use fetched data
-  const primaryWork = doiQuery.data?.data?.work
-  const relatedDois = extractRelatedDois(primaryWork)
-  const vars = getQueryVariables(doi, searchParams)
-  // Merge related DOIs with existing variables as uidList
-  const varsWithRelatedDois = {
-    ...vars,
-    uidList: relatedDois
-  }
   
-  const manager = useRelatedContentManager(varsWithRelatedDois, varsWithRelatedDois.connectionType)
-  const showSankey = shouldShowSankey(primaryWork)
+  const vars = getQueryVariables(doi, searchParams)
+  const manager = useRelatedContentManager(doi, vars)
 
-
-  if (doiQuery.isLoading) return <Row><Loading /></Row>
   if (manager.isLoading) return <Row><Loading /></Row>
-
-  if (doiQuery.isError)
-    return <Row>
-      <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <CommonsError title="An error occurred loading the DOI." message={doiQuery.error?.message} />
-      </Col>
-    </Row>
 
   if (manager.hasError)
     return <Row>
@@ -115,7 +67,7 @@ export default function RelatedContent() {
           loadingFacets={manager.facetsAreLoading || manager.connectionCountsLoading}
           connectionTypesCounts={manager.connectionTypeCounts}
           showAnalytics={!manager.facetsAreLoading}
-          showSankey={showSankey}
+          showSankey={manager.showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
           hasPagination={hasPagination}
