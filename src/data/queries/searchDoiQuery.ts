@@ -10,6 +10,14 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
+/**
+ * Quotes an identifier for safe use in Lucene/OpenSearch queries.
+ * Wraps the identifier in double quotes to prevent special character issues.
+ */
+function quoteIdentifier(identifier: string): string {
+  return `"${identifier}"`
+}
+
 const VALID_CONNECTION_TYPES = ['references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'allRelated', 'otherRelated'];
 
 function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
@@ -18,14 +26,15 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   if (!VALID_CONNECTION_TYPES.includes(connectionType)) return ''
 
   const doi = relatedDoi;
+  const quotedDoi = quoteIdentifier(doi);
   const baseURI = "https://doi.org/";
   const OR = " OR ";
   const httpBaseURI = "http://doi.org/"; // Added HTTP base URI
 
   const relatedIdentifiers = [
-    `"${baseURI}${doi}"`,
-    `"${doi}"`,
-    `"${httpBaseURI}${doi}"` // Added HTTP version
+    quoteIdentifier(`${baseURI}${doi}`),
+    quotedDoi,
+    quoteIdentifier(`${httpBaseURI}${doi}`) // Added HTTP version
   ];
   const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
   const uidPart = uidList && uidList.length > 0
@@ -34,20 +43,20 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
 
   // Map connection types to their corresponding query parts
   const queryPartsByType = {
-    references: [`citation_ids:${doi}`],
-    citations: [`reference_ids:${doi}`],
-    parts: [`part_of_ids:${doi}`],
-    partOf: [`part_ids:${doi}`],
-    versions: [`version_of_ids:${doi}`],
-    versionOf: [`versions_ids:${doi}`],
+    references: [`citation_ids:${quotedDoi}`],
+    citations: [`reference_ids:${quotedDoi}`],
+    parts: [`part_of_ids:${quotedDoi}`],
+    partOf: [`part_ids:${quotedDoi}`],
+    versions: [`version_of_ids:${quotedDoi}`],
+    versionOf: [`versions_ids:${quotedDoi}`],
     allRelated: [
       relatedIdentifierPart,
-      `reference_ids:${doi}`,
-      `citation_ids:${doi}`,
-      `part_ids:${doi}`,
-      `part_of_ids:${doi}`,
-      `versions_ids:${doi}`,
-      `version_of_ids:${doi}`,
+      `reference_ids:${quotedDoi}`,
+      `citation_ids:${quotedDoi}`,
+      `part_ids:${quotedDoi}`,
+      `part_of_ids:${quotedDoi}`,
+      `versions_ids:${quotedDoi}`,
+      `version_of_ids:${quotedDoi}`,
       uidPart
     ],
     otherRelated: [
@@ -57,12 +66,12 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   };
 
   const negativeOtherRelationsParts = [
-    `reference_ids:${doi}`,
-    `citation_ids:${doi}`,
-    `part_ids:${doi}`,
-    `part_of_ids:${doi}`,
-    `versions_ids:${doi}`,
-    `version_of_ids:${doi}`,
+    `reference_ids:${quotedDoi}`,
+    `citation_ids:${quotedDoi}`,
+    `part_ids:${quotedDoi}`,
+    `part_of_ids:${quotedDoi}`,
+    `versions_ids:${quotedDoi}`,
+    `version_of_ids:${quotedDoi}`,
   ];
 
   const selectedParts = queryPartsByType[connectionType as keyof typeof queryPartsByType] || [];
