@@ -15,6 +15,7 @@ import mapSearchparams from './mapSearchParams'
 import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
 import { Work } from 'src/data/types'
 import { fetchDoi } from 'src/data/queries/doiQuery'
+import { isDMP, isProject } from 'src/utils/helpers'
 
 function getQueryVariables(doi: string, searchParams: any){
   const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
@@ -32,6 +33,11 @@ function extractRelatedDois(work: Work | undefined): string[] {
     .filter((identifier: any) => identifier.relatedIdentifierType === 'DOI')
     .map((identifier: any) => identifier.relatedIdentifier)
     .filter(Boolean) // Remove any undefined/null values
+}
+
+function shouldShowSankey(work: Work | undefined) {
+  if (!work) return false
+  return isDMP(work) || isProject(work)
 }
 
 export default function RelatedContent() {
@@ -58,6 +64,8 @@ export default function RelatedContent() {
   }
   
   const manager = useRelatedContentManager(varsWithRelatedDois, varsWithRelatedDois.connectionType)
+  // Need to determin showSankey based on primaryWork data
+  const showSankey = shouldShowSankey(primaryWork)
 
 
   if (doiQuery.isLoading) return <Row><Loading /></Row>
@@ -101,7 +109,7 @@ export default function RelatedContent() {
           loadingFacets={manager.facetsAreLoading || manager.connectionCountsLoading}
           connectionTypesCounts={manager.connectionTypeCounts}
           showAnalytics={!manager.facetsAreLoading}
-          showSankey={manager.showSankey}
+          showSankey={showSankey}
           sankeyTitle={`Contributions to ${displayedConnectionTitle}`}
           showClaimStatus={true}
           hasPagination={hasPagination}
