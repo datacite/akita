@@ -98,10 +98,6 @@ export class RelatedContentManager {
       endCursor: this.paginationManager.endCursor
     }
   }
-
-  get url() {
-    return '/doi.org/' + this.vars.id + '/?'
-  }
 }
 
 function extractRelatedDois(work: Work | undefined): string[] {
