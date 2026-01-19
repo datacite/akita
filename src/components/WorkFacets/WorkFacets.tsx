@@ -4,7 +4,7 @@ import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
-import { Work, Facet } from 'src/data/types'
+import { Work, Facet, ConnectionTypeCounts } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
 
@@ -12,7 +12,7 @@ interface Props {
   data: Facets
   model: string
   url: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number, versions: number, versionOf: number }
+  connectionTypesCounts?: ConnectionTypeCounts
 }
 
 interface Facets {
