@@ -17,7 +17,7 @@ export function useDoiRelatedContentQuery(variables: QueryVar) {
 
   const work = {
     types: {
-      resourceTypeGeneral: "TEXT",
+      resourceTypeGeneral: undefined,
 
     },
     [variables.connectionType || "allRelated"]: {
