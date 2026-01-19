@@ -64,12 +64,18 @@ export default function RelatedContent() {
   }
   
   const manager = useRelatedContentManager(varsWithRelatedDois, varsWithRelatedDois.connectionType)
-  // Need to determin showSankey based on primaryWork data
   const showSankey = shouldShowSankey(primaryWork)
 
 
   if (doiQuery.isLoading) return <Row><Loading /></Row>
   if (manager.isLoading) return <Row><Loading /></Row>
+
+  if (doiQuery.isError)
+    return <Row>
+      <Col md={{ offset: 3 }} className="panel panel-transparent">
+        <CommonsError title="An error occurred loading the DOI." message={doiQuery.error?.message} />
+      </Col>
+    </Row>
 
   if (manager.hasError)
     return <Row>
