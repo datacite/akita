@@ -15,13 +15,11 @@ export class RelatedContentManager {
   private readonly connectionManager: ConnectionTypeManager | null
   private readonly paginationManager: PaginationManager | null
   private readonly connectionType: string
-  private readonly vars: QueryVar & { id: string }
   private readonly facetsLoading: boolean
   private readonly connectionCounts: ExternalConnectionCounts | undefined
   private readonly primaryWork: Work | undefined
 
-  constructor(vars: QueryVar & { id: string }, connectionType: string | undefined, data: QueryData | undefined, loading: boolean, error: Error | undefined | null, facetsLoading: boolean, connectionCounts?: ExternalConnectionCounts, primaryWork?: Work) {
-    this.vars = vars
+  constructor(connectionType: string | undefined, data: QueryData | undefined, loading: boolean, error: Error | undefined | null, facetsLoading: boolean, connectionCounts?: ExternalConnectionCounts, primaryWork?: Work) {
     this.data = data
     this.loading = loading
     this.facetsLoading = facetsLoading
@@ -115,7 +113,7 @@ function extractRelatedDois(work: Work | undefined): string[] {
 
 export function useRelatedContentManager(
   doi: string,
-  vars: QueryVar & { id: string }
+  vars: QueryVar
 ) {
   // Fetch primary work
   const doiQuery = useQuery({
@@ -138,7 +136,6 @@ export function useRelatedContentManager(
   const connectionCounts = useConnectionCounts(varsWithRelatedDois)
   
   return new RelatedContentManager(
-    varsWithRelatedDois,
     varsWithRelatedDois.connectionType,
     data,
     loading || doiQuery.isLoading,
