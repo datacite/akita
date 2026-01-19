@@ -31,12 +31,12 @@ const tooltipText = (sourceField: string) => `The field "${sourceField}" from DO
 function WorksDashboard({ works, show = {}, children }: Props) {
   if (works.totalCount == 0) return null
 
-  const published = works.published?.map((x) => ({
+  const published = (works.published ?? []).map((x) => ({
     title: x.title,
     count: x.count
-  })) || []
+  }))
 
-  const resourceTypes = getTopFive(works.resourceTypes?.map(toBarRecord) || [])
+  const resourceTypes = getTopFive((works.resourceTypes ?? []).map(toBarRecord))
   const licenses = getTopFive((works.licenses ?? []).map(toBarRecord))
 
   return (
