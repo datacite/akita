@@ -1,22 +1,24 @@
-import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNECTION_TYPE_COUNTS } from './ConnectionTypeManager'
+import { ConnectionTypeManager, getValidConnectionType, EMPTY_WORKS, EMPTY_CONNECTION_TYPE_COUNTS, ExternalConnectionCounts } from './ConnectionTypeManager'
 import { PaginationManager, EMPTY_PAGINATION } from './PaginationManager'
 import { useDoiRelatedContentQuery } from 'src/data/queries/doiRelatedContentQuery'
 import { useConnectionCounts } from './ConnectionCountManager'
-import { ConnectionTypeCounts, Pagination } from 'src/data/types'
+import { ConnectionTypeCounts, Pagination, Works } from 'src/data/types'
+import { QueryData } from 'src/data/queries/doiQuery'
+import { QueryVar } from 'src/data/queries/searchDoiQuery'
 import { isDMP, isProject } from 'src/utils/helpers'
 
 export class RelatedContentManager {
-  private readonly data: any
+  private readonly data: QueryData | undefined
   private readonly loading: boolean
   private readonly error: Error | undefined | null
   private readonly connectionManager: ConnectionTypeManager | null
   private readonly paginationManager: PaginationManager | null
   private readonly connectionType: string
-  private readonly vars: any
+  private readonly vars: QueryVar & { id: string }
   private readonly facetsLoading: boolean
-  private readonly connectionCounts: any
+  private readonly connectionCounts: ExternalConnectionCounts | undefined
 
-  constructor(vars: any, connectionType: string | undefined, data: any, loading: boolean, error: Error | undefined | null, facetsLoading: boolean, connectionCounts?: any) {
+  constructor(vars: QueryVar & { id: string }, connectionType: string | undefined, data: QueryData | undefined, loading: boolean, error: Error | undefined | null, facetsLoading: boolean, connectionCounts?: ExternalConnectionCounts) {
     this.vars = vars
     this.data = data
     this.loading = loading
@@ -80,7 +82,7 @@ export class RelatedContentManager {
     return this.connectionCounts?.isError || false
   }
 
-  get selectedContent() : {works: any, title: string} {
+  get selectedContent() : {works: Works, title: string} {
     if (!this.connectionManager) return {works: EMPTY_WORKS, title: ''}
     return this.connectionManager.getWorksAndTitle(this.connectionType)
   }
@@ -99,7 +101,7 @@ export class RelatedContentManager {
   }
 }
 
-export function useRelatedContentManager(vars: any, connectionType: string | undefined) {
+export function useRelatedContentManager(vars: QueryVar & { id: string }, connectionType: string | undefined) {
 
   const { loading, data, error, facetsLoading } = useDoiRelatedContentQuery(vars)
   const connectionCounts = useConnectionCounts(vars)
