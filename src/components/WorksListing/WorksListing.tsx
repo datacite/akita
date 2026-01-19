@@ -74,11 +74,17 @@ export default function WorksListing({
     return (
       <>
         {showAnalytics && <WorksDashboard works={works} show={show} />}
-        {showSankey && <Row>
-          <Col xs={12}>
-            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
-          </Col>
-        </Row>}
+        {showSankey && !loadingFacets && (
+          <Row>
+            <Col xs={12}>
+              <SankeyGraph
+                titleText={sankeyTitle}
+                data={sankeyData}
+                tooltipText="This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types."
+              />
+            </Col>
+          </Row>
+        )}
 
         {works.nodes.map((doi) => (
           <Row key={doi.doi} className="mb-4 work">
