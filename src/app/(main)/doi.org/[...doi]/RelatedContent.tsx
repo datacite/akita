@@ -15,7 +15,7 @@ import { useRelatedContentManager } from 'src/data/managers/RelatedContentManage
 
 function getQueryVariables(doi: string, searchParams: URLSearchParams) {
   const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
-  return { id: doi, relatedDoi: doi, ...variables, connectionType }
+  return { relatedDoi: doi, ...variables, connectionType }
 }
 
 export default function RelatedContent() {
