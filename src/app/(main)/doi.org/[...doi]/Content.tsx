@@ -13,16 +13,13 @@ import CiteAs from 'src/components/CiteAs/CiteAs'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
 // import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import Work from 'src/components/Work/Work'
-// import { isProject } from 'src/utils/helpers';
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
 
 interface Props {
   doi: string
-  isBot?: boolean
 }
 
 export default async function Content(props: Props) {
-  // const { doi, isBot = false } = props
   const { doi } = props
 
   const { data, error } = await fetchDoi(doi)
