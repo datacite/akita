@@ -1,11 +1,7 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import Content from './Content'
-import Loading from 'src/components/Loading/Loading'
 import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
-import Container from 'react-bootstrap/Container'
 import RelatedContent from './RelatedContent'
 
 
@@ -55,16 +51,12 @@ export default async function Page(props: Props) {
   const params = await props.params;
   const repoid = decodeURIComponent(params.repoid.join('/'))
 
-  // Fetch Repository metadata
+  // Content rendering moved to layout.tsx
+  // Fetch repository data to check clientId and pass to RelatedContent
   const { data } = await fetchRepository(repoid)
 
-  if (!data) notFound()
+  if (!data) return null
 
-  return <Container fluid>
-    <Suspense fallback={<Loading />}>
-      <Content variables={{ id: repoid }} />
-    </Suspense>
-    {data.repository.clientId && <RelatedContent repository={data.repository} />}
-  </Container>
+  return data.repository.clientId ? <RelatedContent repository={data.repository} /> : null
 }
 
