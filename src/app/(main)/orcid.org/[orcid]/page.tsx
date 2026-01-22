@@ -1,12 +1,10 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import truncate from 'lodash/truncate'
 
-import Content from './Content'
 import { fetchPerson } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'
-import Loading from 'src/components/Loading/Loading'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
@@ -57,18 +55,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default async function Page(props: Props) {
-  const params = await props.params;
-  const orcid = params.orcid.toUpperCase()
+  // Redirect handling moved to layout.tsx
+  // Content rendering moved to layout.tsx
+  // RelatedContent gets orcid from useParams() internally
 
-  if (params.orcid != orcid)
-    redirect(`/orcid.org/${orcid}/`)
-
-  return <>
-    <Suspense fallback={<Loading />}>
-      <Content orcid={orcid} />
-    </Suspense>
+  return (
     <RelatedContent />
-  </>
+  )
 }
-
-
