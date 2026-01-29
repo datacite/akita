@@ -51,7 +51,7 @@ End-to-end tests that validate JWT authentication flows in the browser:
 
 #### Session Persistence Tests
 - **Cross-page navigation**: Verifies session persists across page changes
-- **Missing JWT_KEY**: Tests behavior when environment variable is not configured
+- **Missing NEXT_PUBLIC_JWT_PUBLIC_KEY**: Tests behavior when environment variable is not configured
 
 ### Component Tests (`src/components/Header/NavRight.test.tsx`)
 
@@ -59,8 +59,7 @@ Component-level tests for the NavRight component that uses JWT authentication:
 
 #### Authentication State Tests
 - **No JWT token**: Shows signed-out content when no token is present
-- **JWT_KEY not configured**: Handles missing environment variable
-- **Missing _datacite cookie**: Displays signed-out content appropriately
+- **NEXT_PUBLIC_JWT_PUBLIC_KEY not configured**: Handles missing environment variable
 - **Missing access_token**: Handles incomplete cookie structure
 - **Invalid JWT token**: Shows signed-out content for invalid tokens
 - **Malformed cookie data**: Gracefully handles corrupted cookie data
@@ -110,7 +109,7 @@ The tests validate several security aspects:
 1. **Token Verification**: Ensures only properly signed tokens are accepted
 2. **Expired Token Handling**: Confirms expired tokens are rejected
 3. **Malformed Data**: Tests graceful degradation with corrupted data
-4. **Missing Configuration**: Validates safe behavior without JWT_KEY
+4. **Missing Configuration**: Validates safe behavior without NEXT_PUBLIC_JWT_PUBLIC_KEY
 
 ## Future Improvements
 
