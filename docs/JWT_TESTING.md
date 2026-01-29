@@ -33,12 +33,11 @@ End-to-end tests that validate JWT authentication flows in the browser:
 - Verifies sign-in link is visible when not authenticated
 - Confirms user menu is not shown without authentication
 
-#### Authenticated User Tests (Commented)
+#### Authenticated User Tests
 - Tests for authenticated users with valid JWT tokens
-- Commented out because they require:
-  - Valid JWT token signed with correct private key
-  - Matching public key in `NEXT_PUBLIC_JWT_PUBLIC_KEY` environment variable
-  - Proper test environment setup in CI/CD
+- Uses test fixtures from `cypress/fixtures/jwt-keys.json` to generate valid tokens
+- Tests conditionally skip if `NEXT_PUBLIC_JWT_PUBLIC_KEY` is not configured
+- Validates user menu display and authentication state
 
 #### Invalid JWT Token Tests
 - **Invalid token format**: Ensures app handles malformed tokens gracefully
@@ -63,6 +62,7 @@ Component-level tests for the NavRight component that uses JWT authentication:
 - **Missing access_token**: Handles incomplete cookie structure
 - **Invalid JWT token**: Shows signed-out content for invalid tokens
 - **Malformed cookie data**: Gracefully handles corrupted cookie data
+- **Valid JWT token**: Shows signed-in content when valid token is present (requires test key setup)
 
 ## Running the Tests
 
@@ -90,17 +90,35 @@ yarn cy:open
 ### For Local Testing
 
 1. Set the JWT public key in `.env` file:
-```
+```bash
 NEXT_PUBLIC_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
 ```
 
-2. For authenticated user tests, you'll need a valid JWT token in the Cypress environment configuration.
+2. For testing with valid JWT tokens, use the test keys from `cypress/fixtures/jwt-keys.json`:
+```bash
+# Copy the test public key to your .env file
+# See cypress/fixtures/JWT_TEST_SETUP.md for detailed instructions
+```
+
+3. The test suite provides helper functions to generate valid JWT tokens:
+```typescript
+import { setAuthenticatedSession } from '../support/jwt-helper'
+
+// Set up authenticated session in tests
+setAuthenticatedSession({ uid: 'test-123', name: 'Test User' })
+```
 
 ### For CI/CD
 
 Configure the following in your CI/CD environment:
-- `NEXT_PUBLIC_JWT_PUBLIC_KEY`: The RSA public key for JWT verification
-- `userCookie` in Cypress environment: A valid JWT token for authenticated tests
+- `NEXT_PUBLIC_JWT_PUBLIC_KEY`: The test RSA public key for JWT verification (optional)
+  - Use the public key from `cypress/fixtures/jwt-keys.json` for tests
+  - **Note**: This is a test-only key, safe to use in CI/CD
+- `CYPRESS_USER_COOKIE`: A real user cookie for integration tests (already configured)
+
+**Important**: The test keys in `cypress/fixtures/jwt-keys.json` are for testing only and are different from production keys.
+
+For complete setup instructions, see: `cypress/fixtures/JWT_TEST_SETUP.md`
 
 ## Security Considerations
 
@@ -113,10 +131,10 @@ The tests validate several security aspects:
 
 ## Future Improvements
 
-1. **Generate test JWT tokens**: Create a test fixture that generates valid JWT tokens for testing
-2. **More component tests**: Add tests for other components using `session()`
-3. **Token refresh testing**: If token refresh is implemented, add tests for that flow
-4. **Performance tests**: Validate JWT verification doesn't impact page load times
+1. **Add more authenticated flow tests**: Expand coverage to other components using `session()`
+2. **Token refresh testing**: If token refresh is implemented, add tests for that flow
+3. **Performance tests**: Validate JWT verification doesn't impact page load times
+4. **Security scanning**: Automated security checks for JWT implementation
 
 ## References
 

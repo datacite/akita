@@ -12,6 +12,8 @@ on:
         required: true
       CYPRESS_USER_COOKIE:
         required: true
+      NEXT_PUBLIC_JWT_PUBLIC_KEY:
+        required: false
 
 jobs:
   cypress:
@@ -40,6 +42,7 @@ jobs:
           CYPRESS_NODE_ENV: test
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXT_PUBLIC_ORCID_API_URL: ${{ secrets.NEXT_PUBLIC_ORCID_API_URL }}
+          NEXT_PUBLIC_JWT_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_JWT_PUBLIC_KEY }}
           SITEMAPS_URL: ${{ secrets.SITEMAPS_URL }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_USER_COOKIE: ${{ secrets.CYPRESS_USER_COOKIE }}

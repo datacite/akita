@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { setAuthenticatedSession } from '../support/jwt-helper'
+
 describe('JWT Authentication', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
@@ -19,25 +21,33 @@ describe('JWT Authentication', () => {
 
   describe('Authenticated User (with valid JWT)', () => {
     beforeEach(() => {
-      // Set a mock authenticated cookie with JWT token
-      // Note: In a real test environment, this would need a valid JWT token
-      // signed with the correct private key that matches the public key in JWT_KEY
-      cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false })
+      // Set up authenticated session with valid JWT token using test fixtures
+      // This will work if NEXT_PUBLIC_JWT_PUBLIC_KEY is set to the test public key
+      setAuthenticatedSession({ uid: 'test-user-123', name: 'Test User' })
     })
 
-    // These tests are commented out because they require a valid JWT token
-    // and proper authentication setup which should be configured in CI/CD
-    
-    // it('should display user name when authenticated', () => {
-    //   cy.visit('/')
-    //   cy.get('#sign-in', { timeout: 30000 }).should('be.visible')
-    // })
+    it('should display user name when authenticated with valid JWT', () => {
+      // Skip if JWT public key is not configured for tests
+      if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+        cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
+        return
+      }
+      
+      cy.visit('/')
+      cy.get('#sign-in', { timeout: 30000 }).should('be.visible')
+    })
 
-    // it('should show user dropdown menu when authenticated', () => {
-    //   cy.visit('/')
-    //   cy.get('#sign-in', { timeout: 30000 }).click()
-    //   cy.get('[data-cy=settings]').should('be.visible')
-    // })
+    it('should show user dropdown menu when authenticated with valid JWT', () => {
+      // Skip if JWT public key is not configured for tests
+      if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+        cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
+        return
+      }
+      
+      cy.visit('/')
+      cy.get('#sign-in', { timeout: 30000 }).click()
+      cy.get('[data-cy=settings]').should('be.visible')
+    })
   })
 
   describe('Invalid JWT Token', () => {
