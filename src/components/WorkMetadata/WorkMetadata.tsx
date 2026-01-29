@@ -253,7 +253,7 @@ export default function WorkMetadata({
         )}
         {metadata.fieldsOfScience && (
           <span>
-            {metadata.fieldsOfScience.map((fos) => (
+            {metadata.fieldsOfScience?.map((fos) => (
               <OverlayTrigger
                 key={fos.id}
                 placement="top"

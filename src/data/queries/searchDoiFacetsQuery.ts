@@ -24,7 +24,7 @@ function buildDoiSearchParams(variables: QueryVar, facets: string[]): URLSearchP
 function convertToQueryData(json: any): QueryData {
   const { meta } = json
 
-  // Missing authors, repositories, and multilevel
+  // Missing repositories,
   return {
     works: {
       totalCount: meta.total,
@@ -40,7 +40,7 @@ function convertToQueryData(json: any): QueryData {
       authors: meta.authors?.slice(0, 10),
       creatorsAndContributors: meta.creatorsAndContributors?.slice(0, 10),
       clientTypes: meta.clientTypes?.slice(0, 10),
-      personToWorkTypesMultilevel: [],
+      personToWorkTypesMultilevel: meta.personToWorkTypesMultilevel ?? [],
       citations: meta.citations,
       views: meta.views,
       downloads: meta.downloads,
@@ -49,7 +49,7 @@ function convertToQueryData(json: any): QueryData {
       downloadCount: meta.downloadCount,
       totalContentUrl: meta.contentUrlCount,
       totalOpenLicenses: meta.openLicensesCount,
-      openLicenseResourceTypes: meta.openLicenses
+      openLicenseResourceTypes: meta.openLicenses,
     }
   }
 }

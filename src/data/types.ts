@@ -53,25 +53,34 @@ export type Work = WorkMetadata & {
   viewsOverTime?: UsageMonth[]
   downloadCount?: number
   downloadsOverTime?: UsageMonth[]
+  referenceCount?: number
   references?: Works
+  partCount?: number
+  partOfCount?: number
   parts?: Works
   partOf?: Works
+  versionsCount?: number
+  versions?: Works
+  versionOfCount?: number
+  versionOf?: Works
+  otherRelatedCount?: number
   otherRelated?: Works
+  allRelatedCount?: number
   allRelated?: Works
 }
 
 export type Works = {
   totalCount: number
   pageInfo: PageInfo
-  published: Facet[]
-  resourceTypes: Facet[]
-  languages: Facet[]
-  licenses: Facet[]
-  fieldsOfScience: Facet[]
-  registrationAgencies: Facet[]
+  published?: Facet[]
+  resourceTypes?: Facet[]
+  languages?: Facet[]
+  licenses?: Facet[]
+  fieldsOfScience?: Facet[]
+  registrationAgencies?: Facet[]
   repositories?: Facet[]
   affiliations?: Facet[]
-  funders: Facet[]
+  funders?: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
@@ -86,7 +95,7 @@ export type Works = {
   openLicenseResourceTypes?: Facet[]
 
   nodes: Work[]
-  personToWorkTypesMultilevel: MultilevelFacet[]
+  personToWorkTypesMultilevel?: MultilevelFacet[]
 }
 
 type Title = {
@@ -342,7 +351,22 @@ export type PageInfo = {
   hasNextPage: boolean
 }
 
+export type Pagination = PageInfo & {
+  hasPagination: boolean
+}
+
 export type FormattedCitation = {
   id: string
   formattedCitation: string
+}
+
+export type ConnectionTypeCounts = {
+  allRelated: number
+  references: number
+  citations: number
+  parts: number
+  partOf: number
+  versions: number
+  versionOf: number
+  otherRelated: number
 }

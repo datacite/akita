@@ -3,7 +3,6 @@
 import React, { PropsWithChildren } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import clone from 'lodash/clone'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
@@ -32,14 +31,13 @@ const tooltipText = (sourceField: string) => `The field "${sourceField}" from DO
 function WorksDashboard({ works, show = {}, children }: Props) {
   if (works.totalCount == 0) return null
 
-  const published = works.published.map((x) => ({
+  const published = (works.published ?? []).map((x) => ({
     title: x.title,
     count: x.count
   }))
 
-  const resourceTypes = getTopFive(works.resourceTypes.map(toBarRecord))
-  const licensesData = clone(works.licenses)
-  const licenses = getTopFive(licensesData.map(toBarRecord))
+  const resourceTypes = getTopFive((works.resourceTypes ?? []).map(toBarRecord))
+  const licenses = getTopFive((works.licenses ?? []).map(toBarRecord))
 
   return (
     <div className={styles.graphsContainer}>
@@ -73,13 +71,13 @@ function WorksDashboard({ works, show = {}, children }: Props) {
             tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         </Col>}
         {(show.creatorsAndContributors || show.all) && <Col xs={12} sm={4}>
-          <VerticalBarChart title="Top Creators and Contributors" data={works.creatorsAndContributors || []} />
+          <VerticalBarChart title="Top Creators and Contributors" data={works.creatorsAndContributors ?? []} />
         </Col>}
         {(show.fieldsOfScience || show.all) && <Col xs={12} sm={4}>
-          <VerticalBarChart title="Fields of Science" data={works.fieldsOfScience} />
+          <VerticalBarChart title="Fields of Science" data={works.fieldsOfScience ?? []} />
         </Col>}
         {(show.languages || show.all) && <Col xs={12} sm={4}>
-          <VerticalBarChart title="Work Languages" data={works.languages} />
+          <VerticalBarChart title="Work Languages" data={works.languages ?? []} />
         </Col>}
       </Row>
     </div>

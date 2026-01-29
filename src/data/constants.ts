@@ -84,6 +84,9 @@ export const FACETS = {
     'content_url_count',
     'open_licenses',
     'open_licenses_count'
+  ],
+  SANKEY: [
+    'personToWorkTypesMultilevel',
   ]
 }
 
