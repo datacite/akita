@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useMutation, ApolloCache } from '@apollo/client'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
-import { session, User } from 'src/utils/session'
+import { useSession, User } from 'src/utils/session'
 import { Claim as ClaimType } from 'src/data/types'
 import Error from 'src/components/Error/Error'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
@@ -80,7 +80,7 @@ export default function Claim({ doi_id }: Props) {
     }
   })
 
-  const user = session()
+  const { user } = useSession()
 
   const claim: ClaimType = data?.work.claims[0] || {
     id: null,
