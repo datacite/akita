@@ -17,8 +17,11 @@ export default function SearchBox({ path }: Props) {
   const [searchInput, setSearchInput] = useState(params?.get('filterQuery') || '')
 
   const onSubmit = () => {
-    if (router)
-      router.push(`${path}?filterQuery=${searchInput}`)
+    if (router) {
+      const newParams = new URLSearchParams(params)
+      newParams.set('filterQuery', searchInput)
+      router.push(`${path}?${newParams}`)
+    }
   }
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -33,7 +36,9 @@ export default function SearchBox({ path }: Props) {
 
   const onSearchClear = () => {
     setSearchInput('')
-    router.replace(path);
+    const newParams = new URLSearchParams(params)
+    newParams.delete('filterQuery')
+    router.replace(`${path}?${newParams}`)
   }
   const searchBoxStyle = {
     '--bs-heading-color': '#1abc9c',
