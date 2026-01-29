@@ -22,7 +22,7 @@ export interface JWTKeys {
 /**
  * Load JWT test keys from fixtures
  */
-export function loadJWTKeys(): JWTKeys {
+export function loadJWTKeys(): Cypress.Chainable<JWTKeys> {
   return cy.fixture('jwt-keys').then((keys: JWTKeys) => keys)
 }
 
