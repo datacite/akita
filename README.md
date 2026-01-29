@@ -82,6 +82,15 @@ Note: `yarn dev` only runs the frontend. If you need the API, use `yarn dev-all`
 *   `yarn cy:run`: Runs Cypress tests in headless mode.
 *   `yarn cy:open`: Opens the Cypress Test Runner for interactive testing.
 
+#### JWT Authentication Tests
+
+To run JWT authentication tests with valid tokens:
+1. Copy `.env.jwt-testing` to `.env` and uncomment the JWT public key
+2. See `cypress/fixtures/JWT_TEST_SETUP.md` for detailed instructions
+3. The test keys in `cypress/fixtures/jwt-keys.json` are for testing only
+
+For more details on JWT testing, see: `docs/JWT_TESTING.md`
+
 ### Linting and Formatting
 
 *   `yarn lint`: Runs ESLint to check for code quality issues.
