@@ -9,8 +9,6 @@ import { rorFromUrl } from 'src/utils/helpers'
 import { fetchCrossrefFunder } from 'src/data/queries/crossrefFunderQuery'
 import Content from './Content'
 import { fetchDoi } from 'src/data/queries/doiQuery'
-import RelatedContent from './RelatedContent'
-import RelatedAggregateGraph from './RelatedAggregateGraph'
 import Loading from 'src/components/Loading/Loading'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
@@ -94,10 +92,6 @@ export default async function Page(props: Props) {
     <Suspense fallback={<Loading />}>
       <Content doi={doi} />
     </Suspense>
-    <Suspense>
-      <RelatedAggregateGraph doi={doi} />
-    </Suspense>
-    <RelatedContent />
     <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
   </>
 }

@@ -41,6 +41,8 @@ export type Work = WorkMetadata & {
     name: string
   }
 
+  relatedIdentifiers?: RelatedIdentifier[]
+
   registered?: Date
   formattedCitation?: string
   claims?: Claim[]
@@ -74,6 +76,7 @@ export type Works = {
   funders: Facet[]
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
+  clients?: Facet[]
   clientTypes?: Facet[]
   citations?: Facet[]
   views?: Facet[]
@@ -322,10 +325,22 @@ type Identifier = {
   identifierUrl: string
 }
 
+type RelatedIdentifier = {
+  relatedIdentifier: string
+  relatedIdentifierType: string
+  relationType: string
+  resourceTypeGeneral?: string
+  relatedMetadataScheme?: string
+  schemeUri?: string
+  schemeType?: string
+}
+
 export type Facet = {
   id: string
   title: string
   count: number
+  tooltipText?: string
+  loading?: boolean
 }
 
 export type MultilevelFacet = Facet & {

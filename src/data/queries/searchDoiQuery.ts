@@ -10,18 +10,71 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
-function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
+function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = `"https://${id}"`
-  const rorFundingIdsQuery = rorFundingIds.map(id => '"https://doi.org/' + id + '"').join(' OR ')
-  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funding_references.funderIdentifier:(${urlId} ${rorFundingIdsQuery && `OR ${rorFundingIdsQuery}`}))`
+
+  const fundedByQuery = `funder_rors:${urlId}`
+  const fundedByChildOrganizations = `funder_parent_rors:${urlId}`
+  const createdContributedOrPublishedBy = `(organization_id:${id} OR provider.ror_id:${urlId})`
+  const createdOrContributedByAffiliatedResearcher = `affiliation_id:${id}`
+  const connectedToOrganizationOMPs = `related_dmp_organization_id:${id}`
+
+  switch (organizationRelationType) {
+    case 'fundedBy':
+      return `(${fundedByQuery} OR ${fundedByChildOrganizations})`
+    case 'createdContributedOrPublishedBy':
+      return `(${createdContributedOrPublishedBy})`
+    case 'createdOrContributedByAffiliatedResearcher':
+      return `(${createdOrContributedByAffiliatedResearcher})`
+    case 'connectedToOrganizationOMPs':
+      return `(${connectedToOrganizationOMPs})`
+    default:
+      return `(${createdContributedOrPublishedBy} OR ${createdOrContributedByAffiliatedResearcher} OR ${connectedToOrganizationOMPs} OR ${fundedByQuery} OR ${fundedByChildOrganizations})`
+  }
+
 }
+
+function buildRelatedToDoiQuery(relatedToDoi: string | undefined, relatedDois: string[] | undefined, connectionType: string | undefined): string {
+  if (!relatedToDoi) return ''
+  const citationsQuery = '(reference_ids:"' + relatedToDoi + '")'
+  const referencesQuery = '(citation_ids:"' + relatedToDoi + '")'
+
+  const partOfQuery = '(part_ids:"' + relatedToDoi + '")'
+  const isPartOfQuery = '(part_of_ids:"' + relatedToDoi + '")'
+  const versionOfQuery = '(version_ids:"' + relatedToDoi + '")'
+  const versionsQuery = '(version_of_ids:"' + relatedToDoi + '")'
+
+  const outwardRelatedDois = relatedDois && relatedDois.length > 0 && '(doi:(' + relatedDois?.map(doi => '"' + doi + '"').join(' OR ') + '))'
+  const inwardRelatedDois = relatedToDoi && '(relatedIdentifiers.relatedIdentifier:("https://doi.org/' + relatedToDoi?.toLowerCase() + '" OR "' + relatedToDoi?.toLowerCase() + '") AND agency:"datacite")'
+
+  switch (connectionType) {
+    case 'citations':
+      return citationsQuery
+    case 'references':
+      return referencesQuery
+    case 'parts':
+      return partOfQuery
+    case 'partOf':
+      return isPartOfQuery
+    case 'versionOf':
+      return versionOfQuery
+    case 'versions':
+      return versionsQuery
+    case 'otherRelated':
+      return ('(' + [outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR ') + ') AND NOT (' + [citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery].join(' OR ') + ')')
+    default:
+      return ('(' + [citationsQuery, referencesQuery, partOfQuery, isPartOfQuery, versionOfQuery, versionsQuery, outwardRelatedDois, inwardRelatedDois].filter(Boolean).join(' OR ') + ')')
+  }
+}
+
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
-    buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || undefined),
+    buildRelatedToDoiQuery(variables.relatedToDoi || undefined, variables.relatedDois || undefined, variables.connectionType || undefined),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
@@ -73,7 +126,8 @@ function buildDoiSearchParams(variables: QueryVar, count?: number): URLSearchPar
     include_other_registration_agencies: 'true'
   })
 
-  if (count) searchParams.append('page[size]', count.toString())
+  const pageSize = variables.pageSize ?? count
+  if (pageSize !== undefined) searchParams.append('page[size]', pageSize.toString())
 
   searchParams.append('page[number]', variables.cursor || '1')
   // Default to 'relevance' if sort is missing or invalid
@@ -208,8 +262,8 @@ export interface QueryData {
 export interface QueryVar {
   query?: string
   filterQuery?: string
-  rorId?: string
-  rorFundingIds?: string[]
+  rorId?: string,
+  organizationRelationType?: string,
   userId?: string
   clientId?: string
   cursor?: string
@@ -221,7 +275,11 @@ export interface QueryVar {
   license?: string
   registrationAgency?: string
   clientType?: string
+  relatedToDoi?: string
+  relatedDois?: string[]
+  connectionType?: string
   sort?: SortOption
+  pageSize?: number
 }
 
 
