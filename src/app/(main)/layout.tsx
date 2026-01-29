@@ -66,7 +66,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <Script id="feedback-button">
         {`(function(){window.onUsersnapCXLoad=function(e){e.init()};var e=document.createElement("script");e.defer=1,e.src="https://widget.usersnap.com/global/load/b4393e90-ec13-4338-b299-7b6f122b7de3?onload=onUsersnapCXLoad",document.getElementsByTagName("head")[0].appendChild(e)})();`}
       </Script>
-      <Script id="datacite-toasts" data-site="commons" src="https://s3.eu-west-1.amazonaws.com/assets.datacite.org/javascripts/toast_notifications.js">
+      <Script id="datacite-toasts" data-site="commons" src="https://assets.datacite.org/javascripts/toast_notifications.js" async>
       </Script>
     </html>
   )
