@@ -1,6 +1,9 @@
 // import '@cypress/code-coverage/support'
 //require('@cypress/react/support')
 
+// Import JWT helper functions
+import './jwt-helper'
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
