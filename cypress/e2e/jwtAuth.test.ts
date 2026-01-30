@@ -21,29 +21,24 @@ describe('JWT Authentication', () => {
 
   describe('Authenticated User (with valid JWT)', () => {
     beforeEach(() => {
-      // Set up authenticated session with valid JWT token using test fixtures
-      // This will work if NEXT_PUBLIC_JWT_PUBLIC_KEY is set to the test public key
+      if (!Cypress.env('jwtPublicKeyConfigured')) return
       setAuthenticatedSession({ uid: 'test-user-123', name: 'Test User' })
     })
 
     it('should display user name when authenticated with valid JWT', () => {
-      // Skip if JWT public key is not configured for tests
-      if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+      if (!Cypress.env('jwtPublicKeyConfigured')) {
         cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
         return
       }
-      
       cy.visit('/')
       cy.get('#sign-in', { timeout: 30000 }).should('be.visible')
     })
 
     it('should show user dropdown menu when authenticated with valid JWT', () => {
-      // Skip if JWT public key is not configured for tests
-      if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+      if (!Cypress.env('jwtPublicKeyConfigured')) {
         cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
         return
       }
-      
       cy.visit('/')
       cy.get('#sign-in', { timeout: 30000 }).click()
       cy.get('[data-cy=settings]').should('be.visible')

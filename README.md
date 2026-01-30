@@ -85,9 +85,9 @@ Note: `yarn dev` only runs the frontend. If you need the API, use `yarn dev-all`
 #### JWT Authentication Tests
 
 To run JWT authentication tests with valid tokens:
-1. Copy `.env.jwt-testing` to `.env` and uncomment the JWT public key
-2. See `cypress/fixtures/JWT_TEST_SETUP.md` for detailed instructions
-3. The test keys in `cypress/fixtures/jwt-keys.json` are for testing only
+1. Copy `.env.jwt-testing` to `.env` and uncomment `NEXT_PUBLIC_JWT_PUBLIC_KEY` and `TEST_JWT_PRIVATE_KEY` (matching pair)
+2. See `cypress/fixtures/JWT_TEST_SETUP.md` for setup and credential rotation
+3. `cypress/fixtures/jwt-keys.json` contains only the public key; the private key is never committed
 
 For more details on JWT testing, see: `docs/JWT_TESTING.md`
 

@@ -35,8 +35,8 @@ End-to-end tests that validate JWT authentication flows in the browser:
 
 #### Authenticated User Tests
 - Tests for authenticated users with valid JWT tokens
-- Uses test fixtures from `cypress/fixtures/jwt-keys.json` to generate valid tokens
-- Tests conditionally skip if `NEXT_PUBLIC_JWT_PUBLIC_KEY` is not configured
+- Tokens are generated via Cypress Node tasks using `TEST_JWT_PRIVATE_KEY`; public key from `NEXT_PUBLIC_JWT_PUBLIC_KEY`
+- Tests conditionally skip if `NEXT_PUBLIC_JWT_PUBLIC_KEY` is not configured (`jwtPublicKeyConfigured`)
 - Validates user menu display and authentication state
 
 #### Invalid JWT Token Tests
@@ -89,18 +89,14 @@ yarn cy:open
 
 ### For Local Testing
 
-1. Set the JWT public key in `.env` file:
+1. Set the JWT public key in `.env`:
 ```bash
 NEXT_PUBLIC_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
 ```
 
-2. For testing with valid JWT tokens, use the test keys from `cypress/fixtures/jwt-keys.json`:
-```bash
-# Copy the test public key to your .env file
-# See cypress/fixtures/JWT_TEST_SETUP.md for detailed instructions
-```
+2. For tests that generate valid tokens, also set `TEST_JWT_PRIVATE_KEY` (matching pair). See `cypress/fixtures/JWT_TEST_SETUP.md`. The fixture `jwt-keys.json` contains **only** the public key; the private key is never committed.
 
-3. The test suite provides helper functions to generate valid JWT tokens:
+3. The test suite provides helper functions that use Cypress Node tasks to generate and verify JWTs:
 ```typescript
 import { setAuthenticatedSession } from '../support/jwt-helper'
 
@@ -111,12 +107,11 @@ setAuthenticatedSession({ uid: 'test-123', name: 'Test User' })
 ### For CI/CD
 
 Configure the following in your CI/CD environment:
-- `NEXT_PUBLIC_JWT_PUBLIC_KEY`: The test RSA public key for JWT verification (optional)
-  - Use the public key from `cypress/fixtures/jwt-keys.json` for tests
-  - **Note**: This is a test-only key, safe to use in CI/CD
+- `NEXT_PUBLIC_JWT_PUBLIC_KEY`: Test RSA public key for JWT verification (optional)
+- `TEST_JWT_PRIVATE_KEY`: Matching test RSA private key for signing (optional). Used only in Cypress Node tasks; never commit.
 - `CYPRESS_USER_COOKIE`: A real user cookie for integration tests (already configured)
 
-**Important**: The test keys in `cypress/fixtures/jwt-keys.json` are for testing only and are different from production keys.
+**Important**: `jwt-keys.json` holds only the public key. The private key is supplied via `TEST_JWT_PRIVATE_KEY`. Rotate credentials if the previous key pair was ever committed.
 
 For complete setup instructions, see: `cypress/fixtures/JWT_TEST_SETUP.md`
 

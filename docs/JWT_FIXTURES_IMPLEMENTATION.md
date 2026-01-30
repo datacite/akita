@@ -19,7 +19,7 @@ Created a complete test key infrastructure that is:
 ```
 cypress/
 ├── fixtures/
-│   ├── jwt-keys.json              # Test RSA key pair (NEW)
+│   ├── jwt-keys.json              # Test RSA public key only (no private key)
 │   └── JWT_TEST_SETUP.md          # Setup guide (NEW)
 ├── support/
 │   ├── jwt-helper.ts              # JWT utilities (NEW)
@@ -62,21 +62,21 @@ it('should display user name when authenticated', () => {
 
 ### 4. CI/CD Setup
 
-**Required (one-time):**
-Add GitHub secret `NEXT_PUBLIC_JWT_PUBLIC_KEY` with the test public key from `cypress/fixtures/jwt-keys.json`
+**Required for JWT tests:**
+Add GitHub secrets `NEXT_PUBLIC_JWT_PUBLIC_KEY` and `TEST_JWT_PRIVATE_KEY` (must be a matching RSA key pair). See `cypress/fixtures/JWT_TEST_SETUP.md` for key generation instructions.
 
 **How it works:**
-1. Workflow passes secret to test environment
-2. Cypress config loads JWT key from fixtures
-3. Tests generate valid tokens using test private key
-4. App verifies tokens using test public key
+1. Workflow passes secrets to test environment
+2. Cypress config sets `jwtPublicKey` / `jwtPublicKeyConfigured` only when `NEXT_PUBLIC_JWT_PUBLIC_KEY` is set
+3. Cypress Node tasks sign tokens using `TEST_JWT_PRIVATE_KEY`, verify using `NEXT_PUBLIC_JWT_PUBLIC_KEY`
+4. App verifies tokens using `NEXT_PUBLIC_JWT_PUBLIC_KEY`
 5. Full authentication flow tested end-to-end
 
 ### 5. Key Features
 
 #### Graceful Degradation
 ```typescript
-if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+if (!Cypress.env('jwtPublicKeyConfigured')) {
   cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
   return
 }
@@ -105,18 +105,31 @@ if (process.env.CYPRESS_USER_COOKIE) {
   config.env.userCookie = process.env.CYPRESS_USER_COOKIE
 }
 
-const jwtKeys = JSON.parse(fs.readFileSync('cypress/fixtures/jwt-keys.json'))
-config.env.jwtPublicKey = jwtKeys.publicKey
+if (process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY) {
+  config.env.jwtPublicKey = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY.replace(/\\n/g, '\n')
+  config.env.jwtPublicKeyConfigured = true
+}
+
+if (process.env.TEST_JWT_PRIVATE_KEY) {
+  config.env.testJwtPrivateKey = process.env.TEST_JWT_PRIVATE_KEY.replace(/\\n/g, '\n')
+  config.env.testJwtPrivateKeyConfigured = true
+}
 ```
+
+The cy.task handler used for JWT **sign** operations (the task name that signs tokens) should read **`config.env.testJwtPrivateKey`** when performing sign operations.
+
+**Where to look:**
+- **Task implementation (where the private key is consumed):** In `cypress.config.ts`, inside `setupJWTConfigAndTasks` — the `on('task', { signJWT, signExpiredJWT, verifyJWT })` handlers. The **sign** tasks (`signJWT`, `signExpiredJWT`) consume the private key for signing.
+- **Where the JWT sign/verify tasks are called:** In `cypress/support/jwt-helper.ts` — `generateTestJWT` and `generateExpiredTestJWT` call `cy.task('signJWT', ...)` and `cy.task('signExpiredJWT', ...)`; `verifyTestJWT` calls `cy.task('verifyJWT', ...)`.
 
 ### 6. Security Guarantees
 
 | Aspect | Implementation |
 |--------|----------------|
-| **Test Keys** | Generated specifically for testing, committed to repo |
+| **Test public key** | In `jwt-keys.json`; safe to commit |
+| **Test private key** | Via `TEST_JWT_PRIVATE_KEY` only; never in repo or fixtures |
 | **Production Keys** | Remain in secure secrets, never committed |
-| **Separation** | Clear documentation about test vs production keys |
-| **Safety** | Test keys have zero production value if exposed |
+| **Rotation** | If a private key was EVER committed to git history, it is permanently compromised. Rotate keys immediately and treat all tokens/data previously signed with that key as public knowledge. Consider the security impact on any systems that accepted those tokens. |
 
 ### 7. Test Coverage Now Includes
 

@@ -1,11 +1,10 @@
 /**
  * JWT Helper for Testing
- * 
+ *
  * This module provides utilities for generating and managing JWT tokens
- * for testing purposes. It uses test RSA keys stored in fixtures.
+ * for testing purposes. Signing and verification run in Cypress Node tasks;
+ * the public key is loaded from fixtures when needed.
  */
-
-import jwt from 'jsonwebtoken'
 
 export interface JWTPayload {
   uid: string
@@ -14,57 +13,40 @@ export interface JWTPayload {
   iat?: number
 }
 
+/** Decoded JWT payload returned by verifyJWT task (matches signed payload + standard claims). */
+export type DecodedJwt = JWTPayload
+
 export interface JWTKeys {
   publicKey: string
-  privateKey: string
 }
 
 /**
- * Load JWT test keys from fixtures
+ * Load JWT test public key from fixtures (jwt-keys.json contains only publicKey).
  */
 export function loadJWTKeys(): Cypress.Chainable<JWTKeys> {
   return cy.fixture('jwt-keys').then((keys: JWTKeys) => keys)
 }
 
 /**
- * Generate a valid JWT token for testing
+ * Generate a valid JWT token for testing via Node task (uses TEST_JWT_PRIVATE_KEY).
  * @param payload - The JWT payload (uid and name are required)
  * @param expiresIn - Expiration time (default: '1h')
- * @returns Promise<string> - The signed JWT token
+ * @returns Cypress.Chainable<string> - The signed JWT token
  */
 export function generateTestJWT(
   payload: JWTPayload,
   expiresIn: string = '1h'
 ): Cypress.Chainable<string> {
-  return cy.fixture('jwt-keys').then((keys: JWTKeys) => {
-    const token = jwt.sign(
-      payload,
-      keys.privateKey,
-      { 
-        algorithm: 'RS256',
-        expiresIn 
-      }
-    )
-    return token
-  })
+  return cy.task<string>('signJWT', { payload, expiresIn })
 }
 
 /**
- * Generate an expired JWT token for testing
+ * Generate an expired JWT token for testing via Node task.
  * @param payload - The JWT payload
- * @returns Promise<string> - The expired JWT token
+ * @returns Cypress.Chainable<string> - The expired JWT token
  */
-export function generateExpiredTestJWT(
-  payload: JWTPayload
-): Cypress.Chainable<string> {
-  return cy.fixture('jwt-keys').then((keys: JWTKeys) => {
-    const token = jwt.sign(
-      { ...payload, exp: Math.floor(Date.now() / 1000) - 3600 },
-      keys.privateKey,
-      { algorithm: 'RS256' }
-    )
-    return token
-  })
+export function generateExpiredTestJWT(payload: JWTPayload): Cypress.Chainable<string> {
+  return cy.task<string>('signExpiredJWT', { payload })
 }
 
 /**
@@ -83,24 +65,14 @@ export function setAuthenticatedSession(
       }
     })
     cy.setCookie('_datacite', cookieValue)
-  })
+  }) as unknown as Cypress.Chainable<void>
 }
 
 /**
- * Verify JWT token with public key (for testing verification logic)
+ * Verify JWT token with public key via Node task (uses NEXT_PUBLIC_JWT_PUBLIC_KEY).
  * @param token - The JWT token to verify
- * @returns Promise<any> - The decoded payload or null if verification fails
+ * @returns Cypress.Chainable<DecodedJwt | null> - The decoded payload or null if verification fails
  */
-export function verifyTestJWT(token: string): Cypress.Chainable<any> {
-  return cy.fixture('jwt-keys').then((keys: JWTKeys) => {
-    return new Promise((resolve) => {
-      jwt.verify(token, keys.publicKey, { algorithms: ['RS256'] }, (error, payload) => {
-        if (error) {
-          resolve(null)
-        } else {
-          resolve(payload)
-        }
-      })
-    })
-  })
+export function verifyTestJWT(token: string): Cypress.Chainable<DecodedJwt | null> {
+  return cy.task<DecodedJwt | null>('verifyJWT', { token })
 }

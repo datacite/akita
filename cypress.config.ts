@@ -1,6 +1,49 @@
 import { defineConfig } from 'cypress'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as jwt from 'jsonwebtoken'
+
+function normalizeKey(key: string | undefined): string | undefined {
+  return key?.replace(/\\n/g, '\n')
+}
+
+function setupJWTConfigAndTasks(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
+  const publicKey = normalizeKey(process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY)
+  if (publicKey) {
+    config.env.jwtPublicKey = publicKey
+    config.env.jwtPublicKeyConfigured = true
+  }
+
+  on('task', {
+    signJWT({ payload, expiresIn }: { payload: { uid: string; name: string }; expiresIn?: string }) {
+      const privateKey = normalizeKey(process.env.TEST_JWT_PRIVATE_KEY)
+      if (!privateKey) throw new Error('TEST_JWT_PRIVATE_KEY is required for signJWT task')
+      const token = jwt.sign(payload, privateKey, {
+        algorithm: 'RS256',
+        expiresIn: expiresIn ?? '1h'
+      })
+      return token
+    },
+    signExpiredJWT({ payload }: { payload: { uid: string; name: string } }) {
+      const privateKey = normalizeKey(process.env.TEST_JWT_PRIVATE_KEY)
+      if (!privateKey) throw new Error('TEST_JWT_PRIVATE_KEY is required for signExpiredJWT task')
+      const token = jwt.sign(
+        { ...payload, exp: Math.floor(Date.now() / 1000) - 3600 },
+        privateKey,
+        { algorithm: 'RS256' }
+      )
+      return token
+    },
+    verifyJWT({ token }: { token: string }) {
+      const key = normalizeKey(process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY)
+      if (!key) return null
+      return new Promise((resolve) => {
+        jwt.verify(token, key, { algorithms: ['RS256'] }, (err, decoded) => {
+          if (err) resolve(null)
+          else resolve(decoded)
+        })
+      })
+    }
+  })
+}
 
 export default defineConfig({
   experimentalFetchPolyfill: false,
@@ -9,18 +52,10 @@ export default defineConfig({
   retries: 2,
   e2e: {
     setupNodeEvents(on, config) {
-      // Map CYPRESS_USER_COOKIE environment variable to Cypress.env('userCookie')
       if (process.env.CYPRESS_USER_COOKIE) {
         config.env.userCookie = process.env.CYPRESS_USER_COOKIE
       }
-      
-      // Load JWT public key from fixture for tests
-      const jwtKeysPath = path.join(__dirname, 'cypress', 'fixtures', 'jwt-keys.json')
-      if (fs.existsSync(jwtKeysPath)) {
-        const jwtKeys = JSON.parse(fs.readFileSync(jwtKeysPath, 'utf8'))
-        config.env.jwtPublicKey = jwtKeys.publicKey
-      }
-      
+      setupJWTConfigAndTasks(on, config)
       return config
     },
     baseUrl: 'http://localhost:3000',
@@ -28,13 +63,7 @@ export default defineConfig({
   },
   component: {
     setupNodeEvents(on, config) {
-      // Load JWT public key from fixture for component tests
-      const jwtKeysPath = path.join(__dirname, 'cypress', 'fixtures', 'jwt-keys.json')
-      if (fs.existsSync(jwtKeysPath)) {
-        const jwtKeys = JSON.parse(fs.readFileSync(jwtKeysPath, 'utf8'))
-        config.env.jwtPublicKey = jwtKeys.publicKey
-      }
-      
+      setupJWTConfigAndTasks(on, config)
       return config
     },
     specPattern: 'src/components/**/*.test.*',

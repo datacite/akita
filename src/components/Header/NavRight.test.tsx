@@ -81,13 +81,10 @@ describe('NavRight Component with JWT Session', () => {
   })
 
   it('should show signed in content when valid JWT token is present', () => {
-    // Skip if JWT public key is not configured for tests
-    if (!Cypress.env('jwtPublicKey') && !Cypress.env('NEXT_PUBLIC_JWT_PUBLIC_KEY')) {
+    if (!Cypress.env('jwtPublicKeyConfigured')) {
       cy.log('Skipping: NEXT_PUBLIC_JWT_PUBLIC_KEY not configured for tests')
       return
     }
-
-    // Generate a valid JWT token using test fixtures
     generateTestJWT({ uid: 'test-user-123', name: 'Test User' }).then((validToken) => {
       const cookieValue = JSON.stringify({
         authenticated: {
