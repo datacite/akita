@@ -96,18 +96,18 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
 
 const VALID_ORGANIZATION_RELATION_TYPES = [
   'fundedBy',
-  'createdContributedOrPublishedBy',
-  'createdOrContributedByAffiliatedResearcher',
-  'connectedToOrganizationOMPs',
+  'createdBy',
+  'affiliatedResearcher',
+  'dmp',
   'allRelated'
 ] as const
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
-  const relationType = organizationRelationType ?? 'allRelated'
-  if (!VALID_ORGANIZATION_RELATION_TYPES.includes(relationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])) {
-    return ''
-  }
+  const requestedRelationType = organizationRelationType ?? 'allRelated'
+  const relationType = VALID_ORGANIZATION_RELATION_TYPES.includes(requestedRelationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
+    ? requestedRelationType
+    : 'allRelated'
 
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = quoteIdentifier(`https://${id}`)
@@ -115,12 +115,12 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
   const queryPartsByType: Record<typeof VALID_ORGANIZATION_RELATION_TYPES[number], string[]> = {
     fundedBy: [`funder_rors:${urlId}`, `funder_parent_rors:${urlId}`],
-    createdContributedOrPublishedBy: [
+    createdBy: [
       `organization_id:${id}`,
       `provider.ror_id:${urlId}`,
     ],
-    createdOrContributedByAffiliatedResearcher: [`affiliation_id:${id}`],
-    connectedToOrganizationOMPs: [`related_dmp_organization_id:${id}`],
+    affiliatedResearcher: [`affiliation_id:${id}`],
+    dmp: [`related_dmp_organization_id:${id}`],
     allRelated: [
       `organization_id:${id}`,
       `provider.ror_id:${urlId}`,
