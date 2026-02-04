@@ -12,6 +12,7 @@ export interface SearchParams {
   "registration-agency"?: string
   "connection-type"?: string
   "organization-relation-type"?: string
+  "repository-type"?: string
   sort?: SortOption
   isBot: string
 }
