@@ -370,3 +370,11 @@ export type ConnectionTypeCounts = {
   versionOf: number
   otherRelated: number
 }
+
+export type OrganizationRelationTypeCounts = {
+  allRelated: number
+  fundedBy: number
+  createdBy: number
+  affiliatedResearcher: number
+  dmp: number
+}

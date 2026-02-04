@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
-import { ConnectionTypeCounts, Works } from 'src/data/types'
+import { ConnectionTypeCounts, OrganizationRelationTypeCounts, Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
@@ -21,6 +21,8 @@ interface Props {
   showSankey?: boolean
   sankeyTitle?: string
   connectionTypesCounts?: ConnectionTypeCounts
+  organizationRelationTypeCounts?: OrganizationRelationTypeCounts
+  organizationRelationCountsLoading?: boolean
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
@@ -36,6 +38,8 @@ export default function WorksListing({
   works,
   showAnalytics,
   connectionTypesCounts,
+  organizationRelationTypeCounts,
+  organizationRelationCountsLoading = false,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
@@ -59,6 +63,7 @@ export default function WorksListing({
         url={url}
         data={works}
         connectionTypesCounts={connectionTypesCounts}
+        organizationRelationTypeCounts={organizationRelationTypeCounts}
       />
     )
   }
@@ -108,7 +113,7 @@ export default function WorksListing({
   return (
     <Row>
       <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        {loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
+        {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
         {loading ? <Loading /> : renderWorks()}

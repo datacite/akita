@@ -65,7 +65,9 @@ export default function RelatedContent(props: Props) {
         <WorksListing
           works={works}
           loading={manager.isLoading}
-          loadingFacets={manager.facetsAreLoading}
+          loadingFacets={manager.facetsAreLoading || manager.organizationCountsLoading}
+          organizationRelationTypeCounts={manager.organizationRelationTypeCounts}
+          organizationRelationCountsLoading={manager.organizationCountsLoading}
           showAnalytics={!manager.facetsAreLoading}
           showClaimStatus={true}
           hasPagination={hasPagination}

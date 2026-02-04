@@ -4,7 +4,7 @@ import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
-import { Work, Facet, ConnectionTypeCounts } from 'src/data/types'
+import { Work, Facet, ConnectionTypeCounts, OrganizationRelationTypeCounts } from 'src/data/types'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
 
@@ -13,6 +13,7 @@ interface Props {
   model: string
   url: string
   connectionTypesCounts?: ConnectionTypeCounts
+  organizationRelationTypeCounts?: OrganizationRelationTypeCounts
 }
 
 interface Facets {
@@ -34,11 +35,20 @@ function removeOtherAndMissing(facet: Facet) {
   return facet.id !== '__other__' && facet.id !== '__missing__'
 }
 
+const ORGANIZATION_RELATION_TYPE_FACETS: { id: keyof OrganizationRelationTypeCounts; title: string }[] = [
+  { id: 'allRelated', title: 'All related' },
+  { id: 'fundedBy', title: 'Funded by' },
+  { id: 'createdBy', title: 'Created by' },
+  { id: 'affiliatedResearcher', title: 'Affiliated researcher' },
+  { id: 'dmp', title: 'DMP' }
+]
+
 export default function WorkFacets({
   data,
   model,
   url,
-  connectionTypesCounts
+  connectionTypesCounts,
+  organizationRelationTypeCounts
 }: Props) {
 
   // get current query parameters from next router
@@ -63,9 +73,24 @@ export default function WorkFacets({
     Object.values(counts).some(count => count > 0)
   const hasConnectionTypes = connectionTypesCounts ? hasAnyConnections(connectionTypesCounts) : false
 
+  const organizationRelationTypeList: Facet[] = organizationRelationTypeCounts
+    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title }) => ({
+        id,
+        title,
+        count: organizationRelationTypeCounts[id]
+      }))
+    : []
+  const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
+  const hasAnyOrganizationRelationTypes = (counts: NonNullable<typeof organizationRelationTypeCounts>) =>
+    Object.values(counts).some(count => count > 0)
+  const hasOrganizationRelationTypes = organizationRelationTypeCounts
+    ? hasAnyOrganizationRelationTypes(organizationRelationTypeCounts)
+    : false
+
   const defaultActiveKeys = [
     "authors-facets",
     "connection-type-facets",
+    "organization-relation-type-facets",
     "published-facets",
     "work-type-facets",
     "license-facets",
@@ -91,6 +116,18 @@ export default function WorkFacets({
           param="connection-type"
           url={url}
           checked={(i) => !isConnectionTypeSet && i == 0}
+          radio
+        />
+      )}
+
+      {hasOrganizationRelationTypes && (
+        <FacetList
+          data={organizationRelationTypeList.filter(f => f.count > 0)}
+          title="Organization Relation Types"
+          id="organization-relation-type-facets"
+          param="organization-relation-type"
+          url={url}
+          checked={(i) => !isOrganizationRelationTypeSet && i === 0}
           radio
         />
       )}

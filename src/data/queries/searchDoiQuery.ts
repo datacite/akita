@@ -94,7 +94,7 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   return `(${positivePart})`;
 }
 
-const VALID_ORGANIZATION_RELATION_TYPES = [
+export const VALID_ORGANIZATION_RELATION_TYPES = [
   'fundedBy',
   'createdBy',
   'affiliatedResearcher',
