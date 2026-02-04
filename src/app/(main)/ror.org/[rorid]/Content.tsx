@@ -23,7 +23,6 @@ export default function Content(props: Props) {
   const { data, error, loading } = useROROrganization(rorId)
   if (loading) return <Loading />
   const organization = data?.organization || {} as OrganizationType
-  const rorFundingIds = organization.identifiers?.filter((id) => id.identifierType === 'fundref').map((id) => id.identifier) || []
 
   if (error || !organization) return (
     <Col md={{ span: 9, offset: 3 }}>
