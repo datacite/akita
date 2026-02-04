@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
-import { Works } from 'src/data/types'
+import { ConnectionTypeCounts, Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
@@ -20,7 +20,7 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  connectionTypesCounts?: ConnectionTypeCounts
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
@@ -50,7 +50,7 @@ export default function WorksListing({
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
-  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
+  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel ?? []) : []
 
   const renderFacets = () => {
     return (
@@ -74,11 +74,17 @@ export default function WorksListing({
     return (
       <>
         {showAnalytics && <WorksDashboard works={works} show={show} />}
-        {showSankey && <Row>
-          <Col xs={12}>
-            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
-          </Col>
-        </Row>}
+        {showSankey && !loadingFacets && (
+          <Row>
+            <Col xs={12}>
+              <SankeyGraph
+                titleText={sankeyTitle}
+                data={sankeyData}
+                tooltipText="This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types."
+              />
+            </Col>
+          </Row>
+        )}
 
         {works.nodes.map((doi) => (
           <Row key={doi.doi} className="mb-4 work">

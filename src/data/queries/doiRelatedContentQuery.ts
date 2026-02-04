@@ -2,6 +2,35 @@ import { gql, useQuery } from "@apollo/client";
 import { workConnection, workFragment } from "src/data/queries/queryFragments";
 import { QueryData } from "src/data/queries/doiQuery";
 import { QueryVar } from "src/data/queries/searchDoiQuery";
+import { useSearchDoiFacetsQuery } from "./searchDoiFacetsQuery";
+import { useSearchDoiQuery } from "./searchDoiQuery";
+import { FACETS } from "../constants";
+
+export function useDoiRelatedContentQuery(variables: QueryVar) {
+  const content = useSearchDoiQuery( variables )
+  const facets = useSearchDoiFacetsQuery(variables, [...FACETS.DEFAULT, ...FACETS.SANKEY])
+
+  const loading = content.loading;
+  const error = content.error || facets.error;
+
+  if (loading || error) return { loading, data: undefined, error, facetsLoading: facets.loading }
+
+  const work = {
+    types: {
+      resourceTypeGeneral: undefined,
+
+    },
+    [variables.connectionType || "allRelated"]: {
+      ...content.data?.works || {},
+      ...facets.data?.works
+    }
+  }
+  return {
+    ...content,
+    data: { work } as QueryData,
+    facetsLoading: facets.loading
+  }
+}
 
 export function buildFilterQuery(variables: QueryVar) {
   const queryParts = [
@@ -13,9 +42,8 @@ export function buildFilterQuery(variables: QueryVar) {
   return query
 }
 
-export function useDoiRelatedContentQuery(variables: QueryVar) {
+export function useDoiRelatedContentQueryGQL(variables: QueryVar) {
   const filterQuery = buildFilterQuery(variables)
-
   const { loading, data, error } = useQuery<QueryData, QueryVar>(
     RELATED_CONTENT_QUERY,
     {

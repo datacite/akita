@@ -10,6 +10,81 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
+/**
+ * Quotes an identifier for safe use in Lucene/OpenSearch queries.
+ * Wraps the identifier in double quotes to prevent special character issues.
+ */
+function quoteIdentifier(identifier: string): string {
+  return `"${identifier}"`
+}
+
+const VALID_CONNECTION_TYPES = ['references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'allRelated', 'otherRelated'];
+
+function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
+  if (!relatedDoi) return ''
+  // if the connection type is not in the map, return an empty string
+  if (!VALID_CONNECTION_TYPES.includes(connectionType)) return ''
+
+  const doi = relatedDoi;
+  const quotedDoi = quoteIdentifier(doi);
+  const baseURI = "https://doi.org/";
+  const OR = " OR ";
+  const httpBaseURI = "http://doi.org/"; // Added HTTP base URI
+
+  const relatedIdentifiers = [
+    quoteIdentifier(`${baseURI}${doi}`),
+    quotedDoi,
+    quoteIdentifier(`${httpBaseURI}${doi}`) // Added HTTP version
+  ];
+  const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
+  const uidPart = uidList && uidList.length > 0
+    ? `uid:(${uidList.join(OR)})`
+    : '';
+
+  // Map connection types to their corresponding query parts
+  const queryPartsByType = {
+    references: [`citation_ids:${quotedDoi}`],
+    citations: [`reference_ids:${quotedDoi}`],
+    parts: [`part_of_ids:${quotedDoi}`],
+    partOf: [`part_ids:${quotedDoi}`],
+    versions: [`version_of_ids:${quotedDoi}`],
+    versionOf: [`versions_ids:${quotedDoi}`],
+    allRelated: [
+      relatedIdentifierPart,
+      `reference_ids:${quotedDoi}`,
+      `citation_ids:${quotedDoi}`,
+      `part_ids:${quotedDoi}`,
+      `part_of_ids:${quotedDoi}`,
+      `versions_ids:${quotedDoi}`,
+      `version_of_ids:${quotedDoi}`,
+      uidPart
+    ],
+    otherRelated: [
+      relatedIdentifierPart,
+      uidPart
+    ]
+  };
+
+  const negativeOtherRelationsParts = [
+    `reference_ids:${quotedDoi}`,
+    `citation_ids:${quotedDoi}`,
+    `part_ids:${quotedDoi}`,
+    `part_of_ids:${quotedDoi}`,
+    `versions_ids:${quotedDoi}`,
+    `version_of_ids:${quotedDoi}`,
+  ];
+
+  const selectedParts = queryPartsByType[connectionType as keyof typeof queryPartsByType] || [];
+  const positivePart = selectedParts.filter(Boolean).join(OR);
+  const negativePart = negativeOtherRelationsParts.filter(Boolean).join(OR);
+
+  if (connectionType === "otherRelated") {
+    return `((${positivePart}) AND NOT (${negativePart}))`;
+  }
+  // By default only return positive part
+  return `(${positivePart})`;
+}
+
 function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
   if (!rorId) return ''
   const id = 'ror.org/' + extractRORId(rorId)
@@ -22,6 +97,7 @@ export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
     buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
@@ -148,8 +224,8 @@ export async function fetchDoisCitations(variables: QueryVar, count?: number) {
 }
 
 
-export function useSearchDoiQuery(variables: QueryVar) {
-  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables], queryFn: async () => fetchDois(variables) })
+export function useSearchDoiQuery(variables: QueryVar, count?: number) {
+  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables, count], queryFn: async () => fetchDois(variables, count) })
 
   return { loading: isPending, data: data?.data, error }
 }
@@ -210,6 +286,9 @@ export interface QueryVar {
   filterQuery?: string
   rorId?: string
   rorFundingIds?: string[]
+  relatedDoi?: string
+  connectionType?: string
+  uidList?: string[]
   userId?: string
   clientId?: string
   cursor?: string

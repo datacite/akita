@@ -165,9 +165,9 @@ interface Repository {
 export function mapJsonToWork(json: any, included: any[]) {
   const attrs = json.attributes
   const repo =
-    json.relationships.client.data && included
+    json.relationships?.client?.data && included
       ? included.find(
-        (r: Repository) => r.id === json.relationships.client.data.id
+        (r: Repository) => r.id === json.relationships?.client?.data?.id
       ) || null
       : null
 
@@ -186,7 +186,8 @@ export function mapJsonToWork(json: any, included: any[]) {
     repository: repo
       ? { id: repo.id, name: repo.attributes.name }
       : { id: '', name: '' },
-    schemaOrg: ''
+    schemaOrg: '',
+    relationships: json.relationships ?? {}
   }
 }
 

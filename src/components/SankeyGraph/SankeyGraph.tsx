@@ -18,7 +18,8 @@ type Props = {
 }
 
 
-export function multilevelToSankey(facets: MultilevelFacet[]): SankeyGraphData[] {
+export function multilevelToSankey(facets: MultilevelFacet[] | undefined): SankeyGraphData[] {
+  if (!facets) return []
   const outerMap = new Map<SankeyGraphData['data'][0], Map<SankeyGraphData['data'][1], SankeyGraphData['count']>>();
   facets = facets.filter(f => f.title)
 
@@ -72,8 +73,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
   useEffect(() => {
     handleResize();
   });
-
-
 
   if (data.length == 0) {
     return <EmptyChart title={Array.isArray(titleText) ? titleText.join(' ') : titleText} />
