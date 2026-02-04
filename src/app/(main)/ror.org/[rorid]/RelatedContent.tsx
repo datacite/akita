@@ -5,14 +5,11 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
-
-import { useOrganizationRelatedContentQuery } from 'src/data/queries/organizationRelatedContentQuery';
-
-import Error from 'src/components/Error/Error'
+import CommonsError from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
-import { pluralize } from 'src/utils/helpers';
-import { useSearchParams } from 'next/navigation';
-import mapSearchparams from './mapSearchParams';
+import { useSearchParams } from 'next/navigation'
+import mapSearchparams from './mapSearchParams'
+import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
 
 interface Props {
   rorId: string
@@ -25,46 +22,59 @@ export default function RelatedContent(props: Props) {
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
   const vars = { rorId, ...variables }
-  const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
+  const manager = useOrganizationRelatedContentManager(rorId, vars)
 
-  if (loading) return <Row><Loading /></Row>
+  if (manager.isLoading) return <Row><Loading /></Row>
 
-  if (error)
-    return <Row>
-      <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="An error occured loading related content." message={error.message} />
-      </Col>
-    </Row>
+  if (manager.hasError)
+    return (
+      <Row>
+        <Col md={{ offset: 3 }} className="panel panel-transparent">
+          <CommonsError title="An error occurred loading related content." message={manager.errorMessage} />
+        </Col>
+      </Row>
+    )
 
-  if (!data) return
+  if (!manager.hasData || !manager.hasAnyRelatedWorks)
+    return (
+      <Container fluid>
+        <Row>
+          <Col md={{ offset: 3 }}>
+            <h3 className="member-results" id="title">Related Works</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={{ offset: 3 }} className="panel panel-transparent">
+            <p>No related works found for this organization.</p>
+          </Col>
+        </Row>
+      </Container>
+    )
 
-  const relatedWorks = data.organization.works
-
-  const hasNextPage = relatedWorks.totalCount > 25
-  const endCursor = relatedWorks.pageInfo
-    ? relatedWorks.pageInfo.endCursor
-    : ''
-
-  const totalCount = relatedWorks.totalCount
+  const { works, title: displayedConnectionTitle } = manager.selectedContent
+  const { hasPagination, hasNextPage, endCursor } = manager.pagination
 
   return (
     <Container fluid>
-      <Row className="mt-5">
-        <Col md={{ offset: 3 }} className="px-0">
-          <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
+      <Row>
+        <Col md={{ offset: 3 }}>
+          <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
         </Col>
       </Row>
-      <WorksListing
-        works={relatedWorks}
-        loading={loading}
-        showAnalytics={true}
-        showClaimStatus={true}
-        hasPagination={relatedWorks.totalCount > 25}
-        hasNextPage={hasNextPage}
-        model={'organization'}
-        url={'/ror.org/' + vars.rorId + '/?'}
-        endCursor={endCursor}
-      />
+      <Row>
+        <WorksListing
+          works={works}
+          loading={manager.isLoading}
+          loadingFacets={manager.facetsAreLoading}
+          showAnalytics={!manager.facetsAreLoading}
+          showClaimStatus={true}
+          hasPagination={hasPagination}
+          hasNextPage={hasNextPage}
+          model={'organization'}
+          url={'/ror.org/' + vars.rorId + '/?'}
+          endCursor={endCursor}
+        />
+      </Row>
     </Container>
   )
 }
