@@ -35,14 +35,8 @@ export default function SearchBox({ path }: Props) {
     setSearchInput('')
     router.replace(path);
   }
-  const searchBoxStyle = {
-    '--bs-heading-color': '#1abc9c',
-    'border-bottom': '1px solid #cdd2d5',
-    'padding-bottom': '0.35rem',
-  } as React.CSSProperties;
-
   return (<>
-    <h4 style={searchBoxStyle}>Filter Works</h4>
+  <h3 className="member-results">Filter Works</h3>
     <InputGroup>
       <FormControl
         name="query-facets"

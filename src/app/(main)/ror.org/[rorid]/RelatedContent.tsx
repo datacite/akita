@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
 import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
+import SearchBox from 'src/components/SearchBox/SearchBox'
 
 interface Props {
   rorId: string
@@ -54,11 +55,15 @@ export default function RelatedContent(props: Props) {
 
   const { works, title: displayedConnectionTitle } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
+  const url = '/ror.org/' + vars.rorId + '/'
 
   return (
     <Container fluid className="mt-5">
       <Row>
-        <Col md={{ offset: 3 }}>
+        <Col md={3} className="d-none d-md-block">
+          <SearchBox path={url} />
+        </Col>
+        <Col md={9} className="px-0">
           <h3 className="member-results" id="title">Related Works</h3>
           <SummarySearchMetrics {...vars} />
         </Col>
@@ -74,7 +79,7 @@ export default function RelatedContent(props: Props) {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'organization'}
-          url={'/ror.org/' + vars.rorId + '/?'}
+          url={url+ '/?'}
           endCursor={endCursor}
         />
       </Row>

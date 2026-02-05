@@ -14,6 +14,7 @@ import { pluralize } from 'src/utils/helpers';
 import { useSearchParams } from 'next/navigation';
 import mapSearchparams from './mapSearchParams';
 import { Repository } from 'src/data/types'
+import SearchBox from 'src/components/SearchBox/SearchBox'
 
 interface Props {
   repository: Repository
@@ -47,11 +48,15 @@ export default function RelatedContent({ repository }: Props) {
     : ''
 
   const totalCount = relatedWorks.totalCount
+  const url = '/repositories/' + clientId + '/'
 
   return (
     <Container fluid>
       <Row className="mt-5">
-        <Col md={{ offset: 3 }} className="px-0">
+                <Col md={3} className="d-none d-md-block">
+          <SearchBox path={url} />
+        </Col>
+        <Col md={9}>
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
       </Row>
@@ -63,7 +68,7 @@ export default function RelatedContent({ repository }: Props) {
         hasPagination={relatedWorks.totalCount > 25}
         hasNextPage={hasNextPage}
         model={'repository'}
-        url={'/repositories/' + clientId + '/?'}
+        url={url+ '/?'}
         endCursor={endCursor}
         show={{ all: true }}
       />
