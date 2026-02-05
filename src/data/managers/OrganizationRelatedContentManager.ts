@@ -4,37 +4,43 @@ import { useOrganizationConnectionCounts } from './OrganizationConnectionCountMa
 import { useOrganizationRelatedContentQuery } from 'src/data/queries/organizationRelatedContentQuery'
 import { OrganizationRelationTypeCounts, Pagination, Works } from 'src/data/types'
 import { QueryData } from 'src/data/queries/organizationRelatedContentQuery'
-import { QueryVar } from 'src/data/queries/searchDoiQuery'
+import { QueryVar, VALID_ORGANIZATION_RELATION_TYPES } from 'src/data/queries/searchDoiQuery'
 
-const EMPTY_ORGANIZATION_RELATION_TYPE_COUNTS: OrganizationRelationTypeCounts = {
-  allRelated: 0,
-  fundedBy: 0,
-  createdBy: 0,
-  affiliatedResearcher: 0,
-  dmp: 0
+type OrganizationRelationType = typeof VALID_ORGANIZATION_RELATION_TYPES[number]
+
+const EMPTY_ORGANIZATION_RELATION_TYPE_COUNTS: OrganizationRelationTypeCounts = VALID_ORGANIZATION_RELATION_TYPES.reduce(
+  (acc, type) => {
+    acc[type] = 0
+    return acc
+  },
+  {} as OrganizationRelationTypeCounts
+)
+
+const ORGANIZATION_RELATION_TYPE_TITLES: Record<OrganizationRelationType, string> = {
+  allRelated: 'All related',
+  fundedBy: 'Funded by',
+  createdBy: 'Created by',
+  affiliatedResearcher: 'Affiliated researcher',
+  dmp: 'DMP'
 }
 
-const VALID_ORGANIZATION_RELATION_TYPES = ['allRelated', 'fundedBy', 'createdBy', 'affiliatedResearcher', 'dmp'] as const
+export const ORGANIZATION_RELATION_TYPE_FACETS: { id: OrganizationRelationType; title: string }[] = VALID_ORGANIZATION_RELATION_TYPES.map(
+  (type) => ({
+    id: type,
+    title: ORGANIZATION_RELATION_TYPE_TITLES[type]
+  })
+)
 
-function formatOrganizationRelationTitle(organizationRelationType: string): string {
-  const type = organizationRelationType || 'allRelated'
-  if (!VALID_ORGANIZATION_RELATION_TYPES.includes(type as typeof VALID_ORGANIZATION_RELATION_TYPES[number])) {
-    return 'All related'
-  }
-  switch (type) {
-    case 'allRelated':
-      return 'All related'
-    case 'fundedBy':
-      return 'Funded by'
-    case 'createdBy':
-      return 'Created by'
-    case 'affiliatedResearcher':
-      return 'Affiliated researcher'
-    case 'dmp':
-      return 'DMP'
-    default:
-      return 'All related'
-  }
+function getValidOrganizationRelationType(organizationRelationType: string | undefined): OrganizationRelationType {
+  if (!organizationRelationType) return 'allRelated'
+  return VALID_ORGANIZATION_RELATION_TYPES.includes(organizationRelationType as OrganizationRelationType)
+    ? (organizationRelationType as OrganizationRelationType)
+    : 'allRelated'
+}
+
+function formatOrganizationRelationTitle(organizationRelationType: string | undefined): string {
+  const type = getValidOrganizationRelationType(organizationRelationType)
+  return ORGANIZATION_RELATION_TYPE_TITLES[type]
 }
 
 export type ExternalOrganizationCounts = {
@@ -64,7 +70,7 @@ export class OrganizationRelatedContentManager {
     this.data = data
     this.loading = loading
     this.error = error
-    this.organizationRelationType = organizationRelationType || 'allRelated'
+    this.organizationRelationType = getValidOrganizationRelationType(organizationRelationType)
     this.facetsLoading = facetsLoading
     this.organizationCounts = organizationCounts
     this.works = data?.organization?.works ?? EMPTY_WORKS
@@ -92,7 +98,8 @@ export class OrganizationRelatedContentManager {
   }
 
   get hasAnyRelatedWorks(): boolean {
-    return this.works.totalCount > 0
+    if (this.works.totalCount > 0) return true
+    return Object.values(this.organizationRelationTypeCounts).some(count => count > 0)
   }
 
   get organizationRelationTypeCounts(): OrganizationRelationTypeCounts {
@@ -117,7 +124,7 @@ export class OrganizationRelatedContentManager {
   }
 }
 
-export function useOrganizationRelatedContentManager(rorId: string, vars: QueryVar) {
+export function useOrganizationRelatedContentManager(vars: QueryVar) {
   const { loading, data, error, facetsLoading } = useOrganizationRelatedContentQuery(vars)
   const organizationCounts = useOrganizationConnectionCounts(vars)
   const organizationRelationType = vars.organizationRelationType

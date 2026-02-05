@@ -22,7 +22,7 @@ export default function RelatedContent(props: Props) {
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
   const vars = { rorId, ...variables }
-  const manager = useOrganizationRelatedContentManager(rorId, vars)
+  const manager = useOrganizationRelatedContentManager(vars)
 
   if (manager.isLoading) return <Row><Loading /></Row>
 
@@ -67,7 +67,6 @@ export default function RelatedContent(props: Props) {
           loading={manager.isLoading}
           loadingFacets={manager.facetsAreLoading || manager.organizationCountsLoading}
           organizationRelationTypeCounts={manager.organizationRelationTypeCounts}
-          organizationRelationCountsLoading={manager.organizationCountsLoading}
           showAnalytics={!manager.facetsAreLoading}
           showClaimStatus={true}
           hasPagination={hasPagination}

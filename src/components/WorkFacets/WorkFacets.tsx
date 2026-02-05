@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet, ConnectionTypeCounts, OrganizationRelationTypeCounts } from 'src/data/types'
+import { ORGANIZATION_RELATION_TYPE_FACETS } from 'src/data/managers/OrganizationRelatedContentManager'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
 
@@ -34,14 +35,6 @@ interface Facets {
 function removeOtherAndMissing(facet: Facet) {
   return facet.id !== '__other__' && facet.id !== '__missing__'
 }
-
-const ORGANIZATION_RELATION_TYPE_FACETS: { id: keyof OrganizationRelationTypeCounts; title: string }[] = [
-  { id: 'allRelated', title: 'All related' },
-  { id: 'fundedBy', title: 'Funded by' },
-  { id: 'createdBy', title: 'Created by' },
-  { id: 'affiliatedResearcher', title: 'Affiliated researcher' },
-  { id: 'dmp', title: 'DMP' }
-]
 
 export default function WorkFacets({
   data,
@@ -97,7 +90,6 @@ export default function WorkFacets({
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "conection-type-facets",
     "repository-type-facets"
   ]
 

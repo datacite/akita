@@ -27,12 +27,12 @@ const VALID_CONNECTION_TYPES = [
   'versionOf',
   'allRelated',
   'otherRelated',
-];
+] as const;
 
 function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
   if (!relatedDoi) return ''
   // if the connection type is not in the map, return an empty string
-  if (!VALID_CONNECTION_TYPES.includes(connectionType)) return ''
+  if (!VALID_CONNECTION_TYPES.includes(connectionType as typeof VALID_CONNECTION_TYPES[number])) return ''
 
   const doi = relatedDoi;
   const quotedDoi = quoteIdentifier(doi);
@@ -95,11 +95,11 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
 }
 
 export const VALID_ORGANIZATION_RELATION_TYPES = [
+  'allRelated',
   'fundedBy',
   'createdBy',
   'affiliatedResearcher',
-  'dmp',
-  'allRelated'
+  'dmp'
 ] as const
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
