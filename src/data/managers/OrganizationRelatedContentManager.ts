@@ -21,7 +21,6 @@ const ORGANIZATION_RELATION_TYPE_TITLES: Record<OrganizationRelationType, string
   affiliatedResearcher: 'By Affiliated Researchers',
   createdBy: 'Created By',
   fundedBy: 'Funded By',
-  // dmp: 'DMP'
 }
 
 export const ORGANIZATION_RELATION_TYPE_FACETS: { id: OrganizationRelationType; title: string }[] = VALID_ORGANIZATION_RELATION_TYPES.map(

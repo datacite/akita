@@ -99,7 +99,6 @@ export const VALID_ORGANIZATION_RELATION_TYPES = [
   'affiliatedResearcher',
   'createdBy',
   'fundedBy',
-  // 'dmp'
 ] as const
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
@@ -120,7 +119,6 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
       `provider.ror_id:${urlId}`,
     ],
     affiliatedResearcher: [`affiliation_id:${id}`],
-    dmp: [`related_dmp_organization_id:${id}`],
     allRelated: [
       `organization_id:${id}`,
       `provider.ror_id:${urlId}`,
