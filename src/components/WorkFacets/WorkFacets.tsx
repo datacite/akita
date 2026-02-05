@@ -66,10 +66,11 @@ export default function WorkFacets({
   const hasConnectionTypes = connectionTypesCounts ? hasAnyConnections(connectionTypesCounts) : false
 
   const organizationRelationTypeList: Facet[] = organizationRelationTypeCounts
-    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title }) => ({
+    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title, tooltipText }) => ({
         id,
         title,
-        count: organizationRelationTypeCounts[id]
+        count: organizationRelationTypeCounts[id],
+        tooltipText
       }))
     : []
   const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
