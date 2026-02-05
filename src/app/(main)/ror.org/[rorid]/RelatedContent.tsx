@@ -55,7 +55,7 @@ export default function RelatedContent(props: Props) {
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
 
   return (
-    <Container fluid>
+    <Container fluid className="mt-5">
       <Row>
         <Col md={{ offset: 3 }}>
           <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
