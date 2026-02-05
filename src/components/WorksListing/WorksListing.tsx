@@ -22,6 +22,7 @@ interface Props {
   sankeyTitle?: string
   connectionTypesCounts?: ConnectionTypeCounts
   organizationRelationTypeCounts?: OrganizationRelationTypeCounts
+  organizationRelationCountsLoading?: boolean
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
@@ -38,6 +39,7 @@ export default function WorksListing({
   showAnalytics,
   connectionTypesCounts,
   organizationRelationTypeCounts,
+  organizationRelationCountsLoading = false,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
@@ -111,7 +113,7 @@ export default function WorksListing({
   return (
     <Row>
       <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        {loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
+        {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
         {loading ? <Loading /> : renderWorks()}
