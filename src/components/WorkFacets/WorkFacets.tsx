@@ -29,6 +29,7 @@ interface Facets {
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
+  clients?: Facet[]
   nodes: Work[]
 }
 
@@ -47,8 +48,6 @@ export default function WorkFacets({
   // get current query parameters from next router
   const searchParams = useSearchParams()
 
-  // remove %2F? at the end of url
-  const path = url.substring(0, url.length - 2)
 
   const connectionTypeList: Facet[] = connectionTypesCounts ? [
     { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
@@ -90,14 +89,12 @@ export default function WorkFacets({
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "client-facets"
   ]
 
   return (
     <>
-      {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <SearchBox path={path} />
-      )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
       {hasConnectionTypes && (
@@ -177,6 +174,15 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
+            {!url.startsWith('/repositories') && (
+        <>
+      <FacetList
+        data={data.clients ?? []}
+        title="Repository"
+        id="client-facets"
+        param="client-id"
+        url={url}
+      />
       <FacetList
         data={data.clientTypes ?? []}
         title="Repository Type"
@@ -185,6 +191,8 @@ export default function WorkFacets({
         tooltipText='The type of DataCite Repository where a DOI is stored.'
         url={url}
       />
+      </>
+      )}
       </FacetListGroup>
     </>
   )
