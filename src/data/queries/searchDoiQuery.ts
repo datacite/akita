@@ -96,10 +96,10 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
 
 export const VALID_ORGANIZATION_RELATION_TYPES = [
   'allRelated',
-  'fundedBy',
-  'createdBy',
   'affiliatedResearcher',
-  'dmp'
+  'createdBy',
+  'fundedBy',
+  // 'dmp'
 ] as const
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
