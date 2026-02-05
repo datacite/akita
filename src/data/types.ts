@@ -336,6 +336,7 @@ export type Facet = {
   id: string
   title: string
   count: number
+  tooltipText?: string
 }
 
 export type MultilevelFacet = Facet & {
