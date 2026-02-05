@@ -8,20 +8,23 @@ interface InfoTooltipProps {
   text: string
 }
 
-export const InfoTooltip = ({ text }: InfoTooltipProps) => (
-  <OverlayTrigger
-    placement="top"
-    overlay={<Tooltip id="infoTooltip">{text}</Tooltip>}
-  >
-    <span
-      onClick={(e) => e.stopPropagation()}
-      className="ms-2"
-      style={{ cursor: 'help' }}
-      role="button"
-      tabIndex={0}
-      aria-label={text}
+export const InfoTooltip = ({ text }: InfoTooltipProps) => {
+  const id = React.useId()
+  return (
+    <OverlayTrigger
+      placement="top"
+      overlay={<Tooltip id={id}>{text}</Tooltip>}
     >
-      <FontAwesomeIcon icon={faQuestionCircle} aria-hidden="true" />
-    </span>
-  </OverlayTrigger>
-)
+      <span
+        onClick={(e) => e.stopPropagation()}
+        className="ms-2"
+        style={{ cursor: 'help' }}
+        role="img"
+        tabIndex={0}
+        aria-label={text}
+      >
+        <FontAwesomeIcon icon={faQuestionCircle} aria-hidden="true" />
+      </span>
+    </OverlayTrigger>
+  )
+}
