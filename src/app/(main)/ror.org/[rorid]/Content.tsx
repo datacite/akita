@@ -13,11 +13,9 @@ import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import OrganizationMetadata from 'src/components/OrganizationMetadata/OrganizationMetadata'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import Loading from 'src/components/Loading/Loading'
-import RelatedContent from 'src/app/(main)/ror.org/[rorid]/RelatedContent';
 
 interface Props {
   rorid: string
-  isBot?: boolean
 }
 
 export default function Content(props: Props) {
@@ -25,7 +23,6 @@ export default function Content(props: Props) {
   const { data, error, loading } = useROROrganization(rorId)
   if (loading) return <Loading />
   const organization = data?.organization || {} as OrganizationType
-  const rorFundingIds = organization.identifiers?.filter((id) => id.identifierType === 'fundref').map((id) => id.identifier) || []
 
   if (error || !organization) return (
     <Col md={{ span: 9, offset: 3 }}>
@@ -61,7 +58,7 @@ export default function Content(props: Props) {
               />
             </Col>
             <Col md={9} className="px-0">
-              <SummarySearchMetrics rorId={organization.id} rorFundingIds={rorFundingIds} />
+              <SummarySearchMetrics rorId={organization.id} />
               {organization.inceptionYear && (
                 <p className="mb-3">Founded {organization.inceptionYear}</p>
               )}
@@ -71,7 +68,6 @@ export default function Content(props: Props) {
             </Col>
           </Row>
         </Container>
-      <RelatedContent isBot={props.isBot} rorId={rorId} rorFundingIds={rorFundingIds} />
     </>
   )
 }

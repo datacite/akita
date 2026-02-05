@@ -18,12 +18,21 @@ function quoteIdentifier(identifier: string): string {
   return `"${identifier}"`
 }
 
-const VALID_CONNECTION_TYPES = ['references', 'citations', 'parts', 'partOf', 'versions', 'versionOf', 'allRelated', 'otherRelated'];
+const VALID_CONNECTION_TYPES = [
+  'references',
+  'citations',
+  'parts',
+  'partOf',
+  'versions',
+  'versionOf',
+  'allRelated',
+  'otherRelated',
+] as const;
 
 function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
   if (!relatedDoi) return ''
   // if the connection type is not in the map, return an empty string
-  if (!VALID_CONNECTION_TYPES.includes(connectionType)) return ''
+  if (!VALID_CONNECTION_TYPES.includes(connectionType as typeof VALID_CONNECTION_TYPES[number])) return ''
 
   const doi = relatedDoi;
   const quotedDoi = quoteIdentifier(doi);
@@ -85,18 +94,50 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   return `(${positivePart})`;
 }
 
-function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
+export const VALID_ORGANIZATION_RELATION_TYPES = [
+  'allRelated',
+  'affiliatedResearcher',
+  'createdBy',
+  'fundedBy',
+] as const
+
+function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
+  const requestedRelationType = organizationRelationType ?? 'allRelated'
+  const relationType = VALID_ORGANIZATION_RELATION_TYPES.includes(requestedRelationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
+    ? requestedRelationType
+    : 'allRelated'
+
   const id = 'ror.org/' + extractRORId(rorId)
-  const urlId = `"https://${id}"`
-  const rorFundingIdsQuery = rorFundingIds.map(id => '"https://doi.org/' + id + '"').join(' OR ')
-  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funding_references.funderIdentifier:(${urlId} ${rorFundingIdsQuery && `OR ${rorFundingIdsQuery}`}))`
+  const urlId = quoteIdentifier(`https://${id}`)
+  const OR = ' OR '
+
+  const queryPartsByType: Record<typeof VALID_ORGANIZATION_RELATION_TYPES[number], string[]> = {
+    fundedBy: [`funder_rors:${urlId}`, `funder_parent_rors:${urlId}`],
+    createdBy: [
+      `organization_id:${id}`,
+      `provider.ror_id:${urlId}`,
+    ],
+    affiliatedResearcher: [`affiliation_id:${id}`],
+    allRelated: [
+      `organization_id:${id}`,
+      `provider.ror_id:${urlId}`,
+      `affiliation_id:${id}`,
+      `related_dmp_organization_id:${id}`,
+      `funder_rors:${urlId}`,
+      `funder_parent_rors:${urlId}`
+    ]
+  }
+
+  const selectedParts = queryPartsByType[relationType as keyof typeof queryPartsByType] ?? queryPartsByType.allRelated
+  const positivePart = selectedParts.filter(Boolean).join(OR)
+  return `(${positivePart})`
 }
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
-    buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || "allRelated"),
     buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
@@ -285,7 +326,7 @@ export interface QueryVar {
   query?: string
   filterQuery?: string
   rorId?: string
-  rorFundingIds?: string[]
+  organizationRelationType?: string
   relatedDoi?: string
   connectionType?: string
   uidList?: string[]
