@@ -70,7 +70,7 @@ export default function RelatedContent(props: Props) {
       hasPagination={relatedWorks.totalCount > 25}
       hasNextPage={hasNextPage}
       model={'person'}
-      url={url + '/?'}
+      url={url + '?'}
       endCursor={endCursor}
     />
   </Container>)
