@@ -10,6 +10,7 @@ import { usePersonRelatedContentQuery } from 'src/data/queries/personRelatedCont
 
 import Error from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
+import SearchBox from 'src/components/SearchBox/SearchBox'
 import { pluralize } from 'src/utils/helpers';
 import { useParams, useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
@@ -50,10 +51,14 @@ export default function RelatedContent(props: Props) {
   const endCursor = relatedWorks.pageInfo
     ? relatedWorks.pageInfo.endCursor
     : ''
+  const url = '/orcid.org/' + orcid + '/'
 
   return (<Container fluid>
     <Row className='mt-5'>
-      <Col md={{ offset: 3 }}>
+      <Col md={3} className="d-none d-md-block">
+        <SearchBox path={url} />
+      </Col>
+      <Col md={9}>
         <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
       </Col>
     </Row>
@@ -65,7 +70,7 @@ export default function RelatedContent(props: Props) {
       hasPagination={relatedWorks.totalCount > 25}
       hasNextPage={hasNextPage}
       model={'person'}
-      url={'/orcid.org/' + orcid + '/?'}
+      url={url + '/?'}
       endCursor={endCursor}
     />
   </Container>)
