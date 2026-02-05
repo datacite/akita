@@ -53,7 +53,7 @@ export default function RelatedContent(props: Props) {
       </Container>
     )
 
-  const { works, title: displayedConnectionTitle } = manager.selectedContent
+  const { works } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
   const url = '/ror.org/' + vars.rorId + '/'
 
@@ -79,7 +79,7 @@ export default function RelatedContent(props: Props) {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'organization'}
-          url={url+ '/?'}
+          url={url+ '?'}
           endCursor={endCursor}
         />
       </Row>

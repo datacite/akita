@@ -78,7 +78,7 @@ export default function RelatedContent() {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'doi'}
-          url={url+ '/?'}
+          url={url + '?'}
           endCursor={endCursor} />
       </Row>
     </Container>

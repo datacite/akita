@@ -68,7 +68,7 @@ export default function RelatedContent({ repository }: Props) {
         hasPagination={relatedWorks.totalCount > 25}
         hasNextPage={hasNextPage}
         model={'repository'}
-        url={url+ '/?'}
+        url={url + '?'}
         endCursor={endCursor}
         show={{ all: true }}
       />
