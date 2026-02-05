@@ -37,7 +37,7 @@ export default function FacetList(props: FacetListProps) {
       <Accordion.Body>
         {data.map((facet, i) => (
           <FacetListItem
-            key={'facet-item- ' +id + '-' + i}
+            key={'facet-item-' +id + '-' + i}
             facet={facet}
             param={param}
             url={url}
