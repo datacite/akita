@@ -40,6 +40,7 @@ function convertToQueryData(json: any): QueryData {
       authors: meta.authors?.slice(0, 10),
       creatorsAndContributors: meta.creatorsAndContributors?.slice(0, 10),
       clientTypes: meta.clientTypes?.slice(0, 10),
+      clients: meta.clients?.slice(0, 10),
       personToWorkTypesMultilevel: meta.personToWorkTypesMultilevel ?? [],
       citations: meta.citations,
       views: meta.views,
