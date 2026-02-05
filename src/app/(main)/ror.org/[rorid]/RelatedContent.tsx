@@ -10,6 +10,7 @@ import WorksListing from 'src/components/WorksListing/WorksListing'
 import { useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
 import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 
 interface Props {
   rorId: string
@@ -58,7 +59,8 @@ export default function RelatedContent(props: Props) {
     <Container fluid className="mt-5">
       <Row>
         <Col md={{ offset: 3 }}>
-          <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
+          <h3 className="member-results" id="title">Related Works</h3>
+          <SummarySearchMetrics {...vars} />
         </Col>
       </Row>
       <Row>
