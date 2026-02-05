@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
-import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet, ConnectionTypeCounts, OrganizationRelationTypeCounts } from 'src/data/types'
 import { ORGANIZATION_RELATION_TYPE_FACETS } from 'src/data/managers/OrganizationRelatedContentManager'

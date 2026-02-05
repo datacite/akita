@@ -12,7 +12,6 @@ import WorksListing from 'src/components/WorksListing/WorksListing'
 import SearchBox from 'src/components/SearchBox/SearchBox'
 import mapSearchparams from './mapSearchParams'
 import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
-import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 
 function getQueryVariables(doi: string, searchParams: URLSearchParams) {
   const { variables, connectionType } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
