@@ -112,7 +112,7 @@ export default function WorksListing({
 
   return (
     <Row>
-      <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
+      <Col md={3} className={'d-none d-md-block' + (url.startsWith('doi.org/?') || url.startsWith('ror.org/') ? ' px-4' : ' pe-4')}>
         {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>

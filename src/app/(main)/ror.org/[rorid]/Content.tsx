@@ -40,7 +40,7 @@ export default function Content(props: Props) {
           </Row>
 
           <Row>
-            <Col md={3}>
+            <Col md={3} className="pe-4">
               <DownloadReports
                 links={[
                   {

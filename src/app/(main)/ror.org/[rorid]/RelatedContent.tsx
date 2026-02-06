@@ -39,7 +39,7 @@ export default function RelatedContent(props: Props) {
 
   if (!manager.hasData || !manager.hasAnyRelatedWorks)
     return (
-      <Container fluid>
+      <Container>
         <Row>
           <Col md={{ offset: 3 }}>
             <h3 className="member-results" id="title">Related Works</h3>
@@ -60,10 +60,10 @@ export default function RelatedContent(props: Props) {
   return (
     <Container fluid className="mt-5">
       <Row>
-        <Col md={3} className="d-none d-md-block">
+        <Col md={3} className="d-none d-md-block pe-4">
           <SearchBox path={url} />
         </Col>
-        <Col md={9} className="px-0">
+        <Col md={9} className="px-0 pb-4">
           <h3 className="member-results" id="title">Related Works</h3>
           <SummarySearchMetrics {...vars} />
         </Col>
