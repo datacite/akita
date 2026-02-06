@@ -35,7 +35,9 @@ export default function SearchWork(props: Props) {
 
   return (<>
     <Row>
-      <Col md={{ span: 9, offset: 3 }}>
+      <Col md={3} className="d-none d-md-block">
+      </Col>
+      <Col md={9}>
         {works.totalCount > 0 && (
           <h3 className="member-results">{pluralize(works.totalCount, 'Work')}</h3>
         )}
