@@ -63,7 +63,7 @@ export default function RelatedContent(props: Props) {
         <Col md={3} className="d-none d-md-block pe-4">
           <SearchBox path={url} />
         </Col>
-        <Col md={9} className="px-0 pb-4">
+        <Col md={9} className="px-0">
           <h3 className="member-results" id="title">Related Works</h3>
           <SummarySearchMetrics {...vars} />
         </Col>
