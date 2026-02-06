@@ -39,7 +39,7 @@ export default function RelatedContent(props: Props) {
 
   if (!manager.hasData || !manager.hasAnyRelatedWorks)
     return (
-      <Container>
+      <Container fluid>
         <Row>
           <Col md={{ offset: 3 }}>
             <h3 className="member-results" id="title">Related Works</h3>
