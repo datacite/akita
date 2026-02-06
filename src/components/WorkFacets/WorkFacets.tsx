@@ -181,6 +181,7 @@ export default function WorkFacets({
         title="Repository"
         id="client-facets"
         param="client-id"
+        tooltipText='The DataCite Repository where a DOI is stored.'
         url={url}
       />
       <FacetList
