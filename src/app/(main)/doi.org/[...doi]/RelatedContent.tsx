@@ -58,7 +58,6 @@ export default function RelatedContent() {
     <Container fluid>
       <Row>
         <Col md={3} className="d-none d-md-block">
-          <SearchBox path={url} />
         </Col>
         <Col md={9}>
           <h3 className="member-results" id="title">Related Works</h3>
@@ -78,7 +77,9 @@ export default function RelatedContent() {
           hasNextPage={hasNextPage}
           model={'doi'}
           url={url + '?'}
-          endCursor={endCursor} />
+          endCursor={endCursor}
+          searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
+        />
       </Row>
     </Container>
   )

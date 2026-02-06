@@ -61,11 +61,9 @@ export default function RelatedContent(props: Props) {
     <Container fluid className="mt-5">
       <Row>
         <Col md={3} className="d-none d-md-block">
-          <SearchBox path={url} />
         </Col>
         <Col md={9} className="px-0">
           <h3 className="member-results" id="title">Related Works</h3>
-          <SummarySearchMetrics {...vars} />
         </Col>
       </Row>
       <Row>
@@ -81,7 +79,10 @@ export default function RelatedContent(props: Props) {
           model={'organization'}
           url={url+ '?'}
           endCursor={endCursor}
-        />
+          searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
+        >
+          <SummarySearchMetrics {...vars} />
+        </WorksListing>
       </Row>
     </Container>
   )

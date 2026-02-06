@@ -53,8 +53,7 @@ export default function RelatedContent({ repository }: Props) {
   return (
     <Container fluid>
       <Row className="mt-5">
-                <Col md={3} className="d-none d-md-block">
-          <SearchBox path={url} />
+        <Col md={3} className="d-none d-md-block">
         </Col>
         <Col md={9}>
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
@@ -71,6 +70,7 @@ export default function RelatedContent({ repository }: Props) {
         url={url + '?'}
         endCursor={endCursor}
         show={{ all: true }}
+        searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
       />
     </Container>
   )
