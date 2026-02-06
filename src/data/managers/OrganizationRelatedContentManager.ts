@@ -23,10 +23,17 @@ const ORGANIZATION_RELATION_TYPE_TITLES: Record<OrganizationRelationType, string
   fundedBy: 'Funded By',
 }
 
-export const ORGANIZATION_RELATION_TYPE_FACETS: { id: OrganizationRelationType; title: string }[] = VALID_ORGANIZATION_RELATION_TYPES.map(
+const ORGANIZATION_RELATION_TYPE_TOOLTIPS: Partial<Record<OrganizationRelationType, string>> = {
+  affiliatedResearcher: 'Works created or contributed to by researchers affiliated with the organization.',
+  createdBy: 'Works created, contributed to, or published by the organization.',
+  fundedBy: 'Works funded by the organization and its child organizations.',
+}
+
+export const ORGANIZATION_RELATION_TYPE_FACETS: { id: OrganizationRelationType; title: string; tooltipText?: string }[] = VALID_ORGANIZATION_RELATION_TYPES.map(
   (type) => ({
     id: type,
-    title: ORGANIZATION_RELATION_TYPE_TITLES[type]
+    title: ORGANIZATION_RELATION_TYPE_TITLES[type],
+    ...(ORGANIZATION_RELATION_TYPE_TOOLTIPS[type] && { tooltipText: ORGANIZATION_RELATION_TYPE_TOOLTIPS[type] })
   })
 )
 

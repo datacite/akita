@@ -21,7 +21,8 @@ export default async function SearchDoiPage(props: Props) {
     resourceTypeId: vars['resource-type'],
     fieldOfScience: vars['field-of-science'],
     registrationAgency: vars['registration-agency'],
-    clientType: vars['repository-type']
+    clientType: vars['repository-type'],
+    clientId: vars['client-id']
   }
 
   // Show example text if there is no query

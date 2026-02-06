@@ -8,7 +8,8 @@ export interface SearchParams {
   license?: string
   "field-of-science"?: string
   "registration-agency"?: string
-
+  "organization-relation-type"?: string
+  "client-id"?: string
   isBot: string
 }
 
@@ -24,6 +25,8 @@ export default function mapSearchparams(searchParams: SearchParams) {
       license: searchParams.license,
       fieldOfScience: searchParams['field-of-science'],
       registrationAgency: searchParams['registration-agency'],
+      organizationRelationType: searchParams['organization-relation-type'] || 'allRelated',
+      clientId: searchParams['client-id'],
     },
 
     isBot: false

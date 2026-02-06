@@ -75,7 +75,7 @@ export const FACETS = {
     'authors',
     'creatorsAndContributors',
     'clientTypes',
-    // personToWorkTypesMultilevel: []
+    'clients'
   ],
   METRICS: [
     'citation_count',
@@ -87,7 +87,7 @@ export const FACETS = {
   ],
   SANKEY: [
     'personToWorkTypesMultilevel',
-  ]
+  ], 
 }
 
 

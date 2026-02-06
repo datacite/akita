@@ -13,6 +13,7 @@ export interface SearchParams {
   "connection-type"?: string
   "organization-relation-type"?: string
   "repository-type"?: string
+  "client-id"?: string
   sort?: SortOption
   isBot: string
 }
@@ -31,6 +32,7 @@ export default function mapSearchparams(searchParams: SearchParams) {
       registrationAgency: searchParams['registration-agency'],
       clientType: searchParams['repository-type'],
       organizationRelationType: searchParams['organization-relation-type'] || 'allRelated',
+      clientId: searchParams['client-id'],
       sort: searchParams.sort
     },
 

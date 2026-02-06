@@ -11,11 +11,13 @@ import {
 import { Facet } from 'src/data/types'
 import styles from './FacetListItem.module.scss'
 import ListGroup from 'react-bootstrap/ListGroup';
+import { InfoTooltip } from 'src/components/InfoTooltip/InfoTooltip'
 
 interface Props {
   facet: Facet
   param: string
   url: string
+  tooltipText?: string
 
   checked?: boolean
   radio?: boolean
@@ -27,6 +29,7 @@ export default function FacetListItem(props: Props) {
     facet,
     param,
     url,
+    tooltipText,
 
     checked = false,
     radio = false,
@@ -57,7 +60,10 @@ export default function FacetListItem(props: Props) {
     <ListGroup.Item as="li" key={facet.id}>
     <Link prefetch={false} href={url + params.toString()} className={styles.facetlink}>
       <FontAwesomeIcon icon={icon} />
-      <span className={styles.facetTitle}>{facet.title}</span>
+        <span className={styles.facetTitle}>
+        {facet.title}
+        {tooltipText && <InfoTooltip text={tooltipText} />}
+      </span>
       <span>{facet.count.toLocaleString('en-US')}</span>
     </Link>
     </ListGroup.Item>

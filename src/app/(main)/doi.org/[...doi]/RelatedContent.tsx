@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import CommonsError from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
 import WorksListing from 'src/components/WorksListing/WorksListing'
-
+import SearchBox from 'src/components/SearchBox/SearchBox'
 import mapSearchparams from './mapSearchParams'
 import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
 
@@ -53,11 +53,14 @@ export default function RelatedContent() {
 
   const { works, title: displayedConnectionTitle } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
+  const url = '/doi.org/' + doi + '/'
   return (
     <Container fluid>
       <Row>
-        <Col md={{ offset: 3 }}>
-          <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
+        <Col md={3} className="d-none d-md-block">
+        </Col>
+        <Col md={9}>
+          <h3 className="member-results" id="title">Related Works</h3>
         </Col>
       </Row>
       <Row>
@@ -73,8 +76,10 @@ export default function RelatedContent() {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'doi'}
-          url={'/doi.org/' + doi + '/?'}
-          endCursor={endCursor} />
+          url={url + '?'}
+          endCursor={endCursor}
+          searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
+        />
       </Row>
     </Container>
   )

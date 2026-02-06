@@ -32,6 +32,8 @@ interface Props {
   hasNextPage: boolean
   endCursor: string
   show?: ShowCharts
+  children?: React.ReactNode
+  searchBox?: React.ReactNode
 }
 
 export default function WorksListing({
@@ -50,7 +52,9 @@ export default function WorksListing({
   hasPagination,
   hasNextPage,
   endCursor,
-  show = { publicationYear: true, resourceTypes: true, licenses: true }
+  show = { publicationYear: true, resourceTypes: true, licenses: true },
+  children,
+  searchBox
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
@@ -58,13 +62,16 @@ export default function WorksListing({
 
   const renderFacets = () => {
     return (
-      <WorkFacets
-        model={model}
-        url={url}
-        data={works}
-        connectionTypesCounts={connectionTypesCounts}
-        organizationRelationTypeCounts={organizationRelationTypeCounts}
-      />
+      <>
+        {searchBox}
+        <WorkFacets
+          model={model}
+          url={url}
+          data={works}
+          connectionTypesCounts={connectionTypesCounts}
+          organizationRelationTypeCounts={organizationRelationTypeCounts}
+        />
+      </>
     )
   }
 
@@ -116,6 +123,7 @@ export default function WorksListing({
         {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
+        {children}
         {loading ? <Loading /> : renderWorks()}
       </Col>
     </Row>
