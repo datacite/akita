@@ -2,6 +2,11 @@
   grid-row: 2;
   max-width: 600px;
 
+  &:not(:first-child) {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
   dl {
     display: grid;
     grid-template: auto 1fr / 1fr 1fr 1fr 1fr;
