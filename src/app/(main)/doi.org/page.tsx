@@ -1,36 +1,29 @@
+'use client'
+
 import React from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import SearchWork from 'src/components/SearchWork/SearchWork'
-import { QueryVar } from 'src/data/queries/searchDoiQuery'
 import { WorksExampleText } from 'src/components/ExampleText/ExampleText'
+import mapSearchParams, { type SearchParams } from './mapSearchParams'
 
-interface Props {
-  searchParams: Promise<SearchParams>
+
+function getQueryVariables(searchParams: URLSearchParams): SearchParams {
+  return mapSearchParams(Object.fromEntries(searchParams.entries()) as any)
 }
+export default function SearchDoiPage() {
+  const searchParams = useSearchParams()
+  const variables = getQueryVariables(searchParams)
 
-interface SearchParams extends Partial<QueryVar> {
-  filterQuery?: string
-}
 
-export default async function SearchDoiPage(props: Props) {
-  const searchParams = await props.searchParams;
-  const { query, filterQuery, ...vars } = searchParams
+  const query = variables.query
+  const filterQuery = variables.filterQuery
 
-  const variables = {
-    ...vars,
-    resourceTypeId: vars['resource-type'],
-    fieldOfScience: vars['field-of-science'],
-    registrationAgency: vars['registration-agency'],
-    clientType: vars['repository-type'],
-    clientId: vars['client-id']
-  }
-
-  // Show example text if there is no query
-  if (!query || query === '')
+  if (!query || query === '') {
     return <WorksExampleText />
-
+  }
 
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  return <SearchWork variables={{ query: queryStatement, ...variables }} />
+  return <SearchWork variables={{ ...variables, query: queryStatement }} />
 }
