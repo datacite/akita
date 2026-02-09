@@ -47,10 +47,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 
 
-export default async function Page(props: Props) {
-  const params = await props.params
-  const { rorid } = params
-
+export default async function Page() {
   // Content rendering moved to layout.tsx
-  return <RelatedContent rorId={rorid} />
+  // RelatedContent gets rorid from useParams() on the client
+  return <RelatedContent />
 }
