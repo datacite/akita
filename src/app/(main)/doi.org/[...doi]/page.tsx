@@ -62,9 +62,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page(props: Props) {
-  const params = await props.params;
-  const doi = decodeURIComponent(params.doi.join('/'))
+export default async function Page() {
 
   // Redirect handling moved to layout.tsx
   // Content rendering moved to layout.tsx

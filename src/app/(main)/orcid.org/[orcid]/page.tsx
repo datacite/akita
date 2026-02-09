@@ -54,11 +54,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page(props: Props) {
-  // Redirect handling moved to layout.tsx
-  // Content rendering moved to layout.tsx
-  // RelatedContent gets orcid from useParams() internally
-
+export default async function Page() {
   return (
     <RelatedContent />
   )
