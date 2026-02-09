@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
-import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
 import { Work, Facet, ConnectionTypeCounts, OrganizationRelationTypeCounts } from 'src/data/types'
 import { ORGANIZATION_RELATION_TYPE_FACETS } from 'src/data/managers/OrganizationRelatedContentManager'
@@ -29,6 +28,7 @@ interface Facets {
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
+  clients?: Facet[]
   nodes: Work[]
 }
 
@@ -47,8 +47,6 @@ export default function WorkFacets({
   // get current query parameters from next router
   const searchParams = useSearchParams()
 
-  // remove %2F? at the end of url
-  const path = url.substring(0, url.length - 2)
 
   const connectionTypeList: Facet[] = connectionTypesCounts ? [
     { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
@@ -67,10 +65,11 @@ export default function WorkFacets({
   const hasConnectionTypes = connectionTypesCounts ? hasAnyConnections(connectionTypesCounts) : false
 
   const organizationRelationTypeList: Facet[] = organizationRelationTypeCounts
-    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title }) => ({
+    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title, tooltipText }) => ({
         id,
         title,
-        count: organizationRelationTypeCounts[id]
+        count: organizationRelationTypeCounts[id],
+        tooltipText
       }))
     : []
   const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
@@ -90,14 +89,12 @@ export default function WorkFacets({
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "client-facets"
   ]
 
   return (
     <>
-      {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <SearchBox path={path} />
-      )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
       {hasConnectionTypes && (
@@ -177,6 +174,16 @@ export default function WorkFacets({
         param="registration-agency"
         url={url}
       />
+            {!url.startsWith('/repositories') && (
+        <>
+      <FacetList
+        data={data.clients ?? []}
+        title="Repository"
+        id="client-facets"
+        param="client-id"
+        tooltipText='The DataCite Repository where a DOI is stored.'
+        url={url}
+      />
       <FacetList
         data={data.clientTypes ?? []}
         title="Repository Type"
@@ -185,6 +192,8 @@ export default function WorkFacets({
         tooltipText='The type of DataCite Repository where a DOI is stored.'
         url={url}
       />
+      </>
+      )}
       </FacetListGroup>
     </>
   )

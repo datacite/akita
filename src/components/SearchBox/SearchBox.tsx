@@ -8,9 +8,10 @@ import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   path: string
+  placeholder?: string
 }
 
-export default function SearchBox({ path }: Props) {
+export default function SearchBox({ path, placeholder = 'Type to search...' }: Props) {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -35,14 +36,7 @@ export default function SearchBox({ path }: Props) {
     setSearchInput('')
     router.replace(path);
   }
-  const searchBoxStyle = {
-    '--bs-heading-color': '#1abc9c',
-    'border-bottom': '1px solid #cdd2d5',
-    'padding-bottom': '0.35rem',
-  } as React.CSSProperties;
-
   return (<>
-    <h4 style={searchBoxStyle}>Filter Works</h4>
     <InputGroup>
       <FormControl
         name="query-facets"
@@ -50,7 +44,7 @@ export default function SearchBox({ path }: Props) {
         onChange={e => onSearchChange(e.currentTarget.value)}
         key="searchInput"
         onKeyDown={onKeyDown}
-        placeholder="Type to search..."
+        placeholder={placeholder}
         className="form-control"
         type="text"
       />

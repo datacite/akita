@@ -10,6 +10,8 @@ import WorksListing from 'src/components/WorksListing/WorksListing'
 import { useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
 import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
+import SearchBox from 'src/components/SearchBox/SearchBox'
 
 interface Props {
   rorId: string
@@ -51,14 +53,15 @@ export default function RelatedContent(props: Props) {
       </Container>
     )
 
-  const { works, title: displayedConnectionTitle } = manager.selectedContent
+  const { works } = manager.selectedContent
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
+  const url = '/ror.org/' + vars.rorId + '/'
 
   return (
     <Container fluid className="mt-5">
       <Row>
-        <Col md={{ offset: 3 }}>
-          <h3 className="member-results" id="title">Related Works - {displayedConnectionTitle}</h3>
+        <Col md={{ offset: 3 }} className="px-0">
+          <h3 className="member-results" id="title">Related Works</h3>
         </Col>
       </Row>
       <Row>
@@ -72,9 +75,14 @@ export default function RelatedContent(props: Props) {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'organization'}
-          url={'/ror.org/' + vars.rorId + '/?'}
+          url={url+ '?'}
           endCursor={endCursor}
-        />
+          searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
+        >
+          <div className="mt-1 mb-5">
+            <SummarySearchMetrics {...vars} />
+          </div>
+        </WorksListing>
       </Row>
     </Container>
   )
