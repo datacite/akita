@@ -1,5 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { fetchRepository } from 'src/data/queries/repositoryQuery'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 import RelatedContent from './RelatedContent'
@@ -55,8 +56,6 @@ export default async function Page(props: Props) {
   // Fetch repository data to check clientId and pass to RelatedContent
   const { data } = await fetchRepository(repoid)
 
-import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
 
   if (!data) notFound()
 
