@@ -55,7 +55,10 @@ export default async function Page(props: Props) {
   // Fetch repository data to check clientId and pass to RelatedContent
   const { data } = await fetchRepository(repoid)
 
-  if (!data) return null
+import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
+
+  if (!data) notFound()
 
   return data.repository.clientId ? <RelatedContent repository={data.repository} /> : null
 }

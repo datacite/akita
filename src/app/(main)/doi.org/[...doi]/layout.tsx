@@ -24,7 +24,7 @@ export default async function Layout(props: Props) {
   if (doi.startsWith('10.13039')) {
     const { data } = await fetchCrossrefFunder(doi)
 
-    if (!data) notFound()
+    if (!data?.organization?.id) notFound()
     redirect(`/ror.org${rorFromUrl(data.organization.id)}`)
   }
 
@@ -32,6 +32,9 @@ export default async function Layout(props: Props) {
   const { data } = await fetchDoi(doi)
 
   if (!data) notFound()
+  if (!data.work) notFound()
+
+  const schemaOrg = data.work.schemaOrg
 
   return (
     <>
@@ -44,7 +47,9 @@ export default async function Layout(props: Props) {
       </Suspense>
       
       {/* Script tag moved here since we have data.work here */}
-      <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
+      {schemaOrg && (
+        <Script type="application/ld+json" id="schemaOrg">{schemaOrg}</Script>
+      )}
       
       {/* Render page.tsx content */}
       {props.children}

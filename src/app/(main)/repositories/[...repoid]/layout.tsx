@@ -15,11 +15,12 @@ interface Props extends PropsWithChildren {
 
 export default async function Layout(props: Props) {
   const params = await props.params
-  const repoid = decodeURIComponent(params.repoid.join('/'))
+  const repoid = params.repoid.map(decodeURIComponent).join('/')
 
   // Fetch Repository metadata (moved from page.tsx)
-  const { data } = await fetchRepository(repoid)
+  const { data, error } = await fetchRepository(repoid)
 
+  if (error) throw error // Let error boundary handle server errors
   if (!data) notFound()
 
   return (
