@@ -1,7 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Content from './Content'
+import { isValidRORId } from 'src/utils/ror'
 import RelatedContent from './RelatedContent'
 import { RORV2Client } from 'src/data/clients/ror-v2-client'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
@@ -10,10 +10,6 @@ interface Props {
   params: Promise<{
     rorid: string
   }>
-}
-function isValidRORId(rorid: string): boolean {
-  const rorIdPattern = /^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$/
-  return rorIdPattern.test(rorid)
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
@@ -51,13 +47,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 
 
-export default async function Page(props: Props) {
-  const params = await props.params;
-  const { rorid } = params
-  return (
-    <>
-      <Content rorid={rorid} />
-      <RelatedContent rorId={rorid} />
-    </>
-  )
+export default async function Page() {
+  // Content rendering moved to layout.tsx
+  // RelatedContent gets rorid from useParams() on the client
+  return <RelatedContent />
 }

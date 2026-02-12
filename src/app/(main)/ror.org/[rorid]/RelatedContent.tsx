@@ -7,19 +7,14 @@ import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
 import CommonsError from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
-import { useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
 import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
 import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
 import SearchBox from 'src/components/SearchBox/SearchBox'
 
-interface Props {
-  rorId: string
-}
-
-export default function RelatedContent(props: Props) {
-  const { rorId } = props
-
+export default function RelatedContent() {
+  const rorId = useParams().rorid as string
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 

@@ -1,17 +1,9 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Metadata } from 'next'
-import { redirect, notFound } from 'next/navigation'
-import Script from 'next/script'
 import truncate from 'lodash/truncate'
 
-import { rorFromUrl } from 'src/utils/helpers'
-
-import { fetchCrossrefFunder } from 'src/data/queries/crossrefFunderQuery'
-import Content from './Content'
 import { fetchDoi } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'
-import RelatedAggregateGraph from './RelatedAggregateGraph'
-import Loading from 'src/components/Loading/Loading'
 import { COMMONS_URL, LOGO_URL } from 'src/data/constants'
 
 
@@ -70,34 +62,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default async function Page(props: Props) {
-  const params = await props.params;
-  const doi = decodeURIComponent(params.doi.join('/'))
+export default async function Page() {
 
+  // Redirect handling moved to layout.tsx
+  // Content rendering moved to layout.tsx
+  // RelatedAggregateGraph moved to layout.tsx
+  // Script tag moved to layout.tsx
 
-  // Redirect to organization page if DOI is a Crossref Funder ID
-  if (doi.startsWith('10.13039')) {
-    const { data } = await fetchCrossrefFunder(doi)
-
-    if (!data) notFound()
-    redirect(`/ror.org${rorFromUrl(data.organization.id)}`)
-  }
-
-
-
-  // Fetch DOI metadata
-  const { data } = await fetchDoi(doi)
-
-  if (!data) notFound()
-
-  return <>
-    <Suspense fallback={<Loading />}>
-      <Content doi={doi} />
-    </Suspense>
-    <Suspense>
-      <RelatedAggregateGraph doi={doi} />
-    </Suspense>
+  return (
     <RelatedContent />
-    <Script type="application/ld+json" id="schemaOrg">{data.work.schemaOrg}</Script>
-  </>
+  )
 }

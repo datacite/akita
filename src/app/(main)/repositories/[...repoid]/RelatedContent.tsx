@@ -27,7 +27,7 @@ export default function RelatedContent({ repository }: Props) {
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
   const vars = { clientId, ...variables }
-  const { loading, data, error } = useRepositoryRelatedContentQuery(vars)
+  const { loading, data, error, facetsLoading } = useRepositoryRelatedContentQuery(vars)
 
   if (loading) return <Row><Loading /></Row>
 
@@ -62,6 +62,7 @@ export default function RelatedContent({ repository }: Props) {
       <WorksListing
         works={relatedWorks}
         loading={loading}
+        loadingFacets={facetsLoading}
         showAnalytics={true}
         showClaimStatus={true}
         hasPagination={relatedWorks.totalCount > 25}
