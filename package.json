@@ -26,7 +26,7 @@
     "@apollo/client": "^3.11.1",
     "@apollo/experimental-nextjs-app-support": "^0.11.2",
     "@cypress/webpack-dev-server": "^1.7.0",
-    "@formatjs/intl-numberformat": "^7.1.4",
+    "@formatjs/intl-numberformat": "^9.2.2",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
