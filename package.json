@@ -94,7 +94,7 @@
     "cypress-dotenv-flow": "^1.2.2",
     "debug": "4.3.1",
     "dotenv-flow": "^3.2.0",
-    "eslint": "^7.29.0",
+    "eslint": "^9.8.0",
     "eslint-config-next": "15.4.6",
     "nyc": "^15.1.0",
     "prettier": "^2.3.1",
