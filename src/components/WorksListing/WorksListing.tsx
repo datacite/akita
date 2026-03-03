@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 
 import WorkFacets from 'src/components/WorkFacets/WorkFacets'
 import WorkMetadata from 'src/components/WorkMetadata/WorkMetadata'
-import { Works } from 'src/data/types'
+import { ConnectionTypeCounts, OrganizationRelationTypeCounts, Works } from 'src/data/types'
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
@@ -20,7 +20,9 @@ interface Props {
   showAnalytics: boolean
   showSankey?: boolean
   sankeyTitle?: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  connectionTypesCounts?: ConnectionTypeCounts
+  organizationRelationTypeCounts?: OrganizationRelationTypeCounts
+  organizationRelationCountsLoading?: boolean
   showClaimStatus: boolean
   loading: boolean
   loadingFacets?: boolean
@@ -30,12 +32,16 @@ interface Props {
   hasNextPage: boolean
   endCursor: string
   show?: ShowCharts
+  children?: React.ReactNode
+  searchBox?: React.ReactNode
 }
 
 export default function WorksListing({
   works,
   showAnalytics,
   connectionTypesCounts,
+  organizationRelationTypeCounts,
+  organizationRelationCountsLoading = false,
   showSankey,
   sankeyTitle = 'Contributions to Related Works',
   showClaimStatus,
@@ -46,20 +52,26 @@ export default function WorksListing({
   hasPagination,
   hasNextPage,
   endCursor,
-  show = { publicationYear: true, resourceTypes: true, licenses: true }
+  show = { publicationYear: true, resourceTypes: true, licenses: true },
+  children,
+  searchBox
 }: Props) {
 
   const hasNoWorks = works.totalCount == 0
-  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel) : []
+  const sankeyData = showSankey ? multilevelToSankey(works.personToWorkTypesMultilevel ?? []) : []
 
   const renderFacets = () => {
     return (
-      <WorkFacets
-        model={model}
-        url={url}
-        data={works}
-        connectionTypesCounts={connectionTypesCounts}
-      />
+      <>
+        {searchBox}
+        <WorkFacets
+          model={model}
+          url={url}
+          data={works}
+          connectionTypesCounts={connectionTypesCounts}
+          organizationRelationTypeCounts={organizationRelationTypeCounts}
+        />
+      </>
     )
   }
 
@@ -74,11 +86,17 @@ export default function WorksListing({
     return (
       <>
         {showAnalytics && <WorksDashboard works={works} show={show} />}
-        {showSankey && <Row>
-          <Col xs={12}>
-            <SankeyGraph titleText={sankeyTitle} data={sankeyData} tooltipText='This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types.' />
-          </Col>
-        </Row>}
+        {showSankey && !loadingFacets && (
+          <Row>
+            <Col xs={12}>
+              <SankeyGraph
+                titleText={sankeyTitle}
+                data={sankeyData}
+                tooltipText="This chart shows the number of times the top Creators & Contributors with ORCID iDs were associated with different work types."
+              />
+            </Col>
+          </Row>
+        )}
 
         {works.nodes.map((doi) => (
           <Row key={doi.doi} className="mb-4 work">
@@ -102,9 +120,10 @@ export default function WorksListing({
   return (
     <Row>
       <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        {loadingFacets ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
+        {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
+        {children}
         {loading ? <Loading /> : renderWorks()}
       </Col>
     </Row>

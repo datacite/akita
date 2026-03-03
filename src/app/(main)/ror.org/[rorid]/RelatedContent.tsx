@@ -5,70 +5,80 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
-
-import { useOrganizationRelatedContentQuery } from 'src/data/queries/organizationRelatedContentQuery';
-
-import Error from 'src/components/Error/Error'
+import CommonsError from 'src/components/Error/Error'
 import WorksListing from 'src/components/WorksListing/WorksListing'
-import { pluralize } from 'src/utils/helpers';
-import { useSearchParams } from 'next/navigation';
-import mapSearchparams from './mapSearchParams';
+import { useParams, useSearchParams } from 'next/navigation'
+import mapSearchparams from './mapSearchParams'
+import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
+import SummarySearchMetrics from 'src/components/SummarySearchMetrics/SummarySearchMetrics'
+import SearchBox from 'src/components/SearchBox/SearchBox'
 
-interface Props {
-  isBot?: boolean
-  rorId: string
-  rorFundingIds: string[]
-}
-
-export default function RelatedContent(props: Props) {
-  const { isBot = false, rorId, rorFundingIds } = props
-
+export default function RelatedContent() {
+  const rorId = useParams().rorid as string
   const searchParams = useSearchParams()
   const { variables } = mapSearchparams(Object.fromEntries(searchParams.entries()) as any)
 
-  const vars = { rorId, rorFundingIds, ...variables }
-  const { loading, data, error } = useOrganizationRelatedContentQuery(vars)
+  const vars = { rorId, ...variables }
+  const manager = useOrganizationRelatedContentManager(vars)
 
-  if (isBot) return null
+  if (manager.isLoading) return <Row><Loading /></Row>
 
-  if (loading) return <Row><Loading /></Row>
-
-  if (error)
-    return <Row>
-      <Col md={{ offset: 3 }} className="panel panel-transparent">
-        <Error title="An error occured loading related content." message={error.message} />
-      </Col>
-    </Row>
-
-  if (!data) return
-
-  const relatedWorks = data.organization.works
-
-  const hasNextPage = relatedWorks.totalCount > 25
-  const endCursor = relatedWorks.pageInfo
-    ? relatedWorks.pageInfo.endCursor
-    : ''
-
-  const totalCount = relatedWorks.totalCount
-
-  return (
-    <Container fluid>
-      <Row className="mt-5">
-        <Col md={{ offset: 3 }} className="px-0">
-          <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
+  if (manager.hasError)
+    return (
+      <Row>
+        <Col md={{ offset: 3 }} className="panel panel-transparent">
+          <CommonsError title="An error occurred loading related content." message={manager.errorMessage} />
         </Col>
       </Row>
-      <WorksListing
-        works={relatedWorks}
-        loading={loading}
-        showAnalytics={true}
-        showClaimStatus={true}
-        hasPagination={relatedWorks.totalCount > 25}
-        hasNextPage={hasNextPage}
-        model={'organization'}
-        url={'/ror.org/' + vars.rorId + '/?'}
-        endCursor={endCursor}
-      />
+    )
+
+  if (!manager.hasData || !manager.hasAnyRelatedWorks)
+    return (
+      <Container fluid>
+        <Row>
+          <Col md={{ offset: 3 }}>
+            <h3 className="member-results" id="title">Related Works</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={{ offset: 3 }} className="panel panel-transparent">
+            <p>No related works found for this organization.</p>
+          </Col>
+        </Row>
+      </Container>
+    )
+
+  const { works } = manager.selectedContent
+  const { hasPagination, hasNextPage, endCursor } = manager.pagination
+  const url = '/ror.org/' + vars.rorId + '/'
+
+  return (
+    <Container fluid className="mt-5">
+      <Row>
+        <Col md={{ offset: 3 }} className="px-0">
+          <h3 className="member-results" id="title">Related Works</h3>
+        </Col>
+      </Row>
+      <Row>
+        <WorksListing
+          works={works}
+          loading={manager.isLoading}
+          loadingFacets={manager.facetsAreLoading || manager.organizationCountsLoading}
+          organizationRelationTypeCounts={manager.organizationRelationTypeCounts}
+          showAnalytics={!manager.facetsAreLoading}
+          showClaimStatus={true}
+          hasPagination={hasPagination}
+          hasNextPage={hasNextPage}
+          model={'organization'}
+          url={url+ '?'}
+          endCursor={endCursor}
+          searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
+        >
+          <div className="mt-1 mb-5">
+            <SummarySearchMetrics {...vars} />
+          </div>
+        </WorksListing>
+      </Row>
     </Container>
   )
 }

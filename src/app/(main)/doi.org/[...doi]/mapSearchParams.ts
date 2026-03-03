@@ -1,3 +1,5 @@
+import { SortOption } from "src/data/queries/searchDoiQuery"
+
 export interface SearchParams {
   id: string
   filterQuery?: string
@@ -10,7 +12,9 @@ export interface SearchParams {
   "field-of-science"?: string
   "registration-agency"?: string
   "connection-type"?: string
-
+  "organization-relation-type"?: string
+  "client-id"?: string
+  sort?: SortOption
   isBot: string
 }
 
@@ -26,11 +30,12 @@ export default function mapSearchparams(searchParams: SearchParams) {
       license: searchParams.license,
       fieldOfScience: searchParams['field-of-science'],
       registrationAgency: searchParams['registration-agency'],
+      organizationRelationType: searchParams['organization-relation-type'] || 'allRelated',
+      clientId: searchParams['client-id'],
+      sort: searchParams.sort
     },
 
     connectionType: searchParams['connection-type'],
     isBot: false
   }
 }
-
-

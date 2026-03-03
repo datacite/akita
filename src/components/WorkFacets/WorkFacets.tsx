@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
-import SearchBox from '../SearchBox/SearchBox'
 import AuthorsFacet from '../AuthorsFacet/AuthorsFacet'
-import { Work, Facet } from 'src/data/types'
+import { Work, Facet, ConnectionTypeCounts, OrganizationRelationTypeCounts } from 'src/data/types'
+import { ORGANIZATION_RELATION_TYPE_FACETS } from 'src/data/managers/OrganizationRelatedContentManager'
 import FacetList from '../FacetList/FacetList'
 import FacetListGroup from '../FacetList/FacetListGroup'
 
@@ -12,12 +12,13 @@ interface Props {
   data: Facets
   model: string
   url: string
-  connectionTypesCounts?: { references: number, citations: number, parts: number, partOf: number, otherRelated: number, allRelated: number }
+  connectionTypesCounts?: ConnectionTypeCounts
+  organizationRelationTypeCounts?: OrganizationRelationTypeCounts
 }
 
 interface Facets {
-  published: Facet[]
-  resourceTypes: Facet[]
+  published?: Facet[]
+  resourceTypes?: Facet[]
   languages?: Facet[]
   licenses?: Facet[]
   repositories?: Facet[]
@@ -27,6 +28,7 @@ interface Facets {
   authors?: Facet[]
   creatorsAndContributors?: Facet[]
   clientTypes?: Facet[]
+  clients?: Facet[]
   nodes: Work[]
 }
 
@@ -38,14 +40,13 @@ export default function WorkFacets({
   data,
   model,
   url,
-  connectionTypesCounts
+  connectionTypesCounts,
+  organizationRelationTypeCounts
 }: Props) {
 
   // get current query parameters from next router
   const searchParams = useSearchParams()
 
-  // remove %2F? at the end of url
-  const path = url.substring(0, url.length - 2)
 
   const connectionTypeList: Facet[] = connectionTypesCounts ? [
     { id: 'allRelated', title: 'All', count: connectionTypesCounts.allRelated },
@@ -53,33 +54,50 @@ export default function WorkFacets({
     { id: 'citations', title: 'Citations', count: connectionTypesCounts.citations },
     { id: 'parts', title: 'Parts', count: connectionTypesCounts.parts },
     { id: 'partOf', title: 'Is Part Of', count: connectionTypesCounts.partOf },
+    { id: 'versions', title: 'Versions', count: connectionTypesCounts.versions },
+    { id: 'versionOf', title: 'Is Version Of', count: connectionTypesCounts.versionOf },
     { id: 'otherRelated', title: 'Other', count: connectionTypesCounts.otherRelated }
   ] : []
 
   const isConnectionTypeSet = searchParams?.has('connection-type')
-  const totalConnectionTypeCount = connectionTypesCounts ? connectionTypesCounts.references + connectionTypesCounts.citations + connectionTypesCounts.parts + connectionTypesCounts.partOf + connectionTypesCounts.otherRelated : 0
+  const hasAnyConnections = (counts: NonNullable<typeof connectionTypesCounts>) =>
+    Object.values(counts).some(count => count > 0)
+  const hasConnectionTypes = connectionTypesCounts ? hasAnyConnections(connectionTypesCounts) : false
+
+  const organizationRelationTypeList: Facet[] = organizationRelationTypeCounts
+    ? ORGANIZATION_RELATION_TYPE_FACETS.map(({ id, title, tooltipText }) => ({
+        id,
+        title,
+        count: organizationRelationTypeCounts[id],
+        tooltipText
+      }))
+    : []
+  const isOrganizationRelationTypeSet = searchParams?.has('organization-relation-type')
+  const hasAnyOrganizationRelationTypes = (counts: NonNullable<typeof organizationRelationTypeCounts>) =>
+    Object.values(counts).some(count => count > 0)
+  const hasOrganizationRelationTypes = organizationRelationTypeCounts
+    ? hasAnyOrganizationRelationTypes(organizationRelationTypeCounts)
+    : false
 
   const defaultActiveKeys = [
     "authors-facets",
     "connection-type-facets",
+    "organization-relation-type-facets",
     "published-facets",
     "work-type-facets",
     "license-facets",
     "language-facets",
     "field-of-science-facets",
     "registration-agency-facets",
-    "conection-type-facets",
-    "repository-type-facets"
+    "repository-type-facets",
+    "client-facets"
   ]
 
   return (
     <>
-      {!['doi.org/?', 'orcid.org/?', 'ror.org/?'].includes(url) && (
-        <SearchBox path={path} />
-      )}
 
       <FacetListGroup defaultActiveKey={defaultActiveKeys} >
-      {totalConnectionTypeCount > 0 && (
+      {hasConnectionTypes && (
         <FacetList
           data={connectionTypeList.filter(f => f.count > 0)}
           title="Connection Types"
@@ -91,14 +109,26 @@ export default function WorkFacets({
         />
       )}
 
+      {hasOrganizationRelationTypes && (
+        <FacetList
+          data={organizationRelationTypeList.filter(f => f.count > 0)}
+          title="Organization Relation Types"
+          id="organization-relation-type-facets"
+          param="organization-relation-type"
+          url={url}
+          checked={(i) => !isOrganizationRelationTypeSet && i === 0}
+          radio
+        />
+      )}
+
       {model == "person"
         ? <AuthorsFacet authors={data.authors || []} title="Co-Authors" url={url} model={model} />
-        : <AuthorsFacet authors={data.creatorsAndContributors || []} title="Creators & Contributors" url={url} model={model} />
+        : <AuthorsFacet authors={data.creatorsAndContributors ?? []} title="Creators & Contributors" url={url} model={model} />
       }
 
 
       <FacetList
-        data={data.published}
+        data={data.published ?? []}
         title="Publication Year"
         id="published-facets"
         param="published"
@@ -106,7 +136,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.resourceTypes?.filter(removeOtherAndMissing)}
+        data={(data.resourceTypes ?? []).filter(removeOtherAndMissing)}
         title="Work Type"
         id="work-type-facets"
         param="resource-type"
@@ -114,7 +144,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.licenses?.filter(removeOtherAndMissing)}
+        data={(data.licenses ?? []).filter(removeOtherAndMissing)}
         title="License"
         id="license-facets"
         param="license"
@@ -122,7 +152,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.languages}
+        data={data.languages ?? []}
         title="Language"
         id="language-facets"
         param="language"
@@ -130,7 +160,7 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.fieldsOfScience}
+        data={data.fieldsOfScience ?? []}
         title="Field of Science"
         id="field-of-science-facets"
         param="field-of-science"
@@ -138,20 +168,32 @@ export default function WorkFacets({
       />
 
       <FacetList
-        data={data.registrationAgencies}
+        data={data.registrationAgencies ?? []}
         title="Registration Agency"
         id="registration-agency-facets"
         param="registration-agency"
         url={url}
       />
+            {!url.startsWith('/repositories') && (
+        <>
       <FacetList
-        data={data.clientTypes}
+        data={data.clients ?? []}
+        title="Repository"
+        id="client-facets"
+        param="client-id"
+        tooltipText='The DataCite Repository where a DOI is stored.'
+        url={url}
+      />
+      <FacetList
+        data={data.clientTypes ?? []}
         title="Repository Type"
         id="repository-type-facets"
         param="repository-type"
         tooltipText='The type of DataCite Repository where a DOI is stored.'
         url={url}
       />
+      </>
+      )}
       </FacetListGroup>
     </>
   )

@@ -1,12 +1,9 @@
 'use client'
 
 import React from 'react'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FacetListItem from './FacetListItem'
 import { Facet } from 'src/data/types'
-import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+import { InfoTooltip } from 'src/components/InfoTooltip/InfoTooltip'
 import Accordion from 'react-bootstrap/Accordion';
 import styles from './FacetList.module.scss'
 
@@ -26,21 +23,6 @@ interface FacetListProps {
   tooltipText?: string
 }
 
-// Custom InfoTooltip component
-const InfoTooltip = ({ text }) => (
-  <OverlayTrigger
-    placement="top"
-    overlay={<Tooltip>{text}</Tooltip>}
-  >
-    <span
-      onClick={(e) => e.stopPropagation()}
-      className="ms-2"
-      style={{ cursor: 'help' }}
-    > <FontAwesomeIcon icon={faQuestionCircle} />
-    </span>
-  </OverlayTrigger>
-);
-
 export default function FacetList(props: FacetListProps) {
   const { data, title, id, param, url, value, checked, radio } = props
   if (!data || data.length === 0) return null
@@ -55,10 +37,11 @@ export default function FacetList(props: FacetListProps) {
       <Accordion.Body>
         {data.map((facet, i) => (
           <FacetListItem
-            key={'facet-item- ' +id + '-' + i}
+            key={'facet-item-' +id + '-' + i}
             facet={facet}
             param={param}
             url={url}
+            tooltipText={facet.tooltipText}
             value={value && value(facet.id)}
             checked={checked && checked(i)}
             radio={radio}

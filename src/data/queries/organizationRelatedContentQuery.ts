@@ -12,7 +12,7 @@ export function useOrganizationRelatedContentQuery(variables: QueryVar) {
   const loading = results.loading || facets.loading;
   const error = results.error || facets.error;
 
-  if (loading || error) return { loading, data: undefined, error }
+  if (loading || error) return { loading, data: undefined, error, facetsLoading: facets.loading }
 
 
   const organization = {
@@ -25,6 +25,7 @@ export function useOrganizationRelatedContentQuery(variables: QueryVar) {
   return {
     ...results,
     data: { organization } as QueryData,
+    facetsLoading: facets.loading
   }
 }
 

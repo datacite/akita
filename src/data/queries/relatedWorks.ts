@@ -2,9 +2,12 @@ import {
   ForceDirectedGraphNode,
   ForceDirectedGraphLink
 } from 'src/components/ForceDirectedGraph/ForceDirectedSpec'
-import { VERCEL_URL, URLS } from 'src/data/constants'
+import { VERCEL_URL, URLS, COMMONS_URL } from 'src/data/constants'
 
 function getBaseUrl(): string {
+  if (process.env.VERCEL_ENV === 'production')
+    return COMMONS_URL
+
   if (VERCEL_URL && VERCEL_URL !== 'localhost:3000')
     return `https://${VERCEL_URL}`
 

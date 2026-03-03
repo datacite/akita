@@ -10,25 +10,142 @@ function extractRORId(rorString: string): string {
   return rorString.replace('https://', '').replace('ror.org/', '')
 }
 
-function buildOrgQuery(rorId: string | undefined, rorFundingIds: string[]): string {
+/**
+ * Quotes an identifier for safe use in Lucene/OpenSearch queries.
+ * Wraps the identifier in double quotes to prevent special character issues.
+ */
+function quoteIdentifier(identifier: string): string {
+  return `"${identifier}"`
+}
+
+const VALID_CONNECTION_TYPES = [
+  'references',
+  'citations',
+  'parts',
+  'partOf',
+  'versions',
+  'versionOf',
+  'allRelated',
+  'otherRelated',
+] as const;
+
+function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
+  if (!relatedDoi) return ''
+  // if the connection type is not in the map, return an empty string
+  if (!VALID_CONNECTION_TYPES.includes(connectionType as typeof VALID_CONNECTION_TYPES[number])) return ''
+
+  const doi = relatedDoi;
+  const quotedDoi = quoteIdentifier(doi);
+  const baseURI = "https://doi.org/";
+  const OR = " OR ";
+  const httpBaseURI = "http://doi.org/"; // Added HTTP base URI
+
+  const relatedIdentifiers = [
+    quoteIdentifier(`${baseURI}${doi}`),
+    quotedDoi,
+    quoteIdentifier(`${httpBaseURI}${doi}`) // Added HTTP version
+  ];
+  const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
+  const uidPart = uidList && uidList.length > 0
+    ? `uid:(${uidList.join(OR)})`
+    : '';
+
+  // Map connection types to their corresponding query parts
+  const queryPartsByType = {
+    references: [`citation_ids:${quotedDoi}`],
+    citations: [`reference_ids:${quotedDoi}`],
+    parts: [`part_of_ids:${quotedDoi}`],
+    partOf: [`part_ids:${quotedDoi}`],
+    versions: [`version_of_ids:${quotedDoi}`],
+    versionOf: [`versions_ids:${quotedDoi}`],
+    allRelated: [
+      relatedIdentifierPart,
+      `reference_ids:${quotedDoi}`,
+      `citation_ids:${quotedDoi}`,
+      `part_ids:${quotedDoi}`,
+      `part_of_ids:${quotedDoi}`,
+      `versions_ids:${quotedDoi}`,
+      `version_of_ids:${quotedDoi}`,
+      uidPart
+    ],
+    otherRelated: [
+      relatedIdentifierPart,
+      uidPart
+    ]
+  };
+
+  const negativeOtherRelationsParts = [
+    `reference_ids:${quotedDoi}`,
+    `citation_ids:${quotedDoi}`,
+    `part_ids:${quotedDoi}`,
+    `part_of_ids:${quotedDoi}`,
+    `versions_ids:${quotedDoi}`,
+    `version_of_ids:${quotedDoi}`,
+  ];
+
+  const selectedParts = queryPartsByType[connectionType as keyof typeof queryPartsByType] || [];
+  const positivePart = selectedParts.filter(Boolean).join(OR);
+  const negativePart = negativeOtherRelationsParts.filter(Boolean).join(OR);
+
+  if (connectionType === "otherRelated") {
+    return `((${positivePart}) AND NOT (${negativePart}))`;
+  }
+  // By default only return positive part
+  return `(${positivePart})`;
+}
+
+export const VALID_ORGANIZATION_RELATION_TYPES = [
+  'allRelated',
+  'affiliatedResearcher',
+  'createdBy',
+  'fundedBy',
+] as const
+
+function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
+  const requestedRelationType = organizationRelationType ?? 'allRelated'
+  const relationType = VALID_ORGANIZATION_RELATION_TYPES.includes(requestedRelationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
+    ? requestedRelationType
+    : 'allRelated'
+
   const id = 'ror.org/' + extractRORId(rorId)
-  const urlId = `"https://${id}"`
-  const rorFundingIdsQuery = rorFundingIds.map(id => '"https://doi.org/' + id + '"').join(' OR ')
-  return `((organization_id:${id} OR affiliation_id:${id} OR related_dmp_organization_id:${id} OR provider.ror_id:${urlId}) OR funding_references.funderIdentifier:(${urlId} ${rorFundingIdsQuery && `OR ${rorFundingIdsQuery}`}))`
+  const urlId = quoteIdentifier(`https://${id}`)
+  const OR = ' OR '
+
+  const queryPartsByType: Record<typeof VALID_ORGANIZATION_RELATION_TYPES[number], string[]> = {
+    fundedBy: [`funder_rors:${urlId}`, `funder_parent_rors:${urlId}`],
+    createdBy: [
+      `organization_id:${id}`,
+      `provider.ror_id:${urlId}`,
+    ],
+    affiliatedResearcher: [`affiliation_id:${id}`],
+    allRelated: [
+      `organization_id:${id}`,
+      `provider.ror_id:${urlId}`,
+      `affiliation_id:${id}`,
+      `related_dmp_organization_id:${id}`,
+      `funder_rors:${urlId}`,
+      `funder_parent_rors:${urlId}`
+    ]
+  }
+
+  const selectedParts = queryPartsByType[relationType as keyof typeof queryPartsByType] ?? queryPartsByType.allRelated
+  const positivePart = selectedParts.filter(Boolean).join(OR)
+  return `(${positivePart})`
 }
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
     variables.query,
-    buildOrgQuery(variables.rorId, variables.rorFundingIds || []),
+    buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || "allRelated"),
+    buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',
     variables.registrationAgency ? `agency:${variables.registrationAgency}` : '',
     variables.userId ? `creators_and_contributors.nameIdentifiers.nameIdentifier:(${variables.userId} OR "https://orcid.org/${variables.userId}")` : '',
     // The contributors facet doesn't capture all the works like in the userId
     // If we were to use wildcards then the facet counts mismatch the results
     variables.contributor ? `creators_and_contributors.nameIdentifiers.nameIdentifier:"https://orcid.org/${variables.contributor}"` : '',
-    variables.filterQuery
+    variables.filterQuery ? `(${variables.filterQuery})` : ''
   ].filter(Boolean);
   const query = queryParts.join(' AND ')
 
@@ -148,8 +265,8 @@ export async function fetchDoisCitations(variables: QueryVar, count?: number) {
 }
 
 
-export function useSearchDoiQuery(variables: QueryVar) {
-  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables], queryFn: async () => fetchDois(variables) })
+export function useSearchDoiQuery(variables: QueryVar, count?: number) {
+  const { isPending, data, error } = useQuery({ queryKey: ['doiSearch', variables, count], queryFn: async () => fetchDois(variables, count) })
 
   return { loading: isPending, data: data?.data, error }
 }
@@ -209,7 +326,10 @@ export interface QueryVar {
   query?: string
   filterQuery?: string
   rorId?: string
-  rorFundingIds?: string[]
+  organizationRelationType?: string
+  relatedDoi?: string
+  connectionType?: string
+  uidList?: string[]
   userId?: string
   clientId?: string
   cursor?: string
