@@ -47,9 +47,8 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
   ];
   const relatedIdentifierPart = `related_identifiers.relatedIdentifier:(${relatedIdentifiers.join(OR)})`;
   const uidPart = uidList && uidList.length > 0
-    ? `uid:(${uidList.join(OR)})`
+    ? `uid:(${uidList?.map(quoteIdentifier).join(OR)})`
     : '';
-
   // Map connection types to their corresponding query parts
   const queryPartsByType = {
     references: [`citation_ids:${quotedDoi}`],
