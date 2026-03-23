@@ -7,7 +7,7 @@ import { mapJsonToRepository } from 'src/utils/helpers'
 
 function buildRepositorySearchParams(variables: QueryVar): URLSearchParams {
   const searchParams = new URLSearchParams({
-    query: variables.query,
+    query: [variables.query, "client_id:*"].filter(Boolean).join(' AND '),
   })
 
   function optionalAppend(param: string, value: string | undefined) {
