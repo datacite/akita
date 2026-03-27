@@ -51,26 +51,27 @@ export default function Search() {
         className={`form-control ${styles.input}`}
         type="text"
       />
-      <Button type="submit" className={`search-submit ${styles.submit}`} onClick={(e) => {
-        search(searchInput)
-        e.preventDefault();
-      }}
-      >
-        <FontAwesomeIcon icon={faSearch} />
-      </Button>
       {searchInput !== '' && (
-        <span
+        <Button
           id="search-clear"
-          title="Clear"
-          aria-label="Clear"
+          type="button"
+          title="Clear search"
+          aria-label="Clear search"
           onClick={() => {
             setSearchInput('')
             search('')
           }}
         >
           <FontAwesomeIcon icon={faTimes} />
-        </span>
+        </Button>
       )}
+      <Button type="submit" aria-label="Search" className={`search-submit ${styles.submit}`} onClick={(e) => {
+        search(searchInput)
+        e.preventDefault();
+      }}
+      >
+        <FontAwesomeIcon icon={faSearch} />
+      </Button>
     </InputGroup>
   )
 }

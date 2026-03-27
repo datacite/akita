@@ -52,6 +52,7 @@ export default function SearchBox({ path, placeholder = 'Type to search...' }: P
         id="filter-works"
         type="submit"
         className="search-submit-facets"
+        aria-label="Search within these works"
         onClick={onSubmit}
       >
         <FontAwesomeIcon icon={faSearch} />
