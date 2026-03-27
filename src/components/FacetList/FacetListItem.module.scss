@@ -5,7 +5,7 @@
 .facetlink, .facetlink:hover, .facetlink:visited, .facetlink:active, .facetlink:link {
   display: flex;
   align-items: center;
-      color: #88939a;
+  color: var(--datacite-color-primary, #88939a);
 
   .facetTitle {
     flex-grow:1;

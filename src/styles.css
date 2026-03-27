@@ -183,10 +183,13 @@ a.navbar-brand {
 
 .form-inline #search-clear {
   z-index: 3;
-  color: #cdd2d5;
+  color: #243b54;
   position: absolute;
-  right: 60px;
-  top: 10px;
+  right: 80px;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: none;
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
@@ -603,7 +606,7 @@ h4.work {
 
 
 .navbar-light .navbar-nav .nav-link {
-  color: #a3acb2;
+  color: #243b54;
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
@@ -674,9 +677,20 @@ body {
 }
 
 .secondary {
-  color: #A3ACB2;
+  color: #243b54;
 }
 
 .text-justify {
   text-align: justify;
 }
+
+:root {
+  --datacite-color-primary: #243b54;
+}
+
+.button:hover {
+    background-color: #0071b2;
+    color: #fff;
+}
+
+

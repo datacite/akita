@@ -16,7 +16,7 @@ interface Props extends ButtonProps {
 
 const COLORS = {
   primary: '#037AAD',
-  secondary: '#A3ACB2',
+  secondary: '#243b54',
 }
 
 export default function DataCiteButton(props: Props) {
