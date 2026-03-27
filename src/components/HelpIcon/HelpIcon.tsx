@@ -22,7 +22,7 @@ const HelpIcon: React.FunctionComponent<Props> = ({ text = null, link = null, si
 
 	function Icon() {
 		if (link !== null) return (
-			<a href={link} target="_blank" rel="noreferrer" className='help-icon' style={positionStyle}>
+			<a href={link} target="_blank" rel="noreferrer" className='help-icon' style={positionStyle} aria-label="Open help documentation">
 				<FontAwesomeIcon icon={faQuestionCircle} fontSize={size} />
 			</a>
 		)

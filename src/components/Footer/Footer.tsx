@@ -38,30 +38,32 @@ export default function Footer() {
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
-            <a href="mailto:support@datacite.org" className="share">
+            <a href="mailto:support@datacite.org" className="share" aria-label="Email DataCite support">
               <FontAwesomeIcon icon={faEnvelope} />
             </a>
-            <a href="https://datacite.org/blog/" className="share">
+            <a href="https://datacite.org/blog/" className="share" aria-label="Open DataCite blog">
               <FontAwesomeIcon icon={faBlog} />
             </a>
-            <a href="https://github.com/datacite/datacite" className="share">
+            <a href="https://github.com/datacite/datacite" className="share" aria-label="Open DataCite GitHub">
               <FontAwesomeIcon icon={faGithub} />
             </a>
-            <a href="https://twitter.com/datacite" className="share">
+            <a href="https://twitter.com/datacite" className="share" aria-label="Open DataCite X profile">
               <svg aria-hidden="true" focusable="false" data-prefix="fab" className="svg-inline--fa fa-twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
             </a>
-            <a href="https://openbiblio.social/@datacite" className="share">
+            <a href="https://openbiblio.social/@datacite" className="share" aria-label="Open DataCite Mastodon profile">
               <FontAwesomeIcon icon={faMastodon} />
             </a>
             <a
               href="https://www.linkedin.com/company/datacite"
               className="share"
+              aria-label="Open DataCite LinkedIn profile"
             >
               <FontAwesomeIcon icon={faLinkedin} />
             </a>
             <a
               href="https://www.youtube.com/@DataCiteChannel"
               className="share"
+              aria-label="Open DataCite YouTube channel"
             >
               <FontAwesomeIcon icon={faYoutube} />
             </a>
