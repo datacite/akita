@@ -35,9 +35,19 @@ const FilterItem: React.FunctionComponent<Props> = ({
     }
   }
 
+  const isActive = activeFilter === id
+  const filterActionLabel = `${isActive ? 'Remove' : 'Apply'} filter ${title}`
+
   return (
     <div>
-      <a className={"facet-"+name} onClick={() => toggleFilter(id)}>{activeIcon(id)}</a>
+      <button
+        type="button"
+        className={`facet-${name} btn btn-link p-0 border-0 bg-transparent`}
+        aria-label={filterActionLabel}
+        onClick={() => toggleFilter(id)}
+      >
+        {activeIcon(id)}
+      </button>
       <div className="facet-title">{title}</div>
       <span className="number pull-right">{count.toLocaleString('en-US')}</span>
       <div className="clearfix" />
