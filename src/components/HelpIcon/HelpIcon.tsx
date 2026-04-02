@@ -9,21 +9,38 @@ import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
 type Props = {
 	text?: string
 	link?: string
+	linkLabel?: string
 	size?: number
 	color?: string
 	position?: 'inline' | 'top-right'
 	padding?: number
 }
 
-const HelpIcon: React.FunctionComponent<Props> = ({ text = null, link = null, size = 24, color = 'gray', position = 'top-right', padding = 0 }) => {
+const HelpIcon: React.FunctionComponent<Props> = ({
+	text = null,
+	link = null,
+	linkLabel = null,
+	size = 24,
+	color = 'gray',
+	position = 'top-right',
+	padding = 0
+}) => {
 	if (text === null && link === null) return <></>;
 
 	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding } : {}
+	const accessibleLinkLabel = linkLabel ?? (text ? `Open help: ${text}` : 'Open help documentation')
 
 	function Icon() {
 		if (link !== null) return (
-			<a href={link} target="_blank" rel="noreferrer" className='help-icon' style={positionStyle}>
-				<FontAwesomeIcon icon={faQuestionCircle} fontSize={size} />
+			<a
+				href={link}
+				target="_blank"
+				rel="noreferrer"
+				className='help-icon'
+				style={positionStyle}
+				aria-label={accessibleLinkLabel}
+			>
+				<FontAwesomeIcon icon={faQuestionCircle} fontSize={size} aria-hidden="true" />
 			</a>
 		)
 

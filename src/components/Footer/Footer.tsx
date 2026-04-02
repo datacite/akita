@@ -38,32 +38,54 @@ export default function Footer() {
           </Col>
           <Col sm={3} md={3} className="footer-column">
             <h4 className="share">Contact Us</h4>
-            <a href="mailto:support@datacite.org" className="share">
-              <FontAwesomeIcon icon={faEnvelope} />
+            <a
+              href="mailto:support@datacite.org"
+              className="share"
+              aria-label="Email DataCite support"
+            >
+              <FontAwesomeIcon icon={faEnvelope} aria-hidden="true" />
             </a>
-            <a href="https://datacite.org/blog/" className="share">
-              <FontAwesomeIcon icon={faBlog} />
+            <a
+              href="https://datacite.org/blog/"
+              className="share"
+              aria-label="Visit the DataCite blog"
+            >
+              <FontAwesomeIcon icon={faBlog} aria-hidden="true" />
             </a>
-            <a href="https://github.com/datacite/datacite" className="share">
-              <FontAwesomeIcon icon={faGithub} />
+            <a
+              href="https://github.com/datacite/datacite"
+              className="share"
+              aria-label="Visit DataCite on GitHub"
+            >
+              <FontAwesomeIcon icon={faGithub} aria-hidden="true" />
             </a>
-            <a href="https://twitter.com/datacite" className="share">
+            <a
+              href="https://twitter.com/datacite"
+              className="share"
+              aria-label="Visit DataCite on X"
+            >
               <svg aria-hidden="true" focusable="false" data-prefix="fab" className="svg-inline--fa fa-twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
             </a>
-            <a href="https://openbiblio.social/@datacite" className="share">
-              <FontAwesomeIcon icon={faMastodon} />
+            <a
+              href="https://openbiblio.social/@datacite"
+              className="share"
+              aria-label="Visit DataCite on Mastodon"
+            >
+              <FontAwesomeIcon icon={faMastodon} aria-hidden="true" />
             </a>
             <a
               href="https://www.linkedin.com/company/datacite"
               className="share"
+              aria-label="Visit DataCite on LinkedIn"
             >
-              <FontAwesomeIcon icon={faLinkedin} />
+              <FontAwesomeIcon icon={faLinkedin} aria-hidden="true" />
             </a>
             <a
               href="https://www.youtube.com/@DataCiteChannel"
               className="share"
+              aria-label="Visit the DataCite YouTube channel"
             >
-              <FontAwesomeIcon icon={faYoutube} />
+              <FontAwesomeIcon icon={faYoutube} aria-hidden="true" />
             </a>
             <Links links={LINKS.contact_links} />
             <StatusPage />
