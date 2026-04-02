@@ -49,7 +49,15 @@ export function MetricsDisplay({ counts, links = {} }: Props) {
   const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map((metric, index) =>
     <React.Fragment key={"metric-" + index}>
       <dd>{compactNumbers(metric.count || 0)}</dd>
-      <dt>{metric.label} <HelpIcon link={metric.link} size={20} position='inline' /></dt>
+      <dt>
+        {metric.label}{' '}
+        <HelpIcon
+          link={metric.link}
+          linkLabel={`Learn more about ${metric.label.toLowerCase()} metrics`}
+          size={20}
+          position='inline'
+        />
+      </dt>
     </React.Fragment>
   )
   return (

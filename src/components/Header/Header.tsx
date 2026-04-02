@@ -22,8 +22,8 @@ export default function Header() {
     <Container fluid>
       <Navbar expand="lg" className={`${styles.navbar} justify-content-between`}>
         <Brand>
-          <Link href="/">
-            <img src="/images/commons-logo.svg" height="50" className="commons-logo" />
+          <Link href="/" aria-label="DataCite Commons home">
+            <img src="/images/commons-logo.svg" height="50" className="commons-logo" alt="DataCite Commons" />
           </Link>
         </Brand>   
         <Toggle />
