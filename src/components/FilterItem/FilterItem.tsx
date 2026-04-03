@@ -44,6 +44,7 @@ const FilterItem: React.FunctionComponent<Props> = ({
         type="button"
         className={`facet-${name} btn btn-link p-0 border-0 bg-transparent`}
         aria-label={filterActionLabel}
+        aria-pressed={isActive}
         onClick={() => toggleFilter(id)}
       >
         {activeIcon(id)}

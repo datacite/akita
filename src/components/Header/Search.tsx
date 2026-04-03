@@ -30,12 +30,12 @@ export default function Search() {
   }, [searchParams])
 
   function search(query: string) {
-    const params = new URLSearchParams(searchParams || {});
+    const params = new URLSearchParams(searchParams || {})
 
-    if (searchInput) params.set('query', query);
-    else params.delete('query');
+    if (query) params.set('query', query)
+    else params.delete('query')
 
-    router.push(`${base}?${params.toString()}`);
+    router.push(`${base}?${params.toString()}`)
   }
 
   return (
