@@ -1,17 +1,25 @@
 /**
- * Node-only fetch mock for Cypress (CYPRESS_NODE_ENV=test).
- * Loaded via createRequire from src/instrumentation.ts so webpack does not bundle `fs`.
+ * Node-only fetch mock for Cypress when `CYPRESS_NODE_ENV=test`.
+ *
+ * Wraps `globalThis.fetch` so Next.js server-side requests during e2e runs are
+ * served from `cypress/fixtures/` instead of live staging APIs. Unmatched
+ * requests delegate to the original `fetch`.
+ *
+ * Routing is intentionally string/heuristic-based to mirror how the app builds
+ * query URLs; extend the branches when new specs need additional responses.
  */
 const fs = require('fs')
 const path = require('path')
 
 const fixturesRoot = path.join(process.cwd(), 'cypress', 'fixtures')
 
+/** @param {...string} segments Path segments under cypress/fixtures */
 function readFixtureJson(...segments) {
   const filePath = path.join(fixturesRoot, ...segments)
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
 }
 
+/** @param {unknown} body @param {number} [status] */
 function jsonResponse(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -19,6 +27,7 @@ function jsonResponse(body, status = 200) {
   })
 }
 
+/** @param {string} body */
 function textResponse(body) {
   return new Response(body, {
     status: 200,
@@ -26,6 +35,7 @@ function textResponse(body) {
   })
 }
 
+/** @param {RequestInfo|URL} input */
 function toAbsoluteUrl(input) {
   if (typeof input === 'string') {
     return input.startsWith('http') ? new URL(input) : new URL(input, 'http://localhost:3000')
@@ -34,6 +44,7 @@ function toAbsoluteUrl(input) {
   return new URL(input.url)
 }
 
+/** @param {string} q */
 function decodeQueryParam(q) {
   let out = q
   try {
@@ -45,6 +56,7 @@ function decodeQueryParam(q) {
   return out
 }
 
+/** @param {RequestInfo|URL} input @param {RequestInit} [init] */
 async function readRequestBody(input, init) {
   if (init?.body != null) {
     if (typeof init.body === 'string') return init.body
@@ -54,6 +66,11 @@ async function readRequestBody(input, init) {
   return ''
 }
 
+/**
+ * Returns a stub Response when the request matches a known Cypress fixture route.
+ * @param {RequestInfo|URL} input
+ * @param {RequestInit} [init]
+ */
 async function tryMockResponse(input, init) {
   const url = toAbsoluteUrl(input)
 
@@ -163,6 +180,10 @@ async function tryMockResponse(input, init) {
       if (facets) {
         return jsonResponse(readFixtureJson('jsonapi', 'dois-query-climate-facets.json'))
       }
+      const pageNum = url.searchParams.get('page[number]') || '1'
+      if (pageNum === '2') {
+        return jsonResponse(readFixtureJson('jsonapi', 'dois-query-climate-page2.json'))
+      }
       return jsonResponse(readFixtureJson('jsonapi', 'dois-query-climate-page1.json'))
     }
 
@@ -207,6 +228,11 @@ async function tryMockResponse(input, init) {
   return null
 }
 
+/**
+ * Patches `globalThis.fetch` for the lifetime of the Node process (dev server).
+ * Idempotent enough for instrumentation: repeated calls would stack wrappers, so
+ * only invoke once from `instrumentation.js`.
+ */
 module.exports = function setupCypressFetchMock() {
   if (typeof globalThis.fetch !== 'function') return
 
