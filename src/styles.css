@@ -228,8 +228,16 @@ a.navbar-brand {
   right: 60px;
   top: 10px;
   font-size: 16px;
-  text-decoration: none;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#search-clear-facets:focus-visible {
+  outline: 2px solid #037aad;
+  outline-offset: 2px;
 }
 
 .search-submit-facets {
@@ -688,7 +696,8 @@ body {
   --datacite-color-primary: #243b54;
 }
 
-.button:hover {
+.button:hover,
+.button:focus-visible {
     background-color: #0071b2;
     color: #fff;
 }
