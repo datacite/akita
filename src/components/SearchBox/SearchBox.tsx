@@ -52,19 +52,22 @@ export default function SearchBox({ path, placeholder = 'Type to search...' }: P
         id="filter-works"
         type="submit"
         className="search-submit-facets"
+        aria-label="Search within these works"
         onClick={onSubmit}
       >
         <FontAwesomeIcon icon={faSearch} />
       </Button>
       {searchInput !== '' && (
-        <span
+        <button
           id="search-clear-facets"
-          title="Clear"
-          aria-label="Clear"
+          type="button"
+          title="Clear search input"
+          aria-label="Clear search input"
+          className="p-0 border-0 bg-transparent"
           onClick={onSearchClear}
         >
           <FontAwesomeIcon icon={faTimes} />
-        </span>
+        </button>
       )}
     </InputGroup>
   </>)
