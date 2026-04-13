@@ -1,7 +1,7 @@
 /**
  * Node-only fetch mock for Cypress when `CYPRESS_NODE_ENV=test`.
  *
- * Wraps `globalThis.fetch` so Next.js server-side requests during e2e runs are
+ * Wraps `global.fetch` so Next.js server-side requests during e2e runs are
  * served from `cypress/fixtures/` instead of live staging APIs. Unmatched
  * requests delegate to the original `fetch`.
  *
@@ -229,16 +229,16 @@ async function tryMockResponse(input, init) {
 }
 
 /**
- * Patches `globalThis.fetch` for the lifetime of the Node process (dev server).
+ * Patches `global.fetch` for the lifetime of the Node process (dev server).
  * Idempotent enough for instrumentation: repeated calls would stack wrappers, so
  * only invoke once from `instrumentation.js`.
  */
 module.exports = function setupCypressFetchMock() {
-  if (typeof globalThis.fetch !== 'function') return
+  if (typeof global.fetch !== 'function') return
 
-  const originalFetch = globalThis.fetch.bind(globalThis)
+  const originalFetch = global.fetch.bind(global)
 
-  globalThis.fetch = async (input, init) => {
+  global.fetch = async (input, init) => {
     const mocked = await tryMockResponse(input, init)
     if (mocked) return mocked
     return originalFetch(input, init)
