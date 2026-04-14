@@ -14,7 +14,8 @@
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "cy:coverage": "npx nyc report --reporter=lcov",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --record --quiet"
+    "cy:run": "cypress run",
+    "cy:run:record": "cypress run --record --quiet"
   },
   "nyc": {
     "reporter": [
