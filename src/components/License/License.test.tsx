@@ -31,4 +31,38 @@ describe('License Component', () => {
     cy.get('a[aria-label="View license details: Traditional Knowledge Notice"]')
       .should('exist')
   })
+
+  it('renders navigable links for other rights badges', () => {
+    mount(
+      <License
+        rights={[
+          {
+            rights: 'MIT License',
+            rightsUri: 'https://opensource.org/license/mit',
+            rightsIdentifier: 'mit-license'
+          }
+        ]}
+      />
+    )
+
+    cy.get('a[aria-label="View license details: MIT LICENSE"]')
+      .should('have.attr', 'href', 'https://opensource.org/license/mit')
+  })
+
+  it('does not crash on malformed percent-encoded other rights identifiers', () => {
+    mount(
+      <License
+        rights={[
+          {
+            rights: 'Bad License',
+            rightsUri: 'https://example.com/license',
+            rightsIdentifier: 'bad%zz-license'
+          }
+        ]}
+      />
+    )
+
+    cy.get('a[aria-label="View license details: BAD%ZZ%20LICENSE"]')
+      .should('have.attr', 'href', 'https://example.com/license')
+  })
 })

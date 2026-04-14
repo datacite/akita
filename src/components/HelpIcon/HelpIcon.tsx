@@ -28,7 +28,9 @@ const HelpIcon: React.FunctionComponent<Props> = ({
 	if (text === null && link === null) return <></>;
 
 	const positionStyle: CSSProperties = position == 'top-right' ? { position: 'absolute', top: 0, right: padding } : {}
-	const accessibleLinkLabel = linkLabel ?? (text ? `Open help: ${text}` : 'Open help documentation')
+	const accessibleLinkLabel = linkLabel?.trim().length
+		? linkLabel.trim()
+		: (text ? `Open help: ${text}` : 'Open help documentation')
 
 	function Icon() {
 		if (link !== null) return (
