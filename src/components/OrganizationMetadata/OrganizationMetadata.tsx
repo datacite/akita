@@ -93,7 +93,7 @@ export default function OrganizationMetadata({
           <h5 className="m-0 fw-bold">Other Identifiers</h5>
         </Col></Row>
         {grid.length > 0 && (
-          <Row className="identifier id-type-grid"><Col>
+          <Row className="identifier id-type-grid" data-testid="grid-identifier"><Col>
             GRID{' '}{grid[0].identifier}
           </Col></Row>
         )}
