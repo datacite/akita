@@ -35,7 +35,8 @@ export default function Search() {
     if (query) params.set('query', query)
     else params.delete('query')
 
-    router.push(`${base}?${params.toString()}`)
+    const queryString = params.toString()
+    router.push(queryString ? `${base}?${queryString}` : base)
   }
 
   return (
