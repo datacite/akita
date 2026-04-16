@@ -92,7 +92,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
   }, [] as { icon: any, rightsUri: string, altText: string, rightsIdentifier: string }[])
 
   const otherRights = uniqueRights.reduce((sum, r) => {
-    const ri = { rightsIdentifier: '' }
+    const ri = { rightsIdentifier: '', rightsUri: '' }
     if (r.rightsIdentifier && !isCreativeCommons(r) && !isLocalContexts(r)) {
       if (r.rightsIdentifier.startsWith('apache')) {
         ri.rightsIdentifier = 'Apache%202.0'
@@ -101,22 +101,41 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
           .replace(/-/g, '%20')
           .toUpperCase()
       }
+      ri.rightsUri = r.rightsUri
       sum.push(ri)
     }
     return sum
-  }, [] as { rightsIdentifier: string }[])
+  }, [] as { rightsIdentifier: string, rightsUri: string }[])
+
+  const formatOtherRightsLabel = (rightsIdentifier: string) => {
+    let decodedIdentifier = rightsIdentifier
+
+    try {
+      decodedIdentifier = decodeURIComponent(rightsIdentifier)
+    } catch {
+      decodedIdentifier = rightsIdentifier
+    }
+
+    return decodedIdentifier.replace(/\s+/g, ' ').trim()
+  }
 
   if (!ccRights[0] && !otherRights[0] && !localContextRights[0]) return null
 
   return (
     <div className={'license ' + styles.licenses}>
       {ccRights.map((r, index) => (
-        <a href={r.rightsUri} key={index} target="_blank" rel="noreferrer">
+        <a
+          href={r.rightsUri}
+          key={index}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`View license details: ${r.altText}`}
+        >
         <FontAwesomeIcon
-          key={r.rightsIdentifier}
           icon={r.icon}
           className={styles.icons}
           title={r.altText}
+          aria-hidden="true"
         />
         </a>
       ))}
@@ -126,6 +145,7 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
           key={r.rightsIdentifier}
           target="_blank"
           rel="noreferrer"
+          aria-label={`View license details: ${r.altText}`}
         >
           <Image
             src={r.icon}
@@ -137,9 +157,11 @@ export const License: React.FunctionComponent<Props> = ({ rights = [] }) => {
       ))}
       {otherRights.map((r) => (
         <a
+          href={r.rightsUri}
           key={r.rightsIdentifier}
           target="_blank"
           rel="noreferrer"
+          aria-label={`View license details: ${formatOtherRightsLabel(r.rightsIdentifier)}`}
         >
           <img
             src={`https://img.shields.io/badge/license-${r.rightsIdentifier}-blue.svg`}
