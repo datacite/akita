@@ -14,6 +14,9 @@ type Props = {
 function RepositoryMetadata({ repo }: Props) {
 
   const detailUrl = () => {
+    if (repo.clientId)
+      return `/repositories/${repo.clientId}`
+
     return `/repositories/${repo.id}`
   }
 
