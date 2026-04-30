@@ -694,6 +694,11 @@ body {
 
 :root {
   --datacite-color-primary: #243b54;
+  --datacite-color-secondary: #1abc9c;
+  --datacite-color-secondary: red;
+  --datacite-color-secondary: #243b54;
+  --datacite-color-secondary: #037AAD;
+  --datacite-link-primary: #0071b2;
 }
 
 .button:hover,
@@ -702,4 +707,29 @@ body {
     color: #fff;
 }
 
+a {
+  color: var(--datacite-link-primary, black);
+}
+h3.member-results {
+  color: var(--datacite-color-secondary, #1abc9c);
+}
 
+.facets h4 {
+  color: var(--datacite-color-secondary, #1abc9c);
+}
+
+#fair-filter {
+  .facet-title {
+    color: var(--datacite-color-primary, red);
+  }
+}
+.nav-tabs-member>li>button:focus, .nav-tabs-member button.active {
+    color: var(--datacite-color-secondary, red) !important;
+}
+.nav-tabs-member button {
+    color: var(--datacite-color-primary, red) !important;
+  }
+
+span.metrics-counter {
+  color: unset;
+}
