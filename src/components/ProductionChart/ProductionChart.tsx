@@ -44,7 +44,7 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
   }
 
   if (typeof color == 'undefined') {
-    color = '#1abc9c'
+    color = 'var(--datacite-color-primary, #1abc9c)'
   }
 
   /* istanbul ignore next */
