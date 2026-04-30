@@ -53,7 +53,7 @@ export const JWT_KEY = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY?.replace(/\\n/g, '
 
 // Colors
 export const ACCENT_COLOR = '#00B1E2'
-export const ACCENT_GREEN = '#1ABC9C'
+export const ACCENT_GREEN = 'var(--datacite-color-primary, #1ABC9C)'
 export const WARNING = '#E67E22'
 
 
