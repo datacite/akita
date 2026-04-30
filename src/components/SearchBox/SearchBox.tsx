@@ -47,12 +47,14 @@ export default function SearchBox({ path, placeholder = 'Type to search...' }: P
         placeholder={placeholder}
         className="form-control"
         type="text"
+        title="Search within results"
+        aria-label="Search within input field"
       />
       <Button
         id="filter-works"
         type="submit"
         className="search-submit-facets"
-        aria-label="Search within these works"
+        aria-label="Search within submit button"
         onClick={onSubmit}
       >
         <FontAwesomeIcon icon={faSearch} />
