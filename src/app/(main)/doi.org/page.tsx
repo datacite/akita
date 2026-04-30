@@ -27,5 +27,10 @@ export default function SearchDoiPage() {
 
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  return <SearchWork variables={{ ...variables, query: queryStatement }} />
+  return (<>
+    <h1 className="visually-hidden">Doi Search</h1>
+    <SearchWork variables={{ ...variables, query: queryStatement }} />
+  </>
+         );
+
 }
