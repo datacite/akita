@@ -35,6 +35,7 @@ export default function SearchWork(props: Props) {
 
   return (<>
     <Row>
+      <h2 className="visually-hidden">Works Results</h2>
       <Col md={3} className="d-none d-md-block">
       </Col>
       <Col md={9}>
