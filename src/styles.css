@@ -694,9 +694,6 @@ body {
 
 :root {
   --datacite-color-primary: #243b54;
-  --datacite-color-secondary: #1abc9c;
-  --datacite-color-secondary: red;
-  --datacite-color-secondary: #243b54;
   --datacite-color-secondary: #037AAD;
   --datacite-link-primary: #0071b2;
 }
@@ -710,6 +707,8 @@ body {
 a {
   color: var(--datacite-link-primary, black);
 }
+
+h2.member-results,
 h3.member-results {
   color: var(--datacite-color-secondary, #1abc9c);
 }
