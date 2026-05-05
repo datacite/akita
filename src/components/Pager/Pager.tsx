@@ -25,12 +25,16 @@ export default function Pager({ url, hasNextPage, endCursor }: Props) {
 
   return (
     <Pagination className="justify-content-between">
-      <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
-        First Page
-      </DataCiteButton>
-      <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
-        Next Page
-      </DataCiteButton>
+      <Pagination.Item>
+        <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
+          First Page
+        </DataCiteButton>
+      </Pagination.Item>
+      <Pagination.Item>
+        <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
+          Next Page
+        </DataCiteButton>
+      </Pagination.Item>
     </Pagination>
   )
 }
