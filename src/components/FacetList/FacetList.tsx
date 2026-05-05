@@ -34,7 +34,7 @@ export default function FacetList(props: FacetListProps) {
         {title}
         {props.tooltipText && <InfoTooltip text={props.tooltipText} /> }
       </Accordion.Header>
-      <Accordion.Body>
+      <Accordion.Body as="ol">
         {data.map((facet, i) => (
           <FacetListItem
             key={'facet-item-' +id + '-' + i}
