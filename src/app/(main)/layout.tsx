@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         <Providers authToken={getAuthToken()} >
           <Header />
           <DiscoverWorksAlert />
-          <div className="container-fluid flex-grow-1">{children}</div>
+          <main role="main" className="container-fluid flex-grow-1">{children}</main>
           <Consent />
           <Footer />
         </Providers>
