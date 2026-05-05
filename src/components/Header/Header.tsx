@@ -20,7 +20,7 @@ import styles from './Header.module.scss'
 export default function Header() {
   return (
     <Container fluid>
-      <Navbar expand="lg" className={`${styles.navbar} justify-content-between`}>
+      <Navbar role="navigation" expand="lg" className={`${styles.navbar} justify-content-between`}>
         <Brand>
           <Link href="/" aria-label="DataCite Commons home">
             <img src="/images/commons-logo.svg" height="50" className="commons-logo" alt="DataCite Commons" />
