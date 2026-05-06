@@ -10,7 +10,7 @@ import { Claim as ClaimType } from 'src/data/types'
 import Error from 'src/components/Error/Error'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
 import { useGetClaimQuery, GET_CLAIM_GQL, CREATE_CLAIM_GQL, DELETE_CLAIM_GQL, QueryData, QueryVar } from 'src/data/queries/claimQuery';
-import { ACCENT_GREEN, PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, WARNING } from 'src/data/constants';
+import { ACCENT_COLOR, PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, WARNING } from 'src/data/constants';
 import DataCiteButton from '../DataCiteButton/DataCiteButton';
 
 type Props = {
@@ -126,7 +126,7 @@ export default function Claim({ doi_id }: Props) {
   if (loading) {
     return <DataCiteButton
       icon={faOrcid}
-      color={ACCENT_GREEN}
+      color={ACCENT_COLOR}
       className='w-100'
       disabled
       outline
@@ -159,7 +159,7 @@ export default function Claim({ doi_id }: Props) {
           <DataCiteButton
             onClick={onCreate}
             icon={faOrcid}
-            color={ACCENT_GREEN}
+            color={ACCENT_COLOR}
             className='w-100'
             disabled={!user}
             outline

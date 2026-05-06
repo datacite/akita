@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { Claim } from 'src/data/types'
 import DataCiteButton from 'src/components/DataCiteButton/DataCiteButton'
-import { ACCENT_GREEN } from 'src/data/constants'
+import { ACCENT_COLOR } from 'src/data/constants'
 
 type Props = {
   claim: Claim,
@@ -18,10 +18,10 @@ const ClaimStatus: React.FunctionComponent<Props> = ({ claim, type }) => {
   const stateColors = {
     done: 'success',
     failed: 'danger',
-    working: ACCENT_GREEN,
-    waiting: ACCENT_GREEN,
+    working: ACCENT_COLOR,
+    waiting: ACCENT_COLOR,
     ready: 'default',
-    deleted: ACCENT_GREEN
+    deleted: ACCENT_COLOR
   }
   const stateText = {
     ready: 'Unclaimed',
