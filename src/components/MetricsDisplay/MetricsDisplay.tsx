@@ -48,7 +48,6 @@ export function MetricsDisplay({ counts, links = {} }: Props) {
 
   const metricList = metricsData.filter(metric => metric.count && metric.count > 0).map((metric, index) =>
     <React.Fragment key={"metric-" + index}>
-      <dd>{compactNumbers(metric.count || 0)}</dd>
       <dt>
         {metric.label}{' '}
         <HelpIcon
@@ -58,6 +57,7 @@ export function MetricsDisplay({ counts, links = {} }: Props) {
           position='inline'
         />
       </dt>
+      <dd>{compactNumbers(metric.count || 0)}</dd>
     </React.Fragment>
   )
   return (
