@@ -54,7 +54,7 @@ export default function OrganizationMetadata({
         {(metadata.url || metadata.wikipediaUrl || metadata.twitter) && (
           <>
             <Row><Col>
-              <h5 className="m-0 fw-bold">Links</h5>
+              <h4 className="m-0 fw-bold">Links</h4>
             </Col></Row>
             {metadata.url && (
               <Row><Col>
@@ -90,7 +90,7 @@ export default function OrganizationMetadata({
       </Col>
       <Col xs={6} md={6}>
         <Row><Col>
-          <h5 className="m-0 fw-bold">Other Identifiers</h5>
+          <h4 className="m-0 fw-bold">Other Identifiers</h4>
         </Col></Row>
         {grid.length > 0 && (
           <Row className="identifier id-type-grid" data-testid="grid-identifier"><Col>
@@ -197,7 +197,7 @@ function Geolocation({ geolocation }: { geolocation: Organization['geolocation']
 
   return (
     <Row className="mt-3"><Col className="location">
-      <Row><Col><h5 className="m-0 fw-bold">Geolocation</h5></Col></Row>
+      <Row><Col><h4 className="m-0 fw-bold">Geolocation</h4></Col></Row>
       <Row><Col>
         <a
           href={`https://geohack.toolforge.org/geohack.php?params=${geolocation.pointLatitude};${geolocation.pointLongitude}_&language=en`}
