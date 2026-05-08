@@ -1,6 +1,6 @@
 
 .link {
-	color: #88939a;
+	color: var(--datacite-color-primary, #88939a) !important;
 }
 
 .subtitle {
