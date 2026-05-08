@@ -16,5 +16,9 @@ export default async function SearchPersonPage(props: Props) {
     return <PeopleExampleText />
 
 
-  return <SearchPerson variables={searchParams} />
+  return <>
+  <h1 className="visually-hidden">People Search</h1>
+  <h2 className="visually-hidden">People Results</h2>
+  <SearchPerson variables={searchParams} />
+  </>
 }
