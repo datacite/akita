@@ -63,9 +63,9 @@ export default function WorksListing({
   const renderFacets = () => {
     return (
       <>
-        <h2 className="visually-hidden">Works Sidebar</h2>
+        <h2 className="visually-hidden">Works Search Sidebar</h2>
         {searchBox}
-        <h3 className="visually-hidden">Works Facets</h3>
+        <h3 className="visually-hidden">Works Search Facets</h3>
         <WorkFacets
           model={model}
           url={url}
@@ -125,7 +125,7 @@ export default function WorksListing({
         {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
       </Col>
       <Col md={9}>
-        <h2 className="visually-hidden">Works Listing</h2>
+        <h2 className="visually-hidden">Works Search Listing</h2>
         {children}
         {loading ? <Loading /> : renderWorks()}
       </Col>
