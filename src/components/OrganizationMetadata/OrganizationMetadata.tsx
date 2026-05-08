@@ -168,7 +168,7 @@ export default function OrganizationMetadata({
 function Footer({ id }: { id: string }) {
   return (
     <Row className="panel-footer"><Col>
-      <a id="ror-link" target="_blank" rel="noreferrer" href={id} aria-label="View ROR in new tab">
+      <a id="ror-link" target="_blank" rel="noreferrer" href={id} aria-label={'View ROR recor ${id} in new tab'}>
         <FontAwesomeIcon icon={faExternalLinkAlt} size="sm" /> {id}
       </a>
     </Col></Row>
