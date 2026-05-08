@@ -8,17 +8,19 @@ interface Props {
   searchParams: Promise<QueryVar>
 }
 
+function searchOrExampleText(searchParams: QueryVar) {
+  if (!searchParams.query || searchParams.query === '')
+    return <PeopleExampleText />
+
+  return <SearchPerson variables={searchParams} />
+}
+
 export default async function SearchPersonPage(props: Props) {
   const searchParams = await props.searchParams;
 
   // Show example text if there is no query
-  if (!searchParams.query || searchParams.query === '')
-    return <PeopleExampleText />
-
-
   return <>
-  <h1 className="visually-hidden">People Search</h1>
-  <h2 className="visually-hidden">People Results</h2>
-  <SearchPerson variables={searchParams} />
+    <h1 className="visually-hidden">People Search</h1>
+    {searchOrExampleText(searchParams)}
   </>
 }

@@ -32,6 +32,7 @@ export default function SearchPerson(props: Props) {
 
 
   return (<>
+    <h2 className="visually-hidden">People Results</h2>
     <Row><Col md={{ span: 9, offset: 3 }}>
       {people.nodes.length > 0 && (
         <h3 className="member-results">

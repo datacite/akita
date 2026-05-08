@@ -51,7 +51,7 @@ export default function Search() {
         key="searchInput"
         className={`form-control ${styles.input}`}
         type="text"
-        title="Primary Search"
+        title="Primary search"
         aria-label="Primary search input field"
       />
       {searchInput !== '' && (

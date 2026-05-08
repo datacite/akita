@@ -18,10 +18,12 @@ export default function Pager({ url, hasNextPage, endCursor }: Props) {
 
   const hasFirstPage = params.get('cursor')
   params.delete('cursor')
-  const firstPageUrl = url + params.toString()
+  const paramsString = params.toString()
+  const firstPageUrl = paramsString ? `${url}?${paramsString}` : url
 
   params.set('cursor', endCursor)
-  const nextPageUrl = url + params.toString()
+  const paramsString2 = params.toString()
+  const nextPageUrl = paramsString2 ? `${url}?${paramsString2}` : url
 
   return (
     <Pagination className="justify-content-between">
