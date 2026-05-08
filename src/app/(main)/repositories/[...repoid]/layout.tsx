@@ -26,6 +26,7 @@ export default async function Layout(props: Props) {
   return (
     <Container fluid>
       <Suspense fallback={<Loading />}>
+        <h1 className="visually-hidden">Repository Page</h1>
         <Content variables={{ id: repoid }} />
       </Suspense>
       
