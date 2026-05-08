@@ -16,14 +16,18 @@ export default function Pager({ url, hasNextPage, endCursor }: Props) {
   const searchParams = useSearchParams() || {} as ReadonlyURLSearchParams
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
+  const buildUrl = (baseUrl: string, query: URLSearchParams) => {
+    const qs = query.toString()
+    if (!qs) return baseUrl
+    const sep = baseUrl.includes('?') ? (baseUrl.endsWith('?') || baseUrl.endsWith('&') ? '' : '&') : '?'
+    return `${baseUrl}${sep}${qs}`
+  }
   const hasFirstPage = params.get('cursor')
   params.delete('cursor')
-  const paramsString = params.toString()
-  const firstPageUrl = paramsString ? `${url}?${paramsString}` : url
+  const firstPageUrl = buildUrl(url, params)
 
   params.set('cursor', endCursor)
-  const paramsString2 = params.toString()
-  const nextPageUrl = paramsString2 ? `${url}?${paramsString2}` : url
+  const nextPageUrl = buildUrl(url, params)
 
   return (
     <Pagination className="justify-content-between">
