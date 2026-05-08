@@ -40,6 +40,12 @@ export async function GET(request: NextRequest) {
       }
     })
   } catch (error) {
-    return new Response(JSON.stringify({ error }), { status: 400 })
+    return new Response(
+      JSON.stringify({ error: 'Error building related works report' }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' },
+        }
+    );
   }
 }
