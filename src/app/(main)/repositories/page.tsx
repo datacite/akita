@@ -17,5 +17,8 @@ export default async function SearchRepositoryPage(props: Props) {
     return <RepositoriesExampleText />
 
 
-  return <SearchRepository variables={searchParams} />
+  return <>
+  <h1 className="visually-hidden">Repositories Search</h1>
+  <SearchRepository variables={searchParams} />
+  </>
 }
