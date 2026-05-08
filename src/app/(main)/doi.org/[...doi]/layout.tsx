@@ -38,8 +38,8 @@ export default async function Layout(props: Props) {
 
   return (
     <>
-    <h1 className="visually-hidden">Works Page</h1>
-      <h2 className="visually-hidden">Primary Work Details</h1>
+      <h1 className="visually-hidden">Works Page</h1>
+      <h2 className="visually-hidden">Primary Work Details</h2>
       <Suspense fallback={<Loading />}>
         <Content doi={doi} />
       </Suspense>
