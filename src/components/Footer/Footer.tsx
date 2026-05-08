@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { HTMLAttributes, PropsWithChildren } from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -17,27 +17,36 @@ import Links from 'src/components/Footer/Links'
 import LINKS from 'src/data/footer_links'
 
 
+function FooterTitle({
+  children,
+  className,
+  ...props
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
+  const titleClassName = className ? `footer-title ${className}` : 'footer-title'
+  return <h3 {...props} className={titleClassName}>{children}</h3>
+}
+
 export default function Footer() {
   return (
     <footer className="footer d-none d-sm-block">
       <Container>
         <Row>
           <Col sm={3} md={3} className="footer-column">
-            <h4 data-cy="about">About Us</h4>
+            <FooterTitle data-cy="about">About Us</FooterTitle>
             <Links links={LINKS.about_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
-            <h4>Work With Us</h4>
+            <FooterTitle>Work With Us</FooterTitle>
             <Links links={LINKS.services_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
-            <h4>Membership</h4>
+            <FooterTitle>Membership</FooterTitle>
             <Links links={LINKS.community_links} />
-            <h4>Resources</h4>
+            <FooterTitle>Resources</FooterTitle>
             <Links links={LINKS.resources_links} />
           </Col>
           <Col sm={3} md={3} className="footer-column">
-            <h4 className="share">Contact Us</h4>
+            <FooterTitle className="share">Contact Us</FooterTitle>
             <a
               href="mailto:support@datacite.org"
               className="share"
@@ -89,7 +98,7 @@ export default function Footer() {
             </a>
             <Links links={LINKS.contact_links} />
             <StatusPage />
-            <h4>Funding</h4>
+            <FooterTitle>Funding</FooterTitle>
             <ul>
               <li className="funding">
                 The work on DataCite Commons is supported by funding from the

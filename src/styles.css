@@ -732,3 +732,10 @@ h3.member-results {
 span.metrics-counter {
   color: unset;
 }
+.footer-title {
+    font-size: 24px;
+    margin-bottom: .1em;
+    margin-top: .5em;
+    font-weight: 700;
+    line-height: 1.2em;
+  }
