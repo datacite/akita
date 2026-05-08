@@ -89,6 +89,7 @@ export default function SearchOrganizations(props: Props) {
 
   return (<>
     <Row>
+      <h2 className="visually-hidden">Organization Results</h2>
       <Col md={{ span: 9, offset: 3 }}>
         {organizations.totalCount > 0 && (
           <h3 className="member-results">{pluralize(organizations.totalCount || 0, 'Organization')}</h3>
@@ -97,9 +98,12 @@ export default function SearchOrganizations(props: Props) {
     </Row>
     <Row>
       <Col md={3} className='px-4'>
+        <h2 className="visually-hidden">Organization Sidebar</h2>
+        <h3 className="visually-hidden">Organization Facets</h3>
         {renderFacets()}
       </Col>
       <Col md={9}>
+        <h2 className="visually-hidden">Organization Listings</h2>
         {renderResults()}
       </Col>
     </Row>
