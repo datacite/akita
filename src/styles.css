@@ -260,10 +260,6 @@ a.navbar-brand {
   color: #34495e !important;
 }
 
-@media(max-width:1200px) {
-  .input-group input[name="query-facets"] {}
-}
-
 #basic-nav-dropdown {
   padding-top: 6px;
   height: 40px;
@@ -410,12 +406,6 @@ ul.ror-identifiers {
 .no-content {
   margin-left: 10px;
   margin-right: 10px;
-}
-
-#search-nav {
-  /* margin-left: -6px; */
-  /* margin-top: -15px; */
-  /* padding-left: 0; */
 }
 
 .nav-link.active {
