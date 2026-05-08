@@ -89,7 +89,7 @@ export default function SearchOrganizations(props: Props) {
 
   return (<>
     <Row>
-      <h2 className="visually-hidden">Organization Results</h2>
+      <h2 className="visually-hidden">Organization Results Summary</h2>
       <Col md={{ span: 9, offset: 3 }}>
         {organizations.totalCount > 0 && (
           <h3 className="member-results">{pluralize(organizations.totalCount || 0, 'Organization')}</h3>
