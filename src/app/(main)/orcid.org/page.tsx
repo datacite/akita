@@ -9,7 +9,7 @@ interface Props {
 }
 
 function searchOrExampleText(searchParams: QueryVar) {
-  if (!searchParams.query || searchParams.query === '')
+  if (!searchParams.query || searchParams.query.trim() === '')
     return <PeopleExampleText />
 
   return <SearchPerson variables={searchParams} />
