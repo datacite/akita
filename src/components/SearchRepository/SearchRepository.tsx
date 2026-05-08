@@ -96,13 +96,6 @@ export default function SearchRepositories({ variables }: Props) {
 
 
     return (<>
-      <Row><Col>
-        {(repositories.nodes.length || 0) > 0 && (
-          <h3 className="member-results">
-            {pluralize(repositories.totalCount || 0, 'Repository', false, 'Repositories')}
-          </h3>
-        )}
-      </Col></Row>
       {repositories.nodes.map((repo) => (
         <RepositoryMetadata repo={repo} key={repo.id} />
       ))}
@@ -121,8 +114,23 @@ export default function SearchRepositories({ variables }: Props) {
 
   return (<Container fluid>
     <Row>
-      <Col md={3} className='pe-4'>{renderFacets()}</Col>
-      <Col md={9}>{renderResults()}</Col>
+      <h2 className="visually-hidden">Repositories Results Summary</h2>
+      <Col md={{ span: 9, offset: 3 }}>
+        {repositories.totalCount > 0 && (
+          <h3 className="member-results">{pluralize(repositories.totalCount || 0, 'Repository', false, 'Repositories')}</h3>
+        )}
+      </Col>
+    </Row>
+    <Row>
+      <Col md={3} className='pe-4'>
+        <h2 className="visually-hidden">Repositories Sidebar</h2>
+        <h3 className="visually-hidden">Repositories Facets</h3>
+        {renderFacets()}
+      </Col>
+      <Col md={9}>
+        <h2 className="visually-hidden">Repositories Listings</h2>
+        {renderResults()}
+      </Col>
     </Row>
   </Container>)
 }
