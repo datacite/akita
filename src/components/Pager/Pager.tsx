@@ -18,23 +18,23 @@ export default function Pager({ url, hasNextPage, endCursor }: Props) {
 
   const hasFirstPage = params.get('cursor')
   params.delete('cursor')
-  const firstPageUrl = hasFirstPage ? url + params.toString() : undefined
+  const firstPageUrl = url + params.toString()
 
   params.set('cursor', endCursor)
-  const nextPageUrl = hasNextPage && endCursor ? url + params.toString() : undefined
+  const nextPageUrl = url + params.toString()
 
   return (
     <Pagination className="justify-content-between">
-      <Pagination.Item>
-        <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
-          First Page
-        </DataCiteButton>
-      </Pagination.Item>
-      <Pagination.Item>
-        <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
-          Next Page
-        </DataCiteButton>
-      </Pagination.Item>
+        <li>
+          <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
+            First Page
+          </DataCiteButton>
+        </li>
+        <li>
+          <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
+            Next Page
+          </DataCiteButton>
+        </li>
     </Pagination>
   )
 }
