@@ -9,6 +9,7 @@ import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import { Repository } from 'src/data/types';
 import { useRepositoryRelatedContentQuery } from 'src/data/queries/repositoryRelatedContentQuery'
 import { SummaryStatsLoader } from '../SummarySearchMetrics/SummarySearchMetrics'
+import styles from './RepositoryDetail.module.scss'
 
 type Props = {
   repo: Repository
@@ -62,14 +63,14 @@ export function RepositoryDetail({ repo }: Props) {
       },
     ]
 
-    return <Col xs={12} as="dl">
-      {metadata.map((field, fieldIndex) => <Row key={fieldIndex}>
-        <Col xs={3} as="dt">{field.label}</Col>
-        <Col>{field.values.length == 0 ? <Row as="dd">none</Row> :
+    return <Col xs={12} as="dl" className={styles.metadata}>
+      {metadata.map((field, fieldIndex) => <React.Fragment key={fieldIndex}>
+        <dt>{field.label}</dt>
+        {field.values.length == 0 ? <dd>none</dd> :
           field.values.map((value, index) => (
-            <Row as="dd" key={"metadata-" + field.label + index}>{value}</Row>
-          ))}</Col>
-      </Row>)}
+            <dd key={"metadata-" + field.label + index}>{value}</dd>
+          ))}
+      </React.Fragment>)}
     </Col>
   }
 

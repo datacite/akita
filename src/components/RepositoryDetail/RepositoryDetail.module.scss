@@ -1,0 +1,12 @@
+.metadata {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: 2rem;
+    margin: 0;
+    dt {
+        grid-column: 1;
+    }
+    dd {
+        grid-column: 2;
+    }
+}
