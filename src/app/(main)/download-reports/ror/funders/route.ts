@@ -8,19 +8,18 @@ function getFundersArray(works: any): any[] {
 }
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const variables = Object.fromEntries(searchParams)
-
-  const response = await fetchDoisFacets(variables, ['funders'])
-  const works = response.data.works
-  const funders = getFundersArray(works)
-
-  const csv = stringify(funders, {
-    header: true,
-    columns: [{ key: 'id', header: 'Funder ID' }, { key: 'title', header: 'Title' }, { key: 'count', header: 'Work Count' }]
-  })
-
   try {
+    const searchParams = request.nextUrl.searchParams
+    const variables = Object.fromEntries(searchParams)
+
+    const response = await fetchDoisFacets(variables, ['funders'])
+    const works = response.data.works
+    const funders = getFundersArray(works)
+
+    const csv = stringify(funders, {
+      header: true,
+      columns: [{ key: 'id', header: 'Funder ID' }, { key: 'title', header: 'Title' }, { key: 'count', header: 'Work Count' }]
+    })
     return new Response(csv, {
       status: 200,
       headers: {
