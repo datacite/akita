@@ -11,7 +11,13 @@ function decodeJwtPayload(token: string): any {
     // base64url -> base64
     const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
       .padEnd(payload.length + (4 - payload.length % 4) % 4, '=')
-    return JSON.parse(atob(base64))
+    const binaryString = atob(base64)
+    const bytes = new Uint8Array(binaryString.length)
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i)
+    }
+    const decoded = new TextDecoder('utf-8').decode(bytes)
+    return JSON.parse(decoded)
   } catch {
     return null
   }
