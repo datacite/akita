@@ -48,7 +48,6 @@ export const LOCALHOST_URL = localhost
 // Tracking, logging, and auth
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 export const SENTRY_DSN = process.env.SENTRY_DSN
-export const JWT_KEY = process.env.NEXT_PUBLIC_JWT_PUBLIC_KEY?.replace(/\\n/g, '\n')
 
 
 // Colors
