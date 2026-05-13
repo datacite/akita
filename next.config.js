@@ -51,8 +51,6 @@ module.exports = withSourceMaps({
   },
   staticPageGenerationTimeout: 220,
   webpack: (config, options) => {
-    // import yaml files
-    config.module.rules.push({ test: /\.ya?ml$/, use: 'js-yaml-loader' })
 
     // workaround for package not defined as module
     config.module.rules.push({
