@@ -61,7 +61,6 @@ The application uses several environment variables for configuration. You can se
 | `NEXT_PUBLIC_ID_BASE` | Base URL for DOI resolution | `https://handle.stage.datacite.org/` |
 | `NEXT_PUBLIC_GA_TRACKING_ID` | Google Analytics Tracking ID | - |
 | `SENTRY_DSN` | Sentry DSN for error tracking | - |
-| `NEXT_PUBLIC_JWT_PUBLIC_KEY` | Public key for verifying JWTs | - |
 | `NEXT_PUBLIC_FEATURE_FLAGS` | Comma-separated list of feature flags | - |
 
 ## Running / Client
