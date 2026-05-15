@@ -12,7 +12,7 @@ describe('Person Metadata Component', () => {
   })
 
   it('orcid', () => {
-    mount(<PersonMetadata metadata={data} />)
+    mount(<PersonMetadata metadata={data} url={'orcid.org/?'} />)
     cy.get('a#orcid-link')
       .contains('orcid.org/0000-0001-6528-2027')
       .should('be.visible')
@@ -32,7 +32,7 @@ describe('Person Metadata Component', () => {
   // })
 
   it('name', () => {
-    mount(<PersonMetadata metadata={data} />)
+    mount(<PersonMetadata metadata={data} url={'orcid.org/?'} />)
     cy.get('h3.work').contains('Juan Perez').should('be.visible')
   })
 
