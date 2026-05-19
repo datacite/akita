@@ -297,7 +297,7 @@ export default function WorkMetadata({
           {metadata.identifiers && metadata.identifiers.length > 0 && (
             <Row>
               <Col xs={6} md={6} className="other-identifiers">
-                <h5>Other Identifiers</h5>
+                <h4 className={styles.idTitle}>Other Identifiers</h4>
                 {metadata.identifiers.map((id) => (
                   <div key={id.identifier} className="work-identifiers">
                     {id.identifierType}:{' '}

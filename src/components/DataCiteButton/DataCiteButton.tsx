@@ -15,7 +15,7 @@ interface Props extends ButtonProps {
 }
 
 const COLORS = {
-  primary: '#037AAD',
+  primary: 'var(--datacite-link-primary, #037AAD)',
   secondary: 'var(--datacite-color-primary, #243b54)',
 }
 

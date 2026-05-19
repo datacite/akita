@@ -1,11 +1,8 @@
 .chartText {
   max-width: 300px;
-
   font-size: 21px;
   font-weight: 700;
-
-  color: #34495E;
-
+  color: var(--datacite-color-primary, #34495E);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -14,7 +11,6 @@
 
 .chartDetail {
   max-width: 300px;
-  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,6 +18,5 @@
 
 .chartDetailText {
   font-size: 28px !important;
-
-  color: #1ABC9C;
+  color: var(--datacite-color-secondary, #1ABC9C);
 }

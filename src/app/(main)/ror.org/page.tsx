@@ -23,5 +23,8 @@ export default async function SearchOrganizationPage(props: Props) {
 
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  return <SearchOrganization variables={{ query: queryStatement, ...variables }} />
+  return <>
+  <h1 className="visually-hidden">Organizations Search</h1>
+  <SearchOrganization variables={{ query: queryStatement, ...variables }} />
+  </>
 }

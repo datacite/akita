@@ -2,6 +2,15 @@
 	color: var(--datacite-color-primary, #88939a) !important;
 }
 
+a.id {
+	color: var(--datacite-color-secondary, #3498db) !important;
+}
+
 .id {
-	color: #3498db !important;
+	color: var(--datacite-color-secondary, #3498db) !important;
+}
+
+.idTitle {
+	font-size: 1.2rem;
+	color: var(--datacite-color-primary, #243b54) !important;
 }

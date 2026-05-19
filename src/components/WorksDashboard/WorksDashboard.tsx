@@ -46,6 +46,7 @@ function WorksDashboard({ works, show = {}, children }: Props) {
         </Row>
       }
       <Row>
+        <h3 className="visually-hidden">Works Dashboard</h3>
         {(show.publicationYear || show.all) && <Col xs={12} sm={4}>
           <ProductionChart
             title='Publication Year'

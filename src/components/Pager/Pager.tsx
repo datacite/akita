@@ -16,21 +16,31 @@ export default function Pager({ url, hasNextPage, endCursor }: Props) {
   const searchParams = useSearchParams() || {} as ReadonlyURLSearchParams
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
+  const buildUrl = (baseUrl: string, query: URLSearchParams) => {
+    const qs = query.toString()
+    if (!qs) return baseUrl
+    const sep = baseUrl.includes('?') ? (baseUrl.endsWith('?') || baseUrl.endsWith('&') ? '' : '&') : '?'
+    return `${baseUrl}${sep}${qs}`
+  }
   const hasFirstPage = params.get('cursor')
   params.delete('cursor')
-  const firstPageUrl = hasFirstPage ? url + params.toString() : undefined
+  const firstPageUrl = buildUrl(url, params)
 
   params.set('cursor', endCursor)
-  const nextPageUrl = hasNextPage && endCursor ? url + params.toString() : undefined
+  const nextPageUrl = buildUrl(url, params)
 
   return (
     <Pagination className="justify-content-between">
-      <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
-        First Page
-      </DataCiteButton>
-      <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
-        Next Page
-      </DataCiteButton>
+        <li>
+          <DataCiteButton disabled={!hasFirstPage} href={firstPageUrl}>
+            First Page
+          </DataCiteButton>
+        </li>
+        <li>
+          <DataCiteButton disabled={!hasNextPage} href={nextPageUrl}>
+            Next Page
+          </DataCiteButton>
+        </li>
     </Pagination>
   )
 }

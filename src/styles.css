@@ -41,7 +41,7 @@ h3 {
 }
 
 .card-body h3.member>i {
-  color: #1abc9c;
+  color: var(--datacite-color-secondary, #1abc9c) !important;
   font-size: 100%;
 }
 
@@ -178,7 +178,7 @@ a.navbar-brand {
 
 .form-inline .input-group input[name="query"]:focus,
 .form-inline .input-group input[name="query"]:focus+.search-submit {
-  border-color: #1abc9c;
+  color: var(--datacite-color-secondary, #1abc9c) !important;
 }
 
 .form-inline #search-clear {
@@ -260,10 +260,6 @@ a.navbar-brand {
   color: #34495e !important;
 }
 
-@media(max-width:1200px) {
-  .input-group input[name="query-facets"] {}
-}
-
 #basic-nav-dropdown {
   padding-top: 6px;
   height: 40px;
@@ -278,7 +274,7 @@ a.navbar-brand {
 
 h2.member-results {
   font-weight: 600;
-  color: #1abc9c;
+  color: var(--datacite-color-secondary, #1abc9c) !important;
   border-bottom: 1px solid #cdd2d5;
   padding: 0;
   margin: 0 0 .35em 10px;
@@ -412,15 +408,9 @@ ul.ror-identifiers {
   margin-right: 10px;
 }
 
-#search-nav {
-  /* margin-left: -6px; */
-  /* margin-top: -15px; */
-  /* padding-left: 0; */
-}
-
 .nav-link.active {
   color: #34495e;
-  border-bottom: 3px solid #1abc9c;
+  border-bottom: 3px solid var(--datacite-color-secondary, #1abc9c);
   border-radius: 0;
 }
 
@@ -450,8 +440,8 @@ ul.ror-identifiers {
 }
 
 .form-inline .search-submit:hover {
-  border-color: #1abc9c;
-  background-color: #1abc9c;
+  border-color: var(--datacite-color-secondary, #1abc9c);
+  background-color: var(--datacite-color-secondary, #1abc9c);
   color: white !important;
 }
 
@@ -477,7 +467,7 @@ ul.nav.nav-tabs li {
 
 ul.nav.nav-tabs li span {
   font-weight: 600;
-  color: #1abc9c;
+  color: var(--datacite-color-secondary, #1abc9c);
   font-size: 25px;
 }
 
@@ -662,7 +652,7 @@ h4.work {
 }
 
 .work-identifiers>a {
-  color: #3498db !important;
+  color: var(--datacite-link-primary, #3498db) !important;
 }
 
 .download-list>h5 {
@@ -693,13 +683,74 @@ body {
 }
 
 :root {
-  --datacite-color-primary: #243b54;
+  /* DataCite Design Manual v2.1 - Brand Colors */
+  /* https://datacite.org/wp-content/uploads/2024/06/DataCite_Design_manual-version_2_1.pdf */
+
+  /* Primary colors */
+  --datacite-primary-dark-blue:  #243B54;
+  --datacite-primary-light-blue: #00B1E2;
+  --datacite-primary-light-blue-darker: color-mix(in srgb, var(--datacite-primary-light-blue), black 40%);
+
+  /* Secondary colors (use in combination with primary dark blue) */
+  --datacite-secondary-grey:     #C0CED6;
+  --datacite-secondary-grey-dark: color-mix(in srgb, var(--datacite-secondary-grey), black 40%);
+  --datacite-secondary-turquoise: #46BCAB;
+  --datacite-secondary-turquoise-dark: color-mix(in srgb, var(--datacite-secondary-turquoise), black 30%);
+  --datacite-secondary-light-red: #F07C73;
+
+  /* Additional colors */
+  --datacite-medium-blue:        #0D60D4;
+  --datacite-dark-pink:          #BC2B66;
+  --datacite-lime:               #E2E254;
+
+  /* Gradient endpoints (for backgrounds, infographics) */
+  --datacite-gradient-start:     var(--datacite-primary-light-blue);
+  --datacite-gradient-end:     var(--datacite-primary-dark-blue);
+
+  --datacite-color-primary: var(--datacite-primary-dark-blue);
+  --datacite-color-secondary: var(--datacite-secondary-turquoise-dark, #318478);
+  --datacite-link-primary: var(--datacite-primary-light-blue-darker,#0071b2);
 }
 
 .button:hover,
 .button:focus-visible {
-    background-color: #0071b2;
-    color: #fff;
+  background-color: var(--datacite-link-primary, #0071b2);
+  color: #fff;
 }
 
+a {
+  color: var(--datacite-link-primary, blue);
+}
 
+h2.member-results,
+h3.member-results {
+  color: var(--datacite-color-secondary, #1abc9c);
+}
+
+.facets h4 {
+  color: var(--datacite-color-secondary, #1abc9c);
+}
+
+#fair-filter .facet-title {
+  color: var(--datacite-color-primary, #243b54);
+}
+
+.nav-tabs-member>li>button:focus, .nav-tabs-member button.active {
+  color: var(--datacite-color-secondary, #1abc9c) !important;
+}
+
+.nav-tabs-member button {
+  color: var(--datacite-color-primary, #243b54) !important;
+}
+
+span.metrics-counter {
+  color: unset;
+}
+
+.footer-title {
+  font-size: 24px;
+  margin-bottom: .1em;
+  margin-top: .5em;
+  font-weight: 700;
+  line-height: 1.2em;
+}

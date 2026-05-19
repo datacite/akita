@@ -16,7 +16,6 @@ export default function DownloadMetadata({ modalContent }: Props) {
       onClick={() => setShowModal(true)}
       outline
       className='w-100'
-      title="Download Metadata"
       id="download-metadata-button"
     >
       Download Metadata

@@ -55,9 +55,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       </head>
       <body className={sourceSans3.className}>
         <Providers authToken={getAuthToken()} >
+            <a href="#main-content"
+            className="visually-hidden-focusable p-3 text-center bg-primary text-white position-absolute w-100"
+            style={{ zIndex: 1050 }}
+            >
+            Skip to main content
+            </a>
           <Header />
           <DiscoverWorksAlert />
-          <div className="container-fluid flex-grow-1">{children}</div>
+          <main id="main-content" className="container-fluid flex-grow-1">{children}</main>
           <Consent />
           <Footer />
         </Providers>

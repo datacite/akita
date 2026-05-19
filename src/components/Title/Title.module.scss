@@ -1,5 +1,5 @@
 .link {
-  color: gray
+  color: var(--datacite-link-primary, gray);
 }
 
 .title {
@@ -18,6 +18,6 @@
   padding: 0 !important;
 
   .link a {
-    color: gray;
+    color: var(--datacite-link-primary, gray);
   }
 }

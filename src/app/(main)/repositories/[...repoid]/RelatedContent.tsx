@@ -56,6 +56,7 @@ export default function RelatedContent({ repository }: Props) {
         <Col md={3} className="d-none d-md-block">
         </Col>
         <Col md={9}>
+          <h2 className="visually-hidden">Related Works Results Summary</h2>
           <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
         </Col>
       </Row>
