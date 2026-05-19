@@ -78,12 +78,6 @@ export function AboutLink() {
   </DropdownItem>
 }
 
-export function StatisticsLink() {
-  return <DropdownItem eventKey="1.2" data-cy="statistics" href="/statistics">
-    Statistics
-  </DropdownItem>
-}
-
 export function SupportLink() {
   return <NavItem>
     <NavLink
