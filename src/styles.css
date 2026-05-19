@@ -709,13 +709,13 @@ body {
 
   --datacite-color-primary: var(--datacite-primary-dark-blue);
   --datacite-color-secondary: var(--datacite-secondary-turquoise-dark, #037AAD);
-  --datacite-link-primary: var(--datace-primary-light-blue-darker,#0071b2);
+  --datacite-link-primary: var(--datacite-primary-light-blue-darker,#0071b2);
 }
 
 .button:hover,
 .button:focus-visible {
-    background-color: var(--datacite-link-primary, #0071b2);
-    color: #fff;
+  background-color: var(--datacite-link-primary, #0071b2);
+  color: #fff;
 }
 
 a {
@@ -734,20 +734,23 @@ h3.member-results {
 #fair-filter .facet-title {
   color: var(--datacite-color-primary, #243b54);
 }
+
 .nav-tabs-member>li>button:focus, .nav-tabs-member button.active {
-    color: var(--datacite-color-secondary, #1abc9c) !important;
+  color: var(--datacite-color-secondary, #1abc9c) !important;
 }
+
 .nav-tabs-member button {
-    color: var(--datacite-color-primary, #243b54) !important;
-  }
+  color: var(--datacite-color-primary, #243b54) !important;
+}
 
 span.metrics-counter {
   color: unset;
 }
+
 .footer-title {
-    font-size: 24px;
-    margin-bottom: .1em;
-    margin-top: .5em;
-    font-weight: 700;
-    line-height: 1.2em;
-  }
+  font-size: 24px;
+  margin-bottom: .1em;
+  margin-top: .5em;
+  font-weight: 700;
+  line-height: 1.2em;
+}
