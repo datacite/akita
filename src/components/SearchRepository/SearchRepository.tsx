@@ -36,8 +36,7 @@ export default function SearchRepositories({ variables }: Props) {
     <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
         <Alert variant="warning">
-          <p>No repositories found. If a domain repository is not available for your
-            kind of data, you may be able to use a general repository such as:</p>
+          <p>No repositories found. Try a new search or explore generalist repositories such as:</p>
 
           <ul>
             <li><Link href="/repositories/dryad.dryad">Dryad</Link></li>

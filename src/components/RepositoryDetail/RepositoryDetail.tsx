@@ -9,7 +9,6 @@ import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import { Repository } from 'src/data/types';
 import { useRepositoryRelatedContentQuery } from 'src/data/queries/repositoryRelatedContentQuery'
 import { SummaryStatsLoader } from '../SummarySearchMetrics/SummarySearchMetrics'
-import styles from './RepositoryDetail.module.scss'
 
 type Props = {
   repo: Repository
@@ -31,47 +30,6 @@ export function RepositoryDetail({ repo }: Props) {
       views: works?.viewCount,
       downloads: works?.downloadCount
     }} />
-  }
-
-  function ExtendedMetadata() {
-    if (repo.re3doi == null) return "";
-
-    const metadata = [
-      {
-        label: "Data Access",
-        values: repo.dataAccess.map((term) => (
-          term.type
-        ))
-      },
-      {
-        label: "Persistent Identifier",
-        values: repo.pidSystem
-      },
-      {
-        label: "Certificates",
-        values: repo.certificate
-      },
-      {
-        label: "Data Upload",
-        values: repo.dataUpload.map((term) => (
-          term.type
-        ))
-      },
-      {
-        label: "Provider Type",
-        values: repo.providerType
-      },
-    ]
-
-    return <Col xs={12} as="dl" className={styles.metadata}>
-      {metadata.map((field, fieldIndex) => <React.Fragment key={fieldIndex}>
-        <dt>{field.label}</dt>
-        {field.values.length == 0 ? <dd>none</dd> :
-          field.values.map((value, index) => (
-            <dd key={"metadata-" + field.label + index}>{value}</dd>
-          ))}
-      </React.Fragment>)}
-    </Col>
   }
 
   function Tags() {
@@ -101,7 +59,6 @@ export function RepositoryDetail({ repo }: Props) {
   return <Row className="gap-4">
     <Col xs={12}><Metrics /></Col>
     <Col xs={12}>{repo.description}</Col>
-    <ExtendedMetadata />
     <Col xs={12}><Tags /></Col>
     <Col xs={12}><Advise /></Col>
   </Row>
