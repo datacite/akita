@@ -9,7 +9,6 @@ import { MetricsDisplay } from 'src/components/MetricsDisplay/MetricsDisplay';
 import { Repository } from 'src/data/types';
 import { useRepositoryRelatedContentQuery } from 'src/data/queries/repositoryRelatedContentQuery'
 import { SummaryStatsLoader } from '../SummarySearchMetrics/SummarySearchMetrics'
-import styles from './RepositoryDetail.module.scss'
 
 type Props = {
   repo: Repository
