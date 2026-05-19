@@ -4,7 +4,6 @@ import WorksDashboard from '../WorksDashboard/WorksDashboard'
 
 type Props = {
   rorId?: string
-  gridId?: string
   crossrefFunderId?: string
   works: Works
 }
