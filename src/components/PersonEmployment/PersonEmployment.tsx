@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { gridFromUrl } from 'src/utils/helpers'
+import { rorFromUrl } from 'src/utils/helpers'
 import { EmploymentRecord } from 'src/data/types'
 
 type Props = {
@@ -15,7 +15,7 @@ const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
 
     return (
       <h4 className="work">
-        <Link prefetch={false} href={'/grid.ac' + gridFromUrl(employment.organizationId)}>
+        <Link prefetch={false} href={'/ror.org' + rorFromUrl(employment.organizationId)}>
           {employment.organizationName}
         </Link>
       </h4>
