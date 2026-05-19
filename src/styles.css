@@ -689,7 +689,7 @@ body {
   /* Primary colors */
   --datacite-primary-dark-blue:  #243B54;
   --datacite-primary-light-blue: #00B1E2;
-  --datacite-primary-light-blue-darker: color-mix(in srgb, var(--datacite-light-blue), black 40%);
+  --datacite-primary-light-blue-darker: color-mix(in srgb, var(--datacite-primary-light-blue), black 40%);
 
   /* Secondary colors (use in combination with primary dark blue) */
   --datacite-secondary-grey:     #C0CED6;
@@ -708,7 +708,7 @@ body {
   --datacite-gradient-end:     var(--datacite-primary-dark-blue);
 
   --datacite-color-primary: var(--datacite-primary-dark-blue);
-  --datacite-color-secondary: var(--datacite-secondary-turquoise-dark, #037AAD);
+  --datacite-color-secondary: var(--datacite-secondary-turquoise-dark, #318478);
   --datacite-link-primary: var(--datacite-primary-light-blue-darker,#0071b2);
 }
 
