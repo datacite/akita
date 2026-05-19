@@ -52,7 +52,7 @@ export function normalizeRorUrl(rorId: string): string | undefined {
   if (!rorId) return undefined
   const trimmed = rorId.trim()
   if (trimmed.startsWith('https://ror.org/')) return trimmed
-  if (trimmed.startsWith('http://ror.org/')) return `https://ror.org/${trimmed.slice(16)}`
+  if (trimmed.startsWith('http://ror.org/')) return `https://ror.org/${trimmed.slice('http://ror.org/'.length)}`
   if (trimmed.startsWith('ror.org/')) return `https://${trimmed}`
   if (/^0[a-hj-km-np-tv-z0-9]{6}[0-9]{2}$/i.test(trimmed)) {
     return `https://ror.org/${trimmed}`
