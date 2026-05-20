@@ -110,8 +110,39 @@ async function tryMockResponse(input, init) {
       if (id === '013meh722') {
         return jsonResponse(readFixtureJson('ror', 'organization-013meh722.json'))
       }
+      if (id === '0472cxd90') {
+        return jsonResponse({
+          id: 'https://ror.org/0472cxd90',
+          names: [{ lang: 'en', types: ['ror_display', 'label'], value: 'European Research Council' }],
+          status: 'active',
+          established: 2007,
+          locations: [],
+          types: ['funder', 'government'],
+          links: [{ type: 'website', value: 'https://erc.europa.eu' }],
+          external_ids: [],
+          relationships: [],
+        })
+      }
     }
     if (url.pathname === '/v2/organizations') {
+      const rawAdvancedQ = url.searchParams.get('query.advanced') || ''
+      const advancedQ = decodeQueryParam(rawAdvancedQ)
+      if (advancedQ === 'external_ids.all:100011199') {
+        return jsonResponse({
+          number_of_results: 1,
+          time_taken: 1,
+          items: [{ id: 'https://ror.org/0472cxd90' }],
+          meta: { types: [], countries: [], continents: [], statuses: [] },
+        })
+      }
+      if (advancedQ === 'external_ids.all:100011105') {
+        return jsonResponse({
+          number_of_results: 0,
+          time_taken: 0,
+          items: [],
+          meta: { types: [], countries: [], continents: [], statuses: [] },
+        })
+      }
       const rawQ = url.searchParams.get('query') || ''
       const q = decodeQueryParam(rawQ)
       if (q === 'oxford') {
@@ -150,15 +181,6 @@ async function tryMockResponse(input, init) {
       return null
     }
 
-    if (variables.crossrefFunderId === '10.13039/100011199') {
-      return jsonResponse({ data: { organization: { id: 'https://ror.org/0472cxd90' } } })
-    }
-    if (variables.crossrefFunderId === '10.13039/100011105') {
-      return jsonResponse({
-        errors: [{ message: 'Record not found', path: ['organization'] }],
-        data: null,
-      })
-    }
     return null
   }
 
