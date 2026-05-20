@@ -150,9 +150,6 @@ async function tryMockResponse(input, init) {
       return null
     }
 
-    if (variables.gridId === 'grid.ac/institutes/grid.4991.5') {
-      return jsonResponse({ data: { organization: { id: 'https://ror.org/052gg0110' } } })
-    }
     if (variables.crossrefFunderId === '10.13039/100011199') {
       return jsonResponse({ data: { organization: { id: 'https://ror.org/0472cxd90' } } })
     }

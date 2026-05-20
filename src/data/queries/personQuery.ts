@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 import { Person, PersonMetadata } from 'src/data/types'
 import type { QueryData as Facets } from 'src/data/queries/searchDoiFacetsQuery'
 import apolloClient from 'src/utils/apolloClient/apolloClient'
-import { buildPersonName, getCountryName, getDateFromParts } from 'src/utils/helpers'
+import { buildPersonName, getCountryName, getDateFromParts, normalizeRorUrl } from 'src/utils/helpers'
 import { fetchDoisFacets } from './searchDoiFacetsQuery'
 import { FACETS, ORCID_API_URL } from 'src/data/constants'
 
@@ -38,8 +38,13 @@ function convertToQueryData(id: string, jsonPerson: any, jsonEmployments: any, f
     const start = a['summaries'][0]['employment-summary']['start-date'] || {}
     const end = a['summaries'][0]['employment-summary']['end-date'] || {}
 
+    const rorIdentifier =
+      org['disambiguation-source'] === 'ROR'
+        ? org['disambiguated-organization-identifier']
+        : undefined
+
     return {
-      organizationId: org['disambiguation-source'] === "GRID" ? 'https://grid.ac/institutes/' + org['disambiguated-organization-identifier'] : undefined,
+      organizationId: rorIdentifier ? normalizeRorUrl(rorIdentifier) : undefined,
       organizationName: a['summaries'][0]['employment-summary']['organization']['name'],
       roleTitle: a['summaries'][0]['employment-summary']['role-title'],
       startDate: getDateFromParts(start?.year?.value, start?.month?.value, start?.day?.value),
