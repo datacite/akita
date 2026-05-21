@@ -107,6 +107,7 @@ export interface RORV2ClientConfig {
  */
 export interface RORV2SearchParams {
   query?: string;
+  queryAdvanced?: string;
   page?: number;
   types?: string | string[];
   countries?: string | string[];
@@ -199,7 +200,9 @@ export class RORV2Client {
   public async searchOrganizations(params: RORV2SearchParams = {}): Promise<RORV2SearchResponse> {
     const searchParams = new URLSearchParams();
 
-    if (params.query) {
+    if (params.queryAdvanced) {
+      searchParams.append('query.advanced', params.queryAdvanced);
+    } else if (params.query) {
       searchParams.append('query', params.query);
     }
 
