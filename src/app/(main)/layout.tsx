@@ -14,7 +14,7 @@ import Header from "src/components/Header/Header";
 import Consent from "./Consent";
 import Footer from "src/components/Footer/Footer";
 import Providers from "./Providers";
-import { getAuthToken } from "src/utils/apolloClient/apolloClient";
+import { getAuthToken } from "src/utils/auth";
 import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
 import Script from "next/script";
 import { SENTRY_DSN, IS_PROD } from "src/data/constants";
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         </Suspense>
       </head>
       <body className={sourceSans3.className}>
-        <Providers authToken={getAuthToken()} >
+        <Providers authToken={getAuthToken() ?? ''} >
             <a href="#main-content"
             className="visually-hidden-focusable p-3 text-center bg-primary text-white position-absolute w-100"
             style={{ zIndex: 1050 }}
