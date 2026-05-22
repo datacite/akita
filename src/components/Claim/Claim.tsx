@@ -1,17 +1,18 @@
 'use client'
 
 import React from 'react'
-import { useEffect } from 'react';
-import { useMutation, ApolloCache } from '@apollo/client'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 
 import { session, User } from 'src/utils/session'
-import { Claim as ClaimType } from 'src/data/types'
 import Error from 'src/components/Error/Error'
 import ClaimStatus from 'src/components/ClaimStatus/ClaimStatus'
-import { useGetClaimQuery, GET_CLAIM_GQL, CREATE_CLAIM_GQL, DELETE_CLAIM_GQL, QueryData, QueryVar } from 'src/data/queries/claimQuery';
-import { ACCENT_COLOR, PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, WARNING } from 'src/data/constants';
-import DataCiteButton from '../DataCiteButton/DataCiteButton';
+import {
+  useClaimQuery,
+  useCreateClaimMutation,
+  useDeleteClaimMutation,
+} from 'src/data/queries/claimQuery'
+import { ACCENT_COLOR, PROFILES_SETTINGS_URL, PROFILES_SIGN_IN_URL, WARNING } from 'src/data/constants'
+import DataCiteButton from '../DataCiteButton/DataCiteButton'
 
 type Props = {
   doi_id: string
@@ -19,132 +20,82 @@ type Props = {
 
 const HELP_CONTENT = {
   'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank' rel='noreferrer'>Account Settings</a> to add this work to your ORCID record</>,
-  // 'Too many claims. Only 10,000 claims allowed.': <></>,
-  // 'Missing data': <></>,
-  // 'token has expired.': <></>,
 } as const
 
 function getHelpContent(user: User, message?: string): React.ReactNode {
   if (!user) return <><a href={PROFILES_SIGN_IN_URL} target='_blank' rel='noreferrer'>Sign in</a> to add this work to your ORCID record.</>
   if (!message) return null
 
-  return HELP_CONTENT[message] || <>We encountered an error adding this work to your ORCID profile. Contact DataCite Support for help: <a href="mailto: support@datacite.org" target='_blank' rel='noreferrer'>support@datacite.org</a>. (Error code: {message})</>
+  return HELP_CONTENT[message as keyof typeof HELP_CONTENT] || <>We encountered an error adding this work to your ORCID profile. Contact DataCite Support for help: <a href="mailto: support@datacite.org" target='_blank' rel='noreferrer'>support@datacite.org</a>. (Error code: {message})</>
 }
 
 export default function Claim({ doi_id }: Props) {
-
-  const { loading, error, data, refetch } = useGetClaimQuery({ id: doi_id })
-
-  const [claimError, setClaimError] = React.useState<string | null>(null);
-
-  const addOrUpdateExistingClaim = (cache: ApolloCache<any>, updatedClaim: ClaimType) => {
-    setClaimError(updatedClaim.errorMessages[0]?.title || null);
-
-    const existingClaims = cache.readQuery<QueryData, QueryVar>({ query: GET_CLAIM_GQL, variables: { id: doi_id } });
-
-    // Add or update the claim in the cache
-    let newClaims: ClaimType[] = [];
-    if (existingClaims && existingClaims.work && existingClaims.work.claims.length > 0) {
-      // Update existing claims with new claim
-      const existingClaimsUpdated = existingClaims.work.claims.map(claim => {
-        if (claim.id === updatedClaim.id) {
-          return updatedClaim;
-        }
-        return claim;
-      });
-
-      newClaims = existingClaimsUpdated;
-
-    } else {
-      newClaims = existingClaims ? [...existingClaims.work.claims, updatedClaim] : [updatedClaim];
-    }
-
-    cache.writeQuery({ query: GET_CLAIM_GQL, variables: { id: doi_id }, data: { work: { ...existingClaims?.work, claims: newClaims } } });
-  }
-
-  const [createClaim] = useMutation(CREATE_CLAIM_GQL, {
-    errorPolicy: 'all',
-    update(cache, { data: { createClaim } }) {
-      if (createClaim.claim) {
-        addOrUpdateExistingClaim(cache, createClaim.claim);
-      }
-    }
-  })
-
-  const [deleteClaim] = useMutation(DELETE_CLAIM_GQL, {
-    errorPolicy: 'all',
-    update(cache, { data: { deleteClaim } }) {
-      if (deleteClaim.claim) {
-        addOrUpdateExistingClaim(cache, deleteClaim.claim);
-      }
-    }
-  })
-
   const user = session()
+  const [claimError, setClaimError] = React.useState<string | null>(null)
 
-  const claim: ClaimType = data?.work.claims[0] || {
-    id: null,
-    sourceId: null,
-    state: 'ready',
-    claimAction: null,
-    claimed: null,
-    errorMessages: null
-  } as any
+  const { loading, error, data } = useClaimQuery({ id: doi_id })
+  const { mutate: createClaim } = useCreateClaimMutation(doi_id)
+  const { mutate: deleteClaim } = useDeleteClaimMutation(doi_id)
 
-  const isClaimed = claim.state === 'done' && claim.claimed != null
-  const isActionPossible = claim.state !== 'waiting'
-
-  useEffect(() => {
-    if (!isActionPossible) {
-      const timer = setInterval(() => {
-        refetch()
-      }, 10000);
-
-      return () => clearInterval(timer);
-    }
-  }, [isActionPossible])
-
+  const claim = data?.work.claims[0]
+  const state = claim?.state ?? 'ready'
+  const isClaimed = state === 'done' && claim?.claimed != null
+  const isActionPossible = state !== 'waiting'
 
   const onCreate = () => {
-    createClaim({
-      variables: { doi: doi_id, sourceId: 'orcid_search' }
-    })
+    createClaim(
+      { doi: doi_id, sourceId: 'orcid_search' },
+      {
+        onSuccess: (result) => {
+          setClaimError(result.claim?.errorMessages?.[0]?.title || null)
+        },
+      }
+    )
   }
 
   const onDelete = () => {
-    deleteClaim({
-      variables: { id: claim.id }
+    if (!claim?.id) return
+
+    deleteClaim(claim.id, {
+      onSuccess: (result) => {
+        setClaimError(result.claim?.errorMessages?.[0]?.title || null)
+      },
     })
   }
 
-
-
-  // don't show claim option if registration agency is not datacite
-  if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite')
+  if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite') {
     return null
-
-  if (loading) {
-    return <DataCiteButton
-      icon={faOrcid}
-      color={ACCENT_COLOR}
-      className='w-100'
-      disabled
-      outline
-      title="Checking claim status..."
-    >
-      Checking claim status...
-    </DataCiteButton>
   }
 
-  if (error)
-    return <Error title="Error fetching claim." message={error.message} />
+  if (loading) {
+    return (
+      <DataCiteButton
+        icon={faOrcid}
+        color={ACCENT_COLOR}
+        className='w-100'
+        disabled
+        outline
+        title="Checking claim status..."
+      >
+        Checking claim status...
+      </DataCiteButton>
+    )
+  }
 
-  const errorMessage = claimError || (claim.errorMessages && claim.errorMessages.length > 0 ? claim.errorMessages[0].title : undefined)
+  if (error) {
+    return <Error title="Error fetching claim." message={error.message} />
+  }
+
+  const errorMessage =
+    claimError ||
+    (claim?.errorMessages && claim.errorMessages.length > 0
+      ? claim.errorMessages[0].title
+      : undefined)
 
   return (
     <>
       {isActionPossible ? (
-        isClaimed ?
+        isClaimed ? (
           <DataCiteButton
             onClick={onDelete}
             icon={faOrcid}
@@ -155,7 +106,7 @@ export default function Claim({ doi_id }: Props) {
           >
             Remove Claim
           </DataCiteButton>
-          :
+        ) : (
           <DataCiteButton
             onClick={onCreate}
             icon={faOrcid}
@@ -166,13 +117,14 @@ export default function Claim({ doi_id }: Props) {
           >
             Add to ORCID Record
           </DataCiteButton>
-      ) :
-        <ClaimStatus claim={claim} type="button" />
-      }
+        )
+      ) : (
+        claim && <ClaimStatus claim={claim} type="button" />
+      )}
 
-      {!isClaimed &&
+      {!isClaimed && (
         <p className='secondary px-4 mt-2'>{getHelpContent(user, errorMessage)}</p>
-      }
+      )}
     </>
   )
 }
