@@ -174,11 +174,68 @@ async function tryMockResponse(input, init) {
 
     const bodyText = await readRequestBody(input, init)
     let variables = {}
+    let query = ''
     try {
       const parsed = JSON.parse(bodyText)
       variables = parsed.variables || {}
+      query = parsed.query || ''
     } catch {
       return null
+    }
+
+    if (query.includes('getDoiClaimQuery')) {
+      return jsonResponse({
+        data: {
+          work: {
+            id: variables.id,
+            registrationAgency: { id: 'datacite' },
+            claims: [{
+              id: 'claim-1',
+              sourceId: 'orcid_search',
+              state: 'ready',
+              claimAction: null,
+              claimed: null,
+              errorMessages: [],
+            }],
+          },
+        },
+      })
+    }
+
+    if (query.includes('createClaim')) {
+      return jsonResponse({
+        data: {
+          createClaim: {
+            claim: {
+              id: 'claim-1',
+              sourceId: variables.sourceId || 'orcid_search',
+              state: 'waiting',
+              claimAction: 'create',
+              claimed: null,
+              errorMessages: [],
+            },
+            errors: null,
+          },
+        },
+      })
+    }
+
+    if (query.includes('deleteClaim')) {
+      return jsonResponse({
+        data: {
+          deleteClaim: {
+            claim: {
+              id: variables.id,
+              sourceId: 'orcid_search',
+              state: 'deleted',
+              claimAction: 'delete',
+              claimed: null,
+              errorMessages: [],
+            },
+            errors: null,
+          },
+        },
+      })
     }
 
     return null
