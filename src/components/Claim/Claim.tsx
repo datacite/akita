@@ -43,6 +43,10 @@ export default function Claim({ doi_id }: Props) {
   const isClaimed = state === 'done' && claim?.claimed != null
   const isActionPossible = state !== 'waiting'
 
+  const onMutationError = (error: Error) => {
+    setClaimError(error.message)
+  }
+
   const onCreate = () => {
     createClaim(
       { doi: doi_id, sourceId: 'orcid_search' },
@@ -50,6 +54,7 @@ export default function Claim({ doi_id }: Props) {
         onSuccess: (result) => {
           setClaimError(result.claim?.errorMessages?.[0]?.title || null)
         },
+        onError: onMutationError,
       }
     )
   }
@@ -61,6 +66,7 @@ export default function Claim({ doi_id }: Props) {
       onSuccess: (result) => {
         setClaimError(result.claim?.errorMessages?.[0]?.title || null)
       },
+      onError: onMutationError,
     })
   }
 
