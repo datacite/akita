@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const token = getAuthToken()
+    const token = await getAuthToken()
     const result = await dataciteGraphql<GetClaimResponse>(
       GET_CLAIM_QUERY,
       { id: doi },
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const token = getAuthToken()
+    const token = await getAuthToken()
     const result = await dataciteGraphql<CreateClaimGraphqlResponse>(
       CREATE_CLAIM_MUTATION,
       { doi, sourceId },

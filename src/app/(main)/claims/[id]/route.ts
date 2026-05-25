@@ -22,7 +22,7 @@ export async function DELETE(
   }
 
   try {
-    const token = getAuthToken()
+    const token = await getAuthToken()
     const result = await dataciteGraphql<DeleteClaimGraphqlResponse>(
       DELETE_CLAIM_MUTATION,
       { id },
