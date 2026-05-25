@@ -54,14 +54,18 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { doi?: string; sourceId?: string }
+  let body: unknown
   try {
     body = await request.json()
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { doi, sourceId } = body
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const { doi, sourceId } = body as { doi?: string; sourceId?: string }
   if (!doi || !sourceId) {
     return NextResponse.json({ error: 'doi and sourceId are required' }, { status: 400 })
   }
