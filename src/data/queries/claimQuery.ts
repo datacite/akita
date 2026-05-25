@@ -51,7 +51,8 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<Mutati
   }
 
   if (json.errors?.length) {
-    throw new Error(json.errors[0].message || 'Failed to create claim')
+    const err = json.errors[0]
+    throw new Error(err.title || err.message || 'Failed to create claim')
   }
 
   return json
@@ -68,7 +69,8 @@ async function deleteClaimRequest(id: string): Promise<MutationResponse> {
   }
 
   if (json.errors?.length) {
-    throw new Error(json.errors[0].message || 'Failed to delete claim')
+    const err = json.errors[0]
+    throw new Error(err.title || err.message || 'Failed to delete claim')
   }
 
   return json
