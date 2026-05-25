@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         </Suspense>
       </head>
       <body className={sourceSans3.className}>
-        <Providers authToken={getAuthToken() ?? ''} >
+        <Providers authToken={(await getAuthToken()) ?? ''} >
             <a href="#main-content"
             className="visually-hidden-focusable p-3 text-center bg-primary text-white position-absolute w-100"
             style={{ zIndex: 1050 }}
