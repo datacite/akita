@@ -129,7 +129,7 @@ export default function Claim({ doi_id }: Props) {
         claim && <ClaimStatus claim={claim} type="button" />
       )}
 
-      {!isClaimed && (
+      {(!isClaimed || errorMessage) && (
         <p className='secondary px-4 mt-2'>{getHelpContent(user, errorMessage)}</p>
       )}
     </>
