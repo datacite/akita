@@ -34,8 +34,9 @@ export default function Claim({ doi_id }: Props) {
   const [claimError, setClaimError] = React.useState<string | null>(null)
 
   const { loading, error, data } = useClaimQuery({ id: doi_id })
-  const { mutate: createClaim } = useCreateClaimMutation(doi_id)
-  const { mutate: deleteClaim } = useDeleteClaimMutation(doi_id)
+  const { mutate: createClaim, isPending: isCreating } = useCreateClaimMutation(doi_id)
+  const { mutate: deleteClaim, isPending: isDeleting } = useDeleteClaimMutation(doi_id)
+  const isSubmitting = isCreating || isDeleting
 
   const claim = data?.work.claims[0]
   const state = claim?.state ?? 'ready'
@@ -101,7 +102,7 @@ export default function Claim({ doi_id }: Props) {
             icon={faOrcid}
             color={WARNING}
             className='w-100'
-            disabled={!user}
+            disabled={!user || isSubmitting}
             outline
           >
             Remove Claim
@@ -112,7 +113,7 @@ export default function Claim({ doi_id }: Props) {
             icon={faOrcid}
             color={ACCENT_COLOR}
             className='w-100'
-            disabled={!user}
+            disabled={!user || isSubmitting}
             outline
           >
             Add to ORCID Record
