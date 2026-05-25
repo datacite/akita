@@ -78,10 +78,13 @@ export interface GraphqlResponse<T> {
   errors?: GraphqlError[]
 }
 
+const DEFAULT_GRAPHQL_TIMEOUT_MS = 5000
+
 export async function dataciteGraphql<T>(
   query: string,
   variables: Record<string, unknown>,
-  token?: string
+  token?: string,
+  timeoutMs: number = DEFAULT_GRAPHQL_TIMEOUT_MS
 ): Promise<GraphqlResponse<T>> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -92,15 +95,31 @@ export async function dataciteGraphql<T>(
     headers.Authorization = `Bearer ${token}`
   }
 
-  const response = await fetch(`${DATACITE_API_URL}/graphql`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ query, variables }),
-  })
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
 
-  if (!response.ok) {
-    throw new Error(`DataCite GraphQL request failed: ${response.status} ${response.statusText}`)
+  try {
+    const response = await fetch(`${DATACITE_API_URL}/graphql`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ query, variables }),
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeoutId)
+
+    if (!response.ok) {
+      throw new Error(`DataCite GraphQL request failed: ${response.status} ${response.statusText}`)
+    }
+
+    return response.json()
+  } catch (error) {
+    clearTimeout(timeoutId)
+
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(`DataCite GraphQL request timed out after ${timeoutMs}ms`)
+    }
+
+    throw error
   }
-
-  return response.json()
 }
