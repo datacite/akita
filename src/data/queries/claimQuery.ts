@@ -82,13 +82,25 @@ function updateClaimInCache(
   queryClient.setQueryData<QueryData>(claimKeys.detail(doiId), (existing) => {
     if (!existing?.work) return existing
 
-    const claims = existing.work.claims.length > 0
-      ? existing.work.claims.map((claim) =>
-          claim.id === updatedClaim.id ? updatedClaim : claim
-        )
-      : [updatedClaim]
+    if (!existing.work.claims || existing.work.claims.length === 0) {
+      return { work: { ...existing.work, claims: [updatedClaim] } }
+    }
 
-    return { work: { ...existing.work, claims } }
+    let replaced = false
+    const claims = existing.work.claims.map((claim) => {
+      if (claim.id === updatedClaim.id) {
+        replaced = true
+        return updatedClaim
+      }
+      return claim
+    })
+
+    return {
+      work: {
+        ...existing.work,
+        claims: replaced ? claims : [...claims, updatedClaim],
+      },
+    }
   })
 }
 
