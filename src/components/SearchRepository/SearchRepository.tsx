@@ -46,11 +46,6 @@ export default function SearchRepositories({ variables }: Props) {
             <li><Link href="/repositories/cos.osf">Open Science Framework</Link></li>
             <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
           </ul>
-
-          <p>You may also have an institutional repository or other local resources
-            at your organization available to you.  Contact your data librarian or
-            computing facility for local data services.</p>
-
         </Alert>
       </div>
     </Col>
