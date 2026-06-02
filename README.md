@@ -38,8 +38,9 @@ Key features include:
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) 22+ (includes [Corepack](https://nodejs.org/api/corepack.html)) — a version manager like [N](https://github.com/tj/n) or [asdf](https://asdf-vm.com/) works well
-* [Python 3](https://www.python.org/) (with pip3)
+* [Node.js](https://nodejs.org/) 22+ (includes [Corepack](https://nodejs.org/api/corepack.html)) — a version manager like [N](https://github.com/tj/n), [mise](https://mise.jdx.dev/), or [asdf](https://asdf-vm.com/) works well
+* [Python 3.12+](https://www.python.org/)
+* [uv](https://docs.astral.sh/uv/) — required by the `api` and `api-prod` scripts (`uv sync` / `uv run`); install with `pip3 install uv` or see the [uv install guide](https://docs.astral.sh/uv/getting-started/installation/)
 
 This repo pins **Yarn 4** via the `packageManager` field in `package.json`. You do not need a global Yarn 1 install.
 
@@ -49,7 +50,8 @@ This repo pins **Yarn 4** via the `packageManager` field in `package.json`. You 
 * `corepack enable`
 * `yarn install`
 * `cp .env.example .env` (and configure environment variables as needed)
-* `pip3 install -r api/requirements.txt` (optional, handled by `yarn dev-all`)
+
+The `api` and `api-prod` scripts run `uv sync --project api` and `uv run --project api` to install and start the Flask API. `yarn dev-all` runs `yarn api` alongside the frontend, so **uv must be installed** for local full-stack development. The first `yarn api` or `yarn dev-all` will sync Python dependencies automatically.
 
 ## Environment Variables
 
