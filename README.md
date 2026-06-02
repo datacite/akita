@@ -38,13 +38,15 @@ Key features include:
 You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM) - Suggestion is to use a version manager like [N](https://github.com/tj/n)
-* [Yarn 1 Classic](https://classic.yarnpkg.com/lang/en/)
+* [Node.js](https://nodejs.org/) 22+ (includes [Corepack](https://nodejs.org/api/corepack.html)) — a version manager like [N](https://github.com/tj/n) or [asdf](https://asdf-vm.com/) works well
 * [Python 3](https://www.python.org/) (with pip3)
+
+This repo pins **Yarn 4** via the `packageManager` field in `package.json`. You do not need a global Yarn 1 install.
 
 ## Installation
 
 * `git clone <repository-url>` this repository
+* `corepack enable`
 * `yarn install`
 * `cp .env.example .env` (and configure environment variables as needed)
 * `pip3 install -r api/requirements.txt` (optional, handled by `yarn dev-all`)
