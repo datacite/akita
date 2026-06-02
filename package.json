@@ -28,8 +28,8 @@
     "@formatjs/intl-numberformat": "^7.1.4",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
-    "@fortawesome/free-regular-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.13.3",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@next/third-parties": "15.4.6",
     "@sentry/browser": "^10.53.0",
@@ -89,6 +89,7 @@
   },
   "license": "MIT",
   "resolutions": {
+    "@fortawesome/fontawesome-common-types": "7.1.0",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "minimatch": "^3.1.4",
