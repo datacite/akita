@@ -22,9 +22,7 @@ export default function Providers({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       <SSRProvider>
-        <Suspense
-          fallback={<FlagsProvider features={FEATURE_FLAGS}>{children}</FlagsProvider>}
-        >
+        <Suspense fallback={null}>
           <FeatureFlagsProvider>{children}</FeatureFlagsProvider>
         </Suspense>
       </SSRProvider>
