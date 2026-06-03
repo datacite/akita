@@ -35,6 +35,8 @@ export default function Header() {
                 type="text"
                 placeholder="Type to search..."
                 disabled
+                aria-hidden
+                tabIndex={-1}
                 aria-label="Primary search input field"
               />
             }>
