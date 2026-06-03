@@ -26,10 +26,10 @@
     "@apollo/client": "^3.11.1",
     "@apollo/experimental-nextjs-app-support": "^0.11.2",
     "@formatjs/intl-numberformat": "^7.1.4",
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-brands-svg-icons": "^7.1.0",
-    "@fortawesome/free-regular-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.13.3",
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-regular-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@next/third-parties": "15.4.6",
     "@sentry/browser": "^10.53.0",
@@ -89,11 +89,11 @@
   },
   "license": "MIT",
   "resolutions": {
+    "@fortawesome/fontawesome-common-types": "7.2.0",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
-    "**/@fortawesome/fontawesome-common-types": "^0.3.0",
     "minimatch": "^3.1.4",
     "picomatch": "^2.3.2"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@4.16.0+sha512.5374c94eb4ef6aa8188fb112f20c1aa6569f248d676c5e576e1fd2a1a4d8d87a96df65d9dfe1c2a0252cbe38bda46cf18d955005b81b43cc7607a5c9d56fd2b6"
 }
