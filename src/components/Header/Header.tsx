@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link'
 import Search from 'src/components/Header/Search'
 
@@ -29,7 +29,17 @@ export default function Header() {
         <Toggle />
         <Collapse className="align-items-start">
           <Form className={`${styles.navsearchlinks} form-inline mx-auto`}>
-            <Search />
+            <Suspense fallback={
+              <input
+                className={`form-control ${styles.input}`}
+                type="text"
+                placeholder="Type to search..."
+                disabled
+                aria-label="Primary search input field"
+              />
+            }>
+              <Search />
+            </Suspense>
             <NavLinks>
               <WorksLink />
               <PeopleLink />
