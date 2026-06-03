@@ -1,6 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
-import { workConnection, workFragment } from "src/data/queries/queryFragments";
-import { QueryData, QueryVar as QueryVarGQL } from "src/data/queries/personQuery";
+import { Works } from "src/data/types";
 import { useSearchDoiQuery, QueryVar } from "./searchDoiQuery";
 import { useSearchDoiFacetsQuery } from "./searchDoiFacetsQuery";
 
@@ -29,53 +27,10 @@ export function usePersonRelatedContentQuery(variables: QueryVar) {
 }
 
 
-export function usePersonRelatedContentQueryGQL(variables: QueryVarGQL) {
-  const { loading, data, error } = useQuery<QueryData, QueryVarGQL>(
-    RELATED_CONTENT_QUERY,
-    {
-      variables,
-      errorPolicy: 'all'
-    }
-  )
-
-  return { loading, data, error }
+export interface QueryData {
+  person: {
+    works: Works
+  }
 }
 
-
-export const RELATED_CONTENT_QUERY = gql`
-  query getRelatedContentQuery(
-    $id: ID!
-    $filterQuery: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
-  ) {
-    person(id: $id) {
-      works(
-        first: 25
-        query: $filterQuery
-        after: $cursor
-        published: $published
-        resourceTypeId: $resourceTypeId
-        fieldOfScience: $fieldOfScience
-        language: $language
-        license: $license
-        registrationAgency: $registrationAgency
-      ) {
-        ...WorkConnectionFragment
-        nodes {
-          ...WorkFragment
-        }
-      }
-    }
-  }
-  ${workConnection}
-  ${workFragment}
-`;
-
-
-export type { QueryData, QueryVar }
+export type { QueryVar }
