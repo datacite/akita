@@ -23,6 +23,7 @@ export default function CiteAs({ doi }: Props) {
       <select
         className="cite-as input-group float-right"
         aria-label="Select citation style"
+        data-cy="cite-as-style"
         onChange={(e) => setSelectedOption(e.target.value)}
       >
         <option value="apa">APA</option>
