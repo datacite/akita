@@ -1,4 +1,3 @@
-import { gql, useQuery as useQueryGQL } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { Repositories } from 'src/data/types'
 import { DATACITE_API_URL } from 'src/data/constants'
@@ -69,75 +68,6 @@ export function useSearchRepositoryQuery(variables: QueryVar) {
 
   return { loading: isPending, data: data?.data, error }
 }
-
-export function useSearchRepositoryQueryGQL(variables: QueryVar) {
-  const { loading, data, error } = useQueryGQL<QueryData, QueryVar>(
-    SEARCH_REPOSITORIES_GQL,
-    {
-      variables,
-      errorPolicy: 'all'
-    }
-  )
-
-  return { loading, data, error }
-}
-
-
-export const SEARCH_REPOSITORIES_GQL = gql`
-  query getRepositoryQuery(
-    $query: String
-    $cursor: String
-    $certificate: String
-    $software: String
-    $hasPid: String
-    $isOpen: String
-    $isCertified: String
-    $subjectId: String
-  ) {
-    repositories(
-      query: $query
-      after: $cursor
-      certificate: $certificate
-      software: $software
-      hasPid: $hasPid
-      isOpen: $isOpen
-      isCertified: $isCertified
-      subjectId: $subjectId
-    ) {
-      totalCount
-
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      nodes {...repoFields}
-      certificates {...facetFields}
-      software {...facetFields}
-    }
-  }
-
-  fragment repoFields on Repository{
-    id:uid
-    re3dataDoi
-    clientId
-    name
-    language
-    keyword
-    subject {
-      name
-    }
-    description
-    type
-    repositoryType
-    url
-  }
-
-  fragment facetFields on Facet{
-    id
-    title
-    count
-  }
-`
 
 
 export interface QueryData {

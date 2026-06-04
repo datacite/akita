@@ -22,12 +22,9 @@ export default function AboutPage() {
                 </a>
                 , the graph formed by the collection of scholarly resources such
                 as publications, datasets, people and research organizations, and
-                their connections. The PID Graph uses persistent identifiers and{' '}
-                <a href="https://graphql.org/" target="_blank" rel="noreferrer">
-                  GraphQL
-                </a>
-                , with PIDs and metadata provided by DataCite, Crossref, ORCID,
-                and others.
+                their connections. DataCite Commons uses persistent identifiers and
+                REST APIs from DataCite, ORCID, ROR, and others, with PIDs and
+                metadata provided by DataCite, Crossref, ORCID, and others.
               </p>
               <p>
                 DataCite Commons was officially launched in October 2020 by the{' '}

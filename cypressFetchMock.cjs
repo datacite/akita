@@ -168,6 +168,7 @@ async function tryMockResponse(input, init) {
     }
   }
 
+  // Server-side claims proxy (`/claims` routes) calls DataCite GraphQL.
   if (url.hostname === 'api.stage.datacite.org' && url.pathname === '/graphql') {
     const method = init?.method || (input instanceof Request ? input.method : 'GET')
     if (method !== 'POST') return null

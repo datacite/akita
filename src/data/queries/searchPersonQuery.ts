@@ -1,4 +1,3 @@
-import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { parseInt } from 'lodash'
 import { People } from 'src/data/types'
@@ -52,38 +51,6 @@ export function useSearchPersonQuery(variables: QueryVar) {
 
   return { loading: isPending, data: data?.data, error }
 }
-
-export function useSearchPersonQueryGQL(variables: QueryVar) {
-  const { loading, data, error } = useGQLQuery<QueryData, QueryVar>(
-    SEARCH_PERSON_QUERY,
-    {
-      variables,
-      errorPolicy: 'all'
-    }
-  )
-
-  return { loading, data, error }
-}
-
-
-export const SEARCH_PERSON_QUERY = gql`
-  query getSearchPersonQuery($query: String, $cursor: String) {
-    people(first: 25, query: $query, after: $cursor) {
-      totalCount
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      nodes {
-        id
-        name
-        givenName
-        familyName
-        alternateName
-      }
-    }
-  }
-`
 
 
 export interface QueryData {

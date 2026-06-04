@@ -3,17 +3,6 @@
 describe('Server error', () => {
   beforeEach(() => {
     cy.setCookie('_consent', 'true')
-    cy.intercept('POST', '**/graphql**', (req) => {
-      req.reply({
-        body: {
-          errors: [
-            {
-              message: 'Internal Server Error'
-            }
-          ]
-        }
-      })
-    })
   })
 
   // it('search works', () => {

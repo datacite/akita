@@ -19,7 +19,7 @@ describe('workContainer with usage', () => {
   })
 
   it('cite as', () => {
-    cy.get('.cite-as')
+    cy.get('[data-cy="cite-as-style"]').filter(':visible')
       .select('ieee')
       .get('#formatted-citation', { timeout: 30000 })
       .should('contain', 'NEXUS Head CT')

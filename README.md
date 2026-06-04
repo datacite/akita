@@ -19,7 +19,7 @@ Key features include:
 
 ## Tech Stack
 
-*   **Frontend:** [Next.js](https://nextjs.org/) (React framework), [Apollo Client](https://www.apollographql.com/docs/react/) (GraphQL), [React Bootstrap](https://react-bootstrap.github.io/) (UI components).
+*   **Frontend:** [Next.js](https://nextjs.org/) (React framework), [@tanstack/react-query](https://tanstack.com/query) (data fetching), [React Bootstrap](https://react-bootstrap.github.io/) (UI components).
 *   **Backend:** [Flask](https://flask.palletsprojects.com/) (Python microframework) for specific API endpoints.
 *   **Testing:** [Cypress](https://www.cypress.io/) (End-to-End testing).
 
@@ -29,7 +29,7 @@ Key features include:
 *   `src/`: Main source code for the Next.js frontend.
     *   `app/`: Next.js App Router pages/routes.
     *   `components/`: Reusable React components.
-    *   `data/`: GraphQL queries, constants, and data fetching logic.
+    *   `data/`: REST query modules, constants, and data fetching logic.
 *   `cypress/`: End-to-End tests.
 *   `public/`: Static assets.
 
@@ -112,7 +112,7 @@ Please ensure you:
 
 *   [DataCite Commons](https://commons.datacite.org): The live service.
 *   [DataCite API Documentation](https://support.datacite.org/docs/api-reference): Reference for the DataCite REST API.
-*   [DataCite GraphQL API Guide](https://support.datacite.org/docs/datacite-graphql-api-guide): Guide for using the DataCite GraphQL API.
+*   [DataCite GraphQL API Guide](https://support.datacite.org/docs/datacite-graphql-api-guide): Used server-side only for DOI claims via the `/claims` route handlers.
 *   [DataCite Support](https://support.datacite.org/): General support documentation.
 
 ## License

@@ -1,7 +1,5 @@
-import { gql, useQuery as useGQLQuery } from '@apollo/client'
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
-import { workFragment, workConnection } from 'src/data/queries/queryFragments'
 import { mapJsonToWork, cursorToPage } from 'src/utils/helpers'
 import { DATACITE_API_URL } from 'src/data/constants'
 
@@ -269,52 +267,6 @@ export function useSearchDoiQuery(variables: QueryVar, count?: number) {
 
   return { loading: isPending, data: data?.data, error }
 }
-
-
-export function useSearchDoiQueryGQL(variables: QueryVar) {
-  const { loading, data, error } = useGQLQuery<QueryData, QueryVar>(
-    SEARCH_DOI_QUERY,
-    {
-      variables,
-      errorPolicy: 'all'
-    }
-  )
-
-  return { loading, data, error }
-}
-
-
-export const SEARCH_DOI_QUERY = gql`
-  query getContentQuery(
-    $query: String
-    $cursor: String
-    $published: String
-    $resourceTypeId: String
-    $fieldOfScience: String
-    $language: String
-    $license: String
-    $registrationAgency: String
-  ) {
-    works(
-      first: 25
-      query: $query
-      after: $cursor
-      published: $published
-      resourceTypeId: $resourceTypeId
-      fieldOfScience: $fieldOfScience
-      language: $language
-      license: $license
-      registrationAgency: $registrationAgency
-    ) {
-      ...WorkConnectionFragment
-      nodes {
-        ...WorkFragment
-      }
-    }
-  }
-  ${workConnection}
-  ${workFragment}
-`
 
 
 export interface QueryData {

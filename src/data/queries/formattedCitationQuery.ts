@@ -1,4 +1,3 @@
-import { gql, useQuery } from "@apollo/client"
 import { FormattedCitation } from "src/data/types"
 import { useQuery as useReactQuery, UseQueryResult } from "@tanstack/react-query"
 import { DATACITE_API_URL } from 'src/data/constants'
@@ -15,29 +14,6 @@ export interface QueryData {
   work: FormattedCitation
 }
 
-// GraphQL query implementation
-export function useFormattedCitationQuery(variables: QueryVar) {
-  const { loading, data, error } = useQuery<QueryData, QueryVar>(
-    FORMATTED_CITATION_GQL,
-    {
-      variables,
-      errorPolicy: 'all'
-    }
-  )
-
-  return { loading, data, error }
-}
-
-export const FORMATTED_CITATION_GQL = gql`
-  query getCitationFormatter($id: ID!, $style: String!, $locale: String!) {
-    work(id: $id) {
-      id
-      formattedCitation(style: $style, locale: $locale)
-    }
-  }
-`
-
-// Direct API fetch implementation
 async function fetchFormattedCitation(variables: QueryVar): Promise<string> {
   const params = new URLSearchParams({
     style: variables.style,
@@ -56,7 +32,6 @@ async function fetchFormattedCitation(variables: QueryVar): Promise<string> {
   return text
 }
 
-// React Query hook
 export function useDirectCitationQuery(variables: QueryVar): UseQueryResult<QueryData, Error> {
   return useReactQuery({
     queryKey: ['citation', variables],
