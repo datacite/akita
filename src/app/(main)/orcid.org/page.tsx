@@ -1,11 +1,17 @@
+'use client'
+
 import React from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { PeopleExampleText } from 'src/components/ExampleText/ExampleText'
 import SearchPerson from 'src/components/SearchPerson/SearchPerson'
 import { QueryVar } from 'src/data/queries/searchPersonQuery'
 
-interface Props {
-  searchParams: Promise<QueryVar>
+function getQueryVariables(searchParams: URLSearchParams): QueryVar {
+  return {
+    query: searchParams.get('query') ?? '',
+    cursor: searchParams.get('cursor') ?? undefined,
+  }
 }
 
 function searchOrExampleText(searchParams: QueryVar) {
@@ -15,12 +21,11 @@ function searchOrExampleText(searchParams: QueryVar) {
   return <SearchPerson variables={searchParams} />
 }
 
-export default async function SearchPersonPage(props: Props) {
-  const searchParams = await props.searchParams;
+export default function SearchPersonPage() {
+  const variables = getQueryVariables(useSearchParams())
 
-  // Show example text if there is no query
   return <>
     <h1 className="visually-hidden">People Search</h1>
-    {searchOrExampleText(searchParams)}
+    {searchOrExampleText(variables)}
   </>
 }

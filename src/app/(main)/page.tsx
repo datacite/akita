@@ -1,27 +1,29 @@
+'use client'
+
 import React from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { WorksExampleText } from 'src/components/ExampleText/ExampleText'
 import SearchWork from 'src/components/SearchWork/SearchWork'
-import { QueryVar } from 'src/data/queries/searchDoiQuery'
+import { default as mapSearchParams, type SearchParams } from './doi.org/mapSearchParams'
+import { type QueryVar } from 'src/data/queries/searchDoiQuery'
 
-interface Props {
-  searchParams: Promise<SearchParams>
+function getQueryVariables(searchParams: URLSearchParams): QueryVar {
+  return mapSearchParams(Object.fromEntries(searchParams.entries()) as SearchParams)
 }
 
-interface SearchParams extends Partial<QueryVar> {
-  filterQuery?: string
-}
+export default function IndexPage() {
+  const searchParams = useSearchParams()
+  const variables = getQueryVariables(searchParams)
 
-export default async function IndexPage(props: Props) {
-  const searchParams = await props.searchParams;
-  const { query, filterQuery, ...vars } = searchParams
+  const query = variables.query
+  const filterQuery = variables.filterQuery
 
-  // Show example text if there is no query
-  if (!query || query === '')
+  if (!query || query === '') {
     return <WorksExampleText />
-
+  }
 
   const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
 
-  return <SearchWork variables={{ query: queryStatement, ...vars }} />
+  return <SearchWork variables={{ ...variables, query: queryStatement }} />
 }
