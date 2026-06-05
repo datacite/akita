@@ -26,7 +26,6 @@ export default function OrganizationMetadata({
   const memberRoles = {
     "direct_member": "DataCite Member",
     "member_only": "DataCite Member",
-    "for-profit_provider": "DataCite Member",
     "consortium": "DataCite Consortium",
     "consortium_organization": "DataCite Consortium Organization"
   }
