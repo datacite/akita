@@ -6,7 +6,7 @@ import { useConnectionCounts } from './ConnectionCountManager'
 import { ConnectionTypeCounts, Pagination, Works, Work } from 'src/data/types'
 import { QueryData, fetchDoi } from 'src/data/queries/doiQuery'
 import { QueryVar } from 'src/data/queries/searchDoiQuery'
-import { isDMP, isProject } from 'src/utils/helpers'
+import { doiFromUrl, isDMP, isProject } from 'src/utils/helpers'
 
 export class RelatedContentManager {
   private readonly data: QueryData | undefined
@@ -107,8 +107,8 @@ function extractRelatedDois(work: Work | undefined): string[] {
   
   return workWithRelatedIdentifiers.relatedIdentifiers
     .filter((identifier: any) => identifier.relatedIdentifierType === 'DOI')
-    .map((identifier: any) => identifier.relatedIdentifier)
-    .filter(Boolean) // Remove any undefined/null values
+    .map((identifier: any) => doiFromUrl(identifier.relatedIdentifier))
+    .filter((doi): doi is string => !!doi)
 }
 
 export function useRelatedContentManager(
