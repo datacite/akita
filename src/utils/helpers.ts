@@ -27,7 +27,7 @@ export const pluralize = (
 }
 
 export const doiFromUrl = (doiInput: string) => {
-  if (!doiInput) return null
+  if (typeof doiInput !== 'string' || !doiInput) return null;
   const bareDoi = doiInput.trim().replace(/^https?:\/\/doi\.org\//i, '')
   return bareDoi || null
 }
