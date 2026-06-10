@@ -14,7 +14,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
     try {
       const url = new URL(funding.funderIdentifier)
       if (url.host === 'doi.org' && url.pathname.startsWith('/10.13039')) {
-        return '/doi.org' + doiFromUrl(funding.funderIdentifier)
+        return '/doi.org/' + doiFromUrl(funding.funderIdentifier)
       }
       if (url.host === 'ror.org') {
         return '/ror.org' + rorFromUrl(funding.funderIdentifier)

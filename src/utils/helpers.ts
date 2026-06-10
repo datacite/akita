@@ -26,8 +26,10 @@ export const pluralize = (
   return resultNumber + resultString
 }
 
-export const doiFromUrl = (doiUrl: string) => {
-  return doiUrl ? doiUrl.substring(15) : null
+export const doiFromUrl = (doiInput: string) => {
+  if (typeof doiInput !== 'string' || !doiInput) return null;
+  const bareDoi = doiInput.trim().replace(/^https?:\/\/doi\.org\//i, '')
+  return bareDoi || null
 }
 
 export const orcidFromUrl = (orcidInput: string) => {
