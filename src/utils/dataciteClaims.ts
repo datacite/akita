@@ -1,36 +1,25 @@
 import { DATACITE_API_URL } from 'src/data/constants'
-import type { Claim } from 'src/data/types'
-
-export interface ClaimsApiError {
-  status?: number
-  source?: string
-  title: string
-}
+import type { Claim, ClaimError, ClaimMutationResult } from 'src/data/types'
 
 interface ClaimResource {
   id: string
   attributes: {
     sourceId: string
     state: string
-    claimAction: string
-    claimed: Date
-    errorMessages: Array<{ status?: number; title: string }>
+    claimAction: string | null
+    claimed: string | null
+    errorMessages: ClaimError[]
   }
 }
 
 interface ClaimsListResponse {
   data?: ClaimResource[]
-  errors?: ClaimsApiError[]
+  errors?: ClaimError[]
 }
 
 interface ClaimResponse {
   data?: ClaimResource
-  errors?: ClaimsApiError[]
-}
-
-export interface MutationResult {
-  claim: Claim | null
-  errors: ClaimsApiError[] | null
+  errors?: ClaimError[]
 }
 
 const DEFAULT_TIMEOUT_MS = 5000
@@ -41,7 +30,9 @@ function toClaim(resource: ClaimResource): Claim {
     sourceId: resource.attributes.sourceId,
     state: resource.attributes.state,
     claimAction: resource.attributes.claimAction,
-    claimed: resource.attributes.claimed,
+    claimed: resource.attributes.claimed
+      ? new Date(resource.attributes.claimed)
+      : null,
     errorMessages: resource.attributes.errorMessages ?? [],
   }
 }
@@ -79,19 +70,33 @@ export async function getClaims(
   doi: string,
   uid: string,
   token: string
-): Promise<{ claims: Claim[]; errors: ClaimsApiError[] | null }> {
+): Promise<{ claims: Claim[]; errors: ClaimError[] | null }> {
   const params = new URLSearchParams({
     'user-id': uid,
     dois: doi.toLowerCase(),
   })
   const response = await claimsFetch(`/claims?${params.toString()}`, token)
-  const json: ClaimsListResponse = await response.json()
 
   if (!response.ok) {
-    return { claims: [], errors: json.errors ?? [{ title: `Failed to fetch claims: ${response.status}` }] }
+    let errors: ClaimError[] | null = null
+    try {
+      const json: ClaimsListResponse = await response.json()
+      errors = json.errors ?? null
+    } catch {
+      // non-JSON error body
+    }
+    return {
+      claims: [],
+      errors: errors ?? [{ title: `Failed to fetch claims: ${response.status}` }],
+    }
   }
 
-  return { claims: (json.data ?? []).map(toClaim), errors: null }
+  try {
+    const json: ClaimsListResponse = await response.json()
+    return { claims: (json.data ?? []).map(toClaim), errors: null }
+  } catch {
+    return { claims: [], errors: [{ title: 'Failed to fetch claims: invalid response' }] }
+  }
 }
 
 export async function createClaim(
@@ -99,7 +104,7 @@ export async function createClaim(
   sourceId: string,
   uid: string,
   token: string
-): Promise<MutationResult> {
+): Promise<ClaimMutationResult> {
   const body = {
     claim: {
       uuid: crypto.randomUUID(),
@@ -115,25 +120,45 @@ export async function createClaim(
     headers: { 'Content-Type': 'application/json;charset=UTF-8' },
     body: JSON.stringify(body),
   })
-  const json: ClaimResponse = await response.json()
 
-  if (response.status !== 202 || !json.data) {
+  if (response.status !== 202) {
+    let errors: ClaimError[] | null = null
+    try {
+      const json: ClaimResponse = await response.json()
+      errors = json.errors ?? null
+    } catch {
+      // non-JSON error body
+    }
     return {
       claim: null,
-      errors: json.errors ?? [{ status: response.status, title: 'Failed to create claim' }],
+      errors: errors ?? [{ status: response.status, title: 'Failed to create claim' }],
     }
   }
 
-  return { claim: toClaim(json.data), errors: null }
+  try {
+    const json: ClaimResponse = await response.json()
+    if (!json.data) {
+      return {
+        claim: null,
+        errors: json.errors ?? [{ status: response.status, title: 'Failed to create claim' }],
+      }
+    }
+    return { claim: toClaim(json.data), errors: null }
+  } catch {
+    return {
+      claim: null,
+      errors: [{ status: response.status, title: 'Failed to create claim: invalid response' }],
+    }
+  }
 }
 
-export async function deleteClaim(id: string, token: string): Promise<MutationResult> {
+export async function deleteClaim(id: string, token: string): Promise<ClaimMutationResult> {
   const response = await claimsFetch(`/claims/${encodeURIComponent(id)}`, token, {
     method: 'DELETE',
   })
 
   if (![200, 202, 204].includes(response.status)) {
-    let errors: ClaimsApiError[] | null = null
+    let errors: ClaimError[] | null = null
     try {
       const json: ClaimResponse = await response.json()
       errors = json.errors ?? null
