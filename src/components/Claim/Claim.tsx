@@ -18,6 +18,8 @@ type Props = {
   doi_id: string
 }
 
+// Only rendered for DataCite works; see doi.org Content.tsx registrationAgency guard.
+
 const HELP_CONTENT = {
   'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank' rel='noreferrer'>Account Settings</a> to add this work to your ORCID record</>,
 } as const
