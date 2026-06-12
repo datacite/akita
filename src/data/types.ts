@@ -153,18 +153,24 @@ export type FundingReference = {
   awardNumber?: string
 }
 
+export type ClaimError = {
+  status?: number
+  source?: string
+  title: string
+}
+
 export type Claim = {
   id: string
   sourceId: string
   state: string
-  claimAction: string
-  claimed: Date
+  claimAction: string | null
+  claimed: Date | null
   errorMessages: ClaimError[]
 }
 
-interface ClaimError {
-  status?: number
-  title: string
+export type ClaimMutationResult = {
+  claim: Claim | null
+  errors: ClaimError[] | null
 }
 
 type FieldOfScience = {
