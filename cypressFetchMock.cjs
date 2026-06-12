@@ -170,7 +170,7 @@ async function tryMockResponse(input, init) {
 
   // Server-side claims proxy (`/claims` routes) calls the DataCite REST claims API.
   if (url.hostname === 'api.stage.datacite.org' && url.pathname === '/claims') {
-    const method = init?.method || (input instanceof Request ? input.method : 'GET')
+    const method = (init?.method || (input instanceof Request ? input.method : 'GET')).toUpperCase()
 
     if (method === 'GET') {
       return jsonResponse({
@@ -195,7 +195,7 @@ async function tryMockResponse(input, init) {
         const parsed = JSON.parse(bodyText)
         sourceId = parsed?.claim?.source_id || sourceId
       } catch {
-        return null
+        return jsonResponse({ errors: [{ title: 'Invalid request body' }] }, 400)
       }
 
       return jsonResponse({
@@ -217,7 +217,7 @@ async function tryMockResponse(input, init) {
   }
 
   if (url.hostname === 'api.stage.datacite.org' && url.pathname.startsWith('/claims/')) {
-    const method = init?.method || (input instanceof Request ? input.method : 'GET')
+    const method = (init?.method || (input instanceof Request ? input.method : 'GET')).toUpperCase()
     if (method !== 'DELETE') return null
 
     const id = decodeURIComponent(url.pathname.slice('/claims/'.length))
