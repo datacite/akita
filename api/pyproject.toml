@@ -13,3 +13,4 @@ datacitekit = { url = "https://github.com/datacite/datacitekit/archive/main.zip"
 
 [tool.uv]
 exclude-newer = "7 days"
+exclude-newer-package = { "vercel-runtime" = "0 days" }
