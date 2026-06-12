@@ -1,28 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAuthToken } from 'src/utils/auth'
-import {
-  CREATE_CLAIM_MUTATION,
-  dataciteGraphql,
-  GET_CLAIM_QUERY,
-} from 'src/utils/dataciteGraphql'
-import type { Claim } from 'src/data/types'
-
-interface GetClaimResponse {
-  work: {
-    id: string
-    registrationAgency: { id: string }
-    claims: Claim[]
-  }
-}
-
-interface MutationResponse {
-  claim: Claim | null
-  errors: Array<{ status?: number; source?: string; title: string }> | null
-}
-
-interface CreateClaimGraphqlResponse {
-  createClaim: MutationResponse
-}
+import { getAuthSession } from 'src/utils/auth'
+import { getClaims, createClaim } from 'src/utils/dataciteClaims'
 
 export async function GET(request: NextRequest) {
   const doi = request.nextUrl.searchParams.get('doi')
@@ -30,26 +8,23 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'doi query parameter is required' }, { status: 400 })
   }
 
+  const auth = await getAuthSession()
+  // Mirror the DataCite GraphQL behavior: unauthenticated users see no claims.
+  if (!auth) {
+    return NextResponse.json({ claims: [] })
+  }
+
   try {
-    const token = await getAuthToken()
-    const result = await dataciteGraphql<GetClaimResponse>(
-      GET_CLAIM_QUERY,
-      { id: doi },
-      token
-    )
+    const result = await getClaims(doi, auth.uid, auth.token)
 
     if (result.errors?.length) {
       return NextResponse.json({ errors: result.errors }, { status: 200 })
     }
 
-    if (!result.data?.work) {
-      return NextResponse.json({ error: 'Work not found' }, { status: 404 })
-    }
-
-    return NextResponse.json(result.data)
+    return NextResponse.json({ claims: result.claims })
   } catch (error) {
-    console.error('Error fetching claim:', error)
-    return NextResponse.json({ error: 'Failed to fetch claim' }, { status: 500 })
+    console.error('Error fetching claims:', error)
+    return NextResponse.json({ error: 'Failed to fetch claims' }, { status: 500 })
   }
 }
 
@@ -70,20 +45,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'doi and sourceId are required' }, { status: 400 })
   }
 
+  const auth = await getAuthSession()
+  if (!auth) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
   try {
-    const token = await getAuthToken()
-    const result = await dataciteGraphql<CreateClaimGraphqlResponse>(
-      CREATE_CLAIM_MUTATION,
-      { doi, sourceId },
-      token
-    )
-
-    if (result.errors?.length) {
-      return NextResponse.json({ errors: result.errors }, { status: 200 })
-    }
-
-    const payload = result.data?.createClaim ?? { claim: null, errors: null }
-    return NextResponse.json(payload)
+    const result = await createClaim(doi, sourceId, auth.uid, auth.token)
+    return NextResponse.json(result)
   } catch (error) {
     console.error('Error creating claim:', error)
     return NextResponse.json({ error: 'Failed to create claim' }, { status: 500 })

@@ -112,7 +112,6 @@ Please ensure you:
 
 *   [DataCite Commons](https://commons.datacite.org): The live service.
 *   [DataCite API Documentation](https://support.datacite.org/docs/api-reference): Reference for the DataCite REST API.
-*   [DataCite GraphQL API Guide](https://support.datacite.org/docs/datacite-graphql-api-guide): Used server-side only for DOI claims via the `/claims` route handlers.
 *   [DataCite Support](https://support.datacite.org/): General support documentation.
 
 ## License
