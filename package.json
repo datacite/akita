@@ -18,7 +18,7 @@
     "cy:run:record": "mise exec -- env CYPRESS_NODE_ENV=test cypress run --record --quiet",
     "fixtures:update": "mise exec -- node scripts/update-cypress-fixtures.cjs",
     "fixtures:update:dry": "mise exec -- node scripts/update-cypress-fixtures.cjs --dry-run",
-    "fixtures:update:one": "mise exec -- node scripts/update-cypress-fixtures.cjs --fixture",
+    "fixtures:update:one": "mise exec -- node scripts/update-cypress-fixtures.cjs",
     "fixtures:list": "mise exec -- node scripts/update-cypress-fixtures.cjs --list"
   },
   "nyc": {
