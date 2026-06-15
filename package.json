@@ -18,7 +18,7 @@
     "cy:run:record": "CYPRESS_NODE_ENV=test cypress run --record --quiet",
     "fixtures:update": "yarn node scripts/update-cypress-fixtures.cjs",
     "fixtures:update:dry": "yarn node scripts/update-cypress-fixtures.cjs --dry-run",
-    "fixtures:update:one": "yarn node scripts/update-cypress-fixtures.cjs",
+    "fixtures:update:one": "yarn node scripts/update-cypress-fixtures.cjs --fixture",
     "fixtures:list": "yarn node scripts/update-cypress-fixtures.cjs --list"
   },
   "nyc": {

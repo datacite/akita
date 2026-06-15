@@ -5,7 +5,7 @@
  * Usage:
  *   yarn fixtures:update
  *   yarn fixtures:update:dry
- *   yarn fixtures:update:one -- --fixture=orcid/expanded-search-hallett.json
+ *   yarn fixtures:update:one orcid/expanded-search-hallett.json
  *   yarn fixtures:list
  */
 const fs = require('fs')
@@ -43,6 +43,7 @@ function parseArgs(argv) {
     dryRun: false,
     list: false,
     fixture: null,
+    fixtureRequested: false,
     group: null,
   }
 
@@ -50,13 +51,25 @@ function parseArgs(argv) {
     const arg = argv[i]
     if (arg === '--dry-run') options.dryRun = true
     else if (arg === '--list') options.list = true
-    else if (arg === '--fixture') options.fixture = argv[++i]
-    else if (arg.startsWith('--fixture=')) options.fixture = arg.slice('--fixture='.length)
-    else if (arg === '--group') options.group = argv[++i]
+    else if (arg === '--fixture') {
+      options.fixtureRequested = true
+      options.fixture = argv[++i]
+    } else if (arg.startsWith('--fixture=')) {
+      options.fixtureRequested = true
+      options.fixture = arg.slice('--fixture='.length)
+    } else if (arg === '--group') options.group = argv[++i]
     else if (arg.startsWith('--group=')) options.group = arg.slice('--group='.length)
   }
 
   return options
+}
+
+/** @param {ReturnType<typeof parseArgs>} options */
+function isFixtureFilterIncomplete(options) {
+  return (
+    options.fixtureRequested &&
+    (options.fixture == null || String(options.fixture).trim() === '')
+  )
 }
 
 /** @param {typeof manifest[number]} entry */
@@ -88,6 +101,14 @@ function writeFixture(entry, body) {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
+
+  if (isFixtureFilterIncomplete(options)) {
+    console.error(
+      'error: --fixture requires a path (e.g. yarn fixtures:update:one orcid/expanded-search-hallett.json)',
+    )
+    process.exit(1)
+  }
+
   const entries = manifest.filter((entry) => matchesFilter(entry, options))
 
   if (options.list) {
