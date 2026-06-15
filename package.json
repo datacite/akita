@@ -13,13 +13,13 @@
     "prettier-format": "prettier --config .prettierrc.json '**/*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "cy:coverage": "npx nyc report --reporter=lcov",
-    "cy:open": "mise exec -- env CYPRESS_NODE_ENV=test cypress open",
-    "cy:run": "mise exec -- env CYPRESS_NODE_ENV=test cypress run",
-    "cy:run:record": "mise exec -- env CYPRESS_NODE_ENV=test cypress run --record --quiet",
-    "fixtures:update": "mise exec -- node scripts/update-cypress-fixtures.cjs",
-    "fixtures:update:dry": "mise exec -- node scripts/update-cypress-fixtures.cjs --dry-run",
-    "fixtures:update:one": "mise exec -- node scripts/update-cypress-fixtures.cjs",
-    "fixtures:list": "mise exec -- node scripts/update-cypress-fixtures.cjs --list"
+    "cy:open": "CYPRESS_NODE_ENV=test cypress open",
+    "cy:run": "CYPRESS_NODE_ENV=test cypress run",
+    "cy:run:record": "CYPRESS_NODE_ENV=test cypress run --record --quiet",
+    "fixtures:update": "yarn node scripts/update-cypress-fixtures.cjs",
+    "fixtures:update:dry": "yarn node scripts/update-cypress-fixtures.cjs --dry-run",
+    "fixtures:update:one": "yarn node scripts/update-cypress-fixtures.cjs",
+    "fixtures:list": "yarn node scripts/update-cypress-fixtures.cjs --list"
   },
   "nyc": {
     "reporter": [
