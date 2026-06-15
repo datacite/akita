@@ -116,6 +116,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
   const pathname = url.pathname
 
   if (
+    upperMethod === 'GET' &&
     (url.hostname === 'localhost' || url.hostname === '127.0.0.1') &&
     pathname.startsWith('/api/doi/related-graph/')
   ) {
@@ -123,13 +124,14 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
   }
 
   if (
+    upperMethod === 'GET' &&
     (url.hostname === 'localhost' || url.hostname === '127.0.0.1') &&
     pathname === '/providers'
   ) {
     return fixtureMatch('providers/empty.json')
   }
 
-  if (isOrcidHost(url.hostname)) {
+  if (isOrcidHost(url.hostname) && upperMethod === 'GET') {
     const orcidBase = pathname.match(/^(\/v3\.0)?\/([^/]+)\/(person|employments)$/)
     if (orcidBase) {
       const id = decodeURIComponent(orcidBase[2]).toUpperCase()
@@ -166,8 +168,8 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
 
   const rorPathname = normalizeRorPathname(pathname)
   if (
-    url.hostname === 'api.ror.org' ||
-    pathname.startsWith('/api/ror/v2/')
+    upperMethod === 'GET' &&
+    (url.hostname === 'api.ror.org' || pathname.startsWith('/api/ror/v2/'))
   ) {
     const idMatch = rorPathname.match(/^\/v2\/organizations\/([^/?]+)$/)
     if (idMatch) {
@@ -243,7 +245,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
     return null
   }
 
-  if (isDataciteHost(url.hostname) && pathname === '/dois') {
+  if (isDataciteHost(url.hostname) && pathname === '/dois' && upperMethod === 'GET') {
     const rawQuery = url.searchParams.get('query')
     if (rawQuery == null) return null
 
@@ -303,7 +305,11 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
     return null
   }
 
-  if (isDataciteHost(url.hostname) && pathname.startsWith('/text/x-bibliography/')) {
+  if (
+    isDataciteHost(url.hostname) &&
+    pathname.startsWith('/text/x-bibliography/') &&
+    upperMethod === 'GET'
+  ) {
     return fixtureMatch('text/bibliography-nexus-head-ct.txt')
   }
 
