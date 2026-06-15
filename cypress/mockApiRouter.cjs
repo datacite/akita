@@ -65,7 +65,7 @@ function decodeQueryParam(q) {
 
 /** @param {string} hostname */
 function isOrcidHost(hostname) {
-  return hostname.includes('orcid.org')
+  return hostname === 'orcid.org' || hostname.endsWith('.orcid.org')
 }
 
 /** @param {string} hostname */
