@@ -1,0 +1,17 @@
+{
+  "id": "https://ror.org/0472cxd90",
+  "names": [
+    {
+      "lang": "en",
+      "types": ["ror_display", "label"],
+      "value": "European Research Council"
+    }
+  ],
+  "status": "active",
+  "established": 2007,
+  "locations": [],
+  "types": ["funder", "government"],
+  "links": [{ "type": "website", "value": "https://erc.europa.eu" }],
+  "external_ids": [],
+  "relationships": []
+}

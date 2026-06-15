@@ -1,0 +1,41 @@
+{
+  "expanded-result": [
+    {
+      "orcid-id": "0000-0001-6528-2027",
+      "given-names": "Richard",
+      "family-names": "Hallett",
+      "credit-name": "Richard Hallett",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-1111-2222",
+      "given-names": "Jane",
+      "family-names": "Hallett",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-3333-4444",
+      "given-names": "John",
+      "family-names": "Hallett",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0004-5555-6666",
+      "given-names": "Mary",
+      "family-names": "Hallett",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    }
+  ],
+  "num-found": 4
+}
