@@ -17,7 +17,7 @@ export default async function Layout(props: Props) {
 
   // Handle uppercase redirect (moved from page.tsx)
   if (params.orcid != orcid)
-    redirect(`/orcid.org/${orcid}/`)
+    redirect(`/orcid.org/${orcid}`)
 
   return (
     <>
