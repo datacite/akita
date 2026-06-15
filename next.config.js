@@ -37,16 +37,6 @@ const nextConfig = {
     ]
   },
   staticPageGenerationTimeout: 220,
-  webpack: (config) => {
-    // workaround for package not defined as module
-    config.module.rules.push({
-      test: /\.js/,
-      include: /node_modules\/nuqs/,
-      type: 'javascript/auto',
-    })
-
-    return config
-  },
 }
 
 module.exports = withSentryConfig(nextConfig, {
