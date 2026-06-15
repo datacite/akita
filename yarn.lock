@@ -2616,7 +2616,6 @@ __metadata:
     maltipoo: "https://github.com/datacite/maltipoo#2.1.1"
     next: "npm:15.5.18"
     next-plausible: "npm:^3.12.5"
-    nuqs: "npm:^1.16.0"
     nyc: "npm:^15.1.0"
     prettier: "npm:^2.3.1"
     react: "npm:19.1.1"
@@ -6427,13 +6426,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mitt@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "mitt@npm:3.0.1"
-  checksum: 10c0/3ab4fdecf3be8c5255536faa07064d05caa3dd332bd318ff02e04621f7b3069ca1de9106cfe8e7ced675abfc2bec2ce4c4ef321c4a1bb1fb29df8ae090741913
-  languageName: node
-  linkType: hard
-
 "module-details-from-path@npm:^1.0.3, module-details-from-path@npm:^1.0.4":
   version: 1.0.4
   resolution: "module-details-from-path@npm:1.0.4"
@@ -6628,17 +6620,6 @@ __metadata:
   dependencies:
     path-key: "npm:^3.0.0"
   checksum: 10c0/6f9353a95288f8455cf64cbeb707b28826a7f29690244c1e4bb61ec573256e021b6ad6651b394eb1ccfd00d6ec50147253aba2c5fe58a57ceb111fad62c519ac
-  languageName: node
-  linkType: hard
-
-"nuqs@npm:^1.16.0":
-  version: 1.20.0
-  resolution: "nuqs@npm:1.20.0"
-  dependencies:
-    mitt: "npm:^3.0.1"
-  peerDependencies:
-    next: ">=13.4 <14.0.2 || ^14.0.3"
-  checksum: 10c0/8e1b67a96c6fda21023924db03b31f3eecf387097ee23685f35fbd1118ff202d1f8f3efd5e1e45bb5736e701a13da0d6cefc98cbe813315dc6462c2e38e2c93f
   languageName: node
   linkType: hard
 
