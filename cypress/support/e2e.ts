@@ -1,3 +1,9 @@
+const registerApiMocks = require('./registerApiMocks')
+
+beforeEach(() => {
+  registerApiMocks()
+})
+
 // import '@cypress/code-coverage/support'
 //require('@cypress/react/support')
 
