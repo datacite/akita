@@ -168,78 +168,72 @@ async function tryMockResponse(input, init) {
     }
   }
 
-  // Server-side claims proxy (`/claims` routes) calls DataCite GraphQL.
-  if (url.hostname === 'api.stage.datacite.org' && url.pathname === '/graphql') {
-    const method = init?.method || (input instanceof Request ? input.method : 'GET')
-    if (method !== 'POST') return null
+  // Server-side claims proxy (`/claims` routes) calls the DataCite REST claims API.
+  if (url.hostname === 'api.stage.datacite.org' && url.pathname === '/claims') {
+    const method = (init?.method || (input instanceof Request ? input.method : 'GET')).toUpperCase()
 
-    const bodyText = await readRequestBody(input, init)
-    let variables = {}
-    let query = ''
-    try {
-      const parsed = JSON.parse(bodyText)
-      variables = parsed.variables || {}
-      query = parsed.query || ''
-    } catch {
-      return null
-    }
-
-    if (query.includes('getDoiClaimQuery')) {
+    if (method === 'GET') {
       return jsonResponse({
-        data: {
-          work: {
-            id: variables.id,
-            registrationAgency: { id: 'datacite' },
-            claims: [{
-              id: 'claim-1',
-              sourceId: 'orcid_search',
-              state: 'ready',
-              claimAction: null,
-              claimed: null,
-              errorMessages: [],
-            }],
+        data: [{
+          id: 'claim-1',
+          type: 'claims',
+          attributes: {
+            sourceId: 'orcid_search',
+            state: 'ready',
+            claimAction: null,
+            claimed: null,
+            errorMessages: [],
           },
-        },
+        }],
       })
     }
 
-    if (query.includes('createClaim')) {
-      return jsonResponse({
-        data: {
-          createClaim: {
-            claim: {
-              id: 'claim-1',
-              sourceId: variables.sourceId || 'orcid_search',
-              state: 'waiting',
-              claimAction: 'create',
-              claimed: null,
-              errorMessages: [],
-            },
-            errors: null,
-          },
-        },
-      })
-    }
+    if (method === 'POST') {
+      const bodyText = await readRequestBody(input, init)
+      let sourceId = 'orcid_search'
+      try {
+        const parsed = JSON.parse(bodyText)
+        sourceId = parsed?.claim?.source_id || sourceId
+      } catch {
+        return jsonResponse({ errors: [{ title: 'Invalid request body' }] }, 400)
+      }
 
-    if (query.includes('deleteClaim')) {
       return jsonResponse({
         data: {
-          deleteClaim: {
-            claim: {
-              id: variables.id,
-              sourceId: 'orcid_search',
-              state: 'deleted',
-              claimAction: 'delete',
-              claimed: null,
-              errorMessages: [],
-            },
-            errors: null,
+          id: 'claim-1',
+          type: 'claims',
+          attributes: {
+            sourceId,
+            state: 'waiting',
+            claimAction: 'create',
+            claimed: null,
+            errorMessages: [],
           },
         },
-      })
+      }, 202)
     }
 
     return null
+  }
+
+  if (url.hostname === 'api.stage.datacite.org' && url.pathname.startsWith('/claims/')) {
+    const method = (init?.method || (input instanceof Request ? input.method : 'GET')).toUpperCase()
+    if (method !== 'DELETE') return null
+
+    const id = decodeURIComponent(url.pathname.slice('/claims/'.length))
+    return jsonResponse({
+      data: {
+        id,
+        type: 'claims',
+        attributes: {
+          sourceId: 'orcid_search',
+          state: 'deleted',
+          claimAction: 'delete',
+          claimed: null,
+          errorMessages: [],
+        },
+      },
+    })
   }
 
   if (url.hostname === 'api.stage.datacite.org' && url.pathname === '/dois') {

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Claim } from 'src/data/types'
+import { Claim, ClaimMutationResult } from 'src/data/types'
 
 export const claimKeys = {
   all: ['claim'] as const,
@@ -7,20 +7,32 @@ export const claimKeys = {
 }
 
 export interface QueryData {
-  work: {
-    id: string
-    registrationAgency: { id: string }
-    claims: Claim[]
-  }
+  claims: Claim[]
 }
 
 export interface QueryVar {
   id: string
 }
 
-export interface MutationResponse {
-  claim: Claim | null
-  errors: Array<{ status?: number; source?: string; title: string }> | null
+/** Claim shape as returned by JSON.parse (dates are ISO strings). */
+type ClaimJson = Omit<Claim, 'claimed'> & { claimed: string | null }
+
+function normalizeClaim(raw: ClaimJson): Claim {
+  return {
+    ...raw,
+    claimed: raw.claimed ? new Date(raw.claimed) : null,
+  }
+}
+
+function normalizeQueryData(json: { claims?: ClaimJson[] }): QueryData {
+  return { claims: (json.claims ?? []).map(normalizeClaim) }
+}
+
+function normalizeMutationResult(json: ClaimMutationResult & { claim?: ClaimJson | null }): ClaimMutationResult {
+  return {
+    ...json,
+    claim: json.claim ? normalizeClaim(json.claim) : null,
+  }
 }
 
 async function fetchClaim(doi: string): Promise<QueryData> {
@@ -28,17 +40,17 @@ async function fetchClaim(doi: string): Promise<QueryData> {
   const json = await response.json()
 
   if (!response.ok) {
-    throw new Error(json.error || 'Failed to fetch claim')
+    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to fetch claim')
   }
 
   if (json.errors?.length) {
-    throw new Error(json.errors[0].message || 'Failed to fetch claim')
+    throw new Error(json.errors[0].title || 'Failed to fetch claim')
   }
 
-  return json
+  return normalizeQueryData(json)
 }
 
-async function createClaimRequest(doi: string, sourceId: string): Promise<MutationResponse> {
+async function createClaimRequest(doi: string, sourceId: string): Promise<ClaimMutationResult> {
   const response = await fetch('/claims', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -47,33 +59,31 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<Mutati
   const json = await response.json()
 
   if (!response.ok) {
-    throw new Error(json.error || 'Failed to create claim')
+    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to create claim')
   }
 
   if (json.errors?.length) {
-    const err = json.errors[0]
-    throw new Error(err.title || err.message || 'Failed to create claim')
+    throw new Error(json.errors[0].title || 'Failed to create claim')
   }
 
-  return json
+  return normalizeMutationResult(json)
 }
 
-async function deleteClaimRequest(id: string): Promise<MutationResponse> {
+async function deleteClaimRequest(id: string): Promise<ClaimMutationResult> {
   const response = await fetch(`/claims/${encodeURIComponent(id)}`, {
     method: 'DELETE',
   })
   const json = await response.json()
 
   if (!response.ok) {
-    throw new Error(json.error || 'Failed to delete claim')
+    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to delete claim')
   }
 
   if (json.errors?.length) {
-    const err = json.errors[0]
-    throw new Error(err.title || err.message || 'Failed to delete claim')
+    throw new Error(json.errors[0].title || 'Failed to delete claim')
   }
 
-  return json
+  return normalizeMutationResult(json)
 }
 
 function updateClaimInCache(
@@ -82,14 +92,14 @@ function updateClaimInCache(
   updatedClaim: Claim
 ) {
   queryClient.setQueryData<QueryData>(claimKeys.detail(doiId), (existing) => {
-    if (!existing?.work) return existing
+    if (!existing) return existing
 
-    if (!existing.work.claims || existing.work.claims.length === 0) {
-      return { work: { ...existing.work, claims: [updatedClaim] } }
+    if (!existing.claims || existing.claims.length === 0) {
+      return { claims: [updatedClaim] }
     }
 
     let replaced = false
-    const claims = existing.work.claims.map((claim) => {
+    const claims = existing.claims.map((claim) => {
       if (claim.id === updatedClaim.id) {
         replaced = true
         return updatedClaim
@@ -97,12 +107,7 @@ function updateClaimInCache(
       return claim
     })
 
-    return {
-      work: {
-        ...existing.work,
-        claims: replaced ? claims : [...claims, updatedClaim],
-      },
-    }
+    return { claims: replaced ? claims : [...claims, updatedClaim] }
   })
 }
 
@@ -111,7 +116,7 @@ export function useClaimQuery(variables: QueryVar) {
     queryKey: claimKeys.detail(variables.id),
     queryFn: () => fetchClaim(variables.id),
     refetchInterval: (query) => {
-      const claim = query.state.data?.work?.claims?.[0]
+      const claim = query.state.data?.claims?.[0]
       return claim?.state === 'waiting' ? 10000 : false
     },
   })

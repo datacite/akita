@@ -18,6 +18,8 @@ type Props = {
   doi_id: string
 }
 
+// Only rendered for DataCite works; see doi.org Content.tsx registrationAgency guard.
+
 const HELP_CONTENT = {
   'No user and/or ORCID token': <>Enable permissions in <a href={PROFILES_SETTINGS_URL} target='_blank' rel='noreferrer'>Account Settings</a> to add this work to your ORCID record</>,
 } as const
@@ -38,7 +40,7 @@ export default function Claim({ doi_id }: Props) {
   const { mutate: deleteClaim, isPending: isDeleting } = useDeleteClaimMutation(doi_id)
   const isSubmitting = isCreating || isDeleting
 
-  const claim = data?.work.claims[0]
+  const claim = data?.claims[0]
   const state = claim?.state ?? 'ready'
   const isClaimed = state === 'done' && claim?.claimed != null
   const isActionPossible = state !== 'waiting'
@@ -68,10 +70,6 @@ export default function Claim({ doi_id }: Props) {
       },
       onError: onMutationError,
     })
-  }
-
-  if (data?.work.registrationAgency && data.work.registrationAgency.id !== 'datacite') {
-    return null
   }
 
   if (loading) {
