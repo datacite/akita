@@ -53,7 +53,7 @@ function toAbsoluteUrl(input) {
 
 /** @param {string} q */
 function decodeQueryParam(q) {
-  let out = q
+  let out
   try {
     out = decodeURIComponent(q)
     if (out.includes('%')) out = decodeURIComponent(out)
