@@ -2,18 +2,8 @@ import React, { PropsWithChildren, Suspense } from "react";
 import { Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { Source_Sans_3 } from 'next/font/google';
-import * as Sentry from '@sentry/node'
 
 import 'src/styles.css'
-
-import { SENTRY_DSN, IS_PROD } from "src/data/constants";
-
-if (typeof SENTRY_DSN !== 'undefined') {
-  Sentry.init({
-    enabled: IS_PROD,
-    dsn: SENTRY_DSN
-  })
-}
 
 export const metadata: Metadata = {
   title: 'DataCite Commons',
