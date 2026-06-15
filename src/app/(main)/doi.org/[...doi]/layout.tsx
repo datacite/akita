@@ -25,7 +25,11 @@ export default async function Layout(props: Props) {
     const { data } = await fetchCrossrefFunder(doi)
 
     if (!data?.organization?.id) notFound()
-    redirect(`/ror.org${rorFromUrl(data.organization.id)}`)
+
+    const rorPath = rorFromUrl(data.organization.id)
+    if (!rorPath) notFound()
+
+    redirect(`/ror.org/${rorPath.replace(/^\//, '')}`)
   }
 
   // Fetch DOI data (moved from page.tsx)
