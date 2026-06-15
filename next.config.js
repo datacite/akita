@@ -24,7 +24,6 @@ const COMMIT_SHA =
 
 
 module.exports = withSourceMaps({
-  typedRoutes: true,
   outputFileTracingExcludes: {
     '*': [
       'node_modules/@swc/core-linux-x64-gnu',
