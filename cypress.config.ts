@@ -5,6 +5,9 @@ export default defineConfig({
   video: false,
   projectId: 'yur1cf',
   retries: 2,
+  env: {
+    strictApiMocks: process.env.CYPRESS_NODE_ENV === 'test',
+  },
   e2e: {
     setupNodeEvents(on, config) {},
     baseUrl: 'http://localhost:3000',

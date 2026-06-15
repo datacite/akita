@@ -8,7 +8,7 @@ describe('Search Organizations', () => {
     cy.get('input[name="query"]')
       .type('oxford{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       .should('contain', 'Organizations')
       // results are rendered
       .get('.organization')
@@ -30,7 +30,7 @@ describe('Search Organizations', () => {
     cy.get('input[name="query"]')
       .type('ror.org/052gg0110{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       .should('contain', 'Organization')
       // results are rendered
       .get('.organization')
@@ -52,7 +52,7 @@ describe('Search Organizations', () => {
     cy.get('input[name="query"]')
       .type('oxford{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       // results are found
       .should('contain', 'Organizations')
       .get('#search-clear >')
@@ -66,7 +66,7 @@ describe('Search Organizations', () => {
       .type('xxx{enter}')
       // timeout for the query results to return
       // return introduction text
-      .get('.alert-warning', { timeout: 60000 })
+      .get('.alert-warning', { timeout: 15000 })
       .should('contain', 'No results found.')
   })
 })
