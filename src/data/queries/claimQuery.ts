@@ -117,7 +117,7 @@ export function useClaimQuery(variables: QueryVar) {
     queryFn: () => fetchClaim(variables.id),
     refetchInterval: (query) => {
       const claim = query.state.data?.claims?.[0]
-      return claim?.state === 'waiting' ? 10000 : false
+      return claim?.state === 'waiting' ? 2000 : false
     },
   })
 
