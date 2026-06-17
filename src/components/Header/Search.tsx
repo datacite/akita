@@ -20,14 +20,14 @@ export default function Search() {
   const router = useRouter()
 
   const [searchInput, setSearchInput] = useState(searchParams?.get('query')?.toString() || '')
+  const [isFocused, setIsFocused] = useState(false)
 
-  // Update searchInput when URL changes (e.g., back button)
+  // Update searchInput when URL changes (e.g., back button), but not while typing
   React.useEffect(() => {
+    if (isFocused) return
     const queryParam = searchParams?.get('query')?.toString() || ''
-    if (searchInput !== queryParam) {
-      setSearchInput(queryParam)
-    }
-  }, [searchParams])
+    setSearchInput((current) => (current !== queryParam ? queryParam : current))
+  }, [searchParams, isFocused])
 
   function search(query: string) {
     const params = new URLSearchParams(searchParams || {})
@@ -48,6 +48,8 @@ export default function Search() {
         onChange={e => {
           setSearchInput(e.target.value)
         }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         key="searchInput"
         className={`form-control ${styles.input}`}
         type="text"
