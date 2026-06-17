@@ -35,17 +35,21 @@ function normalizeMutationResult(json: ClaimMutationResult & { claim?: ClaimJson
   }
 }
 
+function throwIfApiError(response: Response, json: any, fallbackMessage: string): void {
+  if (!response.ok) {
+    throw new Error(json.error || json.errors?.[0]?.title || fallbackMessage)
+  }
+
+  if (json.errors?.length) {
+    throw new Error(json.errors[0].title || fallbackMessage)
+  }
+}
+
 async function fetchClaim(doi: string): Promise<QueryData> {
   const response = await fetch(`/claims?doi=${encodeURIComponent(doi)}`)
   const json = await response.json()
 
-  if (!response.ok) {
-    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to fetch claim')
-  }
-
-  if (json.errors?.length) {
-    throw new Error(json.errors[0].title || 'Failed to fetch claim')
-  }
+  throwIfApiError(response, json, `Failed to fetch claim (${response.status} ${response.statusText})`)
 
   return normalizeQueryData(json)
 }
@@ -58,13 +62,11 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<ClaimM
   })
   const json = await response.json()
 
-  if (!response.ok) {
-    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to create claim')
-  }
-
-  if (json.errors?.length) {
-    throw new Error(json.errors[0].title || 'Failed to create claim')
-  }
+  throwIfApiError(
+    response,
+    json,
+    `Failed to create claim (HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ''})`,
+  )
 
   return normalizeMutationResult(json)
 }
@@ -75,13 +77,11 @@ async function deleteClaimRequest(id: string): Promise<ClaimMutationResult> {
   })
   const json = await response.json()
 
-  if (!response.ok) {
-    throw new Error(json.error || json.errors?.[0]?.title || 'Failed to delete claim')
-  }
-
-  if (json.errors?.length) {
-    throw new Error(json.errors[0].title || 'Failed to delete claim')
-  }
+  throwIfApiError(
+    response,
+    json,
+    `Failed to delete claim (HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ''})`,
+  )
 
   return normalizeMutationResult(json)
 }
@@ -94,7 +94,7 @@ function updateClaimInCache(
   queryClient.setQueryData<QueryData>(claimKeys.detail(doiId), (existing) => {
     if (!existing) return existing
 
-    if (!existing.claims || existing.claims.length === 0) {
+    if (!existing.claims?.length) {
       return { claims: [updatedClaim] }
     }
 
