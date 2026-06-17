@@ -29,7 +29,7 @@ export default async function Layout(props: Props) {
     const rorPath = rorFromUrl(data.organization.id)
     if (!rorPath) notFound()
 
-    redirect(`/ror.org/${rorPath.replace(/^\//, '')}`)
+    redirect(`/ror.org/${rorPath}`)
   }
 
   // Fetch DOI data (moved from page.tsx)

@@ -15,7 +15,7 @@ const PersonEmployment: React.FunctionComponent<Props> = ({ employment }) => {
 
     return (
       <h4 className="work">
-        <Link prefetch={false} href={'/ror.org' + rorFromUrl(employment.organizationId)}>
+        <Link prefetch={false} href={'/ror.org/' + rorFromUrl(employment.organizationId)}>
           {employment.organizationName}
         </Link>
       </h4>

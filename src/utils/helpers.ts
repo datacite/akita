@@ -47,7 +47,12 @@ export const orcidFromUrl = (orcidInput: string) => {
 }
 
 export const rorFromUrl = (rorUrl: string) => {
-  return rorUrl ? rorUrl.substring(15) : null
+  if (!rorUrl) return null
+  const path = rorUrl.includes('ror.org/')
+    ? rorUrl.split('ror.org/')[1]
+    : rorUrl
+  const id = path.replace(/^\/+|\/+$/g, '')
+  return id || null
 }
 
 export function normalizeRorUrl(rorId: string): string | undefined {
