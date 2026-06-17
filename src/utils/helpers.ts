@@ -48,9 +48,21 @@ export const orcidFromUrl = (orcidInput: string) => {
 
 export const rorFromUrl = (rorUrl: string) => {
   if (!rorUrl) return null
-  const path = rorUrl.includes('ror.org/')
-    ? rorUrl.split('ror.org/')[1]
-    : rorUrl
+  const trimmed = rorUrl.trim()
+  let path = trimmed
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      const parsed = new URL(trimmed)
+      if (parsed.hostname !== 'ror.org' && parsed.hostname !== 'www.ror.org') {
+        return null
+      }
+      path = parsed.pathname
+    } catch {
+      return null
+    }
+  } else if (trimmed.startsWith('ror.org/')) {
+    path = trimmed.slice('ror.org/'.length)
+  }
   const id = path.replace(/^\/+|\/+$/g, '')
   return id || null
 }
