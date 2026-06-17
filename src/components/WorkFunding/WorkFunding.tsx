@@ -17,7 +17,7 @@ const WorkFunding: React.FunctionComponent<Props> = ({ funding }) => {
         return '/doi.org/' + doiFromUrl(funding.funderIdentifier)
       }
       if (url.host === 'ror.org') {
-        return '/ror.org' + rorFromUrl(funding.funderIdentifier)
+        return '/ror.org/' + rorFromUrl(funding.funderIdentifier)
       }
     } catch (e) {
       return null

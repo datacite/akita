@@ -8,7 +8,7 @@ describe('Search Works', () => {
     cy.get('input[name="query"]')
       .type('climate{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       .should('contain', 'Works')
       // results are rendered
       .get('.work')
@@ -35,10 +35,10 @@ describe('Search Works', () => {
   })
 
   it('search and reset', () => {
-    cy.get('input[name="query"]', { timeout: 60000 })
+    cy.get('input[name="query"]', { timeout: 15000 })
       .type('climate{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       // results are found
       .should('contain', 'Works')
       .get('#search-clear >')
@@ -51,7 +51,7 @@ describe('Search Works', () => {
   //   cy.get('input[name="query"]')
   //     .type('10.17863/cam.330{enter}')
   //     // the results are rendered
-  //     .get('.panel-body .metadata', { timeout: 60000 })
+  //     .get('.panel-body .metadata', { timeout: 15000 })
   //     .should(
   //       'contain',
   //       'Article published 2016 via Apollo - University of Cambridge Repository (staging)'
@@ -68,7 +68,7 @@ describe('Search Works', () => {
   //     .get('.panel-body .tags')
   //     .should('contain', 'Text')
   //     // no results count for single result
-  //     .get('.member-results', { timeout: 60000 })
+  //     .get('.member-results', { timeout: 15000 })
   //     .should('contain', 'Work')
   //     // all facets are rendered
   //     .get('.panel.facets')
@@ -86,7 +86,7 @@ describe('Search Works', () => {
     cy.get('input[name="query"]')
       .type('xxxxxxxxxxxx{enter}')
       // timeout for the query results to return
-      .get('.alert-warning', { timeout: 60000 })
+      .get('.alert-warning', { timeout: 15000 })
       .should('contain', 'No results found.')
       // no results count for zero results
       .get('.member-results')
@@ -99,7 +99,7 @@ describe('Search Works', () => {
   // it("search and use facets", () => {
   //   cy.get('input[name="query"]')
   //     .type('hallett')
-  //     .get(':nth-child(2) > .panel-body > ul > :nth-child(2) > a', { timeout: 60000 })
+  //     .get(':nth-child(2) > .panel-body > ul > :nth-child(2) > a', { timeout: 15000 })
   //     .click()
   //     // timeout for the query results to return
   //     .get('.member-results')
@@ -121,7 +121,7 @@ describe('Search Works', () => {
   // it("search and filter by license", () => {
   //   cy.get('input[name="query"]')
   //     .type('science')
-  //     .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 60000 })
+  //     .get(':nth-child(2) > .panel-body > ul > :nth-child(4) > a', { timeout: 15000 })
   //     .click()
   //     .get('.member-results')
   //     .should('contain', 'Results')
@@ -140,11 +140,11 @@ describe('Search Works', () => {
   // it("search with pagination", () => {
   //   cy.get('input[name="query"]')
   //     .type('hallett')
-  //     .get('.member-results', { timeout: 60000 })
+  //     .get('.member-results', { timeout: 15000 })
   //     .should('contain', 'Results')
   //     .get('.pager > :nth-child(2) > a').click()
   //     // timeout for the query results to return
-  //     .get('.member-results', { timeout: 60000 })
+  //     .get('.member-results', { timeout: 15000 })
   //     .should('contain', 'Results')
   //     // all facets are rendered
   //     .get('.panel.facets').should(($facet) => {

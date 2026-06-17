@@ -8,7 +8,7 @@ describe('Search People', () => {
     cy.get('input[name="query"]')
       .type('richard hallett{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       .should('contain', 'People')
       // results are rendered
       .get('.person')
@@ -21,7 +21,7 @@ describe('Search People', () => {
     cy.get('input[name="query"]')
       .type('hallett{enter}')
       // timeout for the query results to return
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       // results are found
       .should('contain', 'Person')
       .get('#search-clear >')
@@ -34,7 +34,7 @@ describe('Search People', () => {
     cy.get('input[name="query"]')
       .type('0000-0001-6528-2027{enter}')
       // the results are rendered
-      .get('.member-results', { timeout: 60000 })
+      .get('.member-results', { timeout: 15000 })
       .should('contain', 'People')
       // results are rendered
       .get('.person')
@@ -47,7 +47,7 @@ describe('Search People', () => {
     cy.get('input[name="query"]')
       .type('xxxxxyyyyy{enter}')
       // timeout for the query results to return
-      .get('.alert-warning', { timeout: 60000 })
+      .get('.alert-warning', { timeout: 15000 })
       .should('contain', 'No results found.')
   })
 })

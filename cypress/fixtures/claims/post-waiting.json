@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": "claim-1",
+    "type": "claims",
+    "attributes": {
+      "sourceId": "orcid_search",
+      "state": "waiting",
+      "claimAction": "create",
+      "claimed": null,
+      "errorMessages": []
+    }
+  }
+}

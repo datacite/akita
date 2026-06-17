@@ -17,7 +17,7 @@ const PersonTable: React.FunctionComponent<Props> = ({ people }) => {
     const personLink = link ? <Link href={link}>{personName}</Link> : personName;
     const affiliations = person.affiliation?.map((item) => {
       return item.id && item.id.startsWith('https://ror.org/') ? (
-        <Link key={item.id} href={'/ror.org' + rorFromUrl(item.id)}>
+        <Link key={item.id} href={'/ror.org/' + rorFromUrl(item.id)}>
           {item.name}
         </Link>
       ) : (

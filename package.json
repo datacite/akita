@@ -13,9 +13,13 @@
     "prettier-format": "prettier --config .prettierrc.json '**/*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
     "cy:coverage": "npx nyc report --reporter=lcov",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "cy:run:record": "cypress run --record --quiet"
+    "cy:open": "CYPRESS_NODE_ENV=test cypress open",
+    "cy:run": "CYPRESS_NODE_ENV=test cypress run",
+    "cy:run:record": "CYPRESS_NODE_ENV=test cypress run --record --quiet",
+    "fixtures:update": "yarn node scripts/update-cypress-fixtures.cjs",
+    "fixtures:update:dry": "yarn node scripts/update-cypress-fixtures.cjs --dry-run",
+    "fixtures:update:one": "yarn node scripts/update-cypress-fixtures.cjs --fixture",
+    "fixtures:list": "yarn node scripts/update-cypress-fixtures.cjs --list"
   },
   "nyc": {
     "reporter": [

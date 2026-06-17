@@ -42,7 +42,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation?.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link prefetch={false} href={'/ror.org' + rorFromUrl(item.id)}>
+                    <Link prefetch={false} href={'/ror.org/' + rorFromUrl(item.id)}>
                         {item.name}
                     </Link>
                   </div>
@@ -65,7 +65,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
     return (
       <>
         <h4 className="work">
-          <Link prefetch={false} href={'/ror.org' + rorFromUrl(person.id)}>
+          <Link prefetch={false} href={'/ror.org/' + rorFromUrl(person.id)}>
             {name}
           </Link>
         </h4>
@@ -75,7 +75,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
               {person.affiliation?.map((item) =>
                 item.id ? (
                   <div className="affiliation" key={item.id}>
-                    <Link prefetch={false} href={'/ror.org' + rorFromUrl(item.id)}>
+                    <Link prefetch={false} href={'/ror.org/' + rorFromUrl(item.id)}>
                         {item.name}
                     </Link>
                   </div>
@@ -103,7 +103,7 @@ const WorkPerson: React.FunctionComponent<Props> = ({ person }) => {
             {person.affiliation?.map((item) =>
               item.id ? (
                 <div className="affiliation" key={item.id}>
-                  <Link href={'/ror.org' + rorFromUrl(item.id)}>
+                  <Link href={'/ror.org/' + rorFromUrl(item.id)}>
                       {item.name}
                   </Link>
                 </div>

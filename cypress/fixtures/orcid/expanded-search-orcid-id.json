@@ -1,0 +1,41 @@
+{
+  "expanded-result": [
+    {
+      "orcid-id": "0000-0001-6528-2027",
+      "given-names": "Martin",
+      "family-names": "Fenner",
+      "credit-name": "Martin Fenner",
+      "other-name": [],
+      "email": [],
+      "institution-name": ["DataCite"]
+    },
+    {
+      "orcid-id": "0000-0002-6945-7290",
+      "given-names": "Example",
+      "family-names": "Researcher",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0001-5489-3594",
+      "given-names": "Sample",
+      "family-names": "Author",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-5121-9489",
+      "given-names": "Test",
+      "family-names": "Person",
+      "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    }
+  ],
+  "num-found": 4
+}
