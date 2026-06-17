@@ -32,7 +32,7 @@ export default function SearchRepositories({ variables }: Props) {
 
   const repositories = data?.repositories
 
-  if (error || !repositories || repositories.nodes.length == 0) return (
+  if (error || !repositories || repositories.nodes.length === 0) return (
     <Col md={{ span: 9, offset: 3 }}>
       <div className="alert-works">
         <Alert variant="warning">
@@ -53,7 +53,7 @@ export default function SearchRepositories({ variables }: Props) {
 
 
   const renderFacets = () => {
-    if (repositories.totalCount == 0) return ""
+    if (repositories.totalCount === 0) return ""
     const defaultActiveKeys = ['certificate', 'software']
 
     return (
