@@ -1,5 +1,8 @@
 const { matchRequest, isApiRequestUrl } = require('../mockApiRouter.cjs')
 
+// Strict API mocking is on unless explicitly disabled. Unmocked API requests get HTTP 599
+// instead of hitting the network. To turn strict mode off, set strictApiMocks: false in
+// cypress.config.ts env, pass --env strictApiMocks=false, or set CYPRESS_strictApiMocks=false.
 const strictMocks = Cypress.env('strictApiMocks') !== false
 
 const API_INTERCEPT_PATTERNS = [
