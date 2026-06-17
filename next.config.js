@@ -8,7 +8,9 @@ const COMMIT_SHA =
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: Boolean(
+    SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN
+  ),
   outputFileTracingExcludes: {
     '*': [
       'node_modules/@swc/core-linux-x64-gnu',
