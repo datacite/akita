@@ -75,10 +75,7 @@ describe('Search', () => {
 
       it('search with click', () => {
         cy.visit('/doi.org/10.17863/cam.10544')
-        cy.get('#works-link')
-          .click()
-          .get('input[name="query"]')
-          .type('climate')
+        cy.typeHeaderSearchAfterNav('#works-link', '/doi.org', 'climate')
         cy.get('.search-submit').click()
         cy.get('#search-nav .active', { timeout: 15000 })
           .should('contain', 'Works')
@@ -260,10 +257,7 @@ describe('Search', () => {
 
       it('search with click', () => {
         cy.visit('/ror.org/013meh722')
-        cy.get('#organizations-link')
-          .click()
-          .get('input[name="query"]')
-          .type('Cambridge')
+        cy.typeHeaderSearchAfterNav('#organizations-link', '/ror.org', 'Cambridge')
         cy.get('.search-submit').click()
         cy.get('#search-nav .active', { timeout: 15000 })
           .should('contain', 'Organizations')
