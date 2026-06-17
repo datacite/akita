@@ -62,11 +62,7 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<ClaimM
   })
   const json = await response.json()
 
-  throwIfApiError(
-    response,
-    json,
-    `Failed to create claim (HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ''})`,
-  )
+  throwIfApiError(response, json, `Failed to create claim (${response.status} ${response.statusText})`)
 
   return normalizeMutationResult(json)
 }
@@ -77,11 +73,7 @@ async function deleteClaimRequest(id: string): Promise<ClaimMutationResult> {
   })
   const json = await response.json()
 
-  throwIfApiError(
-    response,
-    json,
-    `Failed to delete claim (HTTP ${response.status}${response.statusText ? ` ${response.statusText}` : ''})`,
-  )
+  throwIfApiError(response, json, `Failed to delete claim (${response.status} ${response.statusText})`)
 
   return normalizeMutationResult(json)
 }
