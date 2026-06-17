@@ -558,33 +558,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:1.11.4":
-  version: 1.11.4
-  resolution: "@formatjs/ecma402-abstract@npm:1.11.4"
-  dependencies:
-    "@formatjs/intl-localematcher": "npm:0.2.25"
-    tslib: "npm:^2.1.0"
-  checksum: 10c0/c25d56a54f7c6a356c8475ba76ba5357bbf8cb035ab1da5a6b3b75b41a49dae6e1790271bb619e8d09aca52f1daa3e28d5fa2297297fdef5e986e213be4c84b7
+"@formatjs/bigdecimal@npm:0.2.6":
+  version: 0.2.6
+  resolution: "@formatjs/bigdecimal@npm:0.2.6"
+  checksum: 10c0/8e39a52ffd77bb6ed877e044d16a8dc4282ab940b0d10caeaf94ba7db9a0b56e7440fc56caee369915d5614cff2116cb6ad46a199a53f2caa1b3b1735f808307
   languageName: node
   linkType: hard
 
-"@formatjs/intl-localematcher@npm:0.2.25":
-  version: 0.2.25
-  resolution: "@formatjs/intl-localematcher@npm:0.2.25"
-  dependencies:
-    tslib: "npm:^2.1.0"
-  checksum: 10c0/a49d5d1a09ff5d02b3c14176783f0e26978895878a35b986fafdf8ecbaa474d669eb1ee1b7a257167cb8df54d5001011d6abde691bc7f75fd123e070e87c194a
+"@formatjs/fast-memoize@npm:3.1.6":
+  version: 3.1.6
+  resolution: "@formatjs/fast-memoize@npm:3.1.6"
+  checksum: 10c0/6cac8413b09aa4771edd98a52d46a9adc2f02e8bce8756a2abbd1eea2cf977757ffbb4bc1b33b6c17092739cd0c33351dffa0ea58b22e431b9754a34e46fe093
   languageName: node
   linkType: hard
 
-"@formatjs/intl-numberformat@npm:^7.1.4":
-  version: 7.4.3
-  resolution: "@formatjs/intl-numberformat@npm:7.4.3"
+"@formatjs/intl-localematcher@npm:0.8.10":
+  version: 0.8.10
+  resolution: "@formatjs/intl-localematcher@npm:0.8.10"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:1.11.4"
-    "@formatjs/intl-localematcher": "npm:0.2.25"
-    tslib: "npm:^2.1.0"
-  checksum: 10c0/aa84fa2f9163c50c370577d85919b4d8bbdc94f00ae3d38ca85ee79768f1a046d0e4520614a5e839c281769fea7c7089ad7d0729877c02cad027152f6fd1d254
+    "@formatjs/fast-memoize": "npm:3.1.6"
+  checksum: 10c0/49a38b45d618de0ce857d62208e41af4c043a90d739a10828cb0a1e57c88c1ad28c27905ce57246ae5aa1c66834276a42665320d8294b01607d0e46b229d4a71
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-numberformat@npm:^9.3.11":
+  version: 9.3.11
+  resolution: "@formatjs/intl-numberformat@npm:9.3.11"
+  dependencies:
+    "@formatjs/bigdecimal": "npm:0.2.6"
+    "@formatjs/intl-localematcher": "npm:0.8.10"
+  checksum: 10c0/645864cff17f650488e69c68c1206889f09fde52c57445c5d9d049a5737d420a99d2e827f002e1f65c856694d9e945f61c92840444f0c6486b55cbd6980a59b5
   languageName: node
   linkType: hard
 
@@ -2246,7 +2249,7 @@ __metadata:
     "@cypress/code-coverage": "npm:^3.9.7"
     "@cypress/react": "npm:^6.1"
     "@cypress/webpack-dev-server": "npm:^1.7.0"
-    "@formatjs/intl-numberformat": "npm:^7.1.4"
+    "@formatjs/intl-numberformat": "npm:^9.3.11"
     "@fortawesome/fontawesome-svg-core": "npm:^7.2.0"
     "@fortawesome/free-brands-svg-icons": "npm:^7.2.0"
     "@fortawesome/free-regular-svg-icons": "npm:^7.2.0"
