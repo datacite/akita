@@ -45,8 +45,9 @@ export default function FacetListItem(props: Props) {
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
   const value = customValue || facet.id
+  const isActive = params.get(param) == value
 
-  if (params.get(param) == value) {
+  if (isActive) {
     // if param is present, delete from query and use checked icon
     params.delete(param)
     icon = checkIcon
@@ -56,9 +57,17 @@ export default function FacetListItem(props: Props) {
   }
   params.delete('cursor')
 
+  const filterActionLabel = `${isActive ? 'Remove' : 'Apply'} filter ${facet.title}`
+
   return (
     <ListGroup.Item as="li" key={facet.id}>
-    <Link prefetch={false} href={url + params.toString()} className={styles.facetlink}>
+    <Link
+      prefetch={false}
+      href={url + params.toString()}
+      className={styles.facetlink}
+      aria-label={filterActionLabel}
+      aria-pressed={isActive}
+    >
       <FontAwesomeIcon icon={icon} />
         <span className={styles.facetTitle}>
         {facet.title}
