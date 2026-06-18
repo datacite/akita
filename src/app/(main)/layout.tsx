@@ -2,7 +2,6 @@ import React, { PropsWithChildren, Suspense } from "react";
 import { Metadata } from 'next'
 import PlausibleProvider from 'next-plausible'
 import { Source_Sans_3 } from 'next/font/google';
-import * as Sentry from '@sentry/node'
 
 import 'src/styles.css'
 
@@ -16,18 +15,10 @@ import Footer from "src/components/Footer/Footer";
 import Providers from "./Providers";
 import ConsentedGoogleTagManager from "src/components/ConsentedGoogleTagManager/ConsentedGoogleTagManager";
 import Script from "next/script";
-import { SENTRY_DSN, IS_PROD } from "src/data/constants";
 import DiscoverWorksAlert from "src/components/DiscoverWorksAlert/DiscoverWorksAlert";
 
 
 config.autoAddCss = false
-
-if (typeof SENTRY_DSN !== 'undefined') {
-  Sentry.init({
-    enabled: IS_PROD,
-    dsn: SENTRY_DSN
-  })
-}
 
 export const metadata: Metadata = {
   title: 'DataCite Commons',
