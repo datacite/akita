@@ -1,4 +1,5 @@
 const registerApiMocks = require('./registerApiMocks')
+require('./commands')
 
 beforeEach(() => {
   registerApiMocks()
