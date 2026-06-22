@@ -5,52 +5,14 @@ import { Vega } from 'react-vega'
 
 import HelpIcon from '../HelpIcon/HelpIcon'
 import EmptyChart from '../EmptyChart/EmptyChart'
-import { MultilevelFacet } from 'src/data/types';
 import sankeySpec, { SankeyGraphData } from './SankeySpec'
 
 import styles from './SankeyGraph.module.scss'
-
 
 type Props = {
   titleText: string
   data: SankeyGraphData[]
   tooltipText?: string
-}
-
-
-export function multilevelToSankey(facets: MultilevelFacet[] | undefined): SankeyGraphData[] {
-  if (!facets) return []
-  const outerMap = new Map<SankeyGraphData['data'][0], Map<SankeyGraphData['data'][1], SankeyGraphData['count']>>();
-  facets = facets.filter(f => f.title)
-
-  facets.forEach(facet => {
-    facet.inner.forEach(i => {
-      const outerKey = facet.title
-      const innerKey = i.title
-      const count = i.count
-
-      let innerMap = outerMap.get(outerKey)
-
-      if (!innerMap) {
-        innerMap = new Map<SankeyGraphData['data'][1], SankeyGraphData['count']>()
-        outerMap.set(outerKey, innerMap)
-      }
-
-      const previousCount = innerMap.get(innerKey) || 0
-      const totalCount = count + previousCount
-      innerMap.set(innerKey, totalCount)
-    })
-  })
-
-  const data: SankeyGraphData[] = []
-
-  outerMap.forEach((innerMap, outerKey) => {
-    innerMap.forEach((count, innerKey) => {
-      data.push({ data: [outerKey, innerKey], count })
-    })
-  })
-
-  return data
 }
 
 
