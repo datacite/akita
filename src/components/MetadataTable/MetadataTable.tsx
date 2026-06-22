@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import { Tab, Tabs } from 'src/components/ReactBootstrap'
 
 import { Work } from 'src/data/types'
-import { truncate, chunk, startCase } from 'src/utils/helpers'
+import { asHtmlString, truncate, chunk, startCase } from 'src/utils/helpers'
 import ReactHtmlParser from 'html-react-parser'
 import sanitizeHtml from 'sanitize-html'
 import WorkFunding from 'src/components/WorkFunding/WorkFunding'
@@ -23,7 +23,8 @@ type MetadataType = typeof METADATA_TYPES[number]
 export default function MetadataTable({ metadata }: Props) {
   const description = (title, key) => {
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
-    const rawDescription = metadata.descriptions[0].description
+    const rawDescription = asHtmlString(metadata.descriptions[0].description)
+    if (!rawDescription) return ''
 
     const truncatedDescription = truncate(rawDescription, {
       length: 2500,
