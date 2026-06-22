@@ -1,5 +1,3 @@
-import '@formatjs/intl-numberformat/polyfill'
-import '@formatjs/intl-numberformat/locale-data/en'
 import ISO6391 from 'iso-639-1'
 import ISO31661 from 'iso-3166-1'
 import type { Facet, WorkMetadata, Person } from 'src/data/types'
@@ -7,10 +5,17 @@ import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarCha
 import { DOI_ID_BASE } from 'src/data/constants'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
-  let options = {}
-  if (compact && num >= 1e3)
-    options = { notation: 'compact', compactDisplay: 'short' }
-  return num.toLocaleString('en-US', options)
+  if (compact && num >= 1e3) {
+    try {
+      return num.toLocaleString('en-US', {
+        notation: 'compact',
+        compactDisplay: 'short',
+      })
+    } catch {
+      return num.toLocaleString('en-US')
+    }
+  }
+  return num.toLocaleString('en-US')
 }
 
 export const pluralize = (
@@ -272,4 +277,46 @@ export function cursorToPage(cursor: string) {
   if (!cursor) return 1
   const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
+}
+
+export function truncate(
+  str: string,
+  { length = 30, separator = '…' }: { length?: number; separator?: string } = {}
+): string {
+  if (!str || str.length <= length) return str
+  const slice = str.slice(0, length)
+  const lastSpace = slice.lastIndexOf(' ')
+  const end = lastSpace > length * 0.8 ? lastSpace : length
+  return str.slice(0, end).trimEnd() + separator
+}
+
+export function startCase(str: string): string {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/[_-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
+
+export function chunk<T>(arr: T[], size: number): T[][] {
+  if (!Number.isFinite(size) || size < 1) return []
+  const chunkSize = Math.floor(size)
+  const result: T[][] = []
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize))
+  }
+  return result
+}
+
+export function uniqBy<T>(arr: T[], key: keyof T): T[] {
+  const seen = new Set<unknown>()
+  return arr.filter((item) => {
+    const value = item[key]
+    if (seen.has(value)) return false
+    seen.add(value)
+    return true
+  })
 }

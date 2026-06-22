@@ -35,4 +35,16 @@ Cypress.on("uncaught:exception", (err) => {
   }
 });
 
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      typeHeaderSearchAfterNav(
+        navSelector: string,
+        expectedPathname: string,
+        query: string
+      ): Chainable<void>
+    }
+  }
+}
+
 export {}

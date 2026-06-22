@@ -1,9 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import startCase from 'lodash/startCase'
-
-import { orcidFromUrl } from '../../utils/helpers'
-import { rorFromUrl } from '../../utils/helpers'
+import { startCase, orcidFromUrl, rorFromUrl } from '../../utils/helpers'
 
 export interface Person {
   id: string

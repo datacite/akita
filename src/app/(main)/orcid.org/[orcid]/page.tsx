@@ -1,7 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import truncate from 'lodash/truncate'
+import { truncate } from 'src/utils/helpers'
 
 import { fetchPerson } from 'src/data/queries/personQuery'
 import RelatedContent from './RelatedContent'

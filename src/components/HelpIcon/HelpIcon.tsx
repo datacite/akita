@@ -46,12 +46,15 @@ const HelpIcon: React.FunctionComponent<Props> = ({
 			</a>
 		)
 
-		return <FontAwesomeIcon
-			icon={faQuestionCircle}
-			fontSize={size}
-			color={color}
-			style={positionStyle}
-		/>
+		return (
+			<span style={positionStyle}>
+				<FontAwesomeIcon
+					icon={faQuestionCircle}
+					fontSize={size}
+					color={color}
+				/>
+			</span>
+		)
 	}
 
 	if (text === null) return <Icon />

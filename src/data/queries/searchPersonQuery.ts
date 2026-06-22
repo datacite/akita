@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { parseInt } from 'lodash'
 import { People } from 'src/data/types'
 import { mapSearchJsonToPerson } from 'src/utils/helpers'
 import { ORCID_API_URL } from 'src/data/constants'
@@ -13,8 +12,8 @@ function buildSearchParams(variables: QueryVar): URLSearchParams {
 }
 
 function convertToQueryData(json: any, pageStr: string): QueryData {
-  const page = parseInt(pageStr)
-  const totalCount = parseInt(json['num-found'])
+  const page = Number.parseInt(pageStr, 10)
+  const totalCount = Number.parseInt(json['num-found'], 10)
   return {
     people: {
       __typename: 'PersonConnectionWithTotal',

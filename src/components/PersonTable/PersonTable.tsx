@@ -1,9 +1,8 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table'
-import startCase from 'lodash/startCase'
-import { Person } from 'src/components/WorkPerson/WorkPerson'
 import Link from 'next/link'
-import { rorFromUrl, orcidFromUrl } from 'src/utils/helpers'
+import { Person } from 'src/components/WorkPerson/WorkPerson'
+import { startCase, rorFromUrl, orcidFromUrl } from 'src/utils/helpers'
 
 type Props = {
   people: Person[]
