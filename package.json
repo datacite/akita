@@ -68,7 +68,7 @@
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "concurrently": "^9.1.2",
+    "concurrently": "^10.0.3",
     "cypress": "^13.6.3",
     "eslint": "^7.29.0",
     "prettier": "^2.3.1",
@@ -80,7 +80,8 @@
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "minimatch": "^3.1.4",
-    "picomatch": "^2.3.2"
+    "picomatch": "^2.3.2",
+    "postcss": "8.5.15"
   },
   "packageManager": "yarn@4.16.0+sha512.5374c94eb4ef6aa8188fb112f20c1aa6569f248d676c5e576e1fd2a1a4d8d87a96df65d9dfe1c2a0252cbe38bda46cf18d955005b81b43cc7607a5c9d56fd2b6"
 }
