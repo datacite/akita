@@ -302,9 +302,11 @@ export function startCase(str: string): string {
 }
 
 export function chunk<T>(arr: T[], size: number): T[][] {
+  if (!Number.isFinite(size) || size < 1) return []
+  const chunkSize = Math.floor(size)
   const result: T[][] = []
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size))
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    result.push(arr.slice(i, i + chunkSize))
   }
   return result
 }
