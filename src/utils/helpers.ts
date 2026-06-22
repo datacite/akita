@@ -273,3 +273,43 @@ export function cursorToPage(cursor: string) {
   const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
 }
+
+export function truncate(
+  str: string,
+  { length = 30, separator = '…' }: { length?: number; separator?: string } = {}
+): string {
+  if (!str || str.length <= length) return str
+  const slice = str.slice(0, length)
+  const lastSpace = slice.lastIndexOf(' ')
+  const end = lastSpace > length * 0.8 ? lastSpace : length
+  return str.slice(0, end).trimEnd() + separator
+}
+
+export function startCase(str: string): string {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/[_-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
+
+export function chunk<T>(arr: T[], size: number): T[][] {
+  const result: T[][] = []
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size))
+  }
+  return result
+}
+
+export function uniqBy<T>(arr: T[], key: keyof T): T[] {
+  const seen = new Set<unknown>()
+  return arr.filter((item) => {
+    const value = item[key]
+    if (seen.has(value)) return false
+    seen.add(value)
+    return true
+  })
+}
