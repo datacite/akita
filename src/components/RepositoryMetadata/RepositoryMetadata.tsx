@@ -2,7 +2,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Badge from 'react-bootstrap/Badge'
-import truncate from 'lodash/truncate'
+import { truncate } from 'src/utils/helpers'
 import Link from 'next/link'
 import { Repository } from 'src/data/types'
 

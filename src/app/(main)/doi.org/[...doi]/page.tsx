@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import truncate from 'lodash/truncate'
+import { truncate } from 'src/utils/helpers'
 
 import { fetchDoi } from 'src/data/queries/doiQuery'
 import RelatedContent from './RelatedContent'

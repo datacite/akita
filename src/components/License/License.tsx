@@ -11,7 +11,7 @@ import {
 import lcBcNotice from './local-contexts/bc-notice.png'
 import lcCiAttribution from './local-contexts/ci-attribution-incomplete.png'
 import lcTkNotice from './local-contexts/tk-notice.png'
-import uniqBy from 'lodash/uniqBy'
+import { uniqBy } from 'src/utils/helpers'
 import Image from 'next/image'
 
 import styles from './License.module.scss'
