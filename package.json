@@ -24,7 +24,6 @@
     "fixtures:list": "yarn node scripts/update-cypress-fixtures.cjs --list"
   },
   "dependencies": {
-    "@formatjs/intl-numberformat": "^7.1.4",
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
