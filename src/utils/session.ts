@@ -24,7 +24,13 @@ function decodeJwtPayload(token: string): any {
 }
 
 export const session = (): User => {
-  const sessionCookie = Cookies.getJSON('_datacite')
+  const raw = Cookies.get('_datacite')
+  let sessionCookie: { authenticated?: { access_token?: string } } | undefined
+  try {
+    sessionCookie = raw ? JSON.parse(raw) : undefined
+  } catch {
+    sessionCookie = undefined
+  }
   const token = sessionCookie?.authenticated?.access_token
   if (!token) return null
 

@@ -48,7 +48,7 @@
     "react": "19.1.1",
     "react-bootstrap": "^2.10.5",
     "react-content-loader": "^7.1.2",
-    "react-cookie-consent": "^8.0.0",
+    "react-cookie-consent": "^10.0.1",
     "react-dom": "19.1.1",
     "react-vega": "^7.6.0",
     "sanitize-html": "^2.13.0",
