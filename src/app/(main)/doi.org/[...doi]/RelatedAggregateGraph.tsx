@@ -2,7 +2,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import { GraphData, getRelatedWorksGraph } from 'src/data/queries/relatedWorks'
-import ForceDirectedGraph from 'src/components/ForceDirectedGraph/ForceDirectedGraph'
+import LazyForceDirectedGraph from 'src/components/ForceDirectedGraph/LazyForceDirectedGraph'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'
 import styles from "./RelatedAggregateGraph.module.scss"
 
@@ -52,7 +52,7 @@ export default async function RelatedAggregateGraph(props: Props) {
 
   let innerGraph = <EmptyChart title={emptyTitleText} />
   if (graphExists) {
-    innerGraph = <ForceDirectedGraph
+    innerGraph = <LazyForceDirectedGraph
       titleText={titleText}
       nodes={data.nodes}
       links={data.links}
