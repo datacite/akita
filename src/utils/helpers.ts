@@ -279,10 +279,20 @@ export function cursorToPage(cursor: string) {
   return potentialPage <= 1 ? 1 : potentialPage
 }
 
+export function asHtmlString(value: unknown): string {
+  if (typeof value === 'string') return value
+  if (value == null) return ''
+  if (Array.isArray(value)) {
+    return value.filter((part): part is string => typeof part === 'string').join(' ')
+  }
+  return ''
+}
+
 export function truncate(
   str: string,
   { length = 30, separator = '…' }: { length?: number; separator?: string } = {}
 ): string {
+  str = asHtmlString(str)
   if (!str || str.length <= length) return str
   const slice = str.slice(0, length)
   const lastSpace = slice.lastIndexOf(' ')
