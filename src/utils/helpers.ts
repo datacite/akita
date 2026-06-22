@@ -1,5 +1,3 @@
-import '@formatjs/intl-numberformat/polyfill'
-import '@formatjs/intl-numberformat/locale-data/en'
 import ISO6391 from 'iso-639-1'
 import ISO31661 from 'iso-3166-1'
 import type { Facet, WorkMetadata, Person } from 'src/data/types'
@@ -7,10 +5,17 @@ import type { HorizontalBarRecord } from 'src/components/HorizontalStackedBarCha
 import { DOI_ID_BASE } from 'src/data/constants'
 
 export const compactNumbers = (num: number, compact: boolean = false) => {
-  let options = {}
-  if (compact && num >= 1e3)
-    options = { notation: 'compact', compactDisplay: 'short' }
-  return num.toLocaleString('en-US', options)
+  if (compact && num >= 1e3) {
+    try {
+      return num.toLocaleString('en-US', {
+        notation: 'compact',
+        compactDisplay: 'short',
+      })
+    } catch {
+      return num.toLocaleString('en-US')
+    }
+  }
+  return num.toLocaleString('en-US')
 }
 
 export const pluralize = (
