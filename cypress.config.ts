@@ -1,7 +1,6 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  experimentalFetchPolyfill: false,
   video: false,
   projectId: 'yur1cf',
   retries: 2,
@@ -16,6 +15,8 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.test.*',
   },
+  // Component testing deferred: @cypress/webpack-dev-server v1 is incompatible with Cypress 15.
+  // Migrate to @cypress/webpack-dev-server v4 + webpack 5 (or Vite) before using `cypress open --component`.
   component: {
     setupNodeEvents(on, config) { },
     specPattern: 'src/components/**/*.test.*',

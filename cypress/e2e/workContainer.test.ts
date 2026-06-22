@@ -26,7 +26,9 @@ describe('workContainer with usage', () => {
   })
 
   it('chart', () => {
-    cy.get('.mark-rect', { timeout: 30000 }).should('be.visible')
+    cy.get('#over-time-tabs', { timeout: 30000 }).scrollIntoView()
+    cy.get('#over-time-tabs-tab-viewsOverTime').click()
+    cy.get('.usage-chart .vega-embed', { timeout: 30000 }).should('be.visible')
   })
 })
 
