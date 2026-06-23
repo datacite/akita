@@ -16,8 +16,8 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 
-const WorksDashboard = dynamic(() => import('src/components/WorksDashboard/WorksDashboard'))
-const SankeyGraph = dynamic(() => import('src/components/SankeyGraph/SankeyGraph'))
+const WorksDashboard = dynamic(() => import('src/components/WorksDashboard/WorksDashboard'), { ssr: false })
+const SankeyGraph = dynamic(() => import('src/components/SankeyGraph/SankeyGraph'), { ssr: false })
 
 interface Props {
   works: Works
