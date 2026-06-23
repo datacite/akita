@@ -10,7 +10,7 @@ import ReactHtmlParser from 'html-react-parser'
 type Props = {
   title: string
   titleLink: string
-  link: string
+  link?: string
   rights?: Rights[]
   offset?: boolean
 }
@@ -30,9 +30,9 @@ export default function Title({ title, titleLink, link, rights = [], offset = tr
       </Col>
       <Col xs="auto" className={styles.details}>
         <License rights={rights} />
-        <a href={link} target="_blank" rel="noreferrer" id="title-link" className={styles.link}>
+        {link && <a href={link} target="_blank" rel="noreferrer" id="title-link" className={styles.link}>
           {link}
-        </a>
+        </a>}
       </Col>
     </Row>
 
