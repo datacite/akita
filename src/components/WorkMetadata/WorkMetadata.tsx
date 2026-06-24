@@ -57,6 +57,15 @@ export default function WorkMetadata({
       )
 
     const titleHtml = metadata.titles[0].title
+    if (!titleHtml) {
+      return (
+        <h3 className="work">
+          <Link prefetch={false} href={'/doi.org/' + metadata.doi}>
+            No Title
+          </Link>
+        </h3>
+      )
+    }
     const sanitizedTitle = sanitizeHtml(titleHtml)
 
     return (
@@ -72,6 +81,7 @@ export default function WorkMetadata({
     if (!metadata.titles[0]) return <h3 className="member">No Title</h3>
 
     const titleHtml = metadata.titles[0].title
+    if (!titleHtml) return <h3 className="member">No Title</h3>
     const sanitizedTitle = sanitizeHtml(titleHtml)
 
     return (
@@ -190,10 +200,14 @@ export default function WorkMetadata({
   const description = () => {
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
 
-    const descriptionHtml = truncate(metadata.descriptions[0].description, {
-      length: 2500,
-      separator: '… '
-    })
+    const descriptionHtml = truncate(
+      metadata.descriptions[0].description,
+      {
+        length: 2500,
+        separator: '… '
+      }
+    )
+    if (!descriptionHtml) return ''
 
     const sanitizedDescription = sanitizeHtml(descriptionHtml)
     const parsedDescription = ReactHtmlParser(sanitizedDescription)

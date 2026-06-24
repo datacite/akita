@@ -24,6 +24,7 @@ export default function MetadataTable({ metadata }: Props) {
   const description = (title, key) => {
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
     const rawDescription = metadata.descriptions[0].description
+    if (!rawDescription) return ''
 
     const truncatedDescription = truncate(rawDescription, {
       length: 2500,

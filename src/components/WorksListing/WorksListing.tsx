@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import dynamic from 'next/dynamic'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -12,8 +13,11 @@ import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
 
 import Pager from 'src/components/Pager/Pager'
-import WorksDashboard, { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
-import SankeyGraph, { multilevelToSankey } from 'src/components/SankeyGraph/SankeyGraph'
+import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
+import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
+
+const WorksDashboard = dynamic(() => import('src/components/WorksDashboard/WorksDashboard'), { ssr: false })
+const SankeyGraph = dynamic(() => import('src/components/SankeyGraph/SankeyGraph'), { ssr: false })
 
 interface Props {
   works: Works

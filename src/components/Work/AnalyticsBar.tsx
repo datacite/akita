@@ -1,15 +1,24 @@
+'use client'
+
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { Tabs, Tab } from 'src/components/ReactBootstrap'
-import UsageChart from 'src/components/UsageChart/UsageChart'
 
 import { pluralize } from 'src/utils/helpers'
 import type { Work } from 'src/data/types'
 
+const UsageChart = dynamic(() => import('src/components/UsageChart/UsageChart'), {
+  ssr: false,
+  loading: () => (
+    <div className="usage-chart panel-body">
+      <p className="text-muted mb-0">Loading chart…</p>
+    </div>
+  ),
+})
 
 interface Props {
   doi: Work
 }
-
 
 export default function AnalyticsBar({ doi }: Props) {
   const views = doi.viewCount || 0
