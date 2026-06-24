@@ -8,7 +8,6 @@ import Alert from 'react-bootstrap/Alert'
 import Link from 'next/link'
 
 import Pager from 'src/components/Pager/Pager'
-import FairFilter from 'src/components/FairFilter/FairFilter'
 import FacetList from 'src/components/FacetList/FacetList'
 import FacetListGroup from 'src/components/FacetList/FacetListGroup'
 
@@ -58,8 +57,6 @@ export default function SearchRepositories({ variables }: Props) {
 
     return (
       <FacetListGroup defaultActiveKey={defaultActiveKeys}>
-        <FairFilter url="repositories/?" />
-
         <FacetList
           data={repositories.certificates || []}
           title="Certificates"
