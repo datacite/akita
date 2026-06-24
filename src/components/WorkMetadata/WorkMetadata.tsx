@@ -8,7 +8,7 @@ import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 
-import { asHtmlString, startCase, truncate, orcidFromUrl } from 'src/utils/helpers'
+import { startCase, truncate, orcidFromUrl } from 'src/utils/helpers'
 import ReactHtmlParser from 'html-react-parser'
 import sanitizeHtml from 'sanitize-html'
 import Link from 'next/link'
@@ -56,7 +56,7 @@ export default function WorkMetadata({
         </h3>
       )
 
-    const titleHtml = asHtmlString(metadata.titles[0].title)
+    const titleHtml = metadata.titles[0].title
     if (!titleHtml) {
       return (
         <h3 className="work">
@@ -80,7 +80,7 @@ export default function WorkMetadata({
   const externalTitle = () => {
     if (!metadata.titles[0]) return <h3 className="member">No Title</h3>
 
-    const titleHtml = asHtmlString(metadata.titles[0].title)
+    const titleHtml = metadata.titles[0].title
     if (!titleHtml) return <h3 className="member">No Title</h3>
     const sanitizedTitle = sanitizeHtml(titleHtml)
 
@@ -201,7 +201,7 @@ export default function WorkMetadata({
     if (!metadata.descriptions || !metadata.descriptions[0]) return ''
 
     const descriptionHtml = truncate(
-      asHtmlString(metadata.descriptions[0].description),
+      metadata.descriptions[0].description,
       {
         length: 2500,
         separator: '… '
