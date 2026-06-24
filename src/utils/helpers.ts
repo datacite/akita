@@ -208,6 +208,10 @@ export function mapJsonToWork(json: any, included: any[]) {
     id: DOI_ID_BASE + json.id,
     language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
     rights: attrs.rightsList,
+    descriptions: (attrs.descriptions ?? []).map((d: { description?: unknown; descriptionType?: string }) => ({
+      ...d,
+      description: normalizeTextField(d.description),
+    })),
     creators: mapPeople(attrs.creators),
     contributors: mapPeople(attrs.contributors),
     fieldsOfScience: extractFOS(attrs.subjects),
@@ -277,6 +281,15 @@ export function cursorToPage(cursor: string) {
   if (!cursor) return 1
   const potentialPage = cursor ? parseInt(cursor, 10) : 1
   return potentialPage <= 1 ? 1 : potentialPage
+}
+
+export function normalizeTextField(value: unknown): string {
+  if (value == null) return ''
+  if (typeof value === 'string') return value
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === 'string' && item !== '').join(' ')
+  }
+  return String(value)
 }
 
 export function truncate(
