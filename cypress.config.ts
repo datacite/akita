@@ -20,7 +20,7 @@ export default defineConfig({
   // Migrate to @cypress/webpack-dev-server v4 + webpack 5 (or Vite) before using `cypress open --component`.
   component: {
     setupNodeEvents(on, config) { },
-    specPattern: 'src/components/**/*.test.*',
+    specPattern: 'src/{components,utils}/**/*.test.*',
     devServer: {
       bundler: 'webpack',
       framework: 'react',
