@@ -40,7 +40,7 @@ export default async function Content(props: Props) {
       </Col>
       <Col md={9}>
         <h2 className="visually-hidden">Repository Details</h2>
-        <Title title={repository.name} titleLink={repository.url} link={repository.re3dataUrl} offset={false} />
+        <Title title={repository.name} titleLink={repository.url} offset={false} />
         <RepositoryDetail repo={repository} />
       </Col>
     </Row>
