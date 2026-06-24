@@ -208,6 +208,10 @@ export function mapJsonToWork(json: any, included: any[]) {
     id: DOI_ID_BASE + json.id,
     language: { id: attrs.language, name: ISO6391.getName(attrs.language) },
     rights: attrs.rightsList,
+    descriptions: (attrs.descriptions ?? []).map((d: { description?: unknown; descriptionType?: string }) => ({
+      ...d,
+      description: normalizeTextField(d.description),
+    })),
     creators: mapPeople(attrs.creators),
     contributors: mapPeople(attrs.contributors),
     fieldsOfScience: extractFOS(attrs.subjects),
@@ -286,6 +290,13 @@ export function asHtmlString(value: unknown): string {
     return value.filter((part): part is string => typeof part === 'string').join(' ')
   }
   return ''
+export function normalizeTextField(value: unknown): string {
+  if (value == null) return ''
+  if (typeof value === 'string') return value
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === 'string' && item !== '').join(' ')
+  }
+  return String(value)
 }
 
 export function truncate(

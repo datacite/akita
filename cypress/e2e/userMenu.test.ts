@@ -3,7 +3,9 @@
 // describe('User Menu', () => {
 //   beforeEach(() => {
 //     cy.setCookie('_consent', 'true')
-//     cy.setCookie('_datacite', Cypress.env('userCookie'), { log: false })
+//     cy.env(['userCookie']).then(({ userCookie }) => {
+//       cy.setCookie('_datacite', userCookie, { log: false })
+//     })
 //   })
 
 // it('menu item', () => {

@@ -1,13 +1,14 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  allowCypressEnv: false,
   video: false,
   projectId: 'yur1cf',
   retries: 2,
-  env: {
+  expose: {
     // Enabled for `cy:run` / CI (`CYPRESS_NODE_ENV=test`). Unmocked browser API calls fail with
-    // HTTP 599. Strict mode stays on unless you pass strictApiMocks: false (here, --env, or
-    // CYPRESS_strictApiMocks=false).
+    // HTTP 599. Strict mode stays on unless you pass strictApiMocks: false (here, --expose, or
+    // CYPRESS_expose_strictApiMocks=false).
     strictApiMocks: process.env.CYPRESS_NODE_ENV === 'test',
   },
   e2e: {
