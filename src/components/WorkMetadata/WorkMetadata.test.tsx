@@ -3,6 +3,7 @@
 import React from 'react'
 import { mount } from '@cypress/react'
 import WorkMetadata from './WorkMetadata'
+import { mapJsonToWork } from 'src/utils/helpers'
 
 describe('WorkMetadata Component', () => {
   let data
@@ -40,6 +41,35 @@ describe('WorkMetadata Component', () => {
     mount(<WorkMetadata metadata={data} />)
     cy.get('.description')
       .contains('Example description of the item.')
+      .should('be.visible')
+  })
+
+  it('description from array API response', () => {
+    const work = mapJsonToWork(
+      {
+        id: '10.12688/f1000research.14399.1',
+        attributes: {
+          ...data,
+          descriptions: [
+            {
+              description: [
+                'First paragraph about workflows.',
+                null,
+                'Second paragraph about submission.',
+              ],
+            },
+          ],
+        },
+        relationships: {},
+      },
+      []
+    )
+    mount(<WorkMetadata metadata={work} />)
+    cy.get('.description')
+      .contains('First paragraph about workflows.')
+      .should('be.visible')
+    cy.get('.description')
+      .contains('Second paragraph about submission.')
       .should('be.visible')
   })
 
