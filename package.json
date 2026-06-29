@@ -67,7 +67,7 @@
     "@types/react-dom": "19.1.7",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@typescript-eslint/parser": "^8.62.0",
     "concurrently": "^10.0.3",
     "cypress": "^15.17.0",
     "eslint": "^7.29.0",
