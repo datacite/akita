@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 import { Works } from 'src/data/types'
 import ProductionChart from '../ProductionChart/ProductionChart'
 import HorizontalStackedBarChart from '../HorizontalStackedBarChart/HorizontalStackedBarChart'
-import { resourceTypeDomain, resourceTypeRange, licenseRange, otherDomain, otherRange } from '../../data/color_palettes'
+import { RESOURCE_TYPE_DOMAIN, RESOURCE_TYPE_RANGE, LICENSE_RANGE, OTHER_DOMAIN, OTHER_RANGE } from 'maltipoo'
 import { getTopFive, toBarRecord } from 'src/utils/helpers'
 import VerticalBarChart from '../VerticalBarChart/VerticalBarChart'
 
@@ -57,8 +57,8 @@ function WorksDashboard({ works, show = {}, children }: Props) {
             chartTitle={'Work Types'}
             topCategory={{ title: resourceTypes.topCategory, percent: resourceTypes.topPercent }}
             data={resourceTypes.data}
-            domain={resourceTypeDomain}
-            range={resourceTypeRange}
+            domain={RESOURCE_TYPE_DOMAIN}
+            range={RESOURCE_TYPE_RANGE}
             tooltipText={tooltipText('resourceType')} />
         </Col>}
         {(show.licenses || show.all) && <Col xs={12} sm={4}>
@@ -66,8 +66,8 @@ function WorksDashboard({ works, show = {}, children }: Props) {
             chartTitle='Licenses'
             topCategory={{ title: licenses.topCategory, percent: licenses.topPercent }}
             data={licenses.data}
-            domain={[...otherDomain, ...licenses.data.map(l => l.title)]}
-            range={[...otherRange, ...licenseRange]}
+            domain={[...OTHER_DOMAIN, ...licenses.data.map(l => l.title)]}
+            range={[...OTHER_RANGE, ...LICENSE_RANGE]}
             tooltipText={'The field "rights" from DOI metadata was used to generate this chart, showing the % of licenses used across works.'} />
         </Col>}
         {(show.creatorsAndContributors || show.all) && <Col xs={12} sm={4}>
