@@ -2054,7 +2054,7 @@ __metadata:
     iso-639-1: "npm:^3.1.3"
     linkify-react: "npm:^4.2.0"
     linkifyjs: "npm:^4.2.0"
-    maltipoo: "https://github.com/datacite/maltipoo#2.2.5"
+    maltipoo: "https://github.com/datacite/maltipoo#2.2.6"
     next: "npm:15.5.18"
     next-plausible: "npm:^3.12.5"
     prettier: "npm:^2.3.1"
@@ -4564,10 +4564,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"maltipoo@https://github.com/datacite/maltipoo#2.2.5":
+"maltipoo@https://github.com/datacite/maltipoo#2.2.6":
   version: 2.2.5
-  resolution: "maltipoo@https://github.com/datacite/maltipoo.git#commit=dc8ade24995711f5a9b7520e169522504b61496b"
-  checksum: 10c0/0550ee3bca94176aa3ec9e577cf65d807630ecfe833879b5fa1e7c8c83cebb17a0bb261e176b6437f90d10a118952c7b1ebba8123f2be27ff91e3008e40eaa02
+  resolution: "maltipoo@https://github.com/datacite/maltipoo.git#commit=cec3474717423319850e02eb00105de3426a40a2"
+  checksum: 10c0/8d6b10ed8b5460e1480e10fc3c7a8d86ae2091b82214a4c4ba17e352eb74ca9cb2d3f69b3b9ec4376062cd4a248391637766f3cc6cc94cc1f5c083ec0349a30b
   languageName: node
   linkType: hard
 
