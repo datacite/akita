@@ -1,8 +1,8 @@
 import { VisualizationSpec } from 'vega-embed'
 import {
-  resourceTypeDomain,
-  resourceTypeRange
-} from '../../data/color_palettes'
+  RESOURCE_TYPE_DOMAIN,
+  RESOURCE_TYPE_RANGE
+} from 'maltipoo'
 import { Mark, Scale, Signal } from 'vega'
 
 export interface ForceDirectedGraphNode {
@@ -240,8 +240,8 @@ const nodeCounts: Mark = {
 
 const forceDirectedGraphSpec = (
   width = 500,
-  domain = resourceTypeDomain.concat(['People', 'Organizations']),
-  range = resourceTypeRange.concat(['#A83', '#FAD'])
+  domain = RESOURCE_TYPE_DOMAIN.concat(['People', 'Organizations']),
+  range = RESOURCE_TYPE_RANGE.concat(['#A83', '#FAD'])
 ): VisualizationSpec => ({
   $schema: 'https://vega.github.io/schema/vega/v5.json',
   width: width,
