@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import Loading from '../Loading/Loading'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -42,7 +42,7 @@ export default function SearchWork(props: Props) {
         {works.totalCount > 0 && (
           <Row className="border-bottom ms-1 mb-3">
             <Col className="ps-0"><h3 className="member-results border-0 mb-0">{pluralize(works.totalCount, 'Work')}</h3></Col>
-            <Col xs="auto"><SortBy /></Col>
+            <Col xs="auto"><Suspense><SortBy /></Suspense></Col>
           </Row>
         )}
       </Col>
