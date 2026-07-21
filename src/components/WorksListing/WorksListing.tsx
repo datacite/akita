@@ -207,8 +207,6 @@ function Item(props: {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  console.log(pathname)
-
   const isActive = params.get('sort') == props.value
 
   if (isActive) {
