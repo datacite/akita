@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row'
 
 import CommonsError from 'src/components/Error/Error'
 import Loading from 'src/components/Loading/Loading'
-import WorksListing from 'src/components/WorksListing/WorksListing'
+import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import SearchBox from 'src/components/SearchBox/SearchBox'
 import mapSearchparams from './mapSearchParams'
 import { useRelatedContentManager } from 'src/data/managers/RelatedContentManager'
@@ -60,7 +60,10 @@ export default function RelatedContent() {
         <Col md={3} className="d-none d-md-block">
         </Col>
         <Col md={9}>
-          <h3 className="member-results" id="title">Related Works</h3>
+          <Row className="border-bottom ms-1 mb-3">
+            <Col className="ps-0"><h3 className="member-results border-0 mb-0">Related Works</h3></Col>
+            <Col xs="auto"><SortBy /></Col>
+          </Row>
         </Col>
       </Row>
       <Row>

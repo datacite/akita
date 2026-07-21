@@ -10,7 +10,7 @@ import { QueryVar, useSearchDoiQuery } from 'src/data/queries/searchDoiQuery'
 import { useSearchDoiFacetsQuery } from 'src/data/queries/searchDoiFacetsQuery'
 
 import NoResults from 'src/components/NoResults/NoResults'
-import WorksListing from 'src/components/WorksListing/WorksListing'
+import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers'
 
 interface Props {
@@ -40,7 +40,10 @@ export default function SearchWork(props: Props) {
       </Col>
       <Col md={9}>
         {works.totalCount > 0 && (
-          <h3 className="member-results">{pluralize(works.totalCount, 'Work')}</h3>
+          <Row className="border-bottom ms-1 mb-3">
+            <Col className="ps-0"><h3 className="member-results border-0 mb-0">{pluralize(works.totalCount, 'Work')}</h3></Col>
+            <Col xs="auto"><SortBy /></Col>
+          </Row>
         )}
       </Col>
     </Row>
