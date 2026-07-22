@@ -211,7 +211,7 @@ export function SortBy() {
             >
               {item.label}
             </Item>
-            {item.appendDivider && <Dropdown.Divider className="pt-1 border-0" />}
+            {'appendDivider' in item && item.appendDivider && <Dropdown.Divider className="pt-1 border-0" />}
           </>
         ))}
       </Dropdown.Menu>
