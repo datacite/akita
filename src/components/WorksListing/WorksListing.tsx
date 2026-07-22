@@ -16,7 +16,7 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { faSortAlphaAsc, faSortAlphaDesc, faSortAmountAsc, faSortNumericAsc, faSortNumericDesc, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faSortAlphaAsc, faSortAlphaDesc, faSortAmountAsc, faSortNumericAsc, faSortNumericDesc, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
@@ -153,9 +153,9 @@ const HIGH_TO_LOW = 'high to low'
 const LOW_TO_HIGH = 'low to high'
 
 const SORT_OPTIONS = [
-  { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc },
-  { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
-  { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
+  // { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc },
+  // { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
+  // { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: 'name', label: 'DOI Name', order: A_TO_Z, icon: faSortAlphaAsc },
   // { value: '-name', label: 'DOI Name', order: Z_TO_A, icon: faSortAlphaDesc },
   { value: 'title', label: 'Title', order: A_TO_Z, icon: faSortAlphaAsc },
@@ -173,29 +173,47 @@ const SORT_OPTIONS = [
 ] as const
 
 export function SortBy() {
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  const activeSort = SORT_OPTIONS.find(e => e.value === params.get('sort')) || { label: 'Sort by...', icon: faSortAmountAsc }
+  const activeSort = SORT_OPTIONS.find(e => e.value === params.get('sort')) || { value: undefined, label: 'Sort by...', icon: faSortAmountAsc }
 
-  return <Dropdown>
-    <Dropdown.Toggle className="border-0 m-0" variant="light">
-      <FontAwesomeIcon icon={activeSort.icon} /> {activeSort.label}
-    </Dropdown.Toggle>
+  // Reset sort params for 'Clear' button
+  params.delete('sort')
+  params.delete('cursor')
 
-    <Dropdown.Menu>
-      {SORT_OPTIONS.map((item) => (
-        <Item
-          key={item.value}
-          value={item.value}
-          order={item.order}
-          icon={item.icon}
-        >
-          {item.label}
-        </Item>
-      ))}
-    </Dropdown.Menu>
-  </Dropdown>
+  return <div className="d-flex align-items-center">
+    {activeSort.value && <Link
+      href={`${pathname}/?${params.toString()}`}
+      id="search-clear"
+      type="button"
+      title="Clear sort"
+      aria-label="Clear sort"
+      className="text-secondary"
+    >
+      <FontAwesomeIcon icon={faTimes} />
+    </Link>
+    }
+    <Dropdown>
+      <Dropdown.Toggle className="border-0 m-0" variant="light">
+        <FontAwesomeIcon icon={activeSort.icon} /> {activeSort.label}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {SORT_OPTIONS.map((item) => (
+          <Item
+            key={item.value}
+            value={item.value}
+            order={item.order}
+            icon={item.icon}
+          >
+            {item.label}
+          </Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+  </div>
 }
 
 function Item(props: {
