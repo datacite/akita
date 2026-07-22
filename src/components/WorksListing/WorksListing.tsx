@@ -153,13 +153,13 @@ const HIGH_TO_LOW = 'high to low'
 const LOW_TO_HIGH = 'low to high'
 
 const SORT_OPTIONS = [
-  // { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc },
+  { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc, appendDivider: true },
   // { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: 'name', label: 'DOI Name', order: A_TO_Z, icon: faSortAlphaAsc },
   // { value: '-name', label: 'DOI Name', order: Z_TO_A, icon: faSortAlphaDesc },
   { value: 'title', label: 'Title', order: A_TO_Z, icon: faSortAlphaAsc },
-  { value: '-title', label: 'Title', order: Z_TO_A, icon: faSortAlphaDesc },
+  { value: '-title', label: 'Title', order: Z_TO_A, icon: faSortAlphaDesc, appendDivider: true },
   // { value: '-created', label: 'Created', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'created', label: 'Created', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: '-updated', label: 'Updated', order: NEWEST_FIRST, icon: faSortNumericDesc },
@@ -188,7 +188,7 @@ export function SortBy() {
       href={`${pathname}/?${params.toString()}`}
       id="search-clear"
       type="button"
-      title="Clear sort"
+      title="Revert to default sort (Relevance)"
       aria-label="Clear sort"
       className="text-secondary"
     >
@@ -200,16 +200,19 @@ export function SortBy() {
         <FontAwesomeIcon icon={activeSort.icon} /> {activeSort.label}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className="remove-dropdown-margin">
         {SORT_OPTIONS.map((item) => (
-          <Item
-            key={item.value}
-            value={item.value}
-            order={item.order}
-            icon={item.icon}
-          >
-            {item.label}
-          </Item>
+          <>
+            <Item
+              key={item.value}
+              value={item.value}
+              order={item.order}
+              icon={item.icon}
+            >
+              {item.label}
+            </Item>
+            {item.appendDivider && <Dropdown.Divider className="pt-1 border-0" />}
+          </>
         ))}
       </Dropdown.Menu>
     </Dropdown>
@@ -226,7 +229,7 @@ function Item(props: {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  const isActive = params.get('sort') == props.value
+  const isActive = params.get('sort') === props.value || (props.value === 'relevance' && !params.get('sort'))
 
   if (isActive) {
     // if param is present, delete from query
