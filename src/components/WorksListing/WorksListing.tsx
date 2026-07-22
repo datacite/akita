@@ -20,6 +20,7 @@ import { faSortAlphaAsc, faSortAlphaDesc, faSortAmountAsc, faSortNumericAsc, faS
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
+import Link from 'next/link'
 
 const WorksDashboard = dynamic(() => import('src/components/WorksDashboard/WorksDashboard'), { ssr: false })
 const SankeyGraph = dynamic(() => import('src/components/SankeyGraph/SankeyGraph'), { ssr: false })
@@ -218,7 +219,7 @@ function Item(props: {
   }
   params.delete('cursor')
 
-  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isActive} className="d-inline-flex align-items-center gap-1">
+  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isActive} className="d-inline-flex align-items-center gap-1" as={Link}>
     <FontAwesomeIcon className={!isActive ? "text-secondary" : ""} icon={props.icon} /> {props.children}
     {props.order && <span className={`${!isActive ? "text-secondary" : ""} ms-auto text-end ps-4`}>{props.order}</span>}
   </Dropdown.Item>
