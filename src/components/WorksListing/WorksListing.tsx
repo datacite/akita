@@ -229,7 +229,8 @@ function Item(props: {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  const isActive = params.get('sort') === props.value || (props.value === 'relevance' && !params.get('sort'))
+  const isActive = params.get('sort') === props.value
+  const isSelected = isActive || (props.value === 'relevance' && !params.get('sort'))
 
   if (isActive) {
     // if param is present, delete from query
@@ -240,7 +241,7 @@ function Item(props: {
   }
   params.delete('cursor')
 
-  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isActive} className="d-inline-flex align-items-center gap-1" as={Link}>
+  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isSelected} className="d-inline-flex align-items-center gap-1" as={Link}>
     <FontAwesomeIcon className={!isActive ? "text-secondary" : ""} icon={props.icon} /> {props.children}
     {props.order && <span className={`${!isActive ? "text-secondary" : ""} ms-auto text-end ps-4`}>{props.order}</span>}
   </Dropdown.Item>
