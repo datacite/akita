@@ -9,7 +9,7 @@ import Loading from 'src/components/Loading/Loading'
 import { useRepositoryRelatedContentQuery } from 'src/data/queries/repositoryRelatedContentQuery'
 
 import Error from 'src/components/Error/Error'
-import WorksListing from 'src/components/WorksListing/WorksListing'
+import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers';
 import { useSearchParams } from 'next/navigation';
 import mapSearchparams from './mapSearchParams';
@@ -56,8 +56,13 @@ export default function RelatedContent({ repository }: Props) {
         <Col md={3} className="d-none d-md-block">
         </Col>
         <Col md={9}>
-          <h2 className="visually-hidden">Related Works Results Summary</h2>
-          <h3 className="member-results">{pluralize(totalCount, 'Work')}</h3>
+          <Row className="border-bottom ms-1 mb-3">
+            <Col className="ps-0">
+              <h2 className="visually-hidden">Related Works Results Summary</h2>
+              <h3 className="member-results border-0 mb-0">{pluralize(totalCount, 'Work')}</h3>
+            </Col>
+            <Col xs="auto"><SortBy /></Col>
+          </Row>
         </Col>
       </Row>
       <WorksListing
