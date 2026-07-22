@@ -9,7 +9,7 @@ import Loading from 'src/components/Loading/Loading'
 import { usePersonRelatedContentQuery } from 'src/data/queries/personRelatedContentQuery'
 
 import Error from 'src/components/Error/Error'
-import WorksListing from 'src/components/WorksListing/WorksListing'
+import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import SearchBox from 'src/components/SearchBox/SearchBox'
 import { pluralize } from 'src/utils/helpers';
 import { useParams, useSearchParams } from 'next/navigation'
@@ -58,7 +58,10 @@ export default function RelatedContent(props: Props) {
       <Col md={3} className="d-none d-md-block">
       </Col>
       <Col md={9}>
-        <h3 className="member-results" id="title">{pluralize(relatedWorks.totalCount, 'Work')}</h3>
+        <Row className="border-bottom ms-1 mb-3">
+          <Col className="ps-0"><h3 className="member-results border-0 mb-0">{pluralize(relatedWorks.totalCount, 'Work')}</h3></Col>
+          <Col xs="auto"><SortBy /></Col>
+        </Row>
       </Col>
     </Row>
     <WorksListing
