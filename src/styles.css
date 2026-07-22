@@ -687,29 +687,29 @@ body {
   /* https://datacite.org/wp-content/uploads/2024/06/DataCite_Design_manual-version_2_1.pdf */
 
   /* Primary colors */
-  --datacite-primary-dark-blue:  #243B54;
+  --datacite-primary-dark-blue: #243B54;
   --datacite-primary-light-blue: #00B1E2;
   --datacite-primary-light-blue-darker: color-mix(in srgb, var(--datacite-primary-light-blue), black 40%);
 
   /* Secondary colors (use in combination with primary dark blue) */
-  --datacite-secondary-grey:     #C0CED6;
+  --datacite-secondary-grey: #C0CED6;
   --datacite-secondary-grey-dark: color-mix(in srgb, var(--datacite-secondary-grey), black 40%);
   --datacite-secondary-turquoise: #46BCAB;
   --datacite-secondary-turquoise-dark: color-mix(in srgb, var(--datacite-secondary-turquoise), black 30%);
   --datacite-secondary-light-red: #F07C73;
 
   /* Additional colors */
-  --datacite-medium-blue:        #0D60D4;
-  --datacite-dark-pink:          #BC2B66;
-  --datacite-lime:               #E2E254;
+  --datacite-medium-blue: #0D60D4;
+  --datacite-dark-pink: #BC2B66;
+  --datacite-lime: #E2E254;
 
   /* Gradient endpoints (for backgrounds, infographics) */
-  --datacite-gradient-start:     var(--datacite-primary-light-blue);
-  --datacite-gradient-end:     var(--datacite-primary-dark-blue);
+  --datacite-gradient-start: var(--datacite-primary-light-blue);
+  --datacite-gradient-end: var(--datacite-primary-dark-blue);
 
   --datacite-color-primary: var(--datacite-primary-dark-blue);
   --datacite-color-secondary: var(--datacite-secondary-turquoise-dark, #318478);
-  --datacite-link-primary: var(--datacite-primary-light-blue-darker,#0071b2);
+  --datacite-link-primary: var(--datacite-primary-light-blue-darker, #0071b2);
 }
 
 .button:hover,
@@ -735,7 +735,8 @@ h3.member-results {
   color: var(--datacite-color-primary, #243b54);
 }
 
-.nav-tabs-member>li>button:focus, .nav-tabs-member button.active {
+.nav-tabs-member>li>button:focus,
+.nav-tabs-member button.active {
   color: var(--datacite-color-secondary, #1abc9c) !important;
 }
 
@@ -753,4 +754,16 @@ span.metrics-counter {
   margin-top: .5em;
   font-weight: 700;
   line-height: 1.2em;
+}
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: var(--datacite-color-secondary);
+}
+
+.remove-dropdown-margin.show {
+  margin-top: 0 !important;
+}
+
+.dropdown-divider {
+  width: 100% !important;
 }
