@@ -16,7 +16,7 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { faCheck, faSortAlphaAsc, faSortAlphaUp, faSortAmountAsc, faSortNumericUp, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSortAmountAsc } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
@@ -143,33 +143,13 @@ export default function WorksListing({
   )
 }
 
-
-
-const A_TO_Z = 'A to Z'
-const Z_TO_A = 'Z to A'
-// const NEWEST_FIRST = 'newest first'
-// const OLDEST_FIRST = 'oldest first'
-// const HIGH_TO_LOW = 'high to low'
-// const LOW_TO_HIGH = 'low to high'
-
 const SORT_OPTIONS = [
-  { value: null, label: 'Relevance', order: undefined, icon: faSortAmountAsc, appendDivider: true },
-  // { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
-  // { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
-  // { value: 'name', label: 'DOI Name', order: A_TO_Z, icon: faSortAlphaAsc },
-  // { value: '-name', label: 'DOI Name', order: Z_TO_A, icon: faSortAlphaDesc },
-  { value: 'title', label: 'Title', order: A_TO_Z, icon: faSortAlphaAsc },
-  { value: '-title', label: 'Title', order: Z_TO_A, icon: faSortAlphaUp, appendDivider: true },
-  // { value: '-created', label: 'Created', order: NEWEST_FIRST, icon: faSortNumericDesc },
-  // { value: 'created', label: 'Created', order: OLDEST_FIRST, icon: faSortNumericAsc },
-  // { value: '-updated', label: 'Updated', order: NEWEST_FIRST, icon: faSortNumericDesc },
-  // { value: 'updated', label: 'Updated', order: OLDEST_FIRST, icon: faSortNumericAsc },
-  { value: '-citation-count', label: 'Most Cited', order: undefined, icon: faSortNumericUp },
-  // { value: 'citation-count', label: 'Citation Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
-  { value: '-view-count', label: 'Most Viewed', order: undefined, icon: faSortNumericUp },
-  // { value: 'view-count', label: 'View Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
-  { value: '-download-count', label: 'Most Downloaded', order: undefined, icon: faSortNumericUp },
-  // { value: 'download-count', label: 'Download Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
+  { value: null, label: 'Relevance', appendDivider: true },
+  { value: 'title', label: 'Title (A to Z)' },
+  { value: '-title', label: 'Title (Z to A)', appendDivider: true },
+  { value: '-citation-count', label: 'Most Cited' },
+  { value: '-view-count', label: 'Most Viewed' },
+  { value: '-download-count', label: 'Most Downloaded' },
 ] as const
 
 export function SortBy() {
@@ -185,22 +165,17 @@ export function SortBy() {
   return <div className="d-flex align-items-center">
     <Dropdown>
       <Dropdown.Toggle className="border-0 m-0 bg-transparent" variant="light">
-        <span className="text-secondary">Sort by:</span> {activeSort.label} {"order" in activeSort && activeSort.order && `(${activeSort.order})`}
+        <span className="text-secondary">Sort by:</span> {activeSort.label}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className="remove-dropdown-margin">
         {SORT_OPTIONS.map((item) => (
-          <>
-            <Item
-              key={item.value}
-              value={item.value}
-              order={item.order}
-              icon={item.icon}
-            >
+          <React.Fragment key={item.value}>
+            <Item value={item.value}>
               {item.label}
             </Item>
             {'appendDivider' in item && item.appendDivider && <Dropdown.Divider className="pt-1 border-0" />}
-          </>
+          </React.Fragment>
         ))}
       </Dropdown.Menu>
     </Dropdown>
@@ -209,8 +184,6 @@ export function SortBy() {
 
 function Item(props: {
   value: null | typeof VALID_SORT_OPTIONS[number],
-  order?: string,
-  icon: IconDefinition,
   children: React.ReactNode
 }) {
   const pathname = usePathname()
@@ -232,6 +205,5 @@ function Item(props: {
   return <Dropdown.Item href={`${pathname}/?${params.toString()}`} className="d-inline-flex align-items-center gap-1" as={Link}>
     <FontAwesomeIcon icon={faCheck} opacity={isSelected ? 1 : 0} />
     {props.children}
-    {props.order && <span className="text-secondary ms-auto text-end ps-4">{props.order}</span>}
   </Dropdown.Item>
 }
