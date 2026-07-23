@@ -757,7 +757,7 @@ span.metrics-counter {
 }
 
 .dropdown-menu {
-  --bs-dropdown-link-active-bg: #34495E;
+  --bs-dropdown-link-active-bg: initial;
   overflow: hidden;
 }
 
@@ -767,4 +767,12 @@ span.metrics-counter {
 
 .dropdown-divider {
   width: 100% !important;
+}
+
+.bg-transparent,
+.bg-transparent:hover,
+.bg-transparent:focus,
+.bg-transparent:active {
+  color: initial !important;
+  background-color: transparent !important;
 }

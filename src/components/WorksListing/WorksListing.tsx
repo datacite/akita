@@ -16,7 +16,7 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { faSortAlphaAsc, faSortAlphaDesc, faSortAlphaUp, faSortAmountAsc, faSortNumericAsc, faSortNumericDesc, faSortNumericUp, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSortAlphaAsc, faSortAlphaUp, faSortAmountAsc, faSortNumericUp, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
@@ -147,13 +147,13 @@ export default function WorksListing({
 
 const A_TO_Z = 'A to Z'
 const Z_TO_A = 'Z to A'
-const NEWEST_FIRST = 'newest first'
-const OLDEST_FIRST = 'oldest first'
-const HIGH_TO_LOW = 'high to low'
-const LOW_TO_HIGH = 'low to high'
+// const NEWEST_FIRST = 'newest first'
+// const OLDEST_FIRST = 'oldest first'
+// const HIGH_TO_LOW = 'high to low'
+// const LOW_TO_HIGH = 'low to high'
 
 const SORT_OPTIONS = [
-  // { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc, appendDivider: true },
+  { value: null, label: 'Relevance', order: undefined, icon: faSortAmountAsc, appendDivider: true },
   // { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: 'name', label: 'DOI Name', order: A_TO_Z, icon: faSortAlphaAsc },
@@ -173,7 +173,6 @@ const SORT_OPTIONS = [
 ] as const
 
 export function SortBy() {
-  const pathname = usePathname()
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
@@ -185,8 +184,8 @@ export function SortBy() {
 
   return <div className="d-flex align-items-center">
     <Dropdown>
-      <Dropdown.Toggle className="border-0 m-0" variant="light">
-        <FontAwesomeIcon icon={activeSort.icon} /> {activeSort.label}
+      <Dropdown.Toggle className="border-0 m-0 bg-transparent" variant="light">
+        <span className="text-secondary">Sort by:</span> {activeSort.label} {"order" in activeSort && activeSort.order && `(${activeSort.order})`}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className="remove-dropdown-margin">
@@ -205,22 +204,11 @@ export function SortBy() {
         ))}
       </Dropdown.Menu>
     </Dropdown>
-
-    {activeSort.value && <Link
-      href={`${pathname}/?${params.toString()}`}
-      id="search-clear"
-      type="button"
-      title="Clear sort"
-      aria-label="Clear sort"
-      className="text-secondary"
-    >
-      <FontAwesomeIcon icon={faTimes} />
-    </Link>}
   </div>
 }
 
 function Item(props: {
-  value: typeof VALID_SORT_OPTIONS[number],
+  value: null | typeof VALID_SORT_OPTIONS[number],
   order?: string,
   icon: IconDefinition,
   children: React.ReactNode
@@ -232,7 +220,7 @@ function Item(props: {
   const isActive = params.get('sort') === props.value
   const isSelected = isActive || (props.value === 'relevance' && !params.get('sort'))
 
-  if (isActive) {
+  if (isActive || !props.value) {
     // if param is present, delete from query
     params.delete('sort')
   } else {
@@ -241,8 +229,9 @@ function Item(props: {
   }
   params.delete('cursor')
 
-  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isSelected} className="d-inline-flex align-items-center gap-1" as={Link}>
-    <FontAwesomeIcon className={!isSelected ? "text-secondary" : ""} icon={props.icon} /> {props.children}
-    {props.order && <span className={`${!isSelected ? "text-secondary" : ""} ms-auto text-end ps-4`}>{props.order}</span>}
+  return <Dropdown.Item href={`${pathname}/?${params.toString()}`} className="d-inline-flex align-items-center gap-1" as={Link}>
+    <FontAwesomeIcon icon={faCheck} opacity={isSelected ? 1 : 0} />
+    {props.children}
+    {props.order && <span className="text-secondary ms-auto text-end ps-4">{props.order}</span>}
   </Dropdown.Item>
 }
