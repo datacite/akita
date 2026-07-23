@@ -16,7 +16,7 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { faSortAlphaAsc, faSortAlphaDesc, faSortAmountAsc, faSortNumericAsc, faSortNumericDesc, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faSortAlphaAsc, faSortAlphaDesc, faSortAlphaUp, faSortAmountAsc, faSortNumericAsc, faSortNumericDesc, faSortNumericUp, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
@@ -153,22 +153,22 @@ const HIGH_TO_LOW = 'high to low'
 const LOW_TO_HIGH = 'low to high'
 
 const SORT_OPTIONS = [
-  { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc, appendDivider: true },
+  // { value: 'relevance', label: 'Relevance (default)', order: undefined, icon: faSortAmountAsc, appendDivider: true },
   // { value: '-published', label: 'Published', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'published', label: 'Published', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: 'name', label: 'DOI Name', order: A_TO_Z, icon: faSortAlphaAsc },
   // { value: '-name', label: 'DOI Name', order: Z_TO_A, icon: faSortAlphaDesc },
   { value: 'title', label: 'Title', order: A_TO_Z, icon: faSortAlphaAsc },
-  { value: '-title', label: 'Title', order: Z_TO_A, icon: faSortAlphaDesc, appendDivider: true },
+  { value: '-title', label: 'Title', order: Z_TO_A, icon: faSortAlphaUp, appendDivider: true },
   // { value: '-created', label: 'Created', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'created', label: 'Created', order: OLDEST_FIRST, icon: faSortNumericAsc },
   // { value: '-updated', label: 'Updated', order: NEWEST_FIRST, icon: faSortNumericDesc },
   // { value: 'updated', label: 'Updated', order: OLDEST_FIRST, icon: faSortNumericAsc },
-  { value: '-citation-count', label: 'Most Cited', order: undefined, icon: faSortNumericDesc },
+  { value: '-citation-count', label: 'Most Cited', order: undefined, icon: faSortNumericUp },
   // { value: 'citation-count', label: 'Citation Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
-  { value: '-view-count', label: 'Most Viewed', order: undefined, icon: faSortNumericDesc },
+  { value: '-view-count', label: 'Most Viewed', order: undefined, icon: faSortNumericUp },
   // { value: 'view-count', label: 'View Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
-  { value: '-download-count', label: 'Most Downloaded', order: undefined, icon: faSortNumericDesc },
+  { value: '-download-count', label: 'Most Downloaded', order: undefined, icon: faSortNumericUp },
   // { value: 'download-count', label: 'Download Count', order: LOW_TO_HIGH, icon: faSortNumericAsc },
 ] as const
 
@@ -184,17 +184,6 @@ export function SortBy() {
   params.delete('cursor')
 
   return <div className="d-flex align-items-center">
-    {activeSort.value && <Link
-      href={`${pathname}/?${params.toString()}`}
-      id="search-clear"
-      type="button"
-      title="Revert to default sort (Relevance)"
-      aria-label="Clear sort"
-      className="text-secondary"
-    >
-      <FontAwesomeIcon icon={faTimes} />
-    </Link>
-    }
     <Dropdown>
       <Dropdown.Toggle className="border-0 m-0" variant="light">
         <FontAwesomeIcon icon={activeSort.icon} /> {activeSort.label}
@@ -216,6 +205,17 @@ export function SortBy() {
         ))}
       </Dropdown.Menu>
     </Dropdown>
+
+    {activeSort.value && <Link
+      href={`${pathname}/?${params.toString()}`}
+      id="search-clear"
+      type="button"
+      title="Clear sort"
+      aria-label="Clear sort"
+      className="text-secondary"
+    >
+      <FontAwesomeIcon icon={faTimes} />
+    </Link>}
   </div>
 }
 
