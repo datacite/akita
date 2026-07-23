@@ -242,7 +242,7 @@ function Item(props: {
   params.delete('cursor')
 
   return <Dropdown.Item href={`${pathname}/?${params.toString()}`} active={isSelected} className="d-inline-flex align-items-center gap-1" as={Link}>
-    <FontAwesomeIcon className={!isActive ? "text-secondary" : ""} icon={props.icon} /> {props.children}
-    {props.order && <span className={`${!isActive ? "text-secondary" : ""} ms-auto text-end ps-4`}>{props.order}</span>}
+    <FontAwesomeIcon className={!isSelected ? "text-secondary" : ""} icon={props.icon} /> {props.children}
+    {props.order && <span className={`${!isSelected ? "text-secondary" : ""} ms-auto text-end ps-4`}>{props.order}</span>}
   </Dropdown.Item>
 }

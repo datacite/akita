@@ -757,7 +757,8 @@ span.metrics-counter {
 }
 
 .dropdown-menu {
-  --bs-dropdown-link-active-bg: var(--datacite-color-secondary);
+  --bs-dropdown-link-active-bg: #34495E;
+  overflow: hidden;
 }
 
 .remove-dropdown-margin.show {
