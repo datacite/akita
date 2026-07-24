@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Loading from 'src/components/Loading/Loading'
 import CommonsError from 'src/components/Error/Error'
-import WorksListing from 'src/components/WorksListing/WorksListing'
+import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import { useParams, useSearchParams } from 'next/navigation'
 import mapSearchparams from './mapSearchParams'
 import { useOrganizationRelatedContentManager } from 'src/data/managers/OrganizationRelatedContentManager'
@@ -56,7 +56,10 @@ export default function RelatedContent() {
     <Container fluid className="mt-5">
       <Row>
         <Col md={{ offset: 3 }} className="px-0">
-          <h3 className="member-results" id="title">Related Works</h3>
+          <Row className="border-bottom ms-1 mb-3">
+            <Col className="ps-0"><h3 className="member-results border-0 mb-0">Related Works</h3></Col>
+            <Col xs="auto"><SortBy /></Col>
+          </Row>
         </Col>
       </Row>
       <Row>
@@ -70,7 +73,7 @@ export default function RelatedContent() {
           hasPagination={hasPagination}
           hasNextPage={hasNextPage}
           model={'organization'}
-          url={url+ '?'}
+          url={url + '?'}
           endCursor={endCursor}
           searchBox={<SearchBox path={url} placeholder="Search within these works..." />}
         >
