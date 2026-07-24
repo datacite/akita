@@ -61,7 +61,7 @@ export default function RelatedContent() {
         </Col>
         <Col md={9}>
           <Row className="border-bottom ms-1 mb-3">
-            <Col className="ps-0"><h3 className="member-results border-0 mb-0">Related Works</h3></Col>
+            <Col className="ps-0"><h3 className="member-results border-0 mb-0" id="title">Related Works</h3></Col>
             <Col xs="auto"><SortBy /></Col>
           </Row>
         </Col>

@@ -16,10 +16,10 @@ import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
 import { multilevelToSankey } from 'src/components/SankeyGraph/sankeyUtils'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { faCheck, faSortAmountAsc } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { VALID_SORT_OPTIONS } from 'src/data/queries/searchDoiQuery'
+import type { SortOption } from 'src/data/queries/searchDoiQuery'
 import Link from 'next/link'
 
 const WorksDashboard = dynamic(() => import('src/components/WorksDashboard/WorksDashboard'), { ssr: false })
@@ -156,11 +156,7 @@ export function SortBy() {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
-  const activeSort = SORT_OPTIONS.find(e => e.value === params.get('sort')) || { value: undefined, label: 'Sort by...', icon: faSortAmountAsc }
-
-  // Reset sort params for 'Clear' button
-  params.delete('sort')
-  params.delete('cursor')
+  const activeSort = SORT_OPTIONS.find(e => e.value === params.get('sort')) || SORT_OPTIONS[0]
 
   return <div className="d-flex align-items-center">
     <Dropdown>
@@ -183,7 +179,7 @@ export function SortBy() {
 }
 
 function Item(props: {
-  value: null | typeof VALID_SORT_OPTIONS[number],
+  value: null | SortOption,
   children: React.ReactNode
 }) {
   const pathname = usePathname()
@@ -191,7 +187,7 @@ function Item(props: {
   const params = new URLSearchParams(Array.from(searchParams?.entries() || []));
 
   const isActive = params.get('sort') === props.value
-  const isSelected = isActive || (props.value === 'relevance' && !params.get('sort'))
+  const isSelected = isActive
 
   if (isActive || !props.value) {
     // if param is present, delete from query

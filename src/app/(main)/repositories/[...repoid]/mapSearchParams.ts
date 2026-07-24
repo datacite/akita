@@ -1,4 +1,4 @@
-import { SortOption } from "src/data/queries/searchDoiQuery"
+import type { SortOption } from 'src/data/queries/searchDoiQuery'
 
 export interface SearchParams {
   id: string
