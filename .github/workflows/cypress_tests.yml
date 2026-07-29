@@ -1,4 +1,6 @@
 name: Run Tests on Cypress.IO
+permissions:
+  contents: read
 on:
   workflow_call:
     secrets:
@@ -12,9 +14,6 @@ on:
         required: true
       CYPRESS_USER_COOKIE:
         required: true
-permissions:
-  contents: read
-
 jobs:
   cypress:
     runs-on: ubuntu-latest
