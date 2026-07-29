@@ -43,7 +43,7 @@
     "linkify-react": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "maltipoo": "https://github.com/datacite/maltipoo#2.2.6",
-    "next": "15.5.18",
+    "next": "15.5.21",
     "next-plausible": "^3.12.5",
     "react": "19.1.1",
     "react-bootstrap": "^2.10.5",
