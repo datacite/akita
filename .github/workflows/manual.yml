@@ -1,6 +1,7 @@
 name: Manually Test and Deploy Branch to Vercel
+permissions:
+  contents: read
 on: workflow_dispatch
-
 jobs:
   test:
     uses: ./.github/workflows/cypress_tests.yml

@@ -1,4 +1,6 @@
 name: Release to Production
+permissions:
+  contents: read
 on:
   release:
     types: [published]

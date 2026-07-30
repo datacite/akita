@@ -1,4 +1,6 @@
 name: Deploy to Staging
+permissions:
+  contents: read
 on:
   push:
     branches:
