@@ -7,7 +7,7 @@ function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
     query: `uid:"${id}"`,
     include: 'client',
-    affiliation: 'false',
+    affiliation: 'true',
     publisher: 'true',
     'disable-facets': 'true',
     include_other_registration_agencies: 'true',
