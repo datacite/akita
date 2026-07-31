@@ -34,7 +34,7 @@ for frontend only). In dev, Next proxies `/api/*` → `http://127.0.0.1:5328` (s
 - `yarn lint` currently **fails**: `.eslintrc.js` references `eslint-plugin-react`, which is
   not a declared dependency, and no CI workflow runs lint. The same warning appears during
   `yarn build` but is non-fatal (the build still succeeds).
-- Use `yarn type-check` (tsc) for type validation and `yarn prettier-format` for formatting.
+- Use `yarn type-check` (tsc) for type validation and `yarn prettier --config .prettierrc.json --write .` for formatting.
 
 ### Cypress e2e tests
 
