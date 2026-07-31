@@ -18,7 +18,7 @@ in `package.json`; setup lives in `README.md`. Notes below are the non-obvious b
 
 The update script already runs `corepack enable` + `yarn install`, so Yarn 4 and the
 Node dependencies are ready when a session starts. Just run `yarn dev-all` (or `yarn dev`
-for frontend only). In dev, Next proxies `/api/*` → `http://127.0.0.1:5328` (see
+for frontend only). In dev, Next proxies `/api/*` → `http://127.0.0.1:5328/api/*` (see
 `next.config.js`), which is how the frontend reaches the Flask API.
 
 ### Python API (uv)
