@@ -8,7 +8,7 @@ function buildDoiSearchParams(variables: QueryVar, facets: string[]): URLSearchP
   const searchParams = new URLSearchParams({
     query: buildQuery(variables),
     facets: facets.join(','),
-    affiliation: 'false',
+    affiliation: 'true',
     publisher: 'false',
     'disable-facets': 'false',
     include_other_registration_agencies: 'true',

@@ -27,7 +27,7 @@ const VALID_CONNECTION_TYPES = [
   'otherRelated',
 ] as const;
 
-function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType="allRelated" ): string {
+function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] | undefined, connectionType = "allRelated"): string {
   if (!relatedDoi) return ''
   // if the connection type is not in the map, return an empty string
   if (!VALID_CONNECTION_TYPES.includes(connectionType as typeof VALID_CONNECTION_TYPES[number])) return ''
@@ -181,7 +181,7 @@ function buildDoiSearchParams(variables: QueryVar, count?: number): URLSearchPar
   const searchParams = new URLSearchParams({
     query: buildQuery(variables),
     include: 'client',
-    affiliation: 'false',
+    affiliation: 'true',
     publisher: 'false',
     'disable-facets': 'true',
     include_other_registration_agencies: 'true'
