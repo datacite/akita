@@ -58,7 +58,7 @@ const manifest = [
       `${dataciteBase(env)}/dois?${new URLSearchParams({
         query: 'climate',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -74,7 +74,7 @@ const manifest = [
       `${dataciteBase(env)}/dois?${new URLSearchParams({
         query: 'climate',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -90,7 +90,7 @@ const manifest = [
       `${dataciteBase(env)}/dois?${new URLSearchParams({
         query: 'climate',
         facets: DEFAULT_FACETS,
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'false',
         include_other_registration_agencies: 'true',
@@ -105,7 +105,7 @@ const manifest = [
       `${dataciteBase(env)}/dois?${new URLSearchParams({
         query: 'uid:"10.7272/q6g15xs4"',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'true',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -120,7 +120,7 @@ const manifest = [
       `${dataciteBase(env)}/dois?${new URLSearchParams({
         query: 'uid:"10.17863/cam.10544"',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'true',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -136,7 +136,7 @@ const manifest = [
         query:
           'creators_and_contributors.nameIdentifiers.nameIdentifier:(0000-0001-6528-2027 OR "https://orcid.org/0000-0001-6528-2027")',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -153,7 +153,7 @@ const manifest = [
         query:
           'creators_and_contributors.nameIdentifiers.nameIdentifier:(0000-0001-6528-2027 OR "https://orcid.org/0000-0001-6528-2027")',
         facets: METRICS_FACETS,
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'false',
         include_other_registration_agencies: 'true',
@@ -169,7 +169,7 @@ const manifest = [
         query:
           'creators_and_contributors.nameIdentifiers.nameIdentifier:(0000-0001-6528-2027 OR "https://orcid.org/0000-0001-6528-2027")',
         facets: DEFAULT_FACETS,
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'false',
         include_other_registration_agencies: 'true',
@@ -185,7 +185,7 @@ const manifest = [
         query:
           'creators_and_contributors.nameIdentifiers.nameIdentifier:(0000-0001-6528-2027 OR "https://orcid.org/0000-0001-6528-2027") AND (datacite)',
         facets: DEFAULT_FACETS,
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'false',
         include_other_registration_agencies: 'true',
@@ -201,7 +201,7 @@ const manifest = [
         query:
           '(organization_id:"ror.org/013meh722" OR provider.ror_id:"https://ror.org/013meh722" OR affiliation_id:"ror.org/013meh722" OR related_dmp_organization_id:"ror.org/013meh722" OR funder_rors:"https://ror.org/013meh722" OR funder_parent_rors:"https://ror.org/013meh722") AND (cambridge)',
         include: 'client',
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'true',
         include_other_registration_agencies: 'true',
@@ -218,7 +218,7 @@ const manifest = [
         query:
           '(organization_id:"ror.org/013meh722" OR provider.ror_id:"https://ror.org/013meh722" OR affiliation_id:"ror.org/013meh722" OR related_dmp_organization_id:"ror.org/013meh722" OR funder_rors:"https://ror.org/013meh722" OR funder_parent_rors:"https://ror.org/013meh722") AND (cambridge)',
         facets: DEFAULT_FACETS,
-        affiliation: 'false',
+        affiliation: 'true',
         publisher: 'false',
         'disable-facets': 'false',
         include_other_registration_agencies: 'true',
