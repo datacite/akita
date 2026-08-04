@@ -48,18 +48,9 @@ export function RepositoryDetail({ repo }: Props) {
     </>
   }
 
-  function Advise() {
-    if (!repo.url) return null
-
-    return <p className="my-4 p-3 d-grid border border-success">
-      If you plan to deposit your research data in this repository, go to <a href={repo.url}>{repo.url}.</a>
-    </p>
-  }
-
   return <Row className="gap-4">
     <Col xs={12}><Metrics /></Col>
     <Col xs={12}>{repo.description}</Col>
     <Col xs={12}><Tags /></Col>
-    <Col xs={12}><Advise /></Col>
   </Row>
 }
