@@ -1,1 +1,1 @@
-Mock IEEE citation including NEXUS Head CT for Cypress.
+R. Rodriguez and W. Mower, “NEXUS Head CT.” Dryad, Apr. 10, 2017. doi: 10.7272/Q6G15XS4.

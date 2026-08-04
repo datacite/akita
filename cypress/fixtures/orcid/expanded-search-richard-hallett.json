@@ -1,41 +1,230 @@
 {
   "expanded-result": [
     {
-      "orcid-id": "0000-0001-6528-2027",
+      "orcid-id": "0000-0002-7352-517X",
       "given-names": "Richard",
       "family-names": "Hallett",
-      "credit-name": "Richard Hallett",
-      "other-name": [],
-      "email": [],
-      "institution-name": []
-    },
-    {
-      "orcid-id": "0000-0002-1111-2222",
-      "given-names": "Jane",
-      "family-names": "Hallett",
       "credit-name": null,
       "other-name": [],
       "email": [],
       "institution-name": []
     },
     {
-      "orcid-id": "0000-0003-3333-4444",
-      "given-names": "John",
-      "family-names": "Hallett",
+      "orcid-id": "0000-0002-4650-8569",
+      "given-names": "Richard",
+      "family-names": "S. (Richard) Ellis",
       "credit-name": null,
       "other-name": [],
       "email": [],
       "institution-name": []
     },
     {
-      "orcid-id": "0000-0004-5555-6666",
-      "given-names": "Mary",
-      "family-names": "Hallett",
+      "orcid-id": "0000-0003-0937-9339",
+      "given-names": "Richard",
+      "family-names": "Jones",
+      "credit-name": "Richard Jones",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-5465-5702",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-4673-980X",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-1847-9553",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-3114-6075",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0001-9301-1160",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-2936-2796",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-7909-6695",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-5782-6124",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-8137-6653",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-3823-9802",
+      "given-names": "Richard",
+      "family-names": "Evans",
+      "credit-name": "Richard Evans",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-6974-2294",
+      "given-names": "Richard",
+      "family-names": "Arott",
       "credit-name": null,
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0001-8992-1911",
+      "given-names": "Richard Pober, PhD",
+      "family-names": "Pober",
+      "credit-name": "Richard Pober, PhD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-0464-3137",
+      "given-names": "Richard Rosen, DDS",
+      "family-names": "Rosen",
+      "credit-name": "Richard Rosen, DDS",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-5055-6045",
+      "given-names": "Richard Wainford, PhD",
+      "family-names": "Wainford",
+      "credit-name": "Richard Wainford, PhD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-0142-457X",
+      "given-names": "Richard Sherva, PhD",
+      "family-names": "Sherva",
+      "credit-name": "Richard Sherva, PhD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-2410-4723",
+      "given-names": "Richard Goldstein, PhD",
+      "family-names": "Goldstein",
+      "credit-name": "Richard Goldstein, PhD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-8560-5644",
+      "given-names": "Richard F. Hoyt Jr, PhD",
+      "family-names": "Hoyt",
+      "credit-name": "Richard F. Hoyt Jr, PhD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-3880-0751",
+      "given-names": "Richard H. Long, MD",
+      "family-names": "Long",
+      "credit-name": "Richard H. Long, MD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0003-4928-4027",
+      "given-names": "Richard R. Ress, MD",
+      "family-names": "Ress",
+      "credit-name": "Richard R. Ress, MD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0001-9678-576X",
+      "given-names": "David Richard Pimentel, MD",
+      "family-names": "Pimentel",
+      "credit-name": "David Richard Pimentel, MD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-2231-5834",
+      "given-names": "Richard A. Serrao, MD",
+      "family-names": "Serrao",
+      "credit-name": "Richard A. Serrao, MD",
+      "other-name": [],
+      "email": [],
+      "institution-name": []
+    },
+    {
+      "orcid-id": "0000-0002-8727-0745",
+      "given-names": "Richard D'Innocenzo, MD, DMD",
+      "family-names": "D'Innocenzo",
+      "credit-name": "Richard D'Innocenzo, MD, DMD",
       "other-name": [],
       "email": [],
       "institution-name": []
     }
   ],
-  "num-found": 4
+  "num-found": 371
 }

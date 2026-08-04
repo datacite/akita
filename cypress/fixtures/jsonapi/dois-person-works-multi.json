@@ -1,1 +1,3099 @@
-{"data":[{"id":"10.5438/fch8-xv27","type":"dois","attributes":{"doi":"10.5438/fch8-xv27","identifiers":[],"creators":[{"name":"Roper, Jennifer O'Brien","nameType":"Personal","givenName":"Jennifer O'Brien","familyName":"Roper","affiliation":[{"name":"University of Virginia","schemeUri":"https://ror.org","affiliationIdentifier":"https://ror.org/0153tk833","affiliationIdentifierScheme":"ROR"}],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0002-7105-9881","nameIdentifierScheme":"ORCID"}]},{"name":"Ramsey, Ellen Catz","nameType":"Personal","givenName":"Ellen Catz","familyName":"Ramsey","affiliation":[{"name":"University of Virginia","schemeUri":"https://ror.org","affiliationIdentifier":"https://ror.org/0153tk833","affiliationIdentifierScheme":"ROR"}],"nameIdentifiers":[{"schemeUri":"https://orcid.org","nameIdentifier":"https://orcid.org/0000-0001-6528-2027","nameIdentifierScheme":"ORCID"}]}],"titles":[{"title":"Restructuring &amp; Reimagining Digital Collections"}],"publisher":"American Library Association","container":{},"publicationYear":2019,"subjects":[{"subject":"digital collections"},{"subject":"workflow"},{"subject":"project management"}],"contributors":[],"dates":[{"date":"2019","dateType":"Issued"}],"language":null,"types":{"ris":"GEN","bibtex":"misc","citeproc":"article","schemaOrg":"Event","resourceType":"Presentation","resourceTypeGeneral":"Event"},"relatedIdentifiers":[],"relatedItems":[],"sizes":[],"formats":[],"version":null,"rightsList":[{"rights":"Attribution 4.0 International (CC BY)"}],"descriptions":[{"description":"In 2017 the University of Virginia Library administration commissioned an internal task force to identify best practices for digital project workflows. At the time, the process of moving digital collections from idea to completion was opaque for all staff involved in the process, and most were frustrated with both the process and the results. The ensuing task force report articulated foundational principles, identified needed tools, recommended specific changes to practice, and proposed an outline for a comprehensive workflow. All recommendations were accepted by the administration, and the Digital Collections Team was created in early 2018 to operationalize the recommendations. This effort includes a restructuring and reimagining of workflows, as well as enabling culture change in how we interact with each other and the content. This webinar will discuss the roles and responsibilities of the membership in this multi-unit group, the nascent workflows and experiments with new communication paths, as well as the tools in use to support these new ways of interacting with each other and the tasks associated with making digital content available.","descriptionType":"Abstract"}],"geoLocations":[],"fundingReferences":[{"funderName":"ALCTS"}],"url":"https://something.datacite.org","contentUrl":null,"metadataVersion":1,"schemaVersion":"http://datacite.org/schema/kernel-4","source":"fabrica","isActive":true,"state":"findable","reason":null,"viewCount":0,"downloadCount":0,"referenceCount":0,"citationCount":0,"partCount":0,"partOfCount":0,"versionCount":0,"versionOfCount":0,"created":"2023-06-07T20:17:59Z","registered":"2023-06-07T20:18:00Z","published":null,"updated":"2025-09-25T13:19:24Z","agency":"datacite"},"relationships":{"client":{"data":{"id":"datacite.datacite","type":"clients"}}}}],"included":[{"id":"datacite.datacite","type":"clients","attributes":{"name":"DataCite Repositories","symbol":"DATACITE.DATACITE","year":2011,"alternateName":null,"description":null,"language":["en","fr"],"clientType":"periodical","domains":"*.datacite.org,figshare.com","re3data":null,"opendoar":null,"issn":{"issnl":null,"print":"1545-7885","electronic":"1544-9173"},"url":null,"created":"2011-12-07T13:43:39Z","updated":"2021-03-29T09:16:25Z","isActive":true},"relationships":{"provider":{"data":{"id":"datacite","type":"providers"}},"consortium":{"data":{"id":"DC","type":"providers"}},"prefixes":{"data":[]}}}],"meta":{"total":1,"totalPages":1,"page":1},"links":{"self":"https://api.stage.datacite.org/dois?query=creators_and_contributors.nameIdentifiers.nameIdentifier%3a%280000-0001-6528-2027+OR+%22https%3a%2f%2forcid.org%2f0000-0001-6528-2027%22%29&include=client&affiliation=false&publisher=false&disable-facets=true&include_other_registration_agencies=true&page[number]=1&page[size]=15&sort=relevance"}}
+{
+  "data": [
+    {
+      "id": "10.14454/f2wp-s162",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.14454/f2wp-s162",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": null,
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema for the Publication and Citation of Research Data v4.3"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2019,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02e2c7k09",
+                "schemeUri": null,
+                "name": "Delft University of Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Robin",
+            "familyName": "Dasler",
+            "name": "Dasler, Robin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-4695-7874"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05dhe8b71",
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04mte1k06",
+                "schemeUri": null,
+                "name": "National Research Council Canada",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Mark",
+            "familyName": "Jacobson",
+            "name": "Jacobson, Mark",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02gfc7t72",
+                "schemeUri": null,
+                "name": "Spanish National Research Council",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04aj4c181",
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Marleen",
+            "familyName": "Burger",
+            "name": "Burger, Marleen",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02mn0vt57",
+                "schemeUri": null,
+                "name": "Institut de l'Information Scientifique et Technique",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/035a68863",
+                "schemeUri": null,
+                "name": "United States Geological Survey",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Metadata Game Changers",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Ted",
+            "familyName": "Habermann",
+            "name": "Habermann, Ted",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/047s2c258",
+                "schemeUri": null,
+                "name": "University of Maryland, College Park",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Anne",
+            "familyName": "Raugh",
+            "name": "Raugh, Anne",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/00hj8s172",
+                "schemeUri": null,
+                "name": "Columbia University",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Violeta",
+            "familyName": "Ilik",
+            "name": "Ilik, Violeta",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05a28rw58",
+                "schemeUri": null,
+                "name": "Swiss Federal Institute of Technology in Zurich",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Andreas",
+            "familyName": "La Roi",
+            "name": "La Roi, Andreas",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2019-08-16",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": null,
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "XSD code"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "IsDocumentedBy",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/7xq3-zf69",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/rv0g-av03",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/fxws-0523",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [],
+        "formats": [
+          "application/xml"
+        ],
+        "version": "4.3",
+        "rightsList": [],
+        "descriptions": [],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.3/",
+        "contentUrl": null,
+        "metadataVersion": 5,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 0,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2019-08-08T11:29:41Z",
+        "registered": "2019-08-16T13:20:10Z",
+        "published": null,
+        "updated": "2026-07-09T14:53:55Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.14454/qn00-qx85",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.14454/qn00-qx85",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": "Organizational",
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite to Dublin Core Mapping v4.4."
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2021,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02e2c7k09",
+                "schemeUri": null,
+                "name": "Delft University of Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02gfc7t72",
+                "schemeUri": null,
+                "name": "Spanish National Research Council",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Robin",
+            "familyName": "Dasler",
+            "name": "Dasler, Robin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-4695-7874"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05dhe8b71",
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04mte1k06",
+                "schemeUri": null,
+                "name": "National Research Council Canada",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Leo",
+            "familyName": "Chiloane",
+            "name": "Chiloane, Leo",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04aj4c181",
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Marleen",
+            "familyName": "Burger",
+            "name": "Burger, Marleen",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02mn0vt57",
+                "schemeUri": null,
+                "name": "Institut de l'Information Scientifique et Technique",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/035a68863",
+                "schemeUri": null,
+                "name": "United States Geological Survey",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Metadata Game Changers",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Ted",
+            "familyName": "Habermann",
+            "name": "Habermann, Ted",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/047s2c258",
+                "schemeUri": null,
+                "name": "University of Maryland, College Park",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Anne",
+            "familyName": "Raugh",
+            "name": "Raugh, Anne",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/00hj8s172",
+                "schemeUri": null,
+                "name": "Columbia University",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Violeta",
+            "familyName": "Ilik",
+            "name": "Ilik, Violeta",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05a28rw58",
+                "schemeUri": null,
+                "name": "Swiss Federal Institute of Technology in Zurich",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Samantha",
+            "familyName": "Foulger",
+            "name": "Foulger, Samantha",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2021",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": "en",
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "Documentation"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "References",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/3w3z-sa82",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [
+          "7 pages"
+        ],
+        "formats": [
+          "application/pdf"
+        ],
+        "version": "4.4",
+        "rightsList": [],
+        "descriptions": [
+          {
+            "descriptionType": "Abstract",
+            "description": "On the occasion of the release of v4.4 of the DataCite Metadata Schema its Metadata Working Group has updated the mapping to Dublin Core. This replaces the mapping in the Appendix of the DataCite-MetadataKernel v2.1. The mapping can be used to convert records described following version 4.4 of the DataCite Metadata Schema into records that comply with the Dublin Core Metadata Initiative Schema.",
+            "lang": null
+          }
+        ],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/dc/",
+        "contentUrl": null,
+        "metadataVersion": 2,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 1,
+        "citationCount": 3,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2021-07-08T09:53:54Z",
+        "registered": "2021-07-08T10:02:59Z",
+        "published": null,
+        "updated": "2026-07-09T15:16:49Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.5438/0015",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.5438/0015",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": null,
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema for the Publication and Citation of Research Data v4.1"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2017,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Amy",
+            "familyName": "Barton",
+            "name": "Barton, Amy",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Noris",
+            "familyName": "Birt",
+            "name": "Birt, Noris",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Stefanie",
+            "familyName": "Dietiker",
+            "name": "Dietiker, Stefanie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jannean",
+            "familyName": "Elliot",
+            "name": "Elliot, Jannean",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": null,
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Wim",
+            "familyName": "Hugo",
+            "name": "Hugo, Wim",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Stefan",
+            "familyName": "Jakobsson",
+            "name": "Jakobsson, Stefan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jessica",
+            "familyName": "Rücknagel",
+            "name": "Rücknagel, Jessica",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Frauke",
+            "familyName": "Ziedorn",
+            "name": "Ziedorn, Frauke",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": null,
+                "nameIdentifier": "https://orcid.org/0000-0002-1143-781X"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2017-10-23",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": null,
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "XSD code"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "IsDocumentedBy",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0014",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0013",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/rv0g-av03",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [],
+        "formats": [
+          "application/xml"
+        ],
+        "version": null,
+        "rightsList": [],
+        "descriptions": [],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.1/index.html",
+        "contentUrl": null,
+        "metadataVersion": 13,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 1,
+        "citationCount": 0,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2017-10-23T12:44:36Z",
+        "registered": "2017-10-23T12:44:36Z",
+        "published": null,
+        "updated": "2025-06-09T21:09:03Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.14454/7xq3-zf69",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.14454/7xq3-zf69",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": "Organizational",
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.3"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2019,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02e2c7k09",
+                "schemeUri": null,
+                "name": "Delft University of Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Robin",
+            "familyName": "Dasler",
+            "name": "Dasler, Robin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-4695-7874"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05dhe8b71",
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04mte1k06",
+                "schemeUri": null,
+                "name": "National Research Council Canada",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Mark",
+            "familyName": "Jacobson",
+            "name": "Jacobson, Mark",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02gfc7t72",
+                "schemeUri": null,
+                "name": "Spanish National Research Council",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04aj4c181",
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Marleen",
+            "familyName": "Burger",
+            "name": "Burger, Marleen",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02mn0vt57",
+                "schemeUri": null,
+                "name": "Institut de l'Information Scientifique et Technique",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/035a68863",
+                "schemeUri": null,
+                "name": "United States Geological Survey",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Metadata Game Changers",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Ted",
+            "familyName": "Habermann",
+            "name": "Habermann, Ted",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/047s2c258",
+                "schemeUri": null,
+                "name": "University of Maryland, College Park",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Anne",
+            "familyName": "Raugh",
+            "name": "Raugh, Anne",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/00hj8s172",
+                "schemeUri": null,
+                "name": "Columbia University",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Violeta",
+            "familyName": "Ilik",
+            "name": "Ilik, Violeta",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05a28rw58",
+                "schemeUri": null,
+                "name": "Swiss Federal Institute of Technology in Zurich",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Andreas",
+            "familyName": "La Roi",
+            "name": "La Roi, Andreas",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2019-08-16",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": "en",
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "Documentation"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "Documents",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/f2wp-s162",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/bmjt-bx77",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/3w3z-sa82",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [
+          "73 pages"
+        ],
+        "formats": [
+          "application/pdf"
+        ],
+        "version": "4.3",
+        "rightsList": [],
+        "descriptions": [
+          {
+            "descriptionType": "TableOfContents",
+            "description": "1 Introduction 1.1 The DataCite Consortium 1.2 DataCite Community Participation 1.3 The Metadata Schema 1.4 Version 4.32 Update 2 DataCite Metadata Properties 2.1 Overview 2.2 Citation 2.3 DataCite Properties 3 XML Example 4 XML Schema 5 Other DataCite Services Appendices Appendix 1: Controlled List Definitions Appendix 2: Earlier Version Update Notes Appendix 3: Standard values for unknown information Appendix 4: Version 4.1 Changes in support of software citation Appendix 5: FORCE11 Software Citation Principles Mapping",
+            "lang": null
+          }
+        ],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.3/",
+        "contentUrl": null,
+        "metadataVersion": 3,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 2,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2019-06-26T16:18:36Z",
+        "registered": "2019-08-16T13:15:45Z",
+        "published": null,
+        "updated": "2026-07-09T14:54:52Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.5438/0014",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.5438/0014",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": null,
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.1"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2017,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "TU Delft",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "California Digital Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Joan",
+            "familyName": "Starr",
+            "name": "Starr, Joan",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": null,
+                "nameIdentifier": "https://orcid.org/0000-0002-7285-027X"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Purdue University Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Amy",
+            "familyName": "Barton",
+            "name": "Barton, Amy",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "NRC/CISTI",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Noris",
+            "familyName": "Birt",
+            "name": "Birt, Noris",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "ETH Zürich",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Stefanie",
+            "familyName": "Dietiker",
+            "name": "Dietiker, Stefanie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "DOE/OSTI",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jannean",
+            "familyName": "Elliot",
+            "name": "Elliot, Jannean",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": null,
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Wim",
+            "familyName": "Hugo",
+            "name": "Hugo, Wim",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "SND",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Stefan",
+            "familyName": "Jakobsson",
+            "name": "Jakobsson, Stefan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Oficina Técnica de DIGITAL-CSIC",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology (TIB)",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jessica",
+            "familyName": "Rücknagel",
+            "name": "Rücknagel, Jessica",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Inist-CNRS",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology (TIB)",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Frauke",
+            "familyName": "Ziedorn",
+            "name": "Ziedorn, Frauke",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": null,
+                "nameIdentifier": "https://orcid.org/0000-0002-1143-781X"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "United States Geological Survey (USGS)",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2017-10-23",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": "en",
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "Documentation"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "Documents",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0015",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0012",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/bmjt-bx77",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [
+          "72 pages"
+        ],
+        "formats": [
+          "application/pdf"
+        ],
+        "version": null,
+        "rightsList": [],
+        "descriptions": [
+          {
+            "descriptionType": "TableOfContents",
+            "description": "1 Introduction1.1 The DataCite Consortium1.2 DataCite Community Participation1.3 The Metadata Schema1.4 Version 4.1 Update2 DataCite Metadata Properties2.1 Overview2.2 Citation2.3 DataCite Properties3 XML Example4 XML Schema5 Other DataCite ServicesAppendicesAppendix 1: Controlled List DefinitionsAppendix 2: Earlier Version Update NotesAppendix 3: Standard values for unknown informationAppendix 4: Version 4.1 Changes in support of software citationAppendix 5: FORCE11 Software Citation Principles Mapping",
+            "lang": null
+          }
+        ],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.1/index.html",
+        "contentUrl": null,
+        "metadataVersion": 3,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 2,
+        "citationCount": 11,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2017-10-23T12:37:46Z",
+        "registered": "2017-10-23T12:37:46Z",
+        "published": null,
+        "updated": "2026-07-09T15:14:40Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.5438/bmjt-bx77",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.5438/bmjt-bx77",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": null,
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema Documentation for the Publication and Citation of Research Data v4.2"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2019,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "TU Delft",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Purdue University Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Amy",
+            "familyName": "Hatfield Hart",
+            "name": "Hatfield Hart, Amy",
+            "nameIdentifiers": [],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Oficina Técnica de DIGITAL-CSIC",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "ETH Zürich",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Stefanie",
+            "familyName": "Dietiker",
+            "name": "Dietiker, Stefanie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "DOE/OSTI",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jannean",
+            "familyName": "Elliot",
+            "name": "Elliot, Jannean",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Wim",
+            "familyName": "Hugo",
+            "name": "Hugo, Wim",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "SND",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Stefan",
+            "familyName": "Jakobsson",
+            "name": "Jakobsson, Stefan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "NRC/CISTI",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology (TIB)",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Jessica",
+            "familyName": "Rücknagel",
+            "name": "Rücknagel, Jessica",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "California Digital Library",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Joan",
+            "familyName": "Starr",
+            "name": "Starr, Joan",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-7285-027X"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Inist-CNRS",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "United States Geological Survey (USGS)",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2019-03-20",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": "en",
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "Documentation"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "Documents",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/rv0g-av03",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0014",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/7xq3-zf69",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [
+          "69 pages"
+        ],
+        "formats": [
+          "application/pdf"
+        ],
+        "version": "4.2",
+        "rightsList": [],
+        "descriptions": [
+          {
+            "descriptionType": "TableOfContents",
+            "description": "1 Introduction\n            1.1 The DataCite Consortium\n            1.2 DataCite Community Participation\n            1.3 The Metadata Schema\n            1.4 Version 4.2 Update\n            2 DataCite Metadata Properties\n            2.1 Overview\n            2.2 Citation\n            2.3 DataCite Properties\n            3 XML Example\n            4 XML Schema\n            5 Other DataCite Services\n            Appendices\n            Appendix 1: Controlled List Definitions\n            Appendix 2: Earlier Version Update Notes\n            Appendix 3: Standard values for unknown information\n            Appendix 4: Version 4.1 Changes in support of software citation\n            Appendix 5: FORCE11 Software Citation Principles Mapping",
+            "lang": null
+          }
+        ],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.2/index.html",
+        "contentUrl": null,
+        "metadataVersion": 6,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 0,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2018-12-17T16:06:25Z",
+        "registered": "2019-03-20T07:46:48Z",
+        "published": null,
+        "updated": "2026-07-09T15:09:14Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.5438/rv0g-av03",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.5438/rv0g-av03",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": null,
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema for the Publication and Citation of Research Data v4.2"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2019,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Amy",
+            "familyName": "Hatfield Hart",
+            "name": "Hatfield Hart, Amy",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martinez",
+            "name": "Bernal Martinez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Stefanie",
+            "familyName": "Dietiker",
+            "name": "Dietiker, Stefanie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jannean",
+            "familyName": "Elliot",
+            "name": "Elliot, Jannean",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Wim",
+            "familyName": "Hugo",
+            "name": "Hugo, Wim",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Stefan",
+            "familyName": "Jakobsson",
+            "name": "Jakobsson, Stefan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Jessica",
+            "familyName": "Rücknagel",
+            "name": "Rücknagel, Jessica",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Joan",
+            "familyName": "Starr",
+            "name": "Starr, Joan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2019-03-20",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": null,
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "XSD code"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "IsDocumentedBy",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/bmjt-bx77",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.5438/0015",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/f2wp-s162",
+            "relatedIdentifierType": "DOI",
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [],
+        "formats": [
+          "application/xml"
+        ],
+        "version": "4.2",
+        "rightsList": [],
+        "descriptions": [],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "http://schema.datacite.org/meta/kernel-4.2/",
+        "contentUrl": null,
+        "metadataVersion": 3,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 0,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2019-03-20T08:33:58Z",
+        "registered": "2019-03-20T08:35:11Z",
+        "published": null,
+        "updated": "2025-06-09T21:26:17Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.14454/fxws-0523",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.14454/fxws-0523",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": "Organizational",
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema for the Publication and Citation of Research Data and Other Research Outputs v4.4"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2021,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02e2c7k09",
+                "schemeUri": null,
+                "name": "Delft University of Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02gfc7t72",
+                "schemeUri": null,
+                "name": "Spanish National Research Council",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Robin",
+            "familyName": "Dasler",
+            "name": "Dasler, Robin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-4695-7874"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05dhe8b71",
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04mte1k06",
+                "schemeUri": null,
+                "name": "National Research Council Canada",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Leo",
+            "familyName": "Chiloane",
+            "name": "Chiloane, Leo",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04aj4c181",
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Marleen",
+            "familyName": "Burger",
+            "name": "Burger, Marleen",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02mn0vt57",
+                "schemeUri": null,
+                "name": "Institut de l'Information Scientifique et Technique",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/035a68863",
+                "schemeUri": null,
+                "name": "United States Geological Survey",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Metadata Game Changers",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Ted",
+            "familyName": "Habermann",
+            "name": "Habermann, Ted",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/047s2c258",
+                "schemeUri": null,
+                "name": "University of Maryland, College Park",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Anne",
+            "familyName": "Raugh",
+            "name": "Raugh, Anne",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/00hj8s172",
+                "schemeUri": null,
+                "name": "Columbia University",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Violeta",
+            "familyName": "Ilik",
+            "name": "Ilik, Violeta",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05a28rw58",
+                "schemeUri": null,
+                "name": "Swiss Federal Institute of Technology in Zurich",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Samantha",
+            "familyName": "Foulger",
+            "name": "Foulger, Samantha",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2021-03-30",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": null,
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "XSD code"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "IsDocumentedBy",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/3w3z-sa82",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/f2wp-s162",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/znvd-6q68",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [],
+        "formats": [
+          "application/xml"
+        ],
+        "version": "4.4",
+        "rightsList": [],
+        "descriptions": [],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.4/",
+        "contentUrl": null,
+        "metadataVersion": 5,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 1,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2021-03-30T10:19:45Z",
+        "registered": "2021-03-30T12:00:37Z",
+        "published": null,
+        "updated": "2026-07-09T14:34:39Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    },
+    {
+      "id": "10.14454/3w3z-sa82",
+      "type": "dois",
+      "attributes": {
+        "doi": "10.14454/3w3z-sa82",
+        "identifiers": [],
+        "creators": [
+          {
+            "nameType": "Organizational",
+            "affiliation": [],
+            "givenName": null,
+            "familyName": null,
+            "name": "DataCite Metadata Working Group",
+            "nameIdentifiers": []
+          }
+        ],
+        "titles": [
+          {
+            "titleType": null,
+            "lang": null,
+            "title": "DataCite Metadata Schema Documentation for the Publication and Citation of Research Data and Other Research Outputs v4.4"
+          }
+        ],
+        "publisher": "DataCite",
+        "container": {},
+        "publicationYear": 2021,
+        "subjects": [],
+        "contributors": [
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02e2c7k09",
+                "schemeUri": null,
+                "name": "Delft University of Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Madeleine",
+            "familyName": "de Smaele",
+            "name": "de Smaele, Madeleine",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-8963-3415"
+              }
+            ],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02gfc7t72",
+                "schemeUri": null,
+                "name": "Spanish National Research Council",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Isabel",
+            "familyName": "Bernal Martínez",
+            "name": "Bernal Martínez, Isabel",
+            "nameIdentifiers": [],
+            "contributorType": "ProjectLeader"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Robin",
+            "familyName": "Dasler",
+            "name": "Dasler, Robin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0002-4695-7874"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05dhe8b71",
+                "schemeUri": null,
+                "name": "British Library",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Jan",
+            "familyName": "Ashton",
+            "name": "Ashton, Jan",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04mte1k06",
+                "schemeUri": null,
+                "name": "National Research Council Canada",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Sophie",
+            "familyName": "Roy",
+            "name": "Roy, Sophie",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04wxnsj81",
+                "schemeUri": null,
+                "name": "DataCite",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Martin",
+            "familyName": "Fenner",
+            "name": "Fenner, Martin",
+            "nameIdentifiers": [
+              {
+                "nameIdentifierScheme": "ORCID",
+                "schemeUri": "https://orcid.org",
+                "nameIdentifier": "https://orcid.org/0000-0001-6528-2027"
+              }
+            ],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "South African Environmental Observation Network",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Leo",
+            "familyName": "Chiloane",
+            "name": "Chiloane, Leo",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/04aj4c181",
+                "schemeUri": null,
+                "name": "German National Library of Science and Technology",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Marleen",
+            "familyName": "Burger",
+            "name": "Burger, Marleen",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/02mn0vt57",
+                "schemeUri": null,
+                "name": "Institut de l'Information Scientifique et Technique",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Mohamed",
+            "familyName": "Yahia",
+            "name": "Yahia, Mohamed",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/035a68863",
+                "schemeUri": null,
+                "name": "United States Geological Survey",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Lisa",
+            "familyName": "Zolly",
+            "name": "Zolly, Lisa",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": null,
+                "schemeUri": null,
+                "name": "Metadata Game Changers",
+                "affiliationIdentifierScheme": null
+              }
+            ],
+            "givenName": "Ted",
+            "familyName": "Habermann",
+            "name": "Habermann, Ted",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/047s2c258",
+                "schemeUri": null,
+                "name": "University of Maryland, College Park",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Anne",
+            "familyName": "Raugh",
+            "name": "Raugh, Anne",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/00hj8s172",
+                "schemeUri": null,
+                "name": "Columbia University",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Violeta",
+            "familyName": "Ilik",
+            "name": "Ilik, Violeta",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          },
+          {
+            "nameType": "Personal",
+            "affiliation": [
+              {
+                "affiliationIdentifier": "https://ror.org/05a28rw58",
+                "schemeUri": null,
+                "name": "Swiss Federal Institute of Technology in Zurich",
+                "affiliationIdentifierScheme": "ROR"
+              }
+            ],
+            "givenName": "Samantha",
+            "familyName": "Foulger",
+            "name": "Foulger, Samantha",
+            "nameIdentifiers": [],
+            "contributorType": "Editor"
+          }
+        ],
+        "dates": [
+          {
+            "date": "2021-03-30",
+            "dateType": "Issued",
+            "dateInformation": null
+          }
+        ],
+        "language": "en",
+        "types": {
+          "schemaOrg": "ScholarlyArticle",
+          "resourceTypeGeneral": "Text",
+          "citeproc": "article-journal",
+          "bibtex": "article",
+          "ris": "RPRT",
+          "resourceType": "Documentation"
+        },
+        "relatedIdentifiers": [
+          {
+            "relationType": "Documents",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/fxws-0523",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsNewVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/7xq3-zf69",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          },
+          {
+            "relationType": "IsPreviousVersionOf",
+            "resourceTypeGeneral": null,
+            "schemeType": null,
+            "schemeUri": null,
+            "relatedIdentifier": "10.14454/g8e5-6293",
+            "relatedIdentifierType": "DOI",
+            "relationTypeInformation": null,
+            "relatedMetadataScheme": null
+          }
+        ],
+        "relatedItems": [],
+        "sizes": [
+          "82 pages"
+        ],
+        "formats": [
+          "application/pdf"
+        ],
+        "version": "4.4",
+        "rightsList": [],
+        "descriptions": [
+          {
+            "descriptionType": "TableOfContents",
+            "description": "1 Introduction\n \n 1.1 The DataCite Consortium\n \n 1.2 DataCite Community Participation\n \n 1.3 The Metadata Schema\n \n 1.4 Version 4.4 Update\n \n 2 DataCite Metadata Properties\n \n 2.1 Overview\n \n 2.2 Citation\n \n 2.3 DataCite Properties\n \n 3 XML Example\n \n 4 XML Schema\n \n 5 Other DataCite Services\n \n Appendices\n \n Appendix 1: Controlled List Definitions\n \n Appendix 2: Earlier Version Update Notes\n \n Appendix 3: Standard values for unknown information\n \n Appendix 4: Version 4.1 Changes in support of software citation\n \n Appendix 5: FORCE11 Software Citation Principles Mapping",
+            "lang": null
+          }
+        ],
+        "geoLocations": [],
+        "fundingReferences": [],
+        "url": "https://schema.datacite.org/meta/kernel-4.4/",
+        "contentUrl": null,
+        "metadataVersion": 3,
+        "schemaVersion": "http://datacite.org/schema/kernel-4",
+        "source": "fabricaForm",
+        "isActive": true,
+        "state": "findable",
+        "reason": null,
+        "viewCount": 0,
+        "downloadCount": 0,
+        "referenceCount": 0,
+        "citationCount": 11,
+        "partCount": 0,
+        "partOfCount": 0,
+        "versionCount": 0,
+        "versionOfCount": 0,
+        "created": "2021-03-08T10:27:52Z",
+        "registered": "2021-03-30T11:55:54Z",
+        "published": null,
+        "updated": "2026-07-09T14:53:08Z",
+        "agency": "datacite"
+      },
+      "relationships": {
+        "client": {
+          "data": {
+            "id": "datacite.datacite",
+            "type": "clients"
+          }
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "datacite.datacite",
+      "type": "clients",
+      "attributes": {
+        "name": "DataCite",
+        "symbol": "DATACITE.DATACITE",
+        "year": 2011,
+        "alternateName": null,
+        "description": null,
+        "language": [],
+        "clientType": "repository",
+        "domains": "*",
+        "re3data": null,
+        "opendoar": null,
+        "issn": {},
+        "url": null,
+        "created": "2011-12-07T13:43:39Z",
+        "updated": "2021-07-08T10:02:17Z",
+        "isActive": true
+      },
+      "relationships": {
+        "provider": {
+          "data": {
+            "id": "datacite",
+            "type": "providers"
+          }
+        },
+        "prefixes": {
+          "data": []
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 9,
+    "totalPages": 1,
+    "page": 1
+  },
+  "links": {
+    "self": "https://api.datacite.org/dois?query=creators_and_contributors.nameIdentifiers.nameIdentifier%3A%280000-0001-6528-2027+OR+%22https%3A%2F%2Forcid.org%2F0000-0001-6528-2027%22%29&include=client&affiliation=true&publisher=false&disable-facets=true&include_other_registration_agencies=true&page%5Bnumber%5D=1&sort=relevance"
+  }
+}

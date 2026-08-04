@@ -1,1 +1,151 @@
-{"data":[],"meta":{"total":0,"totalPages":0,"page":1},"links":{"self":"https://api.stage.datacite.org/dois?query=creators_and_contributors.nameIdentifiers.nameIdentifier%3a%280000-0001-6528-2027+OR+%22https%3a%2f%2forcid.org%2f0000-0001-6528-2027%22%29+AND+%28datacite%29\u0026facets=published%2cresourceTypes%2clanguages%2clicenses_with_missing%2cfieldsOfScience%2caffiliations%2crepositories%2cregistrationAgencies%2cauthors%2ccreatorsAndContributors%2cclientTypes%2cclients\u0026affiliation=false\u0026publisher=false\u0026disable-facets=false\u0026include_other_registration_agencies=true\u0026page[size]=0"}}
+{
+  "data": [],
+  "meta": {
+    "total": 9,
+    "totalPages": 0,
+    "page": 1,
+    "resourceTypes": [
+      {
+        "id": "text",
+        "title": "Text",
+        "count": 9
+      }
+    ],
+    "published": [
+      {
+        "id": "2021",
+        "title": "2021",
+        "count": 3
+      },
+      {
+        "id": "2019",
+        "title": "2019",
+        "count": 4
+      },
+      {
+        "id": "2017",
+        "title": "2017",
+        "count": 2
+      }
+    ],
+    "clients": [
+      {
+        "id": "datacite.datacite",
+        "title": "DataCite",
+        "count": 9
+      }
+    ],
+    "clientTypes": [
+      {
+        "id": "repository",
+        "title": "Repository",
+        "count": 9
+      }
+    ],
+    "affiliations": [
+      {
+        "id": "ror.org/00hj8s172",
+        "title": "Columbia University",
+        "count": 5
+      },
+      {
+        "id": "ror.org/02e2c7k09",
+        "title": "Delft University of Technology",
+        "count": 5
+      },
+      {
+        "id": "ror.org/02gfc7t72",
+        "title": "Spanish National Research Council",
+        "count": 5
+      },
+      {
+        "id": "ror.org/02mn0vt57",
+        "title": "Institut de l'Information Scientifique et Technique",
+        "count": 5
+      },
+      {
+        "id": "ror.org/035a68863",
+        "title": "United States Geological Survey",
+        "count": 5
+      },
+      {
+        "id": "ror.org/047s2c258",
+        "title": "University of Maryland, College Park",
+        "count": 5
+      },
+      {
+        "id": "ror.org/04aj4c181",
+        "title": "German National Library of Science and Technology",
+        "count": 5
+      },
+      {
+        "id": "ror.org/04mte1k06",
+        "title": "National Research Council Canada",
+        "count": 5
+      },
+      {
+        "id": "ror.org/04wxnsj81",
+        "title": "DataCite",
+        "count": 5
+      },
+      {
+        "id": "ror.org/05a28rw58",
+        "title": "Swiss Federal Institute of Technology in Zurich",
+        "count": 5
+      }
+    ],
+    "licensesWithMissing": [
+      {
+        "id": "__missing__",
+        "title": "Unknown",
+        "count": 9
+      }
+    ],
+    "authors": [],
+    "creatorsAndContributors": [
+      {
+        "id": "https://orcid.org/0000-0001-6528-2027",
+        "title": "Fenner, Martin",
+        "count": 9
+      },
+      {
+        "id": "https://orcid.org/0000-0002-8963-3415",
+        "title": "de Smaele, Madeleine",
+        "count": 7
+      },
+      {
+        "id": "https://orcid.org/0000-0002-4695-7874",
+        "title": "Dasler, Robin",
+        "count": 5
+      },
+      {
+        "id": "https://orcid.org/0000-0002-1143-781X",
+        "title": "Ziedorn, Frauke",
+        "count": 2
+      },
+      {
+        "id": "https://orcid.org/0000-0002-7285-027X",
+        "title": "Starr, Joan",
+        "count": 2
+      }
+    ],
+    "fieldsOfScience": [],
+    "languages": [
+      {
+        "id": "en",
+        "title": "English",
+        "count": 5
+      }
+    ],
+    "registrationAgencies": [
+      {
+        "id": "datacite",
+        "title": "DataCite",
+        "count": 9
+      }
+    ]
+  },
+  "links": {
+    "self": "https://api.datacite.org/dois?query=creators_and_contributors.nameIdentifiers.nameIdentifier%3A%280000-0001-6528-2027+OR+%22https%3A%2F%2Forcid.org%2F0000-0001-6528-2027%22%29+AND+%28datacite%29&facets=published%2CresourceTypes%2Clanguages%2Clicenses_with_missing%2CfieldsOfScience%2Caffiliations%2Crepositories%2CregistrationAgencies%2Cauthors%2CcreatorsAndContributors%2CclientTypes%2Cclients&affiliation=true&publisher=false&disable-facets=false&include_other_registration_agencies=true&page%5Bsize%5D=0"
+  }
+}
