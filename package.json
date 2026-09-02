@@ -51,7 +51,7 @@
     "react-cookie-consent": "^10.0.1",
     "react-dom": "^19.2.8",
     "react-vega": "^7.6.0",
-    "sanitize-html": "^2.13.0",
+    "sanitize-html": "^2.17.7",
     "sass": "^1.49.0",
     "swr": "^0.3.2",
     "vega": "^6.2.0",
