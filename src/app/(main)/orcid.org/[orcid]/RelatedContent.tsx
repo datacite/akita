@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Loading from 'src/components/Loading/Loading'
@@ -62,8 +63,8 @@ export default function RelatedContent(props: Props) {
   const url = '/orcid.org/' + orcid + '/'
 
   return (
-    <>
-      <CommonsLayout className="mt-5">
+    <Container fluid>
+      <CommonsLayout className="mt-5" fluid={false}>
         <Row className="border-bottom ms-1 mb-3">
           <Col className="ps-0">
             <h3 className="member-results border-0 mb-0">
@@ -89,6 +90,6 @@ export default function RelatedContent(props: Props) {
           <SearchBox path={url} placeholder="Search within these works..." />
         }
       />
-    </>
+    </Container>
   )
 }

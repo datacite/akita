@@ -24,6 +24,7 @@ describe('CommonsLayout Component', () => {
       </CommonsLayout>
     )
     cy.get('.container-fluid > .row > .col-md-9.offset-md-3')
+      .find('span#main')
       .should('contain', 'Main')
       .and('have.attr', 'id', 'main')
     cy.get('.col-md-3').should('not.exist')
@@ -41,7 +42,7 @@ describe('CommonsLayout Component', () => {
       </CommonsLayout>
     )
     cy.get('.container-fluid').should('not.exist')
-    cy.get(':root > .row > .col-md-3')
+    cy.get('[data-cy-root] .row > .col-md-3')
       .should('have.class', 'px-4')
       .and('not.have.class', 'pe-4')
     cy.get('.col-md-9').should('have.class', 'px-0')

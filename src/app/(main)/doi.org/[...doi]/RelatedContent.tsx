@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -63,8 +64,8 @@ export default function RelatedContent() {
   const { hasPagination, hasNextPage, endCursor } = manager.pagination
   const url = '/doi.org/' + doi + '/'
   return (
-    <>
-      <CommonsLayout>
+    <Container fluid>
+      <CommonsLayout fluid={false}>
         <Row className="border-bottom ms-1 mb-3">
           <Col className="ps-0">
             <h3 className="member-results border-0 mb-0" id="title">
@@ -96,6 +97,6 @@ export default function RelatedContent() {
           <SearchBox path={url} placeholder="Search within these works..." />
         }
       />
-    </>
+    </Container>
   )
 }

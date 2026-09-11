@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Loading from 'src/components/Loading/Loading'
@@ -60,8 +61,8 @@ export default function RelatedContent({ repository }: Props) {
   const url = '/repositories/' + clientId + '/'
 
   return (
-    <>
-      <CommonsLayout className="mt-5">
+    <Container fluid>
+      <CommonsLayout className="mt-5" fluid={false}>
         <Row className="border-bottom ms-1 mb-3">
           <Col className="ps-0">
             <h2 className="visually-hidden">Related Works Results Summary</h2>
@@ -90,6 +91,6 @@ export default function RelatedContent({ repository }: Props) {
           <SearchBox path={url} placeholder="Search within these works..." />
         }
       />
-    </>
+    </Container>
   )
 }

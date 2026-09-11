@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Loading from 'src/components/Loading/Loading'
@@ -59,8 +60,8 @@ export default function RelatedContent() {
   const url = '/ror.org/' + vars.rorId + '/'
 
   return (
-    <>
-      <CommonsLayout className="mt-5" mainClassName="px-0">
+    <Container fluid>
+      <CommonsLayout className="mt-5" mainClassName="px-0" fluid={false}>
         <Row className="border-bottom ms-1 mb-3">
           <Col className="ps-0">
             <h3 className="member-results border-0 mb-0">Related Works</h3>
@@ -92,6 +93,6 @@ export default function RelatedContent() {
           <SummarySearchMetrics {...vars} />
         </div>
       </WorksListing>
-    </>
+    </Container>
   )
 }
