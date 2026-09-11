@@ -1,6 +1,5 @@
 import React from 'react'
-import { VegaLite } from 'react-vega'
-import { VisualizationSpec } from 'vega-embed'
+import { VegaLite, type VisualizationSpec } from 'react-vega'
 import EmptyChart from '../EmptyChart/EmptyChart'
 
 import { compactNumbers } from '../../utils/helpers'

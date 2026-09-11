@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { VegaLite } from 'react-vega'
-import { VisualizationSpec } from 'vega-embed'
+import { VegaLite, type VisualizationSpec } from 'react-vega'
 
 import useWindowDimensions from 'src/utils/useWindowDimensions'
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'

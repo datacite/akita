@@ -1,6 +1,6 @@
 'use client'
 
-import { VisualizationSpec } from 'vega-embed'
+import type { VisualizationSpec } from 'react-vega'
 import { RESOURCE_TYPE_DOMAIN, RESOURCE_TYPE_RANGE } from 'maltipoo'
 import { BaseData, Mark, Scale } from 'vega'
 

@@ -1,11 +1,10 @@
 'use client'
 
 import React from 'react'
-import { VegaLite } from 'react-vega'
+import { VegaLite, type VisualizationSpec } from 'react-vega'
 import { pluralize } from 'src/utils/helpers'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import { VisualizationSpec } from 'vega-embed'
 import {
   subYears,
   isAfter,
