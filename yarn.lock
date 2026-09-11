@@ -1293,7 +1293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-gnu@npm:4.62.2, @rollup/rollup-linux-x64-gnu@npm:^4.24.4":
+"@rollup/rollup-linux-x64-gnu@npm:4.62.2":
   version: 4.62.2
   resolution: "@rollup/rollup-linux-x64-gnu@npm:4.62.2"
   conditions: os=linux & cpu=x64 & libc=glibc
@@ -2069,7 +2069,7 @@ __metadata:
     swr: "npm:^0.3.2"
     typescript: "npm:^5.3.3"
     vega: "npm:^6.2.0"
-    vega-embed: "npm:^6.25.0"
+    vega-embed: "npm:^7.1.0"
     vega-lite: "npm:^5.19.0"
   languageName: unknown
   linkType: soft
@@ -5578,7 +5578,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.1.3, semver@npm:^7.2.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.4, semver@npm:^7.6.3, semver@npm:^7.7.3":
+"semver@npm:^7.1.3, semver@npm:^7.2.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.5.4, semver@npm:^7.7.2, semver@npm:^7.7.3":
   version: 7.8.5
   resolution: "semver@npm:7.8.5"
   bin:
@@ -6354,22 +6354,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-embed@npm:^6.25.0":
-  version: 6.29.0
-  resolution: "vega-embed@npm:6.29.0"
+"vega-embed@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "vega-embed@npm:7.1.0"
   dependencies:
     fast-json-patch: "npm:^3.1.1"
     json-stringify-pretty-compact: "npm:^4.0.0"
-    semver: "npm:^7.6.3"
+    semver: "npm:^7.7.2"
     tslib: "npm:^2.8.1"
-    vega-interpreter: "npm:^1.0.5"
-    vega-schema-url-parser: "npm:^2.2.0"
-    vega-themes: "npm:^2.15.0"
-    vega-tooltip: "npm:^0.35.2"
+    vega-interpreter: "npm:^2.0.0"
+    vega-schema-url-parser: "npm:^3.0.2"
+    vega-themes: "npm:3.0.0"
+    vega-tooltip: "npm:1.0.0"
   peerDependencies:
-    vega: ^5.21.0
+    vega: "*"
     vega-lite: "*"
-  checksum: 10c0/298285cd45647c9958d529fbd0450040b6cdec5e204b2e940807b890046aa4f7b52706f662d980428b6347265cb6909e2b47d4e12e8f59e06b358de581dbbb10
+  checksum: 10c0/d51d26ca7e457693b4e609995e9cb4d28c4df72865baa23cdd5fe80a7a981d8234ac6307c4c312d4166d58ca83ea7e5a520a19f352806d9a79bf06fbadd7543e
   languageName: node
   linkType: hard
 
@@ -6490,12 +6490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-interpreter@npm:^1.0.5":
-  version: 1.2.1
-  resolution: "vega-interpreter@npm:1.2.1"
+"vega-interpreter@npm:^2.0.0":
+  version: 2.3.1
+  resolution: "vega-interpreter@npm:2.3.1"
   dependencies:
-    vega-util: "npm:^1.17.4"
-  checksum: 10c0/b684bda6747a221179209aa29e4506c566607c4bb6aef7d72efdee6156c9bf466fd9be530343809a4d31b3532083d4bc5b1956c0ff0fd3aece5a6148d079da70
+    vega-util: "npm:^2.1.0"
+  checksum: 10c0/a2aaa33c5a76bb187d7c9f701fb05a5017d1b9b787ee61f7a51f5a8823c75131d6fcd15f3fb2b6b19683208a0b88778cebf021321037b52ac13c34da9e5f2a88
   languageName: node
   linkType: hard
 
@@ -6625,10 +6625,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-schema-url-parser@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "vega-schema-url-parser@npm:2.2.0"
-  checksum: 10c0/286ca81403836ebfa9ec4aaab06195128507c0800e942ab669fab8209ad1b8ca2a6729e2a7e853a7bcbcc598a17806fb4c43e0266640af2e3b89bb7da0a6e2b4
+"vega-schema-url-parser@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "vega-schema-url-parser@npm:3.0.2"
+  checksum: 10c0/d3b3bc3225e00f220fb7f7350451926572202a804c141d4f94e608ec7186acf8d4e7f578d010c0cecfdecd16f2fc42c5aa0dbdf5dec030dd19509b7c4e0d4dbf
   languageName: node
   linkType: hard
 
@@ -6652,7 +6652,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-themes@npm:^2.15.0, vega-themes@npm:^2.8.2":
+"vega-themes@npm:3.0.0":
+  version: 3.0.0
+  resolution: "vega-themes@npm:3.0.0"
+  peerDependencies:
+    vega: "*"
+    vega-lite: "*"
+  checksum: 10c0/9592bb044b33abf54e1d56ff3d1d507f87d9f90b316bfc0aded3bcac9e0913dd5292c558aa7fa2a7aa01826fc9ee96e4c98f1a6220b7e713b59089a76d0781e3
+  languageName: node
+  linkType: hard
+
+"vega-themes@npm:^2.8.2":
   version: 2.15.0
   resolution: "vega-themes@npm:2.15.0"
   peerDependencies:
@@ -6673,25 +6683,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vega-tooltip@npm:1.0.0":
+  version: 1.0.0
+  resolution: "vega-tooltip@npm:1.0.0"
+  dependencies:
+    vega-util: "npm:^2.0.0"
+  checksum: 10c0/f96c908f3981d35257c2577e68b2ed2989b7a075cb3375ff003673035f9f67cbc1bd18fe7a788aca3c51ff65534cd2c3355efff227454d29cd1e84ecca361948
+  languageName: node
+  linkType: hard
+
 "vega-tooltip@npm:^0.22.0":
   version: 0.22.1
   resolution: "vega-tooltip@npm:0.22.1"
   dependencies:
     vega-util: "npm:^1.13.1"
   checksum: 10c0/7abf0743aebacda52d804dd9c05d1bc2044411b6fb7e6e5a01a526a3c7f12e8f6570062f1089212c709f3c056a60346b4745ba4355fb3b441b099da11c47d389
-  languageName: node
-  linkType: hard
-
-"vega-tooltip@npm:^0.35.2":
-  version: 0.35.2
-  resolution: "vega-tooltip@npm:0.35.2"
-  dependencies:
-    "@rollup/rollup-linux-x64-gnu": "npm:^4.24.4"
-    vega-util: "npm:^1.17.2"
-  dependenciesMeta:
-    "@rollup/rollup-linux-x64-gnu":
-      optional: true
-  checksum: 10c0/9ebd70e687f604dad23d99268df0ef30aadc942237a9ba20f1996252fdfc0a56ce48882ccb80deaf26c62445176bce81ae2caacf051f1cbe42c0de3d3030a10b
   languageName: node
   linkType: hard
 
@@ -6720,10 +6726,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-util@npm:^1.13.1, vega-util@npm:^1.17.2, vega-util@npm:^1.17.3, vega-util@npm:^1.17.4, vega-util@npm:~1.17.2":
+"vega-util@npm:^1.13.1, vega-util@npm:^1.17.3, vega-util@npm:~1.17.2":
   version: 1.17.4
   resolution: "vega-util@npm:1.17.4"
   checksum: 10c0/71457e85821f1f0b51985d7a0721f049f9a359b6134384fb7f0b8b8a50c154ae4e90aba86b1e88f63c553bc18a42ff830fb885adaf14b64776dddfee9f1c879b
+  languageName: node
+  linkType: hard
+
+"vega-util@npm:^2.0.0":
+  version: 2.1.2
+  resolution: "vega-util@npm:2.1.2"
+  checksum: 10c0/af7a3bfc99685e77e31e2f3151d5c195c7a3cf8f25387fa553c50fbc1927eed034d8557b5f1403330336087ed4557f3c9a289778476d04e5171912e62edfb73a
   languageName: node
   linkType: hard
 
