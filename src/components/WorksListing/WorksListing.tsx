@@ -11,6 +11,7 @@ import { ConnectionTypeCounts, OrganizationRelationTypeCounts, Works } from 'src
 import Loading from 'src/components/Loading/Loading'
 import LoadingFacetList from 'src/components/Loading/LoadingFacetList'
 import NoResults from 'src/components/NoResults/NoResults'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 import Pager from 'src/components/Pager/Pager'
 import type { ShowCharts } from 'src/components/WorksDashboard/WorksDashboard'
@@ -129,17 +130,20 @@ export default function WorksListing({
     )
   }
 
+  const sidebar = (loadingFacets || organizationRelationCountsLoading)
+    ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row>
+    : renderFacets()
+
   return (
-    <Row>
-      <Col md={3} className={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}>
-        {(loadingFacets || organizationRelationCountsLoading) ? <Row><LoadingFacetList count={4} numberOfLines={10} /></Row> : renderFacets()}
-      </Col>
-      <Col md={9}>
-        <h2 className="visually-hidden">Works Search Listing</h2>
-        {children}
-        {loading ? <Loading /> : renderWorks()}
-      </Col>
-    </Row>
+    <CommonsLayout
+      fluid={false}
+      sidebarClassName={'d-none d-md-block' + (['doi.org/?'].includes(url) ? ' px-4' : ' pe-4')}
+      sidebar={sidebar}
+    >
+      <h2 className="visually-hidden">Works Search Listing</h2>
+      {children}
+      {loading ? <Loading /> : renderWorks()}
+    </CommonsLayout>
   )
 }
 
