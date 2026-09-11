@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Alert from 'react-bootstrap/Alert'
@@ -16,6 +15,7 @@ import RepositoryMetadata from 'src/components/RepositoryMetadata/RepositoryMeta
 
 import { QueryVar, useSearchRepositoryQuery } from 'src/data/queries/searchRepositoryQuery'
 import { pluralize } from 'src/utils/helpers'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 
 type Props = {
@@ -32,22 +32,22 @@ export default function SearchRepositories({ variables }: Props) {
   const repositories = data?.repositories
 
   if (error || !repositories || repositories.nodes.length === 0) return (
-    <Col md={{ span: 9, offset: 3 }}>
+    <CommonsLayout>
       <div className="alert-works">
         <Alert variant="warning">
           <p>No repositories found. Try a new search or explore generalist repositories such as:</p>
 
-          <ul>
-            <li><Link href="/repositories/dryad.dryad">Dryad</Link></li>
-            <li><Link href="/repositories/figshare.ars">Figshare</Link></li>
-            <li><Link href="/repositories/gdcc.harvard-dv">Harvard Dataverse</Link></li>
-            <li><Link href="/repositories/bl.mendeley">Mendeley Data</Link></li>
-            <li><Link href="/repositories/cos.osf">Open Science Framework</Link></li>
-            <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
-          </ul>
+        <ul>
+          <li><Link href="/repositories/dryad.dryad">Dryad</Link></li>
+          <li><Link href="/repositories/figshare.ars">Figshare</Link></li>
+          <li><Link href="/repositories/gdcc.harvard-dv">Harvard Dataverse</Link></li>
+          <li><Link href="/repositories/bl.mendeley">Mendeley Data</Link></li>
+          <li><Link href="/repositories/cos.osf">Open Science Framework</Link></li>
+          <li><Link href="/repositories/cern.zenodo">Zenodo</Link></li>
+        </ul>
         </Alert>
       </div>
-    </Col>
+    </CommonsLayout>
   )
 
 
@@ -103,25 +103,25 @@ export default function SearchRepositories({ variables }: Props) {
     </>)
   }
 
-  return (<Container fluid>
-    <Row>
+  return (<>
+    <CommonsLayout>
       <h2 className="visually-hidden">Repositories Results Summary</h2>
-      <Col md={{ span: 9, offset: 3 }}>
-        {repositories.totalCount > 0 && (
-          <h3 className="member-results">{pluralize(repositories.totalCount || 0, 'Repository', false, 'Repositories')}</h3>
-        )}
-      </Col>
-    </Row>
-    <Row>
-      <Col md={3} className='pe-4'>
-        <h2 className="visually-hidden">Repositories Sidebar</h2>
-        <h3 className="visually-hidden">Repositories Facets</h3>
-        {renderFacets()}
-      </Col>
-      <Col md={9}>
-        <h2 className="visually-hidden">Repositories Listings</h2>
-        {renderResults()}
-      </Col>
-    </Row>
-  </Container>)
+      {repositories.totalCount > 0 && (
+        <h3 className="member-results">{pluralize(repositories.totalCount || 0, 'Repository', false, 'Repositories')}</h3>
+      )}
+    </CommonsLayout>
+    <CommonsLayout
+      sidebarClassName='pe-4'
+      sidebar={
+        <>
+          <h2 className="visually-hidden">Repositories Sidebar</h2>
+          <h3 className="visually-hidden">Repositories Facets</h3>
+          {renderFacets()}
+        </>
+      }
+    >
+      <h2 className="visually-hidden">Repositories Listings</h2>
+      {renderResults()}
+    </CommonsLayout>
+  </>)
 }

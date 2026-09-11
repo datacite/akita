@@ -3,7 +3,6 @@
 import React from 'react'
 import Loading from 'src/components/Loading/Loading'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import PersonMetadata from 'src/components/PersonMetadata/PersonMetadata'
 import Pager from 'src/components/Pager/Pager'
 import NoResults from 'src/components/NoResults/NoResults'
@@ -11,6 +10,7 @@ import NoResults from 'src/components/NoResults/NoResults'
 import { QueryVar, useSearchPersonQuery } from 'src/data/queries/searchPersonQuery'
 
 import { pluralize } from 'src/utils/helpers'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 interface Props {
   variables: QueryVar
@@ -23,32 +23,30 @@ export default function SearchPerson(props: Props) {
 
   const people = data?.people
   if (error || !people || people.nodes.length == 0) return (
-    <Row>
-      <Col md={{ span: 9, offset: 3 }}>
-        <NoResults />
-      </Col>
-    </Row>
+    <CommonsLayout>
+      <NoResults />
+    </CommonsLayout>
   )
 
 
   return (<>
     <h2 className="visually-hidden">People Results</h2>
-    <Row><Col md={{ span: 9, offset: 3 }}>
+    <CommonsLayout>
       {people.nodes.length > 0 && (
         <h3 className="member-results">
           {pluralize(people.totalCount, 'Person', false, 'People')}
         </h3>
       )}
-    </Col></Row>
+    </CommonsLayout>
 
-    <Row><Col md={{ span: 9, offset: 3 }}>
+    <CommonsLayout>
       {people.nodes.map((item) => (
         <PersonMetadata metadata={item} url={'orcid.org?'} key={item.id} />
       ))}
-    </Col></Row>
+    </CommonsLayout>
 
 
-    <Row><Col md={{ span: 9, offset: 3 }}>
+    <CommonsLayout>
       {(people.totalCount || 0) > 25 && (
         <Pager
           url={'/orcid.org?'}
@@ -56,6 +54,6 @@ export default function SearchPerson(props: Props) {
           endCursor={data.people.pageInfo.endCursor || ''}
         />
       )}
-    </Col></Row>
+    </CommonsLayout>
   </>)
 }
