@@ -12,6 +12,7 @@ import { useSearchDoiFacetsQuery } from 'src/data/queries/searchDoiFacetsQuery'
 import NoResults from 'src/components/NoResults/NoResults'
 import WorksListing, { SortBy } from 'src/components/WorksListing/WorksListing'
 import { pluralize } from 'src/utils/helpers'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 interface Props {
   variables: QueryVar
@@ -24,29 +25,23 @@ export default function SearchWork(props: Props) {
   if (loading) return <Row><Loading /></Row>
 
   if (error) return (
-    <Row>
-      <Col md={{ span: 9, offset: 3 }}>
-        <NoResults />
-      </Col>
-    </Row>
+    <CommonsLayout>
+      <NoResults />
+    </CommonsLayout>
   )
 
   const works = { ...data?.works, ...facets.data?.works } as Works
 
   return (<>
-    <Row>
+    <CommonsLayout>
       <h2 className="visually-hidden">Works Results</h2>
-      <Col md={3} className="d-none d-md-block">
-      </Col>
-      <Col md={9}>
-        {works.totalCount > 0 && (
-          <Row className="border-bottom ms-1 mb-3">
-            <Col className="ps-0"><h3 className="member-results border-0 mb-0">{pluralize(works.totalCount, 'Work')}</h3></Col>
-            <Col xs="auto"><Suspense><SortBy /></Suspense></Col>
-          </Row>
-        )}
-      </Col>
-    </Row>
+      {works.totalCount > 0 && (
+        <Row className="border-bottom ms-1 mb-3">
+          <Col className="ps-0"><h3 className="member-results border-0 mb-0">{pluralize(works.totalCount, 'Work')}</h3></Col>
+          <Col xs="auto"><Suspense><SortBy /></Suspense></Col>
+        </Row>
+      )}
+    </CommonsLayout>
     <WorksListing
       works={works}
       loading={false}

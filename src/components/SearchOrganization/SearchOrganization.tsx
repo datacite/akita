@@ -13,6 +13,7 @@ import Loading from 'src/components/Loading/Loading'
 import { QueryVar, useRORSearch } from 'src/data/queries/searchOrganizationQuery'
 import FacetList from 'src/components/FacetList/FacetList'
 import FacetListGroup from 'src/components/FacetList/FacetListGroup'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 type Props = {
   variables: QueryVar
@@ -25,11 +26,9 @@ export default function SearchOrganizations(props: Props) {
 
   const organizations = data?.organizations
   if (error || !organizations || organizations.nodes.length == 0) return (
-    <Row>
-      <Col md={{ span: 9, offset: 3 }}>
-        <NoResults />
-      </Col>
-    </Row>
+    <CommonsLayout>
+      <NoResults />
+    </CommonsLayout>
   )
 
   const renderResults = () => {
@@ -88,24 +87,24 @@ export default function SearchOrganizations(props: Props) {
   }
 
   return (<>
-    <Row>
+    <CommonsLayout>
       <h2 className="visually-hidden">Organization Results Summary</h2>
-      <Col md={{ span: 9, offset: 3 }}>
-        {organizations.totalCount > 0 && (
-          <h3 className="member-results">{pluralize(organizations.totalCount || 0, 'Organization')}</h3>
-        )}
-      </Col>
-    </Row>
-    <Row>
-      <Col md={3} className='px-4'>
-        <h2 className="visually-hidden">Organization Sidebar</h2>
-        <h3 className="visually-hidden">Organization Facets</h3>
-        {renderFacets()}
-      </Col>
-      <Col md={9}>
-        <h2 className="visually-hidden">Organization Listings</h2>
-        {renderResults()}
-      </Col>
-    </Row>
+      {organizations.totalCount > 0 && (
+        <h3 className="member-results">{pluralize(organizations.totalCount || 0, 'Organization')}</h3>
+      )}
+    </CommonsLayout>
+    <CommonsLayout
+      sidebarClassName='px-4'
+      sidebar={
+        <>
+          <h2 className="visually-hidden">Organization Sidebar</h2>
+          <h3 className="visually-hidden">Organization Facets</h3>
+          {renderFacets()}
+        </>
+      }
+    >
+      <h2 className="visually-hidden">Organization Listings</h2>
+      {renderResults()}
+    </CommonsLayout>
   </>)
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -11,9 +10,9 @@ import TitleComponent from 'src/components/Title/Title'
 import Claim from 'src/components/Claim/Claim'
 import CiteAs from 'src/components/CiteAs/CiteAs'
 import DownloadMetadata from 'src/components/DownloadMetadata/DownloadMetadata'
-// import DownloadReports from 'src/components/DownloadReports/DownloadReports'
 import Work from 'src/components/Work/Work'
 import ExportMetadata from 'src/components/DownloadMetadata/ExportMetadata'
+import CommonsLayout from 'src/components/CommonsLayout/CommonsLayout'
 
 interface Props {
   doi: string
@@ -24,13 +23,14 @@ export default async function Content(props: Props) {
 
   const { data, error } = await fetchDoi(doi)
 
-  if (error) return (
-    <Col md={{ span: 9, offset: 3 }}>
-      <Error title="An error occured." message={error.message} />
-    </Col>
-  )
+  if (error)
+    return (
+      <CommonsLayout>
+        <Error title="An error occured." message={error.message} />
+      </CommonsLayout>
+    )
 
-  const work = data?.work || {} as WorkType
+  const work = data?.work || ({} as WorkType)
 
   const title = work.titles[0]?.title || ''
   const handleUrl =
@@ -39,46 +39,41 @@ export default async function Content(props: Props) {
       : 'https://doi.org/' + work.doi
 
   return (
-    <Container fluid>
-      <Row className="mb-4">
-        <Col md={{ offset: 3 }}>
-          <TitleComponent title={title} titleLink={handleUrl} link={'https://doi.org/' + work.doi} rights={work.rights} />
-        </Col>
-      </Row>
+    <>
+      <CommonsLayout className="mb-4">
+        <TitleComponent
+          title={title}
+          titleLink={handleUrl}
+          link={'https://doi.org/' + work.doi}
+          rights={work.rights}
+        />
+      </CommonsLayout>
 
-      <Row>
-        <Col md={3} className='pe-5'>
-          <Row className="mb-2 pb-4">
-            <Col xs={12}>
-              <DownloadMetadata modalContent={<ExportMetadata doi={work} />} />
-            </Col>
-            {work.registrationAgency.id == "datacite" && (
-              <Col xs={12} className="mt-3 mb-3">
-                <Claim doi_id={work.doi} />
+      <CommonsLayout
+        sidebarClassName="pe-5"
+        mainClassName="px-0"
+        sidebar={
+          <>
+            <Row className="mb-2 pb-4">
+              <Col xs={12}>
+                <DownloadMetadata
+                  modalContent={<ExportMetadata doi={work} />}
+                />
               </Col>
-            )}
-          </Row>
-          <Row className="mb-2 pb-4">
-            <CiteAs doi={work} />
-          </Row>
-          {/* <Row className="mb-2 pb-4"> */}
-          {/*   {!isBot && <DownloadReports */}
-          {/*     links={[ */}
-          {/*       { */}
-          {/*         title: 'Related Works (CSV)', */}
-          {/*         helpText: `Includes descriptions and formatted citations in APA style for up to 200 DOIs associated with this ${isProject(work) ? 'project' : 'work'}.`, */}
-          {/*         type: 'doi/related-works', */}
-          {/*       } */}
-          {/*     ]} */}
-          {/*     variables={{ id: doi }} */}
-          {/*   />} */}
-          {/* </Row> */}
-        </Col>
-
-        <Col md={9} className="px-0">
-          <Work doi={work} />
-        </Col>
-      </Row>
-    </Container>
+              {work.registrationAgency.id == 'datacite' && (
+                <Col xs={12} className="mt-3 mb-3">
+                  <Claim doi_id={work.doi} />
+                </Col>
+              )}
+            </Row>
+            <Row className="mb-2 pb-4">
+              <CiteAs doi={work} />
+            </Row>
+          </>
+        }
+      >
+        <Work doi={work} />
+      </CommonsLayout>
+    </>
   )
 }
