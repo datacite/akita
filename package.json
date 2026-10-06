@@ -63,7 +63,7 @@
     "@cypress/webpack-dev-server": "^1.7.0",
     "@types/gtag.js": "^0.0.3",
     "@types/node": "^12.12.39",
-    "@types/react": "19.1.10",
+    "@types/react": "19.2.18",
     "@types/react-dom": "^19.2.4",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -77,7 +77,7 @@
   "license": "MIT",
   "resolutions": {
     "@fortawesome/fontawesome-common-types": "7.2.0",
-    "@types/react": "19.1.10",
+    "@types/react": "19.2.18",
     "@types/react-dom": "19.1.7",
     "minimatch": "^3.1.4",
     "picomatch": "^2.3.2",
