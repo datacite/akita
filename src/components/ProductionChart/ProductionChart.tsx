@@ -1,10 +1,16 @@
 'use client'
 
 import React from 'react'
-import { VegaLite, type VisualizationSpec } from 'react-vega'
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 
-import useWindowDimensions from 'src/utils/useWindowDimensions'
-import EmptyChart from 'src/components/EmptyChart/EmptyChart'
+import ChartPanel from 'src/components/ChartPanel/ChartPanel'
+import ChartTooltip from 'src/components/ChartPanel/ChartTooltip'
+import {
+  AXIS_LINE,
+  AXIS_TICK,
+  CHART_HIGHLIGHT,
+  integerFormat
+} from 'src/components/ChartPanel/chartTheme'
 
 interface ChartRecord {
   title: string
@@ -18,138 +24,75 @@ type Props = {
   color?: string
 }
 
-const actions = {
-  export: true,
-  source: false,
-  compiled: false,
-  editor: false
+interface YearCount {
+  year: number
+  count: number
+}
+
+// One bar per year from lowerBoundYear up to and including the current year,
+// with missing years filled in as 0 so the axis has no gaps.
+function toYearSeries(data: ChartRecord[], lowerBoundYear: number, endYear: number): YearCount[] {
+  const counts = new Map<number, number>()
+  data.forEach((d) => {
+    const year = Number(d.title)
+    if (!Number.isNaN(year)) counts.set(year, (counts.get(year) ?? 0) + d.count)
+  })
+
+  const series: YearCount[] = []
+  for (let year = lowerBoundYear; year < endYear; year++) {
+    series.push({ year, count: counts.get(year) ?? 0 })
+  }
+  return series
 }
 
 export default function ProductionChart({ title, data, lowerBoundYear, color }: Props) {
-  if (data.length == 0) {
-    return <EmptyChart title={title} />
-  }
-  // get current screen size
-  const windowDimensions: any = useWindowDimensions()
-  const width = windowDimensions.width
+  // exclusive upper bound: the bar for the current year is included
+  const endYear = new Date().getFullYear() + 1
 
-  /* istanbul ignore next */
-  const thisYear = new Date().getFullYear() + 1
-
-  /* istanbul ignore next */
   // lower bound year should be multiple of 5
-  if (typeof lowerBoundYear == 'undefined') {
-    lowerBoundYear = Math.floor((thisYear - 10) / 5) * 5
-  }
+  const lowerBound = lowerBoundYear ?? Math.floor((endYear - 10) / 5) * 5
+  const fill = color ?? 'var(--datacite-color-primary, #1abc9c)'
 
-  if (typeof color == 'undefined') {
-    color = 'var(--datacite-color-primary, #1abc9c)'
-  }
-
-  /* istanbul ignore next */
-  const yearsDomain = thisYear - lowerBoundYear
-  const chartWidth = width >= 1400 ? yearsDomain * 22 : yearsDomain * 18
-
-  // type Expand<VisualizationSpec> = VisualizationSpec extends Record<string, unknown>
-  // interface ExtendedVisualizationSpec extends VisualizationSpec {
-  //   UserId: string
-  // }
-
-  /* istanbul ignore next */
-  const spec: VisualizationSpec = {
-    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
-    data: {
-      name: 'table'
-    },
-    padding: { left: 5, top: 5, right: 5, bottom: 5 },
-    transform: [
-      {
-        calculate: 'toNumber(datum.title)',
-        as: 'year'
-      },
-      {
-        calculate: 'toNumber(datum.title)+1',
-        as: 'bin_end'
-      },
-      {
-        filter: 'toNumber(datum.title) >= ' + lowerBoundYear
-      }
-    ],
-    width: chartWidth,
-    mark: {
-      type: 'bar',
-      cursor: 'pointer',
-      tooltip: true
-    },
-    selection: {
-      highlight: {
-        type: 'single',
-        empty: 'none',
-        on: 'mouseover'
-      }
-    },
-    encoding: {
-      x: {
-        field: 'year',
-        bin: {
-          binned: true,
-          step: 1,
-          maxbins: thisYear - lowerBoundYear
-        },
-        type: 'quantitative',
-        axis: {
-          format: '1',
-          labelExpr: 'datum.label % 5 === 0 ? datum.label : ""'
-        },
-        scale: {
-          domain: [lowerBoundYear, thisYear]
-        }
-      },
-      y: {
-        field: 'count',
-        type: 'quantitative',
-        axis: {
-          format: ',d',
-          tickMinStep: 1
-        }
-      },
-      color: {
-        field: 'count',
-        scale: { range: [color] },
-        type: 'nominal',
-        legend: null,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        condition: [{ selection: 'highlight', value: '#34495e' }]
-      }
-    },
-    config: {
-      view: {
-        stroke: null
-      },
-      axis: {
-        grid: false,
-        title: null,
-        labelFlush: false
-      }
-    }
-  }
-
-  const mydata = data
+  const series = toYearSeries(data, lowerBound, endYear)
 
   return (
-    <div className="panel panel-transparent">
-      <div className="panel-body production-chart">
-        <div className="title text-center">
-          <h4>{title}</h4>
-        </div>
-        <VegaLite
-          renderer="svg"
-          spec={spec}
-          data={{ table: mydata }}
-          actions={actions}
+    <ChartPanel
+      title={title}
+      isEmpty={data.length == 0}
+      height={220}
+      className="production-chart"
+    >
+      <BarChart data={series} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
+        <XAxis
+          dataKey="year"
+          interval={0}
+          tickFormatter={(year: number) => (year % 5 === 0 ? String(year) : '')}
+          tick={AXIS_TICK}
+          tickLine={false}
+          axisLine={AXIS_LINE}
         />
-      </div>
-    </div>
+        <YAxis
+          allowDecimals={false}
+          tickFormatter={integerFormat}
+          tick={AXIS_TICK}
+          axisLine={AXIS_LINE}
+          width={45}
+        />
+        <Tooltip
+          cursor={false}
+          content={
+            <ChartTooltip formatValue={(item) => integerFormat(Number(item.value))} />
+          }
+        />
+        <Bar
+          dataKey="count"
+          name="Works"
+          fill={fill}
+          activeBar={{ fill: CHART_HIGHLIGHT }}
+          cursor="pointer"
+          isAnimationActive={false}
+        />
+      </BarChart>
+    </ChartPanel>
   )
 }
