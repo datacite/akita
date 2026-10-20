@@ -44,7 +44,7 @@ describe('UsageChart Component', () => {
         data={data.viewsOverTime}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 3)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 3)
 
     cy.get('.usage-chart').should('be.visible')
 
@@ -64,7 +64,7 @@ describe('UsageChart Component', () => {
         data={oldData.viewsOverTime}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 2)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 2)
 
     cy.get('.usage-chart').should('be.visible')
 

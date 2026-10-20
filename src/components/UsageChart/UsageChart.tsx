@@ -1,19 +1,30 @@
 'use client'
 
 import React from 'react'
-import { VegaLite, type VisualizationSpec } from 'react-vega'
-import { pluralize } from 'src/utils/helpers'
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import {
-  subYears,
+  addMonths,
+  format,
   isAfter,
+  isBefore,
   parseISO,
-  differenceInMonths,
-  getYear
+  startOfMonth,
+  startOfYear,
+  subYears
 } from 'date-fns'
 
-import useWindowDimensions from 'src/utils/useWindowDimensions'
+import { pluralize } from 'src/utils/helpers'
+import ChartPanel from 'src/components/ChartPanel/ChartPanel'
+import ChartTooltip from 'src/components/ChartPanel/ChartTooltip'
+import {
+  AXIS_LINE,
+  AXIS_TICK,
+  CHART_HIGHLIGHT,
+  CHART_PRIMARY,
+  integerFormat
+} from 'src/components/ChartPanel/chartTheme'
 
 interface ChartRecord {
   yearMonth: string
@@ -28,11 +39,9 @@ type Props = {
   type: string
 }
 
-const actions = {
-  export: true,
-  source: false,
-  compiled: false,
-  editor: false
+interface MonthTotal {
+  yearMonth: string // yyyy-MM
+  total: number
 }
 
 const UsageChart: React.FunctionComponent<Props> = ({
@@ -41,135 +50,80 @@ const UsageChart: React.FunctionComponent<Props> = ({
   publicationYear,
   type
 }) => {
-  // get current screen size
-  const windowDimensions: any = useWindowDimensions()
-  const width = windowDimensions.width
+  const now = new Date()
 
-  // current date
-  /* istanbul ignore next */
-  const thisYear = new Date().getFullYear()
-
-  /* istanbul ignore next */
-  // getMonth is zero-based, so January is 0
-  const thisMonth = new Date().getMonth() + 1
-
-  // Get the lowerBound
-  /* istanbul ignore next */
-  const threeYearsAgo = subYears(new Date(), 3)
+  // Show at most the last three years. (Kept as before: publicationYear is a
+  // year, so as a date it is always earlier than three years ago.)
+  const threeYearsAgo = subYears(now, 3)
   const lowerBound = isAfter(publicationYear || 0, threeYearsAgo)
     ? publicationYear || 0
     : threeYearsAgo
 
-  // Filter dataset
-  /* istanbul ignore next */
-  let subset: ChartRecord[] = data?.filter((e) => {
-    const chartDate = parseISO(e.yearMonth)
-    return isAfter(chartDate, lowerBound)
-  }) || []
+  const totals = new Map<string, number>()
+  ;(data ?? [])
+    .filter((e) => {
+      const chartDate = parseISO(e.yearMonth)
+      return isAfter(chartDate, lowerBound) && isAfter(chartDate, publicationYear || 0)
+    })
+    .forEach((e) => totals.set(e.yearMonth, (totals.get(e.yearMonth) ?? 0) + e.total))
 
-  /* istanbul ignore next */
-  subset = subset.filter((e) => {
-    const chartDate = parseISO(e.yearMonth)
-    return isAfter(chartDate, publicationYear || 0)
-  })
-
-  const subsetWithTimezone = subset.map((d) => ({
-    ...d,
-    yearMonth: d.yearMonth + '-15T00:00:00Z'
-  }))
-
-  // get domain, set width according to screen size
-  /* istanbul ignore next */
-  const domain = Math.abs(differenceInMonths(lowerBound, new Date()))
-  const chartWidth = width >= 1400 ? domain * 25 : domain * 18
-
-  /* istanbul ignore next */
-  const spec: VisualizationSpec = {
-    $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
-    data: {
-      name: 'table'
-    },
-    width: chartWidth,
-    mark: {
-      type: 'bar',
-      tooltip: true,
-      cursor: 'pointer'
-    },
-    selection: {
-      highlight: {
-        type: 'single',
-        empty: 'none',
-        on: 'mouseover'
-      }
-    },
-    encoding: {
-      x: {
-        field: 'yearMonth',
-        timeUnit: {
-          unit: 'yearmonth',
-          step: 1
-          // band: 0.5
-        },
-        type: 'temporal',
-        title: null,
-        axis: {
-          labelAngle: domain < 30 ? 45 : 0,
-          labelFlush: false,
-          labelOverlap: true
-        },
-        scale: {
-          domain: [
-            { year: getYear(lowerBound), month: 1 },
-            { year: thisYear, month: thisMonth }
-          ]
-        }
-      },
-      y: {
-        field: 'total',
-        type: 'quantitative',
-        axis: null
-      },
-      color: {
-        field: 'total',
-        scale: { range: ['#1abc9c'] },
-        type: 'nominal',
-        legend: null,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        condition: [{ selection: 'highlight', value: '#34495e' }]
-      }
-    },
-    config: {
-      view: {
-        stroke: null
-      },
-      axis: {
-        grid: false
-      }
-    }
+  // One bar per month from January of the lower-bound year to this month,
+  // with missing months as 0 so the time axis has no gaps.
+  const series: MonthTotal[] = []
+  const lastMonth = startOfMonth(now)
+  for (
+    let month = startOfYear(lowerBound);
+    !isBefore(lastMonth, month);
+    month = addMonths(month, 1)
+  ) {
+    const key = format(month, 'yyyy-MM')
+    series.push({ yearMonth: key, total: totals.get(key) ?? 0 })
   }
 
-  const title = () => {
-    return (
-      <div>
-        {pluralize(counts || 0, type)} reported since publication in{' '}
-        {publicationYear}.
-      </div>
-    )
-  }
+  const monthLabel = (yearMonth: string) => format(parseISO(yearMonth), 'MMM yyyy')
 
   return (
     <div className="panel panel-transparent">
       <div className="usage-chart panel-body">
         <Container>
-          <Row>{title()}</Row>
           <Row>
-            <VegaLite
-              renderer="svg"
-              spec={spec}
-              data={{ table: subsetWithTimezone }}
-              actions={actions}
-            />
+            <div>
+              {pluralize(counts || 0, type)} reported since publication in{' '}
+              {publicationYear}.
+            </div>
+          </Row>
+          <Row>
+            <ChartPanel height={200} bare>
+              <BarChart data={series} margin={{ top: 10, right: 10, bottom: 5, left: 10 }}>
+                <XAxis
+                  dataKey="yearMonth"
+                  tickFormatter={monthLabel}
+                  interval="preserveStartEnd"
+                  minTickGap={24}
+                  tick={AXIS_TICK}
+                  tickLine={false}
+                  axisLine={AXIS_LINE}
+                />
+                <YAxis hide />
+                <Tooltip
+                  cursor={false}
+                  content={
+                    <ChartTooltip
+                      formatLabel={(label) => monthLabel(String(label))}
+                      formatValue={(item) => integerFormat(Number(item.value))}
+                    />
+                  }
+                />
+                <Bar
+                  dataKey="total"
+                  name={type}
+                  fill={CHART_PRIMARY}
+                  activeBar={{ fill: CHART_HIGHLIGHT }}
+                  cursor="pointer"
+                  isAnimationActive={false}
+                />
+              </BarChart>
+            </ChartPanel>
           </Row>
         </Container>
       </div>

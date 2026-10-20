@@ -22,6 +22,8 @@ type Props = {
   height: number
   /** Extra class on the panel body, e.g. for tests or legacy styles. */
   className?: string
+  /** Render only the sized chart, without the panel, title or empty state. */
+  bare?: boolean
   /** Rendered below the chart (legends, notes). */
   footer?: React.ReactNode
   /** A single Recharts chart element (BarChart, …). */
@@ -39,8 +41,19 @@ export default function ChartPanel({
   height,
   className = '',
   footer,
+  bare = false,
   children
 }: Props) {
+  const chart = (
+    <div className={styles.chart} style={{ height }}>
+      <ResponsiveContainer width="100%" height="100%">
+        {children}
+      </ResponsiveContainer>
+    </div>
+  )
+
+  if (bare) return chart
+
   if (isEmpty) {
     return <EmptyChart title={emptyTitle ?? (typeof title === 'string' ? title : '')} />
   }
@@ -54,11 +67,7 @@ export default function ChartPanel({
             {helpText && <HelpIcon text={helpText} position="inline" color="#34495E" />}
           </div>
         ))}
-        <div className={styles.chart} style={{ height }}>
-          <ResponsiveContainer width="100%" height="100%">
-            {children}
-          </ResponsiveContainer>
-        </div>
+        {chart}
         {footer}
       </div>
     </div>
