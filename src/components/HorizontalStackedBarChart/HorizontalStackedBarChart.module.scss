@@ -20,3 +20,31 @@
   font-size: 28px !important;
   color: var(--datacite-color-secondary, #1ABC9C);
 }
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 2px 12px;
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0 10px;
+  font-size: 11px;
+  color: #666;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legendSwatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
