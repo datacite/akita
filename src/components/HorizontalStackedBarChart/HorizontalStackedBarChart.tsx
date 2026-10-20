@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
-import { VegaLite } from 'react-vega'
-import EmptyChart from 'src/components/EmptyChart/EmptyChart'
-import HelpIcon from 'src/components/HelpIcon/HelpIcon'
-import styles from './HorizontalStackedBarChart.module.scss'
-import stackedBarChartSpec from './HorizontalStackedBarChartSpec'
+import React from 'react'
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 
+import ChartPanel from 'src/components/ChartPanel/ChartPanel'
+import ChartTooltip from 'src/components/ChartPanel/ChartTooltip'
+import HelpIcon from 'src/components/HelpIcon/HelpIcon'
+import { AXIS_TICK, CHART_FALLBACK } from 'src/components/ChartPanel/chartTheme'
+import styles from './HorizontalStackedBarChart.module.scss'
 
 type Props = {
   chartTitle: string
@@ -22,6 +23,16 @@ export interface HorizontalBarRecord {
   count: number
 }
 
+interface Segment extends HorizontalBarRecord {
+  key: string
+  color: string
+}
+
+const percentOf = (count: number, total: number) =>
+  total > 0 ? Math.round((count / total) * 100) : 0
+
+// A single 100% stacked bar with a legend, using fixed category colours
+// (domain[i] is drawn in range[i]).
 const HorizontalBarChart: React.FunctionComponent<Props> = ({
   chartTitle,
   topCategory,
@@ -30,59 +41,95 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
   domain,
   tooltipText
 }) => {
-  const [width, setWidth] = useState(500);
-  const graphDivRef = useRef<HTMLDivElement | null>(null);
+  const total = data.reduce((sum, d) => sum + d.count, 0)
 
-  function handleResize() {
-    if (!graphDivRef.current) return
-    setWidth(graphDivRef.current.offsetWidth - 20);
-  }
+  // Largest segment first. Keys are synthetic because titles such as
+  // "CC-BY-4.0" contain dots, which Recharts would read as a path.
+  const segments: Segment[] = [...data]
+    .sort((a, b) => b.count - a.count)
+    .map((d, i) => {
+      const index = domain ? domain.indexOf(d.title) : -1
+      return { ...d, key: `s${i}`, color: index >= 0 && range[index] ? range[index] : CHART_FALLBACK }
+    })
 
+  const row: Record<string, number | string> = { name: chartTitle }
+  segments.forEach((s) => { row[s.key] = s.count })
 
-  useEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [])
+  const legend = [...segments].sort((a, b) => a.title.localeCompare(b.title))
 
-  useEffect(() => {
-    handleResize();
-  });
+  const header = (
+    <>
+      <div className={styles.chartText}>
+        {chartTitle}
+        {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
+      </div>
+      <div className={styles.chartDetail}>
+        <span className={styles.chartDetailText}>{topCategory.title}</span>
+        <span className={styles.chartDetailText}>{topCategory.percent}%</span>
+      </div>
+    </>
+  )
 
-
-
-  if (data.length == 0) {
-    return <EmptyChart title={`Percent ${Array.isArray(chartTitle) ? chartTitle.join(' ') : chartTitle}`} />
-  }
-
-  if (domain) {
-    const indices = data.map(d => domain.findIndex(dom => dom === d.title))
-    domain = domain.filter((_, i) => indices.includes(i))
-    range = range.filter((_, i) => indices.includes(i))
-  }
-
-
+  const footer = (
+    <ul className={styles.legend}>
+      {legend.map((s) => (
+        <li key={s.key} className={styles.legendItem}>
+          <span className={styles.legendSwatch} style={{ backgroundColor: s.color }} />
+          {s.title}
+        </li>
+      ))}
+    </ul>
+  )
 
   return (
-    <div className="panel panel-transparent">
-      <div className="panel-body production-chart" ref={graphDivRef}>
-        <div className={styles.chartText}>
-          {chartTitle}
-          {tooltipText && <HelpIcon text={tooltipText} padding={25} position='inline' color='#34495E' />}
-        </div>
-        <div className={styles.chartDetail}>
-          <span className={styles.chartDetailText}>{topCategory.title}</span>
-          <span className={styles.chartDetailText}>{topCategory.percent}%</span>
-        </div>
-        <VegaLite
-          renderer="svg"
-          spec={stackedBarChartSpec(width, domain, range)}
-          data={{ rawData: data }}
-          actions={false}
-          padding={0}
+    <ChartPanel
+      header={header}
+      footer={footer}
+      isEmpty={data.length == 0}
+      emptyTitle={`Percent ${chartTitle}`}
+      height={80}
+      className="production-chart"
+    >
+      <BarChart
+        data={[row]}
+        layout="vertical"
+        stackOffset="expand"
+        margin={{ top: 5, right: 10, bottom: 5, left: 10 }}
+        barCategoryGap={0}
+      >
+        <XAxis
+          type="number"
+          domain={[0, 1]}
+          ticks={[0, 0.2, 0.4, 0.6, 0.8, 1]}
+          tickFormatter={(v: number) => `${Math.round(v * 100)}%`}
+          tick={AXIS_TICK}
+          axisLine={{ stroke: 'lightgray' }}
+          tickLine={{ stroke: 'lightgray' }}
         />
-      </div>
-    </div>
+        <YAxis type="category" dataKey="name" hide />
+        <Tooltip
+          shared={false}
+          cursor={false}
+          content={
+            <ChartTooltip
+              formatLabel={(_, item) => String(item.name ?? '')}
+              formatValue={(item) => `${percentOf(Number(item.value), total)}%`}
+            />
+          }
+        />
+        {segments.map((s) => (
+          <Bar
+            key={s.key}
+            dataKey={s.key}
+            name={s.title}
+            stackId="all"
+            fill={s.color}
+            barSize={50}
+            isAnimationActive={false}
+          />
+        ))}
+      </BarChart>
+    </ChartPanel>
   )
 }
 
