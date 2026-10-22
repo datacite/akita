@@ -19,6 +19,8 @@
   font-size: 12px;
   color: #34495e;
   pointer-events: none;
+  // Recharts' own tooltip slide is turned off; fade in where it appears instead.
+  animation: chartTooltipFadeIn 120ms ease-out;
 }
 
 .tooltipLabel {
@@ -27,4 +29,9 @@
 
 .tooltipValue {
   font-variant-numeric: tabular-nums;
+}
+
+@keyframes chartTooltipFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

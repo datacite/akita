@@ -70,6 +70,7 @@ export default function VerticalBarChart({ title, data, color }: Props) {
           axisLine={AXIS_LINE}
         />
         <Tooltip
+          isAnimationActive={false}
           cursor={false}
           content={
             <ChartTooltip formatValue={(item) => integerFormat(Number(item.value))} />

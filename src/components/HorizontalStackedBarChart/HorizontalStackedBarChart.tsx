@@ -108,6 +108,7 @@ const HorizontalBarChart: React.FunctionComponent<Props> = ({
         />
         <YAxis type="category" dataKey="name" hide />
         <Tooltip
+          isAnimationActive={false}
           shared={false}
           cursor={false}
           content={

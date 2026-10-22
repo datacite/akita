@@ -26,6 +26,8 @@ type Props = {
   bare?: boolean
   /** Rendered below the chart (legends, notes). */
   footer?: React.ReactNode
+  /** Mouse moves over the chart area, e.g. for a cursor-following tooltip. */
+  onChartMouseMove?: React.MouseEventHandler<HTMLDivElement>
   /** A single Recharts chart element (BarChart, …). */
   children: React.ReactElement
 }
@@ -42,10 +44,11 @@ export default function ChartPanel({
   className = '',
   footer,
   bare = false,
+  onChartMouseMove,
   children
 }: Props) {
   const chart = (
-    <div className={styles.chart} style={{ height }}>
+    <div className={styles.chart} style={{ height }} onMouseMove={onChartMouseMove}>
       <ResponsiveContainer width="100%" height="100%">
         {children}
       </ResponsiveContainer>
