@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { ChartCursorContext, cursorTransform } from './chartCursor'
 import styles from './ChartPanel.module.scss'
 
 export interface ChartTooltipItem {
@@ -21,7 +22,8 @@ type Props = {
   formatValue?: (item: ChartTooltipItem) => React.ReactNode
 }
 
-// Brand tooltip shared by every chart: a label line and a value line.
+// Brand tooltip shared by every chart: a label line and a value line. Inside a
+// ChartPanel it follows the cursor (see chartCursor.ts).
 export default function ChartTooltip({
   active,
   payload,
@@ -29,10 +31,11 @@ export default function ChartTooltip({
   formatLabel,
   formatValue
 }: Props) {
+  const cursor = useContext(ChartCursorContext)
   if (!active || !payload || payload.length === 0) return null
   const item = payload[0]
 
-  return (
+  const tooltip = (
     <div className={styles.tooltip}>
       <div className={styles.tooltipLabel}>
         {formatLabel ? formatLabel(label, item) : label}
@@ -40,6 +43,14 @@ export default function ChartTooltip({
       <div className={styles.tooltipValue}>
         {formatValue ? formatValue(item) : String(item.value ?? '')}
       </div>
+    </div>
+  )
+
+  if (!cursor) return tooltip
+
+  return (
+    <div ref={cursor.tipRef} style={{ transform: cursorTransform(cursor.cursorRef.current) }}>
+      {tooltip}
     </div>
   )
 }

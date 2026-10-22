@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React from 'react'
 import { Sankey, Tooltip } from 'recharts'
 import type { NodeProps, LinkProps } from 'recharts/types/chart/Sankey'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -23,45 +23,6 @@ type Props = {
 const LABEL_WIDTH = 160
 const MAX_LABEL_CHARS = 24
 const ROW_HEIGHT = 34
-const CURSOR_OFFSET = 14
-
-type Cursor = { x: number, y: number, flipX: boolean, flipY: boolean }
-
-// Place the tooltip next to the cursor, on the side with more room.
-const cursorShift = (flip: boolean) =>
-  flip ? `calc(-100% - ${CURSOR_OFFSET}px)` : `${CURSOR_OFFSET}px`
-
-const cursorTransform = (cursor?: Cursor) => cursor
-  ? `translate(${cursor.x}px, ${cursor.y}px) translate(${cursorShift(cursor.flipX)}, ${cursorShift(cursor.flipY)})`
-  : undefined
-
-type SankeyTooltipProps = React.ComponentProps<typeof ChartTooltip> & {
-  tipRef: React.RefObject<HTMLDivElement | null>
-  cursorRef: React.RefObject<Cursor | undefined>
-}
-
-// Recharts pins the tooltip wrapper to the chart's origin (see `position`
-// below); this element is then moved to the cursor directly in the DOM, so
-// mouse moves never re-render the chart or remount the tooltip.
-function SankeyTooltip({ tipRef, cursorRef, ...props }: SankeyTooltipProps) {
-  if (!props.active || !props.payload?.length) return null
-
-  return (
-    <div ref={tipRef} style={{ transform: cursorTransform(cursorRef.current) }}>
-      <ChartTooltip
-        {...props}
-        formatLabel={(_, item) => {
-          const p = item.payload?.payload ?? item.payload
-          return p?.source && p?.target ? `${p.source.name} → ${p.target.name}` : String(item.name ?? '')
-        }}
-        formatValue={(item) => {
-          const count = Number(item.value)
-          return `${integerFormat(count)} ${count === 1 ? 'work' : 'works'}`
-        }}
-      />
-    </div>
-  )
-}
 
 const typeColor = (name: string) => {
   const index = RESOURCE_TYPE_DOMAIN.indexOf(name)
@@ -84,18 +45,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const activeType = searchParams?.get('resource-type')
-
-  // Recharts anchors Sankey tooltips to the middle of the hovered node or
-  // link; track the pointer instead so the tooltip sits next to the cursor.
-  const cursorRef = useRef<Cursor>(undefined)
-  const tipRef = useRef<HTMLDivElement>(null)
-  const trackCursor = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    cursorRef.current = { x, y, flipX: x > rect.width / 2, flipY: y > rect.height - 70 }
-    if (tipRef.current) tipRef.current.style.transform = cursorTransform(cursorRef.current) ?? ''
-  }
 
   const typeHref = (id: string) => {
     const params = new URLSearchParams(Array.from(searchParams?.entries() || []))
@@ -184,7 +133,6 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
       emptyTitle={titleText}
       height={height}
       className="production-chart"
-      onChartMouseMove={trackCursor}
     >
       <Sankey
         data={data}
@@ -198,7 +146,18 @@ const SankeyGraph: React.FunctionComponent<Props> = ({ titleText, data, tooltipT
         <Tooltip
           isAnimationActive={false}
           position={{ x: 0, y: 0 }}
-          content={<SankeyTooltip tipRef={tipRef} cursorRef={cursorRef} />}
+          content={
+            <ChartTooltip
+              formatLabel={(_, item) => {
+                const p = item.payload?.payload ?? item.payload
+                return p?.source && p?.target ? `${p.source.name} → ${p.target.name}` : String(item.name ?? '')
+              }}
+              formatValue={(item) => {
+                const count = Number(item.value)
+                return `${integerFormat(count)} ${count === 1 ? 'work' : 'works'}`
+              }}
+            />
+          }
         />
       </Sankey>
     </ChartPanel>
