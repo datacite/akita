@@ -59,11 +59,15 @@ const UsageChart: React.FunctionComponent<Props> = ({
     ? publicationYear || 0
     : threeYearsAgo
 
+  // The series and the data filter share one start month, so no month with
+  // data is drawn as 0.
+  const firstMonth = startOfYear(lowerBound)
+
   const totals = new Map<string, number>()
   ;(data ?? [])
     .filter((e) => {
       const chartDate = parseISO(e.yearMonth)
-      return isAfter(chartDate, lowerBound) && isAfter(chartDate, publicationYear || 0)
+      return !isBefore(chartDate, firstMonth) && isAfter(chartDate, publicationYear || 0)
     })
     .forEach((e) => totals.set(e.yearMonth, (totals.get(e.yearMonth) ?? 0) + e.total))
 
@@ -72,7 +76,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
   const series: MonthTotal[] = []
   const lastMonth = startOfMonth(now)
   for (
-    let month = startOfYear(lowerBound);
+    let month = firstMonth;
     !isBefore(lastMonth, month);
     month = addMonths(month, 1)
   ) {
