@@ -71,6 +71,7 @@ export default function VerticalBarChart({ title, data, color }: Props) {
         />
         <Tooltip
           isAnimationActive={false}
+          position={{ x: 0, y: 0 }}
           cursor={false}
           content={
             <ChartTooltip formatValue={(item) => integerFormat(Number(item.value))} />

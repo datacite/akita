@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo, useRef } from 'react'
 import { ResponsiveContainer } from 'recharts'
 
 import EmptyChart from 'src/components/EmptyChart/EmptyChart'
 import HelpIcon from 'src/components/HelpIcon/HelpIcon'
+import { ChartCursorContext, trackCursor, type Cursor } from './chartCursor'
 import styles from './ChartPanel.module.scss'
 
 type Props = {
@@ -26,14 +27,13 @@ type Props = {
   bare?: boolean
   /** Rendered below the chart (legends, notes). */
   footer?: React.ReactNode
-  /** Mouse moves over the chart area, e.g. for a cursor-following tooltip. */
-  onChartMouseMove?: React.MouseEventHandler<HTMLDivElement>
   /** A single Recharts chart element (BarChart, …). */
   children: React.ReactElement
 }
 
 // Shared wrapper for every Recharts chart: title, help icon, empty state and
-// responsive sizing. Replaces the per-chart window-resize code.
+// responsive sizing, plus the mouse tracking for cursor-following tooltips
+// (see chartCursor.ts). Replaces the per-chart window-resize code.
 export default function ChartPanel({
   title,
   header,
@@ -44,15 +44,20 @@ export default function ChartPanel({
   className = '',
   footer,
   bare = false,
-  onChartMouseMove,
   children
 }: Props) {
+  const cursorRef = useRef<Cursor>(undefined)
+  const tipRef = useRef<HTMLDivElement>(null)
+  const cursor = useMemo(() => ({ cursorRef, tipRef }), [])
+
   const chart = (
-    <div className={styles.chart} style={{ height }} onMouseMove={onChartMouseMove}>
-      <ResponsiveContainer width="100%" height="100%">
-        {children}
-      </ResponsiveContainer>
-    </div>
+    <ChartCursorContext.Provider value={cursor}>
+      <div className={styles.chart} style={{ height }} onMouseMove={(e) => trackCursor(e, cursor)}>
+        <ResponsiveContainer width="100%" height="100%">
+          {children}
+        </ResponsiveContainer>
+      </div>
+    </ChartCursorContext.Provider>
   )
 
   if (bare) return chart
