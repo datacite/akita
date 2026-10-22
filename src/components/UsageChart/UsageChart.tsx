@@ -7,8 +7,8 @@ import Row from 'react-bootstrap/Row'
 import {
   addMonths,
   format,
-  isAfter,
   isBefore,
+  max,
   parseISO,
   startOfMonth,
   startOfYear,
@@ -52,26 +52,19 @@ const UsageChart: React.FunctionComponent<Props> = ({
 }) => {
   const now = new Date()
 
-  // Show at most the last three years. (Kept as before: publicationYear is a
-  // year, so as a date it is always earlier than three years ago.)
-  const threeYearsAgo = subYears(now, 3)
-  const lowerBound = isAfter(publicationYear || 0, threeYearsAgo)
-    ? publicationYear || 0
-    : threeYearsAgo
-
-  // The series and the data filter share one start month, so no month with
-  // data is drawn as 0.
-  const firstMonth = startOfYear(lowerBound)
+  // Start in January of the publication year, but show at most the last three
+  // years. publicationYear is a calendar year, so turn it into a date first.
+  const firstMonth = max([
+    startOfYear(subYears(now, 3)),
+    new Date(publicationYear ?? 0, 0, 1)
+  ])
 
   const totals = new Map<string, number>()
   ;(data ?? [])
-    .filter((e) => {
-      const chartDate = parseISO(e.yearMonth)
-      return !isBefore(chartDate, firstMonth) && isAfter(chartDate, publicationYear || 0)
-    })
+    .filter((e) => !isBefore(parseISO(e.yearMonth), firstMonth))
     .forEach((e) => totals.set(e.yearMonth, (totals.get(e.yearMonth) ?? 0) + e.total))
 
-  // One bar per month from January of the lower-bound year to this month,
+  // One bar per month from the first month to this month,
   // with missing months as 0 so the time axis has no gaps.
   const series: MonthTotal[] = []
   const lastMonth = startOfMonth(now)
