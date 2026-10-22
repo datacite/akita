@@ -10,3 +10,35 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.label {
+  font-size: 12px;
+  fill: #34495E;
+}
+
+.nodeLink {
+  cursor: pointer;
+
+  &:hover .label,
+  &:focus .label {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible rect {
+    stroke: #34495E;
+    stroke-width: 2;
+  }
+}
+
+.link {
+  stroke-opacity: 0.35;
+  transition: stroke-opacity 0.15s;
+
+  &:hover {
+    stroke-opacity: 0.7;
+  }
+}

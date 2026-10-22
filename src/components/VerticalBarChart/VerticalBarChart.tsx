@@ -1,10 +1,17 @@
 'use client'
 
 import React from 'react'
-import { VegaLite, type VisualizationSpec } from 'react-vega'
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 
-import useWindowDimensions from 'src/utils/useWindowDimensions'
-import EmptyChart from 'src/components/EmptyChart/EmptyChart'
+import ChartPanel from 'src/components/ChartPanel/ChartPanel'
+import ChartTooltip from 'src/components/ChartPanel/ChartTooltip'
+import {
+  AXIS_LINE,
+  AXIS_TICK,
+  CHART_HIGHLIGHT,
+  CHART_PRIMARY,
+  integerFormat
+} from 'src/components/ChartPanel/chartTheme'
 
 interface ChartRecord {
   title: string
@@ -18,125 +25,78 @@ type Props = {
   color?: string
 }
 
-const actions = {
-  export: true,
-  source: false,
-  compiled: false,
-  editor: false
+const MAX_BARS = 10
+const LABEL_LENGTH = 9
+const BAR_ROW_HEIGHT = 22
+
+const truncate = (label: string) =>
+  label.length > LABEL_LENGTH ? label.substring(0, LABEL_LENGTH) + '…' : label
+
+// Whole-number ticks from 0 up to a round number at or above max. Recharts
+// ignores allowDecimals on a sqrt scale and would tick at 0.2, 0.4, …
+export function integerTicks(max: number, count = 5): number[] {
+  if (max <= 0) return [0]
+  const rough = max / (count - 1)
+  const magnitude = 10 ** Math.floor(Math.log10(rough))
+  const step = Math.max(1, [1, 2, 5, 10].map((m) => m * magnitude).find((s) => s >= rough)!)
+  const top = Math.ceil(max / step) * step
+  return Array.from({ length: top / step + 1 }, (_, i) => i * step)
 }
 
+// Top-10 horizontal bars (the name is historical), largest first, on a
+// square-root scale so long tails stay visible.
 export default function VerticalBarChart({ title, data, color }: Props) {
-  if (data.length == 0) {
-    return <EmptyChart title={title} />
-  }
-  // get current screen size
-  const windowDimensions: any = useWindowDimensions()
-  const width = windowDimensions.width
-
-  if (typeof color == 'undefined') {
-    color = '#1abc9c'
-  }
-
-  /* istanbul ignore next */
-  const chartWidth = width >= 1400 ? 11 * 22 : 11 * 18
-
-  /* istanbul ignore next */
-  const spec: VisualizationSpec = {
-    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    data: {
-      name: 'table'
-    },
-    padding: { left: 5, top: 5, right: 5, bottom: 5 },
-    axes: [
-      { orient: "bottom", scale: "xscale", tickCount: 5 },
-      { orient: "left", scale: "yscale", tickCount: 5 }
-    ],
-    mark: {
-      type: "bar",
-      cursor: "pointer",
-      tooltip: true
-    },
-    params: [
-      {
-        name: "highlight",
-        select: { type: "point", on: "pointerover" }
-      },
-      { name: "select", select: "point" }
-    ],
-    // params: {
-    //   name: "highlight",
-    //
-    //   highlight: {
-    //     type: "single",
-    //     empty: "none",
-    //     on: "mouseover"
-    //   }
-    // },
-    width: chartWidth,
-    height: 200,
-    encoding: {
-      y: {
-        field: "title",
-        type: "ordinal",
-        sort: { encoding: "x" },
-        axis: {
-          title: "",
-          labelLimit: 100,
-          labelExpr: 'substring(datum.value, 0,9)'
-        }
-      },
-      x: {
-        field: "count",
-        type: "quantitative",
-        title: "",
-        axis: {
-          format: ",d",
-          tickMinStep: 1
-        },
-        scale: { type: "sqrt" }
-      },
-      color: {
-        field: "count",
-        scale: { range: [color] },
-        type: "nominal",
-        legend: null,
-        condition: [{ param: "highlight", value: "#34495e" }]
-      }
-    },
-    config: {
-      view: {
-        stroke: null
-      },
-      axis: {
-        grid: false,
-        title: null,
-        labelFlush: false
-      }
-    }
-  }
-
-
-  const mydata = data.map(item => {
-    if (item.title === "missing") {
-      return { ...item, color: "#e74c3c" }
-    } else {
-      return { ...item, color: "#1abc9c" }
-    }
-  })
+  const rows = [...data].sort((a, b) => b.count - a.count).slice(0, MAX_BARS)
+  const height = Math.max(rows.length, 3) * BAR_ROW_HEIGHT + 40
+  const ticks = integerTicks(rows[0]?.count ?? 0)
 
   return (
-    <div className="panel panel-transparent">
-      <div className="panel-body production-chart">
-        <div className="title text-center">
-          <h4>{title}</h4>
-        </div>
-        <VegaLite
-          renderer="svg"
-          spec={spec}
-          data={{ table: mydata.slice(0, 10) }}
-          actions={actions}
+    <ChartPanel
+      title={title}
+      isEmpty={data.length == 0}
+      height={height}
+      className="production-chart"
+    >
+      <BarChart
+        data={rows}
+        layout="vertical"
+        margin={{ top: 5, right: 15, bottom: 5, left: 5 }}
+      >
+        <XAxis
+          type="number"
+          scale="sqrt"
+          domain={[0, ticks[ticks.length - 1]]}
+          ticks={ticks}
+          tickFormatter={integerFormat}
+          tick={AXIS_TICK}
+          axisLine={AXIS_LINE}
         />
-      </div>
-    </div>
+        <YAxis
+          type="category"
+          dataKey="title"
+          width={80}
+          interval={0}
+          tickFormatter={truncate}
+          tick={AXIS_TICK}
+          axisLine={AXIS_LINE}
+        />
+        <Tooltip
+          isAnimationActive={false}
+          position={{ x: 0, y: 0 }}
+          cursor={false}
+          content={
+            <ChartTooltip formatValue={(item) => integerFormat(Number(item.value))} />
+          }
+        />
+        <Bar
+          dataKey="count"
+          name={title}
+          fill={color ?? CHART_PRIMARY}
+          activeBar={{ fill: CHART_HIGHLIGHT }}
+          cursor="pointer"
+          isAnimationActive={false}
+        />
+      </BarChart>
+    </ChartPanel>
   )
 }

@@ -86,7 +86,7 @@ describe('VerticalBarChart Component', () => {
         data={data.works.resourceTypes}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 6)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 6)
     cy.get('.production-chart .title').should('be.visible').contains('Test')
   })
 })
