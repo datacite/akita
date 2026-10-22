@@ -106,6 +106,7 @@ const UsageChart: React.FunctionComponent<Props> = ({
                 />
                 <YAxis hide />
                 <Tooltip
+                  isAnimationActive={false}
                   cursor={false}
                   content={
                     <ChartTooltip

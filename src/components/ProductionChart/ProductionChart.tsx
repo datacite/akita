@@ -79,6 +79,7 @@ export default function ProductionChart({ title, data, lowerBoundYear, color }: 
           width={45}
         />
         <Tooltip
+          isAnimationActive={false}
           cursor={false}
           content={
             <ChartTooltip formatValue={(item) => integerFormat(Number(item.value))} />
