@@ -42,6 +42,12 @@ export const ORCID_API_URL = process.env.NEXT_PUBLIC_ORCID_API_URL || orcidApiSa
 export const ROR_API_URL = ror
 export const ROR_API_PROXY_URL = rorProxy
 
+// Identifies Commons to the DataCite API. X-Requested-With is used because it is
+// already in the API's CORS Access-Control-Allow-Headers list.
+export const COMMONS_VERSION = process.env.NEXT_PUBLIC_COMMONS_VERSION || 'dev'
+export const COMMONS_CLIENT_ID = `DataCiteCommons/${COMMONS_VERSION}`
+export const DATACITE_API_HEADERS = { 'X-Requested-With': COMMONS_CLIENT_ID }
+
 export const VERCEL_URL = process.env.NEXT_PUBLIC_VERCEL_URL
 export const LOCALHOST_URL = localhost
 

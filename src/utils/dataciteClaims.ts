@@ -1,4 +1,4 @@
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 import type { Claim, ClaimError, ClaimMutationResult } from 'src/data/types'
 
 interface ClaimResource {
@@ -52,6 +52,7 @@ async function claimsFetch(
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
+        ...DATACITE_API_HEADERS,
         ...init.headers,
       },
       signal: controller.signal,

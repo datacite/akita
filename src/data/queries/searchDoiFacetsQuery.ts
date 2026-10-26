@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import type { Works } from 'src/data/types'
 import { appendFacets, buildQuery, type QueryVar } from './searchDoiQuery'
-import { DATACITE_API_URL, FACETS } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS, FACETS } from 'src/data/constants'
 
 
 function buildDoiSearchParams(variables: QueryVar, facets: string[]): URLSearchParams {
@@ -58,7 +58,7 @@ function convertToQueryData(json: any): QueryData {
 export async function fetchDoisFacets(variables: QueryVar, facets = FACETS.DEFAULT) {
   const options = {
     method: 'GET',
-    headers: { accept: 'application/vnd.api+json' }
+    headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
   }
   const searchParams = buildDoiSearchParams(variables, facets)
 
