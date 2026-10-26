@@ -247,18 +247,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^6.1":
-  version: 6.2.1
-  resolution: "@cypress/react@npm:6.2.1"
+"@cypress/react@npm:^10.0":
+  version: 10.0.0
+  resolution: "@cypress/react@npm:10.0.0"
   peerDependencies:
-    "@types/react": ^16.9.16 || ^17.0.0
+    "@types/react": ^18 || ^19
+    "@types/react-dom": ^18 || ^19
     cypress: "*"
-    react: ^=16.x || ^=17.x
-    react-dom: ^=16.x || ^=17.x
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/0099750d91ecf4abad0f27725053036e9585e904028dc0848a58c3438f83ffdc0c32431eb891f3d66b8fc2daf704a898777addaf52579661dd625783b99f2e2b
+  checksum: 10c0/e7a11c6f383cf52cc6a3718ce55e3556ab750521f483cd3a24bc6685f70414af93db6d9b4ccf80e6360a68c8f6965bc0d423cb184bb4f28b0f2ab445b886ef05
   languageName: node
   linkType: hard
 
@@ -2042,7 +2043,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "akita@workspace:."
   dependencies:
-    "@cypress/react": "npm:^6.1"
+    "@cypress/react": "npm:^10.0"
     "@cypress/webpack-dev-server": "npm:^1.7.0"
     "@fortawesome/fontawesome-svg-core": "npm:^7.2.0"
     "@fortawesome/free-brands-svg-icons": "npm:^7.2.0"
