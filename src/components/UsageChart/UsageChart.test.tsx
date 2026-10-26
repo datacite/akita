@@ -29,6 +29,10 @@ describe('UsageChart Component', () => {
   let data
   
   beforeEach(function () {
+    // The chart shows at most the last three years, so pin the date to one
+    // where the 2018 fixture months are inside that window. Only Date is
+    // faked; Recharts' timers keep running.
+    cy.clock(new Date('2019-06-15T12:00:00Z'), ['Date'])
     cy.fixture('usageChart.json').then((d) => {
       data = d
     })
@@ -44,7 +48,7 @@ describe('UsageChart Component', () => {
         data={data.viewsOverTime}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 3)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 3)
 
     cy.get('.usage-chart').should('be.visible')
 
@@ -64,7 +68,7 @@ describe('UsageChart Component', () => {
         data={oldData.viewsOverTime}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 2)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 2)
 
     cy.get('.usage-chart').should('be.visible')
 

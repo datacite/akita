@@ -84,9 +84,10 @@ describe('ProductionChart Component', () => {
       <ProductionChart
         title='Test'
         data={data.works.published}
+        lowerBoundYear={2010}
       />
     )
-    cy.get('.mark-rect > path').should('be.visible').should('have.length', 9)
+    cy.get('.recharts-bar-rectangle path').should('be.visible').should('have.length', 9)
     cy.get('.production-chart .title').should('be.visible').contains('Test')
   })
 })
