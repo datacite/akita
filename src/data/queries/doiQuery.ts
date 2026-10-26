@@ -1,7 +1,7 @@
 import { WorkMetadata, Work } from 'src/data/types'
 import { mapJsonToWork } from 'src/utils/helpers'
 import fetchConditionalCache from 'src/utils/fetchConditionalCache'
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 
 function buildDoiSearchParams(id: string): URLSearchParams {
   return new URLSearchParams({
@@ -25,7 +25,7 @@ export async function fetchDoi(id: string) {
   try {
     const options = {
       method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
+      headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
     }
     const searchParams = buildDoiSearchParams(id)
 

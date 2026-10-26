@@ -1,6 +1,6 @@
 import { FormattedCitation } from "src/data/types"
 import { useQuery as useReactQuery, UseQueryResult } from "@tanstack/react-query"
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 
 const BASE_CITATION_URL = `${DATACITE_API_URL}/text/x-bibliography/`
 
@@ -22,7 +22,7 @@ async function fetchFormattedCitation(variables: QueryVar): Promise<string> {
 
   const url = `${BASE_CITATION_URL}${variables.id}?${params.toString()}`
 
-  const response = await fetch(url)
+  const response = await fetch(url, { headers: DATACITE_API_HEADERS })
 
   if (!response.ok) {
     throw new Error(`Citation API returned ${response.status}: ${response.statusText}`)

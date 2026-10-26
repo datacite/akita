@@ -1,5 +1,5 @@
 import { Repository } from 'src/data/types'
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 import { mapJsonToRepository } from 'src/utils/helpers'
 
 function convertToQueryData(repository: any): QueryData {
@@ -12,7 +12,7 @@ export async function fetchRepository(id: string) {
   try {
     const options = {
       method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
+      headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
     }
 
     const res = await fetch(`${DATACITE_API_URL}/reference-repositories/${id}`, options)

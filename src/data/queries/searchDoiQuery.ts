@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { PageInfo, Works } from 'src/data/types'
 import { mapJsonToWork, cursorToPage } from 'src/utils/helpers'
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 
 
 function extractRORId(rorString: string): string {
@@ -217,7 +217,7 @@ function convertToQueryData(json: any): QueryData {
 export async function fetchDois(variables: QueryVar, count?: number) {
   const options = {
     method: 'GET',
-    headers: { accept: 'application/vnd.api+json' }
+    headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
   }
   const searchParams = buildDoiSearchParams(variables, count)
 
@@ -240,7 +240,7 @@ export async function fetchDois(variables: QueryVar, count?: number) {
 export async function fetchDoisCitations(variables: QueryVar, count?: number) {
   const options = {
     method: 'GET',
-    headers: { accept: 'text/x-bibliography' }
+    headers: { ...DATACITE_API_HEADERS, accept: 'text/x-bibliography' }
   }
   const searchParams = buildDoiSearchParams(variables, count)
 

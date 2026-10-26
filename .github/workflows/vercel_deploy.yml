@@ -47,10 +47,16 @@ jobs:
           TEAM_ID: ${{ secrets.TEAM_ID }}
         run: |
           set -euo pipefail
-          if [[ "${{ inputs.production }}" == "true" ]]; then
-            DEPLOYMENT_URL=$(vercel deploy --prod --token="$VERCEL_TOKEN" --scope="$TEAM_ID" --yes)
+          # Vercel builds without .git, so pass the build version explicitly
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            COMMONS_VERSION="$GITHUB_REF_NAME"
           else
-            DEPLOYMENT_URL=$(vercel deploy --token="$VERCEL_TOKEN" --scope="$TEAM_ID" --yes)
+            COMMONS_VERSION="${GITHUB_SHA::7}"
+          fi
+          if [[ "${{ inputs.production }}" == "true" ]]; then
+            DEPLOYMENT_URL=$(vercel deploy --prod --token="$VERCEL_TOKEN" --scope="$TEAM_ID" --build-env COMMONS_VERSION="$COMMONS_VERSION" --yes)
+          else
+            DEPLOYMENT_URL=$(vercel deploy --token="$VERCEL_TOKEN" --scope="$TEAM_ID" --build-env COMMONS_VERSION="$COMMONS_VERSION" --yes)
           fi
           echo "deployment_url=$DEPLOYMENT_URL" >> "$GITHUB_OUTPUT"
 

@@ -6,8 +6,18 @@ const { SENTRY_ORG, SENTRY_PROJECT, SENTRY_AUTH_TOKEN } = process.env
 const COMMIT_SHA =
   process.env.VERCEL_GITHUB_COMMIT_SHA || process.env.GITHUB_SHA
 
+// Build version sent to the DataCite API. The deploy workflow passes
+// COMMONS_VERSION (release tag or short SHA); local builds fall back to 'dev'.
+const COMMONS_VERSION =
+  process.env.COMMONS_VERSION ||
+  (process.env.VERCEL_GIT_COMMIT_SHA || COMMIT_SHA)?.slice(0, 7) ||
+  'dev'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_COMMONS_VERSION: COMMONS_VERSION,
+  },
   productionBrowserSourceMaps: Boolean(
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_AUTH_TOKEN
   ),

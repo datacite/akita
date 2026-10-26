@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Repositories } from 'src/data/types'
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 import { getPageInfo } from './searchDoiQuery'
 import { mapJsonToRepository } from 'src/utils/helpers'
 
@@ -45,7 +45,7 @@ function convertToQueryData(json: any): QueryData {
 export async function fetchRepositories(variables: QueryVar) {
   const options = {
     method: 'GET',
-    headers: { accept: 'application/vnd.api+json' }
+    headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
   }
   const searchParams = buildRepositorySearchParams(variables)
 

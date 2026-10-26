@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { DATACITE_API_URL } from 'src/data/constants'
+import { DATACITE_API_URL, DATACITE_API_HEADERS } from 'src/data/constants'
 
 interface RelatedProviderInfo {
   symbol: string
@@ -25,7 +25,7 @@ export async function GET() {
   try {
     const options = {
       method: 'GET',
-      headers: { accept: 'application/vnd.api+json' }
+      headers: { ...DATACITE_API_HEADERS, accept: 'application/vnd.api+json' }
     }
 
     const searchParams = new URLSearchParams({
