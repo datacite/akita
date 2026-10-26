@@ -1,4 +1,3 @@
-const { execSync } = require('child_process')
 const { withSentryConfig } = require('@sentry/nextjs')
 
 const { SENTRY_ORG, SENTRY_PROJECT, SENTRY_AUTH_TOKEN } = process.env
@@ -7,22 +6,10 @@ const { SENTRY_ORG, SENTRY_PROJECT, SENTRY_AUTH_TOKEN } = process.env
 const COMMIT_SHA =
   process.env.VERCEL_GITHUB_COMMIT_SHA || process.env.GITHUB_SHA
 
-function git(args) {
-  try {
-    return execSync(`git ${args}`, { stdio: ['ignore', 'pipe', 'ignore'] })
-      .toString()
-      .trim()
-  } catch {
-    return undefined
-  }
-}
-
-// Build version sent to the DataCite API: tag if HEAD is tagged, else short SHA.
-// CI passes COMMONS_VERSION because Vercel builds without .git.
+// Build version sent to the DataCite API. The deploy workflow passes
+// COMMONS_VERSION (release tag or short SHA); local builds fall back to 'dev'.
 const COMMONS_VERSION =
   process.env.COMMONS_VERSION ||
-  git('describe --tags --exact-match') ||
-  git('rev-parse --short HEAD') ||
   (process.env.VERCEL_GIT_COMMIT_SHA || COMMIT_SHA)?.slice(0, 7) ||
   'dev'
 
