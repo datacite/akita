@@ -100,6 +100,36 @@ export async function getClaims(
   }
 }
 
+export async function getClaim(
+  id: string,
+  token: string
+): Promise<{ claim: Claim | null; errors: ClaimError[] | null }> {
+  const response = await claimsFetch(`/claims/${encodeURIComponent(id)}`, token)
+
+  if (!response.ok) {
+    let errors: ClaimError[] | null = null
+    try {
+      const json: ClaimResponse = await response.json()
+      errors = json.errors ?? null
+    } catch {
+      // non-JSON error body
+    }
+    return {
+      claim: null,
+      errors: errors ?? [{ title: `Failed to fetch claims: ${response.status}` }],    }
+  }
+
+  try {
+    const json: ClaimResponse = await response.json()
+    return { claim: json.data ? toClaim(json.data) : null, errors: null }
+  } catch {
+    return {
+      claim: null,
+      errors: [{ status: response.status, title: 'Failed to fetch claim: invalid response' }],
+    }
+  }
+}
+
 export async function createClaim(
   doi: string,
   sourceId: string,
