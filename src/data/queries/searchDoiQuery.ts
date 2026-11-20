@@ -100,17 +100,16 @@ export const VALID_ORGANIZATION_RELATION_TYPES = [
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
-  const requestedRelationType = organizationRelationType ?? 'allRelated'
-  const relationType = VALID_ORGANIZATION_RELATION_TYPES.includes(requestedRelationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
-    ? requestedRelationType
-    : 'allRelated'
+  const relationType = getOrganizationRelationType(organizationRelationType)
 
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = quoteIdentifier(`https://${id}`)
   const OR = ' OR '
 
+  // fundedBy is sent as REST params (funded-by + include-funder-child-organizations)
+  // by appendFacets, so it lands in lupo's unscored filter context instead of query=.
   const queryPartsByType: Record<typeof VALID_ORGANIZATION_RELATION_TYPES[number], string[]> = {
-    fundedBy: [`funder_rors:${urlId}`, `funder_parent_rors:${urlId}`],
+    fundedBy: [],
     createdBy: [
       `organization_id:${id}`,
       `provider.ror_id:${urlId}`,
@@ -128,7 +127,15 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
   const selectedParts = queryPartsByType[relationType as keyof typeof queryPartsByType] ?? queryPartsByType.allRelated
   const positivePart = selectedParts.filter(Boolean).join(OR)
+  if (!positivePart) return ''
   return `(${positivePart})`
+}
+
+function getOrganizationRelationType(organizationRelationType: string | undefined): typeof VALID_ORGANIZATION_RELATION_TYPES[number] {
+  const requested = organizationRelationType ?? 'allRelated'
+  return VALID_ORGANIZATION_RELATION_TYPES.includes(requested as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
+    ? requested as typeof VALID_ORGANIZATION_RELATION_TYPES[number]
+    : 'allRelated'
 }
 
 export function buildQuery(variables: QueryVar): string {
@@ -159,6 +166,10 @@ export function appendFacets(variables: QueryVar, searchParams: URLSearchParams)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
   if (variables.clientId) searchParams.append('client-id', variables.clientId)
   if (variables.clientType) searchParams.append('client-type', variables.clientType)
+  if (variables.rorId && getOrganizationRelationType(variables.organizationRelationType) === 'fundedBy') {
+    searchParams.append('funded-by', extractRORId(variables.rorId))
+    searchParams.append('include-funder-child-organizations', 'true')
+  }
 }
 
 export const VALID_SORT_OPTIONS = [
