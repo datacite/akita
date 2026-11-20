@@ -16,6 +16,8 @@ import DataCiteButton from '../DataCiteButton/DataCiteButton'
 import Link from 'next/link'
 import { Spinner } from 'react-bootstrap'
 
+const IN_PROGRESS_STATES = new Set(['waiting', 'working'])
+
 type Props = {
   doi_id: string
 }
@@ -35,41 +37,35 @@ function getHelpContent(user: User, message?: string): React.ReactNode {
 
 export default function Claim({ doi_id }: Props) {
   const user = session()
-  const [claimError, setClaimError] = React.useState<string | number | null>(null)
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [mutationError, setMutationError] = React.useState<string | null>(null)
   const [claimUid, setClaimUid] = React.useState<string | null>(null)
-  const { loading, error, data } = useClaimQuery({ id: doi_id, claimUid: claimUid, isSubmitting: isSubmitting })
-  const { mutate: createClaim } = useCreateClaimMutation(doi_id)
+  const { loading, error, data } = useClaimQuery({ id: doi_id, claimUid })
+  const { mutate: createClaim, isPending: isCreating } = useCreateClaimMutation(doi_id)
 
   const claim = data?.claims[0]
   const state = claim?.state ?? 'ready'
+  // A claim is in flight while the POST is pending and while the server is still processing it.
+  // Volpino saves the claim as `waiting` before acknowledging the POST, so polling picks up from there.
+  const isSubmitting = isCreating || IN_PROGRESS_STATES.has(state)
   const isClaimed = state === 'done' && claim?.claimed != null
-  const isActionPossible = state !== 'waiting' || isSubmitting
 
-  const onMutationError = (error: Error) => {
-    setClaimError(error.message)
-    setIsSubmitting(false)
-  }
-
+  // Once the claim ID is known, look it up directly via /claims/[id]. Only ever adopt a
+  // defined ID: data is briefly undefined while a new query key loads.
   useEffect(() => {
-    setClaimUid(claim?.id ?? null)
-    if (claim?.state && claim?.state !== 'waiting') {
-      setIsSubmitting(false)
-      setClaimError(
-        String(claim?.errorMessages?.[0]?.title ?? claim?.errorMessages?.[0]?.status ?? '') || null
-      )
-    }
-  }, [claim?.id, claim?.state, claim?.claimed])
+    if (claim?.id) setClaimUid(claim.id)
+  }, [claim?.id])
 
   const onCreate = () => {
-    setIsSubmitting(true)
+    if (!user || isSubmitting) return
+
+    setMutationError(null)
     createClaim(
       { doi: doi_id, sourceId: 'orcid_search' },
       {
         onSuccess: (result) => {
-          setClaimError(result.claim?.errorMessages?.[0]?.title || null)
+          if (result.claim?.id) setClaimUid(result.claim.id)
         },
-        onError: onMutationError,
+        onError: (mutationFailure) => setMutationError(mutationFailure.message),
       }
     )
   }
@@ -82,7 +78,7 @@ export default function Claim({ doi_id }: Props) {
         className='w-100'
         disabled
         outline
-        title="Checking claim status..."
+        title="Checking ORCID Work Status..."
       >
         Checking ORCID Work Status...
       </DataCiteButton>
@@ -93,15 +89,16 @@ export default function Claim({ doi_id }: Props) {
     return <Error title="Error fetching claim." message={error.message} />
   }
 
+  // Errors from a previous attempt are kept on the claim until it is processed again, so
+  // hide them while a new attempt is in flight.
+  const claimErrorDetail = isSubmitting ? undefined : claim?.errorMessages?.[0]
+  const claimErrorMessage = claimErrorDetail?.title || claimErrorDetail?.status
   const errorMessage =
-    claimError ||
-    (claim?.errorMessages && claim.errorMessages.length > 0
-      ? claim.errorMessages[0].title
-      : undefined)
+    mutationError ?? (claimErrorMessage != null ? String(claimErrorMessage) : undefined)
 
   return (
     <>
-      {isActionPossible && isClaimed ? (
+      {isClaimed && !isSubmitting ? (
           <>
             <DataCiteButton
               icon={faCheck}
@@ -156,7 +153,7 @@ export default function Claim({ doi_id }: Props) {
       }
 
       {(!isClaimed || errorMessage) && (
-        <p className='secondary px-4 mt-2 small'>{getHelpContent(user, String(errorMessage))}</p>
+        <p className='secondary px-4 mt-2 small'>{getHelpContent(user, errorMessage)}</p>
       )}
     </>
   )

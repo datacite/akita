@@ -115,7 +115,8 @@ export async function getClaim(
     }
     return {
       claim: null,
-      errors: errors ?? [{ title: `Failed to fetch claims: ${response.status}` }],    }
+      errors: errors ?? [{ status: response.status, title: `Failed to fetch claim: ${response.status}` }],
+    }
   }
 
   try {
