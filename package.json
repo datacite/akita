@@ -59,7 +59,7 @@
     "vega-lite": "^5.19.0"
   },
   "devDependencies": {
-    "@cypress/react": "^6.1",
+    "@cypress/react": "^10.0",
     "@cypress/webpack-dev-server": "^1.7.0",
     "@types/gtag.js": "^0.0.3",
     "@types/node": "^12.12.39",
