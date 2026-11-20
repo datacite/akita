@@ -17,13 +17,11 @@ export default function IndexPage() {
   const variables = getQueryVariables(searchParams)
 
   const query = variables.query
-  const filterQuery = variables.filterQuery
 
   if (!query || query === '') {
     return <WorksExampleText />
   }
 
-  const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
-
-  return <SearchWork variables={{ ...variables, query: queryStatement }} />
+  // filterQuery stays in variables; buildQuery ANDs it onto the query once.
+  return <SearchWork variables={variables} />
 }

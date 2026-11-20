@@ -19,17 +19,15 @@ export default function SearchDoiPage() {
 
 
   const query = variables.query
-  const filterQuery = variables.filterQuery
 
   if (!query || query === '') {
     return <WorksExampleText />
   }
 
-  const queryStatement = query + (filterQuery ? ' AND ' + filterQuery : '')
-
+  // filterQuery stays in variables; buildQuery ANDs it onto the query once.
   return (<>
     <h1 className="visually-hidden">Works Search</h1>
-    <SearchWork variables={{ ...variables, query: queryStatement }} />
+    <SearchWork variables={variables} />
   </>
          );
 
