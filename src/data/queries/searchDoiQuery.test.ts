@@ -33,6 +33,11 @@ describe('buildQuery', () => {
     it('skips an empty user query', () => {
       expect(buildQuery({ query: '', language: 'en' })).toBe('language:en')
     })
+
+    it('skips a whitespace-only user query instead of sending empty parentheses', () => {
+      expect(buildQuery({ query: '   ' })).toBe('')
+      expect(buildQuery({ query: '  ', language: 'en' })).toBe('language:en')
+    })
   })
 
   describe('related DOI connection types', () => {
