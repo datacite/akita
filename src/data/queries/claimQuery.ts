@@ -11,9 +11,8 @@ export interface QueryData {
 }
 
 export interface QueryVar {
-  id: string,
-  claimUid: string | null,
-  isSubmitting: boolean
+  id: string
+  claimUid: string | null
 }
 
 /** Claim shape as returned by JSON.parse (dates are ISO strings). */
@@ -70,49 +69,17 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<ClaimM
   return normalizeMutationResult(json)
 }
 
-async function deleteClaimRequest(id: string): Promise<ClaimMutationResult> {
-  const response = await fetch(`/claims/${encodeURIComponent(id)}`, {
-    method: 'DELETE',
-  })
-  const json = await response.json()
-
-  throwIfApiError(response, json, `Failed to delete claim (${response.status} ${response.statusText})`)
-
-  return normalizeMutationResult(json)
-}
-
-function updateClaimInCache(
-  queryClient: ReturnType<typeof useQueryClient>,
-  doiId: string,
-  updatedClaim: Claim
-) {
-  queryClient.setQueryData<QueryData>(claimKeys.detail(doiId), (existing) => {
-    if (!existing) return existing
-
-    if (!existing.claims?.length) {
-      return { claims: [updatedClaim] }
-    }
-
-    let replaced = false
-    const claims = existing.claims.map((claim) => {
-      if (claim.id === updatedClaim.id) {
-        replaced = true
-        return updatedClaim
-      }
-      return claim
-    })
-
-    return { claims: replaced ? claims : [...claims, updatedClaim] }
-  })
-}
-
 export function useClaimQuery(variables: QueryVar) {
   const { data, error, isPending, refetch } = useQuery({
     queryKey: claimKeys.detail(variables.id, variables.claimUid),
     queryFn: () => fetchClaim(variables.id, variables.claimUid),
+    // When switching from the DOI list lookup to the /claims/[id] lookup, keep showing the
+    // claim we already have instead of dropping back to a loading state.
+    placeholderData: (previousData, previousQuery) =>
+      previousQuery?.queryKey[1] === variables.id ? previousData : undefined,
     refetchInterval: (query) => {
       const claim = query.state.data?.claims?.[0]
-      return variables.isSubmitting || claim?.state === 'waiting' ? 500 : false
+      return claim?.state === 'waiting' ? 500 : false
     },
   })
 
@@ -130,23 +97,17 @@ export function useCreateClaimMutation(doiId: string) {
   return useMutation({
     mutationFn: ({ doi, sourceId }: { doi: string; sourceId: string }) =>
       createClaimRequest(doi, sourceId),
-    onSuccess: (result) => {
+    onSuccess: async (result) => {
       if (result.claim) {
-        updateClaimInCache(queryClient, doiId, result.claim)
+        // Seed the detail entry the component reads once it knows the claim ID, whether
+        // the create returned the existing claim ID or a new one.
+        queryClient.setQueryData<QueryData>(
+          claimKeys.detail(doiId, result.claim.id),
+          { claims: [result.claim] }
+        )
       }
-    },
-  })
-}
-
-export function useDeleteClaimMutation(doiId: string) {
-  const queryClient = useQueryClient()
-
-  return useMutation({
-    mutationFn: (id: string) => deleteClaimRequest(id),
-    onSuccess: (result) => {
-      if (result.claim) {
-        updateClaimInCache(queryClient, doiId, result.claim)
-      }
+      // Refetch whatever claim query is on screen so it reflects the server's state.
+      await queryClient.invalidateQueries({ queryKey: [...claimKeys.all, doiId] })
     },
   })
 }
