@@ -54,14 +54,14 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     parts: [`part_of_ids:${quotedDoi}`],
     partOf: [`part_ids:${quotedDoi}`],
     versions: [`version_of_ids:${quotedDoi}`],
-    versionOf: [`versions_ids:${quotedDoi}`],
+    versionOf: [`version_ids:${quotedDoi}`],
     allRelated: [
       relatedIdentifierPart,
       `reference_ids:${quotedDoi}`,
       `citation_ids:${quotedDoi}`,
       `part_ids:${quotedDoi}`,
       `part_of_ids:${quotedDoi}`,
-      `versions_ids:${quotedDoi}`,
+      `version_ids:${quotedDoi}`,
       `version_of_ids:${quotedDoi}`,
       uidPart
     ],
@@ -76,7 +76,7 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     `citation_ids:${quotedDoi}`,
     `part_ids:${quotedDoi}`,
     `part_of_ids:${quotedDoi}`,
-    `versions_ids:${quotedDoi}`,
+    `version_ids:${quotedDoi}`,
     `version_of_ids:${quotedDoi}`,
   ];
 
