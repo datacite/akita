@@ -29,11 +29,11 @@ export default function DiscoverWorksAlert() {
       <Col xs={12} md={{ span: 8, offset: 3 }} className="d-flex justify-content-center">
         <Toast show={show} onClose={() => setShow(false)} className={`${styles["toast-container"]} w-auto my-4 p-2 rounded-0`}>
           <Toast.Header className="border-0">
-            <strong className="fs-5 me-auto">Add Works to your ORCID profile</strong>
+            <strong className="fs-5 me-auto">Add Works to your ORCID record</strong>
           </Toast.Header>
           <Toast.Body>
             <p className="fs-6">
-              Add Works to your ORCID profile from any Works page. Find your Works by ORCID iD, with your name, or by using a keyword search. Enable ORCID Auto-Update in Account Settings so DataCite DOIs with your ORCID iD are automatically added to your ORCID profile.
+              Add Works to your ORCID record from any Works page. Find your Works by ORCID iD, with your name, or by using a keyword search. Enable ORCID Auto-Update in Account Settings so DataCite DOIs with your ORCID iD are automatically added to your ORCID record.
             </p>
 
 

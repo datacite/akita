@@ -3,7 +3,7 @@ import { Claim, ClaimMutationResult } from 'src/data/types'
 
 export const claimKeys = {
   all: ['claim'] as const,
-  detail: (doi: string) => [...claimKeys.all, doi] as const,
+  detail: (doi: string, claimUid?: string | null) => [...claimKeys.all, doi, claimUid ?? 'list'] as const,
 }
 
 export interface QueryData {
@@ -11,7 +11,9 @@ export interface QueryData {
 }
 
 export interface QueryVar {
-  id: string
+  id: string,
+  claimUid: string | null,
+  isSubmitting: boolean
 }
 
 /** Claim shape as returned by JSON.parse (dates are ISO strings). */
@@ -45,8 +47,9 @@ function throwIfApiError(response: Response, json: any, fallbackMessage: string)
   }
 }
 
-async function fetchClaim(doi: string): Promise<QueryData> {
-  const response = await fetch(`/claims?doi=${encodeURIComponent(doi)}`)
+async function fetchClaim(doi: string, claimUid: string | null): Promise<QueryData> {
+  const url = claimUid ? `/claims/${encodeURIComponent(claimUid)}` : `/claims?doi=${encodeURIComponent(doi)}`
+  const response = await fetch(url)
   const json = await response.json()
 
   throwIfApiError(response, json, `Failed to fetch claim (${response.status} ${response.statusText})`)
@@ -105,11 +108,11 @@ function updateClaimInCache(
 
 export function useClaimQuery(variables: QueryVar) {
   const { data, error, isPending, refetch } = useQuery({
-    queryKey: claimKeys.detail(variables.id),
-    queryFn: () => fetchClaim(variables.id),
+    queryKey: claimKeys.detail(variables.id, variables.claimUid),
+    queryFn: () => fetchClaim(variables.id, variables.claimUid),
     refetchInterval: (query) => {
       const claim = query.state.data?.claims?.[0]
-      return claim?.state === 'waiting' ? 2000 : false
+      return variables.isSubmitting || claim?.state === 'waiting' ? 500 : false
     },
   })
 
