@@ -15,6 +15,7 @@
     "type-check": "tsc",
     "prettier-format": "prettier --config .prettierrc.json '**/*.ts|tsx' --write",
     "lint": "./node_modules/.bin/eslint . --ext .ts,.tsx",
+    "test": "vitest run",
     "cy:open": "CYPRESS_NODE_ENV=test cypress open",
     "cy:run": "CYPRESS_NODE_ENV=test cypress run",
     "cy:run:record": "CYPRESS_NODE_ENV=test cypress run --record --quiet",
@@ -72,7 +73,9 @@
     "cypress": "^15.17.0",
     "eslint": "^7.29.0",
     "prettier": "^2.3.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
   },
   "license": "MIT",
   "resolutions": {
