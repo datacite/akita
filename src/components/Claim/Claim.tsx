@@ -16,6 +16,8 @@ import DataCiteButton from '../DataCiteButton/DataCiteButton'
 import Link from 'next/link'
 import { Spinner } from 'react-bootstrap'
 
+const IN_PROGRESS_STATES = new Set(['waiting', 'working'])
+
 type Props = {
   doi_id: string
 }
@@ -42,8 +44,9 @@ export default function Claim({ doi_id }: Props) {
 
   const claim = data?.claims[0]
   const state = claim?.state ?? 'ready'
-  // A claim is in flight while the POST is pending and while the server reports it as waiting.
-  const isSubmitting = isCreating || state === 'waiting'
+  // A claim is in flight while the POST is pending and while the server is still processing it.
+  // Volpino saves the claim as `waiting` before acknowledging the POST, so polling picks up from there.
+  const isSubmitting = isCreating || IN_PROGRESS_STATES.has(state)
   const isClaimed = state === 'done' && claim?.claimed != null
 
   // Once the claim ID is known, look it up directly via /claims/[id]. Only ever adopt a
@@ -86,7 +89,9 @@ export default function Claim({ doi_id }: Props) {
     return <Error title="Error fetching claim." message={error.message} />
   }
 
-  const claimErrorDetail = claim?.errorMessages?.[0]
+  // Errors from a previous attempt are kept on the claim until it is processed again, so
+  // hide them while a new attempt is in flight.
+  const claimErrorDetail = isSubmitting ? undefined : claim?.errorMessages?.[0]
   const claimErrorMessage = claimErrorDetail?.title || claimErrorDetail?.status
   const errorMessage =
     mutationError ?? (claimErrorMessage != null ? String(claimErrorMessage) : undefined)

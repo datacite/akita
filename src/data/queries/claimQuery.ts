@@ -79,7 +79,7 @@ export function useClaimQuery(variables: QueryVar) {
       previousQuery?.queryKey[1] === variables.id ? previousData : undefined,
     refetchInterval: (query) => {
       const claim = query.state.data?.claims?.[0]
-      return claim?.state === 'waiting' ? 500 : false
+      return claim?.state === 'waiting' || claim?.state === 'working' ? 500 : false
     },
   })
 
