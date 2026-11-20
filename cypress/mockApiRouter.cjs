@@ -252,7 +252,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
     const queryDecoded = decodeQueryParam(rawQuery)
     const facets = url.searchParams.get('facets') || ''
 
-    if (queryDecoded === 'xxxxxxxxxxxx' && !facets) {
+    if (queryDecoded === '(xxxxxxxxxxxx)' && !facets) {
       return fixtureMatch('jsonapi/dois-query-empty.json')
     }
 
@@ -260,7 +260,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
       return fixtureMatch('jsonapi/dois-query-empty.json')
     }
 
-    if (queryDecoded === 'climate') {
+    if (queryDecoded === '(climate)') {
       if (facets) {
         return fixtureMatch('jsonapi/dois-query-climate-facets.json')
       }

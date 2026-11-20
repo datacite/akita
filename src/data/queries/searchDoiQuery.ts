@@ -133,7 +133,9 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
-    variables.query,
+    // Parenthesise the user query: Lucene's classic parser has no real operator
+    // precedence, so `a OR b AND language:en` would not mean `(a OR b) AND language:en`.
+    variables.query ? `(${variables.query})` : '',
     buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || "allRelated"),
     buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',

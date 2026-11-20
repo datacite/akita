@@ -56,7 +56,7 @@ const manifest = [
     updatable: true,
     getUrl: (env) =>
       `${dataciteBase(env)}/dois?${new URLSearchParams({
-        query: 'climate',
+        query: '(climate)',
         include: 'client',
         affiliation: 'true',
         publisher: 'false',
@@ -72,7 +72,7 @@ const manifest = [
     updatable: true,
     getUrl: (env) =>
       `${dataciteBase(env)}/dois?${new URLSearchParams({
-        query: 'climate',
+        query: '(climate)',
         include: 'client',
         affiliation: 'true',
         publisher: 'false',
@@ -88,7 +88,7 @@ const manifest = [
     updatable: true,
     getUrl: (env) =>
       `${dataciteBase(env)}/dois?${new URLSearchParams({
-        query: 'climate',
+        query: '(climate)',
         facets: DEFAULT_FACETS,
         affiliation: 'true',
         publisher: 'false',
