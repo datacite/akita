@@ -252,7 +252,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
     const queryDecoded = decodeQueryParam(rawQuery)
     const facets = url.searchParams.get('facets') || ''
 
-    if (queryDecoded === 'xxxxxxxxxxxx' && !facets) {
+    if (queryDecoded === '(xxxxxxxxxxxx)' && !facets) {
       return fixtureMatch('jsonapi/dois-query-empty.json')
     }
 
@@ -260,7 +260,7 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
       return fixtureMatch('jsonapi/dois-query-empty.json')
     }
 
-    if (queryDecoded === 'climate') {
+    if (queryDecoded === '(climate)') {
       if (facets) {
         return fixtureMatch('jsonapi/dois-query-climate-facets.json')
       }
@@ -295,7 +295,10 @@ function matchRequest(urlInput, method = 'GET', bodyText = '') {
       return fixtureMatch('jsonapi/doi-10.17863-cam.10544.json')
     }
 
-    if (queryDecoded.includes('ror.org/013meh722') && queryDecoded.toLowerCase().includes('cambridge')) {
+    // ROR fundedBy sends the organization as the funded-by param instead of in query.
+    const fundedBy = url.searchParams.get('funded-by') || ''
+    const mentions013meh722 = queryDecoded.includes('ror.org/013meh722') || fundedBy.includes('013meh722')
+    if (mentions013meh722 && queryDecoded.toLowerCase().includes('cambridge')) {
       if (facets) {
         return fixtureMatch('jsonapi/dois-org-013meh722-filter-cambridge-facets.json')
       }

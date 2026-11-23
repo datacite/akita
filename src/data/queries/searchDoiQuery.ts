@@ -54,14 +54,14 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     parts: [`part_of_ids:${quotedDoi}`],
     partOf: [`part_ids:${quotedDoi}`],
     versions: [`version_of_ids:${quotedDoi}`],
-    versionOf: [`versions_ids:${quotedDoi}`],
+    versionOf: [`version_ids:${quotedDoi}`],
     allRelated: [
       relatedIdentifierPart,
       `reference_ids:${quotedDoi}`,
       `citation_ids:${quotedDoi}`,
       `part_ids:${quotedDoi}`,
       `part_of_ids:${quotedDoi}`,
-      `versions_ids:${quotedDoi}`,
+      `version_ids:${quotedDoi}`,
       `version_of_ids:${quotedDoi}`,
       uidPart
     ],
@@ -76,7 +76,7 @@ function buildRelatedDoiQuery(relatedDoi: string | undefined, uidList: string[] 
     `citation_ids:${quotedDoi}`,
     `part_ids:${quotedDoi}`,
     `part_of_ids:${quotedDoi}`,
-    `versions_ids:${quotedDoi}`,
+    `version_ids:${quotedDoi}`,
     `version_of_ids:${quotedDoi}`,
   ];
 
@@ -100,17 +100,16 @@ export const VALID_ORGANIZATION_RELATION_TYPES = [
 
 function buildOrgQuery(rorId: string | undefined, organizationRelationType: string | undefined): string {
   if (!rorId) return ''
-  const requestedRelationType = organizationRelationType ?? 'allRelated'
-  const relationType = VALID_ORGANIZATION_RELATION_TYPES.includes(requestedRelationType as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
-    ? requestedRelationType
-    : 'allRelated'
+  const relationType = getOrganizationRelationType(organizationRelationType)
 
   const id = 'ror.org/' + extractRORId(rorId)
   const urlId = quoteIdentifier(`https://${id}`)
   const OR = ' OR '
 
+  // fundedBy is sent as REST params (funded-by + include-funder-child-organizations)
+  // by appendFacets, so it lands in lupo's unscored filter context instead of query=.
   const queryPartsByType: Record<typeof VALID_ORGANIZATION_RELATION_TYPES[number], string[]> = {
-    fundedBy: [`funder_rors:${urlId}`, `funder_parent_rors:${urlId}`],
+    fundedBy: [],
     createdBy: [
       `organization_id:${id}`,
       `provider.ror_id:${urlId}`,
@@ -128,12 +127,22 @@ function buildOrgQuery(rorId: string | undefined, organizationRelationType: stri
 
   const selectedParts = queryPartsByType[relationType as keyof typeof queryPartsByType] ?? queryPartsByType.allRelated
   const positivePart = selectedParts.filter(Boolean).join(OR)
+  if (!positivePart) return ''
   return `(${positivePart})`
+}
+
+function getOrganizationRelationType(organizationRelationType: string | undefined): typeof VALID_ORGANIZATION_RELATION_TYPES[number] {
+  const requested = organizationRelationType ?? 'allRelated'
+  return VALID_ORGANIZATION_RELATION_TYPES.includes(requested as typeof VALID_ORGANIZATION_RELATION_TYPES[number])
+    ? requested as typeof VALID_ORGANIZATION_RELATION_TYPES[number]
+    : 'allRelated'
 }
 
 export function buildQuery(variables: QueryVar): string {
   const queryParts = [
-    variables.query,
+    // Parenthesise the user query: Lucene's classic parser has no real operator
+    // precedence, so `a OR b AND language:en` would not mean `(a OR b) AND language:en`.
+    variables.query?.trim() ? `(${variables.query.trim()})` : '',
     buildOrgQuery(variables.rorId || undefined, variables.organizationRelationType || "allRelated"),
     buildRelatedDoiQuery(variables.relatedDoi, variables.uidList || [], variables.connectionType || "allRelated"),
     variables.language ? `language:${variables.language}` : '',
@@ -157,6 +166,10 @@ export function appendFacets(variables: QueryVar, searchParams: URLSearchParams)
   if (variables.fieldOfScience) searchParams.append('field-of-science', variables.fieldOfScience)
   if (variables.clientId) searchParams.append('client-id', variables.clientId)
   if (variables.clientType) searchParams.append('client-type', variables.clientType)
+  if (variables.rorId && getOrganizationRelationType(variables.organizationRelationType) === 'fundedBy') {
+    searchParams.append('funded-by', extractRORId(variables.rorId))
+    searchParams.append('include-funder-child-organizations', 'true')
+  }
 }
 
 export const VALID_SORT_OPTIONS = [
