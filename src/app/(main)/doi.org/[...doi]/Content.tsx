@@ -62,7 +62,7 @@ export default async function Content(props: Props) {
               </Col>
               {work.registrationAgency.id == 'datacite' && (
                 <Col xs={12} className="mt-3 mb-3">
-                  <Claim doi_id={work.doi} />
+                  <Claim key={work.doi} doi_id={work.doi} />
                 </Col>
               )}
             </Row>
