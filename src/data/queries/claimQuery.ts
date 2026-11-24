@@ -3,7 +3,7 @@ import { Claim, ClaimMutationResult } from 'src/data/types'
 
 export const claimKeys = {
   all: ['claim'] as const,
-  detail: (doi: string, claimUid?: string | null) => [...claimKeys.all, doi, claimUid ?? 'list'] as const,
+  detail: (doi: string) => [...claimKeys.all, doi] as const,
 }
 
 export interface QueryData {
@@ -12,7 +12,6 @@ export interface QueryData {
 
 export interface QueryVar {
   id: string
-  claimUid: string | null
 }
 
 /** Claim shape as returned by JSON.parse (dates are ISO strings). */
@@ -46,9 +45,10 @@ function throwIfApiError(response: Response, json: any, fallbackMessage: string)
   }
 }
 
-async function fetchClaim(doi: string, claimUid: string | null): Promise<QueryData> {
-  const url = claimUid ? `/claims/${encodeURIComponent(claimUid)}` : `/claims?doi=${encodeURIComponent(doi)}`
-  const response = await fetch(url)
+// Always look claims up by DOI (volpino's OpenSearch-backed list endpoint). Volpino's
+// /claims/:id lookup is unindexed on claims.uuid and currently takes ~30s.
+async function fetchClaim(doi: string): Promise<QueryData> {
+  const response = await fetch(`/claims?doi=${encodeURIComponent(doi)}`)
   const json = await response.json()
 
   throwIfApiError(response, json, `Failed to fetch claim (${response.status} ${response.statusText})`)
@@ -71,15 +71,11 @@ async function createClaimRequest(doi: string, sourceId: string): Promise<ClaimM
 
 export function useClaimQuery(variables: QueryVar) {
   const { data, error, isPending, refetch } = useQuery({
-    queryKey: claimKeys.detail(variables.id, variables.claimUid),
-    queryFn: () => fetchClaim(variables.id, variables.claimUid),
-    // When switching from the DOI list lookup to the /claims/[id] lookup, keep showing the
-    // claim we already have instead of dropping back to a loading state.
-    placeholderData: (previousData, previousQuery) =>
-      previousQuery?.queryKey[1] === variables.id ? previousData : undefined,
+    queryKey: claimKeys.detail(variables.id),
+    queryFn: () => fetchClaim(variables.id),
     refetchInterval: (query) => {
       const claim = query.state.data?.claims?.[0]
-      return claim?.state === 'waiting' || claim?.state === 'working' ? 500 : false
+      return claim?.state === 'waiting' || claim?.state === 'working' ? 2000 : false
     },
   })
 
@@ -97,17 +93,13 @@ export function useCreateClaimMutation(doiId: string) {
   return useMutation({
     mutationFn: ({ doi, sourceId }: { doi: string; sourceId: string }) =>
       createClaimRequest(doi, sourceId),
-    onSuccess: async (result) => {
+    onSuccess: (result) => {
+      // Show the accepted (`waiting`) claim straight away and let polling take it from there.
+      // Don't refetch immediately: volpino reindexes OpenSearch asynchronously, so the list
+      // endpoint may still return the previous `done` claim.
       if (result.claim) {
-        // Seed the detail entry the component reads once it knows the claim ID, whether
-        // the create returned the existing claim ID or a new one.
-        queryClient.setQueryData<QueryData>(
-          claimKeys.detail(doiId, result.claim.id),
-          { claims: [result.claim] }
-        )
+        queryClient.setQueryData<QueryData>(claimKeys.detail(doiId), { claims: [result.claim] })
       }
-      // Refetch whatever claim query is on screen so it reflects the server's state.
-      await queryClient.invalidateQueries({ queryKey: [...claimKeys.all, doiId] })
     },
   })
 }
