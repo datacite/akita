@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { faOrcid } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUpRightFromSquare, faCheck, faRotateRight } from '@fortawesome/free-solid-svg-icons'
@@ -38,8 +38,7 @@ function getHelpContent(user: User, message?: string): React.ReactNode {
 export default function Claim({ doi_id }: Props) {
   const user = session()
   const [mutationError, setMutationError] = React.useState<string | null>(null)
-  const [claimUid, setClaimUid] = React.useState<string | null>(null)
-  const { loading, error, data } = useClaimQuery({ id: doi_id, claimUid })
+  const { loading, error, data } = useClaimQuery({ id: doi_id })
   const { mutate: createClaim, isPending: isCreating } = useCreateClaimMutation(doi_id)
 
   const claim = data?.claims[0]
@@ -49,12 +48,6 @@ export default function Claim({ doi_id }: Props) {
   const isSubmitting = isCreating || IN_PROGRESS_STATES.has(state)
   const isClaimed = state === 'done' && claim?.claimed != null
 
-  // Once the claim ID is known, look it up directly via /claims/[id]. Only ever adopt a
-  // defined ID: data is briefly undefined while a new query key loads.
-  useEffect(() => {
-    if (claim?.id) setClaimUid(claim.id)
-  }, [claim?.id])
-
   const onCreate = () => {
     if (!user || isSubmitting) return
 
@@ -62,9 +55,6 @@ export default function Claim({ doi_id }: Props) {
     createClaim(
       { doi: doi_id, sourceId: 'orcid_search' },
       {
-        onSuccess: (result) => {
-          if (result.claim?.id) setClaimUid(result.claim.id)
-        },
         onError: (mutationFailure) => setMutationError(mutationFailure.message),
       }
     )
